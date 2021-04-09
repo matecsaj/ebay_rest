@@ -21,8 +21,14 @@ class MyTestCase(unittest.TestCase):
     def setUpClass(cls):
         cls._er = EbayRest('Hello, World!')
 
-    def test_something(self):
+    def test_true(self):
         self.assertEqual(self._er.true(), True)
+
+    def test_enum_load(self):
+        self.assertIsNotNone(self._er.get_enums(), msg="Failed to load enums.")
+
+    def test_container_load(self):
+        self.assertIsNotNone(self._er.get_containers(), msg="Failed to load containers.")
 
 
 if __name__ == '__main__':

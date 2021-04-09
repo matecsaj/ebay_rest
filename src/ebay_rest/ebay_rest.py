@@ -1,10 +1,14 @@
 # Standard library imports
+import json
+import logging
+import os
 
 # Third party imports
 
 # Local imports
 
 # Globals
+
 
 class _Error(Exception):
     """An abstract base class for exceptions in this module."""
@@ -40,6 +44,8 @@ class EbayRest:
 
     def __init__(self, my_string):
         self.my_string = my_string
+        self._containers = None
+        self._enums = None
         return
 
     def print(self):
@@ -47,6 +53,30 @@ class EbayRest:
 
     def will_fail(self):
         raise EbayRestError(0, "Sample error.")
+
+    def get_containers(self):
+        """ """
+        # if the data needs caching
+        if self._containers is None:
+            # get the path to this python file, which is also where the data file is
+            path, _fn = os.path.split(os.path.realpath(__file__))
+            # to the path join the data file name and extension
+            path_name = os.path.join(path, 'containers.json')
+            with open(path_name) as f:
+                self._containers = json.load(f)
+        return self._containers
+
+    def get_enums(self):
+        """ """
+        # if the data needs caching
+        if self._enums is None:
+            # get the path to this python file, which is also where the data file is
+            path, _fn = os.path.split(os.path.realpath(__file__))
+            # to the path join the data file name and extension
+            path_name = os.path.join(path, 'enums.json')
+            with open(path_name) as f:
+                self._enums = json.load(f)
+        return self._enums
 
     @staticmethod
     def true():
