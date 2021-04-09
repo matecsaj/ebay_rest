@@ -1,0 +1,1797 @@
+{
+    "ebay_item": {
+        "array_type_sql": null,
+        "children": [
+            "ebay_item_additional_images",
+            "ebay_item_authenticity_verification",
+            "ebay_item_available_coupons",
+            "ebay_item_buying_options",
+            "ebay_item_current_bid_price",
+            "ebay_item_estimated_availabilities",
+            "ebay_item_image",
+            "ebay_item_item_location",
+            "ebay_item_localized_aspects",
+            "ebay_item_marketing_price",
+            "ebay_item_minimum_price_to_bid",
+            "ebay_item_payment_methods",
+            "ebay_item_price",
+            "ebay_item_primary_item_group",
+            "ebay_item_primary_product_review_rating",
+            "ebay_item_product",
+            "ebay_item_qualified_programs",
+            "ebay_item_return_terms",
+            "ebay_item_seller",
+            "ebay_item_shipping_options",
+            "ebay_item_ship_to_locations",
+            "ebay_item_taxes",
+            "ebay_item_unit_price",
+            "ebay_item_warnings"
+        ],
+        "fields": [
+            {
+                "name_python": "adult_only",
+                "name_sql": "adult_only",
+                "required": true,
+                "type_sql": "bool"
+            },
+            {
+                "name_python": "age_group",
+                "name_sql": "age_group",
+                "required": false,
+                "type_sql": "age_group"
+            },
+            {
+                "name_python": "bid_count",
+                "name_sql": "bid_count",
+                "required": false,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "brand",
+                "name_sql": "brand",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "category_id",
+                "name_sql": "category_id",
+                "required": true,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "category_path",
+                "name_sql": "category_path",
+                "required": true,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "color",
+                "name_sql": "color",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "condition",
+                "name_sql": "condition",
+                "required": false,
+                "type_sql": "condition"
+            },
+            {
+                "name_python": "condition_description",
+                "name_sql": "condition_description",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "condition_id",
+                "name_sql": "condition_id",
+                "required": false,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "description",
+                "name_sql": "description",
+                "required": true,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "eligible_for_inline_checkout",
+                "name_sql": "eligible_for_inline_checkout",
+                "required": true,
+                "type_sql": "bool"
+            },
+            {
+                "name_python": "enabled_for_guest_checkout",
+                "name_sql": "enabled_for_guest_checkout",
+                "required": true,
+                "type_sql": "bool"
+            },
+            {
+                "name_python": "energy_efficiency_class",
+                "name_sql": "energy_efficiency_class",
+                "required": false,
+                "type_sql": "energy_efficiency_class"
+            },
+            {
+                "name_python": "epid",
+                "name_sql": "epid",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "gender",
+                "name_sql": "gender",
+                "required": false,
+                "type_sql": "gender"
+            },
+            {
+                "name_python": "gtin",
+                "name_sql": "gtin",
+                "required": false,
+                "type_sql": "numeric(14,0)"
+            },
+            {
+                "name_python": "inferred_epid",
+                "name_sql": "inferred_epid",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "item_affiliate_web_url",
+                "name_sql": "item_affiliate_web_url",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "item_end_date",
+                "name_sql": "item_end_date",
+                "required": false,
+                "type_sql": "timestamp with time zone"
+            },
+            {
+                "name_python": "item_id",
+                "name_sql": "item_id",
+                "required": true,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "item_web_url",
+                "name_sql": "item_web_url",
+                "required": true,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "legacy_item_id",
+                "name_sql": "legacy_item_id",
+                "required": true,
+                "type_sql": "bigint"
+            },
+            {
+                "name_python": "lot_size",
+                "name_sql": "lot_size",
+                "required": false,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "material",
+                "name_sql": "material",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "mpn",
+                "name_sql": "mpn",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "pattern",
+                "name_sql": "pattern",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "price_display_condition",
+                "name_sql": "price_display_condition",
+                "required": false,
+                "type_sql": "price_display_condition"
+            },
+            {
+                "name_python": "product_fiche_web_url",
+                "name_sql": "product_fiche_web_url",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "quantity_limit_per_buyer",
+                "name_sql": "quantity_limit_per_buyer",
+                "required": false,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "reserve_price_met",
+                "name_sql": "reserve_price_met",
+                "required": false,
+                "type_sql": "bool"
+            },
+            {
+                "name_python": "seller_item_revision",
+                "name_sql": "seller_item_revision",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "short_description",
+                "name_sql": "short_description",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "size",
+                "name_sql": "size",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "size_system",
+                "name_sql": "size_system",
+                "required": false,
+                "type_sql": "size_system"
+            },
+            {
+                "name_python": "size_type",
+                "name_sql": "size_type",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "subtitle",
+                "name_sql": "subtitle",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "title",
+                "name_sql": "title",
+                "required": true,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "top_rated_buying_experience",
+                "name_sql": "top_rated_buying_experience",
+                "required": false,
+                "type_sql": "bool"
+            },
+            {
+                "name_python": "unique_bidder_count",
+                "name_sql": "unique_bidder_count",
+                "required": false,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "unit_pricing_measure",
+                "name_sql": "unit_pricing_measure",
+                "required": false,
+                "type_sql": "varchar"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_additional_images": {
+        "array_type_sql": "Image",
+        "children": [],
+        "fields": [
+            {
+                "name_python": "height",
+                "name_sql": "height",
+                "required": false,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "image_url",
+                "name_sql": "image_url",
+                "required": true,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "width",
+                "name_sql": "width",
+                "required": false,
+                "type_sql": "int"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_authenticity_verification": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "description",
+                "name_sql": "description",
+                "required": false,
+                "type_sql": "authenticity_verification_description"
+            },
+            {
+                "name_python": "terms_web_url",
+                "name_sql": "terms_web_url",
+                "required": false,
+                "type_sql": "varchar"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_available_coupons": {
+        "array_type_sql": "AvailableCoupon",
+        "children": [
+            "ebay_item_available_coupons_discount_amount"
+        ],
+        "fields": [
+            {
+                "name_python": "constraints",
+                "name_sql": "constraints",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "discount_type",
+                "name_sql": "discount_type",
+                "required": false,
+                "type_sql": "coupon_discount"
+            },
+            {
+                "name_python": "message",
+                "name_sql": "message",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "redemption_code",
+                "name_sql": "redemption_code",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "terms_web_url",
+                "name_sql": "terms_web_url",
+                "required": false,
+                "type_sql": "varchar"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_available_coupons_discount_amount": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "currency",
+                "name_sql": "currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "value",
+                "name_sql": "value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_buying_options": {
+        "array_type_sql": "buying_options",
+        "children": [],
+        "fields": [],
+        "required": true,
+        "shape": "array_of_enum"
+    },
+    "ebay_item_current_bid_price": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "converted_from_currency",
+                "name_sql": "converted_from_currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "converted_from_value",
+                "name_sql": "converted_from_value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            },
+            {
+                "name_python": "currency",
+                "name_sql": "currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "value",
+                "name_sql": "value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_estimated_availabilities": {
+        "array_type_sql": "EstimatedAvailability",
+        "children": [
+            "ebay_item_estimated_availabilities_delivery_options"
+        ],
+        "fields": [
+            {
+                "name_python": "availability_threshold",
+                "name_sql": "availability_threshold",
+                "required": false,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "availability_threshold_type",
+                "name_sql": "availability_threshold_type",
+                "required": false,
+                "type_sql": "availability_threshold"
+            },
+            {
+                "name_python": "estimated_availability_status",
+                "name_sql": "estimated_availability_status",
+                "required": false,
+                "type_sql": "availability_status"
+            },
+            {
+                "name_python": "estimated_available_quantity",
+                "name_sql": "estimated_available_quantity",
+                "required": false,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "estimated_sold_quantity",
+                "name_sql": "estimated_sold_quantity",
+                "required": false,
+                "type_sql": "int"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_estimated_availabilities_delivery_options": {
+        "array_type_sql": "delivery_options",
+        "children": [],
+        "fields": [],
+        "required": true,
+        "shape": "array_of_enum"
+    },
+    "ebay_item_image": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "height",
+                "name_sql": "height",
+                "required": false,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "image_url",
+                "name_sql": "image_url",
+                "required": true,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "width",
+                "name_sql": "width",
+                "required": false,
+                "type_sql": "int"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_item_location": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "address_line1",
+                "name_sql": "address_line1",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "address_line2",
+                "name_sql": "address_line2",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "city",
+                "name_sql": "city",
+                "required": true,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "country",
+                "name_sql": "country",
+                "required": true,
+                "type_sql": "country_code"
+            },
+            {
+                "name_python": "county",
+                "name_sql": "county",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "postal_code",
+                "name_sql": "postal_code",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "state_or_province",
+                "name_sql": "state_or_province",
+                "required": false,
+                "type_sql": "varchar"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_localized_aspects": {
+        "array_type_sql": "TypedNameValue",
+        "children": [],
+        "fields": [
+            {
+                "name_python": "name",
+                "name_sql": "name",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "type",
+                "name_sql": "type",
+                "required": false,
+                "type_sql": "value_type"
+            },
+            {
+                "name_python": "value",
+                "name_sql": "value",
+                "required": false,
+                "type_sql": "varchar"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_marketing_price": {
+        "array_type_sql": null,
+        "children": [
+            "ebay_item_marketing_price_discount_amount",
+            "ebay_item_marketing_price_original_price"
+        ],
+        "fields": [
+            {
+                "name_python": "discount_percentage",
+                "name_sql": "discount_percentage",
+                "required": false,
+                "type_sql": "numeric(4,1)"
+            },
+            {
+                "name_python": "price_treatment",
+                "name_sql": "price_treatment",
+                "required": false,
+                "type_sql": "price_treatment"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_marketing_price_discount_amount": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "converted_from_currency",
+                "name_sql": "converted_from_currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "converted_from_value",
+                "name_sql": "converted_from_value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            },
+            {
+                "name_python": "currency",
+                "name_sql": "currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "value",
+                "name_sql": "value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_marketing_price_original_price": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "converted_from_currency",
+                "name_sql": "converted_from_currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "converted_from_value",
+                "name_sql": "converted_from_value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            },
+            {
+                "name_python": "currency",
+                "name_sql": "currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "value",
+                "name_sql": "value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_minimum_price_to_bid": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "converted_from_currency",
+                "name_sql": "converted_from_currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "converted_from_value",
+                "name_sql": "converted_from_value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            },
+            {
+                "name_python": "currency",
+                "name_sql": "currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "value",
+                "name_sql": "value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_payment_methods": {
+        "array_type_sql": "PaymentMethod",
+        "children": [
+            "ebay_item_payment_methods_payment_method_brands",
+            "ebay_item_payment_methods_payment_instructions",
+            "ebay_item_payment_methods_seller_instructions"
+        ],
+        "fields": [
+            {
+                "name_python": "payment_method_type",
+                "name_sql": "payment_method_type",
+                "required": false,
+                "type_sql": "payment_method_type"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_payment_methods_payment_instructions": {
+        "array_type_sql": "payment_instruction",
+        "children": [],
+        "fields": [],
+        "required": true,
+        "shape": "array_of_enum"
+    },
+    "ebay_item_payment_methods_payment_method_brands": {
+        "array_type_sql": "PaymentMethodBrand",
+        "children": [
+            "ebay_item_payment_methods_payment_method_brands_logo_image"
+        ],
+        "fields": [
+            {
+                "name_python": "payment_method_brand_type",
+                "name_sql": "payment_method_brand_type",
+                "required": false,
+                "type_sql": "payment_method_brand"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_payment_methods_payment_method_brands_logo_image": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "height",
+                "name_sql": "height",
+                "required": false,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "image_url",
+                "name_sql": "image_url",
+                "required": true,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "width",
+                "name_sql": "width",
+                "required": false,
+                "type_sql": "int"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_payment_methods_seller_instructions": {
+        "array_type_sql": "seller_instruction",
+        "children": [],
+        "fields": [],
+        "required": true,
+        "shape": "array_of_enum"
+    },
+    "ebay_item_price": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "converted_from_currency",
+                "name_sql": "converted_from_currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "converted_from_value",
+                "name_sql": "converted_from_value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            },
+            {
+                "name_python": "currency",
+                "name_sql": "currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "value",
+                "name_sql": "value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_primary_item_group": {
+        "array_type_sql": null,
+        "children": [
+            "ebay_item_primary_item_group_item_group_additional_images",
+            "ebay_item_primary_item_group_item_group_image"
+        ],
+        "fields": [
+            {
+                "name_python": "item_group_href",
+                "name_sql": "item_group_href",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "item_group_id",
+                "name_sql": "item_group_id",
+                "required": false,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "item_group_title",
+                "name_sql": "item_group_title",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "item_group_type",
+                "name_sql": "item_group_type",
+                "required": false,
+                "type_sql": "item_group_type"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_primary_item_group_item_group_additional_images": {
+        "array_type_sql": "Image",
+        "children": [],
+        "fields": [
+            {
+                "name_python": "height",
+                "name_sql": "height",
+                "required": false,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "image_url",
+                "name_sql": "image_url",
+                "required": true,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "width",
+                "name_sql": "width",
+                "required": false,
+                "type_sql": "int"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_primary_item_group_item_group_image": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "height",
+                "name_sql": "height",
+                "required": false,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "image_url",
+                "name_sql": "image_url",
+                "required": true,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "width",
+                "name_sql": "width",
+                "required": false,
+                "type_sql": "int"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_primary_product_review_rating": {
+        "array_type_sql": null,
+        "children": [
+            "ebay_item_primary_product_review_rating_rating_histograms"
+        ],
+        "fields": [
+            {
+                "name_python": "average_rating",
+                "name_sql": "average_rating",
+                "required": false,
+                "type_sql": "numeric(2,1)"
+            },
+            {
+                "name_python": "review_count",
+                "name_sql": "review_count",
+                "required": false,
+                "type_sql": "int"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_primary_product_review_rating_rating_histograms": {
+        "array_type_sql": "RatingHistogram",
+        "children": [],
+        "fields": [
+            {
+                "name_python": "count",
+                "name_sql": "count",
+                "required": false,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "rating",
+                "name_sql": "rating",
+                "required": false,
+                "type_sql": "numeric(1)"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_product": {
+        "array_type_sql": null,
+        "children": [
+            "ebay_item_product_additional_images",
+            "ebay_item_product_additional_product_identities",
+            "ebay_item_product_aspect_groups",
+            "ebay_item_product_gtins",
+            "ebay_item_product_image",
+            "ebay_item_product_mpns"
+        ],
+        "fields": [
+            {
+                "name_python": "brand",
+                "name_sql": "brand",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "description",
+                "name_sql": "description",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "title",
+                "name_sql": "title",
+                "required": false,
+                "type_sql": "varchar"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_product_additional_images": {
+        "array_type_sql": "Image",
+        "children": [],
+        "fields": [
+            {
+                "name_python": "height",
+                "name_sql": "height",
+                "required": false,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "image_url",
+                "name_sql": "image_url",
+                "required": true,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "width",
+                "name_sql": "width",
+                "required": false,
+                "type_sql": "int"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_product_additional_product_identities": {
+        "array_type_sql": "AdditionalProductIdentity",
+        "children": [
+            "ebay_item_product_additional_product_identities_product_identity"
+        ],
+        "fields": [],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_product_additional_product_identities_product_identity": {
+        "array_type_sql": "ProductIdentity",
+        "children": [],
+        "fields": [
+            {
+                "name_python": "identifier_type",
+                "name_sql": "identifier_type",
+                "required": false,
+                "type_sql": "identifier_type"
+            },
+            {
+                "name_python": "identifier_value",
+                "name_sql": "identifier_value",
+                "required": false,
+                "type_sql": "int"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_product_aspect_groups": {
+        "array_type_sql": "AspectGroup",
+        "children": [
+            "ebay_item_product_aspect_groups_aspects"
+        ],
+        "fields": [
+            {
+                "name_python": "localized_group_name",
+                "name_sql": "localized_group_name",
+                "required": false,
+                "type_sql": "varchar"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_product_aspect_groups_aspects": {
+        "array_type_sql": "Aspect",
+        "children": [
+            "ebay_item_product_aspect_groups_aspects_localized_values"
+        ],
+        "fields": [
+            {
+                "name_python": "localized_name",
+                "name_sql": "localized_name",
+                "required": false,
+                "type_sql": "varchar"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_product_aspect_groups_aspects_localized_values": {
+        "array_type_sql": "varchar",
+        "children": [],
+        "fields": [],
+        "required": true,
+        "shape": "array_of_type"
+    },
+    "ebay_item_product_gtins": {
+        "array_type_sql": "numeric(14,0)",
+        "children": [],
+        "fields": [],
+        "required": true,
+        "shape": "array_of_type"
+    },
+    "ebay_item_product_image": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "height",
+                "name_sql": "height",
+                "required": false,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "image_url",
+                "name_sql": "image_url",
+                "required": true,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "width",
+                "name_sql": "width",
+                "required": false,
+                "type_sql": "int"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_product_mpns": {
+        "array_type_sql": "varchar",
+        "children": [],
+        "fields": [],
+        "required": true,
+        "shape": "array_of_type"
+    },
+    "ebay_item_qualified_programs": {
+        "array_type_sql": "qualified_programs",
+        "children": [],
+        "fields": [],
+        "required": true,
+        "shape": "array_of_enum"
+    },
+    "ebay_item_return_terms": {
+        "array_type_sql": null,
+        "children": [
+            "ebay_item_return_terms_return_period"
+        ],
+        "fields": [
+            {
+                "name_python": "extended_holiday_returns_offered",
+                "name_sql": "extended_holiday_returns_offered",
+                "required": false,
+                "type_sql": "bool"
+            },
+            {
+                "name_python": "refund_method",
+                "name_sql": "refund_method",
+                "required": false,
+                "type_sql": "refund_method"
+            },
+            {
+                "name_python": "restocking_fee_percentage",
+                "name_sql": "restocking_fee_percentage",
+                "required": false,
+                "type_sql": "numeric(4,1)"
+            },
+            {
+                "name_python": "return_instructions",
+                "name_sql": "return_instructions",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "return_method",
+                "name_sql": "return_method",
+                "required": false,
+                "type_sql": "return_method"
+            },
+            {
+                "name_python": "returns_accepted",
+                "name_sql": "returns_accepted",
+                "required": false,
+                "type_sql": "bool"
+            },
+            {
+                "name_python": "return_shipping_cost_payer",
+                "name_sql": "return_shipping_cost_payer",
+                "required": false,
+                "type_sql": "return_shipping_cost_payer"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_return_terms_return_period": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "unit",
+                "name_sql": "unit",
+                "required": false,
+                "type_sql": "time_duration_unit"
+            },
+            {
+                "name_python": "value",
+                "name_sql": "value",
+                "required": false,
+                "type_sql": "int"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_seller": {
+        "array_type_sql": null,
+        "children": [
+            "ebay_item_seller_seller_legal_info"
+        ],
+        "fields": [
+            {
+                "name_python": "feedback_percentage",
+                "name_sql": "feedback_percentage",
+                "required": true,
+                "type_sql": "numeric(4,1)"
+            },
+            {
+                "name_python": "feedback_score",
+                "name_sql": "feedback_score",
+                "required": true,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "seller_account_type",
+                "name_sql": "seller_account_type",
+                "required": false,
+                "type_sql": "seller_account_type"
+            },
+            {
+                "name_python": "username",
+                "name_sql": "username",
+                "required": true,
+                "type_sql": "varchar"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_seller_seller_legal_info": {
+        "array_type_sql": null,
+        "children": [
+            "ebay_item_seller_seller_legal_info_seller_provided_legal_address",
+            "ebay_item_seller_seller_legal_info_vat_details"
+        ],
+        "fields": [
+            {
+                "name_python": "email",
+                "name_sql": "email",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "fax",
+                "name_sql": "fax",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "imprint",
+                "name_sql": "imprint",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "legal_contact_first_name",
+                "name_sql": "legal_contact_first_name",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "legal_contact_last_name",
+                "name_sql": "legal_contact_last_name",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "name",
+                "name_sql": "name",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "phone",
+                "name_sql": "phone",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "registration_number",
+                "name_sql": "registration_number",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "terms_of_service",
+                "name_sql": "terms_of_service",
+                "required": false,
+                "type_sql": "varchar"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_seller_seller_legal_info_seller_provided_legal_address": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "address_line1",
+                "name_sql": "address_line1",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "address_line2",
+                "name_sql": "address_line2",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "city",
+                "name_sql": "city",
+                "required": true,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "country",
+                "name_sql": "country",
+                "required": false,
+                "type_sql": "country_code"
+            },
+            {
+                "name_python": "country_name",
+                "name_sql": "country_name",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "county",
+                "name_sql": "county",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "postal_code",
+                "name_sql": "postal_code",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "state_or_province",
+                "name_sql": "state_or_province",
+                "required": true,
+                "type_sql": "varchar"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_seller_seller_legal_info_vat_details": {
+        "array_type_sql": "VatDetail",
+        "children": [],
+        "fields": [
+            {
+                "name_python": "issuing_country",
+                "name_sql": "issuing_country",
+                "required": false,
+                "type_sql": "country_code"
+            },
+            {
+                "name_python": "vat_id",
+                "name_sql": "vat_id",
+                "required": false,
+                "type_sql": "varchar"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_ship_to_locations": {
+        "array_type_sql": null,
+        "children": [
+            "ebay_item_ship_to_locations_region_excluded",
+            "ebay_item_ship_to_locations_region_included"
+        ],
+        "fields": [],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_ship_to_locations_region_excluded": {
+        "array_type_sql": "ShipToRegion",
+        "children": [],
+        "fields": [
+            {
+                "name_python": "region_id",
+                "name_sql": "region_id",
+                "required": false,
+                "type_sql": "region_id"
+            },
+            {
+                "name_python": "region_name",
+                "name_sql": "region_name",
+                "required": false,
+                "type_sql": "region_name"
+            },
+            {
+                "name_python": "region_type",
+                "name_sql": "region_type",
+                "required": false,
+                "type_sql": "region_type"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_ship_to_locations_region_included": {
+        "array_type_sql": "ShipToRegion",
+        "children": [],
+        "fields": [
+            {
+                "name_python": "region_id",
+                "name_sql": "region_id",
+                "required": false,
+                "type_sql": "region_id"
+            },
+            {
+                "name_python": "region_name",
+                "name_sql": "region_name",
+                "required": false,
+                "type_sql": "region_name"
+            },
+            {
+                "name_python": "region_type",
+                "name_sql": "region_type",
+                "required": false,
+                "type_sql": "region_type"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_shipping_options": {
+        "array_type_sql": "ShippingOption",
+        "children": [
+            "ebay_item_shipping_options_additional_shipping_cost_per_unit",
+            "ebay_item_shipping_options_import_charges",
+            "ebay_item_shipping_options_shipping_cost",
+            "ebay_item_shipping_options_ship_to_location_used_for_estimate"
+        ],
+        "fields": [
+            {
+                "name_python": "cut_off_date_used_for_estimate",
+                "name_sql": "cut_off_date_used_for_estimate",
+                "required": false,
+                "type_sql": "timestamp with time zone"
+            },
+            {
+                "name_python": "fulfilled_through",
+                "name_sql": "fulfilled_through",
+                "required": false,
+                "type_sql": "fulfilled_through"
+            },
+            {
+                "name_python": "guaranteed_delivery",
+                "name_sql": "guaranteed_delivery",
+                "required": false,
+                "type_sql": "bool"
+            },
+            {
+                "name_python": "max_estimated_delivery_date",
+                "name_sql": "max_estimated_delivery_date",
+                "required": false,
+                "type_sql": "timestamp with time zone"
+            },
+            {
+                "name_python": "min_estimated_delivery_date",
+                "name_sql": "min_estimated_delivery_date",
+                "required": false,
+                "type_sql": "timestamp with time zone"
+            },
+            {
+                "name_python": "quantity_used_for_estimate",
+                "name_sql": "quantity_used_for_estimate",
+                "required": false,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "shipping_carrier_code",
+                "name_sql": "shipping_carrier_code",
+                "required": false,
+                "type_sql": "shipping_carrier_code"
+            },
+            {
+                "name_python": "shipping_cost_type",
+                "name_sql": "shipping_cost_type",
+                "required": true,
+                "type_sql": "shipping_cost_type"
+            },
+            {
+                "name_python": "shipping_service_code",
+                "name_sql": "shipping_service_code",
+                "required": true,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "trademark_symbol",
+                "name_sql": "trademark_symbol",
+                "required": false,
+                "type_sql": "trademark_symbol"
+            },
+            {
+                "name_python": "type",
+                "name_sql": "type",
+                "required": true,
+                "type_sql": "shipping_option_type"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_shipping_options_additional_shipping_cost_per_unit": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "converted_from_currency",
+                "name_sql": "converted_from_currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "converted_from_value",
+                "name_sql": "converted_from_value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            },
+            {
+                "name_python": "currency",
+                "name_sql": "currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "value",
+                "name_sql": "value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_shipping_options_import_charges": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "converted_from_currency",
+                "name_sql": "converted_from_currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "converted_from_value",
+                "name_sql": "converted_from_value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            },
+            {
+                "name_python": "currency",
+                "name_sql": "currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "value",
+                "name_sql": "value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_shipping_options_ship_to_location_used_for_estimate": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "country",
+                "name_sql": "country",
+                "required": false,
+                "type_sql": "country_code"
+            },
+            {
+                "name_python": "postal_code",
+                "name_sql": "postal_code",
+                "required": false,
+                "type_sql": "varchar"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_shipping_options_shipping_cost": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "converted_from_currency",
+                "name_sql": "converted_from_currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "converted_from_value",
+                "name_sql": "converted_from_value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            },
+            {
+                "name_python": "currency",
+                "name_sql": "currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "value",
+                "name_sql": "value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_taxes": {
+        "array_type_sql": "Taxes",
+        "children": [
+            "ebay_item_taxes_tax_jurisdiction"
+        ],
+        "fields": [
+            {
+                "name_python": "ebay_collect_and_remit_tax",
+                "name_sql": "ebay_collect_and_remit_tax",
+                "required": false,
+                "type_sql": "bool"
+            },
+            {
+                "name_python": "included_in_price",
+                "name_sql": "included_in_price",
+                "required": false,
+                "type_sql": "bool"
+            },
+            {
+                "name_python": "shipping_and_handling_taxed",
+                "name_sql": "shipping_and_handling_taxed",
+                "required": false,
+                "type_sql": "bool"
+            },
+            {
+                "name_python": "tax_percentage",
+                "name_sql": "tax_percentage",
+                "required": false,
+                "type_sql": "numeric(4,1)"
+            },
+            {
+                "name_python": "tax_type",
+                "name_sql": "tax_type",
+                "required": false,
+                "type_sql": "tax"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_taxes_tax_jurisdiction": {
+        "array_type_sql": null,
+        "children": [
+            "ebay_item_taxes_tax_jurisdiction_region"
+        ],
+        "fields": [
+            {
+                "name_python": "tax_jurisdiction_id",
+                "name_sql": "tax_jurisdiction_id",
+                "required": false,
+                "type_sql": "tax_jurisdiction_id"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_taxes_tax_jurisdiction_region": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "region_name",
+                "name_sql": "region_name",
+                "required": false,
+                "type_sql": "region_name"
+            },
+            {
+                "name_python": "region_type",
+                "name_sql": "region_type",
+                "required": false,
+                "type_sql": "region_type"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_unit_price": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "converted_from_currency",
+                "name_sql": "converted_from_currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "converted_from_value",
+                "name_sql": "converted_from_value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            },
+            {
+                "name_python": "currency",
+                "name_sql": "currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "value",
+                "name_sql": "value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_warnings": {
+        "array_type_sql": "ErrorDetailV3",
+        "children": [
+            "ebay_item_warnings_input_ref_ids",
+            "ebay_item_warnings_output_ref_ids",
+            "ebay_item_warnings_parameters"
+        ],
+        "fields": [
+            {
+                "name_python": "category",
+                "name_sql": "category",
+                "required": true,
+                "type_sql": "warning_category"
+            },
+            {
+                "name_python": "domain",
+                "name_sql": "domain",
+                "required": true,
+                "type_sql": "domain"
+            },
+            {
+                "name_python": "error_id",
+                "name_sql": "error_id",
+                "required": true,
+                "type_sql": "int"
+            },
+            {
+                "name_python": "long_message",
+                "name_sql": "long_message",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "message",
+                "name_sql": "message",
+                "required": true,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "subdomain",
+                "name_sql": "subdomain",
+                "required": false,
+                "type_sql": "subdomain"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_warnings_input_ref_ids": {
+        "array_type_sql": "varchar",
+        "children": [],
+        "fields": [],
+        "required": true,
+        "shape": "array_of_type"
+    },
+    "ebay_item_warnings_output_ref_ids": {
+        "array_type_sql": "varchar",
+        "children": [],
+        "fields": [],
+        "required": true,
+        "shape": "array_of_type"
+    },
+    "ebay_item_warnings_parameters": {
+        "array_type_sql": "ErrorParameterV3",
+        "children": [],
+        "fields": [
+            {
+                "name_python": "name",
+                "name_sql": "name",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "value",
+                "name_sql": "value",
+                "required": false,
+                "type_sql": "varchar"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    }
+}
