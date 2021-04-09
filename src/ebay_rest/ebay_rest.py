@@ -48,5 +48,6 @@ class EbayRest:
     def will_fail(self):
         raise EbayRestError(0, "Sample error.")
 
-    def true(self):
+    @staticmethod
+    def true():
         return True
