@@ -32,3 +32,4 @@ Please make sure to update tests as appropriate.
 * "Python" is a trademark of the [Python Software Foundation](https://www.python.org/psf/).
 * "eBay" is a trademark of [eBay Inc](https://www.ebay.com).
 * Official endorsement by [eBay Inc](https://www.ebay.com) is not claimed or implied.
+* The oath code was derived from this [eBay Oauth Python Client](https://github.com/eBay/ebay-oauth-python-client).

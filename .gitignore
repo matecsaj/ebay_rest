@@ -148,3 +148,6 @@ Thumbs.db
 .idea/usage.statistics.xml
 .idea/tasks.xml
 .idea/shelf/
+
+# Temporary Caches
+/scripts/api_cache/

@@ -5,6 +5,10 @@ import unittest
 
 # Local imports
 from src.ebay_rest.ebay_rest import EbayRest, EbayRestError
+from src.ebay_rest.oath.credentialutil import credentialutil
+from src.ebay_rest.oath.model.model import environment
+from src.ebay_rest.oath.oauth2api import oauth2api
+
 
 # Globals
 
