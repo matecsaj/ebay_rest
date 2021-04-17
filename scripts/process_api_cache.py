@@ -52,10 +52,6 @@ class Process:
             file.write("Refrain from altering the directory contents.\n")
             file.write("The script process_api_cache.py generates contents.")
 
-    def merge_toml(self):
-        """ Merge the essential bits of the generated toml files into the master. """
-        pass    # TODO
-
     def merge_setup(self):
         """ Merge the essential bits of the generated setup files into the master. """
 
@@ -135,7 +131,6 @@ def main():
     # Refrain from altering the sequence of the method calls because there may be dependencies.
     p = Process()
     # p.copy_api_libraries()
-    p.merge_toml()
     # p.merge_setup()
     # p.make_includes()
 
