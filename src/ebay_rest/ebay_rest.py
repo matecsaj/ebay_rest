@@ -10,12 +10,63 @@ from oath.credentialutil import credentialutil
 from oath.model.model import environment
 from oath.oauth2api import oauth2api
 
+# Refrain from editing the anchors or in-between code; the script process_api_cache.py generates the code.
+# ANCHOR-er_imports-START"
+import api.buy_browse
+from api.buy_browse.rest import ApiException
+import api.buy_deal
+from api.buy_deal.rest import ApiException
 import api.buy_feed
 from api.buy_feed.rest import ApiException
-
-# Refrain from editing the anchors or in-between code; the script process_api_cache.py generates the code.
-# ANCHOR-{er_imports}-START"
-# ANCHOR-{er_imports}-END"
+import api.buy_marketing
+from api.buy_marketing.rest import ApiException
+import api.buy_marketplace_insights
+from api.buy_marketplace_insights.rest import ApiException
+import api.buy_offer
+from api.buy_offer.rest import ApiException
+import api.buy_order
+from api.buy_order.rest import ApiException
+import api.commerce_catalog
+from api.commerce_catalog.rest import ApiException
+import api.commerce_charity
+from api.commerce_charity.rest import ApiException
+import api.commerce_identity
+from api.commerce_identity.rest import ApiException
+import api.commerce_notification
+from api.commerce_notification.rest import ApiException
+import api.commerce_taxonomy
+from api.commerce_taxonomy.rest import ApiException
+import api.commerce_translation
+from api.commerce_translation.rest import ApiException
+import api.developer_analytics
+from api.developer_analytics.rest import ApiException
+import api.sell_account
+from api.sell_account.rest import ApiException
+import api.sell_analytics
+from api.sell_analytics.rest import ApiException
+import api.sell_compliance
+from api.sell_compliance.rest import ApiException
+import api.sell_feed
+from api.sell_feed.rest import ApiException
+import api.sell_finances
+from api.sell_finances.rest import ApiException
+import api.sell_fulfillment
+from api.sell_fulfillment.rest import ApiException
+import api.sell_inventory
+from api.sell_inventory.rest import ApiException
+import api.sell_listing
+from api.sell_listing.rest import ApiException
+import api.sell_logistics
+from api.sell_logistics.rest import ApiException
+import api.sell_marketing
+from api.sell_marketing.rest import ApiException
+import api.sell_metadata
+from api.sell_metadata.rest import ApiException
+import api.sell_negotiation
+from api.sell_negotiation.rest import ApiException
+import api.sell_recommendation
+from api.sell_recommendation.rest import ApiException
+# ANCHOR-er_imports-END"
 
 
 # Globals

@@ -191,42 +191,6 @@ def get_soup_via_link(url):
     return BeautifulSoup(html_content, "html.parser")
 
 
-def insert_vault_code(anchor, insert_lines):
-    """ Replace what is between anchors in vault.py with new lines of code. """
-    target = '../vault.py'
-
-    if os.path.isfile(target):
-        new_lines = ''
-        start = f"ANCHOR-{anchor}-START"
-        end = f"ANCHOR-{anchor}-END"
-        start_found = end_found = False
-
-        with open(target) as file:
-            for old_line in file:
-                if not start_found:
-                    new_lines += old_line
-                    if start in old_line:
-                        start_found = True
-                        new_lines += insert_lines
-                elif start_found and not end_found:
-                    if end in old_line:
-                        end_found = True
-                        new_lines += old_line
-                else:
-                    new_lines += old_line
-
-        if start_found and end_found:
-            with open(target, 'w') as file:
-                file.write(new_lines)
-
-        else:
-            print(f"Can't find proper start or end anchors anchors for {anchor} in {target}.")
-    else:
-        print(f"Can't find {target}")
-
-    return
-
-
 def make_containers(parent_is_array, parent_container_kind,
                     table_part, table_parent, dot_level, response_fields):
 
