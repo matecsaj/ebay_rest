@@ -17,10 +17,13 @@ import shutil
 class Process:
     """ The processing steps are split into bite sized methods. """
     def __init__(self):
-        self.path_api_cache = os.path.abspath('./api_cache')
-        self.path_ebay_rest = os.path.abspath('../src/ebay_rest')
         self.file_ebay_rest = os.path.abspath('../src/ebay_rest/ebay_rest.py')
+        self.file_setup = os.path.abspath('../setup.cfg')
+
+        self.path_api_cache = os.path.abspath('./api_cache')
         self.path_api_final = os.path.abspath('../src/ebay_rest/api')
+        self.path_ebay_rest = os.path.abspath('../src/ebay_rest')
+
         assert os.path.isdir(self.path_api_cache), 'Fatal error. Prior, you must run the script generate_api_cache.py.'
         for (_root, dirs, _files) in os.walk(self.path_api_cache):
             dirs.sort()
@@ -55,7 +58,30 @@ class Process:
 
     def merge_setup(self):
         """ Merge the essential bits of the generated setup files into the master. """
-        pass    # TODO
+
+        # compile a list of all unique requirements from the generated libraries
+        start_tag = 'REQUIRES = ['
+        end_tag = ']\n'
+        requirements = set()
+        for name in self.names:
+            src = os.path.join(self.path_api_cache, name, 'setup.py')
+            with open(src) as file:
+                for line in file:
+                    if line.startswith(start_tag):
+                        line = line.replace(start_tag, '')
+                        line = line.replace(end_tag, '')
+                        parts = line.split(', ')
+                        for part in parts:
+                            requirements.add(part)
+                        break
+        requirements = list(requirements)
+        requirements.sort()
+
+        # include these with the other requirements for our package
+        insert_lines = ''
+        for requirement in requirements:
+            insert_lines += f'    {requirement}\n'
+        self._put_anchored_lines(target_file=self.file_setup, anchor='setup.cfg', insert_lines=insert_lines)
 
     def make_includes(self):
         """ Make includes for all the libraries. """
@@ -101,8 +127,6 @@ class Process:
         else:
             print(f"Can't find {target_file}")
 
-        return
-
 
 def main():
 
@@ -112,10 +136,8 @@ def main():
     p = Process()
     # p.copy_api_libraries()
     p.merge_toml()
-    p.merge_setup()
+    # p.merge_setup()
     # p.make_includes()
-
-    return
 
 
 if __name__ == "__main__":
