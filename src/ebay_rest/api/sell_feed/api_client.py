@@ -22,9 +22,9 @@ import tempfile
 import six
 from six.moves.urllib.parse import quote
 
-from sell_feed.configuration import Configuration
-import sell_feed.models
-from sell_feed import rest
+from ..sell_feed.configuration import Configuration
+from ..sell_feed import models
+from ..sell_feed import rest
 
 
 class ApiClient(object):
@@ -257,7 +257,7 @@ class ApiClient(object):
             if klass in self.NATIVE_TYPES_MAPPING:
                 klass = self.NATIVE_TYPES_MAPPING[klass]
             else:
-                klass = getattr(sell_feed.models, klass)
+                klass = getattr(models, klass)
 
         if klass in self.PRIMITIVE_TYPES:
             return self.__deserialize_primitive(data, klass)

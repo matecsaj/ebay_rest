@@ -17,7 +17,7 @@ import re  # noqa: F401
 # python 2 and python 3 compatibility library
 import six
 
-from commerce_catalog.api_client import ApiClient
+from ...commerce_catalog.api_client import ApiClient
 
 
 class ProductSummaryApi(object):

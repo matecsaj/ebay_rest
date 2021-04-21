@@ -15,11 +15,11 @@
 from __future__ import absolute_import
 
 # import apis into sdk package
-from commerce_notification.api.public_key_api import PublicKeyApi
+from ..commerce_notification.api.public_key_api import PublicKeyApi
 # import ApiClient
-from commerce_notification.api_client import ApiClient
-from commerce_notification.configuration import Configuration
+from ..commerce_notification.api_client import ApiClient
+from ..commerce_notification.configuration import Configuration
 # import models into sdk package
-from commerce_notification.models.error import Error
-from commerce_notification.models.error_parameter import ErrorParameter
-from commerce_notification.models.public_key import PublicKey
+from ..commerce_notification.models.error import Error
+from ..commerce_notification.models.error_parameter import ErrorParameter
+from ..commerce_notification.models.public_key import PublicKey

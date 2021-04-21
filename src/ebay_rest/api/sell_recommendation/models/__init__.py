@@ -14,11 +14,11 @@
 from __future__ import absolute_import
 
 # import models into model package
-from sell_recommendation.models.ad import Ad
-from sell_recommendation.models.bid_percentages import BidPercentages
-from sell_recommendation.models.error import Error
-from sell_recommendation.models.error_parameter import ErrorParameter
-from sell_recommendation.models.find_listing_recommendation_request import FindListingRecommendationRequest
-from sell_recommendation.models.listing_recommendation import ListingRecommendation
-from sell_recommendation.models.marketing_recommendation import MarketingRecommendation
-from sell_recommendation.models.paged_listing_recommendation_collection import PagedListingRecommendationCollection
+from ...sell_recommendation.models.ad import Ad
+from ...sell_recommendation.models.bid_percentages import BidPercentages
+from ...sell_recommendation.models.error import Error
+from ...sell_recommendation.models.error_parameter import ErrorParameter
+from ...sell_recommendation.models.find_listing_recommendation_request import FindListingRecommendationRequest
+from ...sell_recommendation.models.listing_recommendation import ListingRecommendation
+from ...sell_recommendation.models.marketing_recommendation import MarketingRecommendation
+from ...sell_recommendation.models.paged_listing_recommendation_collection import PagedListingRecommendationCollection

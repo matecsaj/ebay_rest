@@ -15,13 +15,13 @@
 from __future__ import absolute_import
 
 # import apis into sdk package
-from commerce_translation.api.language_api import LanguageApi
+from ..commerce_translation.api.language_api import LanguageApi
 # import ApiClient
-from commerce_translation.api_client import ApiClient
-from commerce_translation.configuration import Configuration
+from ..commerce_translation.api_client import ApiClient
+from ..commerce_translation.configuration import Configuration
 # import models into sdk package
-from commerce_translation.models.error import Error
-from commerce_translation.models.error_parameter import ErrorParameter
-from commerce_translation.models.translate_request import TranslateRequest
-from commerce_translation.models.translate_response import TranslateResponse
-from commerce_translation.models.translation import Translation
+from ..commerce_translation.models.error import Error
+from ..commerce_translation.models.error_parameter import ErrorParameter
+from ..commerce_translation.models.translate_request import TranslateRequest
+from ..commerce_translation.models.translate_response import TranslateResponse
+from ..commerce_translation.models.translation import Translation

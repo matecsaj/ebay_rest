@@ -22,9 +22,9 @@ import tempfile
 import six
 from six.moves.urllib.parse import quote
 
-from commerce_catalog.configuration import Configuration
-import commerce_catalog.models
-from commerce_catalog import rest
+from ..commerce_catalog.configuration import Configuration
+from ..commerce_catalog import models
+from ..commerce_catalog import rest
 
 
 class ApiClient(object):
@@ -257,7 +257,7 @@ class ApiClient(object):
             if klass in self.NATIVE_TYPES_MAPPING:
                 klass = self.NATIVE_TYPES_MAPPING[klass]
             else:
-                klass = getattr(commerce_catalog.models, klass)
+                klass = getattr(models, klass)
 
         if klass in self.PRIMITIVE_TYPES:
             return self.__deserialize_primitive(data, klass)

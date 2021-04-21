@@ -14,8 +14,8 @@
 from __future__ import absolute_import
 
 # import models into model package
-from commerce_translation.models.error import Error
-from commerce_translation.models.error_parameter import ErrorParameter
-from commerce_translation.models.translate_request import TranslateRequest
-from commerce_translation.models.translate_response import TranslateResponse
-from commerce_translation.models.translation import Translation
+from ...commerce_translation.models.error import Error
+from ...commerce_translation.models.error_parameter import ErrorParameter
+from ...commerce_translation.models.translate_request import TranslateRequest
+from ...commerce_translation.models.translate_response import TranslateResponse
+from ...commerce_translation.models.translation import Translation

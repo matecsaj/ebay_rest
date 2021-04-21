@@ -14,6 +14,6 @@
 from __future__ import absolute_import
 
 # import models into model package
-from commerce_notification.models.error import Error
-from commerce_notification.models.error_parameter import ErrorParameter
-from commerce_notification.models.public_key import PublicKey
+from ...commerce_notification.models.error import Error
+from ...commerce_notification.models.error_parameter import ErrorParameter
+from ...commerce_notification.models.public_key import PublicKey

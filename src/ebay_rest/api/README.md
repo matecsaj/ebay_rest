@@ -1,3 +1,2 @@
-# Read Me
-Refrain from altering the directory contents.
-The script process_api_cache.py generates contents.
+# READ ME
+Refrain from altering the folders in this directory because the script process_swagger_cache.py generates them.

@@ -14,11 +14,11 @@
 from __future__ import absolute_import
 
 # import models into model package
-from commerce_identity.models.address import Address
-from commerce_identity.models.business_account import BusinessAccount
-from commerce_identity.models.contact import Contact
-from commerce_identity.models.error import Error
-from commerce_identity.models.error_parameter import ErrorParameter
-from commerce_identity.models.individual_account import IndividualAccount
-from commerce_identity.models.phone import Phone
-from commerce_identity.models.user_response import UserResponse
+from ...commerce_identity.models.address import Address
+from ...commerce_identity.models.business_account import BusinessAccount
+from ...commerce_identity.models.contact import Contact
+from ...commerce_identity.models.error import Error
+from ...commerce_identity.models.error_parameter import ErrorParameter
+from ...commerce_identity.models.individual_account import IndividualAccount
+from ...commerce_identity.models.phone import Phone
+from ...commerce_identity.models.user_response import UserResponse

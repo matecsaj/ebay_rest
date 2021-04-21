@@ -14,11 +14,11 @@
 from __future__ import absolute_import
 
 # import models into model package
-from buy_feed.models.error import Error
-from buy_feed.models.error_parameter import ErrorParameter
-from buy_feed.models.item import Item
-from buy_feed.models.item_group import ItemGroup
-from buy_feed.models.item_group_response import ItemGroupResponse
-from buy_feed.models.item_response import ItemResponse
-from buy_feed.models.item_snapshot import ItemSnapshot
-from buy_feed.models.item_snapshot_response import ItemSnapshotResponse
+from ...buy_feed.models.error import Error
+from ...buy_feed.models.error_parameter import ErrorParameter
+from ...buy_feed.models.item import Item
+from ...buy_feed.models.item_group import ItemGroup
+from ...buy_feed.models.item_group_response import ItemGroupResponse
+from ...buy_feed.models.item_response import ItemResponse
+from ...buy_feed.models.item_snapshot import ItemSnapshot
+from ...buy_feed.models.item_snapshot_response import ItemSnapshotResponse

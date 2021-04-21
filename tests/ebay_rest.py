@@ -5,10 +5,6 @@ import unittest
 
 # Local imports
 from src.ebay_rest.ebay_rest import EbayRest, EbayRestError
-from src.ebay_rest.oath.credentialutil import credentialutil
-from src.ebay_rest.oath.model.model import environment
-from src.ebay_rest.oath.oauth2api import oauth2api
-
 
 # Globals
 
@@ -33,6 +29,10 @@ class MyTestCase(unittest.TestCase):
 
     def test_container_load(self):
         self.assertIsNotNone(self._er.get_containers(), msg="Failed to load containers.")
+
+    def test_developer_analytics_get_rate_limits(self):
+        self.assertIsNotNone(self._er.developer_analytics_get_rate_limits(),
+                             msg="Failed at developer_analytics_get_rate_limits.")
 
 
 if __name__ == '__main__':

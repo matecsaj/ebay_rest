@@ -14,10 +14,10 @@
 from __future__ import absolute_import
 
 # import models into model package
-from developer_analytics.models.error import Error
-from developer_analytics.models.error_parameter import ErrorParameter
-from developer_analytics.models.inline_response500 import InlineResponse500
-from developer_analytics.models.rate import Rate
-from developer_analytics.models.rate_limit import RateLimit
-from developer_analytics.models.rate_limits_response import RateLimitsResponse
-from developer_analytics.models.resource import Resource
+from ...developer_analytics.models.error import Error
+from ...developer_analytics.models.error_parameter import ErrorParameter
+from ...developer_analytics.models.inline_response500 import InlineResponse500
+from ...developer_analytics.models.rate import Rate
+from ...developer_analytics.models.rate_limit import RateLimit
+from ...developer_analytics.models.rate_limits_response import RateLimitsResponse
+from ...developer_analytics.models.resource import Resource

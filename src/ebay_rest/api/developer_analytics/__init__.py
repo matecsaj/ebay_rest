@@ -15,16 +15,16 @@
 from __future__ import absolute_import
 
 # import apis into sdk package
-from developer_analytics.api.rate_limit_api import RateLimitApi
-from developer_analytics.api.user_rate_limit_api import UserRateLimitApi
+from ..developer_analytics.api.rate_limit_api import RateLimitApi
+from ..developer_analytics.api.user_rate_limit_api import UserRateLimitApi
 # import ApiClient
-from developer_analytics.api_client import ApiClient
-from developer_analytics.configuration import Configuration
+from ..developer_analytics.api_client import ApiClient
+from ..developer_analytics.configuration import Configuration
 # import models into sdk package
-from developer_analytics.models.error import Error
-from developer_analytics.models.error_parameter import ErrorParameter
-from developer_analytics.models.inline_response500 import InlineResponse500
-from developer_analytics.models.rate import Rate
-from developer_analytics.models.rate_limit import RateLimit
-from developer_analytics.models.rate_limits_response import RateLimitsResponse
-from developer_analytics.models.resource import Resource
+from ..developer_analytics.models.error import Error
+from ..developer_analytics.models.error_parameter import ErrorParameter
+from ..developer_analytics.models.inline_response500 import InlineResponse500
+from ..developer_analytics.models.rate import Rate
+from ..developer_analytics.models.rate_limit import RateLimit
+from ..developer_analytics.models.rate_limits_response import RateLimitsResponse
+from ..developer_analytics.models.resource import Resource

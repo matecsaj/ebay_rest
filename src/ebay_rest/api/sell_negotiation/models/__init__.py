@@ -14,14 +14,14 @@
 from __future__ import absolute_import
 
 # import models into model package
-from sell_negotiation.models.amount import Amount
-from sell_negotiation.models.create_offers_request import CreateOffersRequest
-from sell_negotiation.models.eligible_item import EligibleItem
-from sell_negotiation.models.error import Error
-from sell_negotiation.models.error_parameter import ErrorParameter
-from sell_negotiation.models.offer import Offer
-from sell_negotiation.models.offered_item import OfferedItem
-from sell_negotiation.models.paged_eligible_item_collection import PagedEligibleItemCollection
-from sell_negotiation.models.send_offer_to_interested_buyers_collection_response import SendOfferToInterestedBuyersCollectionResponse
-from sell_negotiation.models.time_duration import TimeDuration
-from sell_negotiation.models.user import User
+from ...sell_negotiation.models.amount import Amount
+from ...sell_negotiation.models.create_offers_request import CreateOffersRequest
+from ...sell_negotiation.models.eligible_item import EligibleItem
+from ...sell_negotiation.models.error import Error
+from ...sell_negotiation.models.error_parameter import ErrorParameter
+from ...sell_negotiation.models.offer import Offer
+from ...sell_negotiation.models.offered_item import OfferedItem
+from ...sell_negotiation.models.paged_eligible_item_collection import PagedEligibleItemCollection
+from ...sell_negotiation.models.send_offer_to_interested_buyers_collection_response import SendOfferToInterestedBuyersCollectionResponse
+from ...sell_negotiation.models.time_duration import TimeDuration
+from ...sell_negotiation.models.user import User

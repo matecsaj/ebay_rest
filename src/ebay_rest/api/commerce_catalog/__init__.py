@@ -15,19 +15,19 @@
 from __future__ import absolute_import
 
 # import apis into sdk package
-from commerce_catalog.api.product_api import ProductApi
-from commerce_catalog.api.product_summary_api import ProductSummaryApi
+from ..commerce_catalog.api.product_api import ProductApi
+from ..commerce_catalog.api.product_summary_api import ProductSummaryApi
 # import ApiClient
-from commerce_catalog.api_client import ApiClient
-from commerce_catalog.configuration import Configuration
+from ..commerce_catalog.api_client import ApiClient
+from ..commerce_catalog.configuration import Configuration
 # import models into sdk package
-from commerce_catalog.models.aspect import Aspect
-from commerce_catalog.models.aspect_distribution import AspectDistribution
-from commerce_catalog.models.aspect_value_distribution import AspectValueDistribution
-from commerce_catalog.models.error import Error
-from commerce_catalog.models.error_parameter import ErrorParameter
-from commerce_catalog.models.image import Image
-from commerce_catalog.models.product import Product
-from commerce_catalog.models.product_search_response import ProductSearchResponse
-from commerce_catalog.models.product_summary import ProductSummary
-from commerce_catalog.models.refinement import Refinement
+from ..commerce_catalog.models.aspect import Aspect
+from ..commerce_catalog.models.aspect_distribution import AspectDistribution
+from ..commerce_catalog.models.aspect_value_distribution import AspectValueDistribution
+from ..commerce_catalog.models.error import Error
+from ..commerce_catalog.models.error_parameter import ErrorParameter
+from ..commerce_catalog.models.image import Image
+from ..commerce_catalog.models.product import Product
+from ..commerce_catalog.models.product_search_response import ProductSearchResponse
+from ..commerce_catalog.models.product_summary import ProductSummary
+from ..commerce_catalog.models.refinement import Refinement

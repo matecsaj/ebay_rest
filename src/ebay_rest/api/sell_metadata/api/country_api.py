@@ -17,7 +17,7 @@ import re  # noqa: F401
 # python 2 and python 3 compatibility library
 import six
 
-from sell_metadata.api_client import ApiClient
+from ...sell_metadata.api_client import ApiClient
 
 
 class CountryApi(object):

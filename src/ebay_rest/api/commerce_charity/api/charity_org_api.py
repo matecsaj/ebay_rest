@@ -17,7 +17,7 @@ import re  # noqa: F401
 # python 2 and python 3 compatibility library
 import six
 
-from commerce_charity.api_client import ApiClient
+from ...commerce_charity.api_client import ApiClient
 
 
 class CharityOrgApi(object):

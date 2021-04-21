@@ -14,12 +14,12 @@
 from __future__ import absolute_import
 
 # import models into model package
-from buy_marketing.models.amount import Amount
-from buy_marketing.models.best_selling_product_response import BestSellingProductResponse
-from buy_marketing.models.error import Error
-from buy_marketing.models.error_parameter import ErrorParameter
-from buy_marketing.models.image import Image
-from buy_marketing.models.market_price_detail import MarketPriceDetail
-from buy_marketing.models.merchandised_product import MerchandisedProduct
-from buy_marketing.models.rating_aspect import RatingAspect
-from buy_marketing.models.rating_aspect_distribution import RatingAspectDistribution
+from ...buy_marketing.models.amount import Amount
+from ...buy_marketing.models.best_selling_product_response import BestSellingProductResponse
+from ...buy_marketing.models.error import Error
+from ...buy_marketing.models.error_parameter import ErrorParameter
+from ...buy_marketing.models.image import Image
+from ...buy_marketing.models.market_price_detail import MarketPriceDetail
+from ...buy_marketing.models.merchandised_product import MerchandisedProduct
+from ...buy_marketing.models.rating_aspect import RatingAspect
+from ...buy_marketing.models.rating_aspect_distribution import RatingAspectDistribution

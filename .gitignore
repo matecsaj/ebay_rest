@@ -150,4 +150,4 @@ Thumbs.db
 .idea/shelf/
 
 # Temporary Caches
-/scripts/api_cache/
+scripts/api_cache/

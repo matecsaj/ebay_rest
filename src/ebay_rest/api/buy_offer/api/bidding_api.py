@@ -17,7 +17,7 @@ import re  # noqa: F401
 # python 2 and python 3 compatibility library
 import six
 
-from buy_offer.api_client import ApiClient
+from ...buy_offer.api_client import ApiClient
 
 
 class BiddingApi(object):

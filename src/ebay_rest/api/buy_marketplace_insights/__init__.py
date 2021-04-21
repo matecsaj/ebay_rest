@@ -15,23 +15,23 @@
 from __future__ import absolute_import
 
 # import apis into sdk package
-from buy_marketplace_insights.api.item_sales_api import ItemSalesApi
+from ..buy_marketplace_insights.api.item_sales_api import ItemSalesApi
 # import ApiClient
-from buy_marketplace_insights.api_client import ApiClient
-from buy_marketplace_insights.configuration import Configuration
+from ..buy_marketplace_insights.api_client import ApiClient
+from ..buy_marketplace_insights.configuration import Configuration
 # import models into sdk package
-from buy_marketplace_insights.models.aspect_distribution import AspectDistribution
-from buy_marketplace_insights.models.aspect_value_distribution import AspectValueDistribution
-from buy_marketplace_insights.models.buying_option_distribution import BuyingOptionDistribution
-from buy_marketplace_insights.models.category import Category
-from buy_marketplace_insights.models.category_distribution import CategoryDistribution
-from buy_marketplace_insights.models.condition_distribution import ConditionDistribution
-from buy_marketplace_insights.models.converted_amount import ConvertedAmount
-from buy_marketplace_insights.models.error import Error
-from buy_marketplace_insights.models.error_parameter import ErrorParameter
-from buy_marketplace_insights.models.image import Image
-from buy_marketplace_insights.models.item_location import ItemLocation
-from buy_marketplace_insights.models.item_sales import ItemSales
-from buy_marketplace_insights.models.refinement import Refinement
-from buy_marketplace_insights.models.sales_history_paged_collection import SalesHistoryPagedCollection
-from buy_marketplace_insights.models.seller import Seller
+from ..buy_marketplace_insights.models.aspect_distribution import AspectDistribution
+from ..buy_marketplace_insights.models.aspect_value_distribution import AspectValueDistribution
+from ..buy_marketplace_insights.models.buying_option_distribution import BuyingOptionDistribution
+from ..buy_marketplace_insights.models.category import Category
+from ..buy_marketplace_insights.models.category_distribution import CategoryDistribution
+from ..buy_marketplace_insights.models.condition_distribution import ConditionDistribution
+from ..buy_marketplace_insights.models.converted_amount import ConvertedAmount
+from ..buy_marketplace_insights.models.error import Error
+from ..buy_marketplace_insights.models.error_parameter import ErrorParameter
+from ..buy_marketplace_insights.models.image import Image
+from ..buy_marketplace_insights.models.item_location import ItemLocation
+from ..buy_marketplace_insights.models.item_sales import ItemSales
+from ..buy_marketplace_insights.models.refinement import Refinement
+from ..buy_marketplace_insights.models.sales_history_paged_collection import SalesHistoryPagedCollection
+from ..buy_marketplace_insights.models.seller import Seller

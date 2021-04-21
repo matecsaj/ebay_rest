@@ -15,16 +15,16 @@
 from __future__ import absolute_import
 
 # import apis into sdk package
-from buy_offer.api.bidding_api import BiddingApi
+from ..buy_offer.api.bidding_api import BiddingApi
 # import ApiClient
-from buy_offer.api_client import ApiClient
-from buy_offer.configuration import Configuration
+from ..buy_offer.api_client import ApiClient
+from ..buy_offer.configuration import Configuration
 # import models into sdk package
-from buy_offer.models.amount import Amount
-from buy_offer.models.bidding import Bidding
-from buy_offer.models.error import Error
-from buy_offer.models.error_parameter import ErrorParameter
-from buy_offer.models.place_proxy_bid_request import PlaceProxyBidRequest
-from buy_offer.models.place_proxy_bid_response import PlaceProxyBidResponse
-from buy_offer.models.proxy_bid import ProxyBid
-from buy_offer.models.user_consent import UserConsent
+from ..buy_offer.models.amount import Amount
+from ..buy_offer.models.bidding import Bidding
+from ..buy_offer.models.error import Error
+from ..buy_offer.models.error_parameter import ErrorParameter
+from ..buy_offer.models.place_proxy_bid_request import PlaceProxyBidRequest
+from ..buy_offer.models.place_proxy_bid_response import PlaceProxyBidResponse
+from ..buy_offer.models.proxy_bid import ProxyBid
+from ..buy_offer.models.user_consent import UserConsent

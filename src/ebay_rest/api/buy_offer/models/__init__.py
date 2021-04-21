@@ -14,11 +14,11 @@
 from __future__ import absolute_import
 
 # import models into model package
-from buy_offer.models.amount import Amount
-from buy_offer.models.bidding import Bidding
-from buy_offer.models.error import Error
-from buy_offer.models.error_parameter import ErrorParameter
-from buy_offer.models.place_proxy_bid_request import PlaceProxyBidRequest
-from buy_offer.models.place_proxy_bid_response import PlaceProxyBidResponse
-from buy_offer.models.proxy_bid import ProxyBid
-from buy_offer.models.user_consent import UserConsent
+from ...buy_offer.models.amount import Amount
+from ...buy_offer.models.bidding import Bidding
+from ...buy_offer.models.error import Error
+from ...buy_offer.models.error_parameter import ErrorParameter
+from ...buy_offer.models.place_proxy_bid_request import PlaceProxyBidRequest
+from ...buy_offer.models.place_proxy_bid_response import PlaceProxyBidResponse
+from ...buy_offer.models.proxy_bid import ProxyBid
+from ...buy_offer.models.user_consent import UserConsent

@@ -15,16 +15,16 @@
 from __future__ import absolute_import
 
 # import apis into sdk package
-from commerce_charity.api.charity_org_api import CharityOrgApi
+from ..commerce_charity.api.charity_org_api import CharityOrgApi
 # import ApiClient
-from commerce_charity.api_client import ApiClient
-from commerce_charity.configuration import Configuration
+from ..commerce_charity.api_client import ApiClient
+from ..commerce_charity.configuration import Configuration
 # import models into sdk package
-from commerce_charity.models.address import Address
-from commerce_charity.models.charity_org import CharityOrg
-from commerce_charity.models.charity_search_response import CharitySearchResponse
-from commerce_charity.models.error import Error
-from commerce_charity.models.error_parameter import ErrorParameter
-from commerce_charity.models.geo_coordinates import GeoCoordinates
-from commerce_charity.models.image import Image
-from commerce_charity.models.location import Location
+from ..commerce_charity.models.address import Address
+from ..commerce_charity.models.charity_org import CharityOrg
+from ..commerce_charity.models.charity_search_response import CharitySearchResponse
+from ..commerce_charity.models.error import Error
+from ..commerce_charity.models.error_parameter import ErrorParameter
+from ..commerce_charity.models.geo_coordinates import GeoCoordinates
+from ..commerce_charity.models.image import Image
+from ..commerce_charity.models.location import Location
