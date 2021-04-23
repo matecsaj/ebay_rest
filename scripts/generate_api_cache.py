@@ -3,6 +3,8 @@
 # Standard library imports
 import os
 from urllib.parse import urljoin
+import shutil
+from sys import platform
 
 # Third party imports
 from bs4 import BeautifulSoup
@@ -11,6 +13,7 @@ import requests
 # Local imports
 
 # Globals
+TARGET_PATH = 'api_cache'
 
 
 # Run this long-running script from the command line to generate the api_cache folder.
@@ -63,30 +66,50 @@ def get_contracts(limit=100):
 
 
 def install_tools():
-    print('Install or update the package manager named HomeBrew.')
-    os.system('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
+    if platform == 'darwin':    # OS X or MacOS
+        print('Install or update the package manager named HomeBrew.')
+        os.system('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
 
-    print('Install the code generator from Swagger. https://swagger.io/')
-    os.system('brew install swagger-codegen')
+        if os.path.isfile('/usr/local/bin/swagger-codegen'):
+            print('Upgrade the code generator from Swagger. https://swagger.io/')
+            os.system('brew upgrade swagger-codegen')
+        else:
+            print('Install the code generator from Swagger. https://swagger.io/')
+            os.system('brew install swagger-codegen')
 
-    print('Test the generator installation by invoking its help screen.')
-    os.system('/usr/local/bin/swagger-codegen -h')
+        print('Test the generator installation by invoking its help screen.')
+        os.system('/usr/local/bin/swagger-codegen -h')
+    else:
+        assert False, f'Please extend install_tools() for your {platform} platform.'
 
-    return
+
+def delete_folder_contents(path_to_folder):
+    list_dir = os.listdir(path_to_folder)
+    for filename in list_dir:
+        file_path = os.path.join(path_to_folder, filename)
+        if os.path.isfile(file_path) or os.path.islink(file_path):
+            print("deleting file:", file_path)
+            os.unlink(file_path)
+        elif os.path.isdir(file_path):
+            print("deleting folder:", file_path)
+            shutil.rmtree(file_path)
 
 
 def main():
-
     install_tools()
     contracts = get_contracts(limit=100)
+
+    delete_folder_contents(TARGET_PATH)
 
     print('For each contract generate and install a library.')
     for contract in contracts:
         category, call, url = contract
         name = f'{category}_{call}'
-        command = f'/usr/local/bin/swagger-codegen generate -l python ' \
-                  f'-o api_cache/{name} -DpackageName={name} -i {url} '
-        # print(command)
+        if platform == 'darwin':  # OS X or MacOS
+            command = f'/usr/local/bin/swagger-codegen generate -l python ' \
+                      f'-o {TARGET_PATH}/{name} -DpackageName={name} -i {url} '
+        else:
+            assert False, f'Please extend main() for your {platform} platform.'
         os.system(command)
 
     return

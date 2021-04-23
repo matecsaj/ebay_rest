@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 # Standard library imports
+import hashlib
 import os
 import shutil
 
@@ -9,6 +10,9 @@ import shutil
 # Local imports
 
 # Globals
+TARGET_DIRECTORY = 'api'
+TARGET_PATH = '../src/ebay_rest/' + TARGET_DIRECTORY
+SOURCE_PATH = './' + TARGET_DIRECTORY + '_cache'   # must match the TARGET_PATH in generate_api_cache.py
 
 # Run this script from the command line to relocate and generate python code.
 # Before you must run generate_api_cache.py.
@@ -20,37 +24,66 @@ class Process:
         self.file_ebay_rest = os.path.abspath('../src/ebay_rest/ebay_rest.py')
         self.file_setup = os.path.abspath('../setup.cfg')
 
-        self.path_api_cache = os.path.abspath('./api_cache')
-        self.path_api_final = os.path.abspath('../src/ebay_rest/api')
+        self.path_cache = os.path.abspath(SOURCE_PATH)
+        self.path_final = os.path.abspath(TARGET_PATH)
         self.path_ebay_rest = os.path.abspath('../src/ebay_rest')
 
-        assert os.path.isdir(self.path_api_cache), 'Fatal error. Prior, you must run the script generate_api_cache.py.'
-        for (_root, dirs, _files) in os.walk(self.path_api_cache):
+        assert os.path.isdir(self.path_cache),\
+            'Fatal error. Prior, you must run the script generate_api_cache.py.'
+        for (_root, dirs, _files) in os.walk(self.path_cache):
             dirs.sort()
             self.names = dirs
             break
 
-    def copy_api_libraries(self):
+    def copy_libraries(self):
         """ Copy essential parts of the generated eBay libraries to within the src folder. """
         # purge what might already be there
-        if os.path.isdir(self.path_api_final):
-            shutil.rmtree(self.path_api_final)
-
-        # create or re-create the directory where libraries will be stored
-        os.mkdir(self.path_api_final)
+        for filename in os.listdir(self.path_final):
+            file_path = os.path.join(self.path_final, filename)
+            if os.path.isdir(file_path):
+                shutil.rmtree(file_path)
 
         # copy each library's directory
         for name in self.names:
-            src = os.path.join(self.path_api_cache, name, name)
-            dst = os.path.join(self.path_api_final, name)
+            src = os.path.join(self.path_cache, name, name)
+            dst = os.path.join(self.path_final, name)
             _destination = shutil.copytree(src, dst)
 
-        # put a programmer friendly warning
-        dst = os.path.join(self.path_api_final, 'README.md')
-        with open(dst, "w") as file:
-            file.write("# Read Me\n")
-            file.write("Refrain from altering the directory contents.\n")
-            file.write("The script process_api_cache.py generates contents.")
+    def fix_imports(self):
+        """ The deeper the directory, the more dots are needed to make the correct relative path. """
+        for name in self.names:
+            self._fix_imports_recursive(name, '..', os.path.join(self.path_final, name))
+
+    def _fix_imports_recursive(self, name, dots, path):
+        """ This does the recursive part of fix_imports. """
+
+        for (_root, dirs, files) in os.walk(path):
+
+            swaps = [   # order is crucial, put more specific swaps before less
+                (f'import {name}.models', f'from {dots}{name} import models'),
+                (f'from models', f'from {dots}{name}.models'),
+                (f'import {name}', f'import {dots}{name}'),
+                (f'from {name}', f'from {dots}{name}'),
+                (f'{name}.models', f'models'),
+            ]
+            for file in files:
+                target_file = os.path.join(path, file)
+                new_lines = ''
+                with open(target_file) as file_handle:
+                    for old_line in file_handle:
+                        for (original, replacement) in swaps:
+                            if original in old_line:
+                                old_line = old_line.replace(original, replacement)
+                                break   # only the first matching swap should happen
+                        new_lines += old_line
+                with open(target_file, 'w') as file_handle:
+                    file_handle.write(new_lines)
+
+            dots += '.'
+            for directory in dirs:
+                self._fix_imports_recursive(name, dots, os.path.join(path, directory))
+
+            break
 
     def merge_setup(self):
         """ Merge the essential bits of the generated setup files into the master. """
@@ -60,7 +93,7 @@ class Process:
         end_tag = ']\n'
         requirements = set()
         for name in self.names:
-            src = os.path.join(self.path_api_cache, name, 'setup.py')
+            src = os.path.join(self.path_cache, name, 'setup.py')
             with open(src) as file:
                 for line in file:
                     if line.startswith(start_tag):
@@ -84,10 +117,64 @@ class Process:
 
         lines = []
         for name in self.names:
-            lines.append(f'import api.{name}')
-            lines.append(f'from api.{name}.rest import ApiException')
+            lines.append(f'import {TARGET_DIRECTORY}.{name} as {name}')
+            lines.append(f'from {TARGET_DIRECTORY}.{name}.rest import ApiException as {self._camel(name)}Exception')
         insert_lines = '\n'.join(lines) + '\n'
         self._put_anchored_lines(target_file=self.file_ebay_rest, anchor='er_imports', insert_lines=insert_lines)
+
+    def remove_duplicates(self):
+        """ Deduplicate identical .py files found in all APIs.
+        for example when comments are ignored the rest.py files appear identical. """
+
+        # build a catalog that includes a hashed file signature
+        catalog = []
+        for name in self.names:
+            catalog.extend(self._remove_duplicates_recursive_catalog(name, os.path.join(self.path_final, name)))
+
+        # count how many times each signature appears
+        signature_tally = {}
+        for (name, file, path, signature) in catalog:
+            if signature in signature_tally:
+                signature_tally[signature] = + 1
+            else:
+                signature_tally[signature] = 1
+
+        # make a sub catalog that just includes signature repeaters
+        catalog_repeaters = []
+        for values in catalog:
+            (name, file, path, signature) = values
+            if signature_tally[signature] > 1:
+                catalog_repeaters.append(values)
+
+        # TODO apply the DRY principle to the repeaters
+
+    def _remove_duplicates_recursive_catalog(self, name, path):
+        """ This does the recursive part of cataloging for remove_duplicates. """
+
+        catalog = []
+        for (_root, dirs, files) in os.walk(path):
+            for file in files:
+                if file != '__init__.py' and file.endswith('.py'):
+                    target_file = os.path.join(path, file)
+                    with open(target_file) as file_handle:
+                        code_text = file_handle.read()
+                        # TODO Remove whitespace and comments from the Python code before hashing.
+                        m = hashlib.sha256()
+                        m.update(code_text.encode())
+                        catalog.append((name, file, target_file, m.digest()))
+
+            for directory in dirs:
+                catalog.extend(self._remove_duplicates_recursive_catalog(name, os.path.join(path, directory)))
+
+            return catalog
+
+    @staticmethod
+    def _camel(name):
+        """ Convert a name with underscore separators to camel case. """
+        camel = ''
+        for part in name.split('_'):
+            camel += part.capitalize()
+        return camel
 
     @staticmethod
     def _put_anchored_lines(target_file, anchor, insert_lines):
@@ -126,13 +213,13 @@ class Process:
 
 def main():
 
-    # TODO uncomment all methods calls when finished debugging.
-
     # Refrain from altering the sequence of the method calls because there may be dependencies.
     p = Process()
-    # p.copy_api_libraries()
-    # p.merge_setup()
-    # p.make_includes()
+    p.copy_libraries()
+    p.fix_imports()
+    p.merge_setup()
+    p.make_includes()
+    # p.remove_duplicates()     # uncomment the method call when work on the method resumes
 
 
 if __name__ == "__main__":
