@@ -5,7 +5,7 @@ Copyright 2019 eBay Inc.
 Licensed under the Apache License, Version 2.0 (the "License");
 You may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-    http://www.apache.org/licenses/LICENSE-2.0
+    https://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,7 +19,7 @@ limitations under the License.
 import base64
 
 
-def _generate_request_headers(credential):
+def generate_request_headers(credential):
 
     b64_encoded_credential = base64.b64encode((credential.client_id + ':' + credential.client_secret).encode())
     headers = {
@@ -30,7 +30,7 @@ def _generate_request_headers(credential):
     return headers
 
 
-def _generate_application_request_body(credential, scopes):
+def generate_application_request_body(credential, scopes):
 
     body = {
             'grant_type': 'client_credentials',
@@ -41,9 +41,9 @@ def _generate_application_request_body(credential, scopes):
     return body
 
 
-def _generate_refresh_request_body(scopes, refresh_token):
+def generate_refresh_request_body(scopes, refresh_token):
     if refresh_token is None:
-        raise StandardError("credential object does not contain refresh_token and/or scopes")
+        raise ValueError("credential object does not contain refresh_token and/or scopes")
 
     body = {
             'grant_type': 'refresh_token',
@@ -53,7 +53,7 @@ def _generate_refresh_request_body(scopes, refresh_token):
     return body
 
 
-def _generate_oauth_request_body(credential, code):
+def generate_oauth_request_body(credential, code):
     body = {
             'grant_type': 'authorization_code',
             'redirect_uri': credential.ru_name,

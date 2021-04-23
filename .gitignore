@@ -151,3 +151,6 @@ Thumbs.db
 
 # Temporary Caches
 scripts/api_cache/
+
+# Credential files
+ebay_rest.json

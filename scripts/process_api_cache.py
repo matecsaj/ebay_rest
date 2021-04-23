@@ -117,8 +117,8 @@ class Process:
 
         lines = []
         for name in self.names:
-            lines.append(f'import {TARGET_DIRECTORY}.{name} as {name}')
-            lines.append(f'from {TARGET_DIRECTORY}.{name}.rest import ApiException as {self._camel(name)}Exception')
+            lines.append(f'from .{TARGET_DIRECTORY} import {name}')
+            lines.append(f'from .{TARGET_DIRECTORY}.{name}.rest import ApiException as {self._camel(name)}Exception')
         insert_lines = '\n'.join(lines) + '\n'
         self._put_anchored_lines(target_file=self.file_ebay_rest, anchor='er_imports', insert_lines=insert_lines)
 
