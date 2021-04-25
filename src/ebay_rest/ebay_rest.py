@@ -70,6 +70,7 @@ from .api import sell_negotiation
 from .api.sell_negotiation.rest import ApiException as SellNegotiationException
 from .api import sell_recommendation
 from .api.sell_recommendation.rest import ApiException as SellRecommendationException
+
 # ANCHOR-er_imports-END"
 
 # Constants
@@ -131,7 +132,7 @@ class EbayRestError(Exception):
         return f'Error {self.number} is {self.message}.'
 
 
-class _Singleton:   # pylint: disable=too-few-public-methods
+class _Singleton:  # pylint: disable=too-few-public-methods
     """ An abstract base class used to make Singletons. The singleton software design pattern
     restricts the instantiation of a class to one "single" instance. This is useful when exactly
     one object is needed to coordinate actions across the system.
@@ -147,20 +148,72 @@ class _Singleton:   # pylint: disable=too-few-public-methods
 # TODO If init parameters repeat then use a singleton to conserve resources.
 # class EbayRest(_Singleton):
 class EbayRest:
-    """ A wrapper for eBay's APIs. """
+    """ The object wraps eBay's APIs. """
 
     # Pertaining to eBay Application Token maintenance.
     _oauth2api_inst = None
     _token_lock = threading.Lock()
-    _app_token = None               # use when locked
-    _token_initialized = False      # use when locked
+    _app_token = None  # use when locked
+    _token_initialized = False  # use when locked
 
-    def __init__(self, my_string):
-        self.my_string = my_string
-        self.use_sandbox = False
-        self.site_id = 'EBAY-ENCA'  # strings ie. 'EBAY-ENCA' and numbers ie. 101 work
+    def __init__(self, use_sandbox: bool = False, site_id: str = 'EBAY-US'):
+        """ Instantiate an EbayRest object.
+
+        :param
+        use_sandbox (bool): True to use the sandbox, and False for the live system. Defaults to False.
+
+        :param
+        site_id (str) : The eBay Site ID or the Global ID for the site you wish to use. Defaults to the United States.
+
+        eBay Site ID    Global ID   Site Name
+        0               EBAY-US     eBay United States
+        2	            EBAY-ENCA   eBay Canada (English)
+        3	            EBAY-GB     eBay UK
+        15	            EBAY-AU     eBay Australia
+        16	            EBAY-AT     eBay Austria
+        23	            EBAY-FRBE   eBay Belgium (French)
+        71	            EBAY-FR     eBay France
+        77	            EBAY-DE     eBay Germany
+        100	            EBAY-MOTOR  eBay Motors
+        101	            EBAY-IT     eBay Italy
+        123	            EBAY-NLBE   eBay Belgium (Dutch)
+        146	            EBAY-NL     eBay Netherlands
+        186	            EBAY-ES     eBay Spain
+        193	            EBAY-CH     eBay Switzerland
+        201	            EBAY-HK     eBay Hong Kong
+        203	            EBAY-IN     eBay India
+        205	            EBAY-IE     eBay Ireland
+        207	            EBAY-MY     eBay Malaysia
+        210	            EBAY-FRCA   eBay Canada (French)
+        211	            EBAY-PH     eBay Philippines
+        212	            EBAY-PL     eBay Poland
+        216             EBAY-SG     eBay Singapore
+
+        There may be updates at https://developer.ebay.com/Devzone/merchandising/docs/concepts/siteidtoglobalid.html.
+
+        :return An EbayRest object.
+
+        :rtype: object
+        """
+
         self._containers = None
         self._enums = None
+        self._global_id_values = None
+
+        if use_sandbox in (True, False):
+            self.use_sandbox = use_sandbox
+        else:
+            raise EbayRestError(0, "use_sandbox must be unspecified, True or False.")
+
+        global_id_values = self.get_global_id_values()
+        valid = []
+        for global_id_value in global_id_values:
+            valid.append(global_id_value['global_id'])
+            valid.append(global_id_value['ebay_site_id'])
+        if site_id in valid:
+            self.site_id = site_id  # eg. 'EBAY-ENCA' or '101'
+        else:
+            raise EbayRestError(1, f"site_id must be unspecified or one of these strings {valid}.")
 
         global _launch_lock, _launched, _rates_thread
         with _launch_lock:
@@ -169,44 +222,37 @@ class EbayRest:
                 # _rates_thread =  /
                 # threading.Thread(target=self._developer_analytics_worker, daemon=True).start()
                 _launched = True
-
-    def print(self):
-        """ Print the string that is supplied to the constructor. """
-        print(self.my_string)
+        return
 
     @staticmethod
-    def will_fail():
+    def will_fail():  # TODO remove this after incorporating EbayRestError into another unittest
         """ Demonstrate what happens when a method call fails. """
         raise EbayRestError(0, "Sample error.")
 
     def get_containers(self):
         """ Get eBay container information. """
-        # if the data needs caching
-        if self._containers is None:
-            # get the path to this python file, which is also where the data file is
-            path, _fn = os.path.split(os.path.realpath(__file__))
-            # to the path join the data file name and extension
-            path_name = os.path.join(path, 'containers.json')
-            with open(path_name) as file_handle:
-                self._containers = json.load(file_handle)
-        return self._containers
+        return self._get_info('containers', self._containers)
 
     def get_enums(self):
         """ Get eBay enumeration information. """
+        return self._get_info('enums', self._enums)
+
+    def get_global_id_values(self):
+        """ Get eBay global id information. """
+        return self._get_info('global_id_values', self._global_id_values)
+
+    @staticmethod
+    def _get_info(name, cache):
+        """ Get information from the json files. """
         # if the data needs caching
-        if self._enums is None:
+        if cache is None:
             # get the path to this python file, which is also where the data file is
             path, _fn = os.path.split(os.path.realpath(__file__))
             # to the path join the data file name and extension
-            path_name = os.path.join(path, 'enums.json')
+            path_name = os.path.join(path, f'info_{name}.json')
             with open(path_name) as file_handle:
-                self._enums = json.load(file_handle)
-        return self._enums
-
-    @staticmethod
-    def true():
-        """ Always return true. """
-        return True
+                cache = json.load(file_handle)
+        return cache
 
     def developer_analytics_get_rate_limits(self):
         """ Refresh the local Developer Analytics values. """
@@ -279,7 +325,7 @@ class EbayRest:
 
         logging.debug('The refresh token worker started.')
 
-        directory = os.getcwd()     # get the current working directory
+        directory = os.getcwd()  # get the current working directory
         CredentialUtil.load(os.path.join(directory, 'ebay_rest.json'))
         self._oauth2api_inst = OAuth2Api()
         self._refresh_token()

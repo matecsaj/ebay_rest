@@ -6,6 +6,7 @@ import unittest
 # Local imports
 from src.ebay_rest.ebay_rest import EbayRest, EbayRestError
 
+
 # Globals
 
 
@@ -19,10 +20,7 @@ class MyTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls._er = EbayRest('Hello, World!')
-
-    def test_true(self):
-        self.assertEqual(self._er.true(), True)
+        cls._er = EbayRest(use_sandbox=False, site_id='EBAY-ENCA')
 
     def test_enum_load(self):
         self.assertIsNotNone(self._er.get_enums(), msg="Failed to load enums.")
@@ -33,6 +31,14 @@ class MyTestCase(unittest.TestCase):
     def test_developer_analytics_get_rate_limits(self):
         self.assertIsNotNone(self._er.developer_analytics_get_rate_limits(),
                              msg="Failed at developer_analytics_get_rate_limits.")
+
+    def test_try_except_else(self):
+        try:
+            self._er.will_fail()
+        except EbayRestError as error:
+            print(f'Error {error.number} is {error.message}.')
+        else:
+            self.assertIsNotNone(None, msg="Failed to raise an exception.")
 
 
 if __name__ == '__main__':

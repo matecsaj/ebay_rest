@@ -1,0 +1,156 @@
+[
+    {
+        "ebay_site_id": "16",
+        "global_id": "EBAY-AT",
+        "language": "de-AT",
+        "site_name": "eBay Austria",
+        "territory": "AT"
+    },
+    {
+        "ebay_site_id": "15",
+        "global_id": "EBAY-AU",
+        "language": "en-AU",
+        "site_name": "eBay Australia",
+        "territory": "AU"
+    },
+    {
+        "ebay_site_id": "193",
+        "global_id": "EBAY-CH",
+        "language": "de-CH",
+        "site_name": "eBay Switzerland",
+        "territory": "CH"
+    },
+    {
+        "ebay_site_id": "77",
+        "global_id": "EBAY-DE",
+        "language": "en-DE",
+        "site_name": "eBay Germany",
+        "territory": "DE"
+    },
+    {
+        "ebay_site_id": "2",
+        "global_id": "EBAY-ENCA",
+        "language": "en-CA",
+        "site_name": "eBay Canada (English)",
+        "territory": "CA"
+    },
+    {
+        "ebay_site_id": "186",
+        "global_id": "EBAY-ES",
+        "language": "es-ES",
+        "site_name": "eBay Spain",
+        "territory": "ES"
+    },
+    {
+        "ebay_site_id": "71",
+        "global_id": "EBAY-FR",
+        "language": "fr-FR",
+        "site_name": "eBay France",
+        "territory": "FR"
+    },
+    {
+        "ebay_site_id": "23",
+        "global_id": "EBAY-FRBE",
+        "language": "fr-BE",
+        "site_name": "eBay Belgium (French)",
+        "territory": "BE"
+    },
+    {
+        "ebay_site_id": "210",
+        "global_id": "EBAY-FRCA",
+        "language": "fr-CA",
+        "site_name": "eBay Canada (French)",
+        "territory": "CA"
+    },
+    {
+        "ebay_site_id": "3",
+        "global_id": "EBAY-GB",
+        "language": "en-GB",
+        "site_name": "eBay UK",
+        "territory": "GB"
+    },
+    {
+        "ebay_site_id": "201",
+        "global_id": "EBAY-HK",
+        "language": "zh-Hant",
+        "site_name": "eBay Hong Kong",
+        "territory": "HK"
+    },
+    {
+        "ebay_site_id": "205",
+        "global_id": "EBAY-IE",
+        "language": "en-IE",
+        "site_name": "eBay Ireland",
+        "territory": "IE"
+    },
+    {
+        "ebay_site_id": "203",
+        "global_id": "EBAY-IN",
+        "language": "en-IN",
+        "site_name": "eBay India",
+        "territory": "IN"
+    },
+    {
+        "ebay_site_id": "101",
+        "global_id": "EBAY-IT",
+        "language": "it-IT",
+        "site_name": "eBay Italy",
+        "territory": "IT"
+    },
+    {
+        "ebay_site_id": "100",
+        "global_id": "EBAY-MOTOR",
+        "language": "en-US",
+        "site_name": "eBay Motors",
+        "territory": "US"
+    },
+    {
+        "ebay_site_id": "207",
+        "global_id": "EBAY-MY",
+        "language": "en-MY",
+        "site_name": "eBay Malaysia",
+        "territory": "MY"
+    },
+    {
+        "ebay_site_id": "146",
+        "global_id": "EBAY-NL",
+        "language": "nl-NL",
+        "site_name": "eBay Netherlands",
+        "territory": "NL"
+    },
+    {
+        "ebay_site_id": "123",
+        "global_id": "EBAY-NLBE",
+        "language": "nl-BE",
+        "site_name": "eBay Belgium (Dutch)",
+        "territory": "BE"
+    },
+    {
+        "ebay_site_id": "211",
+        "global_id": "EBAY-PH",
+        "language": "en-PH",
+        "site_name": "eBay Philippines",
+        "territory": "PH"
+    },
+    {
+        "ebay_site_id": "212",
+        "global_id": "EBAY-PL",
+        "language": "pl-PL",
+        "site_name": "eBay Poland",
+        "territory": "PL"
+    },
+    {
+        "ebay_site_id": "216",
+        "global_id": "EBAY-SG",
+        "language": "en-SG",
+        "site_name": "eBay Singapore",
+        "territory": "SG"
+    },
+    {
+        "ebay_site_id": "0",
+        "global_id": "EBAY-US",
+        "language": "en-US",
+        "site_name": "eBay United States",
+        "territory": "US"
+    }
+]

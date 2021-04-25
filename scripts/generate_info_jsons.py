@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-Run this script from the command line to generate json files that vault.py needs.
+Run this script from the command line to generate informational json files that ebay_rest.py loads.
 
 Run this whenever the Response Fields in the following link change.
 https://developer.ebay.com/api-docs/buy/browse/resources/item/methods/getItem#h2-output
@@ -181,6 +181,38 @@ def get_response_fields():
         datum[0] = camel_to_snake_case(datum[0])
 
     return data
+
+
+def get_global_id_values():
+    print("Find the eBay's Global ID Values.")
+
+    # load the target webpage
+    url = 'https://developer.ebay.com/Devzone/merchandising/docs/CallRef/Enums/GlobalIdList.html'
+    soup = get_soup_via_link(url)
+
+    # find the rows regarding Response Fields.
+    table = soup.find('table')
+    rows = table.find_all('tr')
+
+    # put the rows into a table of data
+    data = []
+    for row in rows:
+        cols = row.find_all('td')
+        cols = [ele.text.strip() for ele in cols]
+        data.append([ele for ele in cols if ele])  # Get rid of empty values
+
+    # the header got messed up and is unlikely to change, so hard code it
+    cols = ['global_id', 'language', 'territory', 'site_name', 'ebay_site_id']
+
+    # convert to a list of dicts
+    dicts = []
+    for datum in data[1:]:
+        my_dict = {}
+        for index, column in enumerate(cols):
+            my_dict[column] = datum[index]
+        dicts.append(my_dict)
+
+    return dicts
 
 
 def get_soup_via_link(url):
@@ -364,6 +396,8 @@ def use_cache(should_use, object_name, get_function, get_param):
 
 
 def main():
+    global_id_values = get_global_id_values()
+
     # True will slowly get a fresh object --- False will quickly reload the last object
     response_fields = use_cache(True, 'response_fields', get_response_fields, None)
     enums = use_cache(True, 'enums', get_enumerations, response_fields)
@@ -460,10 +494,12 @@ def main():
             print(f"Container {key} has unexpected shape {containers[key]['shape']}.")
 
     path = '../src/ebay_rest/'
-    with open(path+'enums.json', 'w') as outfile:
-        json.dump(enums, outfile, sort_keys=True, indent=4)
-    with open(path+'containers.json', 'w') as outfile:
+    with open(path+'info_containers.json', 'w') as outfile:
         json.dump(containers, outfile, sort_keys=True, indent=4)
+    with open(path+'info_enums.json', 'w') as outfile:
+        json.dump(enums, outfile, sort_keys=True, indent=4)
+    with open(path+'info_global_id_values.json', 'w') as outfile:
+        json.dump(global_id_values, outfile, sort_keys=True, indent=4)
 
     return
 
