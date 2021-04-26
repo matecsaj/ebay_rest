@@ -5,7 +5,6 @@ import json
 import logging
 import os
 import threading
-import time
 
 # Third party imports
 
@@ -78,12 +77,6 @@ EBAY_DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%fZ"
 
 # Globals
 
-# Pertaining to launching threads once and only once.
-# Are global because class variables are immutable in __init__.
-_launch_lock = threading.Lock()
-_launched = False
-_rates_thread = None
-
 
 class EbayDateTime:
     """ Helpers for the specific way that eBay does date-time. """
@@ -150,12 +143,6 @@ class _Singleton:  # pylint: disable=too-few-public-methods
 class EbayRest:
     """ The object wraps eBay's APIs. """
 
-    # Pertaining to eBay Application Token maintenance.
-    _oauth2api_inst = None
-    _token_lock = threading.Lock()
-    _app_token = None  # use when locked
-    _token_initialized = False  # use when locked
-
     def __init__(self, use_sandbox: bool = False, site_id: str = 'EBAY-US'):
         """ Instantiate an EbayRest object.
 
@@ -200,11 +187,13 @@ class EbayRest:
         self._enums = None
         self._global_id_values = None
 
+        # check then set use_sandbox
         if use_sandbox in (True, False):
             self.use_sandbox = use_sandbox
         else:
             raise EbayRestError(0, "use_sandbox must be unspecified, True or False.")
 
+        # check then set site_id
         global_id_values = self.get_global_id_values()
         valid = []
         for global_id_value in global_id_values:
@@ -215,13 +204,19 @@ class EbayRest:
         else:
             raise EbayRestError(1, f"site_id must be unspecified or one of these strings {valid}.")
 
-        global _launch_lock, _launched, _rates_thread
-        with _launch_lock:
-            if not _launched:
-                threading.Thread(target=self._refresh_token_worker, daemon=True).start()
-                # _rates_thread =  /
-                # threading.Thread(target=self._developer_analytics_worker, daemon=True).start()
-                _launched = True
+        # initialize the token
+        self._token_lock = threading.Lock()
+        self._app_token = None  # use when locked
+
+        directory = os.getcwd()  # get the current working directory
+        CredentialUtil.load(os.path.join(directory, 'ebay_rest.json'))
+        self._oauth2api_inst = OAuth2Api()
+        if self.use_sandbox:
+            self.env = Environment.SANDBOX
+        else:
+            self.env = Environment.PRODUCTION
+        self._refresh_token()
+
         return
 
     @staticmethod
@@ -301,55 +296,25 @@ class EbayRest:
 
         return result
 
-    def _refresh_token(self):
-        """ Get a new eBay Application Token. """
+    def _get_token(self):
+        """ Get the eBay Application Token. """
 
-        if self.use_sandbox:
-            env = Environment.SANDBOX
-        else:
-            env = Environment.PRODUCTION
-        # self._throttle()
+        with self._token_lock:
+            if self._app_token.token_expiry.replace(tzinfo=timezone.utc) <= EbayDateTime.now():
+                self._refresh_token()
+            token = self._app_token.access_token
+
+        return token
+
+    def _refresh_token(self):
+        """ Refresh the eBay Application Token and update all that comes with it. """
+
         app_token = \
-            self._oauth2api_inst.get_application_token(env,
+            self._oauth2api_inst.get_application_token(self.env,
                                                        ["https://api.ebay.com/oauth/api_scope"])
         if app_token.error is not None:
             logging.critical(f'app_token.error == {app_token.error}.')
         if (app_token.access_token is None) or (len(app_token.access_token) == 0):
             logging.critical('app_token.access_token is missing.')
 
-        with self._token_lock:
-            self._app_token = app_token
-
-    def _refresh_token_worker(self):
-        """ Before expiry, get a new eBay Application Token. """
-
-        logging.debug('The refresh token worker started.')
-
-        directory = os.getcwd()  # get the current working directory
-        CredentialUtil.load(os.path.join(directory, 'ebay_rest.json'))
-        self._oauth2api_inst = OAuth2Api()
-        self._refresh_token()
-        with self._token_lock:
-            self._token_initialized = True
-
-        while True:  # TODO break out of this when the program is gracefully exited.
-            with self._token_lock:
-                expiry = self._app_token.token_expiry
-            wait = expiry.replace(tzinfo=timezone.utc) - EbayDateTime.now()
-            seconds = float(wait.seconds) + float(wait.microseconds) / 1000000
-            seconds -= 60  # don't be late, so refresh a number of seconds before required
-            if seconds > 0:
-                time.sleep(seconds)
-            self._refresh_token()
-
-    def _get_token(self):
-        """ Get the eBay Application Token. """
-
-        self._token_lock.acquire()
-        while not self._token_initialized:
-            self._token_lock.release()
-            time.sleep(0.1)
-            self._token_lock.acquire()
-        token = self._app_token.access_token
-        self._token_lock.release()
-        return token
+        self._app_token = app_token
