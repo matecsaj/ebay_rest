@@ -122,6 +122,133 @@ class Process:
         insert_lines = '\n'.join(lines) + '\n'
         self._put_anchored_lines(target_file=self.file_ebay_rest, anchor='er_imports', insert_lines=insert_lines)
 
+    def get_methods(self):
+        """ For all modules, get all methods. """
+
+        # catalog the module files that contain all method implementations
+        modules = []
+        for name in self.names:
+            path = os.path.join(self.path_cache, name, name, 'api')
+            for (root, _dirs, files) in os.walk(path):
+                for file in files:
+                    if file != '__init__.py':
+                        modules.append((name, file.replace('.py', ''), os.path.join(root, file)))
+
+        # catalog all methods in all modules
+        methods = []
+        method_marker_part = '_with_http_info'
+        method_marker_whole = method_marker_part + '(self,'
+        comment_marker = '"""'
+        bad_comment_markers = (
+            '>>> ',
+            'synchronous',
+            'async_req',
+            'request thread',
+        )
+        typo_remedy = (             # pairs of typos found in comments and their remedy
+            ('cerate', 'create'),               # noqa: - suppress flake8 compatible linters, misspelling is intended
+            ('distibuted', 'distributed'),      # noqa:
+            ('http:', 'https:'),                # noqa:
+            ('identfier', 'identifier'),        # noqa:
+            ('Limt', 'Limit'),                  # noqa:
+            ('lisitng', 'listing'),             # noqa:
+            ('maketplace', 'marketplace'),      # noqa:
+            ('motorcyles', 'motorcycles'),      # noqa:
+            ('parmeter', 'parameter'),          # noqa:
+            ('publlish', 'publish'),            # noqa:
+        )
+        for (name, module, path) in modules:
+            step = 0
+            with open(path) as file_handle:
+                for line in file_handle:
+
+                    if step == 0:   # looking for the next method
+                        if method_marker_whole in line:
+                            (method_and_params, _junk) = line.split(')')
+                            (method, params) = method_and_params.split('(')
+                            method = method.replace('    def ', '')
+                            method = method.replace(method_marker_part, '')
+                            params = params.replace('self, ', '')
+                            step += 1
+
+                    elif step == 1:  # looking for the start of the comment block
+                        if comment_marker in line:
+                            comment = line
+                            step += 1
+
+                    elif step == 2:  # looking for the end of the comment block
+                        if comment_marker not in line:
+                            bad = False
+                            for bad_comment_marker in bad_comment_markers:
+                                if bad_comment_marker in line:
+                                    bad = True
+                                    break
+                            if not bad:
+                                comment += line
+                        else:
+                            comment += line
+                            for (typo, remedy) in typo_remedy:
+                                comment = comment.replace(typo, remedy)
+                            methods.append((name, module, path, method, params, comment))
+                            step = 0
+
+        methods.sort()
+
+        return methods
+
+    def make_methods(self, methods):
+        """ Make all the python methods and insert them where needed. """
+
+        code = "\n"
+        for method in methods:
+            code += self._make_method(method)
+        self._put_anchored_lines(target_file=self.file_ebay_rest, anchor='er_methods', insert_lines=code)
+
+    def _make_method(self, method):
+        """ Return the code for one python method. """
+
+        (name, module, path, method, params, comment) = method
+        base_path = '{basePath}'
+        ignore_long = '  # noqa: E501'  # flake8 compatible linters should not warn about long lines
+
+        code = f"    def {name}_{method}(self, {params}):{ignore_long}\n"
+        code += comment
+        code += f"        # Configure OAuth2 access token for authorization: api_auth\n"
+        code += f"        configuration = {name}.Configuration()\n"
+        code += f"        configuration.access_token = self._get_token()\n"
+        code += f"\n"
+        code += f"        # Configure the host endpoint\n"
+        code += f"        # if the generated client library has a flawed host, then compensate\n"
+        code += f"        if '{base_path}' in configuration.host:\n"
+        code += f"            configuration.host = configuration.host.replace('{base_path}',\n"
+        code += f"                                                            '{name.replace('_', '/')}')\n"
+        code += f"        if self.use_sandbox:\n"
+        code += f"            configuration.host = configuration.host.replace('api.ebay.com',\n"
+        code += f"                                                            'api.sandbox.ebay.com')\n"
+        code += f"\n"
+        code += f"        # create an instance of the API class\n"
+        code += f"        api_instance = \\\n"
+        code += f"            {name}.{self._camel(module)}({name}.ApiClient(configuration))\n"
+        code += f"        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id\n"
+        code += f"\n"
+        code += f"        result = None\n"
+        code += f"        try:\n"
+        code += f"            api_response = api_instance.{method}(\n"
+        code += f"                {params}{ignore_long}\n"
+        code += f"            )\n"
+        code += f"\n"
+        code += f"        except {self._camel(name)}Exception as error:\n"
+        code += f"            logging.critical('APIException status ' + error.status + ' reason '\n"
+        code += f"                             + error.reason + ' body ' + error.body + '.')\n"
+        code += f"\n"
+        code += f"        else:\n"
+        code += f"            result = api_response\n"
+        code += f"\n"
+        code += f"        return result\n"
+        code += f"\n"
+
+        return code
+
     def remove_duplicates(self):
         """ Deduplicate identical .py files found in all APIs.
         for example when comments are ignored the rest.py files appear identical. """
@@ -220,6 +347,7 @@ def main():
     p.merge_setup()
     p.make_includes()
     # p.remove_duplicates()     # uncomment the method call when work on the method resumes
+    p.make_methods(p.get_methods())
 
 
 if __name__ == "__main__":

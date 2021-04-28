@@ -28,8 +28,8 @@ class MyTestCase(unittest.TestCase):
     def test_container_load(self):
         self.assertIsNotNone(self._er.get_containers(), msg="Failed to load containers.")
 
-    def test_developer_analytics_get_rate_limits(self):
-        self.assertIsNotNone(self._er.developer_analytics_get_rate_limits(),
+    def test_developer_analytics_get_rate_limits_tinker(self):
+        self.assertIsNotNone(self._er.developer_analytics_get_rate_limits_tinker(),
                              msg="Failed at developer_analytics_get_rate_limits.")
 
     def test_try_except_else(self):
