@@ -138,14 +138,14 @@ class Process:
         methods = []
         method_marker_part = '_with_http_info'
         method_marker_whole = method_marker_part + '(self,'
-        comment_marker = '"""'
-        bad_comment_markers = (
+        docstring_marker = '"""'
+        bad_docstring_markers = (
             '>>> ',
             'synchronous',
             'async_req',
             'request thread',
         )
-        typo_remedy = (             # pairs of typos found in comments and their remedy
+        typo_remedy = (             # pairs of typos found in docstrings and their remedy
             ('cerate', 'create'),               # noqa: - suppress flake8 compatible linters, misspelling is intended
             ('distibuted', 'distributed'),      # noqa:
             ('http:', 'https:'),                # noqa:
@@ -171,25 +171,25 @@ class Process:
                             params = params.replace('self, ', '')
                             step += 1
 
-                    elif step == 1:  # looking for the start of the comment block
-                        if comment_marker in line:
-                            comment = line
+                    elif step == 1:  # looking for the start of the docstring block
+                        if docstring_marker in line:
+                            docstring = line
                             step += 1
 
-                    elif step == 2:  # looking for the end of the comment block
-                        if comment_marker not in line:
+                    elif step == 2:  # looking for the end of the docstring block
+                        if docstring_marker not in line:
                             bad = False
-                            for bad_comment_marker in bad_comment_markers:
-                                if bad_comment_marker in line:
+                            for bad_docstring_marker in bad_docstring_markers:
+                                if bad_docstring_marker in line:
                                     bad = True
                                     break
                             if not bad:
-                                comment += line
+                                docstring += line
                         else:
-                            comment += line
+                            docstring += line
                             for (typo, remedy) in typo_remedy:
-                                comment = comment.replace(typo, remedy)
-                            methods.append((name, module, path, method, params, comment))
+                                docstring = docstring.replace(typo, remedy)
+                            methods.append((name, module, path, method, params, docstring))
                             step = 0
 
         methods.sort()
@@ -207,24 +207,47 @@ class Process:
     def _make_method(self, method):
         """ Return the code for one python method. """
 
-        (name, module, path, method, params, comment) = method
+        (name, module, path, method, params, docstring) = method
         base_path = '{basePath}'
         ignore_long = '  # noqa: E501'  # flake8 compatible linters should not warn about long lines
 
+        # Fix how the docstring expresses optional parameters then end up in **kwargs
+        # catalog all parameters listed in the docstring
+        docstring_params = set()
+        for line in docstring.split('\n'):
+            if ':param' in line:
+                for word in line.split(' '):
+                    if word.endswith(':'):
+                        docstring_params.add(word.replace(':', ''))
+                        break
+        # determine if any docstring parameters are method parameters
+        has_docstring_problem = False
+        for docstring_param in docstring_params:
+            if docstring_param not in params:
+                has_docstring_problem = True
+                break
+        # if we found an optional parameter, then add a provision for 'optionals' aka *args in the right spot
+        if has_docstring_problem:
+            pass    # TODO Do something to make the comments aka docstring handle optional parameters properly
+
         code = f"    def {name}_{method}(self, {params}):{ignore_long}\n"
-        code += comment
+        code += docstring
         code += f"        # Configure OAuth2 access token for authorization: api_auth\n"
         code += f"        configuration = {name}.Configuration()\n"
         code += f"        configuration.access_token = self._get_token()\n"
         code += f"\n"
         code += f"        # Configure the host endpoint\n"
-        code += f"        # if the generated client library has a flawed host, then compensate\n"
-        code += f"        if '{base_path}' in configuration.host:\n"
-        code += f"            configuration.host = configuration.host.replace('{base_path}',\n"
-        code += f"                                                            '{name.replace('_', '/')}')\n"
         code += f"        if self.use_sandbox:\n"
         code += f"            configuration.host = configuration.host.replace('api.ebay.com',\n"
         code += f"                                                            'api.sandbox.ebay.com')\n"
+        code += f"        # check for host has flaws and then then compensate\n"
+        code += f"        if '{base_path}' in configuration.host:\n"
+        code += f"            configuration.host = configuration.host.replace('{base_path}',\n"
+        code += f"                                                            '/{name.replace('_', '/')}')\n"
+        code += f"            if 'developer/analytics' in configuration.host:\n"
+        code += f"                configuration.host += '/v1_beta'\n"
+        code += f"        else:\n"
+        code += f"            logging.debug('eBay has fixed the flaw so remove the compensating code.')\n"
         code += f"\n"
         code += f"        # create an instance of the API class\n"
         code += f"        api_instance = \\\n"

@@ -28,10 +28,6 @@ class MyTestCase(unittest.TestCase):
     def test_container_load(self):
         self.assertIsNotNone(self._er.get_containers(), msg="Failed to load containers.")
 
-    def test_developer_analytics_get_rate_limits_tinker(self):
-        self.assertIsNotNone(self._er.developer_analytics_get_rate_limits_tinker(),
-                             msg="Failed at developer_analytics_get_rate_limits.")
-
     def test_try_except_else(self):
         try:
             self._er.will_fail()
@@ -39,6 +35,14 @@ class MyTestCase(unittest.TestCase):
             print(f'Error {error.number} is {error.message}.')
         else:
             self.assertIsNotNone(None, msg="Failed to raise an exception.")
+
+    def test_developer_analytics_get_rate_limits(self):
+        self.assertIsNotNone(self._er.developer_analytics_get_rate_limits(),
+                             msg="Failed at developer_analytics_get_rate_limits.")
+
+    def test_developer_analytics_get_rate_limits_api_context(self):
+        self.assertIsNotNone(self._er.developer_analytics_get_rate_limits(api_context='buy'),
+                             msg="Failed at developer_analytics_get_rate_limits.")
 
 
 if __name__ == '__main__':
