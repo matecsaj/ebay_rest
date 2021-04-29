@@ -113,6 +113,59 @@ class EbayDateTime:
         return d_t.replace(tzinfo=timezone.utc)
 
 
+class EbayReference:
+    """ Immutable caches of reference information sourced from eBay's developer website. """
+
+    _cache = {}
+
+    @staticmethod
+    def get_containers():
+        """ Get eBay item "response" field information.
+
+        Details of a specific item can include description, price, category, all item aspects, condition,
+        return policies, seller feedback and score, shipping options, shipping costs, estimated delivery,
+        and other information the buyer needs to make a purchasing decision.
+
+        Source https://developer.ebay.com/api-docs/buy/browse/resources/item/methods/getItem#h2-output.
+        """
+        return EbayReference._get('containers')
+
+    @staticmethod
+    def get_enums():
+        """ Get eBay enumeration type definitions and SOME of their values.
+
+        Source https://developer.ebay.com/api-docs/buy/browse/enums.
+        """
+        return EbayReference._get('enums')
+
+    @staticmethod
+    def get_global_id_values():
+        """ Get eBay global id information.
+
+        The Global ID is a unique identifier for combinations of site, language, and territory.
+        Global ID values are returned in globalId and are used as input for the X-EBAY-SOA-GLOBAL-ID header.
+        The global ID you use must correspond to an eBay site with a valid site ID.
+        See https://developer.ebay.com/Devzone/merchandising/docs/Concepts/SiteIDToGlobalID.html
+        eBay Site ID to Global ID Mapping for a list of global IDs you can use with the API calls.
+
+        Source https://developer.ebay.com/Devzone/merchandising/docs/CallRef/Enums/GlobalIdList.html.
+        """
+        return EbayReference._get('global_id_values')
+
+    @staticmethod
+    def _get(name):
+        """ Get information from the json files. """
+        tp = EbayReference._cache
+        if name not in EbayReference._cache:
+            # get the path to this python file, which is also where the data file is
+            path, _fn = os.path.split(os.path.realpath(__file__))
+            # to the path join the data file name and extension
+            path_name = os.path.join(path, f'info_{name}.json')
+            with open(path_name) as file_handle:
+                EbayReference._cache[name] = json.load(file_handle)
+        return EbayReference._cache[name]
+
+
 class EbayRestError(Exception):
     """ Use to return all exceptions from this module. """
 
@@ -123,6 +176,50 @@ class EbayRestError(Exception):
 
     def __str__(self):
         return f'Error {self.number} is {self.message}.'
+
+
+class EbayToken:
+    """ Initialize, refresh and supply an eBay OAuth application token.
+
+    This is a facade for the oath library.
+    """
+
+    def __init__(self, use_sandbox: bool):
+        self._token_lock = threading.Lock()
+        self._app_token = None  # use when locked
+
+        directory = os.getcwd()  # get the current working directory
+        CredentialUtil.load(os.path.join(directory, 'ebay_rest.json'))
+        self._oauth2api_inst = OAuth2Api()
+        if use_sandbox:
+            self._env = Environment.SANDBOX
+        else:
+            self._env = Environment.PRODUCTION
+
+        self._refresh()
+
+    def get(self):
+        """ Get the eBay Application Token. """
+
+        with self._token_lock:
+            if self._app_token.token_expiry.replace(tzinfo=timezone.utc) <= EbayDateTime.now():
+                self._refresh()
+            token = self._app_token.access_token
+
+        return token
+
+    def _refresh(self):
+        """ Refresh the eBay Application Token and update all that comes with it. """
+
+        app_token = \
+            self._oauth2api_inst.get_application_token(self._env,
+                                                       ["https://api.ebay.com/oauth/api_scope"])
+        if app_token.error is not None:
+            logging.critical(f'app_token.error == {app_token.error}.')
+        if (app_token.access_token is None) or (len(app_token.access_token) == 0):
+            logging.critical('app_token.access_token is missing.')
+
+        self._app_token = app_token
 
 
 class _Singleton:  # pylint: disable=too-few-public-methods
@@ -183,39 +280,24 @@ class EbayRest:
         :rtype: object
         """
 
-        self._containers = None
-        self._enums = None
-        self._global_id_values = None
-
         # check then set use_sandbox
         if use_sandbox in (True, False):
-            self.use_sandbox = use_sandbox
+            self._use_sandbox = use_sandbox
         else:
             raise EbayRestError(0, "use_sandbox must be unspecified, True or False.")
 
         # check then set site_id
-        global_id_values = self.get_global_id_values()
         valid = []
-        for global_id_value in global_id_values:
+        for global_id_value in EbayReference.get_global_id_values():
             valid.append(global_id_value['global_id'])
             valid.append(global_id_value['ebay_site_id'])
         if site_id in valid:
-            self.site_id = site_id  # eg. 'EBAY-ENCA' or '101'
+            self._site_id = site_id  # eg. 'EBAY-ENCA' or '101'
         else:
             raise EbayRestError(1, f"site_id must be unspecified or one of these strings {valid}.")
 
         # initialize the token
-        self._token_lock = threading.Lock()
-        self._app_token = None  # use when locked
-
-        directory = os.getcwd()  # get the current working directory
-        CredentialUtil.load(os.path.join(directory, 'ebay_rest.json'))
-        self._oauth2api_inst = OAuth2Api()
-        if self.use_sandbox:
-            self.env = Environment.SANDBOX
-        else:
-            self.env = Environment.PRODUCTION
-        self._refresh_token()
+        self._token = EbayToken(self._use_sandbox)
 
         return
 
@@ -223,54 +305,6 @@ class EbayRest:
     def will_fail():  # TODO remove this after incorporating EbayRestError into another unittest
         """ Demonstrate what happens when a method call fails. """
         raise EbayRestError(0, "Sample error.")
-
-    def get_containers(self):
-        """ Get eBay container information. """
-        return self._get_info('containers', self._containers)
-
-    def get_enums(self):
-        """ Get eBay enumeration information. """
-        return self._get_info('enums', self._enums)
-
-    def get_global_id_values(self):
-        """ Get eBay global id information. """
-        return self._get_info('global_id_values', self._global_id_values)
-
-    @staticmethod
-    def _get_info(name, cache):
-        """ Get information from the json files. """
-        # if the data needs caching
-        if cache is None:
-            # get the path to this python file, which is also where the data file is
-            path, _fn = os.path.split(os.path.realpath(__file__))
-            # to the path join the data file name and extension
-            path_name = os.path.join(path, f'info_{name}.json')
-            with open(path_name) as file_handle:
-                cache = json.load(file_handle)
-        return cache
-
-    def _get_token(self):
-        """ Get the eBay Application Token. """
-
-        with self._token_lock:
-            if self._app_token.token_expiry.replace(tzinfo=timezone.utc) <= EbayDateTime.now():
-                self._refresh_token()
-            token = self._app_token.access_token
-
-        return token
-
-    def _refresh_token(self):
-        """ Refresh the eBay Application Token and update all that comes with it. """
-
-        app_token = \
-            self._oauth2api_inst.get_application_token(self.env,
-                                                       ["https://api.ebay.com/oauth/api_scope"])
-        if app_token.error is not None:
-            logging.critical(f'app_token.error == {app_token.error}.')
-        if (app_token.access_token is None) or (len(app_token.access_token) == 0):
-            logging.critical('app_token.access_token is missing.')
-
-        self._app_token = app_token
 
     # Don't edit the anchors or in-between which is generated by process_swagger_cache.py.
     # ANCHOR-er_methods-START"
@@ -287,10 +321,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_browse.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -305,7 +339,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_browse.ItemApi(buy_browse.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -333,10 +367,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_browse.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -351,7 +385,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_browse.ItemApi(buy_browse.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -381,10 +415,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_browse.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -399,7 +433,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_browse.ItemApi(buy_browse.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -427,10 +461,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_browse.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -445,7 +479,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_browse.ItemApi(buy_browse.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -472,10 +506,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_browse.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -490,7 +524,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_browse.ItemApi(buy_browse.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -529,10 +563,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_browse.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -547,7 +581,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_browse.ItemSummaryApi(buy_browse.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -582,10 +616,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_browse.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -600,7 +634,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_browse.SearchByImageApi(buy_browse.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -627,10 +661,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_browse.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -645,7 +679,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_browse.ShoppingCartApi(buy_browse.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -671,10 +705,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_browse.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -689,7 +723,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_browse.ShoppingCartApi(buy_browse.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -716,10 +750,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_browse.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -734,7 +768,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_browse.ShoppingCartApi(buy_browse.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -761,10 +795,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_browse.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -779,7 +813,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_browse.ShoppingCartApi(buy_browse.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -811,10 +845,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_deal.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -829,7 +863,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_deal.DealItemApi(buy_deal.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -857,10 +891,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_deal.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -875,7 +909,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_deal.EventApi(buy_deal.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -904,10 +938,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_deal.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -922,7 +956,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_deal.EventApi(buy_deal.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -954,10 +988,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_deal.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -972,7 +1006,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_deal.EventItemApi(buy_deal.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1003,10 +1037,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1021,7 +1055,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_feed.ItemApi(buy_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1052,10 +1086,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1070,7 +1104,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_feed.ItemGroupApi(buy_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1100,10 +1134,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1118,7 +1152,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_feed.ItemSnapshotApi(buy_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1148,10 +1182,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1166,7 +1200,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_marketing.MerchandisedProductApi(buy_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1196,10 +1230,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1214,7 +1248,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_marketing.MerchandisedProductApi(buy_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1244,10 +1278,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1262,7 +1296,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_marketing.MerchandisedProductApi(buy_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1298,10 +1332,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_marketplace_insights.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1316,7 +1350,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_marketplace_insights.ItemSalesApi(buy_marketplace_insights.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1344,10 +1378,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_offer.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1362,7 +1396,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_offer.BiddingApi(buy_offer.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1391,10 +1425,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_offer.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1409,7 +1443,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_offer.BiddingApi(buy_offer.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1437,10 +1471,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1455,7 +1489,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.CheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1482,10 +1516,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1500,7 +1534,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.CheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1527,10 +1561,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1545,7 +1579,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.CheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1572,10 +1606,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1590,7 +1624,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.CheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1618,10 +1652,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1636,7 +1670,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.CheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1664,10 +1698,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1682,7 +1716,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.CheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1710,10 +1744,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1728,7 +1762,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.CheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1756,10 +1790,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1774,7 +1808,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.CheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1802,10 +1836,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1820,7 +1854,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.CheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1848,10 +1882,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1866,7 +1900,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.GuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1893,10 +1927,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1911,7 +1945,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.GuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1938,10 +1972,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -1956,7 +1990,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.GuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -1984,10 +2018,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2002,7 +2036,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.GuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2030,10 +2064,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2048,7 +2082,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.GuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2076,10 +2110,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2094,7 +2128,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.GuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2122,10 +2156,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2140,7 +2174,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.GuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2168,10 +2202,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2186,7 +2220,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.GuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2214,10 +2248,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2232,7 +2266,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.GuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2260,10 +2294,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2278,7 +2312,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.GuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2305,10 +2339,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2323,7 +2357,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.GuestPurchaseOrderApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2351,10 +2385,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2369,7 +2403,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.ProxyGuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2396,10 +2430,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2414,7 +2448,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.ProxyGuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2441,10 +2475,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2459,7 +2493,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.ProxyGuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2487,10 +2521,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2505,7 +2539,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.ProxyGuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2533,10 +2567,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2551,7 +2585,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.ProxyGuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2584,10 +2618,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2602,7 +2636,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.ProxyGuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2630,10 +2664,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2648,7 +2682,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.ProxyGuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2676,10 +2710,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2694,7 +2728,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.ProxyGuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2722,10 +2756,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2740,7 +2774,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.ProxyGuestCheckoutSessionApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2767,10 +2801,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = buy_order.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2785,7 +2819,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             buy_order.PurchaseOrderApi(buy_order.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2812,10 +2846,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = commerce_catalog.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2830,7 +2864,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             commerce_catalog.ProductApi(commerce_catalog.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2864,10 +2898,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = commerce_catalog.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2882,7 +2916,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             commerce_catalog.ProductSummaryApi(commerce_catalog.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2910,10 +2944,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = commerce_charity.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2928,7 +2962,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             commerce_charity.CharityOrgApi(commerce_charity.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -2956,10 +2990,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = commerce_charity.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -2974,7 +3008,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             commerce_charity.CharityOrgApi(commerce_charity.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3005,10 +3039,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = commerce_charity.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3023,7 +3057,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             commerce_charity.CharityOrgApi(commerce_charity.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3049,10 +3083,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = commerce_identity.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3067,7 +3101,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             commerce_identity.UserApi(commerce_identity.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3094,10 +3128,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = commerce_notification.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3112,7 +3146,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             commerce_notification.PublicKeyApi(commerce_notification.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3139,10 +3173,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = commerce_taxonomy.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3157,7 +3191,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             commerce_taxonomy.CategoryTreeApi(commerce_taxonomy.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3185,10 +3219,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = commerce_taxonomy.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3203,7 +3237,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             commerce_taxonomy.CategoryTreeApi(commerce_taxonomy.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3231,10 +3265,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = commerce_taxonomy.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3249,7 +3283,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             commerce_taxonomy.CategoryTreeApi(commerce_taxonomy.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3276,10 +3310,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = commerce_taxonomy.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3294,7 +3328,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             commerce_taxonomy.CategoryTreeApi(commerce_taxonomy.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3322,10 +3356,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = commerce_taxonomy.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3340,7 +3374,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             commerce_taxonomy.CategoryTreeApi(commerce_taxonomy.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3370,10 +3404,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = commerce_taxonomy.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3388,7 +3422,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             commerce_taxonomy.CategoryTreeApi(commerce_taxonomy.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3416,10 +3450,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = commerce_taxonomy.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3434,7 +3468,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             commerce_taxonomy.CategoryTreeApi(commerce_taxonomy.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3462,10 +3496,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = commerce_taxonomy.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3480,7 +3514,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             commerce_taxonomy.CategoryTreeApi(commerce_taxonomy.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3507,10 +3541,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = commerce_translation.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3525,7 +3559,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             commerce_translation.LanguageApi(commerce_translation.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3553,10 +3587,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = developer_analytics.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3571,7 +3605,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             developer_analytics.RateLimitApi(developer_analytics.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3599,10 +3633,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = developer_analytics.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3617,7 +3651,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             developer_analytics.UserRateLimitApi(developer_analytics.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3644,10 +3678,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3662,7 +3696,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.FulfillmentPolicyApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3689,10 +3723,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3707,7 +3741,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.FulfillmentPolicyApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3734,10 +3768,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3752,7 +3786,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.FulfillmentPolicyApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3779,10 +3813,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3797,7 +3831,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.FulfillmentPolicyApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3825,10 +3859,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3843,7 +3877,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.FulfillmentPolicyApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3871,10 +3905,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3889,7 +3923,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.FulfillmentPolicyApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3915,10 +3949,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3933,7 +3967,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.KycApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -3961,10 +3995,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -3979,7 +4013,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.OnboardingApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4006,10 +4040,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4024,7 +4058,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.PaymentPolicyApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4051,10 +4085,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4069,7 +4103,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.PaymentPolicyApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4096,10 +4130,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4114,7 +4148,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.PaymentPolicyApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4141,10 +4175,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4159,7 +4193,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.PaymentPolicyApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4187,10 +4221,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4205,7 +4239,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.PaymentPolicyApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4233,10 +4267,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4251,7 +4285,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.PaymentPolicyApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4279,10 +4313,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4297,7 +4331,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.PaymentsProgramApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4323,10 +4357,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4341,7 +4375,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.PrivilegeApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4367,10 +4401,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4385,7 +4419,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.ProgramApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4412,10 +4446,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4430,7 +4464,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.ProgramApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4457,10 +4491,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4475,7 +4509,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.ProgramApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4502,10 +4536,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4520,7 +4554,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.RateTableApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4547,10 +4581,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4565,7 +4599,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.ReturnPolicyApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4592,10 +4626,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4610,7 +4644,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.ReturnPolicyApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4637,10 +4671,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4655,7 +4689,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.ReturnPolicyApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4682,10 +4716,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4700,7 +4734,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.ReturnPolicyApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4728,10 +4762,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4746,7 +4780,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.ReturnPolicyApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4774,10 +4808,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4792,7 +4826,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.ReturnPolicyApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4821,10 +4855,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4839,7 +4873,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.SalesTaxApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4867,10 +4901,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4885,7 +4919,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.SalesTaxApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4913,10 +4947,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4931,7 +4965,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.SalesTaxApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -4958,10 +4992,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_account.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -4976,7 +5010,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_account.SalesTaxApi(sell_account.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5005,10 +5039,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_analytics.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5023,7 +5057,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_analytics.CustomerServiceMetricApi(sell_analytics.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5049,10 +5083,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_analytics.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5067,7 +5101,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_analytics.SellerStandardsProfileApi(sell_analytics.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5095,10 +5129,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_analytics.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5113,7 +5147,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_analytics.SellerStandardsProfileApi(sell_analytics.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5143,10 +5177,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_analytics.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5161,7 +5195,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_analytics.TrafficReportApi(sell_analytics.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5193,10 +5227,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_compliance.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5211,7 +5245,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_compliance.ListingViolationApi(sell_compliance.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5238,10 +5272,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_compliance.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5256,7 +5290,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_compliance.ListingViolationApi(sell_compliance.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5284,10 +5318,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_compliance.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5302,7 +5336,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_compliance.ListingViolationSummaryApi(sell_compliance.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5330,10 +5364,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5348,7 +5382,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.CustomerServiceMetricTaskApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5375,10 +5409,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5393,7 +5427,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.CustomerServiceMetricTaskApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5424,10 +5458,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5442,7 +5476,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.CustomerServiceMetricTaskApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5470,10 +5504,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5488,7 +5522,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.OrderTaskApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5515,10 +5549,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5533,7 +5567,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.OrderTaskApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5565,10 +5599,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5583,7 +5617,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.OrderTaskApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5610,10 +5644,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5628,7 +5662,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.ScheduleApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5655,10 +5689,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5673,7 +5707,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.ScheduleApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5700,10 +5734,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5718,7 +5752,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.ScheduleApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5745,10 +5779,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5763,7 +5797,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.ScheduleApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5790,10 +5824,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5808,7 +5842,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.ScheduleApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5837,10 +5871,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5855,7 +5889,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.ScheduleApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5884,10 +5918,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5902,7 +5936,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.ScheduleApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5930,10 +5964,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5948,7 +5982,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.ScheduleApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -5976,10 +6010,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -5994,7 +6028,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.TaskApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6021,10 +6055,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6039,7 +6073,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.TaskApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6066,10 +6100,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6084,7 +6118,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.TaskApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6111,10 +6145,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6129,7 +6163,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.TaskApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6161,10 +6195,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6179,7 +6213,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.TaskApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6214,10 +6248,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_feed.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6232,7 +6266,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_feed.TaskApi(sell_feed.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6259,10 +6293,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_finances.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6277,7 +6311,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_finances.PayoutApi(sell_finances.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6304,10 +6338,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_finances.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6322,7 +6356,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_finances.PayoutApi(sell_finances.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6352,10 +6386,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_finances.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6370,7 +6404,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_finances.PayoutApi(sell_finances.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6396,10 +6430,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_finances.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6414,7 +6448,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_finances.SellerFundsSummaryApi(sell_finances.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6441,10 +6475,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_finances.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6459,7 +6493,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_finances.TransactionApi(sell_finances.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6489,10 +6523,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_finances.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6507,7 +6541,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_finances.TransactionApi(sell_finances.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6534,10 +6568,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_finances.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6552,7 +6586,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_finances.TransferApi(sell_finances.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6580,10 +6614,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_fulfillment.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6598,7 +6632,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_fulfillment.OrderApi(sell_fulfillment.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6629,10 +6663,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_fulfillment.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6647,7 +6681,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_fulfillment.OrderApi(sell_fulfillment.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6674,10 +6708,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_fulfillment.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6692,7 +6726,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_fulfillment.OrderApi(sell_fulfillment.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6720,10 +6754,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_fulfillment.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6738,7 +6772,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_fulfillment.PaymentDisputeApi(sell_fulfillment.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6766,10 +6800,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_fulfillment.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6784,7 +6818,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_fulfillment.PaymentDisputeApi(sell_fulfillment.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6812,10 +6846,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_fulfillment.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6830,7 +6864,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_fulfillment.PaymentDisputeApi(sell_fulfillment.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6859,10 +6893,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_fulfillment.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6877,7 +6911,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_fulfillment.PaymentDisputeApi(sell_fulfillment.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6904,10 +6938,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_fulfillment.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6922,7 +6956,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_fulfillment.PaymentDisputeApi(sell_fulfillment.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -6949,10 +6983,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_fulfillment.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -6967,7 +7001,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_fulfillment.PaymentDisputeApi(sell_fulfillment.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7000,10 +7034,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_fulfillment.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7018,7 +7052,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_fulfillment.PaymentDisputeApi(sell_fulfillment.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7046,10 +7080,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_fulfillment.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7064,7 +7098,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_fulfillment.PaymentDisputeApi(sell_fulfillment.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7091,10 +7125,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_fulfillment.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7109,7 +7143,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_fulfillment.PaymentDisputeApi(sell_fulfillment.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7137,10 +7171,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_fulfillment.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7155,7 +7189,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_fulfillment.ShippingFulfillmentApi(sell_fulfillment.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7183,10 +7217,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_fulfillment.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7201,7 +7235,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_fulfillment.ShippingFulfillmentApi(sell_fulfillment.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7228,10 +7262,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_fulfillment.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7246,7 +7280,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_fulfillment.ShippingFulfillmentApi(sell_fulfillment.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7273,10 +7307,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7291,7 +7325,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.InventoryItemApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7318,10 +7352,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7336,7 +7370,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.InventoryItemApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7363,10 +7397,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7381,7 +7415,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.InventoryItemApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7410,10 +7444,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7428,7 +7462,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.InventoryItemApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7455,10 +7489,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7473,7 +7507,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.InventoryItemApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7500,10 +7534,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7518,7 +7552,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.InventoryItemApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7546,10 +7580,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7564,7 +7598,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.InventoryItemApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7593,10 +7627,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7611,7 +7645,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.InventoryItemGroupApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7638,10 +7672,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7656,7 +7690,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.InventoryItemGroupApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7683,10 +7717,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7701,7 +7735,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.InventoryItemGroupApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7728,10 +7762,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7746,7 +7780,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.ListingApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7774,10 +7808,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7792,7 +7826,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.LocationApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7819,10 +7853,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7837,7 +7871,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.LocationApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7864,10 +7898,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7882,7 +7916,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.LocationApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7909,10 +7943,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7927,7 +7961,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.LocationApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -7954,10 +7988,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -7972,7 +8006,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.LocationApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8000,10 +8034,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8018,7 +8052,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.LocationApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8046,10 +8080,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8064,7 +8098,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.LocationApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8091,10 +8125,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8109,7 +8143,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.OfferApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8136,10 +8170,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8154,7 +8188,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.OfferApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8182,10 +8216,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8200,7 +8234,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.OfferApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8227,10 +8261,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8245,7 +8279,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.OfferApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8272,10 +8306,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8290,7 +8324,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.OfferApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8317,10 +8351,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8335,7 +8369,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.OfferApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8366,10 +8400,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8384,7 +8418,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.OfferApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8411,10 +8445,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8429,7 +8463,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.OfferApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8456,10 +8490,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8474,7 +8508,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.OfferApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8503,10 +8537,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8521,7 +8555,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.OfferApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8548,10 +8582,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8566,7 +8600,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.OfferApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8593,10 +8627,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8611,7 +8645,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.OfferApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8640,10 +8674,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8658,7 +8692,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.ProductCompatibilityApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8685,10 +8719,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8703,7 +8737,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.ProductCompatibilityApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8730,10 +8764,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_inventory.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8748,7 +8782,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_inventory.ProductCompatibilityApi(sell_inventory.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8777,10 +8811,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_listing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8795,7 +8829,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_listing.ItemDraftApi(sell_listing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8822,10 +8856,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_logistics.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8840,7 +8874,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_logistics.ShipmentApi(sell_logistics.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8867,10 +8901,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_logistics.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8885,7 +8919,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_logistics.ShipmentApi(sell_logistics.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8912,10 +8946,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_logistics.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8930,7 +8964,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_logistics.ShipmentApi(sell_logistics.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -8957,10 +8991,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_logistics.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -8975,7 +9009,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_logistics.ShipmentApi(sell_logistics.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9002,10 +9036,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_logistics.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9020,7 +9054,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_logistics.ShippingQuoteApi(sell_logistics.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9047,10 +9081,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_logistics.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9065,7 +9099,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_logistics.ShippingQuoteApi(sell_logistics.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9093,10 +9127,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9111,7 +9145,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9139,10 +9173,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9157,7 +9191,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9185,10 +9219,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9203,7 +9237,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9231,10 +9265,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9249,7 +9283,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9277,10 +9311,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9295,7 +9329,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9323,10 +9357,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9341,7 +9375,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9369,10 +9403,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9387,7 +9421,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9415,10 +9449,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9433,7 +9467,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9461,10 +9495,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9479,7 +9513,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9507,10 +9541,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9525,7 +9559,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9553,10 +9587,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9571,7 +9605,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9601,10 +9635,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9619,7 +9653,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9648,10 +9682,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9666,7 +9700,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9695,10 +9729,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9713,7 +9747,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9740,10 +9774,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9758,7 +9792,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdReportApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9784,10 +9818,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9802,7 +9836,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdReportMetadataApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9829,10 +9863,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9847,7 +9881,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdReportMetadataApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9874,10 +9908,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9892,7 +9926,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdReportTaskApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9919,10 +9953,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9937,7 +9971,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdReportTaskApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -9964,10 +9998,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -9982,7 +10016,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdReportTaskApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10011,10 +10045,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10029,7 +10063,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.AdReportTaskApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10057,10 +10091,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10075,7 +10109,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.CampaignApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10102,10 +10136,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10120,7 +10154,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.CampaignApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10147,10 +10181,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10165,7 +10199,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.CampaignApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10192,10 +10226,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10210,7 +10244,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.CampaignApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10239,10 +10273,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10257,7 +10291,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.CampaignApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10284,10 +10318,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10302,7 +10336,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.CampaignApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10329,10 +10363,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10347,7 +10381,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.CampaignApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10379,10 +10413,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10397,7 +10431,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.CampaignApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10424,10 +10458,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10442,7 +10476,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.CampaignApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10469,10 +10503,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10487,7 +10521,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.CampaignApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10515,10 +10549,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10533,7 +10567,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.CampaignApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10560,10 +10594,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10578,7 +10612,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.ItemPriceMarkdownApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10605,10 +10639,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10623,7 +10657,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.ItemPriceMarkdownApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10650,10 +10684,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10668,7 +10702,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.ItemPriceMarkdownApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10696,10 +10730,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10714,7 +10748,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.ItemPriceMarkdownApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10741,10 +10775,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10759,7 +10793,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.ItemPromotionApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10786,10 +10820,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10804,7 +10838,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.ItemPromotionApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10831,10 +10865,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10849,7 +10883,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.ItemPromotionApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10877,10 +10911,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10895,7 +10929,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.ItemPromotionApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10927,10 +10961,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10945,7 +10979,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.PromotionApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -10978,10 +11012,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -10996,7 +11030,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.PromotionApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -11023,10 +11057,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -11041,7 +11075,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.PromotionApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -11068,10 +11102,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -11086,7 +11120,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.PromotionApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -11118,10 +11152,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -11136,7 +11170,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.PromotionReportApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -11163,10 +11197,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_marketing.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -11181,7 +11215,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_marketing.PromotionSummaryReportApi(sell_marketing.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -11208,10 +11242,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_metadata.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -11226,7 +11260,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_metadata.CountryApi(sell_metadata.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -11254,10 +11288,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_metadata.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -11272,7 +11306,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_metadata.MarketplaceApi(sell_metadata.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -11300,10 +11334,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_metadata.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -11318,7 +11352,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_metadata.MarketplaceApi(sell_metadata.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -11346,10 +11380,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_metadata.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -11364,7 +11398,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_metadata.MarketplaceApi(sell_metadata.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -11392,10 +11426,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_metadata.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -11410,7 +11444,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_metadata.MarketplaceApi(sell_metadata.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -11438,10 +11472,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_metadata.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -11456,7 +11490,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_metadata.MarketplaceApi(sell_metadata.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -11484,10 +11518,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_metadata.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -11502,7 +11536,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_metadata.MarketplaceApi(sell_metadata.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -11531,10 +11565,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_negotiation.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -11549,7 +11583,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_negotiation.OfferApi(sell_negotiation.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -11577,10 +11611,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_negotiation.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -11595,7 +11629,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_negotiation.OfferApi(sell_negotiation.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:
@@ -11626,10 +11660,10 @@ class EbayRest:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = sell_recommendation.Configuration()
-        configuration.access_token = self._get_token()
+        configuration.access_token = self._token.get()
 
         # Configure the host endpoint
-        if self.use_sandbox:
+        if self._use_sandbox:
             configuration.host = configuration.host.replace('api.ebay.com',
                                                             'api.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -11644,7 +11678,7 @@ class EbayRest:
         # create an instance of the API class
         api_instance = \
             sell_recommendation.ListingRecommendationApi(sell_recommendation.ApiClient(configuration))
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self.site_id
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
 
         result = None
         try:

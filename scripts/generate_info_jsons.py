@@ -4,7 +4,7 @@
 Run this script from the command line to generate informational json files that ebay_rest.py loads.
 
 Run this whenever the Response Fields in the following link change.
-https://developer.ebay.com/api-docs/buy/browse/resources/item/methods/getItem#h2-output
+
 """
 
 # Standard library imports
@@ -19,7 +19,6 @@ import json
 from bs4 import BeautifulSoup
 
 # Local imports
-# from ..cache import Cache     TODO get this import working instead copy and pasting the code
 
 
 class Cache:
