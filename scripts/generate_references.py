@@ -492,12 +492,12 @@ def main():
         if containers[key]['shape'] not in ('container', 'array_of_type', 'array_of_enum', 'array_of_container'):
             print(f"Container {key} has unexpected shape {containers[key]['shape']}.")
 
-    path = '../src/ebay_rest/'
-    with open(path+'info_containers.json', 'w') as outfile:
+    path = '../src/ebay_rest/reference_'
+    with open(path+'containers.json', 'w') as outfile:
         json.dump(containers, outfile, sort_keys=True, indent=4)
-    with open(path+'info_enums.json', 'w') as outfile:
+    with open(path+'enums.json', 'w') as outfile:
         json.dump(enums, outfile, sort_keys=True, indent=4)
-    with open(path+'info_global_id_values.json', 'w') as outfile:
+    with open(path+'global_id_values.json', 'w') as outfile:
         json.dump(global_id_values, outfile, sort_keys=True, indent=4)
 
     return

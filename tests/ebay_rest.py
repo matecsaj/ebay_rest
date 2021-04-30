@@ -4,7 +4,7 @@ import unittest
 # Third party imports
 
 # Local imports
-from src.ebay_rest.ebay_rest import EbayRest, EbayRestError, EbayReference
+from src.ebay_rest import API, DateTime, EbayRestError, Reference
 
 
 # Globals
@@ -20,16 +20,16 @@ class MyTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls._er = EbayRest(use_sandbox=False, site_id='EBAY-ENCA')
+        cls._er = API(use_sandbox=False, site_id='EBAY-ENCA')
 
     def test_enum_load(self):
-        self.assertIsNotNone(EbayReference.get_enums(), msg="Failed to load enums.")
+        self.assertIsNotNone(Reference.get_enums(), msg="Failed to load enums.")
 
     def test_container_load(self):
-        self.assertIsNotNone(EbayReference.get_containers(), msg="Failed to load containers.")
+        self.assertIsNotNone(Reference.get_containers(), msg="Failed to load containers.")
 
     def test_global_id_values_load(self):
-        self.assertIsNotNone(EbayReference.get_global_id_values(), msg="Failed to load global id values.")
+        self.assertIsNotNone(Reference.get_global_id_values(), msg="Failed to load global id values.")
 
     def test_try_except_else(self):
         try:

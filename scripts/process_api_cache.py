@@ -21,7 +21,7 @@ SOURCE_PATH = './' + TARGET_DIRECTORY + '_cache'   # must match the TARGET_PATH 
 class Process:
     """ The processing steps are split into bite sized methods. """
     def __init__(self):
-        self.file_ebay_rest = os.path.abspath('../src/ebay_rest/ebay_rest.py')
+        self.file_ebay_rest = os.path.abspath('../src/ebay_rest/a_p_i.py')
         self.file_setup = os.path.abspath('../setup.cfg')
 
         self.path_cache = os.path.abspath(SOURCE_PATH)
