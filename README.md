@@ -9,17 +9,33 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install ebay_re
 pip install ebay_rest
 ```
 
+## Setup
+
+Follow the instructions [here](https://github.com/matecsaj/ebay_rest/blob/main/tests/ebay_rest_EXAMPLE.json). 
+
 ## Usage
 
 ```python
-from ebay_rest import EbayRest, EbayRestError
+from ebay_rest import API, DateTime, Error, Reference
 
 try:
-    er = EbayRest('Hello, World!')
-except EbayRestError as error:
+    api = API(use_sandbox=True)
+except Error as error:
     print(f'Error {error.number} is {error.message}.')
 else:
-    er.print()
+    try:
+        items = api.buy_browse_get_items()
+    except Error as error:
+        print(f'Error {error.number} is {error.message}.')
+    else:
+        print('These item ids were gotten:\n')
+        for item in items:
+            print(item.item_id)
+
+print('An item is composed of the following.\n')
+print(Reference.get_item_fields())
+
+print('The official eBay date and time is ', DateTime.now(), '\n')
 ```
 
 ## Contributing

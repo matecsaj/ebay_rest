@@ -1,4 +1,4 @@
 from .a_p_i import API
 from .date_time import DateTime
-from .ebay_rest_error import EbayRestError
+from .error import Error
 from .reference import Reference

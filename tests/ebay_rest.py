@@ -1,10 +1,9 @@
 # Standard library imports
 import unittest
-
-# Third party imports
+import datetime
 
 # Local imports
-from src.ebay_rest import API, DateTime, EbayRestError, Reference
+from src.ebay_rest import API, DateTime, Error, Reference
 
 
 # Globals
@@ -20,31 +19,34 @@ class MyTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls._er = API(use_sandbox=False, site_id='EBAY-ENCA')
+        cls._api = API(use_sandbox=False, site_id='EBAY-ENCA')
 
     def test_enum_load(self):
         self.assertIsNotNone(Reference.get_enums(), msg="Failed to load enums.")
 
     def test_container_load(self):
-        self.assertIsNotNone(Reference.get_containers(), msg="Failed to load containers.")
+        self.assertIsNotNone(Reference.get_item_fields(), msg="Failed to load containers.")
 
     def test_global_id_values_load(self):
         self.assertIsNotNone(Reference.get_global_id_values(), msg="Failed to load global id values.")
 
+    def test_date_time_now(self):
+        self.assertTrue(self, isinstance(DateTime.now(), datetime.date), msg="Failed to get a date time value.")
+
     def test_try_except_else(self):
         try:
-            self._er.will_fail()
-        except EbayRestError as error:
+            self._api.will_fail()
+        except Error as error:
             print(f'Error {error.number} is {error.message}.')
         else:
             self.assertIsNotNone(None, msg="Failed to raise an exception.")
 
     def test_developer_analytics_get_rate_limits(self):
-        self.assertIsNotNone(self._er.developer_analytics_get_rate_limits(),
+        self.assertIsNotNone(self._api.developer_analytics_get_rate_limits(),
                              msg="Failed at developer_analytics_get_rate_limits.")
 
     def test_developer_analytics_get_rate_limits_api_context(self):
-        self.assertIsNotNone(self._er.developer_analytics_get_rate_limits(api_context='buy'),
+        self.assertIsNotNone(self._api.developer_analytics_get_rate_limits(api_context='buy'),
                              msg="Failed at developer_analytics_get_rate_limits.")
 
 

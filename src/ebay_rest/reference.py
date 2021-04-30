@@ -9,8 +9,10 @@ class Reference:
     _cache = {}
 
     @staticmethod
-    def get_containers():
+    def get_item_fields():
         """ Get eBay item "response" field information.
+
+        The root container is ebay_item.
 
         Details of a specific item can include description, price, category, all item aspects, condition,
         return policies, seller feedback and score, shipping options, shipping costs, estimated delivery,
@@ -18,11 +20,13 @@ class Reference:
 
         Source https://developer.ebay.com/api-docs/buy/browse/resources/item/methods/getItem#h2-output.
         """
-        return Reference._get('containers')
+        return Reference._get('item_fields')
 
     @staticmethod
     def get_enums():
         """ Get eBay enumeration type definitions and SOME of their values.
+
+        Beware that many values are missing; expect to encounter new ones.
 
         Source https://developer.ebay.com/api-docs/buy/browse/enums.
         """

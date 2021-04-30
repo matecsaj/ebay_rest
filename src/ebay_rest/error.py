@@ -1,6 +1,6 @@
 
 
-class EbayRestError(Exception):
+class Error(Exception):
     """ Used to return all exceptions from this module. """
 
     def __init__(self, number, message):

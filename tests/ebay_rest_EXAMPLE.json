@@ -1,11 +1,12 @@
 {
     "instructions": {
         "1": "The ebay_rest module needs your eBay Application Keys.",
-        "2": "Copy this file and remove _EXAMPLE from the name.",
+        "2": "Copy this file to your working folder and name it ebay_rest.json.",
         "3": "As you create and get, replace the placeholders in the two sections that follow.",
         "4": "Create a developer account - https://developer.ebay.com/api-docs/static/creating-edp-account.html",
         "5": "Get your OAuth credentials - https://developer.ebay.com/api-docs/static/oauth-credentials.html",
-        "6": "Get your redirect_uri value - https://developer.ebay.com/api-docs/static/oauth-redirect-uri.html"
+        "6": "Get your redirect_uri value - https://developer.ebay.com/api-docs/static/oauth-redirect-uri.html",
+        "7": "If using version control, keep your keys private by NOT checking in the file ebay_rest.json."
     },
     "api.ebay.com": {
         "appid": "placeholder-placeholder-PRD-placeholder-placeholder",

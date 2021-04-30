@@ -493,7 +493,7 @@ def main():
             print(f"Container {key} has unexpected shape {containers[key]['shape']}.")
 
     path = '../src/ebay_rest/reference_'
-    with open(path+'containers.json', 'w') as outfile:
+    with open(path+'item_fields.json', 'w') as outfile:
         json.dump(containers, outfile, sort_keys=True, indent=4)
     with open(path+'enums.json', 'w') as outfile:
         json.dump(enums, outfile, sort_keys=True, indent=4)
