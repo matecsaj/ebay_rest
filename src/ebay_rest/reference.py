@@ -1,10 +1,11 @@
 # Standard library imports
+import copy
 import json
 import os
 
 
 class Reference:
-    """ Immutable caches of reference information sourced from eBay's developer website. """
+    """ Caches of reference information sourced from eBay's developer website. """
 
     _cache = {}
 
@@ -56,4 +57,4 @@ class Reference:
             path_name = os.path.join(path, f'reference_{name}.json')
             with open(path_name) as file_handle:
                 Reference._cache[name] = json.load(file_handle)
-        return Reference._cache[name]
+        return copy.deepcopy(Reference._cache[name])
