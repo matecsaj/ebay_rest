@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 
 # Standard library imports
+import json
 import os
+from urllib.request import urlopen
 from urllib.parse import urljoin
 import shutil
 from sys import platform
@@ -65,6 +67,19 @@ def get_contracts(limit=100):
     return contracts
 
 
+def get_base_paths(contracts):
+    base_paths = {}
+
+    for (category, call, link_href) in contracts:
+        with urlopen(link_href) as url:
+            data = json.loads(url.read().decode())
+            base_path = data['servers'][0]['variables']['basePath']['default']
+            name = category + '_' + call
+            base_paths[name] = base_path
+
+    return base_paths
+
+
 def install_tools():
     if platform == 'darwin':    # OS X or MacOS
         print('Install or update the package manager named HomeBrew.')
@@ -96,8 +111,9 @@ def delete_folder_contents(path_to_folder):
 
 
 def main():
-    install_tools()
-    contracts = get_contracts(limit=100)
+    # install_tools()
+    contracts = get_contracts(limit=300)
+    base_paths = get_base_paths(contracts)
 
     delete_folder_contents(TARGET_PATH)
 
@@ -111,6 +127,10 @@ def main():
         else:
             assert False, f'Please extend main() for your {platform} platform.'
         os.system(command)
+
+    destination = os.path.join(TARGET_PATH, 'base_paths.json')
+    with open(destination, 'w') as outfile:
+        json.dump(base_paths, outfile, sort_keys=True, indent=4)
 
     return
 

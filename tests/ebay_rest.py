@@ -1,18 +1,15 @@
+# *** How to run these unit tests. ***
+# 1. (Open a terminal, alternately known as go to the command line.)
+# 2. cd .. (Or, somehow make the project root the current directory.)
+# 3. python -m unittest tests.ebay_rest
+
+
 # Standard library imports
 import unittest
 import datetime
 
 # Local imports
 from src.ebay_rest import API, DateTime, Error, Reference
-
-
-# Globals
-
-
-# *** How to run these unit tests. ***
-# 1. (Open a terminal, alternately known as go to the command line.)
-# 2. cd .. (Or, somehow make the project root the current directory.)
-# 3. python -m unittest tests.ebay_rest
 
 
 class MyTestCase(unittest.TestCase):
@@ -31,7 +28,7 @@ class MyTestCase(unittest.TestCase):
         self.assertIsNotNone(Reference.get_global_id_values(), msg="Failed to load global id values.")
 
     def test_date_time_now(self):
-        self.assertTrue(self, isinstance(DateTime.now(), datetime.date), msg="Failed to get a date time value.")
+        self.assertTrue(isinstance(DateTime.now(), datetime.date), msg="Failed to get a date time value.")
 
     def test_try_except_else(self):
         try:

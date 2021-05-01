@@ -159,7 +159,7 @@ class API:
     def buy_browse_check_compatibility(self, x_ebay_c_marketplace_id, item_id, **kwargs):  # noqa: E501
         """check_compatibility  # noqa: E501
 
-        This method checks if a product is compatible with the specified item. You can use this method to check the compatibility of cars, trucks, and motorcycles with a specific part listed on eBay. For example, to check the compatibility of a part, you pass in the item ID of the part as a URI parameter and specify all the attributes used to define a specific car in the compatibilityProperties container. If the call is successful, the response will be COMPATIBLE, NOT_COMPATIBLE, or UNDETERMINED. See compatibilityStatus for details. Note: The only products supported are cars, trucks, and motorcycles. To find the attributes and values for a specific marketplace, you can use the compatibility methods in the Taxonomy API. You can use this data to create menus to help buyers specify the product, such as their car. For more details and a list of the required attributes for the US marketplace that describe motor vehicles, see Check compatibility in the Buy Integration Guide. For an example, see the Samples section. URLs for this method Production URL: https://api.ebay.com/buy/browse/v1/item/ Note: This method is supported only on Production. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
+        This method checks if a product is compatible with the specified item. You can use this method to check the compatibility of cars, trucks, and motorcycles with a specific part listed on eBay. For example, to check the compatibility of a part, you pass in the item ID of the part as a URI parameter and specify all the attributes used to define a specific car in the compatibilityProperties container. If the call is successful, the response will be COMPATIBLE, NOT_COMPATIBLE, or UNDETERMINED. See compatibilityStatus for details. Note: The only products supported are cars, trucks, and motorcycles. To find the attributes and values for a specific marketplace, you can use the compatibility methods in the Taxonomy API. You can use this data to create menus to help buyers specify the product, such as their car. For more details and a list of the required attributes for the US marketplace that describe motor vehicles, see Check compatibility in the Buy Integration Guide. For an example, see the Samples section. URLs for this method Production URL: https://api.ebay.com/buy/browse/v1/item/{item_id}/check_compatibility Note: This method is supported only on Production. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
 
         :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace you want to use. Note: This value is case sensitive. For example: &nbsp;&nbsp;X-EBAY-C-MARKETPLACE-ID = EBAY_US For a list of supported sites see, API Restrictions. (required)
         :param str item_id: The eBay RESTful identifier of an item (such as a part you want to check). This ID is returned by the Browse and Feed API methods. RESTful Item ID Format: v1|#|# For example: v1|2**********2|0 or v1|1**********2|4**********2 For more information about item ID for RESTful APIs, see the Legacy API compatibility section of the Buy APIs Overview. (required)
@@ -177,11 +177,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/browse')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/browse/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -206,7 +204,7 @@ class API:
     def buy_browse_get_item(self, item_id, **kwargs):  # noqa: E501
         """get_item  # noqa: E501
 
-        This method retrieves the details of a specific item, such as description, price, category, all item aspects, condition, return policies, seller feedback and score, shipping options, shipping costs, estimated delivery, and other information the buyer needs to make a purchasing decision. The Buy APIs are designed to let you create an eBay shopping experience in your app or website. This means you will need to know when something, such as the availability, quantity, etc., has changed in any eBay item you are offering. You can do this easily by setting the fieldgroups URI parameter. This parameter lets you control what is returned in the response. Setting fieldgroups to COMPACT reduces the response to only the five fields that you need in order to check if any item detail has changed. Setting fieldgroups to PRODUCT, adds additional fields to the default response that return information about the product of the item. You can use either COMPACT or PRODUCT but not both. For more information, see fieldgroups. URLs for this method Production URL: https://api.ebay.com/buy/browse/v1/item/ Sandbox URL: https://api.sandbox.ebay.com/buy/browse/v1/item/ Request headers This method uses the X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, Request headers in the Buying Integration Guide. Restrictions For a list of supported sites and other restrictions, see API Restrictions. eBay Partner Network: In order to be commissioned for your sales, you must use the URL returned in the itemAffiliateWebUrl field to forward your buyer to the ebay.com site.  # noqa: E501
+        This method retrieves the details of a specific item, such as description, price, category, all item aspects, condition, return policies, seller feedback and score, shipping options, shipping costs, estimated delivery, and other information the buyer needs to make a purchasing decision. The Buy APIs are designed to let you create an eBay shopping experience in your app or website. This means you will need to know when something, such as the availability, quantity, etc., has changed in any eBay item you are offering. You can do this easily by setting the fieldgroups URI parameter. This parameter lets you control what is returned in the response. Setting fieldgroups to COMPACT reduces the response to only the five fields that you need in order to check if any item detail has changed. Setting fieldgroups to PRODUCT, adds additional fields to the default response that return information about the product of the item. You can use either COMPACT or PRODUCT but not both. For more information, see fieldgroups. URLs for this method Production URL: https://api.ebay.com/buy/browse/v1/item/{item_id} Sandbox URL: https://api.sandbox.ebay.com/buy/browse/v1/item/{item_id} Request headers This method uses the X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, Request headers in the Buying Integration Guide. Restrictions For a list of supported sites and other restrictions, see API Restrictions. eBay Partner Network: In order to be commissioned for your sales, you must use the URL returned in the itemAffiliateWebUrl field to forward your buyer to the ebay.com site.  # noqa: E501
 
         :param str item_id: The eBay RESTful identifier of an item. This ID is returned by the Browse and Feed API methods. RESTful Item ID Format: v1|#|# For example: v1|2**********2|0 or v1|1**********2|4**********2 For more information about item ID for RESTful APIs, see the Legacy API compatibility section of the Buy APIs Overview. (required)
         :param str fieldgroups: This parameter lets you control what is returned in the response. If you do not set this field, the method returns all the details of the item. Valid Values: PRODUCT - This adds the additionalImages, additionalProductIdentities, aspectGroups, description, gtins, image, and title product fields to the response, which describe the product associated with the item. See Product for more information about these fields. COMPACT - This returns only the following fields, which let you quickly check if the availability or price of the item has changed, if the item has been revised by the seller, or if an item's top-rated plus status has changed for items you have stored. itemId - The identifier of the item. itemAffiliateWebURL - The URL of the View Item page of the item, which includes the affiliate tracking ID. This field is only returned if the eBay partner enables affiliate tracking for the item by including the X-EBAY-C-ENDUSERCTX request header in the method. ItemWebURL - The URL of the View Item page of the item. This enables you to include a &quot;Report Item on eBay&quot; link that takes the buyer to the View Item page on eBay. From there they can report any issues regarding this item to eBay. legacyItemId - The unique identifier of the eBay listing that contains the item. This is the traditional/legacy ID that is often seen in the URL of the listing View Item page. sellerItemRevision - An identifier generated/incremented when a seller revises the item. The follow are the two types of item revisions: Seller changes, such as changing the title eBay system changes, such as changing the quantity when an item is purchased. This ID is changed only when the seller makes a change to the item. This means you cannot use this value to determine if the quantity has changed. To check if the quantity has changed, use estimatedAvailabilities. taxes - A container for the tax information for the item, such as the tax jurisdiction, the tax percentage, and the tax type. topRatedBuyingExperience - A boolean value indicating if this item is a top-rated plus item. A change in the item's top rated plus standing is not tracked by the revision ID. See topRatedBuyingExperience for more information. price - This is tracked by the revision ID but is returned here to enable you to quickly verify the price of the item. estimatedAvailabilities - Returns the item availability information, which is based on the item's quantity. Note: Changes in quantity are not tracked by sellerItemRevision. itemEndDate - This is the scheduled end time of the listing. eligibleForInlineCheckout - This parameter returns items based on whether or not the items can be purchased using the Buy Order API. If the value of this field is true, this indicates that the item can be purchased using the Order API. If the value of this field is false, this indicates that the item cannot be purchased using the Order API and must be purchased on the eBay site. For Example To check if a stored item's information is current, do following. Pass in the item ID and set fieldgroups to COMPACT. item/v1|4**********8|0?fieldgroups=COMPACT Do one of the following: If the sellerItemRevision field is returned and you haven't stored a revision number for this item, record the number and pass in the item ID in the getItem method to get the latest information. If the revision number is different from the value you have stored, update the value and pass in the item ID in the getItem method to get the latest information. If the sellerItemRevision field is not returned or has not changed, where needed, update the item information with the information returned in the response. Maximum value: 1 If more than one values is specified, the first value will be used.
@@ -223,11 +221,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/browse')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/browse/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -252,7 +248,7 @@ class API:
     def buy_browse_get_item_by_legacy_id(self, legacy_item_id, **kwargs):  # noqa: E501
         """get_item_by_legacy_id  # noqa: E501
 
-        This method is a bridge between the eBay legacy APIs, such as Shopping, and Finding and the eBay Buy APIs. There are differences between how legacy APIs and RESTful APIs return the identifier of an &quot;item&quot; and what the item ID represents. This method lets you use the legacy item ids retrieve the details of a specific item, such as description, price, and other information the buyer needs to make a purchasing decision. It also returns the RESTful item ID, which you can use with all the Buy API methods. For more information about how to use legacy ids with the Buy APIs, see Legacy API compatibility in the Buying Integration guide. This method returns the item details and requires you to pass in either the item ID of a non-variation item or the item ids of both the parent and child of an item group. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. When an item group is created, one of the item variations, such as the red shirt size L, is chosen as the &quot;parent&quot;. All the other items in the group are the children, such as the blue shirt size L, red shirt size M, etc. The fieldgroups URI parameter lets you control what is returned in the response. Setting fieldgroups to PRODUCT, adds additional fields to the default response that return information about the product of the item. For more information, see fieldgroups. URLs for this method Production URL: https://api.ebay.com/buy/browse/v1/item/get_item_by_legacy_id/ Sandbox URL: https://api.sandbox.ebay.com/buy/browse/v1/item/get_item_by_legacy_id/ Request headers This method uses the X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, Request headers in the Buying Integration Guide. Restrictions For a list of supported sites and other restrictions, see API Restrictions. eBay Partner Network: In order to be commissioned for your sales, you must use the URL returned in the itemAffiliateWebUrl field to forward your buyer to the ebay.com site.  # noqa: E501
+        This method is a bridge between the eBay legacy APIs, such as Shopping, and Finding and the eBay Buy APIs. There are differences between how legacy APIs and RESTful APIs return the identifier of an &quot;item&quot; and what the item ID represents. This method lets you use the legacy item ids retrieve the details of a specific item, such as description, price, and other information the buyer needs to make a purchasing decision. It also returns the RESTful item ID, which you can use with all the Buy API methods. For more information about how to use legacy ids with the Buy APIs, see Legacy API compatibility in the Buying Integration guide. This method returns the item details and requires you to pass in either the item ID of a non-variation item or the item ids of both the parent and child of an item group. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. When an item group is created, one of the item variations, such as the red shirt size L, is chosen as the &quot;parent&quot;. All the other items in the group are the children, such as the blue shirt size L, red shirt size M, etc. The fieldgroups URI parameter lets you control what is returned in the response. Setting fieldgroups to PRODUCT, adds additional fields to the default response that return information about the product of the item. For more information, see fieldgroups. URLs for this method Production URL: https://api.ebay.com/buy/browse/v1/item/get_item_by_legacy_id? Sandbox URL: https://api.sandbox.ebay.com/buy/browse/v1/item/get_item_by_legacy_id? Request headers This method uses the X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, Request headers in the Buying Integration Guide. Restrictions For a list of supported sites and other restrictions, see API Restrictions. eBay Partner Network: In order to be commissioned for your sales, you must use the URL returned in the itemAffiliateWebUrl field to forward your buyer to the ebay.com site.  # noqa: E501
 
         :param str legacy_item_id: Specifies either: The legacy item ID of an item that is not part of a group. The legacy item ID of a group, which is the ID of the &quot;parent&quot; of the group of items. Note: If you pass in a group ID, you must also use the legacy_variation_id field and pass in the legacy ID of the specific item variation (child ID). Legacy ids are returned by APIs, such as the Finding API. The following is an example of using the value of the ItemID field for a specific item from Finding to get the RESTful itemId value. &nbsp;&nbsp;&nbsp; browse/v1/item/get_item_by_legacy_id?legacy_item_id=1**********9 Maximum: 1 (required)
         :param str fieldgroups: This field lets you control what is returned in the response. If you do not set this field, the method returns all the details of the item. Note: In this method, the only value supported is PRODUCT. Valid Values: PRODUCT - This adds the additionalImages, additionalProductIdentities, aspectGroups, description, gtins, image, and title fields to the response, which describe the item's product. See Product for more information about these fields. Code so that your app gracefully handles any future changes to this list.
@@ -271,11 +267,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/browse')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/browse/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -300,7 +294,7 @@ class API:
     def buy_browse_get_items(self, **kwargs):  # noqa: E501
         """get_items  # noqa: E501
 
-        This method retrieves the details of specific items that the buyer needs to make a purchasing decision. Note: This is a (Limited Release) available only to select Partners. For this method, only the following fields are returned: eligibleForInlineCheckout, estimatedAvailabilities, itemAffiliateWebUrl, itemId, itemWebUrl, legacyItemId, price, sellerItemRevision, taxes, and topRatedBuyingExperience. URLs for this method Production URL: https://api.ebay.com/buy/browse/v1/item/ Sandbox URL: https://api.sandbox.ebay.com/buy/browse/v1/item/ Request headers This method uses the X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, Request headers in the Buying Integration Guide. Restrictions For a list of supported sites and other restrictions, see API Restrictions. eBay Partner Network: In order to be commissioned for your sales, you must use the URL returned in the itemAffiliateWebUrl field to forward your buyer to the ebay.com site.  # noqa: E501
+        This method retrieves the details of specific items that the buyer needs to make a purchasing decision. Note: This is a (Limited Release) available only to select Partners. For this method, only the following fields are returned: eligibleForInlineCheckout, estimatedAvailabilities, itemAffiliateWebUrl, itemId, itemWebUrl, legacyItemId, price, sellerItemRevision, taxes, and topRatedBuyingExperience. URLs for this method Production URL: https://api.ebay.com/buy/browse/v1/item? Sandbox URL: https://api.sandbox.ebay.com/buy/browse/v1/item? Request headers This method uses the X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, Request headers in the Buying Integration Guide. Restrictions For a list of supported sites and other restrictions, see API Restrictions. eBay Partner Network: In order to be commissioned for your sales, you must use the URL returned in the itemAffiliateWebUrl field to forward your buyer to the ebay.com site.  # noqa: E501
 
         :param str item_ids: A list of item IDs. Item IDs are the eBay RESTful identifier of items. RESTful Item ID Format: v1|#|# For example: v1|2**********2|0 or v1|1**********2|4**********2 In any given request, either item_ids or item_group_ids can be retrieved. Attempting to retrieve both will result in an error. In a request, multiple item_ids can be passed as comma separated values. Maximum allowed itemIDs: 20 For more information about item IDs for RESTful APIs, see the Legacy API compatibility section of the Buy APIs Overview.
         :param str item_group_ids: A list of item group IDs. Item group IDs are the eBay RESTful identifier of item groups. RESTful Group Item ID Format: ############ For example: 3**********9 In any given request, either item_ids or item_group_ids can be retrieved. Attempting to retrieve both will result in an error. In a request, multiple item_group_ids can be passed as comma separated values. Maximum allowed itemGroupIDs: 10
@@ -317,11 +311,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/browse')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/browse/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -346,7 +338,7 @@ class API:
     def buy_browse_get_items_by_item_group(self, item_group_id, **kwargs):  # noqa: E501
         """get_items_by_item_group  # noqa: E501
 
-        This method retrieves the details of the individual items in an item group. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. You pass in the item group ID as a URI parameter. You use this method to show the item details of items with multiple aspects, such as color, size, storage capacity, etc. This method returns two main containers; items and commonDescriptions. The items container has an array of containers with the details of each item in the group. The commonDescriptions container has an array of containers for a description and the item ids of all the items that have this exact description. Because items within an item group often have the same description, this decreases the size of the response. URLs for this method Production URL: https://api.ebay.com/buy/browse/v1/item/get_items_by_item_group/ Sandbox URL: https://api.sandbox.ebay.com/buy/browse/v1/item/get_items_by_item_group/ Request headers This method uses the X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, Request headers in the Buying Integration Guide. Restrictions For a list of supported sites and other restrictions, see API Restrictions. eBay Partner Network: In order to be commissioned for your sales, you must use the URL returned in the itemAffiliateWebUrl field to forward your buyer to the ebay.com site.  # noqa: E501
+        This method retrieves the details of the individual items in an item group. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. You pass in the item group ID as a URI parameter. You use this method to show the item details of items with multiple aspects, such as color, size, storage capacity, etc. This method returns two main containers; items and commonDescriptions. The items container has an array of containers with the details of each item in the group. The commonDescriptions container has an array of containers for a description and the item ids of all the items that have this exact description. Because items within an item group often have the same description, this decreases the size of the response. URLs for this method Production URL: https://api.ebay.com/buy/browse/v1/item/get_items_by_item_group? Sandbox URL: https://api.sandbox.ebay.com/buy/browse/v1/item/get_items_by_item_group? Request headers This method uses the X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, Request headers in the Buying Integration Guide. Restrictions For a list of supported sites and other restrictions, see API Restrictions. eBay Partner Network: In order to be commissioned for your sales, you must use the URL returned in the itemAffiliateWebUrl field to forward your buyer to the ebay.com site.  # noqa: E501
 
         :param str item_group_id: Identifier of the item group to return. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. This ID is returned in the itemGroupHref field of the search and getItem methods. For Example: https://api.ebay.com/buy/browse/v1/item/get_items_by_item_group?item_group_id=3**********6 (required)
         :return: ItemGroup
@@ -362,11 +354,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/browse')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/browse/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -391,7 +381,7 @@ class API:
     def buy_browse_search(self, **kwargs):  # noqa: E501
         """search  # noqa: E501
 
-        This method searches for eBay items by various query parameters and retrieves summaries of the items. You can search by keyword, category, eBay product ID (ePID), or GTIN, charity ID, or a combination of these. Note: Only FIXED_PRICE (Buy It Now) items are returned by default. However, this method does return items where both FIXED_PRICE and AUCTION are available as a buying option. After a bid has been placed, items become active auction items and are no longer returned by default, but they remain accessible by filtering for the AUCTION buying option. This method also supports the following: Filtering by the value of one or multiple fields, such as listing format, item condition, price range, location, and more. For the fields supported by this method, see the filter parameter. Retrieving the refinements (metadata) of an item , such as item aspects (color, brand), condition, category, etc. using the fieldgroups parameter. Filtering by item aspects and other refinements using the aspect_filter parameter. Filtering for items that are compatible with a specific product, using the compatibility_filter parameter. Creating aspects histograms, which enables shoppers to drill down in each refinement narrowing the search results. For details and examples of these capabilities, see Browse API in the Buying Integration Guide. Pagination and sort controls There are pagination controls (limit and offset fields) and sort query parameters that control/sort the data that is returned. By default, the results are sorted by &quot;Best Match&quot;. For more information about Best Match, see the eBay help page Best Match. URLs for this method Production URL: https://api.ebay.com/buy/browse/v1/item_summary/ Sandbox URL: https://api.sandbox.ebay.com/buy/browse/v1/item_summary/ Request headers This method uses the X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, Request headers in the Buying Integration Guide. Restrictions This method can return a maximum of 10,000 items. For a list of supported sites and other restrictions, see API Restrictions. eBay Partner Network: In order to receive a commission for your sales, you must use the URL returned in the itemAffiliateWebUrl field to forward your buyer to the ebay.com site.  # noqa: E501
+        This method searches for eBay items by various query parameters and retrieves summaries of the items. You can search by keyword, category, eBay product ID (ePID), or GTIN, charity ID, or a combination of these. Note: Only FIXED_PRICE (Buy It Now) items are returned by default. However, this method does return items where both FIXED_PRICE and AUCTION are available as a buying option. After a bid has been placed, items become active auction items and are no longer returned by default, but they remain accessible by filtering for the AUCTION buying option. This method also supports the following: Filtering by the value of one or multiple fields, such as listing format, item condition, price range, location, and more. For the fields supported by this method, see the filter parameter. Retrieving the refinements (metadata) of an item , such as item aspects (color, brand), condition, category, etc. using the fieldgroups parameter. Filtering by item aspects and other refinements using the aspect_filter parameter. Filtering for items that are compatible with a specific product, using the compatibility_filter parameter. Creating aspects histograms, which enables shoppers to drill down in each refinement narrowing the search results. For details and examples of these capabilities, see Browse API in the Buying Integration Guide. Pagination and sort controls There are pagination controls (limit and offset fields) and sort query parameters that control/sort the data that is returned. By default, the results are sorted by &quot;Best Match&quot;. For more information about Best Match, see the eBay help page Best Match. URLs for this method Production URL: https://api.ebay.com/buy/browse/v1/item_summary/search? Sandbox URL: https://api.sandbox.ebay.com/buy/browse/v1/item_summary/search? Request headers This method uses the X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, Request headers in the Buying Integration Guide. Restrictions This method can return a maximum of 10,000 items. For a list of supported sites and other restrictions, see API Restrictions. eBay Partner Network: In order to receive a commission for your sales, you must use the URL returned in the itemAffiliateWebUrl field to forward your buyer to the ebay.com site.  # noqa: E501
 
         :param str aspect_filter: This field lets you filter by item aspects. The aspect name/value pairs and category, which is required, is used to limit the results to specific aspects of the item. For example, in a clothing category one aspect pair would be Color/Red. For example, the method below uses the category ID for Women's Clothing. This will return only items for a woman's red shirt. /buy/browse/v1/item_summary/search?q=shirt&amp;category_ids=15724&amp;aspect_filter=categoryId:15724,Color:{Red} To get a list of the aspects pairs and the category, which is returned in the dominantCategoryId field, set fieldgroups to ASPECT_REFINEMENTS. /buy/browse/v1/item_summary/search?q=shirt&amp;fieldgroups=ASPECT_REFINEMENTS Required: The category ID is required twice; once as a URI parameter and as part of the aspect_filter. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/buy/browse/types/gct:AspectFilter
         :param str auto_correct: A query parameter that enables auto correction. Valid Values: KEYWORD
@@ -419,11 +409,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/browse')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/browse/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -448,7 +436,7 @@ class API:
     def buy_browse_search_by_image(self, **kwargs):  # noqa: E501
         """search_by_image  # noqa: E501
 
-        This is an Experimental method. This method searches for eBay items based on a image and retrieves summaries of the items. You pass in a Base64 image in the request payload and can refine the search by category, or eBay product ID (ePID), or a combination of these using URI parameters. To get the Base64 image string, you can use sites such as https://codebeautify.org/image-to-base64-converter. This method also supports the following: Filtering by the value of one or multiple fields, such as listing format, item condition, price range, location, and more. For the fields supported by this method, see the filter parameter. Filtering by item aspects using the aspect_filter parameter. For details and examples of these capabilities, see Browse API in the Buying Integration Guide. Pagination and sort controls There are pagination controls (limit and offset fields) and sort query parameters that control/sort the data that is returned. By default, the results are sorted by &quot;Best Match&quot;. For more information about Best Match, see the eBay help page Best Match. URLs for this method Production URL: https://api.ebay.com/buy/browse/v1/item_summary/search_by_image/ Sandbox URL: Due to the data available, this method is not supported in the eBay Sandbox. To test your integration, use the Production URL. Request headers This method uses the X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, Request headers in the Buying Integration Guide. URL Encoding for Parameters Query parameter values need to be URL encoded. For details, see URL encoding query parameter values. For readability, code examples in this document have not been URL encoded. Restrictions This method can return a maximum of 10,000 items. For a list of supported sites and other restrictions, see API Restrictions. eBay Partner Network: In order to receive a commission for your sales, you must use the URL returned in the itemAffiliateWebUrl field to forward your buyer to the ebay.com site.  # noqa: E501
+        This is an Experimental method. This method searches for eBay items based on a image and retrieves summaries of the items. You pass in a Base64 image in the request payload and can refine the search by category, or eBay product ID (ePID), or a combination of these using URI parameters. To get the Base64 image string, you can use sites such as https://codebeautify.org/image-to-base64-converter. This method also supports the following: Filtering by the value of one or multiple fields, such as listing format, item condition, price range, location, and more. For the fields supported by this method, see the filter parameter. Filtering by item aspects using the aspect_filter parameter. For details and examples of these capabilities, see Browse API in the Buying Integration Guide. Pagination and sort controls There are pagination controls (limit and offset fields) and sort query parameters that control/sort the data that is returned. By default, the results are sorted by &quot;Best Match&quot;. For more information about Best Match, see the eBay help page Best Match. URLs for this method Production URL: https://api.ebay.com/buy/browse/v1/item_summary/search_by_image? Sandbox URL: Due to the data available, this method is not supported in the eBay Sandbox. To test your integration, use the Production URL. Request headers This method uses the X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, Request headers in the Buying Integration Guide. URL Encoding for Parameters Query parameter values need to be URL encoded. For details, see URL encoding query parameter values. For readability, code examples in this document have not been URL encoded. Restrictions This method can return a maximum of 10,000 items. For a list of supported sites and other restrictions, see API Restrictions. eBay Partner Network: In order to receive a commission for your sales, you must use the URL returned in the itemAffiliateWebUrl field to forward your buyer to the ebay.com site.  # noqa: E501
 
         :param SearchByImageRequest body: The container for the image information fields.
         :param str aspect_filter: This field lets you filter by item aspects. The aspect name/value pairs and category, which is required, is used to limit the results to specific aspects of the item. For example, in a clothing category one aspect pair would be Color/Red. For example, the method below uses the category ID for Women's Clothing. This will return only items for a woman's red shirt. category_ids=15724&amp;aspect_filter=categoryId:15724,Color:{Red} Required: The category ID is required twice; once as a URI parameter and as part of the aspect_filter. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/buy/browse/types/gct:AspectFilter
@@ -472,11 +460,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/browse')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/browse/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -517,11 +503,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/browse')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/browse/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -561,11 +545,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/browse')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/browse/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -606,11 +588,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/browse')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/browse/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -651,11 +631,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/browse')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/browse/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -701,11 +679,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/deal')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/deal/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -747,11 +723,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/deal')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/deal/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -794,11 +768,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/deal')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/deal/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -844,11 +816,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/deal')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/deal/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -873,7 +843,7 @@ class API:
     def buy_feed_get_item_feed(self, x_ebay_c_marketplace_id, range, feed_scope, category_id, **kwargs):  # noqa: E501
         """get_item_feed  # noqa: E501
 
-        This method lets you download a TSV_GZIP (tab separated value gzip) Item feed file. The feed file contains all the items from all the child categories of the specified category. The first line of the file is the header, which labels the columns and indicates the order of the values on each line. Each header is described in the Response fields section. There are two types of item feed files generated: A daily Item feed file containing all the newly listed items for a specific category, date, and marketplace (feed_scope = NEWLY_LISTED) A weekly Item Bootstrap feed file containing all the items in a specific category and marketplace (feed_scope = ALL_ACTIVE) Note: Filters are applied to the feed files. For details, see Feed File Filters. When curating the items returned, be sure to code as if these filters are not applied as they can be changed or removed in the future. URLs for this method Production URL: https://api.ebay.com/buy/feed/v1_beta/ Sandbox URL: https://api.sandbox.ebay.com/buy/feed/v1_beta/ Downloading feed files Item feed files are binary gzip files. If the file is larger than 100 MB, the download must be streamed in chunks. You specify the size of the chunks in bytes using the Range request header. The Content-range response header indicates where in the full resource this partial chunk of data belongs and the total number of bytes in the file. For more information about using these headers, see Retrieving a gzip feed file. In addition to the API, there is an open source Feed SDK written in Java that downloads, combines files into a single file when needed, and unzips the entire feed file. It also lets you specify field filters to curate the items in the file. Note: The response is always a TSV_GZIP file. However for documentation purposes, the response is shown as JSON fields so that the value returned in each column can be explained. The order of the response fields, shows you the order of the columns in the feed file. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
+        This method lets you download a TSV_GZIP (tab separated value gzip) Item feed file. The feed file contains all the items from all the child categories of the specified category. The first line of the file is the header, which labels the columns and indicates the order of the values on each line. Each header is described in the Response fields section. There are two types of item feed files generated: A daily Item feed file containing all the newly listed items for a specific category, date, and marketplace (feed_scope = NEWLY_LISTED) A weekly Item Bootstrap feed file containing all the items in a specific category and marketplace (feed_scope = ALL_ACTIVE) Note: Filters are applied to the feed files. For details, see Feed File Filters. When curating the items returned, be sure to code as if these filters are not applied as they can be changed or removed in the future. URLs for this method Production URL: https://api.ebay.com/buy/feed/v1_beta/item? Sandbox URL: https://api.sandbox.ebay.com/buy/feed/v1_beta/item? Downloading feed files Item feed files are binary gzip files. If the file is larger than 100 MB, the download must be streamed in chunks. You specify the size of the chunks in bytes using the Range request header. The Content-range response header indicates where in the full resource this partial chunk of data belongs and the total number of bytes in the file. For more information about using these headers, see Retrieving a gzip feed file. In addition to the API, there is an open source Feed SDK written in Java that downloads, combines files into a single file when needed, and unzips the entire feed file. It also lets you specify field filters to curate the items in the file. Note: The response is always a TSV_GZIP file. However for documentation purposes, the response is shown as JSON fields so that the value returned in each column can be explained. The order of the response fields, shows you the order of the columns in the feed file. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
 
         :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. Note: This value is case sensitive. For example: &nbsp;&nbsp;X-EBAY-C-MARKETPLACE-ID = EBAY_US For a list of supported sites see, API Restrictions. (required)
         :param str range: This header specifies the range in bytes of the chunks of the gzip file being returned. Format: bytes=startpos-endpos For example, the following retrieves the first 10 MBs of the feed file. &nbsp;&nbsp;Range bytes=0-10485760 For more information about using this headers, see Retrieving a gzip feed file. Maximum: 100 MB (10MB in the Sandbox) (required)
@@ -893,11 +863,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/feed/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -922,7 +890,7 @@ class API:
     def buy_feed_get_item_group_feed(self, x_ebay_c_marketplace_id, feed_scope, category_id, **kwargs):  # noqa: E501
         """get_item_group_feed  # noqa: E501
 
-        This method lets you download a TSV_GZIP (tab separated value gzip) Item Group feed file. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. There are two types of item group feed files generated: A daily Item Group feed file containing the item group variation information associated with items returned in the Item feed file for a specific day, category, and marketplace. (feed_scope = NEWLY_LISTED) A weekly Item Group Bootstrap feed file containing all the item group variation information associated with items returned in the Item Bootstrap feed file for all the items in a specific category. (feed_scope = ALL_ACTIVE) Note: Filters are applied to the feed files. For details, see Feed File Filters. When curating the items returned, be sure to code as if these filters are not applied as they can be changed or removed in the future. The contents of these feed files are based on the contents of the corresponding daily Item or Item Bootstrap feed file. When a new Item or Item Bootstrap feed file is generated, the service reads the file and if an item in the file has a primaryItemGroupId value, which indicates the item is part of an item group, it uses that value to return the item group (parent item) information for that item in the corresponding Item Group or Item Group Bootstrap feed file. This information includes the name/value pair of the aspects of the items in this group returned in the variesByLocalizedAspects column. For example, if the item was a shirt some of the variation names could be Size, Color, etc. Also the images for the various aspects are returned in the additionalImageUrls column. The first line in any feed file is the header, which labels the columns and indicates the order of the values on each line. Each header is described in the Response fields section. Combining the Item Group and Item feed files The Item Group or Item Group Bootstrap feed file contains details about the item group (parent item), including the item group ID itemGroupId. You match the value of itemGroupId from the Item Group feed file with the value of primaryItemGroupId from the corresponding daily Item or Item Bootstrap feed file. URLs for this method Production URL: https://api.ebay.com/buy/feed/v1_beta/ Sandbox URL: https://api.sandbox.ebay.com/buy/feed/v1_beta/ Downloading feed files Item Group feed files are binary gzip files. If the file is larger than 100 MB, the download must be streamed in chunks. You specify the size of the chunks in bytes using the Range request header. The content-range response header indicates where in the full resource this partial chunk of data belongs and the total number of bytes in the file. For more information about using these headers, see Retrieving a gzip feed file. Note: The response is always only a TSV_GZIP file. However for documentation purposes, the response is shown as JSON fields so that the value returned in each column can be explained. The order of the response fields, shows you the order of the columns in the feed file. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
+        This method lets you download a TSV_GZIP (tab separated value gzip) Item Group feed file. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. There are two types of item group feed files generated: A daily Item Group feed file containing the item group variation information associated with items returned in the Item feed file for a specific day, category, and marketplace. (feed_scope = NEWLY_LISTED) A weekly Item Group Bootstrap feed file containing all the item group variation information associated with items returned in the Item Bootstrap feed file for all the items in a specific category. (feed_scope = ALL_ACTIVE) Note: Filters are applied to the feed files. For details, see Feed File Filters. When curating the items returned, be sure to code as if these filters are not applied as they can be changed or removed in the future. The contents of these feed files are based on the contents of the corresponding daily Item or Item Bootstrap feed file. When a new Item or Item Bootstrap feed file is generated, the service reads the file and if an item in the file has a primaryItemGroupId value, which indicates the item is part of an item group, it uses that value to return the item group (parent item) information for that item in the corresponding Item Group or Item Group Bootstrap feed file. This information includes the name/value pair of the aspects of the items in this group returned in the variesByLocalizedAspects column. For example, if the item was a shirt some of the variation names could be Size, Color, etc. Also the images for the various aspects are returned in the additionalImageUrls column. The first line in any feed file is the header, which labels the columns and indicates the order of the values on each line. Each header is described in the Response fields section. Combining the Item Group and Item feed files The Item Group or Item Group Bootstrap feed file contains details about the item group (parent item), including the item group ID itemGroupId. You match the value of itemGroupId from the Item Group feed file with the value of primaryItemGroupId from the corresponding daily Item or Item Bootstrap feed file. URLs for this method Production URL: https://api.ebay.com/buy/feed/v1_beta/item_group? Sandbox URL: https://api.sandbox.ebay.com/buy/feed/v1_beta/item_group? Downloading feed files Item Group feed files are binary gzip files. If the file is larger than 100 MB, the download must be streamed in chunks. You specify the size of the chunks in bytes using the Range request header. The content-range response header indicates where in the full resource this partial chunk of data belongs and the total number of bytes in the file. For more information about using these headers, see Retrieving a gzip feed file. Note: The response is always only a TSV_GZIP file. However for documentation purposes, the response is shown as JSON fields so that the value returned in each column can be explained. The order of the response fields, shows you the order of the columns in the feed file. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
 
         :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. Note: This value is case sensitive. For example: &nbsp;&nbsp;X-EBAY-C-MARKETPLACE-ID = EBAY_US For a list of supported sites see, API Restrictions. (required)
         :param str feed_scope: Specifies the type of file to return. Valid Values: NEWLY_LISTED - Returns the Item Group feed file containing the item group variation information for items in the daily Item feed file that were associated with an item group. The items in this type of Item feed file are items that were listed on the day specified by the date parameter in the category specified by the category_id parameter. /item_group?feed_scope=NEWLY_LISTED&amp;category_id=15032&amp;date=20170925 ALL_ACTIVE - Returns the weekly Item Group Bootstrap file containing the item group variation information for items in the weekly Item Bootstrap feed file that were associated with an item group. The items are Good 'Til Cancelled items in the category specified by the category_id parameter. Note: Bootstrap files are generated every Tuesday and the file is available on Wednesday. However, the exact time the file is available can vary so we recommend you download the Bootstrap file on Thursday. The item groups in the file are for the items that were in the specified category on Sunday. /item_group?feed_scope=ALL_ACTIVE&amp;category_id=15032 (required)
@@ -942,11 +910,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/feed/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -971,7 +937,7 @@ class API:
     def buy_feed_get_item_snapshot_feed(self, x_ebay_c_marketplace_id, range, category_id, snapshot_date, **kwargs):  # noqa: E501
         """get_item_snapshot_feed  # noqa: E501
 
-        The Hourly Snapshot feed file is generated each hour every day for most categories. This method lets you download an Hourly Snapshot TSV_GZIP (tab-separated value gzip) feed file containing the details of all the items that have changed within the specified day and hour for a specific category. This means to generate the 8AM file of items that have changed from 8AM and 8:59AM, the service starts at 9AM. You can retrieve the 8AM snapshot file at 10AM. Snapshot feeds now include new listings. You can check itemCreationDate to identify listings that were newly created within the specified hour. Note: Filters are applied to the feed files. For details, see Feed File Filters. When curating the items returned, be sure to code as if these filters are not applied as they can be changed or removed in the future. You can use the response from this method to update the item details of items stored in your database. By looking at the value of itemSnapshotDate for a given item, you will be able to tell which information is the latest. Important: When the value of the availability column is UNAVAILABLE, only the itemId and availability columns are populated. URLs for this method Production URL: https://api.ebay.com/buy/feed/v1_beta/ Sandbox URL: https://api.sandbox.ebay.com/buy/feed/v1_beta/ Downloading feed files Hourly snapshot feed files are binary gzip files. If the file is larger than 100 MB, the download must be streamed in chunks. You specify the size of the chunks in bytes using the Range request header. The Content-range response header indicates where in the full resource this partial chunk of data belongs and the total number of bytes in the file. For more information about using these headers, see Retrieving a gzip feed file. Note: The response is always a TSV_GZIP file. However for documentation purposes, the response is shown as JSON fields so that the value returned in each column can be explained. The order of the response fields, shows you the order of the columns in the feed file. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
+        The Hourly Snapshot feed file is generated each hour every day for most categories. This method lets you download an Hourly Snapshot TSV_GZIP (tab-separated value gzip) feed file containing the details of all the items that have changed within the specified day and hour for a specific category. This means to generate the 8AM file of items that have changed from 8AM and 8:59AM, the service starts at 9AM. You can retrieve the 8AM snapshot file at 10AM. Snapshot feeds now include new listings. You can check itemCreationDate to identify listings that were newly created within the specified hour. Note: Filters are applied to the feed files. For details, see Feed File Filters. When curating the items returned, be sure to code as if these filters are not applied as they can be changed or removed in the future. You can use the response from this method to update the item details of items stored in your database. By looking at the value of itemSnapshotDate for a given item, you will be able to tell which information is the latest. Important: When the value of the availability column is UNAVAILABLE, only the itemId and availability columns are populated. URLs for this method Production URL: https://api.ebay.com/buy/feed/v1_beta/item_snapshot? Sandbox URL: https://api.sandbox.ebay.com/buy/feed/v1_beta/item_snapshot? Downloading feed files Hourly snapshot feed files are binary gzip files. If the file is larger than 100 MB, the download must be streamed in chunks. You specify the size of the chunks in bytes using the Range request header. The Content-range response header indicates where in the full resource this partial chunk of data belongs and the total number of bytes in the file. For more information about using these headers, see Retrieving a gzip feed file. Note: The response is always a TSV_GZIP file. However for documentation purposes, the response is shown as JSON fields so that the value returned in each column can be explained. The order of the response fields, shows you the order of the columns in the feed file. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
 
         :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. Note: This value is case sensitive. For example: &nbsp;&nbsp;X-EBAY-C-MARKETPLACE-ID = EBAY_US For a list of supported sites see, API Restrictions. (required)
         :param str range: This header specifies the range in bytes of the chunks of the gzip file being returned. Format: bytes=startpos-endpos For example, the following retrieves the first 10 MBs of the feed file. &nbsp;&nbsp;Range bytes=0-10485760 For more information about using this headers, see Retrieving a gzip feed file. Maximum: 100 MB (10MB in the Sandbox) (required)
@@ -990,11 +956,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/feed/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1038,11 +1002,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/marketing/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1086,11 +1048,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/marketing/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1134,11 +1094,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/marketing/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1163,7 +1121,7 @@ class API:
     def buy_marketplace_insights_search(self, **kwargs):  # noqa: E501
         """search  # noqa: E501
 
-        (Limited Release) This method searches for sold eBay items by various URI query parameters and retrieves the sales history of the items for the last 90 days. You can search by keyword, category, eBay product ID (ePID), or GTIN, or a combination of these. This method also supports the following: Filtering by the value of one or multiple fields, such as listing format, item condition, price range, location, and more. For the fields supported by this method, see the filter parameter. Retrieving the refinements (metadata) of an item , such as item aspects (color, brand), condition, category, etc. using the fieldgroups parameter. Filtering by item aspects and other refinements using the aspect_filter parameter. Creating aspects histograms, which enables shoppers to drill down in each refinement narrowing the search results. For details and examples of these capabilities, see Browse API in the Buying Integration Guide. Pagination and sort controls There are pagination controls (limit and offset fields) and sort query parameters that control/sort the data that is returned. By default, the results are sorted by &quot;Best Match&quot;. For more information about Best Match, see the eBay help page Best Match. URLs for this method Production URL: https://api.ebay.com/buy/marketplace_insights/v1_beta/item_sales/ Sandbox URL: https://api.sandbox.ebay.com/buy/marketplace_insights/v1_beta/item_sales/ Request headers You will want to use the X-EBAY-C-ENDUSERCTX request header with this method. If you are an eBay Network Partner you must use affiliateCampaignId=ePNCampaignId,affiliateReferenceId=referenceId in the header in order to be paid for selling eBay items on your site . For details see, Request headers in the Buy APIs Overview. URL Encoding for Parameters Query parameter values need to be URL encoded. For details, see URL encoding query parameter values. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
+        (Limited Release) This method searches for sold eBay items by various URI query parameters and retrieves the sales history of the items for the last 90 days. You can search by keyword, category, eBay product ID (ePID), or GTIN, or a combination of these. This method also supports the following: Filtering by the value of one or multiple fields, such as listing format, item condition, price range, location, and more. For the fields supported by this method, see the filter parameter. Retrieving the refinements (metadata) of an item , such as item aspects (color, brand), condition, category, etc. using the fieldgroups parameter. Filtering by item aspects and other refinements using the aspect_filter parameter. Creating aspects histograms, which enables shoppers to drill down in each refinement narrowing the search results. For details and examples of these capabilities, see Browse API in the Buying Integration Guide. Pagination and sort controls There are pagination controls (limit and offset fields) and sort query parameters that control/sort the data that is returned. By default, the results are sorted by &quot;Best Match&quot;. For more information about Best Match, see the eBay help page Best Match. URLs for this method Production URL: https://api.ebay.com/buy/marketplace_insights/v1_beta/item_sales/search? Sandbox URL: https://api.sandbox.ebay.com/buy/marketplace_insights/v1_beta/item_sales/search? Request headers You will want to use the X-EBAY-C-ENDUSERCTX request header with this method. If you are an eBay Network Partner you must use affiliateCampaignId=ePNCampaignId,affiliateReferenceId=referenceId in the header in order to be paid for selling eBay items on your site . For details see, Request headers in the Buy APIs Overview. URL Encoding for Parameters Query parameter values need to be URL encoded. For details, see URL encoding query parameter values. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
 
         :param str aspect_filter: This field lets you filter by item aspects. The aspect name/value pairs and category, which is required, is used to limit the results to specific aspects of the item. For example, in a clothing category one aspect pair would be Color/Red. The results are returned in the refinement container. For example, the method below uses the category ID for Women's Clothing. This will return only sold items for a woman's red or blue shirt. /buy/marketplace_insights/v1_beta/item_sales/search?q=shirt&amp;category_ids=15724&amp;aspect_filter=categoryId:15724,Color:{Red|Blue} To get a list of the aspects pairs and the category, which is returned in the dominantCategoryId field, set fieldgroups to ASPECT_REFINEMENTS. /buy/marketplace_insights/v1_beta/item_sales/search?q=shirt&amp;category_ids=15724&amp;fieldgroups=ASPECT_REFINEMENTS Format: aspectName:{value1|value2} Required: The category ID is required twice; once as a URI parameter and as part of the aspect_filter parameter. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/buy/marketplace_insights/types/gct:AspectFilter
         :param str category_ids: The category ID is required and is used to limit the results. For example, if you search for 'shirt' the result set will be very large. But if you also include the category ID 137084, the results will be limited to 'Men's Athletic Apparel'. For example: /buy/marketplace-insights/v1_beta/item_sales/search?q=shirt&amp;category_ids=137084 The list of eBay category IDs is not published and category IDs are not the same across all the eBay marketplaces. You can use the following techniques to find a category by site: For the US marketplace, use the Category Changes page. Use the Taxonomy API. For details see Get Categories for Buy APIs. Usage: This field can have one category ID or a comma separated list of IDs. You can use category_ids by itself or use it with any combination of the gtin, epid, and q fields, which gives you additional control over the result set. Restrictions: Partners will be given a list of categories they can use. To use a top-level (L1) category, you must also include the q, or gtin, or epid query parameter. Maximum number of categories: 4
@@ -1188,11 +1146,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/marketplace/insights')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/marketplace_insights/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1217,7 +1173,7 @@ class API:
     def buy_offer_get_bidding(self, item_id, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """get_bidding  # noqa: E501
 
-        This method retrieves the bidding details that are specific to the buyer of the specified auction. This must be an auction where the buyer has already placed a bid. To retrieve the bidding information you use a user access token and pass in the item ID of the auction. You can also retrieve general bidding details about the auction, such as minimum bid price and the count of unique bidders, using the Browse API getItem method. URLs for this method Production URL: https://api.ebay.com/buy/offer/v1_beta/bidding/ Sandbox URL: https://api.sandbox.ebay.com/buy/offer/v1_beta/bidding/ Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
+        This method retrieves the bidding details that are specific to the buyer of the specified auction. This must be an auction where the buyer has already placed a bid. To retrieve the bidding information you use a user access token and pass in the item ID of the auction. You can also retrieve general bidding details about the auction, such as minimum bid price and the count of unique bidders, using the Browse API getItem method. URLs for this method Production URL: https://api.ebay.com/buy/offer/v1_beta/bidding/{item_id} Sandbox URL: https://api.sandbox.ebay.com/buy/offer/v1_beta/bidding/{item_id} Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
 
         :param str item_id: The eBay RESTful identifier of an item that you want the buyer's bidding information. This ID is returned by the Browse and Feed API methods. RESTful Item ID example: v1|2**********2|0 For more information about item ID for RESTful APIs, see the Legacy API compatibility section of the Buy APIs Overview. Restriction: The buyer must have placed a bid for this item. (required)
         :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the buyer is based. Note: This value is case sensitive. For example: &nbsp;&nbsp;X-EBAY-C-MARKETPLACE-ID = EBAY_US For a list of supported sites see, API Restrictions. (required)
@@ -1234,11 +1190,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/offer')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/offer/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1263,7 +1217,7 @@ class API:
     def buy_offer_place_proxy_bid(self, x_ebay_c_marketplace_id, item_id, **kwargs):  # noqa: E501
         """place_proxy_bid  # noqa: E501
 
-        This method uses a user access token to place a proxy bid for the buyer on a specific auction item. The item must offer AUCTION as one of the buyingOptions. To place a bid, you pass in the item ID of the auction as a URI parameter and the buyer's maximum bid amount (maxAmount ) in the payload. By placing a proxy bid, the buyer is agreeing to purchase the item if they win the auction. After this bid is placed, if someone else outbids the buyer a bid, eBay automatically bids again for the buyer up to the amount of their maximum bid. When the bid exceeds the buyer's maximum bid, eBay will notify them that they have been outbid. To find auctions, you can use the Browse API to search for items and use a filter to return only auction items. For example: /buy/browse/v1/item_summary/search?q=iphone&amp;filter=buyingOptions:{AUCTION} URLs for this method Production URL: https://api.ebay.com/buy/offer/v1_beta/bidding/ Sandbox URL: https://api.sandbox.ebay.com/buy/offer/v1_beta/bidding/ Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
+        This method uses a user access token to place a proxy bid for the buyer on a specific auction item. The item must offer AUCTION as one of the buyingOptions. To place a bid, you pass in the item ID of the auction as a URI parameter and the buyer's maximum bid amount (maxAmount ) in the payload. By placing a proxy bid, the buyer is agreeing to purchase the item if they win the auction. After this bid is placed, if someone else outbids the buyer a bid, eBay automatically bids again for the buyer up to the amount of their maximum bid. When the bid exceeds the buyer's maximum bid, eBay will notify them that they have been outbid. To find auctions, you can use the Browse API to search for items and use a filter to return only auction items. For example: /buy/browse/v1/item_summary/search?q=iphone&amp;filter=buyingOptions:{AUCTION} URLs for this method Production URL: https://api.ebay.com/buy/offer/v1_beta/bidding/{item_id}/place_proxy_bid Sandbox URL: https://api.sandbox.ebay.com/buy/offer/v1_beta/bidding/{item_id}/place_proxy_bid Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
 
         :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the buyer is based. Note: This value is case sensitive. For example: &nbsp;&nbsp;X-EBAY-C-MARKETPLACE-ID = EBAY_US For a list of supported sites see, API Restrictions. (required)
         :param str item_id: The eBay RESTful identifier of an item you want to bid on. This ID is returned by the Browse and Feed API methods. RESTful Item ID Example: v1|2**********2|0 For more information about item ID for RESTful APIs, see the Legacy API compatibility section of the Buy APIs Overview. (required)
@@ -1281,11 +1235,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/offer')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/offer/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1327,11 +1279,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1372,11 +1322,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1417,11 +1365,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1462,11 +1408,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1508,11 +1452,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1554,11 +1496,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1600,11 +1540,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1646,11 +1584,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1692,11 +1628,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1738,11 +1672,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1783,11 +1715,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1828,11 +1758,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1874,11 +1802,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1920,11 +1846,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -1966,11 +1890,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2012,11 +1934,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2058,11 +1978,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2104,11 +2022,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2150,11 +2066,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2195,11 +2109,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2241,11 +2153,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2286,11 +2196,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2331,11 +2239,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2377,11 +2283,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2423,11 +2327,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2474,11 +2376,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2520,11 +2420,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2566,11 +2464,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2612,11 +2508,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2657,11 +2551,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/buy/order')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/buy/order/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2702,11 +2594,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/commerce/catalog')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/commerce/catalog/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2754,11 +2644,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/commerce/catalog')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/commerce/catalog/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2800,11 +2688,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/commerce/charity')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/commerce/charity/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2846,11 +2732,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/commerce/charity')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/commerce/charity/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2895,11 +2779,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/commerce/charity')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/commerce/charity/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2939,11 +2821,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/commerce/identity')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/commerce/identity/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -2984,11 +2864,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/commerce/notification')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/commerce/notification/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3029,11 +2907,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/commerce/taxonomy')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/commerce/taxonomy/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3075,11 +2951,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/commerce/taxonomy')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/commerce/taxonomy/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3121,11 +2995,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/commerce/taxonomy')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/commerce/taxonomy/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3166,11 +3038,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/commerce/taxonomy')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/commerce/taxonomy/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3212,11 +3082,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/commerce/taxonomy')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/commerce/taxonomy/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3260,11 +3128,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/commerce/taxonomy')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/commerce/taxonomy/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3306,11 +3172,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/commerce/taxonomy')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/commerce/taxonomy/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3352,11 +3216,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/commerce/taxonomy')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/commerce/taxonomy/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3397,11 +3259,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/commerce/translation')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/commerce/translation/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3443,11 +3303,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/developer/analytics')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/developer/analytics/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3489,11 +3347,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/developer/analytics')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/developer/analytics/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3534,11 +3390,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3579,11 +3433,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3624,11 +3476,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3669,11 +3519,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3715,11 +3563,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3761,11 +3607,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3805,11 +3649,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3851,11 +3693,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3896,11 +3736,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3941,11 +3779,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -3986,11 +3822,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4031,11 +3865,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4077,11 +3909,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4123,11 +3953,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4169,11 +3997,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4213,11 +4039,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4257,11 +4081,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4302,11 +4124,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4347,11 +4167,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4392,11 +4210,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4437,11 +4253,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4482,11 +4296,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4527,11 +4339,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4572,11 +4382,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4618,11 +4426,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4664,11 +4470,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4711,11 +4515,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4757,11 +4559,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4803,11 +4603,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4848,11 +4646,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/account')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/account/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4895,11 +4691,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/analytics')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/analytics/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4939,11 +4733,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/analytics')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/analytics/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -4985,11 +4777,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/analytics')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/analytics/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5033,11 +4823,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/analytics')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/analytics/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5083,11 +4871,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/compliance')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/compliance/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5128,11 +4914,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/compliance')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/compliance/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5174,11 +4958,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/compliance')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/compliance/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5220,11 +5002,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5265,11 +5045,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5314,11 +5092,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5340,13 +5116,13 @@ class API:
 
         return result
 
-    def sell_feed_create_order_task(self, body, **kwargs):  # noqa: E501
-        """create_order_task  # noqa: E501
+    def sell_feed_create_inventory_task(self, body, **kwargs):  # noqa: E501
+        """create_inventory_task  # noqa: E501
 
-        This method creates an order download task with filter criteria for the order report. When using this method, specify the feedType, schemaVersion, and filterCriteria for the report. The method returns the location response header containing the getOrderTask call URI to retrieve the order task you just created. The URL includes the eBay-assigned task ID, which you can use to reference the order task. To retrieve the status of the task, use the getOrderTask method to retrieve a single task ID or the getOrderTasks method to retrieve multiple order task IDs. Note: The scope depends on the feed type. An error message results when an unsupported scope or feed type is specified. The following list contains this method's authorization scope and its corresponding feed type: https://api.ebay.com/oauth/api_scope/sell.fulfillment: LMS_ORDER_REPORT For details about how this method is used, see General feed types in the Selling Integration Guide. Note: At this time, the createOrderTask method only supports order creation date filters and not modified order date filters. Do not include the modifiedDateRange filter in your request payload.  # noqa: E501
+        This method creates an inventory-related download task for a specified feed type with optional filter criteria. When using this method, specify the feedType. This method returns the location response header containing the getInventoryTask call URI to retrieve the inventory task you just created. The URL includes the eBay-assigned task ID, which you can use to reference the inventory task. To retrieve the status of the task, use the getInventoryTask method to retrieve a single task ID or the getInventoryTasks method to retrieve multiple task IDs. Note: The scope depends on the feed type. An error message results when an unsupported scope or feed type is specified.Presently, this method supports Active Inventory Report. The ActiveInventoryReport returns a report that contains price and quantity information for all of the active listings for a specific seller. A seller can use this information to maintain their inventory on eBay.  # noqa: E501
 
-        :param CreateOrderTaskRequest body: description not needed (required)
-        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. Note: This value is case sensitive. For example: X-EBAY-C-MARKETPLACE-ID = EBAY_US This identifies the eBay marketplace that applies to this task. See MarketplaceIdEnum.
+        :param CreateInventoryTaskRequest body: The request payload containing the version, feedType, and optional filterCriteria. (required)
+        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. Note: This value is case sensitive. For example: X-EBAY-C-MARKETPLACE-ID:EBAY_US This identifies the eBay marketplace that applies to this task. See MarketplaceIdEnum.
         :return: None
         """
         # Configure OAuth2 access token for authorization: api_auth
@@ -5360,11 +5136,144 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
+
+        # create an instance of the API class
+        api_instance = \
+            sell_feed.InventoryTaskApi(sell_feed.ApiClient(configuration))
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
+
+        result = None
+        try:
+            api_response = api_instance.create_inventory_task(
+                body, **kwargs  # noqa: E501
+            )
+
+        except SellFeedException as error:
+            logging.critical('APIException status ' + error.status + ' reason '
+                             + error.reason + ' body ' + error.body + '.')
+
+        else:
+            result = api_response
+
+        return result
+
+    def sell_feed_get_inventory_task(self, task_id, **kwargs):  # noqa: E501
+        """get_inventory_task  # noqa: E501
+
+        This method retrieves the task details and status of the specified inventory-related task. The input is task_id.  # noqa: E501
+
+        :param str task_id: The ID of the task. This ID was generated when the task was created by the createInventoryTask method (required)
+        :return: InventoryTask
+        """
+        # Configure OAuth2 access token for authorization: api_auth
+        configuration = sell_feed.Configuration()
+        configuration.access_token = self._token.get()
+
+        # Configure the host endpoint
+        if self._use_sandbox:
+            configuration.host = configuration.host.replace('api.ebay.com',
+                                                            'api.sandbox.ebay.com')
+        # check for host has flaws and then then compensate
+        if '{basePath}' in configuration.host:
+            configuration.host = configuration.host.replace('{basePath}',
+                                                            '/sell/feed/v1')
+        else:
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
+
+        # create an instance of the API class
+        api_instance = \
+            sell_feed.InventoryTaskApi(sell_feed.ApiClient(configuration))
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
+
+        result = None
+        try:
+            api_response = api_instance.get_inventory_task(
+                task_id, **kwargs  # noqa: E501
+            )
+
+        except SellFeedException as error:
+            logging.critical('APIException status ' + error.status + ' reason '
+                             + error.reason + ' body ' + error.body + '.')
+
+        else:
+            result = api_response
+
+        return result
+
+    def sell_feed_get_inventory_tasks(self, **kwargs):  # noqa: E501
+        """get_inventory_tasks  # noqa: E501
+
+        This method searches for multiple tasks of a specific feed type, and includes date filters and pagination.  # noqa: E501
+
+        :param str feed_type: The feed type associated with the inventory task. Either feed_type or schedule_id is required. Do not use with the schedule_id parameter. Presently, only one feed type is available: LMS_ACTIVE_INVENTORY_REPORT
+        :param str schedule_id: The ID of the schedule for which to retrieve the latest result file. This ID is generated when the schedule was created by the createSchedule method. Schedules apply to downloaded reports (LMS_ACTIVE_INVENTORY_REPORT). Either schedule_id or feed_type is required. Do not use with the feed_type parameter.
+        :param str look_back_days: The number of previous days in which to search for tasks. Do not use with the date_range parameter. If both date_range and look_back_days are omitted, this parameter's default value is used. Default: 7 Range: 1-90 (inclusive)
+        :param str date_range: Specifies the range of task creation dates used to filter the results. The results are filtered to include only tasks with a creation date that is equal to this date or is within specified range. Note: Maximum date range window size is 90 days. Valid Format (UTC): yyyy-MM-ddThh:mm:ss.SSSZ..yyyy-MM-ddThh:mm:ss.SSSZ For example: Tasks created on March 31, 2021 2021-03-31T00:00:00.000Z..2021-03-31T00:00:00.000Z
+        :param str limit: The maximum number of tasks that can be returned on each page of the paginated response. Use this parameter in conjunction with the offset parameter to control the pagination of the output. Note: This feature employs a zero-based list, where the first item in the list has an offset of 0. For example, if offset is set to 10 and limit is set to 10, the call retrieves tasks 11 thru 20 from the result set. If this parameter is omitted, the default value is used. Default: 10 Maximum: 500
+        :param str offset: The number of tasks to skip in the result set before returning the first task in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. If this query parameter is not set, the default value is used and the first page of records is returned. Default: 0
+        :return: InventoryTaskCollection
+        """
+        # Configure OAuth2 access token for authorization: api_auth
+        configuration = sell_feed.Configuration()
+        configuration.access_token = self._token.get()
+
+        # Configure the host endpoint
+        if self._use_sandbox:
+            configuration.host = configuration.host.replace('api.ebay.com',
+                                                            'api.sandbox.ebay.com')
+        # check for host has flaws and then then compensate
+        if '{basePath}' in configuration.host:
+            configuration.host = configuration.host.replace('{basePath}',
+                                                            '/sell/feed/v1')
+        else:
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
+
+        # create an instance of the API class
+        api_instance = \
+            sell_feed.InventoryTaskApi(sell_feed.ApiClient(configuration))
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id
+
+        result = None
+        try:
+            api_response = api_instance.get_inventory_tasks(
+                **kwargs  # noqa: E501
+            )
+
+        except SellFeedException as error:
+            logging.critical('APIException status ' + error.status + ' reason '
+                             + error.reason + ' body ' + error.body + '.')
+
+        else:
+            result = api_response
+
+        return result
+
+    def sell_feed_create_order_task(self, body, **kwargs):  # noqa: E501
+        """create_order_task  # noqa: E501
+
+        This method creates an order download task with filter criteria for the order report. When using this method, specify the feedType, schemaVersion, and filterCriteria for the report. The method returns the location response header containing the getOrderTask call URI to retrieve the order task you just created. The URL includes the eBay-assigned task ID, which you can use to reference the order task. To retrieve the status of the task, use the getOrderTask method to retrieve a single task ID or the getOrderTasks method to retrieve multiple order task IDs. Note: The scope depends on the feed type. An error message results when an unsupported scope or feed type is specified. The following list contains this method's authorization scope and its corresponding feed type: https://api.ebay.com/oauth/api_scope/sell.fulfillment: LMS_ORDER_REPORT For details about how this method is used, see General feed types in the Selling Integration Guide. Note: At this time, the createOrderTask method only supports order creation date filters and not modified order date filters. Do not include the modifiedDateRange filter in your request payload.  # noqa: E501
+
+        :param CreateOrderTaskRequest body: description not needed (required)
+        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. Note: This value is case sensitive. For example: X-EBAY-C-MARKETPLACE-ID:EBAY_US This identifies the eBay marketplace that applies to this task. See MarketplaceIdEnum.
+        :return: None
+        """
+        # Configure OAuth2 access token for authorization: api_auth
+        configuration = sell_feed.Configuration()
+        configuration.access_token = self._token.get()
+
+        # Configure the host endpoint
+        if self._use_sandbox:
+            configuration.host = configuration.host.replace('api.ebay.com',
+                                                            'api.sandbox.ebay.com')
+        # check for host has flaws and then then compensate
+        if '{basePath}' in configuration.host:
+            configuration.host = configuration.host.replace('{basePath}',
+                                                            '/sell/feed/v1')
+        else:
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5405,11 +5314,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5434,14 +5341,14 @@ class API:
     def sell_feed_get_order_tasks(self, **kwargs):  # noqa: E501
         """get_order_tasks  # noqa: E501
 
-        This method returns the details and status for an array of order tasks based on a specified feed_type or scheduled_id. Specifying both feed_type and scheduled_id results in an error. Since schedules are based on feed types, you can specify a schedule (scheduled_id) that returns the needed feed_type. If specifying the feed_type, limit which order tasks are returned by specifying filters such as the creation date range or period of time using look_back_days. If specifying a scheduled_id, the schedule template (that the scheduled_id is based on) determines which order tasks are returned (see scheduled_id for additional information). Each scheduled_id applies to one feed_type.  # noqa: E501
+        This method returns the details and status for an array of order tasks based on a specified feed_type or schedule_id. Specifying both feed_type and schedule_id results in an error. Since schedules are based on feed types, you can specify a schedule (schedule_id) that returns the needed feed_type. If specifying the feed_type, limit which order tasks are returned by specifying filters such as the creation date range or period of time using look_back_days. If specifying a schedule_id, the schedule template (that the schedule_id is based on) determines which order tasks are returned (see schedule_id for additional information). Each schedule_id applies to one feed_type.  # noqa: E501
 
         :param str date_range: The order tasks creation date range. This range is used to filter the results. The filtered results are filtered to include only tasks with a creation date that is equal to this date or is within specified range. Only orders less than 90 days old can be retrieved. Do not use with the look_back_days parameter. Format: UTC For example: Tasks within a range yyyy-MM-ddThh:mm:ss.SSSZ..yyyy-MM-ddThh:mm:ss.SSSZ Tasks created on September 8, 2019 2019-09-08T00:00:00.000Z..2019-09-09T00:00:00.000Z
-        :param str feed_type: The feed type associated with the task. The only presently supported value is LMS_ORDER_REPORT. Do not use with the scheduled_id parameter. Since schedules are based on feed types, you can specify a schedule (scheduled_id) that returns the needed feed_type.
+        :param str feed_type: The feed type associated with the task. The only presently supported value is LMS_ORDER_REPORT. Do not use with the schedule_id parameter. Since schedules are based on feed types, you can specify a schedule (schedule_id) that returns the needed feed_type.
         :param str limit: The maximum number of order tasks that can be returned on each page of the paginated response. Use this parameter in conjunction with the offset parameter to control the pagination of the output. Note: This feature employs a zero-based list, where the first item in the list has an offset of 0. For example, if offset is set to 10 and limit is set to 10, the call retrieves order tasks 11 thru 20 from the result set. If this parameter is omitted, the default value is used. Default: 10 Maximum: 500
         :param str look_back_days: The number of previous days in which to search for tasks. Do not use with the date_range parameter. If both date_range and look_back_days are omitted, this parameter's default value is used. Default: 7 Range: 1-90 (inclusive)
         :param str offset: The number of order tasks to skip in the result set before returning the first order in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. If this query parameter is not set, the default value is used and the first page of records is returned. Default: 0
-        :param str schedule_id: The schedule ID associated with the order task. A schedule periodically generates a report for the feed type specified by the schedule template (see scheduleTemplateId in createSchedule). Do not use with the feed_id parameter.
+        :param str schedule_id: The schedule ID associated with the order task. A schedule periodically generates a report for the feed type specified by the schedule template (see scheduleTemplateId in createSchedule). Do not use with the feed_type parameter. Since schedules are based on feed types, you can specify a schedule (schedule_id) that returns the needed feed_type.
         :return: OrderTaskCollection
         """
         # Configure OAuth2 access token for authorization: api_auth
@@ -5455,11 +5362,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5500,11 +5405,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5545,11 +5448,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5590,11 +5491,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5635,11 +5534,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5680,11 +5577,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5727,11 +5622,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5774,11 +5667,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5820,11 +5711,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5849,10 +5738,10 @@ class API:
     def sell_feed_create_task(self, body, **kwargs):  # noqa: E501
         """create_task  # noqa: E501
 
-        This method creates an upload task or a download task without filter criteria. When using this method, specify the feedType and the feed file schemaVersion. The feed type specified sets the task as a download or an upload task. For details about the upload and download flows, see Working with Order Feeds in the Selling Integration Guide. Note: The scope depends on the feed type. An error message results when an unsupported scope or feed type is specified. The following list contains this method's authorization scopes and their corresponding feed types: https://api.ebay.com/oauth/api_scope/sell.inventory: None* https://api.ebay.com/oauth/api_scope/sell.fulfillment: LMS_ORDER_ACK (specify for upload tasks), LMS_ORDER_REPORT (specify for download tasks) https://api.ebay.com/oauth/api_scope/sell.marketing: None* https://api.ebay.com/oauth/api_scope/commerce.catalog.readonly: None* * Reserved for future release  # noqa: E501
+        This method creates an upload task or a download task without filter criteria. When using this method, specify the feedType and the feed file schemaVersion. The feed type specified sets the task as a download or an upload task. For details about the upload and download flows, see Working with Order Feeds in the Selling Integration Guide. Note: The scope depends on the feed type. An error message results when an unsupported scope or feed type is specified. The following list contains this method's authorization scopes and their corresponding feed types: https://api.ebay.com/oauth/api_scope/sell.inventory: See LMS FeedTypes https://api.ebay.com/oauth/api_scope/sell.fulfillment: LMS_ORDER_ACK (specify for upload tasks). Also see LMS FeedTypes https://api.ebay.com/oauth/api_scope/sell.marketing: None* https://api.ebay.com/oauth/api_scope/commerce.catalog.readonly: None* * Reserved for future release  # noqa: E501
 
         :param CreateTaskRequest body: description not needed (required)
-        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. Note: This value is case sensitive. For example: X-EBAY-C-MARKETPLACE-ID = EBAY_US This identifies the eBay marketplace that applies to this task. See MarketplaceIdEnum.
+        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. Note: This value is case sensitive. For example: X-EBAY-C-MARKETPLACE-ID:EBAY_US This identifies the eBay marketplace that applies to this task. See MarketplaceIdEnum.
         :return: None
         """
         # Configure OAuth2 access token for authorization: api_auth
@@ -5866,11 +5755,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5895,7 +5782,7 @@ class API:
     def sell_feed_get_input_file(self, task_id, **kwargs):  # noqa: E501
         """get_input_file  # noqa: E501
 
-        This method downloads the file previously uploaded using uploadFile. Specify the task_id from the uploadFile call. Note: This method only applies to the LMS_ORDER_ACK feed type.  # noqa: E501
+        This method downloads the file previously uploaded using uploadFile. Specify the task_id from the uploadFile call. Note: With respect to LMS, this method applies to all feed types except LMS_ORDER_REPORT and LMS_ACTIVE_INVENTORY_REPORT. See LMS API Feeds in the Selling Integration Guide.  # noqa: E501
 
         :param str task_id: The task ID associated with the file to be downloaded. (required)
         :return: StreamingOutput
@@ -5911,11 +5798,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5940,7 +5825,7 @@ class API:
     def sell_feed_get_result_file(self, task_id, **kwargs):  # noqa: E501
         """get_result_file  # noqa: E501
 
-        This method retrieves the generated file that is associated with the specified task ID. The response of this call is a compressed or uncompressed CSV, XML, or JSON file, with the applicable file extension (for example: csv.gz). For details about how this method is used, see see Working with Order Feeds in the Selling Integration Guide. Note: The status of the task to retrieve must be in the COMPLETED or COMPLETED_WITH_ERROR state before this method can retrieve the file. You can use the getTask or getTasks method to retrieve the status of the task.  # noqa: E501
+        This method retrieves the generated file that is associated with the specified task ID. The response of this call is a compressed or uncompressed CSV, XML, or JSON file, with the applicable file extension (for example: csv.gz). For details about how this method is used, see Working with Order Feeds in the Selling Integration Guide. Note: The status of the task to retrieve must be in the COMPLETED or COMPLETED_WITH_ERROR state before this method can retrieve the file. You can use the getTask or getTasks method to retrieve the status of the task.  # noqa: E501
 
         :param str task_id: The ID of the task associated with the file you want to download. This ID was generated when the task was created. (required)
         :return: StreamingOutput
@@ -5956,11 +5841,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -5985,7 +5868,7 @@ class API:
     def sell_feed_get_task(self, task_id, **kwargs):  # noqa: E501
         """get_task  # noqa: E501
 
-        This method retrieves the details and status of the specified task. The input is task_id . For details of how this method is used, see Working with Order Feeds in the Selling Integration Guide.  # noqa: E501
+        This method retrieves the details and status of the specified task. The input is task_id. For details of how this method is used, see Working with Order Feeds in the Selling Integration Guide.  # noqa: E501
 
         :param str task_id: The ID of the task. This ID was generated when the task was created. (required)
         :return: Task
@@ -6001,11 +5884,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6030,14 +5911,14 @@ class API:
     def sell_feed_get_tasks(self, **kwargs):  # noqa: E501
         """get_tasks  # noqa: E501
 
-        This method returns the details and status for an array of tasks based on a specified feed_type or scheduledId. Specifying both feed_type and scheduledId results in an error. Since schedules are based on feed types, you can specify a schedule (scheduled_id) that returns the needed feed_type. If specifying the feed_type, limit which tasks are returned by specifying filters, such as the creation date range or period of time using look_back_days. Also, by specifying the feed_type, both on-demand and scheduled reports are returned. If specifying a scheduledId, the schedule template (that the schedule ID is based on) determines which tasks are returned (see schedule_id for additional information). Each scheduledId applies to one feed_type.  # noqa: E501
+        This method returns the details and status for an array of tasks based on a specified feed_type or scheduledId. Specifying both feed_type and scheduledId results in an error. Since schedules are based on feed types, you can specify a schedule (schedule_id) that returns the needed feed_type. If specifying the feed_type, limit which tasks are returned by specifying filters, such as the creation date range or period of time using look_back_days. Also, by specifying the feed_type, both on-demand and scheduled reports are returned. If specifying a scheduledId, the schedule template (that the schedule ID is based on) determines which tasks are returned (see schedule_id for additional information). Each scheduledId applies to one feed_type.  # noqa: E501
 
-        :param str date_range: The tasks creation date range. This range is used to filter the results. The results are filtered to include only tasks with a creation date that is equal to this date or is within specified range. Only tasks that are less than 90 days can be retrieved. Format: UTC For example: Tasks within a range yyyy-MM-ddThh:mm:ss.SSSZ..yyyy-MM-ddThh:mm:ss.SSSZ Tasks created on September 8, 2019 2019-09-08T00:00:00.000Z..2019-09-09T00:00:00.000Z Maximum: 90 days
-        :param str feed_type: The feed type associated with the tasks to be returned. The only presently supported value is LMS_ORDER_REPORT. Do not use with the scheduled_id parameter. Since schedules are based on feed types, you can specify a schedule (scheduled_id) that returns the needed feed_type.
+        :param str date_range: Specifies the range of task creation dates used to filter the results. The results are filtered to include only tasks with a creation date that is equal to this date or is within specified range. Only tasks that are less than 90 days can be retrieved. Note: Maximum date range window size is 90 days. Valid Format (UTC):yyyy-MM-ddThh:mm:ss.SSSZ..yyyy-MM-ddThh:mm:ss.SSSZ For example: Tasks created on September 8, 2019 2019-09-08T00:00:00.000Z..2019-09-09T00:00:00.000Z
+        :param str feed_type: The feed type associated with the tasks to be returned. Only use a feedType that is available for your API: Order Feeds: LMS_ORDER_ACK, LMS_ORDER_REPORT Large Merchant Services (LMS) Feeds: See Available FeedTypes Do not use with the schedule_id parameter. Since schedules are based on feed types, you can specify a schedule (schedule_id) that returns the needed feed_type.
         :param str limit: The maximum number of tasks that can be returned on each page of the paginated response. Use this parameter in conjunction with the offset parameter to control the pagination of the output. Note: This feature employs a zero-based list, where the first item in the list has an offset of 0. For example, if offset is set to 10 and limit is set to 10, the call retrieves tasks 11 thru 20 from the result set. If this parameter is omitted, the default value is used. Default: 10 Maximum: 500
         :param str look_back_days: The number of previous days in which to search for tasks. Do not use with the date_range parameter. If both date_range and look_back_days are omitted, this parameter's default value is used. Default: 7 Range: 1-90 (inclusive)
         :param str offset: The number of tasks to skip in the result set before returning the first task in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. If this query parameter is not set, the default value is used and the first page of records is returned. Default: 0
-        :param str schedule_id: The schedule ID associated with the task. A schedule periodically generates a report for the feed type specified by the schedule template (see scheduleTemplateId in createSchedule). Do not use with the feed_type parameter.
+        :param str schedule_id: The schedule ID associated with the task. A schedule periodically generates a report for the feed type specified by the schedule template (see scheduleTemplateId in createSchedule). Do not use with the feed_type parameter. Since schedules are based on feed types, you can specify a schedule (schedule_id) that returns the needed feed_type.
         :return: TaskCollection
         """
         # Configure OAuth2 access token for authorization: api_auth
@@ -6051,11 +5932,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6080,7 +5959,7 @@ class API:
     def sell_feed_upload_file(self, task_id, **kwargs):  # noqa: E501
         """upload_file  # noqa: E501
 
-        This method associates the specified file with the specified task ID and uploads the input file. After the file has been uploaded the processing of the file begins. Reports often take time to generate and it's common for this method to return an HTTP status of 202, which indicates the report is being generated. Use the getTask with the task ID or getTasks to determine the status of a report. The status flow is QUEUED &gt; IN_PROCESS &gt; COMPLETED or COMPLETED_WITH_ERROR. When the status is COMPLETED or COMPLETED_WITH_ERROR, this indicates the file has been processed and the order report can be downloaded. If there are errors, they will be indicated in the report file. Note: This method only applies to LMS_ORDER_ACK.For details of how this method is used in the upload flow, see Working with Order Feeds in the Selling Integration Guide.  # noqa: E501
+        This method associates the specified file with the specified task ID and uploads the input file. After the file has been uploaded the processing of the file begins. Reports often take time to generate and it's common for this method to return an HTTP status of 202, which indicates the report is being generated. Use the getTask with the task ID or getTasks to determine the status of a report. The status flow is QUEUED &gt; IN_PROCESS &gt; COMPLETED or COMPLETED_WITH_ERROR. When the status is COMPLETED or COMPLETED_WITH_ERROR, this indicates the file has been processed and the order report can be downloaded. If there are errors, they will be indicated in the report file. For details of how this method is used in the upload flow, see Working with Order Feeds in the Selling Integration Guide. Note: With respect to LMS, this method applies to all feed types except LMS_ORDER_REPORT and LMS_ACTIVE_INVENTORY_REPORT. See LMS API Feeds in the Selling Integration Guide. Note: If uploading a file using multipart/form-data, disregard setting the Content-Type header to 'application/json' (as noted below in the HTTP request headers), but instead include the Content-Type header with its value set to 'multipart/form-data'.  # noqa: E501
 
         :param str task_id: The task_id associated with the file that will be uploaded. This ID was generated when the specified task was created. (required)
         :param str creation_date:
@@ -6104,11 +5983,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/feed')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/feed/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6149,11 +6026,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/finances')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/finances/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6194,11 +6069,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/finances')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/finances/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6242,11 +6115,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/finances')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/finances/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6286,11 +6157,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/finances')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/finances/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6331,11 +6200,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/finances')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/finances/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6379,11 +6246,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/finances')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/finances/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6424,11 +6289,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/finances')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/finances/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6470,11 +6333,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/fulfillment')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/fulfillment/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6519,11 +6380,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/fulfillment')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/fulfillment/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6564,11 +6423,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/fulfillment')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/fulfillment/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6610,11 +6467,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/fulfillment')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/fulfillment/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6656,11 +6511,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/fulfillment')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/fulfillment/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6702,11 +6555,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/fulfillment')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/fulfillment/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6749,11 +6600,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/fulfillment')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/fulfillment/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6794,11 +6643,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/fulfillment')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/fulfillment/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6839,11 +6686,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/fulfillment')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/fulfillment/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6890,11 +6735,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/fulfillment')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/fulfillment/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6936,11 +6779,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/fulfillment')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/fulfillment/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -6981,11 +6822,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/fulfillment')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/fulfillment/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7027,11 +6866,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/fulfillment')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/fulfillment/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7073,11 +6910,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/fulfillment')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/fulfillment/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7118,11 +6953,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/fulfillment')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/fulfillment/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7163,11 +6996,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7208,11 +7039,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7253,11 +7082,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7300,11 +7127,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7345,11 +7170,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7390,11 +7213,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7436,11 +7257,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7483,11 +7302,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7528,11 +7345,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7573,11 +7388,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7618,11 +7431,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7664,11 +7475,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7709,11 +7518,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7754,11 +7561,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7799,11 +7604,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7844,11 +7647,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7890,11 +7691,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7936,11 +7735,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -7981,11 +7778,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8026,11 +7821,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8072,11 +7865,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8117,11 +7908,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8162,11 +7951,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8207,11 +7994,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8256,11 +8041,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8301,11 +8084,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8346,11 +8127,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8393,11 +8172,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8438,11 +8215,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8483,11 +8258,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8530,11 +8303,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8575,11 +8346,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8620,11 +8389,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/inventory')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/inventory/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8667,11 +8434,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/listing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/listing/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8712,11 +8477,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/logistics')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/logistics/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8757,11 +8520,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/logistics')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/logistics/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8802,11 +8563,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/logistics')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/logistics/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8847,11 +8606,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/logistics')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/logistics/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8892,11 +8649,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/logistics')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/logistics/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8937,11 +8692,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/logistics')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/logistics/v1_beta')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -8983,11 +8736,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9029,11 +8780,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9075,11 +8824,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9121,11 +8868,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9167,11 +8912,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9213,11 +8956,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9259,11 +9000,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9305,11 +9044,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9351,11 +9088,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9397,11 +9132,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9443,11 +9176,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9491,11 +9222,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9538,11 +9267,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9585,11 +9312,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9630,11 +9355,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9674,11 +9397,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9719,11 +9440,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9764,11 +9483,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9809,11 +9526,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9854,11 +9569,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9901,11 +9614,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9947,11 +9658,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -9992,11 +9701,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10037,11 +9744,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10082,11 +9787,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10129,11 +9832,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10158,7 +9859,7 @@ class API:
     def sell_marketing_get_campaign(self, campaign_id, **kwargs):  # noqa: E501
         """get_campaign  # noqa: E501
 
-        This method retrieves the details of a single campaign, as specified with the campaign_id query parameter. This method returns all the details of a campaign (including the campaign's the selection rules), except the for the listing IDs or inventory reference IDs included in the campaign. These IDs are returned by getAds. Call getCampaigns to retrieve a list of the seller's campaign IDs. Note: This call does not retrieve campaigns created via the eBay web flow.  # noqa: E501
+        This method retrieves the details of a single campaign, as specified with the campaign_id query parameter. This method returns all the details of a campaign (including the campaign's the selection rules), except the for the listing IDs or inventory reference IDs included in the campaign. These IDs are returned by getAds. Call getCampaigns to retrieve a list of the seller's campaign IDs.  # noqa: E501
 
         :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
         :return: Campaign
@@ -10174,11 +9875,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10203,7 +9902,7 @@ class API:
     def sell_marketing_get_campaign_by_name(self, campaign_name, **kwargs):  # noqa: E501
         """get_campaign_by_name  # noqa: E501
 
-        This method retrieves the details of a single campaign, as specified with the campaign_name query parameter. Note that the campaign name you specify must be an exact, case-sensitive match of the name of the campaign you want to retrieve. This method returns all the details of a campaign (including the campaign's the selection rules), except the for the listing IDs or inventory reference IDs included in the campaign. These IDs are returned by getAds. Call getCampaigns to retrieve a list of the seller's campaign names. Note: This call does not retrieve campaigns created via the eBay web flow.  # noqa: E501
+        This method retrieves the details of a single campaign, as specified with the campaign_name query parameter. Note that the campaign name you specify must be an exact, case-sensitive match of the name of the campaign you want to retrieve. This method returns all the details of a campaign (including the campaign's the selection rules), except the for the listing IDs or inventory reference IDs included in the campaign. These IDs are returned by getAds. Call getCampaigns to retrieve a list of the seller's campaign names.  # noqa: E501
 
         :param str campaign_name: Name of the campaign. (required)
         :return: Campaign
@@ -10219,11 +9918,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10248,7 +9945,7 @@ class API:
     def sell_marketing_get_campaigns(self, **kwargs):  # noqa: E501
         """get_campaigns  # noqa: E501
 
-        This method retrieves the details for all the campaigns of a seller, including the campaign's the selection rules. Note that this method does not return the listing IDs or inventory reference IDs of the items included in the ad campaign. Call getAds to retrieve these IDs. You can filter the result set by a campaign name, end date range, start date range, or campaign status. You can also paginate the records returned from the result set using the limit query parameter, and control which records to return using the offset parameter. Note: This call does not retrieve campaigns created via the eBay web flow.  # noqa: E501
+        This method retrieves the details for all the campaigns of a seller, including the campaign's the selection rules. Note that this method does not return the listing IDs or inventory reference IDs of the items included in the ad campaign. Call getAds to retrieve these IDs. You can filter the result set by a campaign name, end date range, start date range, or campaign status. You can also paginate the records returned from the result set using the limit query parameter, and control which records to return using the offset parameter.  # noqa: E501
 
         :param str campaign_name: Specifies the campaign name. The results are filtered to include only the campaign by the specified name. Note: The results might be null if other filters exclude the campaign with this name. Maximum: 1 campaign name
         :param str campaign_status: Specifies the campaign status. The results are filtered to include only campaigns that are in the specified states. Note: The results might not include all the campaigns with this status if other filters exclude them. Valid values: See CampaignStatusEnum Maximum: 1 status
@@ -10269,11 +9966,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10314,11 +10009,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10359,11 +10052,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10405,11 +10096,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10450,11 +10139,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10495,11 +10182,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10540,11 +10225,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10586,11 +10269,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10631,11 +10312,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10676,11 +10355,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10721,11 +10398,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10767,11 +10442,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10817,11 +10490,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10868,11 +10539,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10913,11 +10582,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -10958,11 +10625,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -11008,11 +10673,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -11053,11 +10716,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/marketing')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/marketing/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -11098,11 +10759,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/metadata')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/metadata/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -11144,11 +10803,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/metadata')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/metadata/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -11190,11 +10847,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/metadata')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/metadata/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -11236,11 +10891,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/metadata')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/metadata/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -11282,11 +10935,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/metadata')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/metadata/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -11328,11 +10979,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/metadata')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/metadata/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -11374,11 +11023,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/metadata')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/metadata/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -11421,11 +11068,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/negotiation')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/negotiation/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -11467,11 +11112,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/negotiation')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/negotiation/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \
@@ -11516,11 +11159,9 @@ class API:
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}',
-                                                            '/sell/recommendation')
-            if 'developer/analytics' in configuration.host:
-                configuration.host += '/v1_beta'
+                                                            '/sell/recommendation/v1')
         else:
-            logging.debug('eBay has fixed the flaw so remove the compensating code.')
+            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')
 
         # create an instance of the API class
         api_instance = \

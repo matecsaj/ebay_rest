@@ -2,6 +2,7 @@
 
 # Standard library imports
 import hashlib
+import json
 import os
 import shutil
 
@@ -34,6 +35,10 @@ class Process:
             dirs.sort()
             self.names = dirs
             break
+
+        path_name = os.path.join(SOURCE_PATH, 'base_paths.json')
+        with open(path_name) as file_handle:
+            self.base_paths = json.load(file_handle)
 
     def copy_libraries(self):
         """ Copy essential parts of the generated eBay libraries to within the src folder. """
@@ -243,11 +248,9 @@ class Process:
         code += f"        # check for host has flaws and then then compensate\n"
         code += f"        if '{base_path}' in configuration.host:\n"
         code += f"            configuration.host = configuration.host.replace('{base_path}',\n"
-        code += f"                                                            '/{name.replace('_', '/')}')\n"
-        code += f"            if 'developer/analytics' in configuration.host:\n"
-        code += f"                configuration.host += '/v1_beta'\n"
+        code += f"                                                            '{self.base_paths[name]}')\n"
         code += f"        else:\n"
-        code += f"            logging.debug('eBay has fixed the flaw so remove the compensating code.')\n"
+        code += f"            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')\n"
         code += f"\n"
         code += f"        # create an instance of the API class\n"
         code += f"        api_instance = \\\n"
