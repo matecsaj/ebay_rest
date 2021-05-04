@@ -111,11 +111,16 @@ def delete_folder_contents(path_to_folder):
 
 
 def main():
-    # install_tools()
+    install_tools()
+
+    # ensure that we have an empty cache directory
+    if os.path.isdir(TARGET_PATH):
+        delete_folder_contents(TARGET_PATH)
+    else:
+        os.mkdir(TARGET_PATH)
+
     contracts = get_contracts(limit=300)
     base_paths = get_base_paths(contracts)
-
-    delete_folder_contents(TARGET_PATH)
 
     print('For each contract generate and install a library.')
     for contract in contracts:

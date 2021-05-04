@@ -21,12 +21,12 @@ from ebay_rest import API, DateTime, Error, Reference
 try:
     api = API(use_sandbox=True)
 except Error as error:
-    print(f'Error {error.number} is {error.message}.')
+    print(f'Error {error.number} is {error.reason}  {error.detail}.')
 else:
     try:
         items = api.buy_browse_get_items()
     except Error as error:
-        print(f'Error {error.number} is {error.message}.')
+        print(f'Error {error.number} is {error.reason} {error.detail}.')
     else:
         print('These item ids were gotten:\n')
         for item in items:

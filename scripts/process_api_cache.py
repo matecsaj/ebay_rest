@@ -213,7 +213,6 @@ class Process:
         """ Return the code for one python method. """
 
         (name, module, path, method, params, docstring) = method
-        base_path = '{basePath}'
         ignore_long = '  # noqa: E501'  # flake8 compatible linters should not warn about long lines
 
         # Fix how the docstring expresses optional parameters then end up in **kwargs
@@ -235,43 +234,45 @@ class Process:
         if has_docstring_problem:
             pass    # TODO Do something to make the comments aka docstring handle optional parameters properly
 
+        # identify and prep for parameter possibilities
+        stars_kwargs = '**kwargs'
+        params_modified = params.split(', ')
+        if len(params_modified) == 0:
+            has_args = False
+            has_kw = False
+        else:
+            if params_modified[-1] == stars_kwargs:
+                has_kw = True
+                params_modified.pop()
+            else:
+                has_kw = False
+            if len(params_modified) > 0:
+                has_args = True
+                params_modified = ', '.join(params_modified)
+            else:
+                has_args = False
+
         code = f"    def {name}_{method}(self, {params}):{ignore_long}\n"
         code += docstring
-        code += f"        # Configure OAuth2 access token for authorization: api_auth\n"
-        code += f"        configuration = {name}.Configuration()\n"
-        code += f"        configuration.access_token = self._token.get()\n"
-        code += f"\n"
-        code += f"        # Configure the host endpoint\n"
-        code += f"        if self._use_sandbox:\n"
-        code += f"            configuration.host = configuration.host.replace('api.ebay.com',\n"
-        code += f"                                                            'api.sandbox.ebay.com')\n"
-        code += f"        # check for host has flaws and then then compensate\n"
-        code += f"        if '{base_path}' in configuration.host:\n"
-        code += f"            configuration.host = configuration.host.replace('{base_path}',\n"
-        code += f"                                                            '{self.base_paths[name]}')\n"
-        code += f"        else:\n"
-        code += f"            logging.debug('eBay or Swagger has fixed the flaw so remove the compensating code.')\n"
-        code += f"\n"
-        code += f"        # create an instance of the API class\n"
-        code += f"        api_instance = \\\n"
-        code += f"            {name}.{self._camel(module)}({name}.ApiClient(configuration))\n"
-        code += f"        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = self._site_id\n"
-        code += f"\n"
-        code += f"        result = None\n"
-        code += f"        try:\n"
-        code += f"            api_response = api_instance.{method}(\n"
-        code += f"                {params}{ignore_long}\n"
-        code += f"            )\n"
-        code += f"\n"
-        code += f"        except {self._camel(name)}Exception as error:\n"
-        code += f"            logging.critical('APIException status ' + error.status + ' reason '\n"
-        code += f"                             + error.reason + ' body ' + error.body + '.')\n"
-        code += f"\n"
-        code += f"        else:\n"
-        code += f"            result = api_response\n"
-        code += f"\n"
-        code += f"        return result\n"
-        code += f"\n"
+        code += f"        return self._method(" \
+                f"{name}.Configuration," \
+                f" '{self.base_paths[name]}'," \
+                f" {name}.{self._camel(module)}," \
+                f" {name}.ApiClient," \
+                f" '{method}'," \
+                f" {self._camel(name)}Exception,"
+        if has_args:
+            if ',' in params_modified:
+                code += f" ({params_modified}),"
+            else:
+                code += f" {params_modified},"
+        else:
+            code += f" None,"
+        if has_kw:
+            code += f" **kwargs"
+        else:
+            code += f" None"
+        code += f"){ignore_long}\n\n"
 
         return code
 
@@ -372,7 +373,7 @@ def main():
     p.fix_imports()
     p.merge_setup()
     p.make_includes()
-    # p.remove_duplicates()     # uncomment the method call when work on the method resumes
+    # p.remove_duplicates()     # uncomment the method call when work on it resumes
     p.make_methods(p.get_methods())
 
 
