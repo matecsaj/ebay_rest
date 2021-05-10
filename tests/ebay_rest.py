@@ -5,8 +5,9 @@
 
 
 # Standard library imports
-import unittest
 import datetime
+import unittest
+import warnings
 
 # Local imports
 from src.ebay_rest import API, DateTime, Error, Reference
@@ -16,7 +17,9 @@ class MyTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls._api = API(use_sandbox=False, site_id='EBAY-ENCA')
+        # TODO Stop ignoring the warning and remedy the resource leak. How?
+        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
+        cls._api = API(use_sandbox=True, site_id='EBAY-ENCA')
 
     # test the load of all references
 
