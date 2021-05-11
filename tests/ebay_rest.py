@@ -54,7 +54,7 @@ class MyTestCase(unittest.TestCase):
     def test_positional_one_kw_none(self):
 
         items = self._api.buy_browse_search(q='silver')
-        item_id = items.item_summaries[0].item_id
+        item_id = items['item_summaries'][0]['item_id']
         self.assertIsNotNone(self._api.buy_browse_get_item(item_id=item_id),
                              msg="A call with one positional and no kw arguments failed.")
 
@@ -67,7 +67,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_positional_one_kw_some(self):
         items = self._api.buy_browse_search(q='silver')
-        item_id = items.item_summaries[0].item_id
+        item_id = items['item_summaries'][0]['item_id']
         self.assertIsNotNone(self._api.buy_browse_get_item(item_id=item_id, fieldgroups='PRODUCT'),
                              msg="A call with one positional and some kw arguments failed.")
 

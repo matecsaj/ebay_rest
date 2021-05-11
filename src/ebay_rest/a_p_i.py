@@ -1,7 +1,6 @@
 # Standard library imports
 import datetime
 import logging
-import types
 
 
 # Local imports
@@ -67,13 +66,6 @@ from .api.sell_negotiation.rest import ApiException as SellNegotiationException
 from .api import sell_recommendation
 from .api.sell_recommendation.rest import ApiException as SellRecommendationException
 # ANCHOR-er_imports-END"
-
-
-# TODO Should this should be an ABC, Data Class or a basic Class?
-# class _Base(metaclass=abc.ABCMeta):
-# @dataclass
-class _Base:
-    pass
 
 
 class _Singleton:  # pylint: disable=too-few-public-methods
@@ -212,105 +204,63 @@ class API:
         return result
 
     def _de_swagger(self, obj):
-        """ Return a de-Swaggered object.
+        """ Take a Swagger data object and return the Pythonic equivalent.
 
-        The objects returned from Swagger generated code have extra attributes, the directory of public attributes
-        should not have leading underscores and perhaps other oddness. Do a deep copy and fix problems along the way.
+        There is a Java vibe to objects returned from Swagger generated code and other issues:
+        1. non-eBay attributes are meaningless Swagger artifacts,
+        2. public attributes should not have leading underscores,
+        3. the class objects are effectively dicts,
+        4. class names are in CamelCase.
 
-        To learn more about Swagger visit https://swagger.io.
+        Do a "deep copy" and fix problems along the way.
+
+        To learn more about Swagger, visit https://swagger.io.
         """
-        BASIC_TYPES = (bool, bytes, bytearray, complex, datetime.date, datetime.datetime,
-                       float, int, memoryview, type(None), str)     # omitted ones that are unlikely to ever be used
-        COLLECTION_TYPES = (dict, set, frozenset, list, tuple)      # omitted ones that are unlikely to ever be used
-
-        name = self._get_class_name(obj)
+        BASIC_TYPES = (bool, bytes, datetime.date, datetime.datetime,
+                       float, int, type(None), str)     # omitted ones that are unlikely to ever be used
 
         if type(obj) in BASIC_TYPES:      # leaf node
             return obj
 
-        elif type(obj) in COLLECTION_TYPES:
-            logging.debug("Do QA on untested code. Until now Swagger didn't generate nested collections.")
-            return obj
-
-        elif not name:
-            logging.debug("Unexpected object of type " + type(obj) + ".")
-
-        else:
-            # TODO The named object only has attributes; would a Dict be a more intuitive and efficient solution?
-            obj_new = self._make_object(name)
+        elif obj.__class__.__module__ != 'builtins':     # a user defined class object?
+            new_dict = dict()
             for attr, value in obj.__dict__.items():
-                if attr not in ['attribute_map', 'discriminator', 'swagger_types']:  # skip Swagger specific attributes
+                if attr not in ['attribute_map', 'discriminator', 'swagger_types']:  # skip Swagger specific
+
+                    success = True
 
                     # cope with Swagger presenting public attributes as private
                     if not attr.startswith('_') or attr.startswith('__'):
                         logging.debug('A public or dunder is not anticipated, did Swagger fix the problem?')
-                        attr_new = '_unexpected_' + attr
+                        new_value = None  # this pointless line is here to avoid a lint warning
+                        success = False
                     else:
-                        attr_new = attr[1:]
+                        attr = attr[1:]     # remove the single leading underscore
 
-                    # basic data types
-                    if type(value) in BASIC_TYPES:
-                        setattr(obj_new, attr_new, value)
+                        if type(value) in BASIC_TYPES:
+                            new_value = value
 
-                    elif isinstance(value, list):
-                        new_list = []
-                        for element in value:
-                            new_list.append(self._de_swagger(element))
-                        setattr(obj_new, attr_new, new_list)
+                        elif isinstance(value, list):
+                            new_value = list()
+                            for element in value:
+                                new_value.append(self._de_swagger(element))
 
-                    elif isinstance(value, dict):
-                        logging.debug("Do QA on untested code. Until now Swagger didn't generate dicts.")
-                        new_dict = {}
-                        for key in value:
-                            new_dict[key] = self._de_swagger(value[key])
-                        setattr(obj_new, attr_new, new_dict)
+                        elif value.__class__.__module__ != 'builtins':   # a user defined class object?
+                            new_value = self._de_swagger(value)
 
-                    elif isinstance(value, tuple):
-                        logging.debug("Do QA on untested code. Until now Swagger didn't generate tuples.")
-                        new_tuple = ()
-                        for element in value:
-                            new_tuple = new_tuple + (self._de_swagger(element))
-                        setattr(obj_new, attr_new, new_tuple)
+                        else:
+                            logging.debug("Need to handle attribute " + attr + " of type " + type(value) + ".")
+                            new_value = None  # this pointless line is here to avoid a lint warning
+                            success = False
 
-                    elif isinstance(value, set):
-                        logging.debug("Do QA on untested code. Until now Swagger didn't generate sets.")
-                        new_set = set()
-                        for element in value:
-                            new_set.add(self._de_swagger(element))
-                        setattr(obj_new, attr_new, new_set)
+                    if success:
+                        new_dict[attr] = new_value
 
-                    elif isinstance(value, frozenset):
-                        logging.debug("Do QA on untested code. Until now Swagger didn't generate frozen sets.")
-                        new_set = set()
-                        for element in value:
-                            new_set.add(self._de_swagger(element))
-                        setattr(obj_new, attr_new, frozenset(new_set))
+            return new_dict
 
-                    # Swagger generated object, it will always have a class name so use that as a clue
-                    elif self._get_class_name(value):
-                        setattr(obj_new, attr_new, self._de_swagger(value))
-
-                    else:
-                        logging.debug("Need to handle attribute " + attr + " of type " + type(value) + ".")
-
-            return obj_new
-
-    @staticmethod
-    def _get_class_name(obj):
-        """ Get the name of the user defined class, otherwise return None."""
-        try:
-            name = obj.__class__.__name__
-        except NameError:
-            name = None
-        return name
-
-    @staticmethod
-    def _make_object(class_name):
-        """ Return an empty object that has the name provided. """
-        class_body = {
-            "__module__": None,
-        }
-        return types.new_class(class_name, bases=(_Base,), exec_body=lambda ns: ns.update(class_body))
+        else:
+            logging.debug("Unexpected object of type " + type(obj) + ".")
+            return obj      # something needs to be returned, hopefully it is useful as is
 
     # Don't edit the anchors or in-between which is generated by process_swagger_cache.py.
     # ANCHOR-er_methods-START"
