@@ -19,7 +19,12 @@ class MyTestCase(unittest.TestCase):
     def setUpClass(cls):
         # TODO Stop ignoring the warning and remedy the resource leak.
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
-        cls._api = API(use_sandbox=True, site_id='EBAY-ENCA')
+        cls._use_sandbox = False    # True is better, eBay wants you to use the sandbox for testing
+        if cls._use_sandbox:        # use keywords that will return >0 and < 10,000 results
+            cls.q = 'silver'
+        else:
+            cls.q = 'silver snail'
+        cls._api = API(use_sandbox=cls._use_sandbox, site_id='EBAY-ENCA')
 
     # test the load of all references
 
@@ -45,6 +50,17 @@ class MyTestCase(unittest.TestCase):
         self.assertTrue(isinstance(DateTime.to_string(DateTime.now()), str),
                         msg="Unexpected return type from a DateTime member function.")
 
+    # test paging calls
+    def test_paging_something(self):
+        count = 0
+        limit = 350
+        for item in self._api.buy_browse_search(q=self.q):
+            self.assertTrue(isinstance(item['item_id'], str))
+            count += 1
+            if count > limit:
+                break
+        self.assertTrue(count >= limit)
+
     # test positional and kw arguments to ebay api calls
 
     def test_positional_zero_kw_none(self):
@@ -53,7 +69,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_positional_one_kw_none(self):
 
-        for item in self._api.buy_browse_search(q='silver'):
+        for item in self._api.buy_browse_search(q=self.q):
             self.assertIsNotNone(self._api.buy_browse_get_item(item_id=item['item_id']),
                                  msg="A call with one positional and no kw arguments failed.")
             break
@@ -62,11 +78,11 @@ class MyTestCase(unittest.TestCase):
         pass    # TODO
 
     def test_positional_zero_kw_some(self):
-        self.assertIsNotNone(self._api.buy_browse_search(q='gold'),
+        self.assertIsNotNone(self._api.buy_browse_search(q=self.q),
                              msg="A call with zero positional and no kw arguments failed.")
 
     def test_positional_one_kw_some(self):
-        for item in self._api.buy_browse_search(q='silver'):
+        for item in self._api.buy_browse_search(q=self.q):
             self.assertIsNotNone(self._api.buy_browse_get_item(item_id=item['item_id'], fieldgroups='PRODUCT'),
                                  msg="A call with one positional and some kw arguments failed.")
             break

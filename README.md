@@ -65,7 +65,8 @@ print('The official eBay date and time is ', DateTime.now(), '\n')
 * To be clear, "Paging" is eBay's term for repeating a call while advancing a record offset to get all records.
 * eBay documentation has the word "Page" in the return type of paging calls. 
 * Do NOT supply a record "offset" parameter when making a paging call.
-* The hard limit is 10,000 records -- use tight filters to avoid throwing an exception.
+* The "limit" parameter is repurposed to control how many of potentially 10,000 results you want.
+* If you don't supply a limit, and the result set exceeds 10,000, then an exception will throw. Supply a limit or use a more restrictive filter.
 * Avoid exhausting memory by making the call within a ["for" loop](https://docs.python.org/3/reference/compound_stmts.html#for).
 ##
 **Q:** Blah

@@ -133,7 +133,7 @@ class API:
         if use_sandbox in (True, False):
             self._use_sandbox = use_sandbox
         else:
-            raise Error(0, "use_sandbox must be unspecified, True or False.")
+            raise Error(number=0, reason="use_sandbox must be unspecified, True or False.")
 
         # check then set site_id
         valid = []
@@ -143,7 +143,7 @@ class API:
         if site_id in valid:
             self._site_id = site_id  # eg. 'EBAY-ENCA' or '101'
         else:
-            raise Error(1, f"site_id must be unspecified or one of these strings {valid}.")
+            raise Error(number=1, reason=f"site_id must be unspecified or one of these strings {valid}.")
 
         # initialize the token
         self._token = Token(self._use_sandbox)
@@ -191,28 +191,74 @@ class API:
         :param kwargs:
         :return:
         """
-        try:
-            function_method = self._method_setup(function_configuration, base_path,
-                                                 function_instance, function_client, method)
-        except Error:
-            raise
+        # eBay imposed limits
+        PAGE_LIMIT = 200        # the maximum number of records per page
+        RECORD_LIMIT = 10000    # the maximum number of records allowed for all pages
+        if 'offset' in kwargs:
+            raise Error(number=3, reason="Don't supply an offset parameter. It is automatically handled.")
+        if 'limit' in kwargs:
+            records_desired = kwargs['limit']
+            if records_desired > RECORD_LIMIT:
+                reason = "The limit parameter can't be greater than " + str(RECORD_LIMIT) + \
+                         ' records, you put ' + str(records_desired) + '.'
+                raise Error(number=4, reason=reason)
         else:
+            records_desired = RECORD_LIMIT
+
             try:
-                result = self._call_swagger(function_method, params, kwargs, object_error)
+                function_method = self._method_setup(function_configuration, base_path,
+                                                     function_instance, function_client, method)
             except Error:
                 raise
-            else:
-                for key in result:
-                    if isinstance(result[key], list):
-                        for element in result[key]:
-                            yield element
-            # TODO handle subsequent pages
+
+            kwargs['limit'] = PAGE_LIMIT
+            first = True
+            loop = True
+            offset = 0
+            result_key = None
+            while loop:
+
+                try:
+                    kwargs['offset'] = offset
+                    result = self._call_swagger(function_method, params, kwargs, object_error)
+                except Error:
+                    raise
+
+                if first:       # for the first record only
+                    first = False
+
+                    # raise an error if we can't return the entire result set
+                    if result['total'] > RECORD_LIMIT:
+                        reason = 'The paged call limit is ' + str(RECORD_LIMIT) + \
+                                 ' records, there were ' + str(result['total']) + '.'
+                        raise Error(number=5, reason=reason)
+
+                    # find the key to the list of results
+                    for key in result:
+                        if isinstance(result[key], list):
+                            result_key = key
+                            break
+                    if result_key is None:
+                        logging.debug('The result key could not be found.')
+                        raise Error(number=6, reason='Key missing, possible connection error, try again.')
+
+                if len(result[result_key]) == 0:
+                    loop = False
+                else:
+                    for element in result[result_key]:
+                        yield element
+                    offset += PAGE_LIMIT
+                    if (result['total'] <= offset) or (offset >= RECORD_LIMIT):
+                        loop = False
 
     def _method_setup(self, function_configuration, base_path, function_instance, function_client, method):
         """ Do the setup work that is common to all methods. """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = function_configuration()
-        configuration.access_token = self._token.get()      # TODO handle exceptions
+        try:
+            configuration.access_token = self._token.get()
+        except Error:
+            raise
 
         # Configure the host endpoint
         if self._use_sandbox:
@@ -248,7 +294,7 @@ class API:
                     api_response = function_method()
 
         except object_error as error:
-            raise Error(error.status, error.reason, error.body)
+            raise Error(number=error.status, reason=error.reason, detail=error.body)
 
         else:
             return self._de_swagger(api_response)
