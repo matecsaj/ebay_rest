@@ -234,6 +234,14 @@ class Process:
         if has_docstring_problem:
             pass    # TODO Do something to make the comments aka docstring handle optional parameters properly
 
+        # prepare the method type
+        method_type = 'standard'
+        for line in docstring.split('\n'):
+            if ':return:' in line:
+                if 'Paged' in line:
+                    method_type = 'paged'
+                    break
+
         # identify and prep for parameter possibilities
         stars_kwargs = '**kwargs'
         params_modified = params.split(', ')
@@ -254,7 +262,7 @@ class Process:
 
         code = f"    def {name}_{method}(self, {params}):{ignore_long}\n"
         code += docstring
-        code += f"        return self._method(" \
+        code += f"        return self._method_{method_type}(" \
                 f"{name}.Configuration," \
                 f" '{self.base_paths[name]}'," \
                 f" {name}.{self._camel(module)}," \

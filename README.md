@@ -50,15 +50,23 @@ print('The official eBay date and time is ', DateTime.now(), '\n')
 ##
 **Q:** How to make API calls faster?
 
-**A:**  
-* Reuse the API object.
-* Some calls have filtering options; omit unneeded data.
-* When the call returns a list, make the call in a ["for" loop](https://docs.python.org/3/reference/compound_stmts.html#for). 
-* Use [threading](https://docs.python.org/3/library/threading.html) to make calls in parallel but don't exhaust RAM.
+**A:** Prioritized, do the first things first.
+1. Reuse the API object.
+1. Some calls have filtering options; omit unneeded data.
+1. When the call returns a list, make the call in a ["for" loop](https://docs.python.org/3/reference/compound_stmts.html#for). 
+1. Use [threading](https://docs.python.org/3/library/threading.html) to make calls in parallel but don't exhaust RAM.
+1. Use multiprocessing. -- Multiprocessing support is a future goal. -- A safe workaround is to concurrently run copies of your program and divide the work among each.
+1. Switch to a faster internet connection. 
+1. Switch to computer with faster cores.
 ##
-**Q:** Blah
+**Q:** How are paged calls/results handled? 
 
-**A:** Blah
+**A:** A [simple generator](https://www.python.org/dev/peps/pep-0255/#specification-yield) is implemented.
+* To be clear, "Paging" is eBay's term for repeating a call while advancing a record offset to get all records.
+* eBay documentation has the word "Page" in the return type of paging calls. 
+* Do NOT supply a record "offset" parameter when making a paging call.
+* The hard limit is 10,000 records -- use tight filters to avoid throwing an exception.
+* Avoid exhausting memory by making the call within a ["for" loop](https://docs.python.org/3/reference/compound_stmts.html#for).
 ##
 **Q:** Blah
 

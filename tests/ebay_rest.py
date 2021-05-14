@@ -17,7 +17,7 @@ class MyTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        # TODO Stop ignoring the warning and remedy the resource leak. How?
+        # TODO Stop ignoring the warning and remedy the resource leak.
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
         cls._api = API(use_sandbox=True, site_id='EBAY-ENCA')
 
@@ -53,10 +53,10 @@ class MyTestCase(unittest.TestCase):
 
     def test_positional_one_kw_none(self):
 
-        items = self._api.buy_browse_search(q='silver')
-        item_id = items['item_summaries'][0]['item_id']
-        self.assertIsNotNone(self._api.buy_browse_get_item(item_id=item_id),
-                             msg="A call with one positional and no kw arguments failed.")
+        for item in self._api.buy_browse_search(q='silver'):
+            self.assertIsNotNone(self._api.buy_browse_get_item(item_id=item['item_id']),
+                                 msg="A call with one positional and no kw arguments failed.")
+            break
 
     def test_positional_two_kw_none(self):
         pass    # TODO
@@ -66,10 +66,10 @@ class MyTestCase(unittest.TestCase):
                              msg="A call with zero positional and no kw arguments failed.")
 
     def test_positional_one_kw_some(self):
-        items = self._api.buy_browse_search(q='silver')
-        item_id = items['item_summaries'][0]['item_id']
-        self.assertIsNotNone(self._api.buy_browse_get_item(item_id=item_id, fieldgroups='PRODUCT'),
-                             msg="A call with one positional and some kw arguments failed.")
+        for item in self._api.buy_browse_search(q='silver'):
+            self.assertIsNotNone(self._api.buy_browse_get_item(item_id=item['item_id'], fieldgroups='PRODUCT'),
+                                 msg="A call with one positional and some kw arguments failed.")
+            break
 
     def test_positional_two_kw_some(self):
         pass  # TODO
