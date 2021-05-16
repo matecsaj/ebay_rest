@@ -51,15 +51,24 @@ class MyTestCase(unittest.TestCase):
                         msg="Unexpected return type from a DateTime member function.")
 
     # test paging calls
-    def test_paging_something(self):
+
+    def test_paging_no_results(self):
         count = 0
-        limit = 350
-        for item in self._api.buy_browse_search(q=self.q):
+        for item in self._api.buy_browse_search(q='atomic-donkey-kick--this-will-not-be-found--Geraldine'):
             self.assertTrue(isinstance(item['item_id'], str))
             count += 1
-            if count > limit:
+            break
+        self.assertTrue(count == 0)
+
+    def test_paging_limit_over_page_size(self):
+        count = 0
+        limit = 350
+        for item in self._api.buy_browse_search(limit=limit, q=self.q):
+            self.assertTrue(isinstance(item['item_id'], str))
+            count += 1
+            if count >= limit + 500:    # break out if way past the desired limit
                 break
-        self.assertTrue(count >= limit)
+        self.assertTrue(count == limit)
 
     # test positional and kw arguments to ebay api calls
 

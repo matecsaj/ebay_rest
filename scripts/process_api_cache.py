@@ -235,7 +235,7 @@ class Process:
             pass    # TODO Do something to make the comments aka docstring handle optional parameters properly
 
         # prepare the method type
-        method_type = 'standard'
+        method_type = 'single'      # most calls are of this type
         for line in docstring.split('\n'):
             if ':return:' in line:
                 if 'Paged' in line:
