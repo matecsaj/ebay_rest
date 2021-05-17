@@ -135,7 +135,7 @@ class API:
         else:
             raise Error(number=0, reason="use_sandbox must be unspecified, True or False.")
 
-        # check then set site_id
+        # check the set site_id
         valid = []
         for global_id_value in Reference.get_global_id_values():
             valid.append(global_id_value['global_id'])
@@ -145,9 +145,9 @@ class API:
         else:
             raise Error(number=1, reason=f"site_id must be unspecified or one of these strings {valid}.")
 
-        # initialize the token
+        # get a token, so that a credential problem will be discovered ASAP
         try:
-            self._token = Token(self._use_sandbox)
+            Token.get(use_sandbox=use_sandbox)
         except Error:
             raise
 
@@ -272,7 +272,7 @@ class API:
         # Configure OAuth2 access token for authorization: api_auth
         configuration = function_configuration()
         try:
-            configuration.access_token = self._token.get()
+            configuration.access_token = Token.get(use_sandbox=self._use_sandbox)
         except Error:
             raise
 

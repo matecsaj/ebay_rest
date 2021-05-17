@@ -1,11 +1,11 @@
 # Standard library imports
 from datetime import timezone
-import logging
 import os
 import threading
 
 # Local imports
 from .date_time import DateTime
+from .error import Error
 from .oath.credentialutil import CredentialUtil
 from .oath.model.model import Environment
 from .oath.oauth2api import OAuth2Api
@@ -14,42 +14,65 @@ from .oath.oauth2api import OAuth2Api
 class Token:
     """ Initialize, refresh and supply an eBay OAuth application token.
 
-    This is a facade for the oath library.
+    This is a facade for the oath module. Instantiation is not required.
     """
+    _lock = threading.Lock()
+    _oauth2api_inst = None
+    _app_token = dict()
 
-    def __init__(self, use_sandbox: bool):
-        self._token_lock = threading.Lock()
-        self._app_token = None  # use when locked
+    @staticmethod
+    def get(use_sandbox: bool):
+        """
+        Get an eBay Application Token.
 
-        directory = os.getcwd()  # get the current working directory
-        CredentialUtil.load(os.path.join(directory, 'ebay_rest.json'))
-        self._oauth2api_inst = OAuth2Api()
-        if use_sandbox:
-            self._env = Environment.SANDBOX
-        else:
-            self._env = Environment.PRODUCTION
+        Object instantiation is not required and is discouraged.
 
-        self._refresh()
+        :param
+        use_sandbox (bool): {True, False} For the sandbox True, for production False.
+        """
 
-    def get(self):
-        """ Get the eBay Application Token. """
+        with Token._lock:
+            if Token._oauth2api_inst is None:
+                directory = os.getcwd()  # get the current working directory
+                CredentialUtil.load(os.path.join(directory, 'ebay_rest.json'))
+                Token._oauth2api_inst = OAuth2Api()
 
-        with self._token_lock:
-            if self._app_token.token_expiry.replace(tzinfo=timezone.utc) <= DateTime.now():
-                self._refresh()
-            token = self._app_token.access_token
+            if use_sandbox not in Token._app_token:
+                try:
+                    Token._refresh(use_sandbox)
+                except Error:
+                    raise
+
+            if Token._app_token[use_sandbox].token_expiry.replace(tzinfo=timezone.utc) <= DateTime.now():
+                try:
+                    Token._refresh(use_sandbox)
+                except Error:
+                    raise
+
+            token = Token._app_token[use_sandbox].access_token
 
         return token
 
-    def _refresh(self):
-        """ Refresh the eBay Application Token and update all that comes with it. """
+    @staticmethod
+    def _refresh(use_sandbox: bool):
+        """
+        Refresh the eBay Application Token and update all that comes with it.
 
-        app_token = \
-            self._oauth2api_inst.get_application_token(self._env,
-                                                       ["https://api.ebay.com/oauth/api_scope"])
+        :param
+        use_sandbox (bool): {True, False} For the sandbox True, for production False.
+        """
+
+        URL = "https://api.ebay.com/oauth/api_scope"
+        if use_sandbox:
+            env = Environment.SANDBOX
+        else:
+            env = Environment.PRODUCTION
+
+        app_token = Token._oauth2api_inst.get_application_token(env, [URL])
         if app_token.error is not None:
-            logging.critical(f'app_token.error == {app_token.error}.')
+            reason = 'app_token.error ' + app_token.error
+            raise Error(number=1, reason=reason)
         if (app_token.access_token is None) or (len(app_token.access_token) == 0):
-            logging.critical('app_token.access_token is missing.')
+            raise Error(number=1, reason='app_token.access_token is missing.')
 
-        self._app_token = app_token
+        Token._app_token[use_sandbox] = app_token

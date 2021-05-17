@@ -53,12 +53,10 @@ class MyTestCase(unittest.TestCase):
     # test paging calls
 
     def test_paging_no_results(self):
-        count = 0
-        for item in self._api.buy_browse_search(q='atomic-donkey-kick--this-will-not-be-found--Geraldine'):
+        for item in self._api.buy_browse_search(q='atomic-donkey-kick--this-will-not-be-found-Geraldine'):
             self.assertTrue(isinstance(item['item_id'], str))
-            count += 1
+            self.assertTrue(False, msg='No items should be returned.')
             break
-        self.assertTrue(count == 0)
 
     def test_paging_limit_over_page_size(self):
         count = 0
