@@ -13,7 +13,18 @@ import warnings
 from src.ebay_rest import API, DateTime, Error, Reference
 
 
-class MyTestCase(unittest.TestCase):
+# @unittest.skip
+class APIInitialization(unittest.TestCase):
+
+    def test_uniqueness(self):
+        a1 = API(use_sandbox=True, site_id='EBAY-NL')
+        a2 = API(site_id='EBAY-NL', use_sandbox=True, )
+        b = API(use_sandbox=True, site_id='EBAY-ES')
+        self.assertEqual(a1, a2)
+        self.assertNotEqual(a1, b)
+
+
+class APIOther(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -25,30 +36,6 @@ class MyTestCase(unittest.TestCase):
         else:
             cls.q = 'silver snail'
         cls._api = API(use_sandbox=cls._use_sandbox, site_id='EBAY-ENCA')
-
-    # test the load of all references
-
-    def test_enum_load(self):
-        self.assertIsNotNone(Reference.get_enums(), msg="Failed to load enums.")
-
-    def test_container_load(self):
-        self.assertIsNotNone(Reference.get_item_fields(), msg="Failed to load containers.")
-
-    def test_global_id_values_load(self):
-        self.assertIsNotNone(Reference.get_global_id_values(), msg="Failed to load global id values.")
-
-    # check the return types of all date time functions
-    def test_date_time_now(self):
-        self.assertTrue(isinstance(DateTime.now(), datetime.date),
-                        msg="Unexpected return type from a DateTime member function.")
-
-    def test_date_time_from_string(self):
-        self.assertTrue(isinstance(DateTime.from_string('2004-08-04T19:09:02.768Z'), datetime.date),
-                        msg="Unexpected return type from a DateTime member function.")
-
-    def test_date_time_to_string(self):
-        self.assertTrue(isinstance(DateTime.to_string(DateTime.now()), str),
-                        msg="Unexpected return type from a DateTime member function.")
 
     # test paging calls
 
@@ -106,6 +93,33 @@ class MyTestCase(unittest.TestCase):
             self.assertIsNotNone(f'Error {error.number} is {error.reason} with detail {error.detail}.')
         else:
             self.assertIsNotNone(None, msg="Failed to raise an exception.")
+
+
+class DateTimeTests(unittest.TestCase):
+
+    def test_date_time_now(self):
+        self.assertTrue(isinstance(DateTime.now(), datetime.date),
+                        msg="Unexpected return type from a DateTime member function.")
+
+    def test_date_time_from_string(self):
+        self.assertTrue(isinstance(DateTime.from_string('2004-08-04T19:09:02.768Z'), datetime.date),
+                        msg="Unexpected return type from a DateTime member function.")
+
+    def test_date_time_to_string(self):
+        self.assertTrue(isinstance(DateTime.to_string(DateTime.now()), str),
+                        msg="Unexpected return type from a DateTime member function.")
+
+
+class ReferenceTests(unittest.TestCase):
+
+    def test_enum_load(self):
+        self.assertIsNotNone(Reference.get_enums(), msg="Failed to load enums.")
+
+    def test_container_load(self):
+        self.assertIsNotNone(Reference.get_item_fields(), msg="Failed to load containers.")
+
+    def test_global_id_values_load(self):
+        self.assertIsNotNone(Reference.get_global_id_values(), msg="Failed to load global id values.")
 
 
 if __name__ == '__main__':
