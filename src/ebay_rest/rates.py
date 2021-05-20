@@ -15,11 +15,9 @@ class Rates:
 
     https://developer.ebay.com/api-docs/developer/analytics/resources/rate_limit/methods/getRateLimits
     """
-
     _lock = threading.Lock()    # secure this lock before updating or reading class variables
     _rate_limits = None         # a recent cache of the rates limits from eBay
-    _periodic_refresh_date_time = None    # when the next update to _rate_limits is recommended for
-    _soonest_reset = None       # the soonest date-time when a daily limit will reset
+    _refresh_date_time = None   # the soonest it is advisable to refresh rates data from eBay
 
     @staticmethod
     def decrement_rate(rate_keys: list):
@@ -114,6 +112,7 @@ class Rates:
             return None
 
         else:
+            # TODO sometimes resource_name_module does not have the correct value
             [api_context, api_name, api_version, resource_name_base, resource_name_module] = rate
             rates_base = None
             rates_base_module = None
@@ -168,26 +167,31 @@ class Rates:
     def refresh_developer_analytics(rate_limits):
         """ Refresh the local Developer Analytics values. """
         with Rates._lock:
+            # TODO pre-process the data to make the frequently used find and decrement functions faster.
             Rates._rate_limits = rate_limits
-            Rates._periodic_refresh_date_time = DateTime.now() + timedelta(minutes=15)
-            soonest = DateTime.from_string(Rates.soonest_reset())
-            Rates._soonest_reset = soonest + timedelta(seconds=5)  # extra 5 in case of clock differences
+
+            # Another program may also be using up calls, periodically synchronizing with eBay's counts.
+            periodic = DateTime.now() + timedelta(minutes=15)
+
+            # When the soonest limit is set to reset is another good time to synchronize.
+            # Do it a little bit later, just in case the local clock is a bit off from Ebay's.
+            reset = DateTime.from_string(Rates.soonest_reset()) + timedelta(seconds=15)
+
+            # use the soonest
+            if periodic < reset:
+                Rates._refresh_date_time = periodic
+            else:
+                Rates._refresh_date_time = reset
 
     @staticmethod
     def need_refresh():
-        """ Return True if the rates need refreshing.
-
-        Another program could be running currently, so it is important to periodically re-synchronize.
-        """
+        """ Return True if the rates need refreshing. """
         with Rates._lock:
-            if not Rates._rate_limits or not Rates._periodic_refresh_date_time or not Rates._soonest_reset:
-                result = True
-            else:
-                now = DateTime.now()
-                if Rates._periodic_refresh_date_time < now:    # an independent program may be running
-                    result = True
-                elif Rates._soonest_reset < now:  # an independent program may be running
-                    result = True
-                else:
+            if Rates._refresh_date_time:
+                if Rates._refresh_date_time > DateTime.now():
                     result = False
+                else:
+                    result = True
+            else:
+                result = True
         return result
