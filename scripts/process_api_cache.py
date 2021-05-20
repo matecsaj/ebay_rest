@@ -261,13 +261,9 @@ class Process:
                 has_args = False
 
         # Prepare the list of rate lookup information that will be used for throttling.
-        base_path_parts = self.base_paths[name].split('/')
-        api_context = base_path_parts[1]
-        api_name = base_path_parts[2].capitalize()
-        api_version = base_path_parts[3]
         resource_name_base = name.replace('_', '.')
         resource_name_module = module.replace('_api', '')
-        rate = [api_context, api_name, api_version, resource_name_base, resource_name_module]
+        rate = [resource_name_base, resource_name_module]
 
         code = f"    def {name}_{method}(self, {params}):{ignore_long}\n"
         code += docstring
