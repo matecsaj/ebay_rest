@@ -21,14 +21,14 @@ class Token:
     _app_token = dict()
 
     @staticmethod
-    def get(use_sandbox: bool):
+    def get(sandbox: bool):
         """
         Get an eBay Application Token.
 
         Object instantiation is not required and is discouraged.
 
         :param
-        use_sandbox (bool): {True, False} For the sandbox True, for production False.
+        sandbox (bool): {True, False} For the sandbox True, for production False.
         """
 
         with Token._lock:
@@ -37,33 +37,33 @@ class Token:
                 CredentialUtil.load(os.path.join(directory, 'ebay_rest.json'))
                 Token._oauth2api_inst = OAuth2Api()
 
-            if use_sandbox not in Token._app_token:
+            if sandbox not in Token._app_token:
                 try:
-                    Token._refresh(use_sandbox)
+                    Token._refresh(sandbox)
                 except Error:
                     raise
 
-            if Token._app_token[use_sandbox].token_expiry.replace(tzinfo=timezone.utc) <= DateTime.now():
+            if Token._app_token[sandbox].token_expiry.replace(tzinfo=timezone.utc) <= DateTime.now():
                 try:
-                    Token._refresh(use_sandbox)
+                    Token._refresh(sandbox)
                 except Error:
                     raise
 
-            token = Token._app_token[use_sandbox].access_token
+            token = Token._app_token[sandbox].access_token
 
         return token
 
     @staticmethod
-    def _refresh(use_sandbox: bool):
+    def _refresh(sandbox: bool):
         """
         Refresh the eBay Application Token and update all that comes with it.
 
         :param
-        use_sandbox (bool): {True, False} For the sandbox True, for production False.
+        sandbox (bool): {True, False} For the sandbox True, for production False.
         """
 
         URL = "https://api.ebay.com/oauth/api_scope"
-        if use_sandbox:
+        if sandbox:
             env = Environment.SANDBOX
         else:
             env = Environment.PRODUCTION
@@ -75,4 +75,4 @@ class Token:
         if (app_token.access_token is None) or (len(app_token.access_token) == 0):
             raise Error(number=1, reason='app_token.access_token is missing.')
 
-        Token._app_token[use_sandbox] = app_token
+        Token._app_token[sandbox] = app_token

@@ -17,25 +17,26 @@ from src.ebay_rest import API, DateTime, Error, Reference
 class APIInitialization(unittest.TestCase):
 
     def test_uniqueness(self):
-        a1 = API(use_sandbox=True, site_id='EBAY-NL')
-        a2 = API(site_id='EBAY-NL', use_sandbox=True, )
-        b = API(use_sandbox=True, site_id='EBAY-ES')
+        a1 = API(sandbox=True, site_id='EBAY-NL')
+        a2 = API(site_id='EBAY-NL', sandbox=True, )
+        b = API(sandbox=True, site_id='EBAY-ES')
         self.assertEqual(a1, a2)
         self.assertNotEqual(a1, b)
 
 
+# @unittest.skip
 class APIOther(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
         # TODO Stop ignoring the warning and remedy the resource leak.
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
-        cls._use_sandbox = False    # True is better, eBay wants you to use the sandbox for testing
-        if cls._use_sandbox:        # use keywords that will return >0 and < 10,000 results
+        cls.sandbox = False    # True is better, eBay wants you to use the sandbox for testing
+        if cls.sandbox:        # use keywords that will return >0 and < 10,000 results
             cls.q = 'silver'
         else:
             cls.q = 'silver snail'
-        cls._api = API(use_sandbox=cls._use_sandbox, site_id='EBAY-ENCA')
+        cls._api = API(sandbox=cls.sandbox, site_id='EBAY-ENCA')
 
     # test paging calls
 
@@ -95,6 +96,38 @@ class APIOther(unittest.TestCase):
             self.assertIsNotNone(None, msg="Failed to raise an exception.")
 
 
+# @unittest.skip
+class APIThrottled(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        # TODO Stop ignoring the warning and remedy the resource leak.
+        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
+        cls._api = API(sandbox=False, throttle=True, timeout=60.0)
+
+    def test_finding_one_item(self):
+        count = 0
+        item_id = None
+        for item in self._api.buy_browse_search(limit=1, q='lego'):
+            self.assertTrue(isinstance(item['item_id'], str))
+            item_id = item['item_id']
+            count += 1
+            break
+        self.assertTrue(count == 1)
+        if item_id:
+            item = self._api.buy_browse_get_item(item_id=item_id)
+            self.assertTrue(isinstance(item, dict))
+
+    def test_finding_three_hundred_items(self):
+        count = 0
+        for item in self._api.buy_browse_search(limit=1, q='lego'):
+            self.assertTrue(isinstance(item['item_id'], str))
+            count += 1
+            break
+        self.assertTrue(count == 1)
+
+
+# @unittest.skip
 class DateTimeTests(unittest.TestCase):
 
     def test_date_time_now(self):
@@ -110,6 +143,7 @@ class DateTimeTests(unittest.TestCase):
                         msg="Unexpected return type from a DateTime member function.")
 
 
+# @unittest.skip
 class ReferenceTests(unittest.TestCase):
 
     def test_enum_load(self):

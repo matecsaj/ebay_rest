@@ -260,6 +260,15 @@ class Process:
             else:
                 has_args = False
 
+        # Prepare the list of rate lookup information that will be used for throttling.
+        base_path_parts = self.base_paths[name].split('/')
+        api_context = base_path_parts[1]
+        api_name = base_path_parts[2].capitalize()
+        api_version = base_path_parts[3]
+        resource_name_base = name.replace('_', '.')
+        resource_name_module = module.replace('_api', '')
+        rate = [api_context, api_name, api_version, resource_name_base, resource_name_module]
+
         code = f"    def {name}_{method}(self, {params}):{ignore_long}\n"
         code += docstring
         code += f"        return self._method_{method_type}(" \
@@ -268,7 +277,8 @@ class Process:
                 f" {name}.{self._camel(module)}," \
                 f" {name}.ApiClient," \
                 f" '{method}'," \
-                f" {self._camel(name)}Exception,"
+                f" {self._camel(name)}Exception," \
+                f" {rate},"
         if has_args:
             if ',' in params_modified:
                 code += f" ({params_modified}),"

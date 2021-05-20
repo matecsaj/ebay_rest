@@ -17,4 +17,9 @@ class Error(Exception):
         self.detail = detail
 
     def __str__(self):
-        return 'Error ' + str(self.number) + ' is ' + self.reason + ' with detail: ' + self.detail + '.'
+        message = 'Error number' + str(self.number) + '.'
+        if self.reason:
+            message = message + ' ' + self.reason
+        if self.detail:
+            message = message + ' ' + self.detail
+        return message

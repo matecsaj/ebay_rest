@@ -19,7 +19,7 @@ Follow the instructions [here](https://github.com/matecsaj/ebay_rest/blob/main/t
 from ebay_rest import API, DateTime, Error, Reference
 
 try:
-    api = API(use_sandbox=True)
+    api = API(sandbox=True)
 except Error as error:
     print(f'Error {error.number} is {error.reason}  {error.detail}.\n')
 else:
