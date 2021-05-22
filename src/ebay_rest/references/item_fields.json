@@ -263,6 +263,12 @@
                 "type_sql": "bool"
             },
             {
+                "name_python": "tyre_label_image_url",
+                "name_sql": "tyre_label_image_url",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
                 "name_python": "unique_bidder_count",
                 "name_sql": "unique_bidder_count",
                 "required": false,

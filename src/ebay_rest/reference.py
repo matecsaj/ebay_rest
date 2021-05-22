@@ -51,10 +51,10 @@ class Reference:
     def _get(name):
         """ Get information from the json files. """
         if name not in Reference._cache:
-            # get the path to this python file, which is also where the data file is
+            # get the path to this python file, which is also where the data file directory is
             path, _fn = os.path.split(os.path.realpath(__file__))
             # to the path join the data file name and extension
-            path_name = os.path.join(path, f'reference_{name}.json')
+            path_name = os.path.join(path, 'references', name + '.json')
             with open(path_name) as file_handle:
                 Reference._cache[name] = json.load(file_handle)
         return copy.deepcopy(Reference._cache[name])
