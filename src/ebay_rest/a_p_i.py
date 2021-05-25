@@ -249,27 +249,27 @@ class API:
         :param kwargs:
         :return:
         """
-        PAGE_LIMIT = 200  # the maximum number of records per page, as dictated by eBay
+        page_limit = 200  # the maximum number of records per page, as dictated by eBay
 
         # co-opt some parameters
         if 'offset' in kwargs:
-            raise Error(number=3, reason="Don't supply an offset parameter. It is automatically handled.")
+            raise Error(number=99001, reason="Don't supply an offset parameter. It is automatically handled.")
 
         if 'limit' in kwargs:
             if not isinstance(kwargs['limit'], int):
                 reason = "The limit must be an integer, you supplied a " + type(kwargs['limit']) + '.'
-                raise Error(number=4, reason=reason)
+                raise Error(number=99002, reason=reason)
             records_desired = kwargs['limit']
             if records_desired <= 0:
                 reason = "The limit must be greater that zero, you supplied " + str(records_desired) + '.'
-                raise Error(number=4, reason=reason)
-            if records_desired < PAGE_LIMIT:
+                raise Error(number=99003, reason=reason)
+            if records_desired < page_limit:
                 kwargs['limit'] = records_desired  # just get enough records to satisfy what is desired
             else:
-                kwargs['limit'] = PAGE_LIMIT  # fill pages with as many records as possible
+                kwargs['limit'] = page_limit  # fill pages with as many records as possible
         else:
             records_desired = None  # the users wants all possible records
-            kwargs['limit'] = PAGE_LIMIT  # fill pages with as many records as possible
+            kwargs['limit'] = page_limit  # fill pages with as many records as possible
 
         try:
             swagger_method = self._get_swagger_method(function_configuration, base_path,
@@ -425,10 +425,10 @@ class API:
 
         To learn more about Swagger, visit https://swagger.io.
         """
-        BASIC_TYPES = (bool, bytes, datetime.date, datetime.datetime,
+        basic_types = (bool, bytes, datetime.date, datetime.datetime,
                        float, int, type(None), str)  # omitted ones that are unlikely to ever be used
 
-        if type(obj) in BASIC_TYPES:  # leaf node
+        if type(obj) in basic_types:  # leaf node
             return obj
 
         elif obj.__class__.__module__ != 'builtins':  # a user defined class object?
@@ -446,7 +446,7 @@ class API:
                     else:
                         attr = attr[1:]  # remove the single leading underscore
 
-                        if type(value) in BASIC_TYPES:
+                        if type(value) in basic_types:
                             new_value = value
 
                         elif isinstance(value, list):

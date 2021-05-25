@@ -147,10 +147,10 @@ class DateTimeTests(unittest.TestCase):
 class ReferenceTests(unittest.TestCase):
 
     def test_enum_load(self):
-        self.assertIsNotNone(Reference.get_enums(), msg="Failed to load enums.")
+        self.assertIsNotNone(Reference.get_item_enums_modified(), msg="Failed to load enums.")
 
     def test_container_load(self):
-        self.assertIsNotNone(Reference.get_item_fields(), msg="Failed to load containers.")
+        self.assertIsNotNone(Reference.get_item_fields_modified(), msg="Failed to load containers.")
 
     def test_global_id_values_load(self):
         self.assertIsNotNone(Reference.get_global_id_values(), msg="Failed to load global id values.")
