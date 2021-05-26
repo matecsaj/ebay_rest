@@ -79,7 +79,6 @@ print(help(Reference))
 
 ## Contributing
 * Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-* Error handling. Make a debug [logs](https://docs.python.org/3/library/logging.html?highlight=logging#module-logging) for maintainers. Throw exceptions for end-user errors.
 * Follow Uncle Bob's SOLID principles; see a [text description](https://en.wikipedia.org/wiki/SOLID) & [video tutorial](https://www.youtube.com/watch?v=pTB30aXS77U).
 * Note the error number guide documented in the Error class definition. 
 * Please make sure to update tests as appropriate.
