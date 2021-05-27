@@ -14,6 +14,46 @@ from src.ebay_rest import API, DateTime, Error, Reference
 
 
 # @unittest.skip
+class APIBid(unittest.TestCase):
+    SANDBOX = True      # WARNING. If you change this to False, you will bid on live items.
+    SITE_ID = 'EBAY-ENCA'
+
+    def test_bid(self):
+        # TODO Stop ignoring the warning and remedy the resource leak.
+        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
+
+        try:
+            api = API(sandbox=self.SANDBOX, site_id=self.SITE_ID, throttle=True)
+        except Error as error:
+            self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+        else:
+
+            keywords = 'gold'
+            filters = 'buyingOptions:{AUCTION}'
+            item_id = None
+
+            try:
+                for item in api.buy_browse_search(q=keywords, filter=filters, sort='price', limit=1):
+                    item_id = item['item_id']
+            except Error as error:
+                self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+            else:
+
+                self.assertIsNotNone(item_id)
+                body = {"maxAmount": {"currency": "CAD", "value": "5.00"}}
+                try:
+                    api.buy_offer_place_proxy_bid(x_ebay_c_marketplace_id=self.SITE_ID, item_id=item_id, body=body)
+                except Error as error:
+                    if 'Insufficient permissions' not in error.detail:
+                        self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                else:
+                    self.assertTrue(True)
+                    return
+
+        return
+
+
+# @unittest.skip
 class APIInitialization(unittest.TestCase):
 
     def test_uniqueness(self):
@@ -143,7 +183,7 @@ class DateTimeTests(unittest.TestCase):
                         msg="Unexpected return type from a DateTime member function.")
 
 
-# @unittest.skip
+@unittest.skip
 class ReferenceTests(unittest.TestCase):
 
     def test_enum_load(self):
