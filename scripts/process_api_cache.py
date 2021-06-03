@@ -260,6 +260,8 @@ class Process:
             else:
                 has_args = False
 
+        user_access_token = 'token' in docstring
+
         # Prepare the list of rate lookup information that will be used for throttling.
         resource_name_base = name.replace('_', '.')
         resource_name_module = module.replace('_api', '')
@@ -274,6 +276,7 @@ class Process:
                 f" {name}.ApiClient," \
                 f" '{method}'," \
                 f" {self._camel(name)}Exception," \
+                f" {user_access_token}," \
                 f" {rate},"
         if has_args:
             if ',' in params_modified:

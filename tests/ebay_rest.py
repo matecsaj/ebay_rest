@@ -13,10 +13,9 @@ import warnings
 from src.ebay_rest import API, DateTime, Error, Reference
 
 
-# @unittest.skip
 class APIBid(unittest.TestCase):
     SANDBOX = True      # WARNING. If you change this to False, you will bid on live items.
-    SITE_ID = 'EBAY-ENCA'
+    SITE_ID = 'EBAY-US'
 
     def test_bid(self):
         # TODO Stop ignoring the warning and remedy the resource leak.
@@ -28,7 +27,7 @@ class APIBid(unittest.TestCase):
             self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
 
-            keywords = 'gold'
+            keywords = 'silver'
             filters = 'buyingOptions:{AUCTION}'
             item_id = None
 
@@ -42,7 +41,10 @@ class APIBid(unittest.TestCase):
                 self.assertIsNotNone(item_id)
                 body = {"maxAmount": {"currency": "CAD", "value": "5.00"}}
                 try:
-                    api.buy_offer_place_proxy_bid(x_ebay_c_marketplace_id=self.SITE_ID, item_id=item_id, body=body)
+                    # the marketplace has underscores and is a we bit different
+                    # https://developer.ebay.com/api-docs/buy/static/ref-marketplace-supported.html
+                    result = api.buy_offer_place_proxy_bid(x_ebay_c_marketplace_id='EBAY_US',
+                                                           item_id=item_id, body=body)
                 except Error as error:
                     if 'Insufficient permissions' not in error.detail:
                         self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
@@ -53,7 +55,6 @@ class APIBid(unittest.TestCase):
         return
 
 
-# @unittest.skip
 class APIInitialization(unittest.TestCase):
 
     def test_uniqueness(self):
@@ -64,7 +65,6 @@ class APIInitialization(unittest.TestCase):
         self.assertNotEqual(a1, b)
 
 
-# @unittest.skip
 class APIOther(unittest.TestCase):
 
     @classmethod
@@ -136,7 +136,6 @@ class APIOther(unittest.TestCase):
             self.assertIsNotNone(None, msg="Failed to raise an exception.")
 
 
-# @unittest.skip
 class APIThrottled(unittest.TestCase):
 
     @classmethod
@@ -167,7 +166,6 @@ class APIThrottled(unittest.TestCase):
         self.assertTrue(count == 1)
 
 
-# @unittest.skip
 class DateTimeTests(unittest.TestCase):
 
     def test_date_time_now(self):
@@ -183,7 +181,6 @@ class DateTimeTests(unittest.TestCase):
                         msg="Unexpected return type from a DateTime member function.")
 
 
-@unittest.skip
 class ReferenceTests(unittest.TestCase):
 
     def test_enum_load(self):
