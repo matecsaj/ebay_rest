@@ -115,7 +115,8 @@ class Process:
         insert_lines = ''
         for requirement in requirements:
             insert_lines += f'    {requirement}\n'
-        self._put_anchored_lines(target_file=self.file_setup, anchor='setup.cfg', insert_lines=insert_lines)
+        # TODO This was commented out because it caused an error. Is something like it truly needed?
+        # self._put_anchored_lines(target_file=self.file_setup, anchor='setup.cfg', insert_lines=insert_lines)
 
     def make_includes(self):
         """ Make includes for all the libraries. """

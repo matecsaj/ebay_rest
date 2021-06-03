@@ -440,7 +440,7 @@ class Transaction(object):
     def transaction_memo(self):
         """Gets the transaction_memo of this Transaction.  # noqa: E501
 
-        This field provides more details on a shipping label transaction, such as a purchase, a refund, or a price adjustment to the cost of the shipping label. This field is only returned if applicable/available. Currently, this field is only used for shipping label transactions, but it is possible that it will be used for other transaction types in the future.  # noqa: E501
+        This field provides more details on shipping label transactions and transactions where the funds are being held by eBay. For shipping label transactions, the transactionMemo gives details about a purchase, a refund, or a price adjustment to the cost of the shipping label. For on-hold transactions, the transactionMemo provides information on the reason for the hold or when the hold will be released (e.g., &quot;Funds on hold. Estimated release on Jun 1&quot;). This field is only returned if applicable/available.  # noqa: E501
 
         :return: The transaction_memo of this Transaction.  # noqa: E501
         :rtype: str
@@ -451,7 +451,7 @@ class Transaction(object):
     def transaction_memo(self, transaction_memo):
         """Sets the transaction_memo of this Transaction.
 
-        This field provides more details on a shipping label transaction, such as a purchase, a refund, or a price adjustment to the cost of the shipping label. This field is only returned if applicable/available. Currently, this field is only used for shipping label transactions, but it is possible that it will be used for other transaction types in the future.  # noqa: E501
+        This field provides more details on shipping label transactions and transactions where the funds are being held by eBay. For shipping label transactions, the transactionMemo gives details about a purchase, a refund, or a price adjustment to the cost of the shipping label. For on-hold transactions, the transactionMemo provides information on the reason for the hold or when the hold will be released (e.g., &quot;Funds on hold. Estimated release on Jun 1&quot;). This field is only returned if applicable/available.  # noqa: E501
 
         :param transaction_memo: The transaction_memo of this Transaction.  # noqa: E501
         :type: str

@@ -76,7 +76,7 @@ class ReturnPolicyResponse(object):
     def href(self):
         """Gets the href of this ReturnPolicyResponse.  # noqa: E501
 
-        The URI of the current page of results from the result set.  # noqa: E501
+        This field is for future use.  # noqa: E501
 
         :return: The href of this ReturnPolicyResponse.  # noqa: E501
         :rtype: str
@@ -87,7 +87,7 @@ class ReturnPolicyResponse(object):
     def href(self, href):
         """Sets the href of this ReturnPolicyResponse.
 
-        The URI of the current page of results from the result set.  # noqa: E501
+        This field is for future use.  # noqa: E501
 
         :param href: The href of this ReturnPolicyResponse.  # noqa: E501
         :type: str
@@ -99,7 +99,7 @@ class ReturnPolicyResponse(object):
     def limit(self):
         """Gets the limit of this ReturnPolicyResponse.  # noqa: E501
 
-        The number of items returned on a single page from the result set.  # noqa: E501
+        This field is for future use.  # noqa: E501
 
         :return: The limit of this ReturnPolicyResponse.  # noqa: E501
         :rtype: int
@@ -110,7 +110,7 @@ class ReturnPolicyResponse(object):
     def limit(self, limit):
         """Sets the limit of this ReturnPolicyResponse.
 
-        The number of items returned on a single page from the result set.  # noqa: E501
+        This field is for future use.  # noqa: E501
 
         :param limit: The limit of this ReturnPolicyResponse.  # noqa: E501
         :type: int
@@ -122,7 +122,7 @@ class ReturnPolicyResponse(object):
     def next(self):
         """Gets the next of this ReturnPolicyResponse.  # noqa: E501
 
-        The URI for the following page of results. This value is returned only if there is an additional page of results to display from the result set. Max length: 2048  # noqa: E501
+        This field is for future use.  # noqa: E501
 
         :return: The next of this ReturnPolicyResponse.  # noqa: E501
         :rtype: str
@@ -133,7 +133,7 @@ class ReturnPolicyResponse(object):
     def next(self, next):
         """Sets the next of this ReturnPolicyResponse.
 
-        The URI for the following page of results. This value is returned only if there is an additional page of results to display from the result set. Max length: 2048  # noqa: E501
+        This field is for future use.  # noqa: E501
 
         :param next: The next of this ReturnPolicyResponse.  # noqa: E501
         :type: str
@@ -145,7 +145,7 @@ class ReturnPolicyResponse(object):
     def offset(self):
         """Gets the offset of this ReturnPolicyResponse.  # noqa: E501
 
-        The number of results skipped in the result set before listing the first returned result. This value is set in the request with the offset query parameter. Note: The items in a paginated result set use a zero-based list where the first item in the list has an offset of 0.  # noqa: E501
+        This field is for future use.  # noqa: E501
 
         :return: The offset of this ReturnPolicyResponse.  # noqa: E501
         :rtype: int
@@ -156,7 +156,7 @@ class ReturnPolicyResponse(object):
     def offset(self, offset):
         """Sets the offset of this ReturnPolicyResponse.
 
-        The number of results skipped in the result set before listing the first returned result. This value is set in the request with the offset query parameter. Note: The items in a paginated result set use a zero-based list where the first item in the list has an offset of 0.  # noqa: E501
+        This field is for future use.  # noqa: E501
 
         :param offset: The offset of this ReturnPolicyResponse.  # noqa: E501
         :type: int
@@ -168,7 +168,7 @@ class ReturnPolicyResponse(object):
     def prev(self):
         """Gets the prev of this ReturnPolicyResponse.  # noqa: E501
 
-        The URI for the preceding page of results. This value is returned only if there is a previous page of results to display from the result set. Max length: 2048  # noqa: E501
+        This field is for future use.  # noqa: E501
 
         :return: The prev of this ReturnPolicyResponse.  # noqa: E501
         :rtype: str
@@ -179,7 +179,7 @@ class ReturnPolicyResponse(object):
     def prev(self, prev):
         """Sets the prev of this ReturnPolicyResponse.
 
-        The URI for the preceding page of results. This value is returned only if there is a previous page of results to display from the result set. Max length: 2048  # noqa: E501
+        This field is for future use.  # noqa: E501
 
         :param prev: The prev of this ReturnPolicyResponse.  # noqa: E501
         :type: str
