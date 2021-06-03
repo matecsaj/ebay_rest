@@ -15,14 +15,14 @@ from src.ebay_rest import API, DateTime, Error, Reference
 
 class APIBid(unittest.TestCase):
     SANDBOX = True      # WARNING. If you change this to False, you will bid on live items.
-    SITE_ID = 'EBAY-US'
+    MARKETPLACE_ID = 'EBAY_US'
 
     def test_bid(self):
         # TODO Stop ignoring the warning and remedy the resource leak.
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
 
         try:
-            api = API(sandbox=self.SANDBOX, site_id=self.SITE_ID, throttle=True)
+            api = API(sandbox=self.SANDBOX, marketplace_id=self.MARKETPLACE_ID, throttle=True)
         except Error as error:
             self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
@@ -46,8 +46,7 @@ class APIBid(unittest.TestCase):
                     result = api.buy_offer_place_proxy_bid(x_ebay_c_marketplace_id='EBAY_US',
                                                            item_id=item_id, body=body)
                 except Error as error:
-                    if 'Insufficient permissions' not in error.detail:
-                        self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                    self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
                 else:
                     self.assertTrue(True)
                     return
@@ -58,9 +57,9 @@ class APIBid(unittest.TestCase):
 class APIInitialization(unittest.TestCase):
 
     def test_uniqueness(self):
-        a1 = API(sandbox=True, site_id='EBAY-NL')
-        a2 = API(site_id='EBAY-NL', sandbox=True, )
-        b = API(sandbox=True, site_id='EBAY-ES')
+        a1 = API(sandbox=True, marketplace_id='EBAY_NL')
+        a2 = API(marketplace_id='EBAY_NL', sandbox=True, )
+        b = API(sandbox=True, marketplace_id='EBAY_ES')
         self.assertEqual(a1, a2)
         self.assertNotEqual(a1, b)
 
@@ -76,7 +75,7 @@ class APIOther(unittest.TestCase):
             cls.q = 'silver'
         else:
             cls.q = 'silver snail'
-        cls._api = API(sandbox=cls.sandbox, site_id='EBAY-ENCA')
+        cls._api = API(sandbox=cls.sandbox, marketplace_id='EBAY_ENCA')
 
     # test paging calls
 
@@ -191,6 +190,9 @@ class ReferenceTests(unittest.TestCase):
 
     def test_global_id_values_load(self):
         self.assertIsNotNone(Reference.get_global_id_values(), msg="Failed to load global id values.")
+
+    def test_marketplace_id_values_load(self):
+        self.assertIsNotNone(Reference.get_marketplace_id_values(), msg="Failed to load marketplace id values.")
 
 
 if __name__ == '__main__':

@@ -52,6 +52,17 @@ class Reference:
         return Reference._get('global_id_values')
 
     @staticmethod
+    def get_marketplace_id_values():
+        """ Get eBay marketplace id information.
+
+        The following table lists the set of supported Marketplace IDs, their associated countries,
+        the URLs to the marketplaces, and the locales supported by each marketplace
+
+        Source https://developer.ebay.com/api-docs/static/rest-request-components.html#marketpl.
+        """
+        return Reference._get('marketplace_id_values')
+
+    @staticmethod
     def _get(name):
         """ Get information from the json files. """
         if name not in Reference._cache:

@@ -1,0 +1,217 @@
+{
+    "EBAY_AT": [
+        "Austria",
+        {
+            "de-AT": [
+                "https://www.ebay.at",
+                ""
+            ]
+        }
+    ],
+    "EBAY_AU": [
+        "Australia",
+        {
+            "en-AU": [
+                "https://www.ebay.com.au",
+                ""
+            ]
+        }
+    ],
+    "EBAY_BE": [
+        "Belgium",
+        {
+            " nl-BE": [
+                "https://www.benl.ebay.be/",
+                "Nederlandse"
+            ],
+            "fr-BE": [
+                "https://www.befr.ebay.be/",
+                "Fran\u00e7aise"
+            ]
+        }
+    ],
+    "EBAY_CA": [
+        "Canada",
+        {
+            " fr-CA": [
+                "https://www.cafr.ebay.ca/",
+                "Fran\u00e7aise"
+            ],
+            "en-CA": [
+                "https://www.ebay.ca",
+                "English"
+            ]
+        }
+    ],
+    "EBAY_CH": [
+        "Switzerland",
+        {
+            "de-CH": [
+                "https://www.ebay.ch",
+                ""
+            ]
+        }
+    ],
+    "EBAY_DE": [
+        "Germany",
+        {
+            "de-DE": [
+                "https://www.ebay.de",
+                ""
+            ]
+        }
+    ],
+    "EBAY_ES": [
+        "Spain",
+        {
+            "es-ES": [
+                "https://www.ebay.es",
+                ""
+            ]
+        }
+    ],
+    "EBAY_FR": [
+        "France",
+        {
+            "fr-FR": [
+                "https://www.ebay.fr",
+                ""
+            ]
+        }
+    ],
+    "EBAY_GB": [
+        "Great Britain",
+        {
+            "en-GB": [
+                "https://www.ebay.co.uk",
+                ""
+            ]
+        }
+    ],
+    "EBAY_HK": [
+        "Hong Kong",
+        {
+            "zh-HK": [
+                "https://www.ebay.com.hk",
+                ""
+            ]
+        }
+    ],
+    "EBAY_IE": [
+        "Ireland",
+        {
+            "en-IE": [
+                "https://www.ebay.ie",
+                ""
+            ]
+        }
+    ],
+    "EBAY_IN": [
+        "India",
+        {
+            "en-GB": [
+                "https://www.ebay.in",
+                ""
+            ]
+        }
+    ],
+    "EBAY_IT": [
+        "Italy",
+        {
+            "it-IT": [
+                "https://www.ebay.it",
+                ""
+            ]
+        }
+    ],
+    "EBAY_MOTORS_US": [
+        "United States",
+        {
+            "en-US": [
+                "https://www.ebay.com/motors",
+                "Resolves to the parent \"Auto Parts and Vehicles\" category on the EBAY_US site."
+            ]
+        }
+    ],
+    "EBAY_MY": [
+        "Malaysia",
+        {
+            "en-US": [
+                "https://www.ebay.com.my",
+                ""
+            ]
+        }
+    ],
+    "EBAY_NL": [
+        "Netherlands",
+        {
+            "nl-NL": [
+                "https://www.ebay.nl",
+                ""
+            ]
+        }
+    ],
+    "EBAY_PH": [
+        "Philippines",
+        {
+            "en-PH": [
+                "https://www.ebay.ph",
+                ""
+            ]
+        }
+    ],
+    "EBAY_PL": [
+        "Poland",
+        {
+            "pl-PL": [
+                "https://www.ebay.pl",
+                ""
+            ]
+        }
+    ],
+    "EBAY_SG": [
+        "Singapore",
+        {
+            "en-US": [
+                "https://www.ebay.com.sg",
+                ""
+            ]
+        }
+    ],
+    "EBAY_TH": [
+        "Thailand",
+        {
+            "th-TH": [
+                "https://info.ebay.co.th",
+                ""
+            ]
+        }
+    ],
+    "EBAY_TW": [
+        "Taiwan",
+        {
+            "zh-TW": [
+                "https://www.ebay.com.tw",
+                ""
+            ]
+        }
+    ],
+    "EBAY_US": [
+        "United States",
+        {
+            "en-US": [
+                "https://www.ebay.com",
+                ""
+            ]
+        }
+    ],
+    "EBAY_VN": [
+        "Vietnam",
+        {
+            "en-US": [
+                "https://www.ebay.vn",
+                ""
+            ]
+        }
+    ]
+}

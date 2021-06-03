@@ -10,6 +10,7 @@ Run this whenever the Response Fields in the following link change.
 # Standard library imports
 import os.path
 import pickle
+import re
 import requests
 import string
 import sys
@@ -214,6 +215,46 @@ def get_global_id_values():
     return dicts
 
 
+def get_marketplace_id_values():
+    print("Find the eBay's Marketplace ID Values.")
+
+    # load the target webpage
+    url = 'https://developer.ebay.com/api-docs/static/rest-request-components.html#marketpl'
+    soup = get_soup_via_link(url)
+
+    # find the rows regarding Response Fields.
+    table = soup.findAll('table')[1]        # the second table is index 1
+    rows = table.find_all('tr')
+
+    # put the rows into a table of data
+    data = []
+    for row in rows:
+        cols = row.find_all('td')
+        cols = [ele.text.strip() for ele in cols]
+        data.append([ele for ele in cols if ele])  # Get rid of empty values
+
+    # the header got messed up and is unlikely to change, so hard code it
+    # cols = ['marketplace_id', 'country', 'marketplace_site', 'locale_support']
+
+    # convert to a nested dict
+    my_dict = dict()
+    for datum in data[1:]:
+        [marketplace_id, country, marketplace_site, locale_support] = datum
+        locales = locale_support.split(',')     # convert comma separated locales to a list of strings
+        sites = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
+                           marketplace_site)
+        comments = re.findall('\(([^)]*)\)', marketplace_site)
+        comment_shortage = len(locales) - len(comments)
+        for _ in range(comment_shortage):
+            comments.append('')
+        my_locales = dict()
+        for index, locale in enumerate(locales):
+            my_locales[locale] = [sites[index], comments[index]]
+        my_dict[marketplace_id] = [country, my_locales]
+
+    return my_dict
+
+
 def get_soup_via_link(url):
     # Make a GET request to fetch the raw HTML content
     html_content = requests.get(url).text
@@ -395,6 +436,7 @@ def use_cache(should_use, object_name, get_function, get_param):
 
 
 def main():
+    marketplace_id_values = get_marketplace_id_values()
     global_id_values = get_global_id_values()
 
     # True will slowly get a fresh object --- False will quickly reload the last object
@@ -499,6 +541,8 @@ def main():
         json.dump(enums, outfile, sort_keys=True, indent=4)
     with open(path+'global_id_values.json', 'w') as outfile:
         json.dump(global_id_values, outfile, sort_keys=True, indent=4)
+    with open(path+'marketplace_id_values.json', 'w') as outfile:
+        json.dump(marketplace_id_values, outfile, sort_keys=True, indent=4)
 
     return
 

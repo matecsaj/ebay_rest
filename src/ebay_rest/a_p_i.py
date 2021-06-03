@@ -75,7 +75,7 @@ class API:
     _get_swagger_call_limits = None
     _instances = []
 
-    def __init__(self, sandbox: bool = False, site_id: str = 'EBAY-US',
+    def __init__(self, sandbox: bool = False, marketplace_id: str = 'EBAY_US',
                  throttle: bool = False, timeout: float = -1.0):
         """ Instantiate an EbayRest object.
 
@@ -83,31 +83,31 @@ class API:
         sandbox (bool, optional): {True, False} For the sandbox True, for production False, defaults to False.
 
         :param
-        site_id (str, optional) : The eBay Site ID or the Global ID for the site you wish to use, defaults to 'EBAY-US'.
+        marketplace_id (str, optional) : The eBay Marketplace Id for the site you wish to use, defaults to 'EBAY_US'.
 
-        eBay Site ID    Global ID   Site Name
-        0               EBAY-US     eBay United States
-        2	            EBAY-ENCA   eBay Canada (English)
-        3	            EBAY-GB     eBay UK
-        15	            EBAY-AU     eBay Australia
-        16	            EBAY-AT     eBay Austria
-        23	            EBAY-FRBE   eBay Belgium (French)
-        71	            EBAY-FR     eBay France
-        77	            EBAY-DE     eBay Germany
-        100	            EBAY-MOTOR  eBay Motors
-        101	            EBAY-IT     eBay Italy
-        123	            EBAY-NLBE   eBay Belgium (Dutch)
-        146	            EBAY-NL     eBay Netherlands
-        186	            EBAY-ES     eBay Spain
-        193	            EBAY-CH     eBay Switzerland
-        201	            EBAY-HK     eBay Hong Kong
-        203	            EBAY-IN     eBay India
-        205	            EBAY-IE     eBay Ireland
-        207	            EBAY-MY     eBay Malaysia
-        210	            EBAY-FRCA   eBay Canada (French)
-        211	            EBAY-PH     eBay Philippines
-        212	            EBAY-PL     eBay Poland
-        216             EBAY-SG     eBay Singapore
+        Id          Marketplace
+        EBAY_MOTOR  eBay Motors USA
+        EBAY_AU     Australia
+        EBAY_AT     Austria
+        EBAY_NLBE   Belgium (Dutch)
+        EBAY_FRBE   Belgium (French)
+        EBAY_ENCA   Canada (English)
+        EBAY_FRCA   Canada (French)
+        EBAY_FR     France
+        EBAY_DE     Germany
+        EBAY_HK     Hong Kong
+        EBAY_IN     India
+        EBAY_IE     Ireland
+        EBAY_IT     Italy
+        EBAY_MY     Malaysia
+        EBAY_NL     Netherlands
+        EBAY_PH     Philippines
+        EBAY_PL     Poland
+        EBAY_SG     Singapore
+        EBAY_ES     Spain
+        EBAY_CH     Switzerland
+        EBAY_US     United States
+        EBAY_GB     UK
 
         There may be updates at https://developer.ebay.com/Devzone/merchandising/docs/concepts/siteidtoglobalid.html.
 
@@ -140,16 +140,16 @@ class API:
 
                     valid = []
                     for global_id_value in Reference.get_global_id_values():
-                        valid.append(global_id_value['global_id'])
-                        valid.append(global_id_value['ebay_site_id'])
-                    if site_id not in valid:
-                        options = ''
-                        for v in valid:
-                            options = options + ' ' + v
+                        valid.append(global_id_value['global_id'].replace('-', '_'))
+                    valid.sort()
+                    self._marketplace_ids = valid
+
+                    if marketplace_id not in self._marketplace_ids:
                         number = 1
-                        reason = 'Parameter site_id must be unspecified or one of these strings' + options + '.'
+                        reason = 'Param marketplace_id must be unspecified or one of these strings ' + \
+                                 ', '.join(self._marketplace_ids) + '.'
                     else:
-                        self._site_id = site_id  # eg. 'EBAY-ENCA' or '101'
+                        self._marketplace_id = marketplace_id
 
                     if throttle not in (True, False):
                         number = 0
@@ -350,16 +350,26 @@ class API:
         # create an instance of the API class
         api_instance = function_instance(function_client(configuration))
 
+        # In the header for 'X-EBAY-C-MARKETPLACE-ID'
+        # eBay's docs say to supply a Marketplace ID from this table
+        # https://developer.ebay.com/api-docs/static/rest-request-components.html#marketpl
+        # yet, eBay's API Explorer
+        # https://developer.ebay.com/my/api_test_tool
+        # uses Global Ids from this table with dashes replaced with underscores
+        # https://developer.ebay.com/Devzone/merchandising/docs/CallRef/Enums/GlobalIdList.html
+
         # beware that the site_id is a bit different for the Buy API
         # https://developer.ebay.com/api-docs/buy/static/ref-marketplace-supported.html
-        site_id = self._site_id
+        marketplace_id = self._marketplace_id
         if user_access_token:
             for param in params:
-                if param.startswith('EBAY'):
-                    site_id = param
-        if '/buy/offer' in base_path:
-            site_id = site_id.replace('-', '_')
-        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = site_id
+                if param in self._marketplace_ids:
+                    marketplace_id = param
+        # if '/buy/offer' in base_path:
+        api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = marketplace_id
+
+        # if self._locale:
+        #    api_instance.api_client.default_headers['Content-Language'] = self._locale
 
         # return the callable function
         return getattr(api_instance, method)
