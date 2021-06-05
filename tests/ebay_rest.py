@@ -32,7 +32,7 @@ class APIBid(unittest.TestCase):
             item_id = None
 
             try:
-                for item in api.buy_browse_search(q=keywords, filter=filters, sort='price', limit=1):
+                for item in api.buy_browse_search(q=keywords, filters=filters, sort='price', limit=1):
                     item_id = item['item_id']
             except Error as error:
                 self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')

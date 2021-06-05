@@ -110,6 +110,23 @@ def delete_folder_contents(path_to_folder):
             shutil.rmtree(file_path)
 
 
+def fix_bug_item_filter():
+    """ The item filtering parameter should be filters instead of filter. """
+    path = os.path.join(TARGET_PATH, 'buy_browse/buy_browse/api/item_summary_api.py')
+    with open(path, 'r') as f:
+        text = f.read()
+
+        if "'filters'" in text:
+            print('fix_bug_item_filter() might not be needed anymore.')
+            return
+
+        text = text.replace("'filter'", "'filters'")
+        text = text.replace(":param str filter:", ":param str filters:")
+        text = text.replace(";filter=", ";filters=")
+    with open(path, 'w') as f:
+        f.write(text)
+
+
 def main():
     install_tools()
 
@@ -137,6 +154,7 @@ def main():
     with open(destination, 'w') as outfile:
         json.dump(base_paths, outfile, sort_keys=True, indent=4)
 
+    fix_bug_item_filter()
     return
 
 
