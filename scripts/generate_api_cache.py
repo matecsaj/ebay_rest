@@ -154,7 +154,7 @@ def main():
     with open(destination, 'w') as outfile:
         json.dump(base_paths, outfile, sort_keys=True, indent=4)
 
-    fix_bug_item_filter()
+    # fix_bug_item_filter()
     return
 
 

@@ -27,31 +27,33 @@ class APIBid(unittest.TestCase):
             self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
 
-            keywords = 'silver'
-            filters = 'buyingOptions:{AUCTION}'
-            item_id = None
-
             try:
-                for item in api.buy_browse_search(q=keywords, filters=filters, sort='price', limit=1):
+                item_id = None
+                item_currency = None
+                keywords = 'silver'
+                filter_ = 'buyingOptions:{AUCTION}'
+                for item in api.buy_browse_search(q=keywords, filter=filter_, sort='price', limit=1):
                     item_id = item['item_id']
+                    if item['price']['converted_from_currency']:
+                        item_currency = item['price']['converted_from_currency']
+                    else:
+                        item_currency = item['price']['currency']
             except Error as error:
                 self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
             else:
-
-                self.assertIsNotNone(item_id)
-                body = {"maxAmount": {"currency": "CAD", "value": "5.00"}}
-                try:
-                    # the marketplace has underscores and is a we bit different
-                    # https://developer.ebay.com/api-docs/buy/static/ref-marketplace-supported.html
-                    result = api.buy_offer_place_proxy_bid(x_ebay_c_marketplace_id='EBAY_US',
-                                                           item_id=item_id, body=body)
-                except Error as error:
-                    self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                if item_id and item_currency:
+                    body = {"maxAmount": {"currency": item_currency, "value": "5.00"}}
+                    try:
+                        # the marketplace has underscores and is a we bit different
+                        # https://developer.ebay.com/api-docs/buy/static/ref-marketplace-supported.html
+                        result = api.buy_offer_place_proxy_bid(x_ebay_c_marketplace_id='EBAY_US',
+                                                               item_id=item_id, body=body)
+                    except Error as error:
+                        self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                    else:
+                        self.assertTrue(True)
                 else:
-                    self.assertTrue(True)
-                    return
-
-        return
+                    self.assertTrue(False, 'item_id or item_currency are None.')
 
 
 class APIInitialization(unittest.TestCase):
@@ -75,7 +77,7 @@ class APIOther(unittest.TestCase):
             cls.q = 'silver'
         else:
             cls.q = 'silver snail'
-        cls._api = API(sandbox=cls.sandbox, marketplace_id='EBAY_ENCA')
+        cls._api = API(sandbox=cls.sandbox, marketplace_id='EBAY_US')
 
     # test paging calls
 
@@ -133,6 +135,30 @@ class APIOther(unittest.TestCase):
             self.assertIsNotNone(f'Error {error.number} is {error.reason} with detail {error.detail}.')
         else:
             self.assertIsNotNone(None, msg="Failed to raise an exception.")
+
+    # Test things that have broken in the past
+
+    def test_buying_options(self):
+        """ Does buying option filtering work? """
+        options = ['FIXED_PRICE', 'BEST_OFFER']
+        if not self.sandbox:
+            options.append('AUCTION')
+        for option in options:
+            try:
+                success = None
+                keywords = 'black'
+                filter_ = 'buyingOptions:{' + option + '}'
+                for item in self._api.buy_browse_search(q=keywords, filter=filter_, limit=500):
+                    if option in item['buying_options']:
+                        success = True
+                    else:
+                        success = False
+                        break
+            except Error as error:
+                self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+            else:
+                message = 'The search for ' + option + ' items returned no items or a non-auction item.'
+                self.assertTrue(success, message)
 
 
 class APIThrottled(unittest.TestCase):
