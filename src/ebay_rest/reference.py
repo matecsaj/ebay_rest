@@ -4,10 +4,23 @@ import json
 import os
 
 
+# TODO Instead of loading stale .json files get real-time reference info using this
+# https://developer.ebay.com/devzone/xml/docs/reference/ebay/GeteBayDetails.html
+
 class Reference:
     """ Caches of reference information sourced from eBay's developer website. """
 
     _cache = {}
+
+    @staticmethod
+    def get_country_codes():
+        """ Get eBay country code information.
+
+        A partial list of ISO 3166 standard two-letter codes that represent countries around the world.
+
+        Source https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/countrycodetype.html.
+        """
+        return Reference._get('country_codes')
 
     @staticmethod
     def get_item_fields_modified():

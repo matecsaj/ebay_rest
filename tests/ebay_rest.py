@@ -9,14 +9,18 @@ import datetime
 import unittest
 import warnings
 
+# 3rd party libraries
+from currency_converter import CurrencyConverter
+
 # Local imports
 from src.ebay_rest import API, DateTime, Error, Reference
 
 
 class APIBid(unittest.TestCase):
-    SANDBOX = True      # WARNING. If you change this to False, you will bid on live items.
+    SANDBOX = True      # STRONG WARNING. Don't make this True because you would bid on live items.
     MARKETPLACE_ID = 'EBAY_US'
 
+    @unittest.skip     # TODO Unfinished because no auctions are returned from sandbox searches. Alternative?
     def test_bid(self):
         # TODO Stop ignoring the warning and remedy the resource leak.
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
@@ -53,17 +57,145 @@ class APIBid(unittest.TestCase):
                     else:
                         self.assertTrue(True)
                 else:
-                    self.assertTrue(False, 'item_id or item_currency are None.')
+                    message = f'Neither item_id {item_id} or item_currency {item_currency} should be None.'
+                    self.assertTrue(False, message)
 
 
-class APIInitialization(unittest.TestCase):
+class APIMarketplaces(unittest.TestCase):
+    """ Test things that are different between marketplaces. """
 
-    def test_uniqueness(self):
+    def test_object_reuse(self):    # Do same parameters give the same object?
         a1 = API(sandbox=True, marketplace_id='EBAY_NL')
         a2 = API(marketplace_id='EBAY_NL', sandbox=True, )
         b = API(sandbox=True, marketplace_id='EBAY_ES')
         self.assertEqual(a1, a2)
         self.assertNotEqual(a1, b)
+
+    def test_shipping_accuracy(self):   # Is is closer shipping cheaper?
+        # TODO Stop ignoring the warning and remedy the resource leak.
+        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
+
+        # d = domestic & f = foreign
+        d_market = 'EBAY_ENCA'
+        d_country = 'CA'
+        d_currency = 'CAD'
+        d_zip = 'K1M 1M4'
+
+        f_market = 'EBAY_GB'
+        f_country = 'GB'
+        # f_currency = 'GBP'
+        f_zip = 'SW1A 1AA'
+
+        shipping_currency = 'USD'
+
+        sandbox = False
+        tally = 0
+
+        d_api = API(sandbox=sandbox, marketplace_id=d_market, country_code=d_country, zip_code=d_zip)
+        f_api = API(sandbox=sandbox, marketplace_id=f_market, country_code=f_country, zip_code=f_zip)
+
+        # in the local marketplace find items located locally that also ship to foreign
+        # low priced items are targeted because free shipping for them is unlikely
+        # black items are targeted because they are plentiful, and the q parameter is mandatory
+        try:
+            filter_ = f'deliveryCountry:{f_country},itemLocationCountry:{d_country},price:[1..2],' \
+                      f'priceCurrency:{d_currency} '
+            for item in d_api.buy_browse_search(q='black', filter=filter_, limit=10):
+                item_id = item['item_id']
+                if item['item_location']['country'] == d_country:
+                    # get the lowest domestic shipping cost
+                    try:
+                        d_item = d_api.buy_browse_get_item(item_id=item_id, fieldgroups='PRODUCT')
+                    except Error as error:
+                        self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                    else:
+                        d_shipping = self._get_lowest_shipping(d_item, d_country, shipping_currency)
+
+                        # get the lowest foreign shipping cost
+                        try:
+                            f_item = f_api.buy_browse_get_item(item_id=item_id, fieldgroups='PRODUCT')
+                        except Error as error:
+                            self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                        else:
+                            f_shipping = self._get_lowest_shipping(f_item, f_country, shipping_currency)
+
+                            # compare costs, inconclusive when equal or some None
+                            if (d_shipping is not None) and (f_shipping is not None):
+                                if d_shipping < f_shipping:
+                                    tally += 1      # what we would expect most of the time
+                                elif d_shipping > f_shipping:
+                                    tally -= 1      # very rare, put a break point here find trouble
+                                else:
+                                    tally = tally            # flat rate world wide shipping is possible
+                            else:
+                                self.assertTrue(False, f'For {item_id} both shipping costs can not be found.')
+                                break  # is the deliveryCountry filter flaky?
+                else:
+                    self.assertTrue(False, f'Item {item_id} is supposed to be located in {d_country}.')
+                    break       # is the itemLocationCountry filter flaky too?
+
+        except Error as error:
+            self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+
+        self.assertTrue(tally > 0, "Domestic shipping should cost less than foreign.")
+
+    def _get_lowest_shipping(self, item, country, currency):
+
+        costs = []
+
+        # is shipping excluded?
+        ship_to_locations = item['ship_to_locations']
+        if ship_to_locations:
+            if self._in_region(ship_to_locations['region_excluded'], country):
+                return None
+            # if not in either list, then eBay concludes that shipping is allowed, so skip the following
+            # elif not self._in_region(ship_to_locations['region_included'], country):
+                # return None
+
+        # find all costs
+        if item['shipping_options']:
+            for shipping_option in item['shipping_options']:
+                shipping_cost = shipping_option['shipping_cost']
+                if shipping_cost['currency'] == currency:
+                    cost = float(shipping_cost['value'])
+                elif shipping_cost['converted_from_currency'] == currency:
+                    cost = float(shipping_cost['converted_from_value'])
+                else:
+                    c = CurrencyConverter()
+                    cost = c.convert(float(shipping_cost['value']), shipping_cost['currency'], currency)
+                if cost is not None:
+                    costs.append(cost)
+                else:
+                    self.assertTrue(False, 'A shipping cost, without a cost, should not be possible.')
+
+        if costs:
+            costs.sort()
+            return costs[0]
+        else:
+            self.assertTrue(False, 'Shipping options without any options, should not be possible.')
+            return None     # getting here should not happen, maybe currency conversion failed
+
+    def _in_region(self, regions, country):
+
+        if country in ('CA', 'US'):
+            region_ids = ('AMERICAS', 'NORTH_AMERICA')
+        elif country in ('GB',):
+            region_ids = ('EUROPE',)
+        else:
+            region_ids = {}     # make the linter happy
+            self.assertTrue(False, 'add region ids for your country')
+
+        for region in regions:
+            region_type = region['region_type']
+            if region_type == 'COUNTRY':
+                if region['region_id'] == country:
+                    return True
+            elif region_type == 'WORLD_REGION':
+                if region['region_id'] in region_ids:
+                    return True
+            elif region_type == 'WORLDWIDE':
+                return True
+        return False
 
 
 class APIOther(unittest.TestCase):

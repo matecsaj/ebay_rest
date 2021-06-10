@@ -183,6 +183,37 @@ def get_response_fields():
     return data
 
 
+def get_country_codes():
+    print("Find the eBay's Country Codes.")
+
+    # load the target webpage
+    url = 'https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/countrycodetype.html'
+    soup = get_soup_via_link(url)
+
+    # find the rows regarding Response Fields.
+    table = soup.find('table')
+    rows = table.find_all('tr')
+
+    # put the rows into a table of data
+    data = []
+    for row in rows:
+        cols = row.find_all('td')
+        cols = [ele.text.strip() for ele in cols]
+        data.append([ele for ele in cols if ele])  # Get rid of empty values
+
+    # ignore header, convert to a dict & delete bad values
+    dict_ = {}
+    for datum in data[1:]:
+        dict_[datum[0]] = datum[1]
+    for bad_value in ('CustomCode', 'QM', 'QN', 'QO', 'TP', 'UM', 'YU', 'ZZ'):
+        if bad_value in dict_:
+            del dict_[bad_value]
+        else:
+            print("Bad value " + bad_value + "no longer needs to be deleted.")
+
+    return dict_
+
+
 def get_global_id_values():
     print("Find the eBay's Global ID Values.")
 
@@ -436,6 +467,7 @@ def use_cache(should_use, object_name, get_function, get_param):
 
 
 def main():
+    country_codes = get_country_codes()
     marketplace_id_values = get_marketplace_id_values()
     global_id_values = get_global_id_values()
 
@@ -534,15 +566,18 @@ def main():
         if containers[key]['shape'] not in ('container', 'array_of_type', 'array_of_enum', 'array_of_container'):
             print(f"Container {key} has unexpected shape {containers[key]['shape']}.")
 
+    # dump all the .json files
     path = '../src/ebay_rest/references/'
-    with open(path+'item_fields_modified.json', 'w') as outfile:
-        json.dump(containers, outfile, sort_keys=True, indent=4)
-    with open(path+'item_enums_modified.json', 'w') as outfile:
-        json.dump(enums, outfile, sort_keys=True, indent=4)
-    with open(path+'global_id_values.json', 'w') as outfile:
-        json.dump(global_id_values, outfile, sort_keys=True, indent=4)
-    with open(path+'marketplace_id_values.json', 'w') as outfile:
-        json.dump(marketplace_id_values, outfile, sort_keys=True, indent=4)
+    sources_names = [
+                     (country_codes, 'country_codes'),
+                     (global_id_values, 'global_id_values'),
+                     (containers, 'item_fields_modified'),
+                     (enums, 'item_enums_modified'),
+                     (marketplace_id_values, 'marketplace_id_values'),
+                     ]
+    for (source, name) in sources_names:
+        with open(path + name + '.json', 'w') as outfile:
+            json.dump(source, outfile, sort_keys=True, indent=4)
 
     return
 

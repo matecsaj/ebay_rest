@@ -76,6 +76,7 @@ class API:
     _instances = []
 
     def __init__(self, sandbox: bool = False, marketplace_id: str = 'EBAY_US',
+                 country_code: str = None, zip_code: str = None,
                  throttle: bool = False, timeout: float = -1.0):
         """ Instantiate an EbayRest object.
 
@@ -110,6 +111,14 @@ class API:
         EBAY_GB     UK
 
         There may be updates at https://developer.ebay.com/Devzone/merchandising/docs/concepts/siteidtoglobalid.html.
+
+        :param
+        country_code (string, optional) : ISO 3166 two-letter codes that represent countries around the world,
+        defaults to None. Supply if you want to improve the accuracy of shipping quotes.
+
+        :param
+        zip_code (string, optional) : A US postal code, or the equivalent for the country_code used, defaults to None.
+        Supply if you want to improve the accuracy of shipping quotes further.
 
         :param
         throttle (bool, optional) : When True block the call if a below the prorated call limit, defaults to False.
@@ -165,6 +174,22 @@ class API:
                         reason = "Parameter timeout must be unspecified, -1 or positive."
                     else:
                         self._timeout = timeout
+
+                    # for shipping information accuracy https://developer.ebay.com/api-docs/buy/static/api-browse.html
+                    self._end_user_ctx = None
+                    if country_code:
+                        country_codes = Reference.get_country_codes()
+                        if country_code in country_codes:
+                            self._end_user_ctx = "contextualLocation=country=" + country_code
+                            if zip_code:
+                                self._end_user_ctx += ",zip=" + zip_code
+                        else:
+                            number = 0
+                            reason = "Parameter country_code must be unspecified or one of " + \
+                                     ', '.join(country_codes.keys() + '.')
+                    elif zip_code:
+                        number = 0
+                        reason = "Supply a country_code or omit the zip_code."
 
                     # get a token, so that any credential problem will be discovered ASAP
                     try:
@@ -370,6 +395,10 @@ class API:
 
         # if self._locale:
         #    api_instance.api_client.default_headers['Content-Language'] = self._locale
+
+        # header for shipping information accuracy per https://developer.ebay.com/api-docs/buy/static/api-browse.html
+        if '/buy/browse' in base_path and self._end_user_ctx:
+            api_instance.api_client.default_headers['X-EBAY-C-ENDUSERCTX'] = self._end_user_ctx
 
         # return the callable function
         return getattr(api_instance, method)
