@@ -1,0 +1,10 @@
+{
+    "https://api.ebay.com/oauth/api_scope" : "View public data from eBay",
+    "https://api.ebay.com/oauth/api_scope/buy.guest.order" : "Purchase eBay items anywhere without signing in to eBay",
+    "https://api.ebay.com/oauth/api_scope/buy.item.feed" : "View curated feeds of eBay items",
+    "https://api.ebay.com/oauth/api_scope/buy.marketing" : "Retrieve eBay product and listing data for use in marketing merchandise to buyers",
+    "https://api.ebay.com/oauth/api_scope/buy.product.feed" : "View curated feeds of products from the eBay catalog",
+    "https://api.ebay.com/oauth/api_scope/buy.marketplace.insights" : "View historical sales data to help buyers make informed purchasing decisions",
+    "https://api.ebay.com/oauth/api_scope/buy.proxy.guest.order" : "Purchase eBay items anywhere, using an external vault for PCI compliance",
+    "https://api.ebay.com/oauth/api_scope/buy.item.bulk" : "Retrieve eBay items in bulk"
+}

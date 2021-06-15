@@ -356,7 +356,7 @@ class API:
         configuration = function_configuration()
         try:
             if user_access_token:
-                configuration.access_token = Token.get_user_access(sandbox=self._sandbox)
+                configuration.access_token = Token.get_user(sandbox=self._sandbox)
             else:
                 configuration.access_token = Token.get_application(sandbox=self._sandbox)
         except Error:

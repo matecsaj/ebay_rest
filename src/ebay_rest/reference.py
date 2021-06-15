@@ -13,6 +13,17 @@ class Reference:
     _cache = {}
 
     @staticmethod
+    def get_application_scopes():
+        """ Get eBay **Client Credential/Code** Grant Type Scopes
+         that might be permitted when minting **Application** tokens.
+
+         Dictionary keys are the scopes, and data are descriptions.
+
+        Source https://developer.ebay.com/my/keys, Sandbox column, click OAuth Scopes, second section
+        """
+        return Reference._get('application_scopes')
+
+    @staticmethod
     def get_country_codes():
         """ Get eBay country code information.
 
@@ -74,6 +85,17 @@ class Reference:
         Source https://developer.ebay.com/api-docs/static/rest-request-components.html#marketpl.
         """
         return Reference._get('marketplace_id_values')
+
+    @staticmethod
+    def get_user_scopes():
+        """ Get eBay **Authorization Code** Grant Type Scopes
+        that might be permitted when minting **User Access** tokens.
+
+        Dictionary keys are the scopes, and data are descriptions.
+
+        Source https://developer.ebay.com/my/keys, Sandbox column, click OAuth Scopes, first section
+        """
+        return Reference._get('user_scopes')
 
     @staticmethod
     def _get(name):

@@ -16,6 +16,7 @@ from .error import Error
 from .oath.credentialutil import CredentialUtil
 from .oath.model.model import Environment
 from .oath.oauth2api import OAuth2Api
+from .reference import Reference
 
 
 class Token:
@@ -26,8 +27,10 @@ class Token:
     _lock = threading.Lock()
     _oauth2api_inst = None
     _token_application = dict()
-    _token_user_access = dict()
+    _token_user = dict()
     _user_credential_list = dict()
+    _application_scopes = dict()
+    _user_scopes = dict()
 
     @staticmethod
     def get_application(sandbox: bool):
@@ -46,6 +49,12 @@ class Token:
             except Error:
                 raise
 
+            if sandbox not in Token._application_scopes:
+                try:
+                    Token._determine_application_scopes(sandbox)
+                except Error:
+                    raise
+
             if sandbox not in Token._token_application:
                 try:
                     Token._refresh_application(sandbox)
@@ -63,6 +72,28 @@ class Token:
         return token
 
     @staticmethod
+    def _determine_application_scopes(sandbox: bool):
+        """
+        Determine the application scopes that are currently allowed.
+
+        :param
+        sandbox (bool): {True, False} For the sandbox True, for production False.
+        """
+        if sandbox:
+            scopes = list(Reference.get_application_scopes().keys())  # permission is always granted for all
+        else:
+            env = Environment.PRODUCTION
+            scopes = []
+            for scope in Reference.get_application_scopes():
+                token_application = Token._oauth2api_inst.get_application_token(env, [scope])
+                if token_application.error is None:
+                    if token_application.access_token is not None:
+                        if len(token_application.access_token) > 0:
+                            scopes.append(scope)
+
+        Token._application_scopes[sandbox] = scopes
+
+    @staticmethod
     def _refresh_application(sandbox: bool):
         """
         Refresh the eBay Application Token and update all that comes with it.
@@ -71,13 +102,15 @@ class Token:
         sandbox (bool): {True, False} For the sandbox True, for production False.
         """
 
-        url = "https://api.ebay.com/oauth/api_scope"
         if sandbox:
             env = Environment.SANDBOX
         else:
             env = Environment.PRODUCTION
 
-        token_application = Token._oauth2api_inst.get_application_token(env, [url])
+        # Get the list of scopes which resemble urls.
+        scopes = Token._application_scopes[sandbox]
+
+        token_application = Token._oauth2api_inst.get_application_token(env, scopes)
         if token_application.error is not None:
             reason = 'token_application.error ' + token_application.error
             raise Error(number=1, reason=reason)
@@ -87,7 +120,7 @@ class Token:
         Token._token_application[sandbox] = token_application
 
     @staticmethod
-    def get_user_access(sandbox: bool):
+    def get_user(sandbox: bool):
         """
         Get an eBay User Access Token.
 
@@ -103,24 +136,50 @@ class Token:
             except Error:
                 raise
 
-            if sandbox not in Token._token_user_access:
+            if sandbox not in Token._user_scopes:
                 try:
-                    Token._refresh_user_access(sandbox)
+                    Token._determine_user_scopes(sandbox)
                 except Error:
                     raise
 
-            if Token._token_user_access[sandbox].token_expiry.replace(tzinfo=timezone.utc) <= DateTime.now():
+            if sandbox not in Token._token_user:
                 try:
-                    Token._refresh_user_access(sandbox)
+                    Token._refresh_user(sandbox)
                 except Error:
                     raise
 
-            token = Token._token_user_access[sandbox].access_token
+            if Token._token_user[sandbox].token_expiry.replace(tzinfo=timezone.utc) <= DateTime.now():
+                try:
+                    Token._refresh_user(sandbox)
+                except Error:
+                    raise
+
+            token = Token._token_user[sandbox].access_token
 
         return token
 
     @staticmethod
-    def _refresh_user_access(sandbox: bool):
+    def _determine_user_scopes(sandbox: bool):
+        """
+        Determine the user access scopes that are currently allowed.
+
+        :param
+        sandbox (bool): {True, False} For the sandbox True, for production False.
+        """
+        if sandbox:
+            scopes = list(Reference.get_user_scopes().keys())  # permission is always granted for all
+        else:
+            # TODO Replace the hardcoded list with granted scopes.
+            scopes = ["https://api.ebay.com/oauth/api_scope",
+                      "https://api.ebay.com/oauth/api_scope/sell.inventory",
+                      "https://api.ebay.com/oauth/api_scope/sell.marketing",
+                      "https://api.ebay.com/oauth/api_scope/sell.account",
+                      "https://api.ebay.com/oauth/api_scope/sell.fulfillment"]
+
+        Token._user_scopes[sandbox] = scopes
+
+    @staticmethod
+    def _refresh_user(sandbox: bool):
         """
         Refresh the eBay User Access Token and update all that comes with it.
 
@@ -128,29 +187,27 @@ class Token:
         sandbox (bool): {True, False} For the sandbox True, for production False.
         """
 
-        app_scopes = ["https://api.ebay.com/oauth/api_scope",
-                      "https://api.ebay.com/oauth/api_scope/sell.inventory",
-                      "https://api.ebay.com/oauth/api_scope/sell.marketing",
-                      "https://api.ebay.com/oauth/api_scope/sell.account",
-                      "https://api.ebay.com/oauth/api_scope/sell.fulfillment"]
         if sandbox:
             env = Environment.SANDBOX
         else:
             env = Environment.PRODUCTION
 
-        sign_in_url = Token._oauth2api_inst.generate_user_authorization_url(env, app_scopes)
+        # Get the list of scopes which resemble urls.
+        scopes = Token._user_scopes[sandbox]
+
+        sign_in_url = Token._oauth2api_inst.generate_user_authorization_url(env, scopes)
         if sign_in_url is None:
             raise Error(number=1, reason='sign_in_url is None.')
 
         code = Token._get_authorization_code(sign_in_url)
 
-        token_user_access = Token._oauth2api_inst.exchange_code_for_access_token(env, code)
+        token_user = Token._oauth2api_inst.exchange_code_for_access_token(env, code)
 
-        if token_user_access.access_token is None:
+        if token_user.access_token is None:
             raise Error(number=1, reason='user_token.access_token is None.')
-        if len(token_user_access.access_token) == 0:
+        if len(token_user.access_token) == 0:
             raise Error(number=1, reason='user_token.access_token is of length zero.')
-        Token._token_user_access[sandbox] = token_user_access
+        Token._token_user[sandbox] = token_user
 
     @staticmethod
     def _get_authorization_code(sign_in_url):
@@ -165,7 +222,7 @@ class Token:
         userid = Token._user_credential_list[env_key][0]
         password = Token._user_credential_list[env_key][1]
 
-        delay = 5       # delay seconds to give the page an opportunity to render
+        delay = 5  # delay seconds to give the page an opportunity to render
 
         # open browser and load the initial page
         browser = webdriver.Chrome()

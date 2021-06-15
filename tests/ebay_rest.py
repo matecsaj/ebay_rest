@@ -1,4 +1,4 @@
-# *** How to run these unit tests. ***
+# *** A way to run these unit tests. ***
 # 1. (Open a terminal, alternately known as go to the command line.)
 # 2. cd .. (Or, somehow make the project root the current directory.)
 # 3. python -m unittest tests.ebay_rest
@@ -6,6 +6,7 @@
 
 # Standard library imports
 import datetime
+import random
 import unittest
 import warnings
 
@@ -17,8 +18,9 @@ from src.ebay_rest import API, DateTime, Error, Reference
 
 
 class APIBid(unittest.TestCase):
-    SANDBOX = True      # STRONG WARNING. Don't make this True because you would bid on live items.
+    SANDBOX = False  # STRONG WARNING. Don't make this True because you would bid on live items.
     MARKETPLACE_ID = 'EBAY_US'
+    CURRENCY = 'CAD'
 
     @unittest.skip     # TODO Unfinished because no auctions are returned from sandbox searches. Alternative?
     def test_bid(self):
@@ -50,7 +52,7 @@ class APIBid(unittest.TestCase):
                     try:
                         # the marketplace has underscores and is a we bit different
                         # https://developer.ebay.com/api-docs/buy/static/ref-marketplace-supported.html
-                        result = api.buy_offer_place_proxy_bid(x_ebay_c_marketplace_id='EBAY_US',
+                        result = api.buy_offer_place_proxy_bid(x_ebay_c_marketplace_id=self.MARKETPLACE_ID,
                                                                item_id=item_id, body=body)
                     except Error as error:
                         self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
@@ -60,36 +62,204 @@ class APIBid(unittest.TestCase):
                     message = f'Neither item_id {item_id} or item_currency {item_currency} should be None.'
                     self.assertTrue(False, message)
 
+    @unittest.skip      # TODO finish it
+    def test_create_item_listing(self):
+        # create offer https://developer.ebay.com/api-docs/sell/inventory/resources/offer/methods/createOffer
+        # publish offer https://developer.ebay.com/api-docs/sell/inventory/resources/offer/methods/publishOffer
+
+        # TODO Stop ignoring the warning and remedy the resource leak.
+        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
+
+        try:
+            api = API(sandbox=self.SANDBOX, marketplace_id=self.MARKETPLACE_ID, throttle=True)
+        except Error as error:
+            self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+        else:
+
+            # It is required that the seller be opted in to Business Policies before being able to create live eBay
+            # listings through the Inventory API. Sellers can opt-in to Business Policies through My eBay or by using
+            # the Account API's optInToProgram call. Similarly, payment, return, and fulfillment listing policies may
+            # be created/managed in My eBay or by using the listing policy calls of the Account API.
+            # https://developer.ebay.com/api-docs/sell/account/resources/fulfillment_policy/methods/createFulfillmentPolicy
+
+            try:
+                body = {"programType": "SELLING_POLICY_MANAGEMENT"}
+
+                api.sell_account_opt_in_to_program(body=body)
+            except Error as error:
+                self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+
+            # "fulfillmentPolicyId": "string",  # TODO
+            try:
+                body = {
+                    "categoryTypes": [
+                        {
+                            "default": True,
+                            "name": "ALL_EXCLUDING_MOTORS_VEHICLES"
+                        }
+                    ],
+                    "handlingTime": {
+                        "unit": "BUSINESS_DAY",
+                        "value": 1
+                    },
+                    "marketplaceId": self.MARKETPLACE_ID,
+                    "name": "default",
+                    "shippingOptions": [
+                        {
+                            "costType": "FLAT_RATE",
+                            "optionType": "DOMESTIC",
+                            "packageHandlingCost": {
+                                "currency": self.CURRENCY,
+                                "value": "0"
+                            },
+                            "rateTableId": "string",
+                            "shippingServices": [
+                                {
+                                    "additionalShippingCost": {
+                                        "currency": self.CURRENCY,
+                                        "value": "0"
+                                    },
+                                    "buyerResponsibleForShipping": False,
+                                    "cashOnDeliveryFee": {
+                                        "currency": self.CURRENCY,
+                                        "value": "0"
+                                    },
+                                    "freeShipping": True,
+                                }
+                            ]
+                        },
+                        {
+                            "costType": "FLAT_RATE",
+                            "optionType": "INTERNATIONAL",
+                            "packageHandlingCost": {
+                                "currency": self.CURRENCY,
+                                "value": "0"
+                            },
+                            "rateTableId": "string",
+                            "shippingServices": [
+                                {
+                                    "additionalShippingCost": {
+                                        "currency": self.CURRENCY,
+                                        "value": "0"
+                                    },
+                                    "buyerResponsibleForShipping": False,
+                                    "cashOnDeliveryFee": {
+                                        "currency": self.CURRENCY,
+                                        "value": "0"
+                                    },
+                                    "freeShipping": True,
+                                }
+                            ]
+                        }
+                    ],
+                }
+                response = api.sell_account_create_fulfillment_policy(body=body)
+            except Error as error:
+                self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+
+            tp = True
+
+            # "paymentPolicyId": "string",  # TODO
+
+            # "returnPolicyId": "string",  # TODO
+
+            # This call creates an offer for a specific inventory item on a specific eBay marketplace.
+            # It is up to the sellers whether they want to create a complete offer (with all necessary details)
+            # right from the start, or sellers can provide only some information with the initial createOffer call, and
+            # then make one or more subsequent updateOffer calls to complete the offer and prepare to publish the offer.
+            # Upon first creating an offer, the following fields are required in the request payload: sku,
+            # marketplaceId, and (listing) format.
+            # Other information that will be required before an offer can be published are highlighted below.
+            # These settings are either set with createOffer, or they can be set with a subsequent updateOffer call:
+            # Inventory location Offer price Available quantity eBay listing category Referenced listing policy profiles
+            # to set payment, return, and fulfillment values/settings Note:
+            # Though the includeCatalogProductDetails parameter is not required to be submitted in the request,
+            # the parameter defaults to true if omitted. If the call is successful,
+            # a unique offerId value is returned in the response.
+            # This value will be required for many other offer-related calls.
+            # Note that this call only stages an offer for publishing.
+            # The seller must run the publishOffer call to convert the offer to an active eBay listing.
+            # In addition to the authorization header, which is required for all eBay REST API calls,
+            # the createOffer call also requires the Content-Language header, that sets the natural language that
+            # will be used in the field values of the request payload. For US English, the code value passed in
+            # this header should be en-US. To view other supported Content-Language values, and to read more about all
+            # supported HTTP headers for eBay REST API calls, see the HTTP request headers topic in the Using
+            # eBay RESTful APIs document. For those who prefer to create multiple offers (up to 25 at a time) with one
+            # call, the bulkCreateOffer method can be used.  # noqa: E501
+            #
+            # :param EbayOfferDetailsWithKeys body: Details of the offer for the channel (required)
+            #
+            # :param str content_language: This request header sets the natural language that will be provided in the
+            # field values of the request payload. (required)
+            #
+            # :return: OfferResponse
+
+            sku = random.randrange(10000000000000, 90000000000000)
+
+            body = {
+                "availableQuantity": 1,
+                "categoryId": "171228",  # Fiction & Literature
+                "format": "AUCTION",
+                "listingDescription": "Tap dancing accordion players get the most dates.",
+                "listingDuration": "DAYS_7",
+                "listingPolicies": {
+                    "fulfillmentPolicyId": "string",  # TODO
+                    "paymentPolicyId": "string",  # TODO
+                    "returnPolicyId": "string",  # TODO
+                },
+                "marketplaceId": self.MARKETPLACE_ID,
+                "merchantLocationKey": "string",
+                "pricingSummary": {
+                    "auctionStartPrice": {
+                        "currency": self.CURRENCY,
+                        "value": "1.00"
+                    },
+                    "price": {
+                        "currency": self.CURRENCY,
+                        "value": "1.00"
+                    },
+                },
+                "sku": sku,
+            }
+            try:
+                result = api.sell_inventory_create_offer(body=body, content_language='en-US')
+            except Error as error:
+                self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+            else:
+                tp = True
+
 
 class APIMarketplaces(unittest.TestCase):
     """ Test things that are different between marketplaces. """
 
-    def test_object_reuse(self):    # Do same parameters give the same object?
+    def test_object_reuse(self):  # Do the same parameters return the same object?
         a1 = API(sandbox=True, marketplace_id='EBAY_NL')
         a2 = API(marketplace_id='EBAY_NL', sandbox=True, )
         b = API(sandbox=True, marketplace_id='EBAY_ES')
         self.assertEqual(a1, a2)
         self.assertNotEqual(a1, b)
 
-    def test_shipping_accuracy(self):   # Is is closer shipping cheaper?
+    def test_shipping_accuracy(self):  # Is closer shipping cheaper?
         # TODO Stop ignoring the warning and remedy the resource leak.
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
 
-        # d = domestic & f = foreign
+        # domestic
         d_market = 'EBAY_ENCA'
         d_country = 'CA'
         d_currency = 'CAD'
         d_zip = 'K1M 1M4'
 
+        # foreign
         f_market = 'EBAY_GB'
         f_country = 'GB'
         # f_currency = 'GBP'
         f_zip = 'SW1A 1AA'
 
+        # more constants
         shipping_currency = 'USD'
-
         sandbox = False
-        tally = 0
+
+        tally = 0  # how many times domestic shipping is cheaper than foreign
 
         d_api = API(sandbox=sandbox, marketplace_id=d_market, country_code=d_country, zip_code=d_zip)
         f_api = API(sandbox=sandbox, marketplace_id=f_market, country_code=f_country, zip_code=f_zip)
@@ -122,17 +292,17 @@ class APIMarketplaces(unittest.TestCase):
                             # compare costs, inconclusive when equal or some None
                             if (d_shipping is not None) and (f_shipping is not None):
                                 if d_shipping < f_shipping:
-                                    tally += 1      # what we would expect most of the time
+                                    tally += 1  # what we would expect most of the time
                                 elif d_shipping > f_shipping:
-                                    tally -= 1      # very rare, put a break point here find trouble
+                                    tally -= 1  # very rare, put a break point here find trouble
                                 else:
-                                    tally = tally            # flat rate world wide shipping is possible
+                                    tally = tally  # flat rate world wide shipping is possible
                             else:
                                 self.assertTrue(False, f'For {item_id} both shipping costs can not be found.')
                                 break  # is the deliveryCountry filter flaky?
                 else:
                     self.assertTrue(False, f'Item {item_id} is supposed to be located in {d_country}.')
-                    break       # is the itemLocationCountry filter flaky too?
+                    break  # is the itemLocationCountry filter flaky too?
 
         except Error as error:
             self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
@@ -150,7 +320,7 @@ class APIMarketplaces(unittest.TestCase):
                 return None
             # if not in either list, then eBay concludes that shipping is allowed, so skip the following
             # elif not self._in_region(ship_to_locations['region_included'], country):
-                # return None
+            # return None
 
         # find all costs
         if item['shipping_options']:
@@ -173,7 +343,7 @@ class APIMarketplaces(unittest.TestCase):
             return costs[0]
         else:
             self.assertTrue(False, 'Shipping options without any options, should not be possible.')
-            return None     # getting here should not happen, maybe currency conversion failed
+            return None  # getting here should not happen, maybe currency conversion failed
 
     def _in_region(self, regions, country):
 
@@ -182,7 +352,7 @@ class APIMarketplaces(unittest.TestCase):
         elif country in ('GB',):
             region_ids = ('EUROPE',)
         else:
-            region_ids = {}     # make the linter happy
+            region_ids = {}  # make the linter happy
             self.assertTrue(False, 'add region ids for your country')
 
         for region in regions:
@@ -204,8 +374,8 @@ class APIOther(unittest.TestCase):
     def setUpClass(cls):
         # TODO Stop ignoring the warning and remedy the resource leak.
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
-        cls.sandbox = False    # True is better, eBay wants you to use the sandbox for testing
-        if cls.sandbox:        # use keywords that will return >0 and < 10,000 results
+        cls.sandbox = False  # True is better, eBay wants you to use the sandbox for testing
+        if cls.sandbox:  # use keywords that will return >0 and < 10,000 results
             cls.q = 'silver'
         else:
             cls.q = 'silver snail'
@@ -225,7 +395,7 @@ class APIOther(unittest.TestCase):
         for item in self._api.buy_browse_search(limit=limit, q=self.q):
             self.assertTrue(isinstance(item['item_id'], str))
             count += 1
-            if count >= limit + 500:    # break out if way past the desired limit
+            if count >= limit + 500:  # break out if way past the desired limit
                 break
         self.assertTrue(count == limit)
 
@@ -243,7 +413,7 @@ class APIOther(unittest.TestCase):
             break
 
     def test_positional_two_kw_none(self):
-        pass    # TODO
+        pass  # TODO
 
     def test_positional_zero_kw_some(self):
         self.assertIsNotNone(self._api.buy_browse_search(q=self.q),

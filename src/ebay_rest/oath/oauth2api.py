@@ -115,8 +115,8 @@ class OAuth2Api(object):
             token.access_token = content['access_token']
             token.token_expiry = \
                 datetime.utcnow() + timedelta(seconds=int(content['expires_in'])) - timedelta(minutes=5)
-        else:
-            token.error = str(resp.status_code) + ': ' + content['error_description']
-            logging.error("Unable to retrieve token.  Status code: %s - %s", resp.status_code, resp.reason)
-            logging.error("Error: %s - %s", content['error'], content['error_description'])
+        # else:
+            # token.error = str(resp.status_code) + ': ' + content['error_description']
+            # logging.error("Unable to retrieve token.  Status code: %s - %s", resp.status_code, resp.reason)
+            # logging.error("Error: %s - %s", content['error'], content['error_description'])
         return token
