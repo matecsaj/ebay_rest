@@ -6,10 +6,6 @@ import time
 import threading
 from urllib.parse import parse_qs
 
-# Third party imports
-from selenium import webdriver  # match webdriver & chrome version https://sites.google.com/chromium.org/driver/
-# on Mac, in a terminal, brew install chromedriver
-
 # Local imports
 from .date_time import DateTime
 from .error import Error
@@ -225,7 +221,9 @@ class Token:
         delay = 5  # delay seconds to give the page an opportunity to render
 
         # open browser and load the initial page
-        browser = webdriver.Chrome()
+        import selenium  # match webdriver & chrome version https://sites.google.com/chromium.org/driver/
+        # on Mac, in a terminal, brew install chromedriver
+        browser = selenium.webdriver.Chrome()
         browser.get(sign_in_url)
         time.sleep(delay)
 
