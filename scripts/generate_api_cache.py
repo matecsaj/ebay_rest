@@ -94,6 +94,16 @@ def install_tools():
 
         print('Test the generator installation by invoking its help screen.')
         os.system('/usr/local/bin/swagger-codegen -h')
+    elif platform == 'linux':  # Linux platform
+        # Don't install packages without user interaction.
+        if not os.path.isfile('swagger-codegen-cli.jar'):
+            os.system(
+                'wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/'
+                + 'swagger-codegen-cli/3.0.26/swagger-codegen-cli-3.0.26.jar '
+                + '-O swagger-codegen-cli.jar'
+            )
+        print('Test the generator installation by invoking its help screen.')
+        os.system('java -jar swagger-codegen-cli.jar -h')
     else:
         assert False, f'Please extend install_tools() for your {platform} platform.'
 
@@ -128,6 +138,9 @@ def main():
         name = f'{category}_{call}'
         if platform == 'darwin':  # OS X or MacOS
             command = f'/usr/local/bin/swagger-codegen generate -l python ' \
+                      f'-o {TARGET_PATH}/{name} -DpackageName={name} -i {url} '
+        elif platform == 'linux':  # Linux
+            command = f'java -jar swagger-codegen-cli.jar generate -l python ' \
                       f'-o {TARGET_PATH}/{name} -DpackageName={name} -i {url} '
         else:
             assert False, f'Please extend main() for your {platform} platform.'
