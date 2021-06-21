@@ -36,9 +36,12 @@ class Process:
             self.names = dirs
             break
 
-        path_name = os.path.join(SOURCE_PATH, 'base_paths.json')
-        with open(path_name) as file_handle:
+        with open(os.path.join(SOURCE_PATH, 'base_paths.json')) as file_handle:
             self.base_paths = json.load(file_handle)
+        with open(os.path.join(SOURCE_PATH, 'flows.json')) as file_handle:
+            self.flows = json.load(file_handle)
+        with open(os.path.join(SOURCE_PATH, 'scopes.json')) as file_handle:
+            self.scopes = json.load(file_handle)
 
     def copy_libraries(self):
         """ Copy essential parts of the generated eBay libraries to within the src folder. """
@@ -243,6 +246,28 @@ class Process:
                     method_type = 'paged'
                     break
 
+        # identify if this is a user_access_token routine
+        scopes = self.scopes[name]
+        flows = self.flows[name]
+        operation_id = method.lower().replace('_', '')
+        scopes = self.scopes[name][operation_id]
+        if not scopes:
+            # Assume application keys
+            flows = {'clientCredentials'}
+        else:
+            flows = {self.flows[name][scope] for scope in scopes}
+        if len(flows) != 1:
+            if operation_id == 'getitemconditionpolicies':
+                # This usually uses the client credentials method
+                flows = {'clientCredentials'}
+            else:
+                print('method: ', method)
+                print('scopes: ', scopes)
+                print('flows: ', flows)
+                raise ValueError('Could not identify authorization method!')
+        auth_method, = flows  # note tuple unpacking of set
+        user_access_token = auth_method == 'authorizationCode'
+
         # identify and prep for parameter possibilities
         stars_kwargs = '**kwargs'
         params_modified = params.split(', ')
@@ -260,8 +285,6 @@ class Process:
                 params_modified = ', '.join(params_modified)
             else:
                 has_args = False
-
-        user_access_token = 'token' in docstring
 
         # Prepare the list of rate lookup information that will be used for throttling.
         resource_name_base = name.replace('_', '.')
@@ -342,7 +365,7 @@ class Process:
 
     @staticmethod
     def _camel(name):
-        """ Convert a name with underscore separators to camel case. """
+        """ Convert a name with underscore separators to upper camel case. """
         camel = ''
         for part in name.split('_'):
             camel += part.capitalize()

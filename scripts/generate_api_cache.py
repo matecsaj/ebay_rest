@@ -67,17 +67,59 @@ def get_contracts(limit=100):
     return contracts
 
 
-def get_base_paths(contracts):
+def get_base_paths_and_flows(contracts):
+    """Process the JSON contract and extract two things for later use.
+    1) the base_path for each category_call (e.g. buy_browse)
+    2) the security flow for each scope in each category_call
+    3) the scopes for each call in each category_call
+    """
     base_paths = {}
+    flows = {}
+    scopes = {}
 
     for (category, call, link_href) in contracts:
         with urlopen(link_href) as url:
             data = json.loads(url.read().decode())
-            base_path = data['servers'][0]['variables']['basePath']['default']
-            name = category + '_' + call
-            base_paths[name] = base_path
+        # Get base path
+        base_path = data['servers'][0]['variables']['basePath']['default']
+        # Get flows for this category_call
+        category_flows = (
+            data['components']['securitySchemes']['api_auth']['flows']
+        )
+        flow_by_scope = {}  # dict of scope: flow type
+        for flow, flow_details in category_flows.items():
+            for scope in flow_details['scopes']:
+                flow_by_scope[scope] = flow
 
-    return base_paths
+        # Get scope for each individually pathed call
+        operation_id_scopes = {}
+        for path, path_methods in data['paths'].items():
+            for method, method_dict in path_methods.items():
+                if method not in ('get', 'post', 'put', 'delete'):
+                    # Consider only the HTTP request parts
+                    continue
+                operation_id = method_dict['operationId'].lower()
+                security_list = method_dict.get('security', [])
+                if len(security_list) > 1:
+                    raise ValueError(
+                        'Expected zero/one security entry per path!')
+                elif len(security_list) == 1:
+                    security = security_list[0]['api_auth']
+                else:
+                    security = None
+                if operation_id in operation_id_scopes:
+                    print('Duplicate operation!')
+                    print(path, path_methods)
+                    print(method, method_dict)
+                    raise ValueError('nope')
+                operation_id_scopes[operation_id] = security
+
+        name = category + '_' + call
+        base_paths[name] = base_path
+        flows[name] = flow_by_scope
+        scopes[name] = operation_id_scopes
+
+    return base_paths, flows, scopes
 
 
 def install_tools():
@@ -120,7 +162,7 @@ def main():
         os.mkdir(TARGET_PATH)
 
     contracts = get_contracts(limit=300)
-    base_paths = get_base_paths(contracts)
+    base_paths, flows, scopes = get_base_paths_and_flows(contracts)
 
     print('For each contract generate and install a library.')
     for contract in contracts:
@@ -136,6 +178,12 @@ def main():
     destination = os.path.join(TARGET_PATH, 'base_paths.json')
     with open(destination, 'w') as outfile:
         json.dump(base_paths, outfile, sort_keys=True, indent=4)
+    destination = os.path.join(TARGET_PATH, 'flows.json')
+    with open(destination, 'w') as outfile:
+        json.dump(flows, outfile, sort_keys=True, indent=4)
+    destination = os.path.join(TARGET_PATH, 'scopes.json')
+    with open(destination, 'w') as outfile:
+        json.dump(scopes, outfile, sort_keys=True, indent=4)
 
     return
 
