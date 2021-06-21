@@ -235,6 +235,8 @@ class API:
         :param function_client:
         :param method:
         :param object_error:
+        :param user_access_token:
+        :param rate_keys:
         :param params:
         :param kwargs:
         :return:
@@ -263,7 +265,7 @@ class API:
 
         Across all pages, eBay has a hard limit on how many records it will return. This is subject to change
         and can vary by call. The swagger call will raise an exception at the limit. 10,000 is a common hard limit.
-        
+
         :param function_configuration:
         :param base_path:
         :param function_instance:
@@ -364,8 +366,8 @@ class API:
 
         # Configure the host endpoint
         if self._sandbox:
-            configuration.host = configuration.host.replace('api.ebay.com',
-                                                            'api.sandbox.ebay.com')
+            configuration.host = configuration.host.replace('.ebay.com',
+                                                            '.sandbox.ebay.com')
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}', base_path)
@@ -387,7 +389,7 @@ class API:
         # https://developer.ebay.com/api-docs/buy/static/ref-marketplace-supported.html
         marketplace_id = self._marketplace_id
         if user_access_token:
-            for param in params:
+            for param in (params or []):
                 if param in self._marketplace_ids:
                     marketplace_id = param
         # if '/buy/offer' in base_path:
