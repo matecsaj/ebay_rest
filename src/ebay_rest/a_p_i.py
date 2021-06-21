@@ -74,6 +74,7 @@ class API:
     """
     _get_swagger_call_limits = None
     _instances = []
+    _Token = Token  # Link to Token class
 
     def __init__(self, sandbox: bool = False, marketplace_id: str = 'EBAY_US',
                  country_code: str = None, zip_code: str = None,
@@ -193,7 +194,7 @@ class API:
 
                     # get a token, so that any credential problem will be discovered ASAP
                     try:
-                        Token.get_application(sandbox=sandbox)
+                        self._Token.get_application(sandbox=sandbox)
                     except Error as error:
                         number = error.number
                         reason = error.reason
@@ -209,6 +210,11 @@ class API:
 
         logging.debug("An instance that __new__ created should always be found!")   # abnormal fail
         return
+
+    @classmethod
+    def set_credentials(cls, *args, **kwargs):
+        """Wrapper for Token._set_credentials."""
+        return cls._Token._set_credentials(*args, **kwargs)
 
     def __new__(cls, *args, **kwargs):
         """ When init parameters match, conserve resources, reuse an old initialized object instead of making a new.
@@ -235,6 +241,8 @@ class API:
         :param function_client:
         :param method:
         :param object_error:
+        :param user_access_token:
+        :param rate_keys:
         :param params:
         :param kwargs:
         :return:
@@ -263,7 +271,7 @@ class API:
 
         Across all pages, eBay has a hard limit on how many records it will return. This is subject to change
         and can vary by call. The swagger call will raise an exception at the limit. 10,000 is a common hard limit.
-        
+
         :param function_configuration:
         :param base_path:
         :param function_instance:
@@ -356,16 +364,16 @@ class API:
         configuration = function_configuration()
         try:
             if user_access_token:
-                configuration.access_token = Token.get_user(sandbox=self._sandbox)
+                configuration.access_token = self._Token.get_user(sandbox=self._sandbox)
             else:
-                configuration.access_token = Token.get_application(sandbox=self._sandbox)
+                configuration.access_token = self._Token.get_application(sandbox=self._sandbox)
         except Error:
             raise
 
         # Configure the host endpoint
         if self._sandbox:
-            configuration.host = configuration.host.replace('api.ebay.com',
-                                                            'api.sandbox.ebay.com')
+            configuration.host = configuration.host.replace('.ebay.com',
+                                                            '.sandbox.ebay.com')
         # check for host has flaws and then then compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}', base_path)
@@ -387,7 +395,7 @@ class API:
         # https://developer.ebay.com/api-docs/buy/static/ref-marketplace-supported.html
         marketplace_id = self._marketplace_id
         if user_access_token:
-            for param in params:
+            for param in (params or []):
                 if param in self._marketplace_ids:
                     marketplace_id = param
         # if '/buy/offer' in base_path:
