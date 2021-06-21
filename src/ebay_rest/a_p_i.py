@@ -74,6 +74,7 @@ class API:
     """
     _get_swagger_call_limits = None
     _instances = []
+    _Token = Token  # Link to Token class
 
     def __init__(self, sandbox: bool = False, marketplace_id: str = 'EBAY_US',
                  country_code: str = None, zip_code: str = None,
@@ -193,7 +194,7 @@ class API:
 
                     # get a token, so that any credential problem will be discovered ASAP
                     try:
-                        Token.get_application(sandbox=sandbox)
+                        self._Token.get_application(sandbox=sandbox)
                     except Error as error:
                         number = error.number
                         reason = error.reason
@@ -209,6 +210,11 @@ class API:
 
         logging.debug("An instance that __new__ created should always be found!")   # abnormal fail
         return
+
+    @classmethod
+    def set_credentials(cls, *args, **kwargs):
+        """Wrapper for Token._set_credentials."""
+        return cls._Token._set_credentials(*args, **kwargs)
 
     def __new__(cls, *args, **kwargs):
         """ When init parameters match, conserve resources, reuse an old initialized object instead of making a new.
@@ -358,9 +364,9 @@ class API:
         configuration = function_configuration()
         try:
             if user_access_token:
-                configuration.access_token = Token.get_user(sandbox=self._sandbox)
+                configuration.access_token = self._Token.get_user(sandbox=self._sandbox)
             else:
-                configuration.access_token = Token.get_application(sandbox=self._sandbox)
+                configuration.access_token = self._Token.get_application(sandbox=self._sandbox)
         except Error:
             raise
 

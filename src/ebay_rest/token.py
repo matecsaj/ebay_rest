@@ -10,7 +10,7 @@ from urllib.parse import parse_qs
 from .date_time import DateTime
 from .error import Error
 from .oath.credentialutil import CredentialUtil
-from .oath.model.model import Environment, OAuthToken
+from .oath.model.model import Credentials, Environment, OAuthToken
 from .oath.oauth2api import OAuth2Api
 from .reference import Reference
 
@@ -28,6 +28,47 @@ class Token:
     _user_credential_list = dict()
     _application_scopes = dict()
     _user_scopes = dict()
+    _allow_get_user_consent = True
+
+    @staticmethod
+    def _set_credentials(
+            sandbox: bool, app_id, cert_id,
+            dev_id, ru_name=None, scopes=None,
+            refresh_token=None, refresh_token_expiry=None,
+            allow_get_user_consent=True):
+        """Allow credentials to be populated in the Token class
+        before an API is acquired.
+
+        :param
+        sandbox (bool): {True, False} For the sandbox True, for production False.
+        :param app_id (str): eBay API app_id (also known as client id)
+        :param cert_id (str): eBay API cert_id (also known as client secret)
+        :param dev_id (str): eBay API dev_id
+        :param ru_name (str): eBay API Redirect URL name
+        :param scopes (list): List of user scopes associated with RU name
+        :param refresh_token (str): Refresh token from authorization flow
+        :param refresh_token_expiry (datetime): Expiry of refresh token
+        :param allow_get_user_consent (bool): If we do not have a refresh
+        token, use a browser to get user consent.
+        """
+        env = Environment.SANDBOX if sandbox else Environment.PRODUCTION
+        # Create Credentials for sandbox/production
+        app_info = Credentials(app_id, cert_id, dev_id, ru_name)
+        # Set up Token
+        with Token._lock:
+            CredentialUtil._credential_list.update({env.config_id: app_info})
+            Token._oauth2api_inst = OAuth2Api()
+            if scopes:
+                Token._user_scopes[sandbox] = scopes
+            if refresh_token:
+                if not refresh_token_expiry:
+                    raise ValueError(
+                        'Must supply refresh token expiry with refresh token!')
+                Token._token_refresh_user[sandbox] = OAuthToken(
+                    refresh_token=refresh_token,
+                    refresh_token_expiry=refresh_token_expiry
+                )
+            Token._allow_get_user_consent = allow_get_user_consent
 
     @staticmethod
     def get_application(sandbox: bool):
@@ -49,7 +90,8 @@ class Token:
             if sandbox not in Token._token_application:
                 Token._refresh_application(sandbox)
 
-            if Token._token_application[sandbox].token_expiry.replace(tzinfo=timezone.utc) <= DateTime.now():
+            if (Token._token_application[sandbox].token_expiry
+                    .replace(tzinfo=timezone.utc) <= DateTime.now()):
                 Token._refresh_application(sandbox)
 
             token = Token._token_application[sandbox].access_token
@@ -65,12 +107,14 @@ class Token:
         sandbox (bool): {True, False} For the sandbox True, for production False.
         """
         if sandbox:
-            scopes = list(Reference.get_application_scopes().keys())  # permission is always granted for all
+            # permission is always granted for all
+            scopes = list(Reference.get_application_scopes().keys())
         else:
             env = Environment.PRODUCTION
             scopes = []
             for scope in Reference.get_application_scopes():
-                token_application = Token._oauth2api_inst.get_application_token(env, [scope])
+                token_application = Token._oauth2api_inst.get_application_token(
+                    env, [scope])
                 if token_application.error is None:
                     if token_application.access_token is not None:
                         if len(token_application.access_token) > 0:
@@ -185,6 +229,9 @@ class Token:
         :param
         sandbox (bool): {True, False} For the sandbox True, for production False.
         """
+
+        if not Token._allow_get_user_consent:
+            raise RuntimeError('Getting user consent via browser disabled')
 
         # Get the list of scopes which resemble urls.
         scopes = Token._user_scopes[sandbox]
