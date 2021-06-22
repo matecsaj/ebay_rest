@@ -23,24 +23,22 @@ from .model.model import Environment, Credentials
 user_config_ids = ["sandbox-user", "production-user"]
 
 
-class CredentialUtil(object):
+class CredentialUtil():
     """
     credential_list: dictionary key=string, value=credentials
     """
     _credential_list = {}
 
-    @classmethod
-    def load(cls, app_config_path):
+    def load(self, app_config_path):
         logging.debug("Loading credential configuration file at: %s", app_config_path)
         with open(app_config_path, 'r') as f:
             if app_config_path.endswith('.json'):
                 content = json.loads(f.read())
             else:
                 raise ValueError('Configuration file need to be in JSON.')
-            CredentialUtil._iterate(content)
+            self._iterate(content)
 
-    @classmethod
-    def _iterate(cls, content):
+    def _iterate(self, content):
         for key in content:
             logging.debug("Environment attempted: %s", key)
 
@@ -51,18 +49,30 @@ class CredentialUtil(object):
                 ru_name = content[key]['redirecturi']
 
                 app_info = Credentials(client_id, client_secret, dev_id, ru_name)
-                cls._credential_list.update({key: app_info})
+                self._credential_list.update({key: app_info})
 
-    @classmethod
-    def get_credentials(cls, env_type):
+    def get_credentials(self, env_type):
         """
         env_config_id: environment.PRODUCTION.config_id or environment.SANDBOX.config_id
         """
-        if len(cls._credential_list) == 0:
+        if len(self._credential_list) == 0:
             msg = "No environment loaded from configuration file"
             logging.error(msg)
             raise CredentialNotLoadedError(msg)
-        return cls._credential_list[env_type.config_id]
+        return self._credential_list[env_type.config_id]
+
+    def update_credentials(self, sandbox: bool, credentials: Credentials):
+        """
+        Directly update the list of credentials.
+
+        :param
+        sandbox (bool): {True, False} For the sandbox True, for production False.
+
+        :param
+        credentials (Credentials): A Credentials instance.
+        """
+        key = Environment.SANDBOX.config_id if sandbox else Environment.PRODUCTION.config_id
+        self._credential_list.update({key: credentials})
 
 
 class CredentialNotLoadedError(Exception):

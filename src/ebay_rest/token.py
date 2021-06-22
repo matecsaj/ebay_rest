@@ -21,6 +21,7 @@ class Token:
     This is a facade for the oath module. Instantiation is not required.
     """
     _lock = threading.Lock()
+    _credential_store = CredentialUtil()
     _oauth2api_inst = None
     _token_application = dict()
     _token_user = dict()
@@ -70,9 +71,8 @@ class Token:
         app_info = Credentials(app_id, cert_id, dev_id, ru_name)
         # Set up Token
         with cls._lock:
-            # TODO Refactor the next line because accessing a protected member is bad form.
-            CredentialUtil._credential_list.update({env.config_id: app_info})
-            cls._oauth2api_inst = OAuth2Api()
+            cls._credential_store.update_credentials(sandbox, app_info)
+            cls._oauth2api_inst = OAuth2Api(credential_store=cls._credential_store)
             if scopes:
                 cls._user_scopes[sandbox] = scopes
             if refresh_token:
@@ -200,7 +200,8 @@ class Token:
         sandbox (bool): {True, False} For the sandbox True, for production False.
         """
         if sandbox:
-            scopes = list(Reference.get_user_scopes().keys())  # permission is always granted for all
+            # permission is always granted for all
+            scopes = list(Reference.get_user_scopes().keys())
         else:
             # TODO Replace the hardcoded list with granted scopes.
             scopes = ["https://api.ebay.com/oauth/api_scope",
@@ -384,5 +385,5 @@ class Token:
 
         if cls._oauth2api_inst is None:
             directory = os.getcwd()  # get the current working directory
-            CredentialUtil.load(os.path.join(directory, 'ebay_rest.json'))
-            cls._oauth2api_inst = OAuth2Api()
+            cls._credential_store.load(os.path.join(directory, 'ebay_rest.json'))
+            cls._oauth2api_inst = OAuth2Api(credential_store=cls._credential_store)
