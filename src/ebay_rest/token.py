@@ -326,7 +326,7 @@ class Token:
         browser.quit()
 
         is_auth_successful = False
-        # Chech isAuthSuccessful is true, if present
+        # Check isAuthSuccessful is true, if present
         # Assume authorization was successful if isAuthSuccessful missing
         is_auth_successful = parsed.get('isAuthSuccessful', ['true'])[0]
         if not is_auth_successful:
