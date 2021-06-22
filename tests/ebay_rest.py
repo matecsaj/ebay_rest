@@ -34,7 +34,7 @@ class APIFinances(unittest.TestCase):
         try:
             result = self._api.sell_finances_get_transaction_summary(filter="transactionStatus:{PAYOUT}")
         except Error as error:
-            self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
             self.assertTrue('credit_count' in result)
 
@@ -78,7 +78,7 @@ class APIMarketplaces(unittest.TestCase):
         # low priced items are targeted because free shipping for them is unlikely
         # black items are targeted because they are plentiful, and the q parameter is mandatory
         try:
-            filter_ = f'deliveryCountry:{f_country},itemLocationCountry:{d_country},price:[1..2],' \
+            filter_ = f'deliveryCountry:{f_country},itemLocationCountry:{d_country},price:[1..2],'\
                       f'priceCurrency:{d_currency} '
             for item in d_api.buy_browse_search(q='black', filter=filter_, limit=10):
                 item_id = item['item_id']
@@ -87,35 +87,33 @@ class APIMarketplaces(unittest.TestCase):
                     try:
                         d_item = d_api.buy_browse_get_item(item_id=item_id, fieldgroups='PRODUCT')
                     except Error as error:
-                        self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
-                    else:
-                        d_shipping = self._get_lowest_shipping(d_item, d_country, shipping_currency)
+                        self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                    d_shipping = self._get_lowest_shipping(d_item, d_country, shipping_currency)
 
-                        # get the lowest foreign shipping cost
-                        try:
-                            f_item = f_api.buy_browse_get_item(item_id=item_id, fieldgroups='PRODUCT')
-                        except Error as error:
-                            self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                    # get the lowest foreign shipping cost
+                    try:
+                        f_item = f_api.buy_browse_get_item(item_id=item_id, fieldgroups='PRODUCT')
+                    except Error as error:
+                        self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                    f_shipping = self._get_lowest_shipping(f_item, f_country, shipping_currency)
+
+                    # compare costs, inconclusive when equal or some None
+                    if (d_shipping is not None) and (f_shipping is not None):
+                        if d_shipping < f_shipping:
+                            tally += 1  # what we would expect most of the time
+                        elif d_shipping > f_shipping:
+                            tally -= 1  # very rare, put a break point here find trouble
                         else:
-                            f_shipping = self._get_lowest_shipping(f_item, f_country, shipping_currency)
-
-                            # compare costs, inconclusive when equal or some None
-                            if (d_shipping is not None) and (f_shipping is not None):
-                                if d_shipping < f_shipping:
-                                    tally += 1  # what we would expect most of the time
-                                elif d_shipping > f_shipping:
-                                    tally -= 1  # very rare, put a break point here find trouble
-                                else:
-                                    tally = tally  # flat rate world wide shipping is possible
-                            else:
-                                self.assertTrue(False, f'For {item_id} both shipping costs can not be found.')
-                                break  # is the deliveryCountry filter flaky?
+                            tally = tally  # flat rate world wide shipping is possible
+                    else:
+                        self.fail(f'For {item_id} both shipping costs can not be found.')
+                        break  # is the deliveryCountry filter flaky?
                 else:
-                    self.assertTrue(False, f'Item {item_id} is supposed to be located in {d_country}.')
+                    self.fail(f'Item {item_id} is supposed to be located in {d_country}.')
                     break  # is the itemLocationCountry filter flaky too?
 
         except Error as error:
-            self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
 
         self.assertTrue(tally > 0, "Domestic shipping should cost less than foreign.")
 
@@ -126,33 +124,34 @@ class APIMarketplaces(unittest.TestCase):
         # is shipping excluded?
         ship_to_locations = item['ship_to_locations']
         if ship_to_locations:
-            if self._in_region(ship_to_locations['region_excluded'], country):
+            if self._in_region(ship_to_locations['region_excluded'] or [], country):
                 return None
             # if not in either list, then eBay concludes that shipping is allowed, so skip the following
             # elif not self._in_region(ship_to_locations['region_included'], country):
             # return None
 
         # find all costs
-        if item['shipping_options']:
-            for shipping_option in item['shipping_options']:
-                shipping_cost = shipping_option['shipping_cost']
-                if shipping_cost['currency'] == currency:
-                    cost = float(shipping_cost['value'])
-                elif shipping_cost['converted_from_currency'] == currency:
-                    cost = float(shipping_cost['converted_from_value'])
-                else:
-                    c = CurrencyConverter()
-                    cost = c.convert(float(shipping_cost['value']), shipping_cost['currency'], currency)
-                if cost is not None:
-                    costs.append(cost)
-                else:
-                    self.assertTrue(False, 'A shipping cost, without a cost, should not be possible.')
+        if not item['shipping_options']:
+            return None
+        for shipping_option in item['shipping_options']:
+            shipping_cost = shipping_option['shipping_cost']
+            if shipping_cost['currency'] == currency:
+                cost = float(shipping_cost['value'])
+            elif shipping_cost['converted_from_currency'] == currency:
+                cost = float(shipping_cost['converted_from_value'])
+            else:
+                c = CurrencyConverter()
+                cost = c.convert(float(shipping_cost['value']), shipping_cost['currency'], currency)
+            if cost is not None:
+                costs.append(cost)
+            else:
+                self.fail('A shipping cost, without a cost, should not be possible.')
 
         if costs:
             costs.sort()
             return costs[0]
         else:
-            self.assertTrue(False, 'Shipping options without any options, should not be possible.')
+            self.fail('Shipping options without any options, should not be possible.')
             return None  # getting here should not happen, maybe currency conversion failed
 
     def _in_region(self, regions, country):
@@ -163,7 +162,7 @@ class APIMarketplaces(unittest.TestCase):
             region_ids = ('EUROPE',)
         else:
             region_ids = {}  # make the linter happy
-            self.assertTrue(False, 'add region ids for your country')
+            self.fail('add region ids for your country')
 
         for region in regions:
             region_type = region['region_type']
@@ -184,9 +183,9 @@ class APIOther(unittest.TestCase):
     def setUpClass(cls):
         # TODO Stop ignoring the warning and remedy the resource leak.
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
-        cls.sandbox = False  # True is better, eBay wants you to use the sandbox for testing
+        cls.sandbox = True  # True is better, eBay wants you to use the sandbox for testing
         if cls.sandbox:  # use keywords that will return >0 and < 10,000 results
-            cls.q = 'silver'
+            cls.q = 'black'
         else:
             cls.q = 'silver snail'
         cls._api = API(sandbox=cls.sandbox, marketplace_id='EBAY_US')
@@ -196,7 +195,7 @@ class APIOther(unittest.TestCase):
     def test_paging_no_results(self):
         for item in self._api.buy_browse_search(q='atomic-donkey-kick--this-will-not-be-found-Geraldine'):
             self.assertTrue(isinstance(item['item_id'], str))
-            self.assertTrue(False, msg='No items should be returned.')
+            self.fail(msg='No items should be returned.')
             break
 
     def test_paging_limit_over_page_size(self):
@@ -267,7 +266,7 @@ class APIOther(unittest.TestCase):
                         success = False
                         break
             except Error as error:
-                self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
             else:
                 message = 'The search for ' + option + ' items returned no items or a non-auction item.'
                 self.assertTrue(success, message)
@@ -284,7 +283,7 @@ class APISell(unittest.TestCase):
         try:
             api = API(sandbox=self.SANDBOX, marketplace_id=self.MARKETPLACE_ID, throttle=True)
         except Error as error:
-            self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
 
             # It is required that the seller be opted in to Business Policies before being able to create live eBay
@@ -298,7 +297,7 @@ class APISell(unittest.TestCase):
 
                 api.sell_account_opt_in_to_program(body=body)
             except Error as error:
-                self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
 
             # "fulfillmentPolicyId": "string",  # TODO
             try:
@@ -366,7 +365,7 @@ class APISell(unittest.TestCase):
                 }
                 response = api.sell_account_create_fulfillment_policy(body=body)
             except Error as error:
-                self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
 
             tp = True
 
@@ -435,7 +434,7 @@ class APISell(unittest.TestCase):
             try:
                 result = api.sell_inventory_create_offer(body=body, content_language='en-US')
             except Error as error:
-                self.assertTrue(False, f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
             else:
                 tp = True
 
@@ -446,7 +445,7 @@ class APIThrottled(unittest.TestCase):
     def setUpClass(cls):
         # TODO Stop ignoring the warning and remedy the resource leak.
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
-        cls._api = API(sandbox=False, throttle=True, timeout=60.0)
+        cls._api = API(sandbox=True, throttle=True, timeout=60.0)
 
     def test_finding_one_item(self):
         count = 0
