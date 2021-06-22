@@ -214,7 +214,7 @@ class API:
     @classmethod
     def set_credentials(cls, *args, **kwargs):
         """Wrapper for Token._set_credentials."""
-        return cls._Token._set_credentials(*args, **kwargs)
+        return cls._Token.set_credentials(*args, **kwargs)
 
     def __new__(cls, *args, **kwargs):
         """ When init parameters match, conserve resources, reuse an old initialized object instead of making a new.

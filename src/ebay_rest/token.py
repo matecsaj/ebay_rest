@@ -31,24 +31,38 @@ class Token:
     _allow_get_user_consent = True
 
     @classmethod
-    def _set_credentials(
+    def set_credentials(
             cls, sandbox: bool, app_id, cert_id,
             dev_id, ru_name=None, scopes=None,
             refresh_token=None, refresh_token_expiry=None,
             allow_get_user_consent=True):
-        """Allow credentials to be populated in the Token class
-        before an API is acquired.
+        """Allow credentials to be populated in the Token class before an API is acquired.
 
         :param
         sandbox (bool): {True, False} For the sandbox True, for production False.
-        :param app_id (str): eBay API app_id (also known as client id)
-        :param cert_id (str): eBay API cert_id (also known as client secret)
-        :param dev_id (str): eBay API dev_id
-        :param ru_name (str): eBay API Redirect URL name
-        :param scopes (list): List of user scopes associated with RU name
-        :param refresh_token (str): Refresh token from authorization flow
-        :param refresh_token_expiry (datetime): Expiry of refresh token
-        :param allow_get_user_consent (bool): If we do not have a refresh
+        :param
+        app_id (str): eBay API app_id (also known as client id)
+
+        :param
+        cert_id (str): eBay API cert_id (also known as client secret)
+
+        :param
+        dev_id (str): eBay API dev_id
+
+        :param
+        ru_name (str): eBay API Redirect URL name
+
+        :param
+        scopes (list): List of user scopes associated with RU name
+
+        :param
+        refresh_token (str): Refresh token from authorization flow
+
+        :param
+        refresh_token_expiry (datetime): Expiry of refresh token
+
+        :param
+        allow_get_user_consent (bool): If we do not have a refresh
         token, use a browser to get user consent.
         """
         env = Environment.SANDBOX if sandbox else Environment.PRODUCTION
@@ -56,6 +70,7 @@ class Token:
         app_info = Credentials(app_id, cert_id, dev_id, ru_name)
         # Set up Token
         with cls._lock:
+            # TODO Refactor the next line because accessing a protected member is bad form.
             CredentialUtil._credential_list.update({env.config_id: app_info})
             cls._oauth2api_inst = OAuth2Api()
             if scopes:
@@ -282,10 +297,13 @@ class Token:
 
         delay = 5  # delay seconds to give the page an opportunity to render
 
-        # open browser and load the initial page
-        import selenium  # match webdriver & chrome version https://sites.google.com/chromium.org/driver/
+        # import selenium  # match webdriver & chrome version https://sites.google.com/chromium.org/driver/
         # on Mac, in a terminal, brew install chromedriver
-        browser = selenium.webdriver.Chrome()
+        # Don't move the import to the top of the file because not everyone uses this method.
+        from selenium import webdriver
+
+        # open browser and load the initial page
+        browser = webdriver.Chrome()
         browser.get(sign_in_url)
         time.sleep(delay)
 
@@ -344,11 +362,11 @@ class Token:
 
         cls._token_user[sandbox] = user_token
 
-    @staticmethod
-    def _read_user_info():
+    @classmethod
+    def _read_user_info(cls):
 
         directory = os.getcwd()  # get the current working directory
-        user_config_path = os.path.join(directory, 'ebay_rest_user.json')
+        user_config_path = os.path.join(directory, 'ebay_rest.json')
         try:
             with open(user_config_path, 'r') as f:
                 content = json.loads(f.read())
