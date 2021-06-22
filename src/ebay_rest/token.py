@@ -321,21 +321,22 @@ class Token:
         time.sleep(delay)
 
         # get the result url and then close browser
-        parsed = parse_qs(browser.current_url, encoding='utf-8')
+        qs = browser.current_url.partition('?')[2]
+        parsed = parse_qs(qs, encoding='utf-8')
         browser.quit()
 
         is_auth_successful = False
-        if 'isAuthSuccessful' in parsed:
-            if 'true' == parsed['isAuthSuccessful'][0]:
-                is_auth_successful = True
+        # Chech isAuthSuccessful is true, if present
+        # Assume authorization was successful if isAuthSuccessful missing
+        is_auth_successful = parsed.get('isAuthSuccessful', ['true'])[0]
         if not is_auth_successful:
-            reason = "Authorization unsuccessful, check userid & password: " + userid + " " + password
+            reason = (
+                f"Authorization unsuccessful, check userid & password: {userid} {password}"
+            )
             raise Error(number=1, reason=reason)
 
-        code = None
-        if 'code' in parsed:
-            if parsed['code'][0]:
-                code = parsed['code'][0]
+        # Check we have the code in the browser URL
+        code = parsed.get('code', [False])[0]
         if not code:
             raise Error(number=1, reason="Unable to obtain code.")
 
