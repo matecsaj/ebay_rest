@@ -266,7 +266,8 @@ class API:
             return result
 
     def _method_paged(self, function_configuration, base_path, function_instance, function_client,
-                      method, object_error, user_access_token, rate_keys, params, **kwargs):
+                      method, object_error, user_access_token, rate_keys, params,
+                      record_list_key=None, **kwargs):
         """ Do the work for method that yields objects from repeated calls which is termed Paging by eBay.
 
         Across all pages, eBay has a hard limit on how many records it will return. This is subject to change
@@ -279,6 +280,7 @@ class API:
         :param method:
         :param object_error:
         :param params:
+        :param record_list_key: If passed, the generator returns individual entries from this field
         :param kwargs:
         :return:
         """
@@ -293,6 +295,7 @@ class API:
                 reason = "The limit must be an integer, you supplied a " + type(kwargs['limit']) + '.'
                 raise Error(number=99002, reason=reason)
             records_desired = kwargs['limit']
+            records_yielded = 0
             if records_desired <= 0:
                 reason = "The limit must be greater that zero, you supplied " + str(records_desired) + '.'
                 raise Error(number=99003, reason=reason)
@@ -312,9 +315,9 @@ class API:
 
         # loop though pages until a reason to stop presents itself
         offset = 0  # start at the first record; yes the record index starts at zero
-        record_list_key = None  # a placeholder for the dictionary key that will refer to the list of records
-        loop = True
-        while loop:
+        result = {'next': True}  # Just to get loop below started
+        # Loop while we are returned a 'next' URL
+        while result.get('next', False):
 
             try:
                 self._swagger_throttle(base_path=base_path, rate_keys=rate_keys)
@@ -327,35 +330,24 @@ class API:
                 result = self._call_swagger(swagger_method, params, kwargs, object_error)
             except Error:
                 raise
+            offset += result['limit']
 
-            if record_list_key is None:  # if still needed, find the dictionary key to the list of results
-                for key in result:
-                    if isinstance(result[key], list):
-                        record_list_key = key
-                        break
-                    # it will not be found when the record set is totally empty
-
-            # determine the number of records in the current page
-            records_in_page = 0
-            if record_list_key is not None:  # is the record set totally empty?
-                if record_list_key in result:  # is current page is well formed page?
-                    if result[record_list_key] is not None:  # does the current page have > zero results?
-                        records_in_page = len(result[record_list_key])  # all good, get the record count
-
-            # yield each record to the caller, perhaps stop looping, and prepare the next page's offset
-            if records_in_page:
-                for element in result[record_list_key]:
+            if record_list_key is None:
+                # Yield the full result with each iteration
+                yield result
+            else:
+                # Generator returns one entry per iteration
+                for element in result.get(record_list_key, []):
                     yield element
                     if records_desired is not None:
-                        records_desired -= 1
-                        if records_desired <= 0:
-                            loop = False
+                        records_yielded += 1
+                        if records_yielded >= records_desired:
                             break
-                offset += records_in_page
-                if result['total'] <= offset:
-                    loop = False
-            else:
-                loop = False
+
+            # Break out of the main loop if we have enough pages already
+            if records_desired is not None:
+                if offset >= records_desired:
+                    break
 
     def _get_swagger_method(self, function_configuration, base_path, function_instance, function_client,
                             method, user_access_token, params):
