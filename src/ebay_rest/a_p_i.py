@@ -267,7 +267,7 @@ class API:
 
     def _method_paged(self, function_configuration, base_path, function_instance, function_client,
                       method, object_error, user_access_token, rate_keys, params,
-                      record_list_key=None, **kwargs):
+                      record_list_key='auto', **kwargs):
         """ Do the work for method that yields objects from repeated calls which is termed Paging by eBay.
 
         Across all pages, eBay has a hard limit on how many records it will return. This is subject to change
@@ -280,7 +280,9 @@ class API:
         :param method:
         :param object_error:
         :param params:
-        :param record_list_key: If passed, the generator returns individual entries from this field
+        :param record_list_key: If passed, the generator returns individual entries from this field.
+            Default is 'auto', which will attempt to guess which field is to be returned. Passing None
+            will return a generator of the full pages.
         :param kwargs:
         :return:
         """
@@ -329,8 +331,16 @@ class API:
                 # TODO If the caller does not process all yielded results within five minutes, the token might expire.
                 result = self._call_swagger(swagger_method, params, kwargs, object_error)
             except Error:
-                raise
+                raise Error(number=99001, reason="Don't supply an offset parameter. It is automatically handled.")
             offset += result['limit'] or 0
+
+            if record_list_key == 'auto' and result['total'] is not None:
+                # Attempt to identify the results list
+                # If there are no results, then it will not be found
+                for key, value in result.items():
+                    if isinstance(value, list):
+                        record_list_key = key
+                        break
 
             if record_list_key is None:
                 # Yield the full result with each iteration
@@ -339,7 +349,7 @@ class API:
                 if not result.get(record_list_key):
                     return  # No entries to return
                 # Generator returns one entry per iteration
-                for element in result['record_list_key']:
+                for element in result[record_list_key]:
                     yield element
                     if records_desired is not None:
                         records_yielded += 1
