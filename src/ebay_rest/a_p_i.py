@@ -330,14 +330,16 @@ class API:
                 result = self._call_swagger(swagger_method, params, kwargs, object_error)
             except Error:
                 raise
-            offset += result['limit']
+            offset += result['limit'] or 0
 
             if record_list_key is None:
                 # Yield the full result with each iteration
                 yield result
             else:
+                if not result.get(record_list_key):
+                    return  # No entries to return
                 # Generator returns one entry per iteration
-                for element in result.get(record_list_key, []):
+                for element in result['record_list_key']:
                     yield element
                     if records_desired is not None:
                         records_yielded += 1
