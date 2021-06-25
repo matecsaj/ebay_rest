@@ -238,13 +238,8 @@ class Process:
         if has_docstring_problem:
             pass    # TODO Do something to make the comments aka docstring handle optional parameters properly
 
-        # prepare the method type
-        method_type = 'single'      # most calls are of this type
-        for line in docstring.split('\n'):
-            if ':return:' in line:
-                if 'Paged' in line:
-                    method_type = 'paged'
-                    break
+        # prepare the method type by testing for 'offset' parameter
+        method_type = 'paged' if (':param str offset' in docstring) else 'single'
 
         # identify if this is a user_access_token routine
         scopes = self.scopes[name]
