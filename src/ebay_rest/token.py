@@ -21,6 +21,7 @@ class Token:
     This is a facade for the oath module. Instantiation is not required.
     """
     _lock = threading.Lock()
+    _credential_store = CredentialUtil()
     _oauth2api_inst = None
     _token_application = dict()
     _token_user = dict()
@@ -70,9 +71,8 @@ class Token:
         app_info = Credentials(app_id, cert_id, dev_id, ru_name)
         # Set up Token
         with cls._lock:
-            # TODO Refactor the next line because accessing a protected member is bad form.
-            CredentialUtil._credential_list.update({env.config_id: app_info})
-            cls._oauth2api_inst = OAuth2Api()
+            cls._credential_store.update_credentials(sandbox, app_info)
+            cls._oauth2api_inst = OAuth2Api(credential_store=cls._credential_store)
             if scopes:
                 cls._user_scopes[sandbox] = scopes
             if refresh_token:
@@ -200,7 +200,8 @@ class Token:
         sandbox (bool): {True, False} For the sandbox True, for production False.
         """
         if sandbox:
-            scopes = list(Reference.get_user_scopes().keys())  # permission is always granted for all
+            # permission is always granted for all
+            scopes = list(Reference.get_user_scopes().keys())
         else:
             # TODO Replace the hardcoded list with granted scopes.
             scopes = ["https://api.ebay.com/oauth/api_scope",
@@ -320,21 +321,22 @@ class Token:
         time.sleep(delay)
 
         # get the result url and then close browser
-        parsed = parse_qs(browser.current_url, encoding='utf-8')
+        qs = browser.current_url.partition('?')[2]
+        parsed = parse_qs(qs, encoding='utf-8')
         browser.quit()
 
         is_auth_successful = False
-        if 'isAuthSuccessful' in parsed:
-            if 'true' == parsed['isAuthSuccessful'][0]:
-                is_auth_successful = True
+        # Check isAuthSuccessful is true, if present
+        # Assume authorization was successful if isAuthSuccessful missing
+        is_auth_successful = parsed.get('isAuthSuccessful', ['true'])[0]
         if not is_auth_successful:
-            reason = "Authorization unsuccessful, check userid & password: " + userid + " " + password
+            reason = (
+                f"Authorization unsuccessful, check userid & password: {userid} {password}"
+            )
             raise Error(number=1, reason=reason)
 
-        code = None
-        if 'code' in parsed:
-            if parsed['code'][0]:
-                code = parsed['code'][0]
+        # Check we have the code in the browser URL
+        code = parsed.get('code', [False])[0]
         if not code:
             raise Error(number=1, reason="Unable to obtain code.")
 
@@ -384,5 +386,5 @@ class Token:
 
         if cls._oauth2api_inst is None:
             directory = os.getcwd()  # get the current working directory
-            CredentialUtil.load(os.path.join(directory, 'ebay_rest.json'))
-            cls._oauth2api_inst = OAuth2Api()
+            cls._credential_store.load(os.path.join(directory, 'ebay_rest.json'))
+            cls._oauth2api_inst = OAuth2Api(credential_store=cls._credential_store)

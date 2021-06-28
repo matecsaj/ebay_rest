@@ -26,16 +26,21 @@ from .credentialutil import CredentialUtil
 from .model.model import OAuthToken
 
 
-class OAuth2Api(object):
+class OAuth2Api():
+    def __init__(self, credential_store=None):
+        """Initialize OAuth2Api instance
 
-    @staticmethod
-    def generate_user_authorization_url(env_type, scopes, state=None):
+        :param credential_store: Typically a CredentialUtil instance.
+        """
+        self.credential_store = credential_store or CredentialUtil()
+
+    def generate_user_authorization_url(self, env_type, scopes, state=None):
         """
             env_type = environment.SANDBOX or environment.PRODUCTION
             scopes = list of strings
         """
 
-        credential = CredentialUtil.get_credentials(env_type)
+        credential = self.credential_store.get_credentials(env_type)
 
         scopes = ' '.join(scopes)
         param = {
@@ -52,15 +57,14 @@ class OAuth2Api(object):
         query = urlencode(param)
         return env_type.web_endpoint + '?' + query
 
-    @staticmethod
-    def get_application_token(env_type, scopes):
+    def get_application_token(self, env_type, scopes):
         """
             makes call for application token and stores result in credential object
             returns credential object
         """
 
         logging.debug("Trying to get a new application access token ... ")
-        credential = CredentialUtil.get_credentials(env_type)
+        credential = self.credential_store.get_credentials(env_type)
         headers = util.generate_request_headers(credential)
         body = util.generate_application_request_body(credential, ' '.join(scopes))
 
@@ -68,12 +72,11 @@ class OAuth2Api(object):
         content = json.loads(resp.content)
         token = OAuthToken()
 
-        return OAuth2Api._finish(resp, token, content)
+        return self._finish(resp, token, content)
 
-    @staticmethod
-    def exchange_code_for_access_token(env_type, code):
+    def exchange_code_for_access_token(self, env_type, code):
         logging.debug("Trying to get a new user access token ... ")
-        credential = CredentialUtil.get_credentials(env_type)
+        credential = self.credential_store.get_credentials(env_type)
 
         headers = util.generate_request_headers(credential)
         body = util.generate_oauth_request_body(credential, code)
@@ -84,20 +87,22 @@ class OAuth2Api(object):
 
         if resp.status_code == requests.codes.ok:
             token.refresh_token = content['refresh_token']
-            token.refresh_token_expiry = datetime.utcnow() + timedelta(
-                seconds=int(content['refresh_token_expires_in'])) - timedelta(minutes=5)
+            token.refresh_token_expiry = (
+                datetime.utcnow()
+                + timedelta(seconds=int(content['refresh_token_expires_in']))
+                - timedelta(minutes=5)
+            )
 
-        return OAuth2Api._finish(resp, token, content)
+        return self._finish(resp, token, content)
 
-    @staticmethod
-    def get_access_token(env_type, refresh_token, scopes):
+    def get_access_token(self, env_type, refresh_token, scopes):
         """
         refresh token call
         """
 
         logging.debug("Trying to get a new user access token ... ")
 
-        credential = CredentialUtil.get_credentials(env_type)
+        credential = self.credential_store.get_credentials(env_type)
 
         headers = util.generate_request_headers(credential)
         body = util.generate_refresh_request_body(' '.join(scopes), refresh_token)
@@ -106,15 +111,18 @@ class OAuth2Api(object):
         token = OAuthToken()
         token.token_response = content
 
-        return OAuth2Api._finish(resp, token, content)
+        return self._finish(resp, token, content)
 
     @staticmethod
     def _finish(resp, token, content):
 
         if resp.status_code == requests.codes.ok:
             token.access_token = content['access_token']
-            token.token_expiry = \
-                datetime.utcnow() + timedelta(seconds=int(content['expires_in'])) - timedelta(minutes=5)
+            token.token_expiry = (
+                datetime.utcnow()
+                + timedelta(seconds=int(content['expires_in']))
+                - timedelta(minutes=5)
+            )
         # else:
             # token.error = str(resp.status_code) + ': ' + content['error_description']
             # logging.error("Unable to retrieve token.  Status code: %s - %s", resp.status_code, resp.reason)
