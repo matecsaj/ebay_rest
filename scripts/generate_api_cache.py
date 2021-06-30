@@ -91,7 +91,7 @@ def get_base_paths_and_flows(contracts):
             for scope in flow_details['scopes']:
                 flow_by_scope[scope] = flow
 
-        # Get scope for each individually pathed call
+        # Get scope for each individually path-ed call
         operation_id_scopes = {}
         for path, path_methods in data['paths'].items():
             for method, method_dict in path_methods.items():

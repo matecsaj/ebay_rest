@@ -242,8 +242,6 @@ class Process:
         method_type = 'paged' if (':param str offset' in docstring) else 'single'
 
         # identify if this is a user_access_token routine
-        scopes = self.scopes[name]
-        flows = self.flows[name]
         operation_id = method.lower().replace('_', '')
         scopes = self.scopes[name][operation_id]
         if not scopes:

@@ -107,10 +107,8 @@ class APIMarketplaces(unittest.TestCase):
                             tally = tally  # flat rate world wide shipping is possible
                     else:
                         self.fail(f'For {item_id} both shipping costs can not be found.')
-                        break  # is the deliveryCountry filter flaky?
                 else:
                     self.fail(f'Item {item_id} is supposed to be located in {d_country}.')
-                    break  # is the itemLocationCountry filter flaky too?
 
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
@@ -152,7 +150,6 @@ class APIMarketplaces(unittest.TestCase):
             return costs[0]
         else:
             self.fail('Shipping options without any options, should not be possible.')
-            return None  # getting here should not happen, maybe currency conversion failed
 
     def _in_region(self, regions, country):
 
@@ -161,7 +158,6 @@ class APIMarketplaces(unittest.TestCase):
         elif country in ('GB',):
             region_ids = ('EUROPE',)
         else:
-            region_ids = {}  # make the linter happy
             self.fail('add region ids for your country')
 
         for region in regions:
@@ -196,7 +192,6 @@ class APIOther(unittest.TestCase):
         for item in self._api.buy_browse_search(q='atomic-donkey-kick--this-will-not-be-found-Geraldine'):
             self.assertTrue(isinstance(item['item_id'], str))
             self.fail(msg='No items should be returned.')
-            break
 
     def test_paging_limit_over_page_size(self):
         count = 0
@@ -367,8 +362,6 @@ class APISell(unittest.TestCase):
             except Error as error:
                 self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
 
-            tp = True
-
             # "paymentPolicyId": "string",  # TODO
 
             # "returnPolicyId": "string",  # TODO
@@ -394,7 +387,7 @@ class APISell(unittest.TestCase):
             # will be used in the field values of the request payload. For US English, the code value passed in
             # this header should be en-US. To view other supported Content-Language values, and to read more about all
             # supported HTTP headers for eBay REST API calls, see the HTTP request headers topic in the Using
-            # eBay RESTful APIs document. For those who prefer to create multiple offers (up to 25 at a time) with one
+            # eBay REST full APIs document. For those who prefer to create multiple offers (up to 25 at a time) with one
             # call, the bulkCreateOffer method can be used.  # noqa: E501
             #
             # :param EbayOfferDetailsWithKeys body: Details of the offer for the channel (required)
@@ -436,7 +429,7 @@ class APISell(unittest.TestCase):
             except Error as error:
                 self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
             else:
-                tp = True
+                pass
 
 
 class APIThrottled(unittest.TestCase):

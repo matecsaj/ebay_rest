@@ -6,9 +6,32 @@ A tread-safe Python 3 pip package that conveniently wraps eBay’s REST APIs.
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install ebay_rest.
 
 ```bash
-pip install ebay_rest    # Use pip3 if your computer happens to also have Python 2 installed.
+pip install ebay_rest    # Use pip3 if your computer also has Python 2 installed.
 ```
 
+If you are one of the few people who want ebay_rest to get user tokens, do the following.
+
+Install [Chrome](https://www.google.ca/chrome/).
+
+```bash
+pip install selenium    # Use pip3 if your computer also has Python 2 installed.
+```
+
+Install [Webdriver](https://sites.google.com/chromium.org/driver/), aka Chromedriver, for your version of Chrome .
+
+Here is a method for installing Webdriver/Chromedriver on MacOS and tweaking security to permit it.
+
+Install [HomeBrew](https://brew.sh)
+```bash
+brew install chromedriver
+```
+```bash
+cd /usr/local/Caskroom/chromedriver
+```
+cd to the subdirectory that matches your Chrome version, e.g. 91.0.4472.101
+```bash
+xattr -d com.apple.quarantine chromedriver
+```
 ## Setup
 
 Follow the instructions [here](https://github.com/matecsaj/ebay_rest/blob/main/tests/ebay_rest_EXAMPLE.json). 

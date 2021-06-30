@@ -66,7 +66,6 @@ class Token:
         allow_get_user_consent (bool): If we do not have a refresh
         token, use a browser to get user consent.
         """
-        env = Environment.SANDBOX if sandbox else Environment.PRODUCTION
         # Create Credentials for sandbox/production
         app_info = Credentials(app_id, cert_id, dev_id, ru_name)
         # Set up Token
@@ -146,10 +145,7 @@ class Token:
         sandbox (bool): {True, False} For the sandbox True, for production False.
         """
 
-        if sandbox:
-            env = Environment.SANDBOX
-        else:
-            env = Environment.PRODUCTION
+        env = Environment.SANDBOX if sandbox else Environment.PRODUCTION
 
         # Get the list of scopes which resemble urls.
         scopes = cls._application_scopes[sandbox]
@@ -252,10 +248,7 @@ class Token:
         # Get the list of scopes which resemble urls.
         scopes = cls._user_scopes[sandbox]
 
-        if sandbox:
-            env = Environment.SANDBOX
-        else:
-            env = Environment.PRODUCTION
+        env = Environment.SANDBOX if sandbox else Environment.PRODUCTION
 
         sign_in_url = cls._oauth2api_inst.generate_user_authorization_url(env, scopes)
         if sign_in_url is None:
@@ -288,19 +281,15 @@ class Token:
         """
         cls._read_user_info()
 
-        if "sandbox" in sign_in_url:
-            env_key = "sandbox-user"
-        else:
-            env_key = "production-user"
+        env_key = "sandbox-user" if "sandbox" in sign_in_url else "production-user"
 
         userid = cls._user_credential_list[env_key][0]
         password = cls._user_credential_list[env_key][1]
 
         delay = 5  # delay seconds to give the page an opportunity to render
 
-        # import selenium  # match webdriver & chrome version https://sites.google.com/chromium.org/driver/
-        # on Mac, in a terminal, brew install chromedriver
         # Don't move the import to the top of the file because not everyone uses this method.
+        # In README.md note the extra installation steps.
         from selenium import webdriver
 
         # open browser and load the initial page
@@ -325,10 +314,15 @@ class Token:
         parsed = parse_qs(qs, encoding='utf-8')
         browser.quit()
 
-        is_auth_successful = False
-        # Check isAuthSuccessful is true, if present
         # Assume authorization was successful if isAuthSuccessful missing
-        is_auth_successful = parsed.get('isAuthSuccessful', ['true'])[0]
+        # Check isAuthSuccessful is true, if present
+        if 'isAuthSuccessful' not in parsed:
+            is_auth_successful = True
+        else:
+            if 'true' == parsed['isAuthSuccessful'][0]:
+                is_auth_successful = True
+            else:
+                is_auth_successful = False
         if not is_auth_successful:
             reason = (
                 f"Authorization unsuccessful, check userid & password: {userid} {password}"
@@ -349,10 +343,7 @@ class Token:
         # Get the list of scopes which resemble urls.
         scopes = cls._user_scopes[sandbox]
 
-        if sandbox:
-            env = Environment.SANDBOX
-        else:
-            env = Environment.PRODUCTION
+        env = Environment.SANDBOX if sandbox else Environment.PRODUCTION
 
         user_token = cls._oauth2api_inst.get_access_token(
             env, cls._token_refresh_user[sandbox].refresh_token, scopes)
