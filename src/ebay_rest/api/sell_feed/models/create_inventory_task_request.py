@@ -28,57 +28,34 @@ class CreateInventoryTaskRequest(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'schema_version': 'str',
         'feed_type': 'str',
         'filter_criteria': 'InventoryFilterCriteria',
-        'inventory_file_template': 'str'
+        'inventory_file_template': 'str',
+        'schema_version': 'str'
     }
 
     attribute_map = {
-        'schema_version': 'schemaVersion',
         'feed_type': 'feedType',
         'filter_criteria': 'filterCriteria',
-        'inventory_file_template': 'inventoryFileTemplate'
+        'inventory_file_template': 'inventoryFileTemplate',
+        'schema_version': 'schemaVersion'
     }
 
-    def __init__(self, schema_version=None, feed_type=None, filter_criteria=None, inventory_file_template=None):  # noqa: E501
+    def __init__(self, feed_type=None, filter_criteria=None, inventory_file_template=None, schema_version=None):  # noqa: E501
         """CreateInventoryTaskRequest - a model defined in Swagger"""  # noqa: E501
-        self._schema_version = None
         self._feed_type = None
         self._filter_criteria = None
         self._inventory_file_template = None
+        self._schema_version = None
         self.discriminator = None
-        if schema_version is not None:
-            self.schema_version = schema_version
         if feed_type is not None:
             self.feed_type = feed_type
         if filter_criteria is not None:
             self.filter_criteria = filter_criteria
         if inventory_file_template is not None:
             self.inventory_file_template = inventory_file_template
-
-    @property
-    def schema_version(self):
-        """Gets the schema_version of this CreateInventoryTaskRequest.  # noqa: E501
-
-        The schemaVersion/version number of the file format (use the schema version of the API to which you are programming): LMS Version Details / Schema Version File Exchange Schema Version  # noqa: E501
-
-        :return: The schema_version of this CreateInventoryTaskRequest.  # noqa: E501
-        :rtype: str
-        """
-        return self._schema_version
-
-    @schema_version.setter
-    def schema_version(self, schema_version):
-        """Sets the schema_version of this CreateInventoryTaskRequest.
-
-        The schemaVersion/version number of the file format (use the schema version of the API to which you are programming): LMS Version Details / Schema Version File Exchange Schema Version  # noqa: E501
-
-        :param schema_version: The schema_version of this CreateInventoryTaskRequest.  # noqa: E501
-        :type: str
-        """
-
-        self._schema_version = schema_version
+        if schema_version is not None:
+            self.schema_version = schema_version
 
     @property
     def feed_type(self):
@@ -146,6 +123,29 @@ class CreateInventoryTaskRequest(object):
         """
 
         self._inventory_file_template = inventory_file_template
+
+    @property
+    def schema_version(self):
+        """Gets the schema_version of this CreateInventoryTaskRequest.  # noqa: E501
+
+        The schemaVersion/version number of the file format (use the schema version of the API to which you are programming): LMS Version Details / Schema Version File Exchange Schema Version  # noqa: E501
+
+        :return: The schema_version of this CreateInventoryTaskRequest.  # noqa: E501
+        :rtype: str
+        """
+        return self._schema_version
+
+    @schema_version.setter
+    def schema_version(self, schema_version):
+        """Sets the schema_version of this CreateInventoryTaskRequest.
+
+        The schemaVersion/version number of the file format (use the schema version of the API to which you are programming): LMS Version Details / Schema Version File Exchange Schema Version  # noqa: E501
+
+        :param schema_version: The schema_version of this CreateInventoryTaskRequest.  # noqa: E501
+        :type: str
+        """
+
+        self._schema_version = schema_version
 
     def to_dict(self):
         """Returns the model properties as a dict"""

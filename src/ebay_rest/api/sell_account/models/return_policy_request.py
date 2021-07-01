@@ -39,8 +39,8 @@ class ReturnPolicyRequest(object):
         'return_instructions': 'str',
         'return_method': 'str',
         'return_period': 'TimeDuration',
-        'returns_accepted': 'bool',
-        'return_shipping_cost_payer': 'str'
+        'return_shipping_cost_payer': 'str',
+        'returns_accepted': 'bool'
     }
 
     attribute_map = {
@@ -55,11 +55,11 @@ class ReturnPolicyRequest(object):
         'return_instructions': 'returnInstructions',
         'return_method': 'returnMethod',
         'return_period': 'returnPeriod',
-        'returns_accepted': 'returnsAccepted',
-        'return_shipping_cost_payer': 'returnShippingCostPayer'
+        'return_shipping_cost_payer': 'returnShippingCostPayer',
+        'returns_accepted': 'returnsAccepted'
     }
 
-    def __init__(self, category_types=None, description=None, extended_holiday_returns_offered=None, international_override=None, marketplace_id=None, name=None, refund_method=None, restocking_fee_percentage=None, return_instructions=None, return_method=None, return_period=None, returns_accepted=None, return_shipping_cost_payer=None):  # noqa: E501
+    def __init__(self, category_types=None, description=None, extended_holiday_returns_offered=None, international_override=None, marketplace_id=None, name=None, refund_method=None, restocking_fee_percentage=None, return_instructions=None, return_method=None, return_period=None, return_shipping_cost_payer=None, returns_accepted=None):  # noqa: E501
         """ReturnPolicyRequest - a model defined in Swagger"""  # noqa: E501
         self._category_types = None
         self._description = None
@@ -72,8 +72,8 @@ class ReturnPolicyRequest(object):
         self._return_instructions = None
         self._return_method = None
         self._return_period = None
-        self._returns_accepted = None
         self._return_shipping_cost_payer = None
+        self._returns_accepted = None
         self.discriminator = None
         if category_types is not None:
             self.category_types = category_types
@@ -97,10 +97,10 @@ class ReturnPolicyRequest(object):
             self.return_method = return_method
         if return_period is not None:
             self.return_period = return_period
-        if returns_accepted is not None:
-            self.returns_accepted = returns_accepted
         if return_shipping_cost_payer is not None:
             self.return_shipping_cost_payer = return_shipping_cost_payer
+        if returns_accepted is not None:
+            self.returns_accepted = returns_accepted
 
     @property
     def category_types(self):
@@ -352,29 +352,6 @@ class ReturnPolicyRequest(object):
         self._return_period = return_period
 
     @property
-    def returns_accepted(self):
-        """Gets the returns_accepted of this ReturnPolicyRequest.  # noqa: E501
-
-        If set to true, the seller accepts returns. Call the getReturnPolicies in the Metadata API to see what categories require returns to be offered for listings in each category. Also, note that some European marketplaces (for example, UK, IE, and DE) require sellers to accept returns for fixed-price items and auctions listed with Buy It Now. For details, see Returns and the Law (UK). Note:Top-Rated sellers must accept item returns and the handlingTime should be set to zero days or one day for a listing to receive a Top-Rated Plus badge on the View Item or search result pages. For more information on eBay's Top-Rated seller program, see Becoming a Top Rated Seller and qualifying for Top Rated Plus benefits.  # noqa: E501
-
-        :return: The returns_accepted of this ReturnPolicyRequest.  # noqa: E501
-        :rtype: bool
-        """
-        return self._returns_accepted
-
-    @returns_accepted.setter
-    def returns_accepted(self, returns_accepted):
-        """Sets the returns_accepted of this ReturnPolicyRequest.
-
-        If set to true, the seller accepts returns. Call the getReturnPolicies in the Metadata API to see what categories require returns to be offered for listings in each category. Also, note that some European marketplaces (for example, UK, IE, and DE) require sellers to accept returns for fixed-price items and auctions listed with Buy It Now. For details, see Returns and the Law (UK). Note:Top-Rated sellers must accept item returns and the handlingTime should be set to zero days or one day for a listing to receive a Top-Rated Plus badge on the View Item or search result pages. For more information on eBay's Top-Rated seller program, see Becoming a Top Rated Seller and qualifying for Top Rated Plus benefits.  # noqa: E501
-
-        :param returns_accepted: The returns_accepted of this ReturnPolicyRequest.  # noqa: E501
-        :type: bool
-        """
-
-        self._returns_accepted = returns_accepted
-
-    @property
     def return_shipping_cost_payer(self):
         """Gets the return_shipping_cost_payer of this ReturnPolicyRequest.  # noqa: E501
 
@@ -396,6 +373,29 @@ class ReturnPolicyRequest(object):
         """
 
         self._return_shipping_cost_payer = return_shipping_cost_payer
+
+    @property
+    def returns_accepted(self):
+        """Gets the returns_accepted of this ReturnPolicyRequest.  # noqa: E501
+
+        If set to true, the seller accepts returns. Call the getReturnPolicies in the Metadata API to see what categories require returns to be offered for listings in each category. Also, note that some European marketplaces (for example, UK, IE, and DE) require sellers to accept returns for fixed-price items and auctions listed with Buy It Now. For details, see Returns and the Law (UK). Note:Top-Rated sellers must accept item returns and the handlingTime should be set to zero days or one day for a listing to receive a Top-Rated Plus badge on the View Item or search result pages. For more information on eBay's Top-Rated seller program, see Becoming a Top Rated Seller and qualifying for Top Rated Plus benefits.  # noqa: E501
+
+        :return: The returns_accepted of this ReturnPolicyRequest.  # noqa: E501
+        :rtype: bool
+        """
+        return self._returns_accepted
+
+    @returns_accepted.setter
+    def returns_accepted(self, returns_accepted):
+        """Sets the returns_accepted of this ReturnPolicyRequest.
+
+        If set to true, the seller accepts returns. Call the getReturnPolicies in the Metadata API to see what categories require returns to be offered for listings in each category. Also, note that some European marketplaces (for example, UK, IE, and DE) require sellers to accept returns for fixed-price items and auctions listed with Buy It Now. For details, see Returns and the Law (UK). Note:Top-Rated sellers must accept item returns and the handlingTime should be set to zero days or one day for a listing to receive a Top-Rated Plus badge on the View Item or search result pages. For more information on eBay's Top-Rated seller program, see Becoming a Top Rated Seller and qualifying for Top Rated Plus benefits.  # noqa: E501
+
+        :param returns_accepted: The returns_accepted of this ReturnPolicyRequest.  # noqa: E501
+        :type: bool
+        """
+
+        self._returns_accepted = returns_accepted
 
     def to_dict(self):
         """Returns the model properties as a dict"""

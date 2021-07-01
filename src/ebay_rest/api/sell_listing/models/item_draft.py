@@ -29,33 +29,35 @@ class ItemDraft(object):
     """
     swagger_types = {
         'category_id': 'str',
+        'charity': 'Charity',
         'condition': 'str',
         'format': 'str',
         'pricing_summary': 'PricingSummary',
-        'product': 'Product',
-        'charity': 'Charity'
+        'product': 'Product'
     }
 
     attribute_map = {
         'category_id': 'categoryId',
+        'charity': 'charity',
         'condition': 'condition',
         'format': 'format',
         'pricing_summary': 'pricingSummary',
-        'product': 'product',
-        'charity': 'charity'
+        'product': 'product'
     }
 
-    def __init__(self, category_id=None, condition=None, format=None, pricing_summary=None, product=None, charity=None):  # noqa: E501
+    def __init__(self, category_id=None, charity=None, condition=None, format=None, pricing_summary=None, product=None):  # noqa: E501
         """ItemDraft - a model defined in Swagger"""  # noqa: E501
         self._category_id = None
+        self._charity = None
         self._condition = None
         self._format = None
         self._pricing_summary = None
         self._product = None
-        self._charity = None
         self.discriminator = None
         if category_id is not None:
             self.category_id = category_id
+        if charity is not None:
+            self.charity = charity
         if condition is not None:
             self.condition = condition
         if format is not None:
@@ -64,8 +66,6 @@ class ItemDraft(object):
             self.pricing_summary = pricing_summary
         if product is not None:
             self.product = product
-        if charity is not None:
-            self.charity = charity
 
     @property
     def category_id(self):
@@ -89,6 +89,27 @@ class ItemDraft(object):
         """
 
         self._category_id = category_id
+
+    @property
+    def charity(self):
+        """Gets the charity of this ItemDraft.  # noqa: E501
+
+
+        :return: The charity of this ItemDraft.  # noqa: E501
+        :rtype: Charity
+        """
+        return self._charity
+
+    @charity.setter
+    def charity(self, charity):
+        """Sets the charity of this ItemDraft.
+
+
+        :param charity: The charity of this ItemDraft.  # noqa: E501
+        :type: Charity
+        """
+
+        self._charity = charity
 
     @property
     def condition(self):
@@ -177,27 +198,6 @@ class ItemDraft(object):
         """
 
         self._product = product
-
-    @property
-    def charity(self):
-        """Gets the charity of this ItemDraft.  # noqa: E501
-
-
-        :return: The charity of this ItemDraft.  # noqa: E501
-        :rtype: Charity
-        """
-        return self._charity
-
-    @charity.setter
-    def charity(self, charity):
-        """Sets the charity of this ItemDraft.
-
-
-        :param charity: The charity of this ItemDraft.  # noqa: E501
-        :type: Charity
-        """
-
-        self._charity = charity
 
     def to_dict(self):
         """Returns the model properties as a dict"""

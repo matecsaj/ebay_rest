@@ -30,37 +30,39 @@ class LocationResponse(object):
     swagger_types = {
         'href': 'str',
         'limit': 'int',
+        'locations': 'list[InventoryLocationResponse]',
         'next': 'str',
         'offset': 'int',
         'prev': 'str',
-        'total': 'int',
-        'locations': 'list[InventoryLocationResponse]'
+        'total': 'int'
     }
 
     attribute_map = {
         'href': 'href',
         'limit': 'limit',
+        'locations': 'locations',
         'next': 'next',
         'offset': 'offset',
         'prev': 'prev',
-        'total': 'total',
-        'locations': 'locations'
+        'total': 'total'
     }
 
-    def __init__(self, href=None, limit=None, next=None, offset=None, prev=None, total=None, locations=None):  # noqa: E501
+    def __init__(self, href=None, limit=None, locations=None, next=None, offset=None, prev=None, total=None):  # noqa: E501
         """LocationResponse - a model defined in Swagger"""  # noqa: E501
         self._href = None
         self._limit = None
+        self._locations = None
         self._next = None
         self._offset = None
         self._prev = None
         self._total = None
-        self._locations = None
         self.discriminator = None
         if href is not None:
             self.href = href
         if limit is not None:
             self.limit = limit
+        if locations is not None:
+            self.locations = locations
         if next is not None:
             self.next = next
         if offset is not None:
@@ -69,8 +71,6 @@ class LocationResponse(object):
             self.prev = prev
         if total is not None:
             self.total = total
-        if locations is not None:
-            self.locations = locations
 
     @property
     def href(self):
@@ -117,6 +117,29 @@ class LocationResponse(object):
         """
 
         self._limit = limit
+
+    @property
+    def locations(self):
+        """Gets the locations of this LocationResponse.  # noqa: E501
+
+        An array of one or more of the merchant's inventory locations.  # noqa: E501
+
+        :return: The locations of this LocationResponse.  # noqa: E501
+        :rtype: list[InventoryLocationResponse]
+        """
+        return self._locations
+
+    @locations.setter
+    def locations(self, locations):
+        """Sets the locations of this LocationResponse.
+
+        An array of one or more of the merchant's inventory locations.  # noqa: E501
+
+        :param locations: The locations of this LocationResponse.  # noqa: E501
+        :type: list[InventoryLocationResponse]
+        """
+
+        self._locations = locations
 
     @property
     def next(self):
@@ -209,29 +232,6 @@ class LocationResponse(object):
         """
 
         self._total = total
-
-    @property
-    def locations(self):
-        """Gets the locations of this LocationResponse.  # noqa: E501
-
-        An array of one or more of the merchant's inventory locations.  # noqa: E501
-
-        :return: The locations of this LocationResponse.  # noqa: E501
-        :rtype: list[InventoryLocationResponse]
-        """
-        return self._locations
-
-    @locations.setter
-    def locations(self, locations):
-        """Sets the locations of this LocationResponse.
-
-        An array of one or more of the merchant's inventory locations.  # noqa: E501
-
-        :param locations: The locations of this LocationResponse.  # noqa: E501
-        :type: list[InventoryLocationResponse]
-        """
-
-        self._locations = locations
 
     def to_dict(self):
         """Returns the model properties as a dict"""

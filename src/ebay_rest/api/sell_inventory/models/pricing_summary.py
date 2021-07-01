@@ -31,8 +31,8 @@ class PricingSummary(object):
         'auction_reserve_price': 'Amount',
         'auction_start_price': 'Amount',
         'minimum_advertised_price': 'Amount',
-        'originally_sold_for_retail_price_on': 'str',
         'original_retail_price': 'Amount',
+        'originally_sold_for_retail_price_on': 'str',
         'price': 'Amount',
         'pricing_visibility': 'str'
     }
@@ -41,19 +41,19 @@ class PricingSummary(object):
         'auction_reserve_price': 'auctionReservePrice',
         'auction_start_price': 'auctionStartPrice',
         'minimum_advertised_price': 'minimumAdvertisedPrice',
-        'originally_sold_for_retail_price_on': 'originallySoldForRetailPriceOn',
         'original_retail_price': 'originalRetailPrice',
+        'originally_sold_for_retail_price_on': 'originallySoldForRetailPriceOn',
         'price': 'price',
         'pricing_visibility': 'pricingVisibility'
     }
 
-    def __init__(self, auction_reserve_price=None, auction_start_price=None, minimum_advertised_price=None, originally_sold_for_retail_price_on=None, original_retail_price=None, price=None, pricing_visibility=None):  # noqa: E501
+    def __init__(self, auction_reserve_price=None, auction_start_price=None, minimum_advertised_price=None, original_retail_price=None, originally_sold_for_retail_price_on=None, price=None, pricing_visibility=None):  # noqa: E501
         """PricingSummary - a model defined in Swagger"""  # noqa: E501
         self._auction_reserve_price = None
         self._auction_start_price = None
         self._minimum_advertised_price = None
-        self._originally_sold_for_retail_price_on = None
         self._original_retail_price = None
+        self._originally_sold_for_retail_price_on = None
         self._price = None
         self._pricing_visibility = None
         self.discriminator = None
@@ -63,10 +63,10 @@ class PricingSummary(object):
             self.auction_start_price = auction_start_price
         if minimum_advertised_price is not None:
             self.minimum_advertised_price = minimum_advertised_price
-        if originally_sold_for_retail_price_on is not None:
-            self.originally_sold_for_retail_price_on = originally_sold_for_retail_price_on
         if original_retail_price is not None:
             self.original_retail_price = original_retail_price
+        if originally_sold_for_retail_price_on is not None:
+            self.originally_sold_for_retail_price_on = originally_sold_for_retail_price_on
         if price is not None:
             self.price = price
         if pricing_visibility is not None:
@@ -136,6 +136,27 @@ class PricingSummary(object):
         self._minimum_advertised_price = minimum_advertised_price
 
     @property
+    def original_retail_price(self):
+        """Gets the original_retail_price of this PricingSummary.  # noqa: E501
+
+
+        :return: The original_retail_price of this PricingSummary.  # noqa: E501
+        :rtype: Amount
+        """
+        return self._original_retail_price
+
+    @original_retail_price.setter
+    def original_retail_price(self, original_retail_price):
+        """Sets the original_retail_price of this PricingSummary.
+
+
+        :param original_retail_price: The original_retail_price of this PricingSummary.  # noqa: E501
+        :type: Amount
+        """
+
+        self._original_retail_price = original_retail_price
+
+    @property
     def originally_sold_for_retail_price_on(self):
         """Gets the originally_sold_for_retail_price_on of this PricingSummary.  # noqa: E501
 
@@ -157,27 +178,6 @@ class PricingSummary(object):
         """
 
         self._originally_sold_for_retail_price_on = originally_sold_for_retail_price_on
-
-    @property
-    def original_retail_price(self):
-        """Gets the original_retail_price of this PricingSummary.  # noqa: E501
-
-
-        :return: The original_retail_price of this PricingSummary.  # noqa: E501
-        :rtype: Amount
-        """
-        return self._original_retail_price
-
-    @original_retail_price.setter
-    def original_retail_price(self, original_retail_price):
-        """Sets the original_retail_price of this PricingSummary.
-
-
-        :param original_retail_price: The original_retail_price of this PricingSummary.  # noqa: E501
-        :type: Amount
-        """
-
-        self._original_retail_price = original_retail_price
 
     @property
     def price(self):

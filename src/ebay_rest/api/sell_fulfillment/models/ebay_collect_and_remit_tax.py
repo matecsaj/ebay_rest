@@ -29,33 +29,33 @@ class EbayCollectAndRemitTax(object):
     """
     swagger_types = {
         'amount': 'Amount',
+        'collection_method': 'str',
         'ebay_reference': 'EbayTaxReference',
-        'tax_type': 'str',
-        'collection_method': 'str'
+        'tax_type': 'str'
     }
 
     attribute_map = {
         'amount': 'amount',
+        'collection_method': 'collectionMethod',
         'ebay_reference': 'ebayReference',
-        'tax_type': 'taxType',
-        'collection_method': 'collectionMethod'
+        'tax_type': 'taxType'
     }
 
-    def __init__(self, amount=None, ebay_reference=None, tax_type=None, collection_method=None):  # noqa: E501
+    def __init__(self, amount=None, collection_method=None, ebay_reference=None, tax_type=None):  # noqa: E501
         """EbayCollectAndRemitTax - a model defined in Swagger"""  # noqa: E501
         self._amount = None
+        self._collection_method = None
         self._ebay_reference = None
         self._tax_type = None
-        self._collection_method = None
         self.discriminator = None
         if amount is not None:
             self.amount = amount
+        if collection_method is not None:
+            self.collection_method = collection_method
         if ebay_reference is not None:
             self.ebay_reference = ebay_reference
         if tax_type is not None:
             self.tax_type = tax_type
-        if collection_method is not None:
-            self.collection_method = collection_method
 
     @property
     def amount(self):
@@ -77,6 +77,29 @@ class EbayCollectAndRemitTax(object):
         """
 
         self._amount = amount
+
+    @property
+    def collection_method(self):
+        """Gets the collection_method of this EbayCollectAndRemitTax.  # noqa: E501
+
+        This field indicates the collection method used to collect the 'Collect and Remit' tax for the order. This field is always returned for orders subject to 'Collect and Remit' tax, and its value is always NET. Note: Although the collectionMethod field is returned for all orders subject to 'Collect and Remit' tax, the collectionMethod field and the CollectionMethodEnum type are not currently of any practical use, although this field may have use in the future. If and when the logic of this field is changed, this note will be updated and a note will also be added to the Release Notes. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:CollectionMethodEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The collection_method of this EbayCollectAndRemitTax.  # noqa: E501
+        :rtype: str
+        """
+        return self._collection_method
+
+    @collection_method.setter
+    def collection_method(self, collection_method):
+        """Sets the collection_method of this EbayCollectAndRemitTax.
+
+        This field indicates the collection method used to collect the 'Collect and Remit' tax for the order. This field is always returned for orders subject to 'Collect and Remit' tax, and its value is always NET. Note: Although the collectionMethod field is returned for all orders subject to 'Collect and Remit' tax, the collectionMethod field and the CollectionMethodEnum type are not currently of any practical use, although this field may have use in the future. If and when the logic of this field is changed, this note will be updated and a note will also be added to the Release Notes. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:CollectionMethodEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param collection_method: The collection_method of this EbayCollectAndRemitTax.  # noqa: E501
+        :type: str
+        """
+
+        self._collection_method = collection_method
 
     @property
     def ebay_reference(self):
@@ -121,29 +144,6 @@ class EbayCollectAndRemitTax(object):
         """
 
         self._tax_type = tax_type
-
-    @property
-    def collection_method(self):
-        """Gets the collection_method of this EbayCollectAndRemitTax.  # noqa: E501
-
-        This field indicates the collection method used to collect the 'Collect and Remit' tax for the order. This field is always returned for orders subject to 'Collect and Remit' tax, and its value is always NET. Note: Although the collectionMethod field is returned for all orders subject to 'Collect and Remit' tax, the collectionMethod field and the CollectionMethodEnum type are not currently of any practical use, although this field may have use in the future. If and when the logic of this field is changed, this note will be updated and a note will also be added to the Release Notes. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:CollectionMethodEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The collection_method of this EbayCollectAndRemitTax.  # noqa: E501
-        :rtype: str
-        """
-        return self._collection_method
-
-    @collection_method.setter
-    def collection_method(self, collection_method):
-        """Sets the collection_method of this EbayCollectAndRemitTax.
-
-        This field indicates the collection method used to collect the 'Collect and Remit' tax for the order. This field is always returned for orders subject to 'Collect and Remit' tax, and its value is always NET. Note: Although the collectionMethod field is returned for all orders subject to 'Collect and Remit' tax, the collectionMethod field and the CollectionMethodEnum type are not currently of any practical use, although this field may have use in the future. If and when the logic of this field is changed, this note will be updated and a note will also be added to the Release Notes. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:CollectionMethodEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param collection_method: The collection_method of this EbayCollectAndRemitTax.  # noqa: E501
-        :type: str
-        """
-
-        self._collection_method = collection_method
 
     def to_dict(self):
         """Returns the model properties as a dict"""

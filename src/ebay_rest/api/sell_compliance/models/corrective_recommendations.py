@@ -28,45 +28,24 @@ class CorrectiveRecommendations(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'product_recommendation': 'ProductRecommendation',
-        'aspect_recommendations': 'list[AspectRecommendations]'
+        'aspect_recommendations': 'list[AspectRecommendations]',
+        'product_recommendation': 'ProductRecommendation'
     }
 
     attribute_map = {
-        'product_recommendation': 'productRecommendation',
-        'aspect_recommendations': 'aspectRecommendations'
+        'aspect_recommendations': 'aspectRecommendations',
+        'product_recommendation': 'productRecommendation'
     }
 
-    def __init__(self, product_recommendation=None, aspect_recommendations=None):  # noqa: E501
+    def __init__(self, aspect_recommendations=None, product_recommendation=None):  # noqa: E501
         """CorrectiveRecommendations - a model defined in Swagger"""  # noqa: E501
-        self._product_recommendation = None
         self._aspect_recommendations = None
+        self._product_recommendation = None
         self.discriminator = None
-        if product_recommendation is not None:
-            self.product_recommendation = product_recommendation
         if aspect_recommendations is not None:
             self.aspect_recommendations = aspect_recommendations
-
-    @property
-    def product_recommendation(self):
-        """Gets the product_recommendation of this CorrectiveRecommendations.  # noqa: E501
-
-
-        :return: The product_recommendation of this CorrectiveRecommendations.  # noqa: E501
-        :rtype: ProductRecommendation
-        """
-        return self._product_recommendation
-
-    @product_recommendation.setter
-    def product_recommendation(self, product_recommendation):
-        """Sets the product_recommendation of this CorrectiveRecommendations.
-
-
-        :param product_recommendation: The product_recommendation of this CorrectiveRecommendations.  # noqa: E501
-        :type: ProductRecommendation
-        """
-
-        self._product_recommendation = product_recommendation
+        if product_recommendation is not None:
+            self.product_recommendation = product_recommendation
 
     @property
     def aspect_recommendations(self):
@@ -90,6 +69,27 @@ class CorrectiveRecommendations(object):
         """
 
         self._aspect_recommendations = aspect_recommendations
+
+    @property
+    def product_recommendation(self):
+        """Gets the product_recommendation of this CorrectiveRecommendations.  # noqa: E501
+
+
+        :return: The product_recommendation of this CorrectiveRecommendations.  # noqa: E501
+        :rtype: ProductRecommendation
+        """
+        return self._product_recommendation
+
+    @product_recommendation.setter
+    def product_recommendation(self, product_recommendation):
+        """Sets the product_recommendation of this CorrectiveRecommendations.
+
+
+        :param product_recommendation: The product_recommendation of this CorrectiveRecommendations.  # noqa: E501
+        :type: ProductRecommendation
+        """
+
+        self._product_recommendation = product_recommendation
 
     def to_dict(self):
         """Returns the model properties as a dict"""

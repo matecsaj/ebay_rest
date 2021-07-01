@@ -28,47 +28,24 @@ class Charity(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'donation_percentage': 'str',
-        'charity_id': 'str'
+        'charity_id': 'str',
+        'donation_percentage': 'str'
     }
 
     attribute_map = {
-        'donation_percentage': 'donationPercentage',
-        'charity_id': 'charityId'
+        'charity_id': 'charityId',
+        'donation_percentage': 'donationPercentage'
     }
 
-    def __init__(self, donation_percentage=None, charity_id=None):  # noqa: E501
+    def __init__(self, charity_id=None, donation_percentage=None):  # noqa: E501
         """Charity - a model defined in Swagger"""  # noqa: E501
-        self._donation_percentage = None
         self._charity_id = None
+        self._donation_percentage = None
         self.discriminator = None
-        if donation_percentage is not None:
-            self.donation_percentage = donation_percentage
         if charity_id is not None:
             self.charity_id = charity_id
-
-    @property
-    def donation_percentage(self):
-        """Gets the donation_percentage of this Charity.  # noqa: E501
-
-        This field sets the percentage of the purchase price that the charitable organization (identified in the charityId field) will receive for each sale that the listing generates. This field is conditionally required if a seller is planning on donating a percentage of the sale proceeds to a charitable organization. This numeric value can range from 10 to 100, and in any 5 (percent) increments in between this range (e.g. 10, 15, 20...95,... 100). The seller would pass in 10 for 10 percent, 15 for 15 percent, 20 for 20 percent, and so on, all the way to 100 for 100 percent. Note: For this field, createItemDraft will only validate that a positive integer value is supplied, so the listing draft will still be successfully created (with no error or warning message) if a non-supported value is specified. However, if the seller attempted to publish this listing draft with an unsupported value, the charity information would just be dropped from the listing.  # noqa: E501
-
-        :return: The donation_percentage of this Charity.  # noqa: E501
-        :rtype: str
-        """
-        return self._donation_percentage
-
-    @donation_percentage.setter
-    def donation_percentage(self, donation_percentage):
-        """Sets the donation_percentage of this Charity.
-
-        This field sets the percentage of the purchase price that the charitable organization (identified in the charityId field) will receive for each sale that the listing generates. This field is conditionally required if a seller is planning on donating a percentage of the sale proceeds to a charitable organization. This numeric value can range from 10 to 100, and in any 5 (percent) increments in between this range (e.g. 10, 15, 20...95,... 100). The seller would pass in 10 for 10 percent, 15 for 15 percent, 20 for 20 percent, and so on, all the way to 100 for 100 percent. Note: For this field, createItemDraft will only validate that a positive integer value is supplied, so the listing draft will still be successfully created (with no error or warning message) if a non-supported value is specified. However, if the seller attempted to publish this listing draft with an unsupported value, the charity information would just be dropped from the listing.  # noqa: E501
-
-        :param donation_percentage: The donation_percentage of this Charity.  # noqa: E501
-        :type: str
-        """
-
-        self._donation_percentage = donation_percentage
+        if donation_percentage is not None:
+            self.donation_percentage = donation_percentage
 
     @property
     def charity_id(self):
@@ -92,6 +69,29 @@ class Charity(object):
         """
 
         self._charity_id = charity_id
+
+    @property
+    def donation_percentage(self):
+        """Gets the donation_percentage of this Charity.  # noqa: E501
+
+        This field sets the percentage of the purchase price that the charitable organization (identified in the charityId field) will receive for each sale that the listing generates. This field is conditionally required if a seller is planning on donating a percentage of the sale proceeds to a charitable organization. This numeric value can range from 10 to 100, and in any 5 (percent) increments in between this range (e.g. 10, 15, 20...95,... 100). The seller would pass in 10 for 10 percent, 15 for 15 percent, 20 for 20 percent, and so on, all the way to 100 for 100 percent. Note: For this field, createItemDraft will only validate that a positive integer value is supplied, so the listing draft will still be successfully created (with no error or warning message) if a non-supported value is specified. However, if the seller attempted to publish this listing draft with an unsupported value, the charity information would just be dropped from the listing.  # noqa: E501
+
+        :return: The donation_percentage of this Charity.  # noqa: E501
+        :rtype: str
+        """
+        return self._donation_percentage
+
+    @donation_percentage.setter
+    def donation_percentage(self, donation_percentage):
+        """Sets the donation_percentage of this Charity.
+
+        This field sets the percentage of the purchase price that the charitable organization (identified in the charityId field) will receive for each sale that the listing generates. This field is conditionally required if a seller is planning on donating a percentage of the sale proceeds to a charitable organization. This numeric value can range from 10 to 100, and in any 5 (percent) increments in between this range (e.g. 10, 15, 20...95,... 100). The seller would pass in 10 for 10 percent, 15 for 15 percent, 20 for 20 percent, and so on, all the way to 100 for 100 percent. Note: For this field, createItemDraft will only validate that a positive integer value is supplied, so the listing draft will still be successfully created (with no error or warning message) if a non-supported value is specified. However, if the seller attempted to publish this listing draft with an unsupported value, the charity information would just be dropped from the listing.  # noqa: E501
+
+        :param donation_percentage: The donation_percentage of this Charity.  # noqa: E501
+        :type: str
+        """
+
+        self._donation_percentage = donation_percentage
 
     def to_dict(self):
         """Returns the model properties as a dict"""

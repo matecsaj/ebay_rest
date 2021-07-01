@@ -28,52 +28,29 @@ class CancelStatus(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'cancelled_date': 'str',
         'cancel_requests': 'list[CancelRequest]',
-        'cancel_state': 'str'
+        'cancel_state': 'str',
+        'cancelled_date': 'str'
     }
 
     attribute_map = {
-        'cancelled_date': 'cancelledDate',
         'cancel_requests': 'cancelRequests',
-        'cancel_state': 'cancelState'
+        'cancel_state': 'cancelState',
+        'cancelled_date': 'cancelledDate'
     }
 
-    def __init__(self, cancelled_date=None, cancel_requests=None, cancel_state=None):  # noqa: E501
+    def __init__(self, cancel_requests=None, cancel_state=None, cancelled_date=None):  # noqa: E501
         """CancelStatus - a model defined in Swagger"""  # noqa: E501
-        self._cancelled_date = None
         self._cancel_requests = None
         self._cancel_state = None
+        self._cancelled_date = None
         self.discriminator = None
-        if cancelled_date is not None:
-            self.cancelled_date = cancelled_date
         if cancel_requests is not None:
             self.cancel_requests = cancel_requests
         if cancel_state is not None:
             self.cancel_state = cancel_state
-
-    @property
-    def cancelled_date(self):
-        """Gets the cancelled_date of this CancelStatus.  # noqa: E501
-
-        The date and time the order was cancelled, if applicable. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
-
-        :return: The cancelled_date of this CancelStatus.  # noqa: E501
-        :rtype: str
-        """
-        return self._cancelled_date
-
-    @cancelled_date.setter
-    def cancelled_date(self, cancelled_date):
-        """Sets the cancelled_date of this CancelStatus.
-
-        The date and time the order was cancelled, if applicable. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
-
-        :param cancelled_date: The cancelled_date of this CancelStatus.  # noqa: E501
-        :type: str
-        """
-
-        self._cancelled_date = cancelled_date
+        if cancelled_date is not None:
+            self.cancelled_date = cancelled_date
 
     @property
     def cancel_requests(self):
@@ -120,6 +97,29 @@ class CancelStatus(object):
         """
 
         self._cancel_state = cancel_state
+
+    @property
+    def cancelled_date(self):
+        """Gets the cancelled_date of this CancelStatus.  # noqa: E501
+
+        The date and time the order was cancelled, if applicable. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+
+        :return: The cancelled_date of this CancelStatus.  # noqa: E501
+        :rtype: str
+        """
+        return self._cancelled_date
+
+    @cancelled_date.setter
+    def cancelled_date(self, cancelled_date):
+        """Sets the cancelled_date of this CancelStatus.
+
+        The date and time the order was cancelled, if applicable. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+
+        :param cancelled_date: The cancelled_date of this CancelStatus.  # noqa: E501
+        :type: str
+        """
+
+        self._cancelled_date = cancelled_date
 
     def to_dict(self):
         """Returns the model properties as a dict"""

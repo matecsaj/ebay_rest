@@ -1016,15 +1016,189 @@ class API:
         """
         return self._method_single(commerce_identity.Configuration, '/commerce/identity/v1', commerce_identity.UserApi, commerce_identity.ApiClient, 'get_user', CommerceIdentityException, True, ['commerce.identity', 'user'], None, **kwargs)  # noqa: E501
 
+    def commerce_notification_get_config(self, **kwargs):  # noqa: E501
+        """get_config  # noqa: E501
+
+        This method allows applications to retrieve a previously created configuration.  # noqa: E501
+
+        :return: Config
+        """
+        return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.ConfigApi, commerce_notification.ApiClient, 'get_config', CommerceNotificationException, False, ['commerce.notification', 'config'], None, **kwargs)  # noqa: E501
+
+    def commerce_notification_update_config(self, **kwargs):  # noqa: E501
+        """update_config  # noqa: E501
+
+        This method allows applications to create a new configuration or update an existing configuration. This app-level configuration allows developers to set up alerts.  # noqa: E501
+
+        :param Config body: The configurations for this application.
+        :return: None
+        """
+        return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.ConfigApi, commerce_notification.ApiClient, 'update_config', CommerceNotificationException, False, ['commerce.notification', 'config'], None, **kwargs)  # noqa: E501
+
+    def commerce_notification_create_destination(self, **kwargs):  # noqa: E501
+        """create_destination  # noqa: E501
+
+        This method allows applications to create a destination. A destination is an endpoint that receives HTTP push notifications. A single destination for all topics is valid, as is individual destinations for each topic. To update a destination, use the updateDestination call. The destination created will need to be referenced while creating or updating a subscription to a topic. Note: The destination should be created and ready to respond with the expected challengeResponse for the endpoint to be registered successfully. Refer to the Notification API overview for more information.  # noqa: E501
+
+        :param DestinationRequest body: The create destination request.
+        :return: object
+        """
+        return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.DestinationApi, commerce_notification.ApiClient, 'create_destination', CommerceNotificationException, False, ['commerce.notification', 'destination'], None, **kwargs)  # noqa: E501
+
+    def commerce_notification_delete_destination(self, destination_id, **kwargs):  # noqa: E501
+        """delete_destination  # noqa: E501
+
+        This method provides applications a way to delete a destination. The same destination ID can be used by many destinations. Trying to delete an active destination results in an error. You can disable a subscription, and when the destination is no longer in use, you can delete it.  # noqa: E501
+
+        :param str destination_id: The unique identifier for the destination. (required)
+        :return: None
+        """
+        return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.DestinationApi, commerce_notification.ApiClient, 'delete_destination', CommerceNotificationException, False, ['commerce.notification', 'destination'], destination_id, **kwargs)  # noqa: E501
+
+    def commerce_notification_get_destination(self, destination_id, **kwargs):  # noqa: E501
+        """get_destination  # noqa: E501
+
+        This method allows applications to fetch the details for a destination. The details include the destination name, status, and configuration, including the endpoint and verification token.  # noqa: E501
+
+        :param str destination_id: The unique identifier for the destination. (required)
+        :return: Destination
+        """
+        return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.DestinationApi, commerce_notification.ApiClient, 'get_destination', CommerceNotificationException, False, ['commerce.notification', 'destination'], destination_id, **kwargs)  # noqa: E501
+
+    def commerce_notification_get_destinations(self, **kwargs):  # noqa: E501
+        """get_destinations  # noqa: E501
+
+        This method allows applications to retrieve a paginated collection of destination resources and related details. The details include the destination names, statuses, and configurations, including the endpoints and verification tokens.  # noqa: E501
+
+        :param str limit: The number of items, from the result set, returned in a single page. Range is from 10-100. If this parameter is omitted, the default value is used. Default: 20 Maximum: 100 items per page
+        :param str continuation_token: The continuation token for the next set of results.
+        :return: DestinationSearchResponse
+        """
+        return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.DestinationApi, commerce_notification.ApiClient, 'get_destinations', CommerceNotificationException, False, ['commerce.notification', 'destination'], None, **kwargs)  # noqa: E501
+
+    def commerce_notification_update_destination(self, destination_id, **kwargs):  # noqa: E501
+        """update_destination  # noqa: E501
+
+        This method allows applications to update a destination. Note: The destination should be created and ready to respond with the expected challengeResponse for the endpoint to be registered successfully. Refer to the Notification API overview for more information.  # noqa: E501
+
+        :param str destination_id: The unique identifier for the destination. (required)
+        :param DestinationRequest body: The create subscription request.
+        :return: None
+        """
+        return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.DestinationApi, commerce_notification.ApiClient, 'update_destination', CommerceNotificationException, False, ['commerce.notification', 'destination'], destination_id, **kwargs)  # noqa: E501
+
     def commerce_notification_get_public_key(self, public_key_id, **kwargs):  # noqa: E501
         """get_public_key  # noqa: E501
 
-        This method allows users to retrieve a public key using a specified key ID. The public key that is returned in the response payload is used to process and validate eBay notifications. The public key ID, which is a required request parameter for this method, is retrieved from the Base64-encoded X-EBAY-SIGNATURE header that is included in the eBay notification. Note: For more details about how to process eBay push notifications and validate notification message payloads, see the Notification API Overview.  # noqa: E501
+        This method allows users to retrieve a public key using a specified key ID. The public key that is returned in the response payload is used to process and validate eBay notifications. The public key ID, which is a required request parameter for this method, is retrieved from the Base64-encoded X-EBAY-SIGNATURE header that is included in the eBay notification. Note: For more details about how to process eBay push notifications and validate notification message payloads, see the Notification API overview.  # noqa: E501
 
         :param str public_key_id: The unique key ID that is used to retrieve the public key. Note: This is retrieved from the X-EBAY-SIGNATURE header that is included with the push notification. (required)
         :return: PublicKey
         """
         return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.PublicKeyApi, commerce_notification.ApiClient, 'get_public_key', CommerceNotificationException, False, ['commerce.notification', 'public_key'], public_key_id, **kwargs)  # noqa: E501
+
+    def commerce_notification_create_subscription(self, **kwargs):  # noqa: E501
+        """create_subscription  # noqa: E501
+
+        This method allows applications to create a subscription for a topic and supported schema version. Subscriptions allow applications to express interest in notifications and keep receiving the information relevant to their business. Each application and topic-schema pairing to a subscription should have a 1:1 cardinality. You can create the subscription in disabled mode, test it (see the test method), and when everything is ready, you can enable the subscription (see the enableSubscription method). Note: If an application is not authorized to subscribe to a topic, for example, if your authorization does not include the list of scopes required for the topic, an error code of 195011 is returned.  # noqa: E501
+
+        :param CreateSubscriptionRequest body: The create subscription request.
+        :return: object
+        """
+        return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'create_subscription', CommerceNotificationException, False, ['commerce.notification', 'subscription'], None, **kwargs)  # noqa: E501
+
+    def commerce_notification_delete_subscription(self, subscription_id, **kwargs):  # noqa: E501
+        """delete_subscription  # noqa: E501
+
+        This method allows applications to delete a subscription. Subscriptions can be deleted regardless of status.  # noqa: E501
+
+        :param str subscription_id: The unique identifier for the subscription. (required)
+        :return: None
+        """
+        return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'delete_subscription', CommerceNotificationException, False, ['commerce.notification', 'subscription'], subscription_id, **kwargs)  # noqa: E501
+
+    def commerce_notification_disable_subscription(self, subscription_id, **kwargs):  # noqa: E501
+        """disable_subscription  # noqa: E501
+
+        This method disables a subscription, which prevents the subscription from providing notifications. To restart a subscription, call enableSubscription.  # noqa: E501
+
+        :param str subscription_id: The unique identifier for the subscription. (required)
+        :return: None
+        """
+        return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'disable_subscription', CommerceNotificationException, False, ['commerce.notification', 'subscription'], subscription_id, **kwargs)  # noqa: E501
+
+    def commerce_notification_enable_subscription(self, subscription_id, **kwargs):  # noqa: E501
+        """enable_subscription  # noqa: E501
+
+        This method allows applications to enable a disabled subscription. To pause (or disable) an enabled subscription, call disableSubscription.  # noqa: E501
+
+        :param str subscription_id: The unique identifier for the subscription. (required)
+        :return: None
+        """
+        return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'enable_subscription', CommerceNotificationException, False, ['commerce.notification', 'subscription'], subscription_id, **kwargs)  # noqa: E501
+
+    def commerce_notification_get_subscription(self, subscription_id, **kwargs):  # noqa: E501
+        """get_subscription  # noqa: E501
+
+        This method allows applications to retrieve subscription details for the specified subscription. Specify the subscription to retrieve using the subscription_id. Use the getSubscriptions method to browse all subscriptions if you do not know the subscription_id. Subscriptions allow applications to express interest in notifications and keep receiving the information relevant to their business.  # noqa: E501
+
+        :param str subscription_id: The unique identifier for the subscription. (required)
+        :return: Subscription
+        """
+        return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'get_subscription', CommerceNotificationException, False, ['commerce.notification', 'subscription'], subscription_id, **kwargs)  # noqa: E501
+
+    def commerce_notification_get_subscriptions(self, **kwargs):  # noqa: E501
+        """get_subscriptions  # noqa: E501
+
+        This method allows applications to retrieve a list of all subscriptions. The list returned is a paginated collection of subscription resources. Subscriptions allow applications to express interest in notifications and keep receiving the information relevant to their business.  # noqa: E501
+
+        :param str limit: The number of items, from the result set, returned in a single page. Range is from 10-100. If this parameter is omitted, the default value is used. Default: 20 Maximum: 100 items per page
+        :param str continuation_token: The continuation token for the next set of results.
+        :return: SubscriptionSearchResponse
+        """
+        return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'get_subscriptions', CommerceNotificationException, False, ['commerce.notification', 'subscription'], None, **kwargs)  # noqa: E501
+
+    def commerce_notification_test(self, subscription_id, **kwargs):  # noqa: E501
+        """test  # noqa: E501
+
+        This method triggers a mocked test payload that includes a notification ID, publish date, and so on. Use this method to test your subscription end-to-end. You can create the subscription in disabled mode, test it using this method, and when everything is ready, you can enable the subscription (see the enableSubscription method). Note: Use the notificationId to tell the difference between a test payload and a real payload.  # noqa: E501
+
+        :param str subscription_id: The unique identifier for the subscription. (required)
+        :return: None
+        """
+        return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'test', CommerceNotificationException, False, ['commerce.notification', 'subscription'], subscription_id, **kwargs)  # noqa: E501
+
+    def commerce_notification_update_subscription(self, subscription_id, **kwargs):  # noqa: E501
+        """update_subscription  # noqa: E501
+
+        This method allows applications to update a subscription. Subscriptions allow applications to express interest in notifications and keep receiving the information relevant to their business. Note: This call returns an error if an application is not authorized to subscribe to a topic. You can pause and restart a subscription. See the disableSubscription and enableSubscription methods.  # noqa: E501
+
+        :param str subscription_id: The unique identifier for the subscription. (required)
+        :param UpdateSubscriptionRequest body: The create subscription request.
+        :return: None
+        """
+        return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'update_subscription', CommerceNotificationException, False, ['commerce.notification', 'subscription'], subscription_id, **kwargs)  # noqa: E501
+
+    def commerce_notification_get_topic(self, topic_id, **kwargs):  # noqa: E501
+        """get_topic  # noqa: E501
+
+        This method allows applications to retrieve details for the specified topic. This information includes supported schema versions, formats, and other metadata for the topic. Applications can subscribe to any of the topics for a supported schema version and format, limited by the authorization scopes required to subscribe to the topic. A topic specifies the type of information to be received and the data types associated with an event. An event occurs in the eBay system, such as when a user requests deletion or revokes access for an application. An event is an instance of an event type (topic). Specify the topic to retrieve using the topic_id URI parameter. Note: Use the getTopics method to find a topic if you do not know the topic ID.  # noqa: E501
+
+        :param str topic_id: The ID of the topic for which to retrieve the details. (required)
+        :return: Topic
+        """
+        return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.TopicApi, commerce_notification.ApiClient, 'get_topic', CommerceNotificationException, False, ['commerce.notification', 'topic'], topic_id, **kwargs)  # noqa: E501
+
+    def commerce_notification_get_topics(self, **kwargs):  # noqa: E501
+        """get_topics  # noqa: E501
+
+        This method returns a paginated collection of all supported topics, along with the details for the topics. This information includes supported schema versions, formats, and other metadata for the topics. Applications can subscribe to any of the topics for a supported schema version and format, limited by the authorization scopes required to subscribe to the topic. A topic specifies the type of information to be received and the data types associated with an event. An event occurs in the eBay system, such as when a user requests deletion or revokes access for an application. An event is an instance of an event type (topic).  # noqa: E501
+
+        :param str limit: The maximum number of items to return per page from the result set. A result set is the complete set of results returned by the method. Range is from 10-100. If this parameter is omitted, the default value is used. Default: 20 Maximum: 100 items per page
+        :param str continuation_token: The token used to access the next set of results.
+        :return: TopicSearchResponse
+        """
+        return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.TopicApi, commerce_notification.ApiClient, 'get_topics', CommerceNotificationException, False, ['commerce.notification', 'topic'], None, **kwargs)  # noqa: E501
 
     def commerce_taxonomy_fetch_item_aspects(self, category_tree_id, **kwargs):  # noqa: E501
         """Get Aspects for All Leaf Categories in a Marketplace  # noqa: E501

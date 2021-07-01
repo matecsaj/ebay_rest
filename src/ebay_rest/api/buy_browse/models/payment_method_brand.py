@@ -28,24 +28,45 @@ class PaymentMethodBrand(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'payment_method_brand_type': 'str',
-        'logo_image': 'Image'
+        'logo_image': 'Image',
+        'payment_method_brand_type': 'str'
     }
 
     attribute_map = {
-        'payment_method_brand_type': 'paymentMethodBrandType',
-        'logo_image': 'logoImage'
+        'logo_image': 'logoImage',
+        'payment_method_brand_type': 'paymentMethodBrandType'
     }
 
-    def __init__(self, payment_method_brand_type=None, logo_image=None):  # noqa: E501
+    def __init__(self, logo_image=None, payment_method_brand_type=None):  # noqa: E501
         """PaymentMethodBrand - a model defined in Swagger"""  # noqa: E501
-        self._payment_method_brand_type = None
         self._logo_image = None
+        self._payment_method_brand_type = None
         self.discriminator = None
-        if payment_method_brand_type is not None:
-            self.payment_method_brand_type = payment_method_brand_type
         if logo_image is not None:
             self.logo_image = logo_image
+        if payment_method_brand_type is not None:
+            self.payment_method_brand_type = payment_method_brand_type
+
+    @property
+    def logo_image(self):
+        """Gets the logo_image of this PaymentMethodBrand.  # noqa: E501
+
+
+        :return: The logo_image of this PaymentMethodBrand.  # noqa: E501
+        :rtype: Image
+        """
+        return self._logo_image
+
+    @logo_image.setter
+    def logo_image(self, logo_image):
+        """Sets the logo_image of this PaymentMethodBrand.
+
+
+        :param logo_image: The logo_image of this PaymentMethodBrand.  # noqa: E501
+        :type: Image
+        """
+
+        self._logo_image = logo_image
 
     @property
     def payment_method_brand_type(self):
@@ -69,27 +90,6 @@ class PaymentMethodBrand(object):
         """
 
         self._payment_method_brand_type = payment_method_brand_type
-
-    @property
-    def logo_image(self):
-        """Gets the logo_image of this PaymentMethodBrand.  # noqa: E501
-
-
-        :return: The logo_image of this PaymentMethodBrand.  # noqa: E501
-        :rtype: Image
-        """
-        return self._logo_image
-
-    @logo_image.setter
-    def logo_image(self, logo_image):
-        """Sets the logo_image of this PaymentMethodBrand.
-
-
-        :param logo_image: The logo_image of this PaymentMethodBrand.  # noqa: E501
-        :type: Image
-        """
-
-        self._logo_image = logo_image
 
     def to_dict(self):
         """Returns the model properties as a dict"""

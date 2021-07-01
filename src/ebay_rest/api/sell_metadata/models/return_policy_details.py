@@ -32,8 +32,8 @@ class ReturnPolicyDetails(object):
         'refund_methods': 'list[str]',
         'return_methods': 'list[str]',
         'return_periods': 'list[TimeDuration]',
-        'returns_acceptance_enabled': 'bool',
-        'return_shipping_cost_payers': 'list[str]'
+        'return_shipping_cost_payers': 'list[str]',
+        'returns_acceptance_enabled': 'bool'
     }
 
     attribute_map = {
@@ -41,18 +41,18 @@ class ReturnPolicyDetails(object):
         'refund_methods': 'refundMethods',
         'return_methods': 'returnMethods',
         'return_periods': 'returnPeriods',
-        'returns_acceptance_enabled': 'returnsAcceptanceEnabled',
-        'return_shipping_cost_payers': 'returnShippingCostPayers'
+        'return_shipping_cost_payers': 'returnShippingCostPayers',
+        'returns_acceptance_enabled': 'returnsAcceptanceEnabled'
     }
 
-    def __init__(self, policy_description_enabled=None, refund_methods=None, return_methods=None, return_periods=None, returns_acceptance_enabled=None, return_shipping_cost_payers=None):  # noqa: E501
+    def __init__(self, policy_description_enabled=None, refund_methods=None, return_methods=None, return_periods=None, return_shipping_cost_payers=None, returns_acceptance_enabled=None):  # noqa: E501
         """ReturnPolicyDetails - a model defined in Swagger"""  # noqa: E501
         self._policy_description_enabled = None
         self._refund_methods = None
         self._return_methods = None
         self._return_periods = None
-        self._returns_acceptance_enabled = None
         self._return_shipping_cost_payers = None
+        self._returns_acceptance_enabled = None
         self.discriminator = None
         if policy_description_enabled is not None:
             self.policy_description_enabled = policy_description_enabled
@@ -62,10 +62,10 @@ class ReturnPolicyDetails(object):
             self.return_methods = return_methods
         if return_periods is not None:
             self.return_periods = return_periods
-        if returns_acceptance_enabled is not None:
-            self.returns_acceptance_enabled = returns_acceptance_enabled
         if return_shipping_cost_payers is not None:
             self.return_shipping_cost_payers = return_shipping_cost_payers
+        if returns_acceptance_enabled is not None:
+            self.returns_acceptance_enabled = returns_acceptance_enabled
 
     @property
     def policy_description_enabled(self):
@@ -160,29 +160,6 @@ class ReturnPolicyDetails(object):
         self._return_periods = return_periods
 
     @property
-    def returns_acceptance_enabled(self):
-        """Gets the returns_acceptance_enabled of this ReturnPolicyDetails.  # noqa: E501
-
-        If set to true, this flag indicates the seller can configure how they handle domestic returns.  # noqa: E501
-
-        :return: The returns_acceptance_enabled of this ReturnPolicyDetails.  # noqa: E501
-        :rtype: bool
-        """
-        return self._returns_acceptance_enabled
-
-    @returns_acceptance_enabled.setter
-    def returns_acceptance_enabled(self, returns_acceptance_enabled):
-        """Sets the returns_acceptance_enabled of this ReturnPolicyDetails.
-
-        If set to true, this flag indicates the seller can configure how they handle domestic returns.  # noqa: E501
-
-        :param returns_acceptance_enabled: The returns_acceptance_enabled of this ReturnPolicyDetails.  # noqa: E501
-        :type: bool
-        """
-
-        self._returns_acceptance_enabled = returns_acceptance_enabled
-
-    @property
     def return_shipping_cost_payers(self):
         """Gets the return_shipping_cost_payers of this ReturnPolicyDetails.  # noqa: E501
 
@@ -204,6 +181,29 @@ class ReturnPolicyDetails(object):
         """
 
         self._return_shipping_cost_payers = return_shipping_cost_payers
+
+    @property
+    def returns_acceptance_enabled(self):
+        """Gets the returns_acceptance_enabled of this ReturnPolicyDetails.  # noqa: E501
+
+        If set to true, this flag indicates the seller can configure how they handle domestic returns.  # noqa: E501
+
+        :return: The returns_acceptance_enabled of this ReturnPolicyDetails.  # noqa: E501
+        :rtype: bool
+        """
+        return self._returns_acceptance_enabled
+
+    @returns_acceptance_enabled.setter
+    def returns_acceptance_enabled(self, returns_acceptance_enabled):
+        """Sets the returns_acceptance_enabled of this ReturnPolicyDetails.
+
+        If set to true, this flag indicates the seller can configure how they handle domestic returns.  # noqa: E501
+
+        :param returns_acceptance_enabled: The returns_acceptance_enabled of this ReturnPolicyDetails.  # noqa: E501
+        :type: bool
+        """
+
+        self._returns_acceptance_enabled = returns_acceptance_enabled
 
     def to_dict(self):
         """Returns the model properties as a dict"""

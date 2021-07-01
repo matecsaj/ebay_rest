@@ -33,8 +33,8 @@ class ReportTaskPagedCollection(object):
         'next': 'str',
         'offset': 'int',
         'prev': 'str',
-        'total': 'int',
-        'report_tasks': 'list[ReportTask]'
+        'report_tasks': 'list[ReportTask]',
+        'total': 'int'
     }
 
     attribute_map = {
@@ -43,19 +43,19 @@ class ReportTaskPagedCollection(object):
         'next': 'next',
         'offset': 'offset',
         'prev': 'prev',
-        'total': 'total',
-        'report_tasks': 'reportTasks'
+        'report_tasks': 'reportTasks',
+        'total': 'total'
     }
 
-    def __init__(self, href=None, limit=None, next=None, offset=None, prev=None, total=None, report_tasks=None):  # noqa: E501
+    def __init__(self, href=None, limit=None, next=None, offset=None, prev=None, report_tasks=None, total=None):  # noqa: E501
         """ReportTaskPagedCollection - a model defined in Swagger"""  # noqa: E501
         self._href = None
         self._limit = None
         self._next = None
         self._offset = None
         self._prev = None
-        self._total = None
         self._report_tasks = None
+        self._total = None
         self.discriminator = None
         if href is not None:
             self.href = href
@@ -67,10 +67,10 @@ class ReportTaskPagedCollection(object):
             self.offset = offset
         if prev is not None:
             self.prev = prev
-        if total is not None:
-            self.total = total
         if report_tasks is not None:
             self.report_tasks = report_tasks
+        if total is not None:
+            self.total = total
 
     @property
     def href(self):
@@ -188,29 +188,6 @@ class ReportTaskPagedCollection(object):
         self._prev = prev
 
     @property
-    def total(self):
-        """Gets the total of this ReportTaskPagedCollection.  # noqa: E501
-
-        The total number of items retrieved in the result set. If no items are found, this field is returned with a value of 0.  # noqa: E501
-
-        :return: The total of this ReportTaskPagedCollection.  # noqa: E501
-        :rtype: int
-        """
-        return self._total
-
-    @total.setter
-    def total(self, total):
-        """Sets the total of this ReportTaskPagedCollection.
-
-        The total number of items retrieved in the result set. If no items are found, this field is returned with a value of 0.  # noqa: E501
-
-        :param total: The total of this ReportTaskPagedCollection.  # noqa: E501
-        :type: int
-        """
-
-        self._total = total
-
-    @property
     def report_tasks(self):
         """Gets the report_tasks of this ReportTaskPagedCollection.  # noqa: E501
 
@@ -232,6 +209,29 @@ class ReportTaskPagedCollection(object):
         """
 
         self._report_tasks = report_tasks
+
+    @property
+    def total(self):
+        """Gets the total of this ReportTaskPagedCollection.  # noqa: E501
+
+        The total number of items retrieved in the result set. If no items are found, this field is returned with a value of 0.  # noqa: E501
+
+        :return: The total of this ReportTaskPagedCollection.  # noqa: E501
+        :rtype: int
+        """
+        return self._total
+
+    @total.setter
+    def total(self, total):
+        """Sets the total of this ReportTaskPagedCollection.
+
+        The total number of items retrieved in the result set. If no items are found, this field is returned with a value of 0.  # noqa: E501
+
+        :param total: The total of this ReportTaskPagedCollection.  # noqa: E501
+        :type: int
+        """
+
+        self._total = total
 
     def to_dict(self):
         """Returns the model properties as a dict"""

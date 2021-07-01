@@ -28,52 +28,52 @@ class TaxIdentifier(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'taxpayer_id': 'str',
+        'issuing_country': 'str',
         'tax_identifier_type': 'str',
-        'issuing_country': 'str'
+        'taxpayer_id': 'str'
     }
 
     attribute_map = {
-        'taxpayer_id': 'taxpayerId',
+        'issuing_country': 'issuingCountry',
         'tax_identifier_type': 'taxIdentifierType',
-        'issuing_country': 'issuingCountry'
+        'taxpayer_id': 'taxpayerId'
     }
 
-    def __init__(self, taxpayer_id=None, tax_identifier_type=None, issuing_country=None):  # noqa: E501
+    def __init__(self, issuing_country=None, tax_identifier_type=None, taxpayer_id=None):  # noqa: E501
         """TaxIdentifier - a model defined in Swagger"""  # noqa: E501
-        self._taxpayer_id = None
-        self._tax_identifier_type = None
         self._issuing_country = None
+        self._tax_identifier_type = None
+        self._taxpayer_id = None
         self.discriminator = None
-        if taxpayer_id is not None:
-            self.taxpayer_id = taxpayer_id
-        if tax_identifier_type is not None:
-            self.tax_identifier_type = tax_identifier_type
         if issuing_country is not None:
             self.issuing_country = issuing_country
+        if tax_identifier_type is not None:
+            self.tax_identifier_type = tax_identifier_type
+        if taxpayer_id is not None:
+            self.taxpayer_id = taxpayer_id
 
     @property
-    def taxpayer_id(self):
-        """Gets the taxpayer_id of this TaxIdentifier.  # noqa: E501
+    def issuing_country(self):
+        """Gets the issuing_country of this TaxIdentifier.  # noqa: E501
 
-        This value is the unique tax ID associated with the buyer. The type of tax identification is shown in the taxIdentifierType field.  # noqa: E501
+        This two-letter code indicates the country that issued the buyer's tax ID. The country that the two-letter code represents can be found in the CountryCodeEnum type, or in the ISO 3166 standard. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
-        :return: The taxpayer_id of this TaxIdentifier.  # noqa: E501
+        :return: The issuing_country of this TaxIdentifier.  # noqa: E501
         :rtype: str
         """
-        return self._taxpayer_id
+        return self._issuing_country
 
-    @taxpayer_id.setter
-    def taxpayer_id(self, taxpayer_id):
-        """Sets the taxpayer_id of this TaxIdentifier.
+    @issuing_country.setter
+    def issuing_country(self, issuing_country):
+        """Sets the issuing_country of this TaxIdentifier.
 
-        This value is the unique tax ID associated with the buyer. The type of tax identification is shown in the taxIdentifierType field.  # noqa: E501
+        This two-letter code indicates the country that issued the buyer's tax ID. The country that the two-letter code represents can be found in the CountryCodeEnum type, or in the ISO 3166 standard. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
-        :param taxpayer_id: The taxpayer_id of this TaxIdentifier.  # noqa: E501
+        :param issuing_country: The issuing_country of this TaxIdentifier.  # noqa: E501
         :type: str
         """
 
-        self._taxpayer_id = taxpayer_id
+        self._issuing_country = issuing_country
 
     @property
     def tax_identifier_type(self):
@@ -99,27 +99,27 @@ class TaxIdentifier(object):
         self._tax_identifier_type = tax_identifier_type
 
     @property
-    def issuing_country(self):
-        """Gets the issuing_country of this TaxIdentifier.  # noqa: E501
+    def taxpayer_id(self):
+        """Gets the taxpayer_id of this TaxIdentifier.  # noqa: E501
 
-        This two-letter code indicates the country that issued the buyer's tax ID. The country that the two-letter code represents can be found in the CountryCodeEnum type, or in the ISO 3166 standard. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
+        This value is the unique tax ID associated with the buyer. The type of tax identification is shown in the taxIdentifierType field.  # noqa: E501
 
-        :return: The issuing_country of this TaxIdentifier.  # noqa: E501
+        :return: The taxpayer_id of this TaxIdentifier.  # noqa: E501
         :rtype: str
         """
-        return self._issuing_country
+        return self._taxpayer_id
 
-    @issuing_country.setter
-    def issuing_country(self, issuing_country):
-        """Sets the issuing_country of this TaxIdentifier.
+    @taxpayer_id.setter
+    def taxpayer_id(self, taxpayer_id):
+        """Sets the taxpayer_id of this TaxIdentifier.
 
-        This two-letter code indicates the country that issued the buyer's tax ID. The country that the two-letter code represents can be found in the CountryCodeEnum type, or in the ISO 3166 standard. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
+        This value is the unique tax ID associated with the buyer. The type of tax identification is shown in the taxIdentifierType field.  # noqa: E501
 
-        :param issuing_country: The issuing_country of this TaxIdentifier.  # noqa: E501
+        :param taxpayer_id: The taxpayer_id of this TaxIdentifier.  # noqa: E501
         :type: str
         """
 
-        self._issuing_country = issuing_country
+        self._taxpayer_id = taxpayer_id
 
     def to_dict(self):
         """Returns the model properties as a dict"""

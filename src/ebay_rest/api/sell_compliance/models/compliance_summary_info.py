@@ -29,28 +29,28 @@ class ComplianceSummaryInfo(object):
     """
     swagger_types = {
         'compliance_type': 'str',
-        'marketplace_id': 'str',
-        'listing_count': 'int'
+        'listing_count': 'int',
+        'marketplace_id': 'str'
     }
 
     attribute_map = {
         'compliance_type': 'complianceType',
-        'marketplace_id': 'marketplaceId',
-        'listing_count': 'listingCount'
+        'listing_count': 'listingCount',
+        'marketplace_id': 'marketplaceId'
     }
 
-    def __init__(self, compliance_type=None, marketplace_id=None, listing_count=None):  # noqa: E501
+    def __init__(self, compliance_type=None, listing_count=None, marketplace_id=None):  # noqa: E501
         """ComplianceSummaryInfo - a model defined in Swagger"""  # noqa: E501
         self._compliance_type = None
-        self._marketplace_id = None
         self._listing_count = None
+        self._marketplace_id = None
         self.discriminator = None
         if compliance_type is not None:
             self.compliance_type = compliance_type
-        if marketplace_id is not None:
-            self.marketplace_id = marketplace_id
         if listing_count is not None:
             self.listing_count = listing_count
+        if marketplace_id is not None:
+            self.marketplace_id = marketplace_id
 
     @property
     def compliance_type(self):
@@ -76,29 +76,6 @@ class ComplianceSummaryInfo(object):
         self._compliance_type = compliance_type
 
     @property
-    def marketplace_id(self):
-        """Gets the marketplace_id of this ComplianceSummaryInfo.  # noqa: E501
-
-        This enumeration value indicates the eBay marketplace where the listing violations exist. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/compliance/types/bas:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The marketplace_id of this ComplianceSummaryInfo.  # noqa: E501
-        :rtype: str
-        """
-        return self._marketplace_id
-
-    @marketplace_id.setter
-    def marketplace_id(self, marketplace_id):
-        """Sets the marketplace_id of this ComplianceSummaryInfo.
-
-        This enumeration value indicates the eBay marketplace where the listing violations exist. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/compliance/types/bas:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param marketplace_id: The marketplace_id of this ComplianceSummaryInfo.  # noqa: E501
-        :type: str
-        """
-
-        self._marketplace_id = marketplace_id
-
-    @property
     def listing_count(self):
         """Gets the listing_count of this ComplianceSummaryInfo.  # noqa: E501
 
@@ -120,6 +97,29 @@ class ComplianceSummaryInfo(object):
         """
 
         self._listing_count = listing_count
+
+    @property
+    def marketplace_id(self):
+        """Gets the marketplace_id of this ComplianceSummaryInfo.  # noqa: E501
+
+        This enumeration value indicates the eBay marketplace where the listing violations exist. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/compliance/types/bas:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The marketplace_id of this ComplianceSummaryInfo.  # noqa: E501
+        :rtype: str
+        """
+        return self._marketplace_id
+
+    @marketplace_id.setter
+    def marketplace_id(self, marketplace_id):
+        """Sets the marketplace_id of this ComplianceSummaryInfo.
+
+        This enumeration value indicates the eBay marketplace where the listing violations exist. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/compliance/types/bas:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param marketplace_id: The marketplace_id of this ComplianceSummaryInfo.  # noqa: E501
+        :type: str
+        """
+
+        self._marketplace_id = marketplace_id
 
     def to_dict(self):
         """Returns the model properties as a dict"""

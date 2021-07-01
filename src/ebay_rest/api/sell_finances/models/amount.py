@@ -28,62 +28,39 @@ class Amount(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'currency': 'str',
         'converted_from_currency': 'str',
         'converted_from_value': 'str',
+        'currency': 'str',
         'exchange_rate': 'str',
         'value': 'str'
     }
 
     attribute_map = {
-        'currency': 'currency',
         'converted_from_currency': 'convertedFromCurrency',
         'converted_from_value': 'convertedFromValue',
+        'currency': 'currency',
         'exchange_rate': 'exchangeRate',
         'value': 'value'
     }
 
-    def __init__(self, currency=None, converted_from_currency=None, converted_from_value=None, exchange_rate=None, value=None):  # noqa: E501
+    def __init__(self, converted_from_currency=None, converted_from_value=None, currency=None, exchange_rate=None, value=None):  # noqa: E501
         """Amount - a model defined in Swagger"""  # noqa: E501
-        self._currency = None
         self._converted_from_currency = None
         self._converted_from_value = None
+        self._currency = None
         self._exchange_rate = None
         self._value = None
         self.discriminator = None
-        if currency is not None:
-            self.currency = currency
         if converted_from_currency is not None:
             self.converted_from_currency = converted_from_currency
         if converted_from_value is not None:
             self.converted_from_value = converted_from_value
+        if currency is not None:
+            self.currency = currency
         if exchange_rate is not None:
             self.exchange_rate = exchange_rate
         if value is not None:
             self.value = value
-
-    @property
-    def currency(self):
-        """Gets the currency of this Amount.  # noqa: E501
-
-        A three-letter ISO 4217 code that indicates the currency of the amount in the value field. This field is always returned with any container using Amount type. Default: The currency of the authenticated user's country. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The currency of this Amount.  # noqa: E501
-        :rtype: str
-        """
-        return self._currency
-
-    @currency.setter
-    def currency(self, currency):
-        """Sets the currency of this Amount.
-
-        A three-letter ISO 4217 code that indicates the currency of the amount in the value field. This field is always returned with any container using Amount type. Default: The currency of the authenticated user's country. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param currency: The currency of this Amount.  # noqa: E501
-        :type: str
-        """
-
-        self._currency = currency
 
     @property
     def converted_from_currency(self):
@@ -130,6 +107,29 @@ class Amount(object):
         """
 
         self._converted_from_value = converted_from_value
+
+    @property
+    def currency(self):
+        """Gets the currency of this Amount.  # noqa: E501
+
+        A three-letter ISO 4217 code that indicates the currency of the amount in the value field. This field is always returned with any container using Amount type. Default: The currency of the authenticated user's country. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The currency of this Amount.  # noqa: E501
+        :rtype: str
+        """
+        return self._currency
+
+    @currency.setter
+    def currency(self, currency):
+        """Sets the currency of this Amount.
+
+        A three-letter ISO 4217 code that indicates the currency of the amount in the value field. This field is always returned with any container using Amount type. Default: The currency of the authenticated user's country. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param currency: The currency of this Amount.  # noqa: E501
+        :type: str
+        """
+
+        self._currency = currency
 
     @property
     def exchange_rate(self):

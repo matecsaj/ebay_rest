@@ -34,8 +34,8 @@ class ShippingQuote(object):
         'package_specification': 'PackageSpecification',
         'rates': 'list[Rate]',
         'ship_from': 'Contact',
-        'shipping_quote_id': 'str',
         'ship_to': 'Contact',
+        'shipping_quote_id': 'str',
         'warnings': 'list[Error]'
     }
 
@@ -46,12 +46,12 @@ class ShippingQuote(object):
         'package_specification': 'packageSpecification',
         'rates': 'rates',
         'ship_from': 'shipFrom',
-        'shipping_quote_id': 'shippingQuoteId',
         'ship_to': 'shipTo',
+        'shipping_quote_id': 'shippingQuoteId',
         'warnings': 'warnings'
     }
 
-    def __init__(self, creation_date=None, expiration_date=None, orders=None, package_specification=None, rates=None, ship_from=None, shipping_quote_id=None, ship_to=None, warnings=None):  # noqa: E501
+    def __init__(self, creation_date=None, expiration_date=None, orders=None, package_specification=None, rates=None, ship_from=None, ship_to=None, shipping_quote_id=None, warnings=None):  # noqa: E501
         """ShippingQuote - a model defined in Swagger"""  # noqa: E501
         self._creation_date = None
         self._expiration_date = None
@@ -59,8 +59,8 @@ class ShippingQuote(object):
         self._package_specification = None
         self._rates = None
         self._ship_from = None
-        self._shipping_quote_id = None
         self._ship_to = None
+        self._shipping_quote_id = None
         self._warnings = None
         self.discriminator = None
         if creation_date is not None:
@@ -75,10 +75,10 @@ class ShippingQuote(object):
             self.rates = rates
         if ship_from is not None:
             self.ship_from = ship_from
-        if shipping_quote_id is not None:
-            self.shipping_quote_id = shipping_quote_id
         if ship_to is not None:
             self.ship_to = ship_to
+        if shipping_quote_id is not None:
+            self.shipping_quote_id = shipping_quote_id
         if warnings is not None:
             self.warnings = warnings
 
@@ -217,6 +217,27 @@ class ShippingQuote(object):
         self._ship_from = ship_from
 
     @property
+    def ship_to(self):
+        """Gets the ship_to of this ShippingQuote.  # noqa: E501
+
+
+        :return: The ship_to of this ShippingQuote.  # noqa: E501
+        :rtype: Contact
+        """
+        return self._ship_to
+
+    @ship_to.setter
+    def ship_to(self, ship_to):
+        """Sets the ship_to of this ShippingQuote.
+
+
+        :param ship_to: The ship_to of this ShippingQuote.  # noqa: E501
+        :type: Contact
+        """
+
+        self._ship_to = ship_to
+
+    @property
     def shipping_quote_id(self):
         """Gets the shipping_quote_id of this ShippingQuote.  # noqa: E501
 
@@ -238,27 +259,6 @@ class ShippingQuote(object):
         """
 
         self._shipping_quote_id = shipping_quote_id
-
-    @property
-    def ship_to(self):
-        """Gets the ship_to of this ShippingQuote.  # noqa: E501
-
-
-        :return: The ship_to of this ShippingQuote.  # noqa: E501
-        :rtype: Contact
-        """
-        return self._ship_to
-
-    @ship_to.setter
-    def ship_to(self, ship_to):
-        """Sets the ship_to of this ShippingQuote.
-
-
-        :param ship_to: The ship_to of this ShippingQuote.  # noqa: E501
-        :type: Contact
-        """
-
-        self._ship_to = ship_to
 
     @property
     def warnings(self):

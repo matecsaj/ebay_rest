@@ -28,45 +28,24 @@ class CategoryAspect(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'category': 'Category',
-        'aspects': 'list[Aspect]'
+        'aspects': 'list[Aspect]',
+        'category': 'Category'
     }
 
     attribute_map = {
-        'category': 'category',
-        'aspects': 'aspects'
+        'aspects': 'aspects',
+        'category': 'category'
     }
 
-    def __init__(self, category=None, aspects=None):  # noqa: E501
+    def __init__(self, aspects=None, category=None):  # noqa: E501
         """CategoryAspect - a model defined in Swagger"""  # noqa: E501
-        self._category = None
         self._aspects = None
+        self._category = None
         self.discriminator = None
-        if category is not None:
-            self.category = category
         if aspects is not None:
             self.aspects = aspects
-
-    @property
-    def category(self):
-        """Gets the category of this CategoryAspect.  # noqa: E501
-
-
-        :return: The category of this CategoryAspect.  # noqa: E501
-        :rtype: Category
-        """
-        return self._category
-
-    @category.setter
-    def category(self, category):
-        """Sets the category of this CategoryAspect.
-
-
-        :param category: The category of this CategoryAspect.  # noqa: E501
-        :type: Category
-        """
-
-        self._category = category
+        if category is not None:
+            self.category = category
 
     @property
     def aspects(self):
@@ -90,6 +69,27 @@ class CategoryAspect(object):
         """
 
         self._aspects = aspects
+
+    @property
+    def category(self):
+        """Gets the category of this CategoryAspect.  # noqa: E501
+
+
+        :return: The category of this CategoryAspect.  # noqa: E501
+        :rtype: Category
+        """
+        return self._category
+
+    @category.setter
+    def category(self, category):
+        """Sets the category of this CategoryAspect.
+
+
+        :param category: The category of this CategoryAspect.  # noqa: E501
+        :type: Category
+        """
+
+        self._category = category
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -28,35 +28,41 @@ class ItemGroup(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'additional_image_urls': 'str',
+        'image_altering_prohibited': 'bool',
+        'image_url': 'str',
         'item_group_id': 'str',
         'item_group_type': 'str',
         'title': 'str',
-        'varies_by_localized_aspects': 'str',
-        'image_url': 'str',
-        'additional_image_urls': 'str',
-        'image_altering_prohibited': 'bool'
+        'varies_by_localized_aspects': 'str'
     }
 
     attribute_map = {
+        'additional_image_urls': 'additionalImageUrls',
+        'image_altering_prohibited': 'imageAlteringProhibited',
+        'image_url': 'imageUrl',
         'item_group_id': 'itemGroupId',
         'item_group_type': 'itemGroupType',
         'title': 'title',
-        'varies_by_localized_aspects': 'variesByLocalizedAspects',
-        'image_url': 'imageUrl',
-        'additional_image_urls': 'additionalImageUrls',
-        'image_altering_prohibited': 'imageAlteringProhibited'
+        'varies_by_localized_aspects': 'variesByLocalizedAspects'
     }
 
-    def __init__(self, item_group_id=None, item_group_type=None, title=None, varies_by_localized_aspects=None, image_url=None, additional_image_urls=None, image_altering_prohibited=None):  # noqa: E501
+    def __init__(self, additional_image_urls=None, image_altering_prohibited=None, image_url=None, item_group_id=None, item_group_type=None, title=None, varies_by_localized_aspects=None):  # noqa: E501
         """ItemGroup - a model defined in Swagger"""  # noqa: E501
+        self._additional_image_urls = None
+        self._image_altering_prohibited = None
+        self._image_url = None
         self._item_group_id = None
         self._item_group_type = None
         self._title = None
         self._varies_by_localized_aspects = None
-        self._image_url = None
-        self._additional_image_urls = None
-        self._image_altering_prohibited = None
         self.discriminator = None
+        if additional_image_urls is not None:
+            self.additional_image_urls = additional_image_urls
+        if image_altering_prohibited is not None:
+            self.image_altering_prohibited = image_altering_prohibited
+        if image_url is not None:
+            self.image_url = image_url
         if item_group_id is not None:
             self.item_group_id = item_group_id
         if item_group_type is not None:
@@ -65,12 +71,75 @@ class ItemGroup(object):
             self.title = title
         if varies_by_localized_aspects is not None:
             self.varies_by_localized_aspects = varies_by_localized_aspects
-        if image_url is not None:
-            self.image_url = image_url
-        if additional_image_urls is not None:
-            self.additional_image_urls = additional_image_urls
-        if image_altering_prohibited is not None:
-            self.image_altering_prohibited = image_altering_prohibited
+
+    @property
+    def additional_image_urls(self):
+        """Gets the additional_image_urls of this ItemGroup.  # noqa: E501
+
+        A pipe separated (|) list of URLs for the additional images for the item group. These images are in addition to the primary image, which is returned in the imageUrl column. Note: This column can contain multiple values.  # noqa: E501
+
+        :return: The additional_image_urls of this ItemGroup.  # noqa: E501
+        :rtype: str
+        """
+        return self._additional_image_urls
+
+    @additional_image_urls.setter
+    def additional_image_urls(self, additional_image_urls):
+        """Sets the additional_image_urls of this ItemGroup.
+
+        A pipe separated (|) list of URLs for the additional images for the item group. These images are in addition to the primary image, which is returned in the imageUrl column. Note: This column can contain multiple values.  # noqa: E501
+
+        :param additional_image_urls: The additional_image_urls of this ItemGroup.  # noqa: E501
+        :type: str
+        """
+
+        self._additional_image_urls = additional_image_urls
+
+    @property
+    def image_altering_prohibited(self):
+        """Gets the image_altering_prohibited of this ItemGroup.  # noqa: E501
+
+        A boolean that indicates whether the images can be altered. If the value is true, you cannot modify the image. Note: Due to image licensing agreements and other legal concerns, modification (including resizing) of some images is strictly prohibited. These images are for display as-is only.  # noqa: E501
+
+        :return: The image_altering_prohibited of this ItemGroup.  # noqa: E501
+        :rtype: bool
+        """
+        return self._image_altering_prohibited
+
+    @image_altering_prohibited.setter
+    def image_altering_prohibited(self, image_altering_prohibited):
+        """Sets the image_altering_prohibited of this ItemGroup.
+
+        A boolean that indicates whether the images can be altered. If the value is true, you cannot modify the image. Note: Due to image licensing agreements and other legal concerns, modification (including resizing) of some images is strictly prohibited. These images are for display as-is only.  # noqa: E501
+
+        :param image_altering_prohibited: The image_altering_prohibited of this ItemGroup.  # noqa: E501
+        :type: bool
+        """
+
+        self._image_altering_prohibited = image_altering_prohibited
+
+    @property
+    def image_url(self):
+        """Gets the image_url of this ItemGroup.  # noqa: E501
+
+        The URL to the primary image of the item. The other images of the item group are returned in the additionalImageUrls column.  # noqa: E501
+
+        :return: The image_url of this ItemGroup.  # noqa: E501
+        :rtype: str
+        """
+        return self._image_url
+
+    @image_url.setter
+    def image_url(self, image_url):
+        """Sets the image_url of this ItemGroup.
+
+        The URL to the primary image of the item. The other images of the item group are returned in the additionalImageUrls column.  # noqa: E501
+
+        :param image_url: The image_url of this ItemGroup.  # noqa: E501
+        :type: str
+        """
+
+        self._image_url = image_url
 
     @property
     def item_group_id(self):
@@ -163,75 +232,6 @@ class ItemGroup(object):
         """
 
         self._varies_by_localized_aspects = varies_by_localized_aspects
-
-    @property
-    def image_url(self):
-        """Gets the image_url of this ItemGroup.  # noqa: E501
-
-        The URL to the primary image of the item. The other images of the item group are returned in the additionalImageUrls column.  # noqa: E501
-
-        :return: The image_url of this ItemGroup.  # noqa: E501
-        :rtype: str
-        """
-        return self._image_url
-
-    @image_url.setter
-    def image_url(self, image_url):
-        """Sets the image_url of this ItemGroup.
-
-        The URL to the primary image of the item. The other images of the item group are returned in the additionalImageUrls column.  # noqa: E501
-
-        :param image_url: The image_url of this ItemGroup.  # noqa: E501
-        :type: str
-        """
-
-        self._image_url = image_url
-
-    @property
-    def additional_image_urls(self):
-        """Gets the additional_image_urls of this ItemGroup.  # noqa: E501
-
-        A pipe separated (|) list of URLs for the additional images for the item group. These images are in addition to the primary image, which is returned in the imageUrl column. Note: This column can contain multiple values.  # noqa: E501
-
-        :return: The additional_image_urls of this ItemGroup.  # noqa: E501
-        :rtype: str
-        """
-        return self._additional_image_urls
-
-    @additional_image_urls.setter
-    def additional_image_urls(self, additional_image_urls):
-        """Sets the additional_image_urls of this ItemGroup.
-
-        A pipe separated (|) list of URLs for the additional images for the item group. These images are in addition to the primary image, which is returned in the imageUrl column. Note: This column can contain multiple values.  # noqa: E501
-
-        :param additional_image_urls: The additional_image_urls of this ItemGroup.  # noqa: E501
-        :type: str
-        """
-
-        self._additional_image_urls = additional_image_urls
-
-    @property
-    def image_altering_prohibited(self):
-        """Gets the image_altering_prohibited of this ItemGroup.  # noqa: E501
-
-        A boolean that indicates whether the images can be altered. If the value is true, you cannot modify the image. Note: Due to image licensing agreements and other legal concerns, modification (including resizing) of some images is strictly prohibited. These images are for display as-is only.  # noqa: E501
-
-        :return: The image_altering_prohibited of this ItemGroup.  # noqa: E501
-        :rtype: bool
-        """
-        return self._image_altering_prohibited
-
-    @image_altering_prohibited.setter
-    def image_altering_prohibited(self, image_altering_prohibited):
-        """Sets the image_altering_prohibited of this ItemGroup.
-
-        A boolean that indicates whether the images can be altered. If the value is true, you cannot modify the image. Note: Due to image licensing agreements and other legal concerns, modification (including resizing) of some images is strictly prohibited. These images are for display as-is only.  # noqa: E501
-
-        :param image_altering_prohibited: The image_altering_prohibited of this ItemGroup.  # noqa: E501
-        :type: bool
-        """
-
-        self._image_altering_prohibited = image_altering_prohibited
 
     def to_dict(self):
         """Returns the model properties as a dict"""

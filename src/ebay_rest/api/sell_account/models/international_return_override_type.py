@@ -30,32 +30,32 @@ class InternationalReturnOverrideType(object):
     swagger_types = {
         'return_method': 'str',
         'return_period': 'TimeDuration',
-        'returns_accepted': 'bool',
-        'return_shipping_cost_payer': 'str'
+        'return_shipping_cost_payer': 'str',
+        'returns_accepted': 'bool'
     }
 
     attribute_map = {
         'return_method': 'returnMethod',
         'return_period': 'returnPeriod',
-        'returns_accepted': 'returnsAccepted',
-        'return_shipping_cost_payer': 'returnShippingCostPayer'
+        'return_shipping_cost_payer': 'returnShippingCostPayer',
+        'returns_accepted': 'returnsAccepted'
     }
 
-    def __init__(self, return_method=None, return_period=None, returns_accepted=None, return_shipping_cost_payer=None):  # noqa: E501
+    def __init__(self, return_method=None, return_period=None, return_shipping_cost_payer=None, returns_accepted=None):  # noqa: E501
         """InternationalReturnOverrideType - a model defined in Swagger"""  # noqa: E501
         self._return_method = None
         self._return_period = None
-        self._returns_accepted = None
         self._return_shipping_cost_payer = None
+        self._returns_accepted = None
         self.discriminator = None
         if return_method is not None:
             self.return_method = return_method
         if return_period is not None:
             self.return_period = return_period
-        if returns_accepted is not None:
-            self.returns_accepted = returns_accepted
         if return_shipping_cost_payer is not None:
             self.return_shipping_cost_payer = return_shipping_cost_payer
+        if returns_accepted is not None:
+            self.returns_accepted = returns_accepted
 
     @property
     def return_method(self):
@@ -102,29 +102,6 @@ class InternationalReturnOverrideType(object):
         self._return_period = return_period
 
     @property
-    def returns_accepted(self):
-        """Gets the returns_accepted of this InternationalReturnOverrideType.  # noqa: E501
-
-        If set to true, the seller allows international returns. If set to false, the seller does not accept international returns. Required if the seller wants to set an international return policy that differs from their domestic return policy.  # noqa: E501
-
-        :return: The returns_accepted of this InternationalReturnOverrideType.  # noqa: E501
-        :rtype: bool
-        """
-        return self._returns_accepted
-
-    @returns_accepted.setter
-    def returns_accepted(self, returns_accepted):
-        """Sets the returns_accepted of this InternationalReturnOverrideType.
-
-        If set to true, the seller allows international returns. If set to false, the seller does not accept international returns. Required if the seller wants to set an international return policy that differs from their domestic return policy.  # noqa: E501
-
-        :param returns_accepted: The returns_accepted of this InternationalReturnOverrideType.  # noqa: E501
-        :type: bool
-        """
-
-        self._returns_accepted = returns_accepted
-
-    @property
     def return_shipping_cost_payer(self):
         """Gets the return_shipping_cost_payer of this InternationalReturnOverrideType.  # noqa: E501
 
@@ -146,6 +123,29 @@ class InternationalReturnOverrideType(object):
         """
 
         self._return_shipping_cost_payer = return_shipping_cost_payer
+
+    @property
+    def returns_accepted(self):
+        """Gets the returns_accepted of this InternationalReturnOverrideType.  # noqa: E501
+
+        If set to true, the seller allows international returns. If set to false, the seller does not accept international returns. Required if the seller wants to set an international return policy that differs from their domestic return policy.  # noqa: E501
+
+        :return: The returns_accepted of this InternationalReturnOverrideType.  # noqa: E501
+        :rtype: bool
+        """
+        return self._returns_accepted
+
+    @returns_accepted.setter
+    def returns_accepted(self, returns_accepted):
+        """Sets the returns_accepted of this InternationalReturnOverrideType.
+
+        If set to true, the seller allows international returns. If set to false, the seller does not accept international returns. Required if the seller wants to set an international return policy that differs from their domestic return policy.  # noqa: E501
+
+        :param returns_accepted: The returns_accepted of this InternationalReturnOverrideType.  # noqa: E501
+        :type: bool
+        """
+
+        self._returns_accepted = returns_accepted
 
     def to_dict(self):
         """Returns the model properties as a dict"""

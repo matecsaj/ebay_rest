@@ -31,28 +31,28 @@ class CancelRequest(object):
         'cancel_completed_date': 'str',
         'cancel_initiator': 'str',
         'cancel_reason': 'str',
-        'cancel_requested_date': 'str',
         'cancel_request_id': 'str',
-        'cancel_request_state': 'str'
+        'cancel_request_state': 'str',
+        'cancel_requested_date': 'str'
     }
 
     attribute_map = {
         'cancel_completed_date': 'cancelCompletedDate',
         'cancel_initiator': 'cancelInitiator',
         'cancel_reason': 'cancelReason',
-        'cancel_requested_date': 'cancelRequestedDate',
         'cancel_request_id': 'cancelRequestId',
-        'cancel_request_state': 'cancelRequestState'
+        'cancel_request_state': 'cancelRequestState',
+        'cancel_requested_date': 'cancelRequestedDate'
     }
 
-    def __init__(self, cancel_completed_date=None, cancel_initiator=None, cancel_reason=None, cancel_requested_date=None, cancel_request_id=None, cancel_request_state=None):  # noqa: E501
+    def __init__(self, cancel_completed_date=None, cancel_initiator=None, cancel_reason=None, cancel_request_id=None, cancel_request_state=None, cancel_requested_date=None):  # noqa: E501
         """CancelRequest - a model defined in Swagger"""  # noqa: E501
         self._cancel_completed_date = None
         self._cancel_initiator = None
         self._cancel_reason = None
-        self._cancel_requested_date = None
         self._cancel_request_id = None
         self._cancel_request_state = None
+        self._cancel_requested_date = None
         self.discriminator = None
         if cancel_completed_date is not None:
             self.cancel_completed_date = cancel_completed_date
@@ -60,12 +60,12 @@ class CancelRequest(object):
             self.cancel_initiator = cancel_initiator
         if cancel_reason is not None:
             self.cancel_reason = cancel_reason
-        if cancel_requested_date is not None:
-            self.cancel_requested_date = cancel_requested_date
         if cancel_request_id is not None:
             self.cancel_request_id = cancel_request_id
         if cancel_request_state is not None:
             self.cancel_request_state = cancel_request_state
+        if cancel_requested_date is not None:
+            self.cancel_requested_date = cancel_requested_date
 
     @property
     def cancel_completed_date(self):
@@ -137,29 +137,6 @@ class CancelRequest(object):
         self._cancel_reason = cancel_reason
 
     @property
-    def cancel_requested_date(self):
-        """Gets the cancel_requested_date of this CancelRequest.  # noqa: E501
-
-        The date and time that the order cancellation was requested. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is returned for each cancellation request. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
-
-        :return: The cancel_requested_date of this CancelRequest.  # noqa: E501
-        :rtype: str
-        """
-        return self._cancel_requested_date
-
-    @cancel_requested_date.setter
-    def cancel_requested_date(self, cancel_requested_date):
-        """Sets the cancel_requested_date of this CancelRequest.
-
-        The date and time that the order cancellation was requested. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is returned for each cancellation request. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
-
-        :param cancel_requested_date: The cancel_requested_date of this CancelRequest.  # noqa: E501
-        :type: str
-        """
-
-        self._cancel_requested_date = cancel_requested_date
-
-    @property
     def cancel_request_id(self):
         """Gets the cancel_request_id of this CancelRequest.  # noqa: E501
 
@@ -204,6 +181,29 @@ class CancelRequest(object):
         """
 
         self._cancel_request_state = cancel_request_state
+
+    @property
+    def cancel_requested_date(self):
+        """Gets the cancel_requested_date of this CancelRequest.  # noqa: E501
+
+        The date and time that the order cancellation was requested. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is returned for each cancellation request. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+
+        :return: The cancel_requested_date of this CancelRequest.  # noqa: E501
+        :rtype: str
+        """
+        return self._cancel_requested_date
+
+    @cancel_requested_date.setter
+    def cancel_requested_date(self, cancel_requested_date):
+        """Sets the cancel_requested_date of this CancelRequest.
+
+        The date and time that the order cancellation was requested. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is returned for each cancellation request. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+
+        :param cancel_requested_date: The cancel_requested_date of this CancelRequest.  # noqa: E501
+        :type: str
+        """
+
+        self._cancel_requested_date = cancel_requested_date
 
     def to_dict(self):
         """Returns the model properties as a dict"""

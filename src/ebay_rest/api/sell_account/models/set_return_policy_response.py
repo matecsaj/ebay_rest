@@ -40,8 +40,8 @@ class SetReturnPolicyResponse(object):
         'return_method': 'str',
         'return_period': 'TimeDuration',
         'return_policy_id': 'str',
-        'returns_accepted': 'bool',
         'return_shipping_cost_payer': 'str',
+        'returns_accepted': 'bool',
         'warnings': 'list[Error]'
     }
 
@@ -58,12 +58,12 @@ class SetReturnPolicyResponse(object):
         'return_method': 'returnMethod',
         'return_period': 'returnPeriod',
         'return_policy_id': 'returnPolicyId',
-        'returns_accepted': 'returnsAccepted',
         'return_shipping_cost_payer': 'returnShippingCostPayer',
+        'returns_accepted': 'returnsAccepted',
         'warnings': 'warnings'
     }
 
-    def __init__(self, category_types=None, description=None, extended_holiday_returns_offered=None, international_override=None, marketplace_id=None, name=None, refund_method=None, restocking_fee_percentage=None, return_instructions=None, return_method=None, return_period=None, return_policy_id=None, returns_accepted=None, return_shipping_cost_payer=None, warnings=None):  # noqa: E501
+    def __init__(self, category_types=None, description=None, extended_holiday_returns_offered=None, international_override=None, marketplace_id=None, name=None, refund_method=None, restocking_fee_percentage=None, return_instructions=None, return_method=None, return_period=None, return_policy_id=None, return_shipping_cost_payer=None, returns_accepted=None, warnings=None):  # noqa: E501
         """SetReturnPolicyResponse - a model defined in Swagger"""  # noqa: E501
         self._category_types = None
         self._description = None
@@ -77,8 +77,8 @@ class SetReturnPolicyResponse(object):
         self._return_method = None
         self._return_period = None
         self._return_policy_id = None
-        self._returns_accepted = None
         self._return_shipping_cost_payer = None
+        self._returns_accepted = None
         self._warnings = None
         self.discriminator = None
         if category_types is not None:
@@ -105,10 +105,10 @@ class SetReturnPolicyResponse(object):
             self.return_period = return_period
         if return_policy_id is not None:
             self.return_policy_id = return_policy_id
-        if returns_accepted is not None:
-            self.returns_accepted = returns_accepted
         if return_shipping_cost_payer is not None:
             self.return_shipping_cost_payer = return_shipping_cost_payer
+        if returns_accepted is not None:
+            self.returns_accepted = returns_accepted
         if warnings is not None:
             self.warnings = warnings
 
@@ -385,29 +385,6 @@ class SetReturnPolicyResponse(object):
         self._return_policy_id = return_policy_id
 
     @property
-    def returns_accepted(self):
-        """Gets the returns_accepted of this SetReturnPolicyResponse.  # noqa: E501
-
-        If set to true, the seller accepts returns. If set to false, this field indicates that the seller does not accept returns.  # noqa: E501
-
-        :return: The returns_accepted of this SetReturnPolicyResponse.  # noqa: E501
-        :rtype: bool
-        """
-        return self._returns_accepted
-
-    @returns_accepted.setter
-    def returns_accepted(self, returns_accepted):
-        """Sets the returns_accepted of this SetReturnPolicyResponse.
-
-        If set to true, the seller accepts returns. If set to false, this field indicates that the seller does not accept returns.  # noqa: E501
-
-        :param returns_accepted: The returns_accepted of this SetReturnPolicyResponse.  # noqa: E501
-        :type: bool
-        """
-
-        self._returns_accepted = returns_accepted
-
-    @property
     def return_shipping_cost_payer(self):
         """Gets the return_shipping_cost_payer of this SetReturnPolicyResponse.  # noqa: E501
 
@@ -429,6 +406,29 @@ class SetReturnPolicyResponse(object):
         """
 
         self._return_shipping_cost_payer = return_shipping_cost_payer
+
+    @property
+    def returns_accepted(self):
+        """Gets the returns_accepted of this SetReturnPolicyResponse.  # noqa: E501
+
+        If set to true, the seller accepts returns. If set to false, this field indicates that the seller does not accept returns.  # noqa: E501
+
+        :return: The returns_accepted of this SetReturnPolicyResponse.  # noqa: E501
+        :rtype: bool
+        """
+        return self._returns_accepted
+
+    @returns_accepted.setter
+    def returns_accepted(self, returns_accepted):
+        """Sets the returns_accepted of this SetReturnPolicyResponse.
+
+        If set to true, the seller accepts returns. If set to false, this field indicates that the seller does not accept returns.  # noqa: E501
+
+        :param returns_accepted: The returns_accepted of this SetReturnPolicyResponse.  # noqa: E501
+        :type: bool
+        """
+
+        self._returns_accepted = returns_accepted
 
     @property
     def warnings(self):

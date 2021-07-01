@@ -28,47 +28,24 @@ class CompatibilityProperty(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'localized_name': 'str'
+        'localized_name': 'str',
+        'name': 'str'
     }
 
     attribute_map = {
-        'name': 'name',
-        'localized_name': 'localizedName'
+        'localized_name': 'localizedName',
+        'name': 'name'
     }
 
-    def __init__(self, name=None, localized_name=None):  # noqa: E501
+    def __init__(self, localized_name=None, name=None):  # noqa: E501
         """CompatibilityProperty - a model defined in Swagger"""  # noqa: E501
-        self._name = None
         self._localized_name = None
+        self._name = None
         self.discriminator = None
-        if name is not None:
-            self.name = name
         if localized_name is not None:
             self.localized_name = localized_name
-
-    @property
-    def name(self):
-        """Gets the name of this CompatibilityProperty.  # noqa: E501
-
-        This is the actual name of the compatible vehicle property as it is known on the specified eBay marketplace and in the eBay category. This is the string value that should be used in the compatibility_property and filter query parameters of a getCompatibilityPropertyValues request URI. Typical vehicle properties are 'Make', 'Model', 'Year', 'Engine', and 'Trim', but will vary based on the eBay marketplace and the eBay category.  # noqa: E501
-
-        :return: The name of this CompatibilityProperty.  # noqa: E501
-        :rtype: str
-        """
-        return self._name
-
-    @name.setter
-    def name(self, name):
-        """Sets the name of this CompatibilityProperty.
-
-        This is the actual name of the compatible vehicle property as it is known on the specified eBay marketplace and in the eBay category. This is the string value that should be used in the compatibility_property and filter query parameters of a getCompatibilityPropertyValues request URI. Typical vehicle properties are 'Make', 'Model', 'Year', 'Engine', and 'Trim', but will vary based on the eBay marketplace and the eBay category.  # noqa: E501
-
-        :param name: The name of this CompatibilityProperty.  # noqa: E501
-        :type: str
-        """
-
-        self._name = name
+        if name is not None:
+            self.name = name
 
     @property
     def localized_name(self):
@@ -92,6 +69,29 @@ class CompatibilityProperty(object):
         """
 
         self._localized_name = localized_name
+
+    @property
+    def name(self):
+        """Gets the name of this CompatibilityProperty.  # noqa: E501
+
+        This is the actual name of the compatible vehicle property as it is known on the specified eBay marketplace and in the eBay category. This is the string value that should be used in the compatibility_property and filter query parameters of a getCompatibilityPropertyValues request URI. Typical vehicle properties are 'Make', 'Model', 'Year', 'Engine', and 'Trim', but will vary based on the eBay marketplace and the eBay category.  # noqa: E501
+
+        :return: The name of this CompatibilityProperty.  # noqa: E501
+        :rtype: str
+        """
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        """Sets the name of this CompatibilityProperty.
+
+        This is the actual name of the compatible vehicle property as it is known on the specified eBay marketplace and in the eBay category. This is the string value that should be used in the compatibility_property and filter query parameters of a getCompatibilityPropertyValues request URI. Typical vehicle properties are 'Make', 'Model', 'Year', 'Engine', and 'Trim', but will vary based on the eBay marketplace and the eBay category.  # noqa: E501
+
+        :param name: The name of this CompatibilityProperty.  # noqa: E501
+        :type: str
+        """
+
+        self._name = name
 
     def to_dict(self):
         """Returns the model properties as a dict"""

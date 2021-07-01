@@ -30,35 +30,35 @@ class ComplianceViolation(object):
     swagger_types = {
         'compliance_type': 'str',
         'listing_id': 'str',
-        'sku': 'str',
         'offer_id': 'str',
+        'sku': 'str',
         'violations': 'list[ComplianceDetail]'
     }
 
     attribute_map = {
         'compliance_type': 'complianceType',
         'listing_id': 'listingId',
-        'sku': 'sku',
         'offer_id': 'offerId',
+        'sku': 'sku',
         'violations': 'violations'
     }
 
-    def __init__(self, compliance_type=None, listing_id=None, sku=None, offer_id=None, violations=None):  # noqa: E501
+    def __init__(self, compliance_type=None, listing_id=None, offer_id=None, sku=None, violations=None):  # noqa: E501
         """ComplianceViolation - a model defined in Swagger"""  # noqa: E501
         self._compliance_type = None
         self._listing_id = None
-        self._sku = None
         self._offer_id = None
+        self._sku = None
         self._violations = None
         self.discriminator = None
         if compliance_type is not None:
             self.compliance_type = compliance_type
         if listing_id is not None:
             self.listing_id = listing_id
-        if sku is not None:
-            self.sku = sku
         if offer_id is not None:
             self.offer_id = offer_id
+        if sku is not None:
+            self.sku = sku
         if violations is not None:
             self.violations = violations
 
@@ -109,29 +109,6 @@ class ComplianceViolation(object):
         self._listing_id = listing_id
 
     @property
-    def sku(self):
-        """Gets the sku of this ComplianceViolation.  # noqa: E501
-
-        The seller-defined SKU value of the product in the listing with the violation{s). This field is only returned if defined in the listing. SKU values are optional in listings except when creating listings using the Inventory API model.  # noqa: E501
-
-        :return: The sku of this ComplianceViolation.  # noqa: E501
-        :rtype: str
-        """
-        return self._sku
-
-    @sku.setter
-    def sku(self, sku):
-        """Sets the sku of this ComplianceViolation.
-
-        The seller-defined SKU value of the product in the listing with the violation{s). This field is only returned if defined in the listing. SKU values are optional in listings except when creating listings using the Inventory API model.  # noqa: E501
-
-        :param sku: The sku of this ComplianceViolation.  # noqa: E501
-        :type: str
-        """
-
-        self._sku = sku
-
-    @property
     def offer_id(self):
         """Gets the offer_id of this ComplianceViolation.  # noqa: E501
 
@@ -153,6 +130,29 @@ class ComplianceViolation(object):
         """
 
         self._offer_id = offer_id
+
+    @property
+    def sku(self):
+        """Gets the sku of this ComplianceViolation.  # noqa: E501
+
+        The seller-defined SKU value of the product in the listing with the violation{s). This field is only returned if defined in the listing. SKU values are optional in listings except when creating listings using the Inventory API model.  # noqa: E501
+
+        :return: The sku of this ComplianceViolation.  # noqa: E501
+        :rtype: str
+        """
+        return self._sku
+
+    @sku.setter
+    def sku(self, sku):
+        """Sets the sku of this ComplianceViolation.
+
+        The seller-defined SKU value of the product in the listing with the violation{s). This field is only returned if defined in the listing. SKU values are optional in listings except when creating listings using the Inventory API model.  # noqa: E501
+
+        :param sku: The sku of this ComplianceViolation.  # noqa: E501
+        :type: str
+        """
+
+        self._sku = sku
 
     @property
     def violations(self):

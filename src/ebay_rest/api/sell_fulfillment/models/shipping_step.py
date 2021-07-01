@@ -28,34 +28,78 @@ class ShippingStep(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'shipping_carrier_code': 'str',
-        'shipping_service_code': 'str',
         'ship_to': 'ExtendedContact',
-        'ship_to_reference_id': 'str'
+        'ship_to_reference_id': 'str',
+        'shipping_carrier_code': 'str',
+        'shipping_service_code': 'str'
     }
 
     attribute_map = {
-        'shipping_carrier_code': 'shippingCarrierCode',
-        'shipping_service_code': 'shippingServiceCode',
         'ship_to': 'shipTo',
-        'ship_to_reference_id': 'shipToReferenceId'
+        'ship_to_reference_id': 'shipToReferenceId',
+        'shipping_carrier_code': 'shippingCarrierCode',
+        'shipping_service_code': 'shippingServiceCode'
     }
 
-    def __init__(self, shipping_carrier_code=None, shipping_service_code=None, ship_to=None, ship_to_reference_id=None):  # noqa: E501
+    def __init__(self, ship_to=None, ship_to_reference_id=None, shipping_carrier_code=None, shipping_service_code=None):  # noqa: E501
         """ShippingStep - a model defined in Swagger"""  # noqa: E501
-        self._shipping_carrier_code = None
-        self._shipping_service_code = None
         self._ship_to = None
         self._ship_to_reference_id = None
+        self._shipping_carrier_code = None
+        self._shipping_service_code = None
         self.discriminator = None
-        if shipping_carrier_code is not None:
-            self.shipping_carrier_code = shipping_carrier_code
-        if shipping_service_code is not None:
-            self.shipping_service_code = shipping_service_code
         if ship_to is not None:
             self.ship_to = ship_to
         if ship_to_reference_id is not None:
             self.ship_to_reference_id = ship_to_reference_id
+        if shipping_carrier_code is not None:
+            self.shipping_carrier_code = shipping_carrier_code
+        if shipping_service_code is not None:
+            self.shipping_service_code = shipping_service_code
+
+    @property
+    def ship_to(self):
+        """Gets the ship_to of this ShippingStep.  # noqa: E501
+
+
+        :return: The ship_to of this ShippingStep.  # noqa: E501
+        :rtype: ExtendedContact
+        """
+        return self._ship_to
+
+    @ship_to.setter
+    def ship_to(self, ship_to):
+        """Sets the ship_to of this ShippingStep.
+
+
+        :param ship_to: The ship_to of this ShippingStep.  # noqa: E501
+        :type: ExtendedContact
+        """
+
+        self._ship_to = ship_to
+
+    @property
+    def ship_to_reference_id(self):
+        """Gets the ship_to_reference_id of this ShippingStep.  # noqa: E501
+
+        This is the unique identifer of the Global Shipping Program (GSP) shipment. This field is only returned if the line item is being shipped via GSP (the value of the fulfillmentStartInstructions.ebaySupportedFulfillment field will be true. The international shipping provider uses the shipToReferenceId value as the primary reference number to retrieve the relevant details about the buyer, the order, and the fulfillment, so the shipment can be completed. Sellers must include this value on the shipping label immediately above the street address of the international shipping provider. Example: &quot;Reference #1234567890123456&quot; Note: This value is the same as the ShipToAddress.ReferenceID value returned by the Trading API's GetOrders call.  # noqa: E501
+
+        :return: The ship_to_reference_id of this ShippingStep.  # noqa: E501
+        :rtype: str
+        """
+        return self._ship_to_reference_id
+
+    @ship_to_reference_id.setter
+    def ship_to_reference_id(self, ship_to_reference_id):
+        """Sets the ship_to_reference_id of this ShippingStep.
+
+        This is the unique identifer of the Global Shipping Program (GSP) shipment. This field is only returned if the line item is being shipped via GSP (the value of the fulfillmentStartInstructions.ebaySupportedFulfillment field will be true. The international shipping provider uses the shipToReferenceId value as the primary reference number to retrieve the relevant details about the buyer, the order, and the fulfillment, so the shipment can be completed. Sellers must include this value on the shipping label immediately above the street address of the international shipping provider. Example: &quot;Reference #1234567890123456&quot; Note: This value is the same as the ShipToAddress.ReferenceID value returned by the Trading API's GetOrders call.  # noqa: E501
+
+        :param ship_to_reference_id: The ship_to_reference_id of this ShippingStep.  # noqa: E501
+        :type: str
+        """
+
+        self._ship_to_reference_id = ship_to_reference_id
 
     @property
     def shipping_carrier_code(self):
@@ -102,50 +146,6 @@ class ShippingStep(object):
         """
 
         self._shipping_service_code = shipping_service_code
-
-    @property
-    def ship_to(self):
-        """Gets the ship_to of this ShippingStep.  # noqa: E501
-
-
-        :return: The ship_to of this ShippingStep.  # noqa: E501
-        :rtype: ExtendedContact
-        """
-        return self._ship_to
-
-    @ship_to.setter
-    def ship_to(self, ship_to):
-        """Sets the ship_to of this ShippingStep.
-
-
-        :param ship_to: The ship_to of this ShippingStep.  # noqa: E501
-        :type: ExtendedContact
-        """
-
-        self._ship_to = ship_to
-
-    @property
-    def ship_to_reference_id(self):
-        """Gets the ship_to_reference_id of this ShippingStep.  # noqa: E501
-
-        This is the unique identifer of the Global Shipping Program (GSP) shipment. This field is only returned if the line item is being shipped via GSP (the value of the fulfillmentStartInstructions.ebaySupportedFulfillment field will be true. The international shipping provider uses the shipToReferenceId value as the primary reference number to retrieve the relevant details about the buyer, the order, and the fulfillment, so the shipment can be completed. Sellers must include this value on the shipping label immediately above the street address of the international shipping provider. Example: &quot;Reference #1234567890123456&quot; Note: This value is the same as the ShipToAddress.ReferenceID value returned by the Trading API's GetOrders call.  # noqa: E501
-
-        :return: The ship_to_reference_id of this ShippingStep.  # noqa: E501
-        :rtype: str
-        """
-        return self._ship_to_reference_id
-
-    @ship_to_reference_id.setter
-    def ship_to_reference_id(self, ship_to_reference_id):
-        """Sets the ship_to_reference_id of this ShippingStep.
-
-        This is the unique identifer of the Global Shipping Program (GSP) shipment. This field is only returned if the line item is being shipped via GSP (the value of the fulfillmentStartInstructions.ebaySupportedFulfillment field will be true. The international shipping provider uses the shipToReferenceId value as the primary reference number to retrieve the relevant details about the buyer, the order, and the fulfillment, so the shipment can be completed. Sellers must include this value on the shipping label immediately above the street address of the international shipping provider. Example: &quot;Reference #1234567890123456&quot; Note: This value is the same as the ShipToAddress.ReferenceID value returned by the Trading API's GetOrders call.  # noqa: E501
-
-        :param ship_to_reference_id: The ship_to_reference_id of this ShippingStep.  # noqa: E501
-        :type: str
-        """
-
-        self._ship_to_reference_id = ship_to_reference_id
 
     def to_dict(self):
         """Returns the model properties as a dict"""

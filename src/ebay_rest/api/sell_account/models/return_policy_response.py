@@ -33,8 +33,8 @@ class ReturnPolicyResponse(object):
         'next': 'str',
         'offset': 'int',
         'prev': 'str',
-        'total': 'int',
-        'return_policies': 'list[ReturnPolicy]'
+        'return_policies': 'list[ReturnPolicy]',
+        'total': 'int'
     }
 
     attribute_map = {
@@ -43,19 +43,19 @@ class ReturnPolicyResponse(object):
         'next': 'next',
         'offset': 'offset',
         'prev': 'prev',
-        'total': 'total',
-        'return_policies': 'returnPolicies'
+        'return_policies': 'returnPolicies',
+        'total': 'total'
     }
 
-    def __init__(self, href=None, limit=None, next=None, offset=None, prev=None, total=None, return_policies=None):  # noqa: E501
+    def __init__(self, href=None, limit=None, next=None, offset=None, prev=None, return_policies=None, total=None):  # noqa: E501
         """ReturnPolicyResponse - a model defined in Swagger"""  # noqa: E501
         self._href = None
         self._limit = None
         self._next = None
         self._offset = None
         self._prev = None
-        self._total = None
         self._return_policies = None
+        self._total = None
         self.discriminator = None
         if href is not None:
             self.href = href
@@ -67,10 +67,10 @@ class ReturnPolicyResponse(object):
             self.offset = offset
         if prev is not None:
             self.prev = prev
-        if total is not None:
-            self.total = total
         if return_policies is not None:
             self.return_policies = return_policies
+        if total is not None:
+            self.total = total
 
     @property
     def href(self):
@@ -188,29 +188,6 @@ class ReturnPolicyResponse(object):
         self._prev = prev
 
     @property
-    def total(self):
-        """Gets the total of this ReturnPolicyResponse.  # noqa: E501
-
-        The total number of items retrieved in the result set. If no items are found, this field is returned with a value of 0.  # noqa: E501
-
-        :return: The total of this ReturnPolicyResponse.  # noqa: E501
-        :rtype: int
-        """
-        return self._total
-
-    @total.setter
-    def total(self, total):
-        """Sets the total of this ReturnPolicyResponse.
-
-        The total number of items retrieved in the result set. If no items are found, this field is returned with a value of 0.  # noqa: E501
-
-        :param total: The total of this ReturnPolicyResponse.  # noqa: E501
-        :type: int
-        """
-
-        self._total = total
-
-    @property
     def return_policies(self):
         """Gets the return_policies of this ReturnPolicyResponse.  # noqa: E501
 
@@ -232,6 +209,29 @@ class ReturnPolicyResponse(object):
         """
 
         self._return_policies = return_policies
+
+    @property
+    def total(self):
+        """Gets the total of this ReturnPolicyResponse.  # noqa: E501
+
+        The total number of items retrieved in the result set. If no items are found, this field is returned with a value of 0.  # noqa: E501
+
+        :return: The total of this ReturnPolicyResponse.  # noqa: E501
+        :rtype: int
+        """
+        return self._total
+
+    @total.setter
+    def total(self, total):
+        """Sets the total of this ReturnPolicyResponse.
+
+        The total number of items retrieved in the result set. If no items are found, this field is returned with a value of 0.  # noqa: E501
+
+        :param total: The total of this ReturnPolicyResponse.  # noqa: E501
+        :type: int
+        """
+
+        self._total = total
 
     def to_dict(self):
         """Returns the model properties as a dict"""

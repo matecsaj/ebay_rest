@@ -37,8 +37,8 @@ class FulfillmentPolicyRequest(object):
         'marketplace_id': 'str',
         'name': 'str',
         'pickup_drop_off': 'bool',
-        'shipping_options': 'list[ShippingOption]',
-        'ship_to_locations': 'RegionSet'
+        'ship_to_locations': 'RegionSet',
+        'shipping_options': 'list[ShippingOption]'
     }
 
     attribute_map = {
@@ -51,11 +51,11 @@ class FulfillmentPolicyRequest(object):
         'marketplace_id': 'marketplaceId',
         'name': 'name',
         'pickup_drop_off': 'pickupDropOff',
-        'shipping_options': 'shippingOptions',
-        'ship_to_locations': 'shipToLocations'
+        'ship_to_locations': 'shipToLocations',
+        'shipping_options': 'shippingOptions'
     }
 
-    def __init__(self, category_types=None, description=None, freight_shipping=None, global_shipping=None, handling_time=None, local_pickup=None, marketplace_id=None, name=None, pickup_drop_off=None, shipping_options=None, ship_to_locations=None):  # noqa: E501
+    def __init__(self, category_types=None, description=None, freight_shipping=None, global_shipping=None, handling_time=None, local_pickup=None, marketplace_id=None, name=None, pickup_drop_off=None, ship_to_locations=None, shipping_options=None):  # noqa: E501
         """FulfillmentPolicyRequest - a model defined in Swagger"""  # noqa: E501
         self._category_types = None
         self._description = None
@@ -66,8 +66,8 @@ class FulfillmentPolicyRequest(object):
         self._marketplace_id = None
         self._name = None
         self._pickup_drop_off = None
-        self._shipping_options = None
         self._ship_to_locations = None
+        self._shipping_options = None
         self.discriminator = None
         if category_types is not None:
             self.category_types = category_types
@@ -87,10 +87,10 @@ class FulfillmentPolicyRequest(object):
             self.name = name
         if pickup_drop_off is not None:
             self.pickup_drop_off = pickup_drop_off
-        if shipping_options is not None:
-            self.shipping_options = shipping_options
         if ship_to_locations is not None:
             self.ship_to_locations = ship_to_locations
+        if shipping_options is not None:
+            self.shipping_options = shipping_options
 
     @property
     def category_types(self):
@@ -298,6 +298,27 @@ class FulfillmentPolicyRequest(object):
         self._pickup_drop_off = pickup_drop_off
 
     @property
+    def ship_to_locations(self):
+        """Gets the ship_to_locations of this FulfillmentPolicyRequest.  # noqa: E501
+
+
+        :return: The ship_to_locations of this FulfillmentPolicyRequest.  # noqa: E501
+        :rtype: RegionSet
+        """
+        return self._ship_to_locations
+
+    @ship_to_locations.setter
+    def ship_to_locations(self, ship_to_locations):
+        """Sets the ship_to_locations of this FulfillmentPolicyRequest.
+
+
+        :param ship_to_locations: The ship_to_locations of this FulfillmentPolicyRequest.  # noqa: E501
+        :type: RegionSet
+        """
+
+        self._ship_to_locations = ship_to_locations
+
+    @property
     def shipping_options(self):
         """Gets the shipping_options of this FulfillmentPolicyRequest.  # noqa: E501
 
@@ -319,27 +340,6 @@ class FulfillmentPolicyRequest(object):
         """
 
         self._shipping_options = shipping_options
-
-    @property
-    def ship_to_locations(self):
-        """Gets the ship_to_locations of this FulfillmentPolicyRequest.  # noqa: E501
-
-
-        :return: The ship_to_locations of this FulfillmentPolicyRequest.  # noqa: E501
-        :rtype: RegionSet
-        """
-        return self._ship_to_locations
-
-    @ship_to_locations.setter
-    def ship_to_locations(self, ship_to_locations):
-        """Sets the ship_to_locations of this FulfillmentPolicyRequest.
-
-
-        :param ship_to_locations: The ship_to_locations of this FulfillmentPolicyRequest.  # noqa: E501
-        :type: RegionSet
-        """
-
-        self._ship_to_locations = ship_to_locations
 
     def to_dict(self):
         """Returns the model properties as a dict"""

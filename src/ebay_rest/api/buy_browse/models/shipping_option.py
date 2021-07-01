@@ -36,11 +36,11 @@ class ShippingOption(object):
         'max_estimated_delivery_date': 'str',
         'min_estimated_delivery_date': 'str',
         'quantity_used_for_estimate': 'int',
+        'ship_to_location_used_for_estimate': 'ShipToLocation',
         'shipping_carrier_code': 'str',
         'shipping_cost': 'ConvertedAmount',
         'shipping_cost_type': 'str',
         'shipping_service_code': 'str',
-        'ship_to_location_used_for_estimate': 'ShipToLocation',
         'trademark_symbol': 'str',
         'type': 'str'
     }
@@ -54,16 +54,16 @@ class ShippingOption(object):
         'max_estimated_delivery_date': 'maxEstimatedDeliveryDate',
         'min_estimated_delivery_date': 'minEstimatedDeliveryDate',
         'quantity_used_for_estimate': 'quantityUsedForEstimate',
+        'ship_to_location_used_for_estimate': 'shipToLocationUsedForEstimate',
         'shipping_carrier_code': 'shippingCarrierCode',
         'shipping_cost': 'shippingCost',
         'shipping_cost_type': 'shippingCostType',
         'shipping_service_code': 'shippingServiceCode',
-        'ship_to_location_used_for_estimate': 'shipToLocationUsedForEstimate',
         'trademark_symbol': 'trademarkSymbol',
         'type': 'type'
     }
 
-    def __init__(self, additional_shipping_cost_per_unit=None, cut_off_date_used_for_estimate=None, fulfilled_through=None, guaranteed_delivery=None, import_charges=None, max_estimated_delivery_date=None, min_estimated_delivery_date=None, quantity_used_for_estimate=None, shipping_carrier_code=None, shipping_cost=None, shipping_cost_type=None, shipping_service_code=None, ship_to_location_used_for_estimate=None, trademark_symbol=None, type=None):  # noqa: E501
+    def __init__(self, additional_shipping_cost_per_unit=None, cut_off_date_used_for_estimate=None, fulfilled_through=None, guaranteed_delivery=None, import_charges=None, max_estimated_delivery_date=None, min_estimated_delivery_date=None, quantity_used_for_estimate=None, ship_to_location_used_for_estimate=None, shipping_carrier_code=None, shipping_cost=None, shipping_cost_type=None, shipping_service_code=None, trademark_symbol=None, type=None):  # noqa: E501
         """ShippingOption - a model defined in Swagger"""  # noqa: E501
         self._additional_shipping_cost_per_unit = None
         self._cut_off_date_used_for_estimate = None
@@ -73,11 +73,11 @@ class ShippingOption(object):
         self._max_estimated_delivery_date = None
         self._min_estimated_delivery_date = None
         self._quantity_used_for_estimate = None
+        self._ship_to_location_used_for_estimate = None
         self._shipping_carrier_code = None
         self._shipping_cost = None
         self._shipping_cost_type = None
         self._shipping_service_code = None
-        self._ship_to_location_used_for_estimate = None
         self._trademark_symbol = None
         self._type = None
         self.discriminator = None
@@ -97,6 +97,8 @@ class ShippingOption(object):
             self.min_estimated_delivery_date = min_estimated_delivery_date
         if quantity_used_for_estimate is not None:
             self.quantity_used_for_estimate = quantity_used_for_estimate
+        if ship_to_location_used_for_estimate is not None:
+            self.ship_to_location_used_for_estimate = ship_to_location_used_for_estimate
         if shipping_carrier_code is not None:
             self.shipping_carrier_code = shipping_carrier_code
         if shipping_cost is not None:
@@ -105,8 +107,6 @@ class ShippingOption(object):
             self.shipping_cost_type = shipping_cost_type
         if shipping_service_code is not None:
             self.shipping_service_code = shipping_service_code
-        if ship_to_location_used_for_estimate is not None:
-            self.ship_to_location_used_for_estimate = ship_to_location_used_for_estimate
         if trademark_symbol is not None:
             self.trademark_symbol = trademark_symbol
         if type is not None:
@@ -293,6 +293,27 @@ class ShippingOption(object):
         self._quantity_used_for_estimate = quantity_used_for_estimate
 
     @property
+    def ship_to_location_used_for_estimate(self):
+        """Gets the ship_to_location_used_for_estimate of this ShippingOption.  # noqa: E501
+
+
+        :return: The ship_to_location_used_for_estimate of this ShippingOption.  # noqa: E501
+        :rtype: ShipToLocation
+        """
+        return self._ship_to_location_used_for_estimate
+
+    @ship_to_location_used_for_estimate.setter
+    def ship_to_location_used_for_estimate(self, ship_to_location_used_for_estimate):
+        """Sets the ship_to_location_used_for_estimate of this ShippingOption.
+
+
+        :param ship_to_location_used_for_estimate: The ship_to_location_used_for_estimate of this ShippingOption.  # noqa: E501
+        :type: ShipToLocation
+        """
+
+        self._ship_to_location_used_for_estimate = ship_to_location_used_for_estimate
+
+    @property
     def shipping_carrier_code(self):
         """Gets the shipping_carrier_code of this ShippingOption.  # noqa: E501
 
@@ -381,27 +402,6 @@ class ShippingOption(object):
         """
 
         self._shipping_service_code = shipping_service_code
-
-    @property
-    def ship_to_location_used_for_estimate(self):
-        """Gets the ship_to_location_used_for_estimate of this ShippingOption.  # noqa: E501
-
-
-        :return: The ship_to_location_used_for_estimate of this ShippingOption.  # noqa: E501
-        :rtype: ShipToLocation
-        """
-        return self._ship_to_location_used_for_estimate
-
-    @ship_to_location_used_for_estimate.setter
-    def ship_to_location_used_for_estimate(self, ship_to_location_used_for_estimate):
-        """Sets the ship_to_location_used_for_estimate of this ShippingOption.
-
-
-        :param ship_to_location_used_for_estimate: The ship_to_location_used_for_estimate of this ShippingOption.  # noqa: E501
-        :type: ShipToLocation
-        """
-
-        self._ship_to_location_used_for_estimate = ship_to_location_used_for_estimate
 
     @property
     def trademark_symbol(self):

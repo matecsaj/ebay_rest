@@ -28,57 +28,34 @@ class IssueRefundRequest(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'reason_for_refund': 'str',
         'comment': 'str',
-        'refund_items': 'list[RefundItem]',
-        'order_level_refund_amount': 'SimpleAmount'
+        'order_level_refund_amount': 'SimpleAmount',
+        'reason_for_refund': 'str',
+        'refund_items': 'list[RefundItem]'
     }
 
     attribute_map = {
-        'reason_for_refund': 'reasonForRefund',
         'comment': 'comment',
-        'refund_items': 'refundItems',
-        'order_level_refund_amount': 'orderLevelRefundAmount'
+        'order_level_refund_amount': 'orderLevelRefundAmount',
+        'reason_for_refund': 'reasonForRefund',
+        'refund_items': 'refundItems'
     }
 
-    def __init__(self, reason_for_refund=None, comment=None, refund_items=None, order_level_refund_amount=None):  # noqa: E501
+    def __init__(self, comment=None, order_level_refund_amount=None, reason_for_refund=None, refund_items=None):  # noqa: E501
         """IssueRefundRequest - a model defined in Swagger"""  # noqa: E501
-        self._reason_for_refund = None
         self._comment = None
-        self._refund_items = None
         self._order_level_refund_amount = None
+        self._reason_for_refund = None
+        self._refund_items = None
         self.discriminator = None
-        if reason_for_refund is not None:
-            self.reason_for_refund = reason_for_refund
         if comment is not None:
             self.comment = comment
-        if refund_items is not None:
-            self.refund_items = refund_items
         if order_level_refund_amount is not None:
             self.order_level_refund_amount = order_level_refund_amount
-
-    @property
-    def reason_for_refund(self):
-        """Gets the reason_for_refund of this IssueRefundRequest.  # noqa: E501
-
-        The enumeration value passed into this field indicates the reason for the refund. One of the defined enumeration values in the ReasonForRefundEnum type must be used. This field is required, and it is highly recommended that sellers use the correct refund reason, especially in the case of a buyer-requested cancellation or 'buyer remorse' return to indicate that there was nothing wrong with the item(s) or with the shipment of the order. Note: If issuing refunds for more than one order line item, keep in mind that the refund reason must be the same for each of the order line items. If the refund reason is different for one or more order line items in an order, the seller would need to make separate issueRefund calls, one for each refund reason. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/api:ReasonForRefundEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The reason_for_refund of this IssueRefundRequest.  # noqa: E501
-        :rtype: str
-        """
-        return self._reason_for_refund
-
-    @reason_for_refund.setter
-    def reason_for_refund(self, reason_for_refund):
-        """Sets the reason_for_refund of this IssueRefundRequest.
-
-        The enumeration value passed into this field indicates the reason for the refund. One of the defined enumeration values in the ReasonForRefundEnum type must be used. This field is required, and it is highly recommended that sellers use the correct refund reason, especially in the case of a buyer-requested cancellation or 'buyer remorse' return to indicate that there was nothing wrong with the item(s) or with the shipment of the order. Note: If issuing refunds for more than one order line item, keep in mind that the refund reason must be the same for each of the order line items. If the refund reason is different for one or more order line items in an order, the seller would need to make separate issueRefund calls, one for each refund reason. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/api:ReasonForRefundEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param reason_for_refund: The reason_for_refund of this IssueRefundRequest.  # noqa: E501
-        :type: str
-        """
-
-        self._reason_for_refund = reason_for_refund
+        if reason_for_refund is not None:
+            self.reason_for_refund = reason_for_refund
+        if refund_items is not None:
+            self.refund_items = refund_items
 
     @property
     def comment(self):
@@ -104,6 +81,50 @@ class IssueRefundRequest(object):
         self._comment = comment
 
     @property
+    def order_level_refund_amount(self):
+        """Gets the order_level_refund_amount of this IssueRefundRequest.  # noqa: E501
+
+
+        :return: The order_level_refund_amount of this IssueRefundRequest.  # noqa: E501
+        :rtype: SimpleAmount
+        """
+        return self._order_level_refund_amount
+
+    @order_level_refund_amount.setter
+    def order_level_refund_amount(self, order_level_refund_amount):
+        """Sets the order_level_refund_amount of this IssueRefundRequest.
+
+
+        :param order_level_refund_amount: The order_level_refund_amount of this IssueRefundRequest.  # noqa: E501
+        :type: SimpleAmount
+        """
+
+        self._order_level_refund_amount = order_level_refund_amount
+
+    @property
+    def reason_for_refund(self):
+        """Gets the reason_for_refund of this IssueRefundRequest.  # noqa: E501
+
+        The enumeration value passed into this field indicates the reason for the refund. One of the defined enumeration values in the ReasonForRefundEnum type must be used. This field is required, and it is highly recommended that sellers use the correct refund reason, especially in the case of a buyer-requested cancellation or 'buyer remorse' return to indicate that there was nothing wrong with the item(s) or with the shipment of the order. Note: If issuing refunds for more than one order line item, keep in mind that the refund reason must be the same for each of the order line items. If the refund reason is different for one or more order line items in an order, the seller would need to make separate issueRefund calls, one for each refund reason. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/api:ReasonForRefundEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The reason_for_refund of this IssueRefundRequest.  # noqa: E501
+        :rtype: str
+        """
+        return self._reason_for_refund
+
+    @reason_for_refund.setter
+    def reason_for_refund(self, reason_for_refund):
+        """Sets the reason_for_refund of this IssueRefundRequest.
+
+        The enumeration value passed into this field indicates the reason for the refund. One of the defined enumeration values in the ReasonForRefundEnum type must be used. This field is required, and it is highly recommended that sellers use the correct refund reason, especially in the case of a buyer-requested cancellation or 'buyer remorse' return to indicate that there was nothing wrong with the item(s) or with the shipment of the order. Note: If issuing refunds for more than one order line item, keep in mind that the refund reason must be the same for each of the order line items. If the refund reason is different for one or more order line items in an order, the seller would need to make separate issueRefund calls, one for each refund reason. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/api:ReasonForRefundEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param reason_for_refund: The reason_for_refund of this IssueRefundRequest.  # noqa: E501
+        :type: str
+        """
+
+        self._reason_for_refund = reason_for_refund
+
+    @property
     def refund_items(self):
         """Gets the refund_items of this IssueRefundRequest.  # noqa: E501
 
@@ -125,27 +146,6 @@ class IssueRefundRequest(object):
         """
 
         self._refund_items = refund_items
-
-    @property
-    def order_level_refund_amount(self):
-        """Gets the order_level_refund_amount of this IssueRefundRequest.  # noqa: E501
-
-
-        :return: The order_level_refund_amount of this IssueRefundRequest.  # noqa: E501
-        :rtype: SimpleAmount
-        """
-        return self._order_level_refund_amount
-
-    @order_level_refund_amount.setter
-    def order_level_refund_amount(self, order_level_refund_amount):
-        """Sets the order_level_refund_amount of this IssueRefundRequest.
-
-
-        :param order_level_refund_amount: The order_level_refund_amount of this IssueRefundRequest.  # noqa: E501
-        :type: SimpleAmount
-        """
-
-        self._order_level_refund_amount = order_level_refund_amount
 
     def to_dict(self):
         """Returns the model properties as a dict"""

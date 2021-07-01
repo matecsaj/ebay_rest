@@ -31,7 +31,7 @@ class Address(object):
         'address_line1': 'str',
         'address_line2': 'str',
         'city': 'str',
-        'country': 'str',
+        'country_code': 'str',
         'county': 'str',
         'postal_code': 'str',
         'state_or_province': 'str'
@@ -41,18 +41,18 @@ class Address(object):
         'address_line1': 'addressLine1',
         'address_line2': 'addressLine2',
         'city': 'city',
-        'country': 'country',
+        'country_code': 'countryCode',
         'county': 'county',
         'postal_code': 'postalCode',
         'state_or_province': 'stateOrProvince'
     }
 
-    def __init__(self, address_line1=None, address_line2=None, city=None, country=None, county=None, postal_code=None, state_or_province=None):  # noqa: E501
+    def __init__(self, address_line1=None, address_line2=None, city=None, country_code=None, county=None, postal_code=None, state_or_province=None):  # noqa: E501
         """Address - a model defined in Swagger"""  # noqa: E501
         self._address_line1 = None
         self._address_line2 = None
         self._city = None
-        self._country = None
+        self._country_code = None
         self._county = None
         self._postal_code = None
         self._state_or_province = None
@@ -63,8 +63,8 @@ class Address(object):
             self.address_line2 = address_line2
         if city is not None:
             self.city = city
-        if country is not None:
-            self.country = country
+        if country_code is not None:
+            self.country_code = country_code
         if county is not None:
             self.county = county
         if postal_code is not None:
@@ -142,27 +142,27 @@ class Address(object):
         self._city = city
 
     @property
-    def country(self):
-        """Gets the country of this Address.  # noqa: E501
+    def country_code(self):
+        """Gets the country_code of this Address.  # noqa: E501
 
         The country of the shipping destination, represented as a two-letter ISO 3166-1 alpha-2 country code. For example, US represents the United States, and DE represents Germany. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
-        :return: The country of this Address.  # noqa: E501
+        :return: The country_code of this Address.  # noqa: E501
         :rtype: str
         """
-        return self._country
+        return self._country_code
 
-    @country.setter
-    def country(self, country):
-        """Sets the country of this Address.
+    @country_code.setter
+    def country_code(self, country_code):
+        """Sets the country_code of this Address.
 
         The country of the shipping destination, represented as a two-letter ISO 3166-1 alpha-2 country code. For example, US represents the United States, and DE represents Germany. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
-        :param country: The country of this Address.  # noqa: E501
+        :param country_code: The country_code of this Address.  # noqa: E501
         :type: str
         """
 
-        self._country = country
+        self._country_code = country_code
 
     @property
     def county(self):

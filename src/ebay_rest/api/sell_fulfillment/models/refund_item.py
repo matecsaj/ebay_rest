@@ -28,50 +28,50 @@ class RefundItem(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'refund_amount': 'SimpleAmount',
+        'legacy_reference': 'LegacyReference',
         'line_item_id': 'str',
-        'legacy_reference': 'LegacyReference'
+        'refund_amount': 'SimpleAmount'
     }
 
     attribute_map = {
-        'refund_amount': 'refundAmount',
+        'legacy_reference': 'legacyReference',
         'line_item_id': 'lineItemId',
-        'legacy_reference': 'legacyReference'
+        'refund_amount': 'refundAmount'
     }
 
-    def __init__(self, refund_amount=None, line_item_id=None, legacy_reference=None):  # noqa: E501
+    def __init__(self, legacy_reference=None, line_item_id=None, refund_amount=None):  # noqa: E501
         """RefundItem - a model defined in Swagger"""  # noqa: E501
-        self._refund_amount = None
-        self._line_item_id = None
         self._legacy_reference = None
+        self._line_item_id = None
+        self._refund_amount = None
         self.discriminator = None
-        if refund_amount is not None:
-            self.refund_amount = refund_amount
-        if line_item_id is not None:
-            self.line_item_id = line_item_id
         if legacy_reference is not None:
             self.legacy_reference = legacy_reference
+        if line_item_id is not None:
+            self.line_item_id = line_item_id
+        if refund_amount is not None:
+            self.refund_amount = refund_amount
 
     @property
-    def refund_amount(self):
-        """Gets the refund_amount of this RefundItem.  # noqa: E501
+    def legacy_reference(self):
+        """Gets the legacy_reference of this RefundItem.  # noqa: E501
 
 
-        :return: The refund_amount of this RefundItem.  # noqa: E501
-        :rtype: SimpleAmount
+        :return: The legacy_reference of this RefundItem.  # noqa: E501
+        :rtype: LegacyReference
         """
-        return self._refund_amount
+        return self._legacy_reference
 
-    @refund_amount.setter
-    def refund_amount(self, refund_amount):
-        """Sets the refund_amount of this RefundItem.
+    @legacy_reference.setter
+    def legacy_reference(self, legacy_reference):
+        """Sets the legacy_reference of this RefundItem.
 
 
-        :param refund_amount: The refund_amount of this RefundItem.  # noqa: E501
-        :type: SimpleAmount
+        :param legacy_reference: The legacy_reference of this RefundItem.  # noqa: E501
+        :type: LegacyReference
         """
 
-        self._refund_amount = refund_amount
+        self._legacy_reference = legacy_reference
 
     @property
     def line_item_id(self):
@@ -97,25 +97,25 @@ class RefundItem(object):
         self._line_item_id = line_item_id
 
     @property
-    def legacy_reference(self):
-        """Gets the legacy_reference of this RefundItem.  # noqa: E501
+    def refund_amount(self):
+        """Gets the refund_amount of this RefundItem.  # noqa: E501
 
 
-        :return: The legacy_reference of this RefundItem.  # noqa: E501
-        :rtype: LegacyReference
+        :return: The refund_amount of this RefundItem.  # noqa: E501
+        :rtype: SimpleAmount
         """
-        return self._legacy_reference
+        return self._refund_amount
 
-    @legacy_reference.setter
-    def legacy_reference(self, legacy_reference):
-        """Sets the legacy_reference of this RefundItem.
+    @refund_amount.setter
+    def refund_amount(self, refund_amount):
+        """Sets the refund_amount of this RefundItem.
 
 
-        :param legacy_reference: The legacy_reference of this RefundItem.  # noqa: E501
-        :type: LegacyReference
+        :param refund_amount: The refund_amount of this RefundItem.  # noqa: E501
+        :type: SimpleAmount
         """
 
-        self._legacy_reference = legacy_reference
+        self._refund_amount = refund_amount
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -28,57 +28,57 @@ class PaymentMethod(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'payment_method_type': 'str',
-        'payment_method_brands': 'list[PaymentMethodBrand]',
         'payment_instructions': 'list[str]',
+        'payment_method_brands': 'list[PaymentMethodBrand]',
+        'payment_method_type': 'str',
         'seller_instructions': 'list[str]'
     }
 
     attribute_map = {
-        'payment_method_type': 'paymentMethodType',
-        'payment_method_brands': 'paymentMethodBrands',
         'payment_instructions': 'paymentInstructions',
+        'payment_method_brands': 'paymentMethodBrands',
+        'payment_method_type': 'paymentMethodType',
         'seller_instructions': 'sellerInstructions'
     }
 
-    def __init__(self, payment_method_type=None, payment_method_brands=None, payment_instructions=None, seller_instructions=None):  # noqa: E501
+    def __init__(self, payment_instructions=None, payment_method_brands=None, payment_method_type=None, seller_instructions=None):  # noqa: E501
         """PaymentMethod - a model defined in Swagger"""  # noqa: E501
-        self._payment_method_type = None
-        self._payment_method_brands = None
         self._payment_instructions = None
+        self._payment_method_brands = None
+        self._payment_method_type = None
         self._seller_instructions = None
         self.discriminator = None
-        if payment_method_type is not None:
-            self.payment_method_type = payment_method_type
-        if payment_method_brands is not None:
-            self.payment_method_brands = payment_method_brands
         if payment_instructions is not None:
             self.payment_instructions = payment_instructions
+        if payment_method_brands is not None:
+            self.payment_method_brands = payment_method_brands
+        if payment_method_type is not None:
+            self.payment_method_type = payment_method_type
         if seller_instructions is not None:
             self.seller_instructions = seller_instructions
 
     @property
-    def payment_method_type(self):
-        """Gets the payment_method_type of this PaymentMethod.  # noqa: E501
+    def payment_instructions(self):
+        """Gets the payment_instructions of this PaymentMethod.  # noqa: E501
 
-        The payment method type, such as credit card or cash. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/browse/types/gct:PaymentMethodTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The payment instructions for the buyer, such as cash in person or contact seller.  # noqa: E501
 
-        :return: The payment_method_type of this PaymentMethod.  # noqa: E501
-        :rtype: str
+        :return: The payment_instructions of this PaymentMethod.  # noqa: E501
+        :rtype: list[str]
         """
-        return self._payment_method_type
+        return self._payment_instructions
 
-    @payment_method_type.setter
-    def payment_method_type(self, payment_method_type):
-        """Sets the payment_method_type of this PaymentMethod.
+    @payment_instructions.setter
+    def payment_instructions(self, payment_instructions):
+        """Sets the payment_instructions of this PaymentMethod.
 
-        The payment method type, such as credit card or cash. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/browse/types/gct:PaymentMethodTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The payment instructions for the buyer, such as cash in person or contact seller.  # noqa: E501
 
-        :param payment_method_type: The payment_method_type of this PaymentMethod.  # noqa: E501
-        :type: str
+        :param payment_instructions: The payment_instructions of this PaymentMethod.  # noqa: E501
+        :type: list[str]
         """
 
-        self._payment_method_type = payment_method_type
+        self._payment_instructions = payment_instructions
 
     @property
     def payment_method_brands(self):
@@ -104,27 +104,27 @@ class PaymentMethod(object):
         self._payment_method_brands = payment_method_brands
 
     @property
-    def payment_instructions(self):
-        """Gets the payment_instructions of this PaymentMethod.  # noqa: E501
+    def payment_method_type(self):
+        """Gets the payment_method_type of this PaymentMethod.  # noqa: E501
 
-        The payment instructions for the buyer, such as cash in person or contact seller.  # noqa: E501
+        The payment method type, such as credit card or cash. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/browse/types/gct:PaymentMethodTypeEnum'>eBay API documentation</a>  # noqa: E501
 
-        :return: The payment_instructions of this PaymentMethod.  # noqa: E501
-        :rtype: list[str]
+        :return: The payment_method_type of this PaymentMethod.  # noqa: E501
+        :rtype: str
         """
-        return self._payment_instructions
+        return self._payment_method_type
 
-    @payment_instructions.setter
-    def payment_instructions(self, payment_instructions):
-        """Sets the payment_instructions of this PaymentMethod.
+    @payment_method_type.setter
+    def payment_method_type(self, payment_method_type):
+        """Sets the payment_method_type of this PaymentMethod.
 
-        The payment instructions for the buyer, such as cash in person or contact seller.  # noqa: E501
+        The payment method type, such as credit card or cash. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/browse/types/gct:PaymentMethodTypeEnum'>eBay API documentation</a>  # noqa: E501
 
-        :param payment_instructions: The payment_instructions of this PaymentMethod.  # noqa: E501
-        :type: list[str]
+        :param payment_method_type: The payment_method_type of this PaymentMethod.  # noqa: E501
+        :type: str
         """
 
-        self._payment_instructions = payment_instructions
+        self._payment_method_type = payment_method_type
 
     @property
     def seller_instructions(self):

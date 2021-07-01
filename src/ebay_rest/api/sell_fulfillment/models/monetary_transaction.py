@@ -28,34 +28,55 @@ class MonetaryTransaction(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'amount': 'DisputeAmount',
         '_date': 'str',
-        'type': 'str',
         'reason': 'str',
-        'amount': 'DisputeAmount'
+        'type': 'str'
     }
 
     attribute_map = {
+        'amount': 'amount',
         '_date': 'date',
-        'type': 'type',
         'reason': 'reason',
-        'amount': 'amount'
+        'type': 'type'
     }
 
-    def __init__(self, _date=None, type=None, reason=None, amount=None):  # noqa: E501
+    def __init__(self, amount=None, _date=None, reason=None, type=None):  # noqa: E501
         """MonetaryTransaction - a model defined in Swagger"""  # noqa: E501
-        self.__date = None
-        self._type = None
-        self._reason = None
         self._amount = None
+        self.__date = None
+        self._reason = None
+        self._type = None
         self.discriminator = None
-        if _date is not None:
-            self._date = _date
-        if type is not None:
-            self.type = type
-        if reason is not None:
-            self.reason = reason
         if amount is not None:
             self.amount = amount
+        if _date is not None:
+            self._date = _date
+        if reason is not None:
+            self.reason = reason
+        if type is not None:
+            self.type = type
+
+    @property
+    def amount(self):
+        """Gets the amount of this MonetaryTransaction.  # noqa: E501
+
+
+        :return: The amount of this MonetaryTransaction.  # noqa: E501
+        :rtype: DisputeAmount
+        """
+        return self._amount
+
+    @amount.setter
+    def amount(self, amount):
+        """Sets the amount of this MonetaryTransaction.
+
+
+        :param amount: The amount of this MonetaryTransaction.  # noqa: E501
+        :type: DisputeAmount
+        """
+
+        self._amount = amount
 
     @property
     def _date(self):
@@ -81,29 +102,6 @@ class MonetaryTransaction(object):
         self.__date = _date
 
     @property
-    def type(self):
-        """Gets the type of this MonetaryTransaction.  # noqa: E501
-
-        This enumeration value indicates whether the monetary transaction is a charge or a credit to the seller. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/api:MonetaryTransactionTypeEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The type of this MonetaryTransaction.  # noqa: E501
-        :rtype: str
-        """
-        return self._type
-
-    @type.setter
-    def type(self, type):
-        """Sets the type of this MonetaryTransaction.
-
-        This enumeration value indicates whether the monetary transaction is a charge or a credit to the seller. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/api:MonetaryTransactionTypeEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param type: The type of this MonetaryTransaction.  # noqa: E501
-        :type: str
-        """
-
-        self._type = type
-
-    @property
     def reason(self):
         """Gets the reason of this MonetaryTransaction.  # noqa: E501
 
@@ -127,25 +125,27 @@ class MonetaryTransaction(object):
         self._reason = reason
 
     @property
-    def amount(self):
-        """Gets the amount of this MonetaryTransaction.  # noqa: E501
+    def type(self):
+        """Gets the type of this MonetaryTransaction.  # noqa: E501
 
+        This enumeration value indicates whether the monetary transaction is a charge or a credit to the seller. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/api:MonetaryTransactionTypeEnum'>eBay API documentation</a>  # noqa: E501
 
-        :return: The amount of this MonetaryTransaction.  # noqa: E501
-        :rtype: DisputeAmount
+        :return: The type of this MonetaryTransaction.  # noqa: E501
+        :rtype: str
         """
-        return self._amount
+        return self._type
 
-    @amount.setter
-    def amount(self, amount):
-        """Sets the amount of this MonetaryTransaction.
+    @type.setter
+    def type(self, type):
+        """Sets the type of this MonetaryTransaction.
 
+        This enumeration value indicates whether the monetary transaction is a charge or a credit to the seller. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/api:MonetaryTransactionTypeEnum'>eBay API documentation</a>  # noqa: E501
 
-        :param amount: The amount of this MonetaryTransaction.  # noqa: E501
-        :type: DisputeAmount
+        :param type: The type of this MonetaryTransaction.  # noqa: E501
+        :type: str
         """
 
-        self._amount = amount
+        self._type = type
 
     def to_dict(self):
         """Returns the model properties as a dict"""

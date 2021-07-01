@@ -79,8 +79,8 @@ class Item(object):
         'return_terms': 'ItemReturnTerms',
         'seller': 'SellerDetail',
         'seller_item_revision': 'str',
-        'shipping_options': 'list[ShippingOption]',
         'ship_to_locations': 'ShipToLocations',
+        'shipping_options': 'list[ShippingOption]',
         'short_description': 'str',
         'size': 'str',
         'size_system': 'str',
@@ -148,8 +148,8 @@ class Item(object):
         'return_terms': 'returnTerms',
         'seller': 'seller',
         'seller_item_revision': 'sellerItemRevision',
-        'shipping_options': 'shippingOptions',
         'ship_to_locations': 'shipToLocations',
+        'shipping_options': 'shippingOptions',
         'short_description': 'shortDescription',
         'size': 'size',
         'size_system': 'sizeSystem',
@@ -165,7 +165,7 @@ class Item(object):
         'warnings': 'warnings'
     }
 
-    def __init__(self, additional_images=None, adult_only=None, age_group=None, authenticity_verification=None, available_coupons=None, bid_count=None, brand=None, buying_options=None, category_id=None, category_path=None, color=None, condition=None, condition_description=None, condition_id=None, current_bid_price=None, description=None, eligible_for_inline_checkout=None, enabled_for_guest_checkout=None, energy_efficiency_class=None, epid=None, estimated_availabilities=None, gender=None, gtin=None, image=None, inferred_epid=None, item_affiliate_web_url=None, item_end_date=None, item_id=None, item_location=None, item_web_url=None, legacy_item_id=None, localized_aspects=None, lot_size=None, marketing_price=None, material=None, minimum_price_to_bid=None, mpn=None, pattern=None, payment_methods=None, price=None, price_display_condition=None, primary_item_group=None, primary_product_review_rating=None, product=None, product_fiche_web_url=None, qualified_programs=None, quantity_limit_per_buyer=None, reserve_price_met=None, return_terms=None, seller=None, seller_item_revision=None, shipping_options=None, ship_to_locations=None, short_description=None, size=None, size_system=None, size_type=None, subtitle=None, taxes=None, title=None, top_rated_buying_experience=None, tyre_label_image_url=None, unique_bidder_count=None, unit_price=None, unit_pricing_measure=None, warnings=None):  # noqa: E501
+    def __init__(self, additional_images=None, adult_only=None, age_group=None, authenticity_verification=None, available_coupons=None, bid_count=None, brand=None, buying_options=None, category_id=None, category_path=None, color=None, condition=None, condition_description=None, condition_id=None, current_bid_price=None, description=None, eligible_for_inline_checkout=None, enabled_for_guest_checkout=None, energy_efficiency_class=None, epid=None, estimated_availabilities=None, gender=None, gtin=None, image=None, inferred_epid=None, item_affiliate_web_url=None, item_end_date=None, item_id=None, item_location=None, item_web_url=None, legacy_item_id=None, localized_aspects=None, lot_size=None, marketing_price=None, material=None, minimum_price_to_bid=None, mpn=None, pattern=None, payment_methods=None, price=None, price_display_condition=None, primary_item_group=None, primary_product_review_rating=None, product=None, product_fiche_web_url=None, qualified_programs=None, quantity_limit_per_buyer=None, reserve_price_met=None, return_terms=None, seller=None, seller_item_revision=None, ship_to_locations=None, shipping_options=None, short_description=None, size=None, size_system=None, size_type=None, subtitle=None, taxes=None, title=None, top_rated_buying_experience=None, tyre_label_image_url=None, unique_bidder_count=None, unit_price=None, unit_pricing_measure=None, warnings=None):  # noqa: E501
         """Item - a model defined in Swagger"""  # noqa: E501
         self._additional_images = None
         self._adult_only = None
@@ -218,8 +218,8 @@ class Item(object):
         self._return_terms = None
         self._seller = None
         self._seller_item_revision = None
-        self._shipping_options = None
         self._ship_to_locations = None
+        self._shipping_options = None
         self._short_description = None
         self._size = None
         self._size_system = None
@@ -336,10 +336,10 @@ class Item(object):
             self.seller = seller
         if seller_item_revision is not None:
             self.seller_item_revision = seller_item_revision
-        if shipping_options is not None:
-            self.shipping_options = shipping_options
         if ship_to_locations is not None:
             self.ship_to_locations = ship_to_locations
+        if shipping_options is not None:
+            self.shipping_options = shipping_options
         if short_description is not None:
             self.short_description = short_description
         if size is not None:
@@ -1517,6 +1517,27 @@ class Item(object):
         self._seller_item_revision = seller_item_revision
 
     @property
+    def ship_to_locations(self):
+        """Gets the ship_to_locations of this Item.  # noqa: E501
+
+
+        :return: The ship_to_locations of this Item.  # noqa: E501
+        :rtype: ShipToLocations
+        """
+        return self._ship_to_locations
+
+    @ship_to_locations.setter
+    def ship_to_locations(self, ship_to_locations):
+        """Sets the ship_to_locations of this Item.
+
+
+        :param ship_to_locations: The ship_to_locations of this Item.  # noqa: E501
+        :type: ShipToLocations
+        """
+
+        self._ship_to_locations = ship_to_locations
+
+    @property
     def shipping_options(self):
         """Gets the shipping_options of this Item.  # noqa: E501
 
@@ -1538,27 +1559,6 @@ class Item(object):
         """
 
         self._shipping_options = shipping_options
-
-    @property
-    def ship_to_locations(self):
-        """Gets the ship_to_locations of this Item.  # noqa: E501
-
-
-        :return: The ship_to_locations of this Item.  # noqa: E501
-        :rtype: ShipToLocations
-        """
-        return self._ship_to_locations
-
-    @ship_to_locations.setter
-    def ship_to_locations(self, ship_to_locations):
-        """Sets the ship_to_locations of this Item.
-
-
-        :param ship_to_locations: The ship_to_locations of this Item.  # noqa: E501
-        :type: ShipToLocations
-        """
-
-        self._ship_to_locations = ship_to_locations
 
     @property
     def short_description(self):

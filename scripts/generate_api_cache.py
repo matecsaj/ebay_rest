@@ -26,6 +26,14 @@ TARGET_PATH = 'api_cache'
 # For an introduction to OpenAPI and how to use eBay's REST-ful APIs
 # visit https://developer.ebay.com/api-docs/static/openapi-swagger-codegen.html.
 
+def cache_contracts(contracts):
+    for contract in contracts:
+        [category, call, link_href, file_name] = contract
+        with urlopen(link_href) as url:
+            data = json.loads(url.read().decode())
+            destination = os.path.join(TARGET_PATH, file_name)
+            with open(destination, 'w') as outfile:
+                json.dump(data, outfile, sort_keys=True, indent=4)
 
 def get_soup_via_link(url):
     # Make a GET request to fetch the raw HTML content
@@ -56,7 +64,8 @@ def get_contracts(limit=100):
             parts = link_href.split('/')
             category = parts[5]
             call = parts[6].replace('-', '_')
-            record = [category, call, link_href]
+            file_name = parts[-1]
+            record = [category, call, link_href, file_name]
             if ('beta' not in call) and (record not in contracts):
                 contracts.append(record)
                 print(record)
@@ -65,6 +74,22 @@ def get_contracts(limit=100):
     assert(len(contracts) > 0), 'No contracts found on any overview pages!'
 
     return contracts
+
+
+def patch_contracts():
+
+    # In the Sell Fulfillment API, the model 'Address' is returned with attribute 'countryCode'.
+    # However, the JSON specifies 'country' instead, thus Swagger generates the wrong API.
+    file_location = os.path.join(TARGET_PATH, 'sell_fulfillment_v1_oas3.json')
+    with open(file_location) as file_handle:
+        data = json.load(file_handle)
+        properties = data['components']['schemas']['Address']['properties']
+        if 'country' in properties:
+            properties['countryCode'] = properties.pop('country')   # Warning, spoils the alphabetical key order.
+            with open(file_location, 'w') as outfile:
+                json.dump(data, outfile, sort_keys=True, indent=4)
+        else:
+            print('Patching sell_fulfillment_v1_oas3.json is no longer needed.')
 
 
 def get_base_paths_and_flows(contracts):
@@ -77,9 +102,10 @@ def get_base_paths_and_flows(contracts):
     flows = {}
     scopes = {}
 
-    for (category, call, link_href) in contracts:
-        with urlopen(link_href) as url:
-            data = json.loads(url.read().decode())
+    for [category, call, link_href, file_name] in contracts:
+        source = os.path.join(TARGET_PATH, file_name)
+        with open(source) as file_handle:
+            data = json.load(file_handle)
         # Get base path
         base_path = data['servers'][0]['variables']['basePath']['default']
         # Get flows for this category_call
@@ -171,19 +197,22 @@ def main():
     else:
         os.mkdir(TARGET_PATH)
 
-    contracts = get_contracts(limit=300)
+    contracts = get_contracts(limit=100)
+    cache_contracts(contracts)
+    patch_contracts()
+
     base_paths, flows, scopes = get_base_paths_and_flows(contracts)
 
     print('For each contract generate and install a library.')
     for contract in contracts:
-        category, call, url = contract
+        [category, call, link_href, file_name] = contract
+        source = os.path.join(TARGET_PATH, file_name)
         name = f'{category}_{call}'
+        command = f' generate -l python -o {TARGET_PATH}/{name} -DpackageName={name} -i {source}'
         if platform == 'darwin':  # OS X or MacOS
-            command = f'/usr/local/bin/swagger-codegen generate -l python ' \
-                      f'-o {TARGET_PATH}/{name} -DpackageName={name} -i {url} '
+            command = '/usr/local/bin/swagger-codegen' + command
         elif platform == 'linux':  # Linux
-            command = f'java -jar swagger-codegen-cli.jar generate -l python ' \
-                      f'-o {TARGET_PATH}/{name} -DpackageName={name} -i {url} '
+            command = 'java -jar swagger-codegen-cli.jar' + command
         else:
             assert False, f'Please extend main() for your {platform} platform.'
         os.system(command)
