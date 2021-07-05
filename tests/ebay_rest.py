@@ -212,7 +212,7 @@ class APIOther(unittest.TestCase):
     def test_positional_one_kw_none(self):
 
         for item in self._api.buy_browse_search(q=self.q):
-            self.assertIsNotNone(self._api.buy_browse_get_item(item_id=item['item_id']),
+            self.assertIsNotNone(self._api.buy_browse_get_item(item_id=item['item_id'], fieldgroups='PRODUCT'),
                                  msg="A call with one positional and no kw arguments failed.")
             break
 
