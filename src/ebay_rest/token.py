@@ -42,7 +42,7 @@ class _CredentialUtil:
         for key in content:
             logging.debug("Environment attempted: %s", key)
 
-            if key in [_Environment.PRODUCTION.config_id, _Environment.SANDBOX.config_id]:
+            if key in ["api.ebay.com", "api.sandbox.ebay.com"]:
                 client_id = content[key]['appid']
                 dev_id = content[key]['devid']
                 client_secret = content[key]['certid']
@@ -51,15 +51,19 @@ class _CredentialUtil:
                 app_info = _Credentials(client_id, client_secret, dev_id, ru_name)
                 self._credential_list.update({key: app_info})
 
-    def get_credentials(self, env_type):
+    def get_credentials(self, sandbox):
         """
-        env_config_id: environment.PRODUCTION.config_id or environment.SANDBOX.config_id
+        sandbox: boolean
         """
         if len(self._credential_list) == 0:
             msg = "No environment loaded from configuration file"
             logging.error(msg)
             raise _CredentialNotLoadedError(msg)
-        return self._credential_list[env_type.config_id]
+        if sandbox:
+            config_id = "api.sandbox.ebay.com"
+        else:
+            config_id = "api.ebay.com"
+        return self._credential_list[config_id]
 
     def update_credentials(self, sandbox: bool, credentials: _Credentials):
         """
@@ -71,73 +75,15 @@ class _CredentialUtil:
         :param
         credentials (Credentials): A Credentials instance.
         """
-        key = _Environment.SANDBOX.config_id if sandbox else _Environment.PRODUCTION.config_id
+        if sandbox:
+            key = "api.sandbox.ebay.com"
+        else:
+            key = "api.ebay.com"
         self._credential_list.update({key: credentials})
 
 
 class _CredentialNotLoadedError(Exception):
     pass
-
-
-class _EnvType(object):
-    def __init__(self, config_id, web_endpoint, api_endpoint):
-        self.config_id = config_id
-        self.web_endpoint = web_endpoint
-        self.api_endpoint = api_endpoint
-
-
-class _Environment(object):
-    PRODUCTION = _EnvType("api.ebay.com",
-                          "https://auth.ebay.com/oauth2/authorize",
-                          "https://api.ebay.com/identity/v1/oauth2/token")
-    SANDBOX = _EnvType("api.sandbox.ebay.com",
-                       "https://auth.sandbox.ebay.com/oauth2/authorize",
-                       "https://api.sandbox.ebay.com/identity/v1/oauth2/token")
-
-
-class _Generate:
-    @staticmethod
-    def request_headers(credential):
-
-        b64_encoded_credential = base64.b64encode((credential.client_id + ':' + credential.client_secret).encode())
-        headers = {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Basic ' + b64_encoded_credential.decode()
-        }
-
-        return headers
-
-    @staticmethod
-    def application_request_body(credential, scopes):
-
-        body = {
-                'grant_type': 'client_credentials',
-                'redirect_uri': credential.ru_name,
-                'scope': scopes
-        }
-
-        return body
-
-    @staticmethod
-    def refresh_request_body(scopes, refresh_token):
-        if refresh_token is None:
-            raise ValueError("credential object does not contain refresh_token and/or scopes")
-
-        body = {
-                'grant_type': 'refresh_token',
-                'refresh_token': refresh_token,
-                'scope': scopes
-        }
-        return body
-
-    @staticmethod
-    def oauth_request_body(credential, code):
-        body = {
-                'grant_type': 'authorization_code',
-                'redirect_uri': credential.ru_name,
-                'code': code
-        }
-        return body
 
 
 class _OAuthToken(object):
@@ -179,15 +125,14 @@ class _OAuth2Api:
 
         :param credential_store: Typically a CredentialUtil instance.
         """
-        self.credential_store = credential_store or _CredentialUtil()
+        self._credential_store = credential_store or _CredentialUtil()
 
-    def generate_user_authorization_url(self, env_type, scopes, state=None):
+    def generate_user_authorization_url(self, sandbox, scopes, state=None):
         """
-            env_type = environment.SANDBOX or environment.PRODUCTION
+            sandbox = boolean
             scopes = list of strings
         """
-
-        credential = self.credential_store.get_credentials(env_type)
+        credential = self._credential_store.get_credentials(sandbox)
 
         scopes = ' '.join(scopes)
         param = {
@@ -202,32 +147,47 @@ class _OAuth2Api:
             param.update({'state': state})
 
         query = urlencode(param)
-        return env_type.web_endpoint + '?' + query
+        if sandbox:
+            web_endpoint = "https://auth.sandbox.ebay.com/oauth2/authorize"
+        else:
+            web_endpoint = "https://auth.ebay.com/oauth2/authorize"
+        return web_endpoint + '?' + query
 
-    def get_application_token(self, env_type, scopes):
+    def get_application_token(self, sandbox, scopes):
         """
             makes call for application token and stores result in credential object
             returns credential object
         """
 
         logging.debug("Trying to get a new application access token ... ")
-        credential = self.credential_store.get_credentials(env_type)
-        headers = _Generate.request_headers(credential)
-        body = _Generate.application_request_body(credential, ' '.join(scopes))
+        credential = self._credential_store.get_credentials(sandbox)
+        headers = self._generate_request_headers(credential)
+        body = self._generate_application_request_body(credential, ' '.join(scopes))
 
-        resp = requests.post(env_type.api_endpoint, data=body, headers=headers)
+        if sandbox:
+            api_endpoint = "https://api.sandbox.ebay.com/identity/v1/oauth2/token"
+        else:
+            api_endpoint = "https://api.ebay.com/identity/v1/oauth2/token"
+
+        resp = requests.post(api_endpoint, data=body, headers=headers)
         content = json.loads(resp.content)
         token = _OAuthToken()
 
         return self._finish(resp, token, content)
 
-    def exchange_code_for_access_token(self, env_type, code):
+    def exchange_code_for_access_token(self, sandbox, code):
         logging.debug("Trying to get a new user access token ... ")
-        credential = self.credential_store.get_credentials(env_type)
 
-        headers = _Generate.request_headers(credential)
-        body = _Generate.oauth_request_body(credential, code)
-        resp = requests.post(env_type.api_endpoint, data=body, headers=headers)
+        credential = self._credential_store.get_credentials(sandbox)
+
+        headers = self._generate_request_headers(credential)
+        body = self._generate_oauth_request_body(credential, code)
+
+        if sandbox:
+            api_endpoint = "https://api.sandbox.ebay.com/identity/v1/oauth2/token"
+        else:
+            api_endpoint = "https://api.ebay.com/identity/v1/oauth2/token"
+        resp = requests.post(api_endpoint, data=body, headers=headers)
 
         content = json.loads(resp.content)
         token = _OAuthToken()
@@ -242,23 +202,70 @@ class _OAuth2Api:
 
         return self._finish(resp, token, content)
 
-    def get_access_token(self, env_type, refresh_token, scopes):
+    def get_access_token(self, sandbox, refresh_token, scopes):
         """
         refresh token call
         """
 
         logging.debug("Trying to get a new user access token ... ")
 
-        credential = self.credential_store.get_credentials(env_type)
+        credential = self._credential_store.get_credentials(sandbox)
+        if sandbox:
+            api_endpoint = "https://api.sandbox.ebay.com/identity/v1/oauth2/token"
+        else:
+            api_endpoint = "https://api.ebay.com/identity/v1/oauth2/token"
 
-        headers = _Generate.request_headers(credential)
-        body = _Generate.refresh_request_body(scopes, refresh_token)
-        resp = requests.post(env_type.api_endpoint, data=body, headers=headers)
+        headers = self._generate_request_headers(credential)
+        body = self._generate_refresh_request_body(scopes, refresh_token)
+        resp = requests.post(api_endpoint, data=body, headers=headers)
         content = json.loads(resp.content)
         token = _OAuthToken()
         token.token_response = content
 
         return self._finish(resp, token, content)
+
+    @staticmethod
+    def _generate_request_headers(credential):
+
+        b64_encoded_credential = base64.b64encode((credential.client_id + ':' + credential.client_secret).encode())
+        headers = {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic ' + b64_encoded_credential.decode()
+        }
+
+        return headers
+
+    @staticmethod
+    def _generate_application_request_body(credential, scopes):
+
+        body = {
+                'grant_type': 'client_credentials',
+                'redirect_uri': credential.ru_name,
+                'scope': scopes
+        }
+
+        return body
+
+    @staticmethod
+    def _generate_refresh_request_body(scopes, refresh_token):
+        if refresh_token is None:
+            raise ValueError("credential object does not contain refresh_token and/or scopes")
+
+        body = {
+                'grant_type': 'refresh_token',
+                'refresh_token': refresh_token,
+                'scope': scopes
+        }
+        return body
+
+    @staticmethod
+    def _generate_oauth_request_body(credential, code):
+        body = {
+                'grant_type': 'authorization_code',
+                'redirect_uri': credential.ru_name,
+                'code': code
+        }
+        return body
 
     @staticmethod
     def _finish(resp, token, content):
@@ -387,11 +394,10 @@ class Token:
             # permission is always granted for all
             scopes = list(Reference.get_application_scopes().keys())
         else:
-            env = _Environment.PRODUCTION
             scopes = []
             for scope in Reference.get_application_scopes():
                 token_application = cls._oauth2api_inst.get_application_token(
-                    env, [scope])
+                    sandbox, [scope])
                 if token_application.error is None:
                     if token_application.access_token is not None:
                         if len(token_application.access_token) > 0:
@@ -408,12 +414,10 @@ class Token:
         sandbox (bool): {True, False} For the sandbox True, for production False.
         """
 
-        env = _Environment.SANDBOX if sandbox else _Environment.PRODUCTION
-
         # Get the list of scopes which resemble urls.
         scopes = cls._application_scopes[sandbox]
 
-        token_application = cls._oauth2api_inst.get_application_token(env, scopes)
+        token_application = cls._oauth2api_inst.get_application_token(sandbox, scopes)
         if token_application.error is not None:
             reason = 'token_application.error ' + token_application.error
             raise Error(number=1, reason=reason)
@@ -511,15 +515,13 @@ class Token:
         # Get the list of scopes which resemble urls.
         scopes = cls._user_scopes[sandbox]
 
-        env = _Environment.SANDBOX if sandbox else _Environment.PRODUCTION
-
-        sign_in_url = cls._oauth2api_inst.generate_user_authorization_url(env, scopes)
+        sign_in_url = cls._oauth2api_inst.generate_user_authorization_url(sandbox, scopes)
         if sign_in_url is None:
             raise Error(number=1, reason='sign_in_url is None.')
 
         code = cls._get_authorization_code(sign_in_url)
 
-        refresh_token = cls._oauth2api_inst.exchange_code_for_access_token(env, code)
+        refresh_token = cls._oauth2api_inst.exchange_code_for_access_token(sandbox, code)
 
         if refresh_token.access_token is None:
             raise Error(number=1, reason='refresh_token.access_token is None.')
@@ -544,10 +546,9 @@ class Token:
         """
         cls._read_user_info()
 
-        env_key = "sandbox-user" if "sandbox" in sign_in_url else "production-user"
-
-        userid = cls._user_credential_list[env_key][0]
-        password = cls._user_credential_list[env_key][1]
+        key = "sandbox-user" if "sandbox" in sign_in_url else "production-user"
+        userid = cls._user_credential_list[key][0]
+        password = cls._user_credential_list[key][1]
 
         delay = 5  # delay seconds to give the page an opportunity to render
 
@@ -605,10 +606,8 @@ class Token:
         # Get the list of scopes which resemble urls.
         scopes = cls._user_scopes[sandbox]
 
-        env = _Environment.SANDBOX if sandbox else _Environment.PRODUCTION
-
         user_token = cls._oauth2api_inst.get_access_token(
-            env, cls._token_refresh_user[sandbox].refresh_token, scopes)
+            sandbox, cls._token_refresh_user[sandbox].refresh_token, scopes)
 
         if user_token.access_token is None:
             raise Error(number=1, reason='user_token.access_token is None.')
