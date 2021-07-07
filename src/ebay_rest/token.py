@@ -292,18 +292,21 @@ class Token:
     """
 
     def __init__(self, sandbox):
-        self._SANDBOX = sandbox     # warning, once set, do not change the value
+        self._sandbox = sandbox     # warning, once set, do not change the value
 
         self._lock = threading.Lock()
         self._credential_store = _CredentialUtil()
         self._oauth2api_inst = None
-        self._token_application = None
-        self._token_user = None
-        self._token_refresh_user = None
-        self._user_credential_list = dict()
+
         self._application_scopes = None
+        self._application_token = None
+
+        self._user_consent_get_allowed = True
+        self._user_id = None
+        self._user_password = None
         self._user_scopes = None
-        self._allow_get_user_consent = True
+        self._user_token = None
+        self._user_token_refresh = None
 
         directory = os.getcwd()  # get the current working directory
         user_config_path = os.path.join(directory, 'ebay_rest.json')
@@ -313,12 +316,12 @@ class Token:
         try:
             with open(user_config_path, 'r') as f:
                 content = json.loads(f.read())
-
-                for key in content:
-                    if key in ['production-user', 'sandbox-user']:
-                        userid = content[key]['username']
-                        password = content[key]['password']
-                        self._user_credential_list.update({key: [userid, password]})
+                key = "sandbox-user" if self._sandbox else "production-user"
+                if key in content:
+                    if 'username' in content[key]:
+                        self._user_id = content[key]['username']
+                    if 'password' in content[key]:
+                        self._user_password = content[key]['password']
         except IOError:
             raise Error(number=1, reason='Unable to open ' + user_config_path)
 
@@ -358,7 +361,7 @@ class Token:
         token, use a browser to get user consent.
         """
         # Create Credentials for sandbox/production
-        self._SANDBOX = sandbox
+        self._sandbox = sandbox
         app_info = _Credentials(app_id, cert_id, dev_id, ru_name)
         # Set up Token
         with self._lock:
@@ -370,11 +373,11 @@ class Token:
                 if not refresh_token_expiry:
                     raise ValueError(
                         'Must supply refresh token expiry with refresh token!')
-                self._token_refresh_user = _OAuthToken(
+                self._user_token_refresh = _OAuthToken(
                     refresh_token=refresh_token,
                     refresh_token_expiry=refresh_token_expiry
                 )
-            self._allow_get_user_consent = allow_get_user_consent
+            self._user_consent_get_allowed = allow_get_user_consent
 
     def get_application(self):
         """ Get an eBay Application Token. """
@@ -382,27 +385,27 @@ class Token:
             if self._application_scopes is None:
                 self._determine_application_scopes()
 
-            if self._token_application is None:
+            if self._application_token is None:
                 self._refresh_application()
 
-            if (self._token_application.token_expiry
+            if (self._application_token.token_expiry
                     .replace(tzinfo=timezone.utc) <= DateTime.now()):
                 self._refresh_application()
 
-            token = self._token_application.access_token
+            token = self._application_token.access_token
 
         return token
 
     def _determine_application_scopes(self):
         """ Determine the application scopes that are currently allowed. """
-        if self._SANDBOX:
+        if self._sandbox:
             # permission is always granted for all
             scopes = list(Reference.get_application_scopes().keys())
         else:
             scopes = []
             for scope in Reference.get_application_scopes():
                 token_application = self._oauth2api_inst.get_application_token(
-                    self._SANDBOX, [scope])
+                    self._sandbox, [scope])
                 if token_application.error is None:
                     if token_application.access_token is not None:
                         if len(token_application.access_token) > 0:
@@ -412,14 +415,14 @@ class Token:
 
     def _refresh_application(self):
         """ Refresh the eBay Application Token and update all that comes with it."""
-        token_application = self._oauth2api_inst.get_application_token(self._SANDBOX, self._application_scopes)
+        token_application = self._oauth2api_inst.get_application_token(self._sandbox, self._application_scopes)
         if token_application.error is not None:
             reason = 'token_application.error ' + token_application.error
             raise Error(number=1, reason=reason)
         if (token_application.access_token is None) or (len(token_application.access_token) == 0):
             raise Error(number=1, reason='token_application.access_token is missing.')
 
-        self._token_application = token_application
+        self._application_token = token_application
 
     def get_user(self):
         """ Get an eBay User Access Token. """
@@ -427,19 +430,19 @@ class Token:
             if self._user_scopes is None:
                 self._determine_user_scopes()
 
-            if self._token_user is None:
+            if self._user_token is None:
                 self._refresh_user()
 
-            if (self._token_user.token_expiry
+            if (self._user_token.token_expiry
                     .replace(tzinfo=timezone.utc) <= DateTime.now()):
                 self._refresh_user()
 
-            token = self._token_user.access_token
+            token = self._user_token.access_token
         return token
 
     def _determine_user_scopes(self):
         """ Determine the user access scopes that are currently allowed. """
-        if self._SANDBOX:
+        if self._sandbox:
             # permission is always granted for all
             scopes = list(Reference.get_user_scopes().keys())
         else:
@@ -456,11 +459,11 @@ class Token:
         Refresh the eBay User Access Token and update all that comes with it.
         If we don't have a current refresh token, run the authorization flow.
         """
-        if self._token_refresh_user is None:
+        if self._user_token_refresh is None:
             # We don't have a refresh token; run authorization flow
             self._authorization_flow()
 
-        elif (self._token_refresh_user.refresh_token_expiry
+        elif (self._user_token_refresh.refresh_token_expiry
                 .replace(tzinfo=timezone.utc) <= DateTime.now()):
             # The refresh token has expired; run authorization flow
             self._authorization_flow()
@@ -475,16 +478,16 @@ class Token:
         then exchange that for a refresh token (which also contains a
         user token).
         """
-        if not self._allow_get_user_consent:
+        if not self._user_consent_get_allowed:
             raise RuntimeError('Getting user consent via browser disabled')
 
-        sign_in_url = self._oauth2api_inst.generate_user_authorization_url(self._SANDBOX, self._user_scopes)
+        sign_in_url = self._oauth2api_inst.generate_user_authorization_url(self._sandbox, self._user_scopes)
         if sign_in_url is None:
             raise Error(number=1, reason='sign_in_url is None.')
 
         code = self._get_authorization_code(sign_in_url)
 
-        refresh_token = self._oauth2api_inst.exchange_code_for_access_token(self._SANDBOX, code)
+        refresh_token = self._oauth2api_inst.exchange_code_for_access_token(self._sandbox, code)
 
         if refresh_token.access_token is None:
             raise Error(number=1, reason='refresh_token.access_token is None.')
@@ -492,10 +495,10 @@ class Token:
             raise Error(number=1, reason='refresh_token.access_token is of length zero.')
 
         # Split token into refresh token and user token parts
-        self._token_refresh_user = _OAuthToken(
+        self._user_token_refresh = _OAuthToken(
             refresh_token=refresh_token.refresh_token,
             refresh_token_expiry=refresh_token.refresh_token_expiry)
-        self._token_user = _OAuthToken(
+        self._user_token = _OAuthToken(
             access_token=refresh_token.access_token,
             token_expiry=refresh_token.token_expiry)
 
@@ -506,9 +509,6 @@ class Token:
         :param
         sign_in_url (str): The redirect URL for gaining user consent
         """
-        key = "sandbox-user" if "sandbox" in sign_in_url else "production-user"
-        userid = self._user_credential_list[key][0]
-        password = self._user_credential_list[key][1]
 
         delay = 5  # delay seconds to give the page an opportunity to render
 
@@ -523,13 +523,13 @@ class Token:
 
         # fill in the username then click continue
         form_userid = browser.find_element_by_name('userid')
-        form_userid.send_keys(userid)
+        form_userid.send_keys(self._user_id)
         browser.find_element_by_id('signin-continue-btn').click()
         time.sleep(delay)
 
         # fill in the password then submit
         form_pw = browser.find_element_by_name('pass')
-        form_pw.send_keys(password)
+        form_pw.send_keys(self._user_password)
         browser.find_element_by_id('sgnBt').submit()
         time.sleep(delay)
 
@@ -549,7 +549,7 @@ class Token:
                 is_auth_successful = False
         if not is_auth_successful:
             reason = (
-                f"Authorization unsuccessful, check userid & password: {userid} {password}"
+                f"Authorization unsuccessful, check userid & password: {self._user_id} {self._user_password}"
             )
             raise Error(number=1, reason=reason)
 
@@ -563,11 +563,11 @@ class Token:
         """Exchange a refresh token for a current user token."""
 
         user_token = self._oauth2api_inst.get_access_token(
-            self._SANDBOX, self._token_refresh_user.refresh_token, self._user_scopes)
+            self._sandbox, self._user_token_refresh.refresh_token, self._user_scopes)
 
         if user_token.access_token is None:
             raise Error(number=1, reason='user_token.access_token is None.')
         if len(user_token.access_token) == 0:
             raise Error(number=1, reason='user_token.access_token is of length zero.')
 
-        self._token_user = user_token
+        self._user_token = user_token

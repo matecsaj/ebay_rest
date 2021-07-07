@@ -209,8 +209,8 @@ class APIOther(unittest.TestCase):
         self.assertIsNotNone(self._api.developer_analytics_get_rate_limits(),
                              msg="A call with zero positional and no kw arguments failed.")
 
-    @unittest.skip  # TODO Why does the get_item call fail sometimes?
     def test_positional_one_kw_none(self):
+        # TODO Why does the get_item call fail sometimes?
         for item in self._api.buy_browse_search(q=self.q):
             self.assertIsNotNone(self._api.buy_browse_get_item(item_id=item['item_id'], fieldgroups='PRODUCT'),
                                  msg="A call with one positional and no kw arguments failed.")
