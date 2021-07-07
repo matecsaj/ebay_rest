@@ -287,22 +287,44 @@ class _OAuth2Api:
 class Token:
     """ Initialize, refresh and supply an eBay OAuth application token.
 
-    This is a facade for the oath module. Instantiation is not required.
+    This is a facade for the oath module.
     """
-    _lock = threading.Lock()
-    _credential_store = _CredentialUtil()
-    _oauth2api_inst = None
-    _token_application = dict()
-    _token_user = dict()
-    _token_refresh_user = dict()
-    _user_credential_list = dict()
-    _application_scopes = dict()
-    _user_scopes = dict()
-    _allow_get_user_consent = True
 
-    @classmethod
+    def __init__(self, sandbox):
+        self.sandbox = sandbox
+
+        self._lock = threading.Lock()
+        self._credential_store = _CredentialUtil()
+        self._oauth2api_inst = None
+        self._token_application = dict()
+        self._token_user = dict()
+        self._token_refresh_user = dict()
+        self._user_credential_list = dict()
+        self._application_scopes = dict()
+        self._user_scopes = dict()
+        self._allow_get_user_consent = True
+
+        if self._oauth2api_inst is None:
+            directory = os.getcwd()  # get the current working directory
+            self._credential_store.load(os.path.join(directory, 'ebay_rest.json'))
+            self._oauth2api_inst = _OAuth2Api(credential_store=self._credential_store)
+
+        directory = os.getcwd()  # get the current working directory
+        user_config_path = os.path.join(directory, 'ebay_rest.json')
+        try:
+            with open(user_config_path, 'r') as f:
+                content = json.loads(f.read())
+
+                for key in content:
+                    if key in ['production-user', 'sandbox-user']:
+                        userid = content[key]['username']
+                        password = content[key]['password']
+                        self._user_credential_list.update({key: [userid, password]})
+        except IOError:
+            raise Error(number=1, reason='Unable to open ' + user_config_path)
+
     def set_credentials(
-            cls, sandbox: bool, app_id, cert_id,
+            self, sandbox: bool, app_id, cert_id,
             dev_id, ru_name=None, scopes=None,
             refresh_token=None, refresh_token_expiry=None,
             allow_get_user_consent=True):
@@ -339,23 +361,22 @@ class Token:
         # Create Credentials for sandbox/production
         app_info = _Credentials(app_id, cert_id, dev_id, ru_name)
         # Set up Token
-        with cls._lock:
-            cls._credential_store.update_credentials(sandbox, app_info)
-            cls._oauth2api_inst = _OAuth2Api(credential_store=cls._credential_store)
+        with self._lock:
+            self._credential_store.update_credentials(sandbox, app_info)
+            self._oauth2api_inst = _OAuth2Api(credential_store=self._credential_store)
             if scopes:
-                cls._user_scopes[sandbox] = scopes
+                self._user_scopes[sandbox] = scopes
             if refresh_token:
                 if not refresh_token_expiry:
                     raise ValueError(
                         'Must supply refresh token expiry with refresh token!')
-                cls._token_refresh_user[sandbox] = _OAuthToken(
+                self._token_refresh_user[sandbox] = _OAuthToken(
                     refresh_token=refresh_token,
                     refresh_token_expiry=refresh_token_expiry
                 )
-            cls._allow_get_user_consent = allow_get_user_consent
+            self._allow_get_user_consent = allow_get_user_consent
 
-    @classmethod
-    def get_application(cls, sandbox: bool):
+    def get_application(self):
         """
         Get an eBay Application Token.
 
@@ -365,25 +386,22 @@ class Token:
         sandbox (bool): {True, False} For the sandbox True, for production False.
         """
 
-        with cls._lock:
-            cls._instantiate()
+        with self._lock:
+            if self.sandbox not in self._application_scopes:
+                self._determine_application_scopes(self.sandbox)
 
-            if sandbox not in cls._application_scopes:
-                cls._determine_application_scopes(sandbox)
+            if self.sandbox not in self._token_application:
+                self._refresh_application(self.sandbox)
 
-            if sandbox not in cls._token_application:
-                cls._refresh_application(sandbox)
-
-            if (cls._token_application[sandbox].token_expiry
+            if (self._token_application[self.sandbox].token_expiry
                     .replace(tzinfo=timezone.utc) <= DateTime.now()):
-                cls._refresh_application(sandbox)
+                self._refresh_application(self.sandbox)
 
-            token = cls._token_application[sandbox].access_token
+            token = self._token_application[self.sandbox].access_token
 
         return token
 
-    @classmethod
-    def _determine_application_scopes(cls, sandbox: bool):
+    def _determine_application_scopes(self, sandbox: bool):
         """
         Determine the application scopes that are currently allowed.
 
@@ -396,17 +414,16 @@ class Token:
         else:
             scopes = []
             for scope in Reference.get_application_scopes():
-                token_application = cls._oauth2api_inst.get_application_token(
+                token_application = self._oauth2api_inst.get_application_token(
                     sandbox, [scope])
                 if token_application.error is None:
                     if token_application.access_token is not None:
                         if len(token_application.access_token) > 0:
                             scopes.append(scope)
 
-        cls._application_scopes[sandbox] = scopes
+        self._application_scopes[sandbox] = scopes
 
-    @classmethod
-    def _refresh_application(cls, sandbox: bool):
+    def _refresh_application(self, sandbox: bool):
         """
         Refresh the eBay Application Token and update all that comes with it.
 
@@ -415,19 +432,18 @@ class Token:
         """
 
         # Get the list of scopes which resemble urls.
-        scopes = cls._application_scopes[sandbox]
+        scopes = self._application_scopes[sandbox]
 
-        token_application = cls._oauth2api_inst.get_application_token(sandbox, scopes)
+        token_application = self._oauth2api_inst.get_application_token(sandbox, scopes)
         if token_application.error is not None:
             reason = 'token_application.error ' + token_application.error
             raise Error(number=1, reason=reason)
         if (token_application.access_token is None) or (len(token_application.access_token) == 0):
             raise Error(number=1, reason='token_application.access_token is missing.')
 
-        cls._token_application[sandbox] = token_application
+        self._token_application[sandbox] = token_application
 
-    @classmethod
-    def get_user(cls, sandbox: bool):
+    def get_user(self):
         """
         Get an eBay User Access Token.
 
@@ -437,25 +453,22 @@ class Token:
         sandbox (bool): {True, False} For the sandbox True, for production False.
         """
 
-        with cls._lock:
-            cls._instantiate()
+        with self._lock:
+            if self.sandbox not in self._user_scopes:
+                self._determine_user_scopes(self.sandbox)
 
-            if sandbox not in cls._user_scopes:
-                cls._determine_user_scopes(sandbox)
+            if self.sandbox not in self._token_user:
+                self._refresh_user(self.sandbox)
 
-            if sandbox not in cls._token_user:
-                cls._refresh_user(sandbox)
-
-            if (cls._token_user[sandbox].token_expiry
+            if (self._token_user[self.sandbox].token_expiry
                     .replace(tzinfo=timezone.utc) <= DateTime.now()):
-                cls._refresh_user(sandbox)
+                self._refresh_user(self.sandbox)
 
-            token = cls._token_user[sandbox].access_token
+            token = self._token_user[self.sandbox].access_token
 
         return token
 
-    @classmethod
-    def _determine_user_scopes(cls, sandbox: bool):
+    def _determine_user_scopes(self, sandbox: bool):
         """
         Determine the user access scopes that are currently allowed.
 
@@ -473,10 +486,9 @@ class Token:
                       "https://api.ebay.com/oauth/api_scope/sell.account",
                       "https://api.ebay.com/oauth/api_scope/sell.fulfillment"]
 
-        cls._user_scopes[sandbox] = scopes
+        self._user_scopes[sandbox] = scopes
 
-    @classmethod
-    def _refresh_user(cls, sandbox: bool):
+    def _refresh_user(self, sandbox: bool):
         """
         Refresh the eBay User Access Token and update all that comes with it.
         If we don't have a current refresh token, run the authorization flow.
@@ -485,22 +497,21 @@ class Token:
         sandbox (bool): {True, False} For the sandbox True, for production False.
         """
 
-        if sandbox not in cls._token_refresh_user:
+        if sandbox not in self._token_refresh_user:
             # We don't have a refresh token; run authorization flow
-            cls._authorization_flow(sandbox)
+            self._authorization_flow(sandbox)
 
-        elif (cls._token_refresh_user[sandbox].refresh_token_expiry
+        elif (self._token_refresh_user[sandbox].refresh_token_expiry
                 .replace(tzinfo=timezone.utc) <= DateTime.now()):
             # The refresh token has expired; run authorization flow
-            cls._authorization_flow(sandbox)
+            self._authorization_flow(sandbox)
 
         else:
             # Exchange our still current refresh token for a
             # new user access token
-            cls._refresh_user_token(sandbox)
+            self._refresh_user_token(sandbox)
 
-    @classmethod
-    def _authorization_flow(cls, sandbox: bool):
+    def _authorization_flow(self, sandbox: bool):
         """Get an authorization code by running the authorization_flow, and
         then exchange that for a refresh token (which also contains a
         user token).
@@ -509,19 +520,19 @@ class Token:
         sandbox (bool): {True, False} For the sandbox True, for production False.
         """
 
-        if not cls._allow_get_user_consent:
+        if not self._allow_get_user_consent:
             raise RuntimeError('Getting user consent via browser disabled')
 
         # Get the list of scopes which resemble urls.
-        scopes = cls._user_scopes[sandbox]
+        scopes = self._user_scopes[sandbox]
 
-        sign_in_url = cls._oauth2api_inst.generate_user_authorization_url(sandbox, scopes)
+        sign_in_url = self._oauth2api_inst.generate_user_authorization_url(sandbox, scopes)
         if sign_in_url is None:
             raise Error(number=1, reason='sign_in_url is None.')
 
-        code = cls._get_authorization_code(sign_in_url)
+        code = self._get_authorization_code(sign_in_url)
 
-        refresh_token = cls._oauth2api_inst.exchange_code_for_access_token(sandbox, code)
+        refresh_token = self._oauth2api_inst.exchange_code_for_access_token(sandbox, code)
 
         if refresh_token.access_token is None:
             raise Error(number=1, reason='refresh_token.access_token is None.')
@@ -529,26 +540,23 @@ class Token:
             raise Error(number=1, reason='refresh_token.access_token is of length zero.')
 
         # Split token into refresh token and user token parts
-        cls._token_refresh_user[sandbox] = _OAuthToken(
+        self._token_refresh_user[sandbox] = _OAuthToken(
             refresh_token=refresh_token.refresh_token,
             refresh_token_expiry=refresh_token.refresh_token_expiry)
-        cls._token_user[sandbox] = _OAuthToken(
+        self._token_user[sandbox] = _OAuthToken(
             access_token=refresh_token.access_token,
             token_expiry=refresh_token.token_expiry)
 
-    @classmethod
-    def _get_authorization_code(cls, sign_in_url: str):
+    def _get_authorization_code(self, sign_in_url: str):
         """Run the authorization flow in order to get an authorization code,
         which can subsequently be exchanged for a refresh (and user) token.
 
         :param
         sign_in_url (str): The redirect URL for gaining user consent
         """
-        cls._read_user_info()
-
         key = "sandbox-user" if "sandbox" in sign_in_url else "production-user"
-        userid = cls._user_credential_list[key][0]
-        password = cls._user_credential_list[key][1]
+        userid = self._user_credential_list[key][0]
+        password = self._user_credential_list[key][1]
 
         delay = 5  # delay seconds to give the page an opportunity to render
 
@@ -599,44 +607,18 @@ class Token:
         else:
             raise Error(number=1, reason="Unable to obtain code.")
 
-    @classmethod
-    def _refresh_user_token(cls, sandbox: bool):
+    def _refresh_user_token(self, sandbox: bool):
         """Exchange a refresh token for a current user token."""
 
         # Get the list of scopes which resemble urls.
-        scopes = cls._user_scopes[sandbox]
+        scopes = self._user_scopes[sandbox]
 
-        user_token = cls._oauth2api_inst.get_access_token(
-            sandbox, cls._token_refresh_user[sandbox].refresh_token, scopes)
+        user_token = self._oauth2api_inst.get_access_token(
+            sandbox, self._token_refresh_user[sandbox].refresh_token, scopes)
 
         if user_token.access_token is None:
             raise Error(number=1, reason='user_token.access_token is None.')
         if len(user_token.access_token) == 0:
             raise Error(number=1, reason='user_token.access_token is of length zero.')
 
-        cls._token_user[sandbox] = user_token
-
-    @classmethod
-    def _read_user_info(cls):
-
-        directory = os.getcwd()  # get the current working directory
-        user_config_path = os.path.join(directory, 'ebay_rest.json')
-        try:
-            with open(user_config_path, 'r') as f:
-                content = json.loads(f.read())
-
-                for key in content:
-                    if key in ['production-user', 'sandbox-user']:
-                        userid = content[key]['username']
-                        password = content[key]['password']
-                        cls._user_credential_list.update({key: [userid, password]})
-        except IOError:
-            raise Error(number=1, reason='Unable to open ' + user_config_path)
-
-    @classmethod
-    def _instantiate(cls):
-
-        if cls._oauth2api_inst is None:
-            directory = os.getcwd()  # get the current working directory
-            cls._credential_store.load(os.path.join(directory, 'ebay_rest.json'))
-            cls._oauth2api_inst = _OAuth2Api(credential_store=cls._credential_store)
+        self._token_user[sandbox] = user_token
