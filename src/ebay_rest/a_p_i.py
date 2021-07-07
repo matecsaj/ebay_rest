@@ -145,7 +145,7 @@ class API:
                         number = 0
                         reason = "sandbox must be unspecified, True or False."
                     else:
-                        self._sandbox = sandbox
+                        self._SANDBOX = sandbox
 
                     valid = []
                     for global_id_value in Reference.get_global_id_values():
@@ -368,7 +368,7 @@ class API:
             raise
 
         # Configure the host endpoint
-        if self._sandbox:
+        if self._SANDBOX:
             configuration.host = configuration.host.replace('.ebay.com',
                                                             '.sandbox.ebay.com')
         # check for host has flaws and then then compensate
@@ -419,7 +419,7 @@ class API:
         :param
         rate (list) : Strings, keys used to lookup a rate
         """
-        if not self._sandbox:       # eBay does not limit calls to the sandbox
+        if not self._SANDBOX:       # eBay does not limit calls to the sandbox
 
             if not self._throttle:
                 Rates.decrement_rate(base_path=base_path, rate_keys=rate_keys)
