@@ -23,69 +23,6 @@ class _Credentials(object):
         self.ru_name = ru_name
 
 
-class _CredentialUtil:
-    """
-    credential_list: dictionary key=string, value=credentials
-    """
-    _credential_list = {}
-
-    def load(self, app_config_path):
-        logging.debug("Loading credential configuration file at: %s", app_config_path)
-        with open(app_config_path, 'r') as f:
-            if app_config_path.endswith('.json'):
-                content = json.loads(f.read())
-            else:
-                raise ValueError('Configuration file need to be in JSON.')
-            self._iterate(content)
-
-    def _iterate(self, content):
-        for key in content:
-            logging.debug("Environment attempted: %s", key)
-
-            if key in ["api.ebay.com", "api.sandbox.ebay.com"]:
-                client_id = content[key]['appid']
-                dev_id = content[key]['devid']
-                client_secret = content[key]['certid']
-                ru_name = content[key]['redirecturi']
-
-                app_info = _Credentials(client_id, client_secret, dev_id, ru_name)
-                self._credential_list.update({key: app_info})
-
-    def get_credentials(self, sandbox):
-        """
-        sandbox: boolean
-        """
-        if len(self._credential_list) == 0:
-            msg = "No environment loaded from configuration file"
-            logging.error(msg)
-            raise _CredentialNotLoadedError(msg)
-        if sandbox:
-            config_id = "api.sandbox.ebay.com"
-        else:
-            config_id = "api.ebay.com"
-        return self._credential_list[config_id]
-
-    def update_credentials(self, sandbox: bool, credentials: _Credentials):
-        """
-        Directly update the list of credentials.
-
-        :param
-        sandbox (bool): {True, False} For the sandbox True, for production False.
-
-        :param
-        credentials (Credentials): A Credentials instance.
-        """
-        if sandbox:
-            key = "api.sandbox.ebay.com"
-        else:
-            key = "api.ebay.com"
-        self._credential_list.update({key: credentials})
-
-
-class _CredentialNotLoadedError(Exception):
-    pass
-
-
 class _OAuthToken(object):
 
     def __init__(self, error=None, access_token=None, refresh_token=None, refresh_token_expiry=None, token_expiry=None):
@@ -120,24 +57,22 @@ class _OAuthToken(object):
 
 
 class _OAuth2Api:
-    def __init__(self, credential_store=None):
+    def __init__(self, credentials=None):
         """Initialize OAuth2Api instance
 
-        :param credential_store: Typically a CredentialUtil instance.
+        :param credentials: A _Credentials instance.
         """
-        self._credential_store = credential_store or _CredentialUtil()
+        self._credentials = credentials
 
     def generate_user_authorization_url(self, sandbox, scopes, state=None):
         """
             sandbox = boolean
             scopes = list of strings
         """
-        credential = self._credential_store.get_credentials(sandbox)
-
         scopes = ' '.join(scopes)
         param = {
-            'client_id': credential.client_id,
-            'redirect_uri': credential.ru_name,
+            'client_id': self._credentials.client_id,
+            'redirect_uri': self._credentials.ru_name,
             'response_type': 'code',
             'prompt': 'login',
             'scope': scopes
@@ -160,9 +95,8 @@ class _OAuth2Api:
         """
 
         logging.debug("Trying to get a new application access token ... ")
-        credential = self._credential_store.get_credentials(sandbox)
-        headers = self._generate_request_headers(credential)
-        body = self._generate_application_request_body(credential, ' '.join(scopes))
+        headers = self._generate_request_headers()
+        body = self._generate_application_request_body(' '.join(scopes))
 
         if sandbox:
             api_endpoint = "https://api.sandbox.ebay.com/identity/v1/oauth2/token"
@@ -178,10 +112,8 @@ class _OAuth2Api:
     def exchange_code_for_access_token(self, sandbox, code):
         logging.debug("Trying to get a new user access token ... ")
 
-        credential = self._credential_store.get_credentials(sandbox)
-
-        headers = self._generate_request_headers(credential)
-        body = self._generate_oauth_request_body(credential, code)
+        headers = self._generate_request_headers()
+        body = self._generate_oauth_request_body(code)
 
         if sandbox:
             api_endpoint = "https://api.sandbox.ebay.com/identity/v1/oauth2/token"
@@ -209,13 +141,12 @@ class _OAuth2Api:
 
         logging.debug("Trying to get a new user access token ... ")
 
-        credential = self._credential_store.get_credentials(sandbox)
         if sandbox:
             api_endpoint = "https://api.sandbox.ebay.com/identity/v1/oauth2/token"
         else:
             api_endpoint = "https://api.ebay.com/identity/v1/oauth2/token"
 
-        headers = self._generate_request_headers(credential)
+        headers = self._generate_request_headers()
         body = self._generate_refresh_request_body(scopes, refresh_token)
         resp = requests.post(api_endpoint, data=body, headers=headers)
         content = json.loads(resp.content)
@@ -224,10 +155,10 @@ class _OAuth2Api:
 
         return self._finish(resp, token, content)
 
-    @staticmethod
-    def _generate_request_headers(credential):
+    def _generate_request_headers(self):
 
-        b64_encoded_credential = base64.b64encode((credential.client_id + ':' + credential.client_secret).encode())
+        b64_encoded_credential = base64.b64encode((self._credentials.client_id + ':'
+                                                   + self._credentials.client_secret).encode())
         headers = {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': 'Basic ' + b64_encoded_credential.decode()
@@ -235,12 +166,11 @@ class _OAuth2Api:
 
         return headers
 
-    @staticmethod
-    def _generate_application_request_body(credential, scopes):
+    def _generate_application_request_body(self, scopes):
 
         body = {
                 'grant_type': 'client_credentials',
-                'redirect_uri': credential.ru_name,
+                'redirect_uri': self._credentials.ru_name,
                 'scope': scopes
         }
 
@@ -258,11 +188,10 @@ class _OAuth2Api:
         }
         return body
 
-    @staticmethod
-    def _generate_oauth_request_body(credential, code):
+    def _generate_oauth_request_body(self, code):
         body = {
                 'grant_type': 'authorization_code',
-                'redirect_uri': credential.ru_name,
+                'redirect_uri': self._credentials.ru_name,
                 'code': code
         }
         return body
@@ -295,7 +224,7 @@ class Token:
         self._sandbox = sandbox     # warning, once set, do not change the value
 
         self._lock = threading.Lock()
-        self._credential_store = _CredentialUtil()
+        self._credentials = None
         self._oauth2api_inst = None
 
         self._application_scopes = None
@@ -309,12 +238,25 @@ class Token:
         self._user_token_refresh = None
 
         directory = os.getcwd()  # get the current working directory
-        user_config_path = os.path.join(directory, 'ebay_rest.json')
-        self._credential_store.load(user_config_path)
-        self._oauth2api_inst = _OAuth2Api(credential_store=self._credential_store)
+        config_path = os.path.join(directory, 'ebay_rest.json')
+
+        with open(config_path, 'r') as f:
+            if config_path.endswith('.json'):
+                content = json.loads(f.read())
+                key = "api.sandbox.ebay.com" if self._sandbox else "api.ebay.com"
+                if key in content:
+                    client_id = content[key]['appid']
+                    dev_id = content[key]['devid']
+                    client_secret = content[key]['certid']
+                    ru_name = content[key]['redirecturi']
+                    self._credentials = _Credentials(client_id, client_secret, dev_id, ru_name)
+                    self._oauth2api_inst = _OAuth2Api(credentials=self._credentials)
+
+            else:
+                raise ValueError('Configuration file need to be in JSON.')
 
         try:
-            with open(user_config_path, 'r') as f:
+            with open(config_path, 'r') as f:
                 content = json.loads(f.read())
                 key = "sandbox-user" if self._sandbox else "production-user"
                 if key in content:
@@ -323,14 +265,15 @@ class Token:
                     if 'password' in content[key]:
                         self._user_password = content[key]['password']
         except IOError:
-            raise Error(number=1, reason='Unable to open ' + user_config_path)
+            raise Error(number=1, reason='Unable to open ' + config_path)
 
     def set_credentials(
             self, sandbox: bool, app_id, cert_id,
             dev_id, ru_name=None, scopes=None,
             refresh_token=None, refresh_token_expiry=None,
             allow_get_user_consent=True):
-        """Allow credentials to be populated in the Token class before an API is acquired.
+        """
+        Allow credentials to be populated in the Token class before an API is acquired.
 
         :param
         sandbox (bool): {True, False} For the sandbox True, for production False.
@@ -365,8 +308,7 @@ class Token:
         app_info = _Credentials(app_id, cert_id, dev_id, ru_name)
         # Set up Token
         with self._lock:
-            self._credential_store.update_credentials(sandbox, app_info)
-            self._oauth2api_inst = _OAuth2Api(credential_store=self._credential_store)
+            self._oauth2api_inst = _OAuth2Api(app_info)
             if scopes:
                 self._user_scopes = scopes
             if refresh_token:
