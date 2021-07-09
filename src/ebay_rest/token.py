@@ -16,7 +16,10 @@ from .reference import Reference
 
 
 class _Credentials(object):
-    def __init__(self, client_id, client_secret, dev_id, ru_name):
+    def __init__(self, sandbox, client_id, client_secret, dev_id, ru_name):
+        self.sandbox = sandbox
+
+        # application credentials
         self.client_id = client_id
         self.dev_id = dev_id
         self.client_secret = client_secret
@@ -64,9 +67,8 @@ class _OAuth2Api:
         """
         self._credentials = credentials
 
-    def generate_user_authorization_url(self, sandbox, scopes, state=None):
+    def generate_user_authorization_url(self, scopes, state=None):
         """
-            sandbox = boolean
             scopes = list of strings
         """
         scopes = ' '.join(scopes)
@@ -82,13 +84,13 @@ class _OAuth2Api:
             param.update({'state': state})
 
         query = urlencode(param)
-        if sandbox:
+        if self._credentials.sandbox:
             web_endpoint = "https://auth.sandbox.ebay.com/oauth2/authorize"
         else:
             web_endpoint = "https://auth.ebay.com/oauth2/authorize"
         return web_endpoint + '?' + query
 
-    def get_application_token(self, sandbox, scopes):
+    def get_application_token(self, scopes):
         """
             makes call for application token and stores result in credential object
             returns credential object
@@ -97,28 +99,19 @@ class _OAuth2Api:
         logging.debug("Trying to get a new application access token ... ")
         headers = self._generate_request_headers()
         body = self._generate_application_request_body(' '.join(scopes))
-
-        if sandbox:
-            api_endpoint = "https://api.sandbox.ebay.com/identity/v1/oauth2/token"
-        else:
-            api_endpoint = "https://api.ebay.com/identity/v1/oauth2/token"
-
+        api_endpoint = self._get_endpoint()
         resp = requests.post(api_endpoint, data=body, headers=headers)
         content = json.loads(resp.content)
         token = _OAuthToken()
 
         return self._finish(resp, token, content)
 
-    def exchange_code_for_access_token(self, sandbox, code):
+    def exchange_code_for_access_token(self, code):
         logging.debug("Trying to get a new user access token ... ")
 
         headers = self._generate_request_headers()
         body = self._generate_oauth_request_body(code)
-
-        if sandbox:
-            api_endpoint = "https://api.sandbox.ebay.com/identity/v1/oauth2/token"
-        else:
-            api_endpoint = "https://api.ebay.com/identity/v1/oauth2/token"
+        api_endpoint = self._get_endpoint()
         resp = requests.post(api_endpoint, data=body, headers=headers)
 
         content = json.loads(resp.content)
@@ -134,26 +127,28 @@ class _OAuth2Api:
 
         return self._finish(resp, token, content)
 
-    def get_access_token(self, sandbox, refresh_token, scopes):
+    def get_access_token(self, refresh_token, scopes):
         """
         refresh token call
         """
 
         logging.debug("Trying to get a new user access token ... ")
 
-        if sandbox:
-            api_endpoint = "https://api.sandbox.ebay.com/identity/v1/oauth2/token"
-        else:
-            api_endpoint = "https://api.ebay.com/identity/v1/oauth2/token"
-
         headers = self._generate_request_headers()
         body = self._generate_refresh_request_body(scopes, refresh_token)
+        api_endpoint = self._get_endpoint()
         resp = requests.post(api_endpoint, data=body, headers=headers)
         content = json.loads(resp.content)
         token = _OAuthToken()
         token.token_response = content
 
         return self._finish(resp, token, content)
+
+    def _get_endpoint(self):
+        if self._credentials.sandbox:
+            return "https://api.sandbox.ebay.com/identity/v1/oauth2/token"
+        else:
+            return "https://api.ebay.com/identity/v1/oauth2/token"
 
     def _generate_request_headers(self):
 
@@ -239,31 +234,30 @@ class Token:
 
         directory = os.getcwd()  # get the current working directory
         config_path = os.path.join(directory, 'ebay_rest.json')
-
-        with open(config_path, 'r') as f:
-            if config_path.endswith('.json'):
+        try:
+            with open(config_path, 'r') as f:
                 content = json.loads(f.read())
+
+                # load application credentials
                 key = "api.sandbox.ebay.com" if self._sandbox else "api.ebay.com"
                 if key in content:
                     client_id = content[key]['appid']
                     dev_id = content[key]['devid']
                     client_secret = content[key]['certid']
                     ru_name = content[key]['redirecturi']
-                    self._credentials = _Credentials(client_id, client_secret, dev_id, ru_name)
+                    self._credentials = _Credentials(sandbox, client_id, client_secret, dev_id, ru_name)
                     self._oauth2api_inst = _OAuth2Api(credentials=self._credentials)
+                else:
+                    raise Error(number=1, reason=key + 'is missing from ' + config_path)
 
-            else:
-                raise ValueError('Configuration file need to be in JSON.')
-
-        try:
-            with open(config_path, 'r') as f:
-                content = json.loads(f.read())
+                # load user credentials
                 key = "sandbox-user" if self._sandbox else "production-user"
                 if key in content:
                     if 'username' in content[key]:
                         self._user_id = content[key]['username']
                     if 'password' in content[key]:
                         self._user_password = content[key]['password']
+
         except IOError:
             raise Error(number=1, reason='Unable to open ' + config_path)
 
@@ -305,7 +299,7 @@ class Token:
         """
         # Create Credentials for sandbox/production
         self._sandbox = sandbox
-        app_info = _Credentials(app_id, cert_id, dev_id, ru_name)
+        app_info = _Credentials(sandbox, app_id, cert_id, dev_id, ru_name)
         # Set up Token
         with self._lock:
             self._oauth2api_inst = _OAuth2Api(app_info)
@@ -346,8 +340,7 @@ class Token:
         else:
             scopes = []
             for scope in Reference.get_application_scopes():
-                token_application = self._oauth2api_inst.get_application_token(
-                    self._sandbox, [scope])
+                token_application = self._oauth2api_inst.get_application_token([scope])
                 if token_application.error is None:
                     if token_application.access_token is not None:
                         if len(token_application.access_token) > 0:
@@ -357,7 +350,7 @@ class Token:
 
     def _refresh_application(self):
         """ Refresh the eBay Application Token and update all that comes with it."""
-        token_application = self._oauth2api_inst.get_application_token(self._sandbox, self._application_scopes)
+        token_application = self._oauth2api_inst.get_application_token(self._application_scopes)
         if token_application.error is not None:
             reason = 'token_application.error ' + token_application.error
             raise Error(number=1, reason=reason)
@@ -423,13 +416,13 @@ class Token:
         if not self._user_consent_get_allowed:
             raise RuntimeError('Getting user consent via browser disabled')
 
-        sign_in_url = self._oauth2api_inst.generate_user_authorization_url(self._sandbox, self._user_scopes)
+        sign_in_url = self._oauth2api_inst.generate_user_authorization_url(self._user_scopes)
         if sign_in_url is None:
             raise Error(number=1, reason='sign_in_url is None.')
 
         code = self._get_authorization_code(sign_in_url)
 
-        refresh_token = self._oauth2api_inst.exchange_code_for_access_token(self._sandbox, code)
+        refresh_token = self._oauth2api_inst.exchange_code_for_access_token(code)
 
         if refresh_token.access_token is None:
             raise Error(number=1, reason='refresh_token.access_token is None.')
@@ -504,8 +497,7 @@ class Token:
     def _refresh_user_token(self):
         """Exchange a refresh token for a current user token."""
 
-        user_token = self._oauth2api_inst.get_access_token(
-            self._sandbox, self._user_token_refresh.refresh_token, self._user_scopes)
+        user_token = self._oauth2api_inst.get_access_token(self._user_token_refresh.refresh_token, self._user_scopes)
 
         if user_token.access_token is None:
             raise Error(number=1, reason='user_token.access_token is None.')
