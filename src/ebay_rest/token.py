@@ -14,28 +14,6 @@ from .error import Error
 from .reference import Reference
 
 
-class Credentials(object):
-    def __init__(self, sandbox=None, client_id=None, client_secret=None, dev_id=None, ru_name=None, user_id=None,
-                 user_password=None, application_scopes=None, user_scopes=None, allow_get_user_consent=True,
-                 user_refresh_token=None, user_refresh_token_expiry=None):
-        self.sandbox = sandbox
-
-        # application/client
-        self.client_id = client_id
-        self.dev_id = dev_id
-        self.client_secret = client_secret
-        self.ru_name = ru_name
-        self.application_scopes = application_scopes
-
-        # user
-        self.user_id = user_id
-        self.user_password = user_password
-        self.user_scopes = user_scopes
-        self.allow_get_user_consent = allow_get_user_consent
-        self.user_refresh_token = user_refresh_token
-        self.user_refresh_token_expiry = user_refresh_token_expiry
-
-
 class _OAuthToken(object):
 
     def __init__(self, error=None, access_token=None, refresh_token=None, refresh_token_expiry=None, token_expiry=None):
@@ -70,12 +48,20 @@ class _OAuthToken(object):
 
 
 class _OAuth2Api:
-    def __init__(self, credentials=None):
+    def __init__(self, sandbox, client_id, client_secret, ru_name):
         """Initialize OAuth2Api instance
 
-        :param credentials: A _Credentials instance.
+        :param sandbox (bool, required):
+        :param client_id (str, required):
+        :param client_secret (str, required):
+        :param ru_name (str, required):
         """
-        self._credentials = credentials
+        self._sandbox = sandbox
+
+        # application/client
+        self._client_id = client_id
+        self._client_secret = client_secret
+        self._ru_name = ru_name
 
     def generate_user_authorization_url(self, scopes, state=None):
         """
@@ -83,8 +69,8 @@ class _OAuth2Api:
         """
         scopes = ' '.join(scopes)
         param = {
-            'client_id': self._credentials.client_id,
-            'redirect_uri': self._credentials.ru_name,
+            'client_id': self._client_id,
+            'redirect_uri': self._ru_name,
             'response_type': 'code',
             'prompt': 'login',
             'scope': scopes
@@ -94,7 +80,7 @@ class _OAuth2Api:
             param.update({'state': state})
 
         query = urlencode(param)
-        if self._credentials.sandbox:
+        if self._sandbox:
             web_endpoint = "https://auth.sandbox.ebay.com/oauth2/authorize"
         else:
             web_endpoint = "https://auth.ebay.com/oauth2/authorize"
@@ -155,15 +141,15 @@ class _OAuth2Api:
         return self._finish(resp, token, content)
 
     def _get_endpoint(self):
-        if self._credentials.sandbox:
+        if self._sandbox:
             return "https://api.sandbox.ebay.com/identity/v1/oauth2/token"
         else:
             return "https://api.ebay.com/identity/v1/oauth2/token"
 
     def _generate_request_headers(self):
 
-        b64_encoded_credential = base64.b64encode((self._credentials.client_id + ':'
-                                                   + self._credentials.client_secret).encode())
+        b64_encoded_credential = base64.b64encode((self._client_id + ':'
+                                                   + self._client_secret).encode())
         headers = {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': 'Basic ' + b64_encoded_credential.decode()
@@ -175,7 +161,7 @@ class _OAuth2Api:
 
         body = {
                 'grant_type': 'client_credentials',
-                'redirect_uri': self._credentials.ru_name,
+                'redirect_uri': self._ru_name,
                 'scope': scopes
         }
 
@@ -196,7 +182,7 @@ class _OAuth2Api:
     def _generate_oauth_request_body(self, code):
         body = {
                 'grant_type': 'authorization_code',
-                'redirect_uri': self._credentials.ru_name,
+                'redirect_uri': self._ru_name,
                 'code': code
         }
         return body
@@ -224,20 +210,65 @@ class Token:
     This is a facade for the oath module.
     """
 
-    def __init__(self, credentials):
+    def __init__(self, sandbox, client_id=None, client_secret=None, dev_id=None, ru_name=None, user_id=None,
+                 user_password=None, application_scopes=None, user_scopes=None, allow_get_user_consent=True,
+                 user_refresh_token=None, user_refresh_token_expiry=None):
+        """
+        :param sandbox (bool, required): The system to use, True for Sandbox/Testing and False for Production.
+
+        # application/client credentials, optional if you don't make API calls that need an application/client token
+        :param client_id (str, optional):
+        :param dev_id (str, optional):
+        :param client_secret (str, optional):
+        :param ru_name (str, optional):
+        :param application_scopes (str, optional):
+
+        # user credentials, optional if you don't make API calls that need an user token
+        :param user_id (str, optional):
+        :param user_password (str, optional):
+        :param user_scopes (str, optional):
+
+        # user token supply, optional if don't mind a Chrome browser opening when getting a user token
+        :param allow_get_user_consent (str, optional):
+        :param user_refresh_token (str, optional):
+        :param user_refresh_token_expiry (str, optional):
+        """
+
         self._lock = threading.Lock()
         with self._lock:
+            self._sandbox = sandbox
+
+            # application/client credentials
+            self._client_id = client_id
+            self._dev_id = dev_id
+            self._client_secret = client_secret
+            self._ru_name = ru_name
+            self._application_scopes = application_scopes
+
+            # user credentials
+            self._user_id = user_id
+            self._user_password = user_password
+            self._user_scopes = user_scopes
+
+            # user token supply
+            self._allow_get_user_consent = allow_get_user_consent
+            self._user_refresh_token = user_refresh_token
+            self._user_refresh_token_expiry = user_refresh_token_expiry
+
+            # tokens object storage
             self._application_token = None
             self._user_token = None
-            self._credentials = credentials
-            self._oauth2api_inst = _OAuth2Api(credentials=self._credentials)
 
-            if self._credentials.user_refresh_token is not None:
-                if self._credentials.user_refresh_token is not None:
+            # instantiate low-level oauth api utilities
+            self._oauth2api_inst = _OAuth2Api(self._sandbox, self._client_id, self._client_secret, self._ru_name)
+
+            # case where a user token is supplied
+            if self._user_refresh_token is not None:
+                if self._user_refresh_token is not None:
                     try:
                         self._user_refresh_token = _OAuthToken(
-                            refresh_token=self._credentials.user_refresh_token,
-                            refresh_token_expiry=self._credentials.user_refresh_token_expiry
+                            refresh_token=self._user_refresh_token,
+                            refresh_token_expiry=self._user_refresh_token_expiry
                         )
                     except Error:
                         raise
@@ -247,7 +278,7 @@ class Token:
     def get_application(self):
         """ Get an eBay Application Token. """
         with self._lock:
-            if self._credentials.application_scopes is None:
+            if self._application_scopes is None:
                 self._determine_application_scopes()
 
             if self._application_token is None:
@@ -261,7 +292,7 @@ class Token:
 
     def _determine_application_scopes(self):
         """ Determine the application scopes that are currently allowed. """
-        if self._credentials.sandbox:
+        if self._sandbox:
             # permission is always granted for all
             scopes = list(Reference.get_application_scopes().keys())
         else:
@@ -273,11 +304,11 @@ class Token:
                         if len(token_application.access_token) > 0:
                             scopes.append(scope)
 
-        self._credentials.application_scopes = scopes
+        self._application_scopes = scopes
 
     def _refresh_application(self):
         """ Refresh the eBay Application Token and update all that comes with it."""
-        token_application = self._oauth2api_inst.get_application_token(self._credentials.application_scopes)
+        token_application = self._oauth2api_inst.get_application_token(self._application_scopes)
         if token_application.error is not None:
             reason = 'token_application.error ' + token_application.error
             raise Error(number=1, reason=reason)
@@ -289,7 +320,7 @@ class Token:
     def get_user(self):
         """ Get an eBay User Access Token. """
         with self._lock:
-            if self._credentials.user_scopes is None:
+            if self._user_scopes is None:
                 self._determine_user_scopes()
 
             if self._user_token is None:
@@ -302,28 +333,28 @@ class Token:
 
     def _determine_user_scopes(self):
         """ Determine the user access scopes that are currently allowed. """
-        if self._credentials.sandbox:
+        if self._sandbox:
             # permission is always granted for all
             scopes = list(Reference.get_user_scopes().keys())
         else:
-            # TODO Replace the hardcoded list with granted scopes.
+            # these are always granted, many more are possible
             scopes = ["https://api.ebay.com/oauth/api_scope",
                       "https://api.ebay.com/oauth/api_scope/sell.inventory",
                       "https://api.ebay.com/oauth/api_scope/sell.marketing",
                       "https://api.ebay.com/oauth/api_scope/sell.account",
                       "https://api.ebay.com/oauth/api_scope/sell.fulfillment"]
-        self._credentials.user_scopes = scopes
+        self._user_scopes = scopes
 
     def _refresh_user(self):
         """
         Refresh the eBay User Access Token and update all that comes with it.
         If we don't have a current refresh token, run the authorization flow.
         """
-        if self._credentials.user_refresh_token is None:
+        if self._user_refresh_token is None:
             # We don't have a refresh token; run authorization flow
             self._authorization_flow()
 
-        elif (self._credentials.user_refresh_token.refresh_token_expiry
+        elif (self._user_refresh_token.refresh_token_expiry
                 .replace(tzinfo=timezone.utc) <= DateTime.now()):
             # The refresh token has expired; run authorization flow
             self._authorization_flow()
@@ -338,10 +369,10 @@ class Token:
         then exchange that for a refresh token (which also contains a
         user token).
         """
-        if not self._credentials.allow_get_user_consent:
+        if not self._allow_get_user_consent:
             raise Error(number=1, reason='Getting user consent via browser disabled')
 
-        sign_in_url = self._oauth2api_inst.generate_user_authorization_url(self._credentials.user_scopes)
+        sign_in_url = self._oauth2api_inst.generate_user_authorization_url(self._user_scopes)
         if sign_in_url is None:
             raise Error(number=1, reason='sign_in_url is None.')
 
@@ -355,7 +386,7 @@ class Token:
             raise Error(number=1, reason='refresh_token.access_token is of length zero.')
 
         # Split token into refresh token and user token parts
-        self._credentials.user_refresh_token = _OAuthToken(
+        self._user_refresh_token = _OAuthToken(
             refresh_token=refresh_token.refresh_token,
             refresh_token_expiry=refresh_token.refresh_token_expiry)
         self._user_token = _OAuthToken(
@@ -383,13 +414,13 @@ class Token:
 
         # fill in the username then click continue
         form_userid = browser.find_element_by_name('userid')
-        form_userid.send_keys(self._credentials.user_id)
+        form_userid.send_keys(self._user_id)
         browser.find_element_by_id('signin-continue-btn').click()
         time.sleep(delay)
 
         # fill in the password then submit
         form_pw = browser.find_element_by_name('pass')
-        form_pw.send_keys(self._credentials.user_password)
+        form_pw.send_keys(self._user_password)
         browser.find_element_by_id('sgnBt').submit()
         time.sleep(delay)
 
@@ -410,7 +441,7 @@ class Token:
         if not is_auth_successful:
             reason = (
                 f"Authorization unsuccessful, check userid & password:"
-                f" {self._credentials.user_id} {self._credentials.user_password}"
+                f" {self._user_id} {self._user_password}"
             )
             raise Error(number=1, reason=reason)
 
@@ -423,8 +454,8 @@ class Token:
     def _refresh_user_token(self):
         """Exchange a refresh token for a current user token."""
 
-        user_token = self._oauth2api_inst.get_access_token(self._credentials.user_refresh_token.refresh_token,
-                                                           self._credentials.user_scopes)
+        user_token = self._oauth2api_inst.get_access_token(self._user_refresh_token.refresh_token,
+                                                           self._user_scopes)
 
         if user_token.access_token is None:
             raise Error(number=1, reason='user_token.access_token is None.')
