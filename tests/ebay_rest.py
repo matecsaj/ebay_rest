@@ -210,11 +210,18 @@ class APIOther(unittest.TestCase):
                              msg="A call with zero positional and no kw arguments failed.")
 
     def test_positional_one_kw_none(self):
-        # TODO Why does the get_item call fail sometimes?
-        for item in self._api.buy_browse_search(q=self.q):
-            self.assertIsNotNone(self._api.buy_browse_get_item(item_id=item['item_id'], fieldgroups='PRODUCT'),
-                                 msg="A call with one positional and no kw arguments failed.")
-            break
+        # TODO Why does the get_item call fail sometimes? Are both calls truly using the same marketplace?
+        try:
+            for item in self._api.buy_browse_search(q=self.q):
+                try:
+                    item_detail = self._api.buy_browse_get_item(item_id=item['item_id'], fieldgroups='PRODUCT')
+                except Error as error:
+                    self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                else:
+                    self.assertIsNotNone(item_detail, msg="A call with one positional and no kw arguments failed.")
+                break
+        except Error as error:
+            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
 
     def test_positional_two_kw_none(self):
         pass  # TODO
