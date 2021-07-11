@@ -47,7 +47,7 @@ print("All valid eBay global id values, also known as site ids.")
 print(Reference.get_global_id_values(), '\n')
 
 try:
-    api = API(sandbox=False)
+    api = API(application='production_1', user='production_1', header='US')
 except Error as error:
     print(f'Error {error.number} is {error.reason}  {error.detail}.\n')
 else:

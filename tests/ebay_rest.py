@@ -6,7 +6,9 @@
 
 # Standard library imports
 import datetime
+import json
 import random
+import os
 import unittest
 import warnings
 
@@ -26,8 +28,7 @@ class APIFinances(unittest.TestCase):
     def setUpClass(cls):
         # TODO Stop ignoring the warning and remedy the resource leak.
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
-        cls.sandbox = True  # True is better, eBay wants you to use the sandbox for testing
-        cls._api = API(sandbox=cls.sandbox, marketplace_id='EBAY_US')
+        cls._api = API(application='sandbox_1', user='sandbox_1', header='US')
 
     # https://developer.ebay.com/api-docs/sell/finances/resources/transaction/methods/getTransactionSummary
     def test_get_transaction_summary(self):
@@ -42,37 +43,78 @@ class APIFinances(unittest.TestCase):
 class APIMarketplaces(unittest.TestCase):
     """ Test things that are different between marketplaces. """
 
-    def test_object_reuse(self):  # Do the same parameters return the same object?
-        a1 = API(sandbox=True, marketplace_id='EBAY_NL')
-        a2 = API(marketplace_id='EBAY_NL', sandbox=True, )
-        b = API(sandbox=True, marketplace_id='EBAY_ES')
+    def test_credentials_from_dicts(self):  # set credentials via dicts
+        try:
+            with open('ebay_rest.json', 'r') as f:
+                contents = json.loads(f.read())
+        except IOError:
+            raise Error(number=1, reason="Unable to open the file ebay_rest.json from the test directory.")
+        else:
+
+            application = None
+            if 'applications' in contents:
+                if 'sandbox_1' in contents['applications']:
+                    application = contents['applications']['sandbox_1']
+            self.assertIsInstance(application, dict, 'Failed to load application credentials.')
+
+            user = None
+            if 'users' in contents:
+                if 'sandbox_1' in contents['users']:
+                    user = contents['users']['sandbox_1']
+            self.assertIsInstance(user, dict, 'Failed to load user credentials.')
+
+            header = None
+            if 'headers' in contents:
+                if 'US' in contents['headers']:
+                    header = contents['headers']['US']
+            self.assertIsInstance(header, dict, 'Failed to load header credentials.')
+
+            try:
+                api = API(application=application, user=user, header=header)    # params are dicts
+            except Error as error:
+                self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+            else:
+                self.assertIsInstance(api, API, 'An API object was not returned.')
+
+    def test_object_reuse(self):  # Do the same parameters return the same API object?
+        a1 = API(application='sandbox_1', user='sandbox_1', header='ENCA')
+        a2 = API(application='sandbox_1', user='sandbox_1', header='ENCA')
+        b = API(application='sandbox_1', user='sandbox_1', header='GB')
         self.assertEqual(a1, a2)
         self.assertNotEqual(a1, b)
+
+    def test_credential_path(self):     # supply a path to ebay_rest.json
+        path = os.getcwd()
+        try:
+            api = API(path=path, application='sandbox_1', user='sandbox_1', header='US')
+        except Error as error:
+            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+        else:
+            self.assertIsInstance(api, API, 'An API object was not returned.')
 
     def test_shipping_accuracy(self):  # Is closer shipping cheaper?
         # TODO Stop ignoring the warning and remedy the resource leak.
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
 
         # domestic
-        d_market = 'EBAY_ENCA'
+        # d_market = 'EBAY_ENCA'    # set in header
         d_country = 'CA'
         d_currency = 'CAD'
-        d_zip = 'K1M 1M4'
+        # d_zip = 'K1M 1M4'         # set in header
 
         # foreign
-        f_market = 'EBAY_GB'
+        # f_market = 'EBAY_GB'      # set in header
         f_country = 'GB'
         # f_currency = 'GBP'
-        f_zip = 'SW1A 1AA'
+        # f_zip = 'SW1A 1AA'        # set in header
 
         # more constants
         shipping_currency = 'USD'
-        sandbox = False
 
         tally = 0  # how many times domestic shipping is cheaper than foreign
 
-        d_api = API(sandbox=sandbox, marketplace_id=d_market, country_code=d_country, zip_code=d_zip)
-        f_api = API(sandbox=sandbox, marketplace_id=f_market, country_code=f_country, zip_code=f_zip)
+        d_api = API(application='production_1', user='production_1', header='ENCA')
+        f_api = API(application='production_1', user='production_1', header='GB')
 
         # in the local marketplace find items located locally that also ship to foreign
         # low priced items are targeted because free shipping for them is unlikely
@@ -179,12 +221,8 @@ class APIOther(unittest.TestCase):
     def setUpClass(cls):
         # TODO Stop ignoring the warning and remedy the resource leak.
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
-        cls.sandbox = True  # True is better, eBay wants you to use the sandbox for testing
-        if cls.sandbox:  # use keywords that will return >0 and < 10,000 results
-            cls.q = 'black'
-        else:
-            cls.q = 'silver snail'
-        cls._api = API(sandbox=cls.sandbox, marketplace_id='EBAY_US')
+        cls.q = 'black'
+        cls._api = API(application='sandbox_1', user='sandbox_1', header='US')
 
     # test paging calls
 
@@ -210,7 +248,6 @@ class APIOther(unittest.TestCase):
                              msg="A call with zero positional and no kw arguments failed.")
 
     def test_positional_one_kw_none(self):
-        # TODO Why does the get_item call fail sometimes? Are both calls truly using the same marketplace?
         try:
             for item in self._api.buy_browse_search(q=self.q):
                 try:
@@ -253,9 +290,7 @@ class APIOther(unittest.TestCase):
 
     def test_buying_options(self):
         """ Does buying option filtering work? """
-        options = ['FIXED_PRICE', 'BEST_OFFER']
-        if not self.sandbox:
-            options.append('AUCTION')
+        options = ['FIXED_PRICE', 'BEST_OFFER']     # on Production 'AUCTION' is also an option
         for option in options:
             try:
                 success = None
@@ -283,7 +318,7 @@ class APISell(unittest.TestCase):
     def test_create_item_listing(self):
 
         try:
-            api = API(sandbox=self.SANDBOX, marketplace_id=self.MARKETPLACE_ID, throttle=True)
+            api = API(application='sandbox_1', user='sandbox_1', header='US', throttle=True)
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
@@ -445,7 +480,7 @@ class APIThrottled(unittest.TestCase):
     def setUpClass(cls):
         # TODO Stop ignoring the warning and remedy the resource leak.
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
-        cls._api = API(sandbox=True, throttle=True, timeout=60.0)
+        cls._api = API(application='sandbox_1', user='sandbox_1', header='US', throttle=True, timeout=60.0)
 
     def test_finding_one_item(self):
         count = 0

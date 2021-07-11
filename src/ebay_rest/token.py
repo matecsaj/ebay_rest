@@ -210,8 +210,9 @@ class Token:
     This is a facade for the oath module.
     """
 
-    def __init__(self, sandbox, client_id=None, client_secret=None, dev_id=None, ru_name=None, user_id=None,
-                 user_password=None, application_scopes=None, user_scopes=None, allow_get_user_consent=True,
+    def __init__(self, sandbox,
+                 client_id=None, client_secret=None, dev_id=None, ru_name=None,
+                 user_id=None, user_password=None, application_scopes=None, user_scopes=None,
                  user_refresh_token=None, user_refresh_token_expiry=None):
         """
         :param sandbox (bool, required): The system to use, True for Sandbox/Testing and False for Production.
@@ -229,7 +230,6 @@ class Token:
         :param user_scopes (str, optional):
 
         # user token supply, optional if don't mind a Chrome browser opening when getting a user token
-        :param allow_get_user_consent (str, optional):
         :param user_refresh_token (str, optional):
         :param user_refresh_token_expiry (str, optional):
         """
@@ -250,21 +250,21 @@ class Token:
             self._user_password = user_password
             self._user_scopes = user_scopes
 
-            # user token supply
-            self._allow_get_user_consent = allow_get_user_consent
-            self._user_refresh_token = user_refresh_token
-            self._user_refresh_token_expiry = user_refresh_token_expiry
-
-            # tokens object storage
+            # token object storage
             self._application_token = None
             self._user_token = None
 
             # instantiate low-level oauth api utilities
             self._oauth2api_inst = _OAuth2Api(self._sandbox, self._client_id, self._client_secret, self._ru_name)
 
-            # case where a user token is supplied
-            if self._user_refresh_token is not None:
-                if self._user_refresh_token is not None:
+            # possible user token with expiry
+            self._user_refresh_token = user_refresh_token
+            self._user_refresh_token_expiry = None
+            self._allow_get_user_consent = True
+            if user_refresh_token is not None:
+                if user_refresh_token_expiry is not None:
+                    self._allow_get_user_consent = False
+                    self._user_refresh_token_expiry = DateTime.from_string(user_refresh_token_expiry)
                     try:
                         self._user_refresh_token = _OAuthToken(
                             refresh_token=self._user_refresh_token,
@@ -354,8 +354,7 @@ class Token:
             # We don't have a refresh token; run authorization flow
             self._authorization_flow()
 
-        elif (self._user_refresh_token.refresh_token_expiry
-                .replace(tzinfo=timezone.utc) <= DateTime.now()):
+        elif self._user_refresh_token.refresh_token_expiry <= DateTime.now():
             # The refresh token has expired; run authorization flow
             self._authorization_flow()
 

@@ -1,32 +1,71 @@
 {
-    "instructions": {
-        "01": "The ebay_rest module needs your eBay Application Keys.",
+    "***_instructions_***": {
+        "01": "The ebay_rest module needs your eBay credentials.",
         "02": "Copy this file to your working folder and name it ebay_rest.json.",
         "03": "As you create and get, replace the placeholders in the two sections that follow.",
         "04": "Create a developer account - https://developer.ebay.com/api-docs/static/creating-edp-account.html",
         "05": "Get your OAuth credentials - https://developer.ebay.com/api-docs/static/oauth-credentials.html",
         "06": "Get your redirect_uri value - https://developer.ebay.com/api-docs/static/oauth-redirect-uri.html",
         "07": "Create production and sandbox logins at your eBay country-specific marketplace, e.g. https://www.ebay.com & https://sandbox.ebay.com.",
-        "08": "If using version control, keep your keys private by NOT checking in the file ebay_rest.json."
+        "08": "Except for production users, scopes will be auto-discovered.",
+        "09": "If the token and token_expiry are empty, they will be auto-generated."
     },
-    "api.ebay.com": {
-        "appid": "placeholder-placeholder-PRD-placeholder-placeholder",
-        "certid": "PRD-placeholder-placeholder-placeholder-placeholder-placeholder",
-        "devid": "placeholder-placeholder-placeholder-placeholder-placeholder",
-        "redirecturi": "placeholder-placeholder-placeholder-placeholder"
+    "applications": {
+        "production_1": {
+            "app_id": "placeholder-placeholder-PRD-placeholder-placeholder",
+            "cert_id": "PRD-placeholder-placeholder-placeholder-placeholder-placeholder",
+            "dev_id": "placeholder-placeholder-placeholder-placeholder-placeholder",
+            "redirect_uri": "placeholder-placeholder-placeholder-placeholder"
+        },
+        "sandbox_1": {
+            "app_id": "placeholder-placeholder-SBX-placeholder-placeholder",
+            "cert_id": "SBX-placeholder-placeholder-placeholder-placeholder-placeholder",
+            "dev_id": "placeholder-placeholder-placeholder-placeholder-placeholder",
+            "redirect_uri": "placeholder-placeholder-placeholder-placeholder"
+        }
     },
-    "api.sandbox.ebay.com": {
-        "appid": "placeholder-placeholder-SBX-placeholder-placeholder",
-        "certid": "SBX-placeholder-placeholder-placeholder-placeholder-placeholder",
-        "devid": "placeholder-placeholder-placeholder-placeholder-placeholder",
-        "redirecturi": "placeholder-placeholder-placeholder-placeholder"
+    "users": {
+        "production_1": {
+            "email_or_username": "<production-username>",
+            "password": "<production-user-password>",
+            "scopes": [
+                "https://api.ebay.com/oauth/api_scope",
+                "https://api.ebay.com/oauth/api_scope/sell.inventory",
+                "https://api.ebay.com/oauth/api_scope/sell.marketing",
+                "https://api.ebay.com/oauth/api_scope/sell.account",
+                "https://api.ebay.com/oauth/api_scope/sell.fulfillment"
+            ],
+            "token": "",
+            "token_expiry": ""
+        },
+        "sandbox_1": {
+            "email_or_username": "placeholder",
+            "password": "placeholder",
+            "token": "",
+            "token_expiry": ""
+        }
     },
-    "production-user": {
-		"username": "<production-username>",
-		"password": "<production-user-password>"
-	},
-	"sandbox-user": {
-		"username": "<sandbox-username>",
-		"password": "<sandbox-user-password>"
-	}
+    "headers": {
+        "ENCA": {
+            "content_language": "en-US",
+            "country" : "CA",
+            "currency": "CAD",
+            "marketplace_id": "EBAY_ENCA",
+            "zip": "K1M 1M4"
+        },
+        "GB": {
+            "content_language": "en-US",
+            "country" : "GB",
+            "currency": "GBP",
+            "marketplace_id": "EBAY_GB",
+            "zip": "SW1A 1AA"
+        },
+        "US": {
+            "content_language": "en-US",
+            "country": "US",
+            "currency": "USD",
+            "marketplace_id": "EBAY_US",
+            "zip": "20500"
+        }
+    }
 }
