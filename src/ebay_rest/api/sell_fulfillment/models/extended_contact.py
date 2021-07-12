@@ -110,7 +110,7 @@ class ExtendedContact(object):
     def email(self):
         """Gets the email of this ExtendedContact.  # noqa: E501
 
-        This field shows the email address of the buyer. The email address of a buyer will be masked 14 days after order creation. This field will still be returned for the order, but it will not contain the buyer's email address, but instead, something like 'Invalid Request'. Note: This field always contains the email address of the buyer even with a Global Shipping Program shipment.  # noqa: E501
+        This field contains the email address of the buyer. This address will be returned for up to 14 days from order creation. If an order is more than 14 days old, no address is returned. Note: If returned, this field contains the email address of the buyer, even for Global Shipping Program shipments.  # noqa: E501
 
         :return: The email of this ExtendedContact.  # noqa: E501
         :rtype: str
@@ -121,7 +121,7 @@ class ExtendedContact(object):
     def email(self, email):
         """Sets the email of this ExtendedContact.
 
-        This field shows the email address of the buyer. The email address of a buyer will be masked 14 days after order creation. This field will still be returned for the order, but it will not contain the buyer's email address, but instead, something like 'Invalid Request'. Note: This field always contains the email address of the buyer even with a Global Shipping Program shipment.  # noqa: E501
+        This field contains the email address of the buyer. This address will be returned for up to 14 days from order creation. If an order is more than 14 days old, no address is returned. Note: If returned, this field contains the email address of the buyer, even for Global Shipping Program shipments.  # noqa: E501
 
         :param email: The email of this ExtendedContact.  # noqa: E501
         :type: str
