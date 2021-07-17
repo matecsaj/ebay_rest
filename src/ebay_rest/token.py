@@ -11,6 +11,7 @@ from urllib.parse import parse_qs, urlencode
 # Local imports
 from .date_time import DateTime
 from .error import Error
+from .multiton import Multiton
 from .reference import Reference
 
 
@@ -203,6 +204,7 @@ class _OAuth2Api:
         return token
 
 
+@Multiton   # return the same object when the __init__ params are identical
 class Token:
     """
     Initialize, refresh and supply an eBay OAuth application token.
@@ -235,45 +237,46 @@ class Token:
         """
 
         self._lock = threading.Lock()
-        with self._lock:
-            self._sandbox = sandbox
+        # The Multiton decorator wraps this initializer with a thread lock; it is safe to skip using self._lock.
 
-            # application/client credentials
-            self._client_id = client_id
-            self._dev_id = dev_id
-            self._client_secret = client_secret
-            self._ru_name = ru_name
-            self._application_scopes = application_scopes
+        self._sandbox = sandbox
 
-            # user credentials
-            self._user_id = user_id
-            self._user_password = user_password
-            self._user_scopes = user_scopes
+        # application/client credentials
+        self._client_id = client_id
+        self._dev_id = dev_id
+        self._client_secret = client_secret
+        self._ru_name = ru_name
+        self._application_scopes = application_scopes
 
-            # token object storage
-            self._application_token = None
-            self._user_token = None
+        # user credentials
+        self._user_id = user_id
+        self._user_password = user_password
+        self._user_scopes = user_scopes
 
-            # instantiate low-level oauth api utilities
-            self._oauth2api_inst = _OAuth2Api(self._sandbox, self._client_id, self._client_secret, self._ru_name)
+        # token object storage
+        self._application_token = None
+        self._user_token = None
 
-            # possible user token with expiry
-            self._user_refresh_token = user_refresh_token
-            self._user_refresh_token_expiry = None
-            self._allow_get_user_consent = True
-            if user_refresh_token is not None:
-                if user_refresh_token_expiry is not None:
-                    self._allow_get_user_consent = False
-                    self._user_refresh_token_expiry = DateTime.from_string(user_refresh_token_expiry)
-                    try:
-                        self._user_refresh_token = _OAuthToken(
-                            refresh_token=self._user_refresh_token,
-                            refresh_token_expiry=self._user_refresh_token_expiry
-                        )
-                    except Error:
-                        raise
-                else:
-                    raise Error(number=1, reason='Must supply refresh token expiry with refresh token!')
+        # instantiate low-level oauth api utilities
+        self._oauth2api_inst = _OAuth2Api(self._sandbox, self._client_id, self._client_secret, self._ru_name)
+
+        # possible user token with expiry
+        self._user_refresh_token = user_refresh_token
+        self._user_refresh_token_expiry = None
+        self._allow_get_user_consent = True
+        if user_refresh_token is not None:
+            if user_refresh_token_expiry is not None:
+                self._allow_get_user_consent = False
+                self._user_refresh_token_expiry = DateTime.from_string(user_refresh_token_expiry)
+                try:
+                    self._user_refresh_token = _OAuthToken(
+                        refresh_token=self._user_refresh_token,
+                        refresh_token_expiry=self._user_refresh_token_expiry
+                    )
+                except Error:
+                    raise
+            else:
+                raise Error(number=1, reason='Must supply refresh token expiry with refresh token!')
 
     def get_application(self):
         """ Get an eBay Application Token. """

@@ -6,6 +6,7 @@ import os
 
 # Local imports
 from .error import Error
+from .multiton import Multiton
 from .rates import Rates
 from .reference import Reference
 from .token import Token
@@ -69,13 +70,12 @@ from .api.sell_recommendation.rest import ApiException as SellRecommendationExce
 # ANCHOR-er_imports-END"
 
 
+@Multiton   # return the same object when the __init__ params are identical
 class API:
     """ A wrapper for all of eBay's REST-ful APIs.
 
     For an overview of the APIs and more see https://developer.ebay.com/docs.
     """
-    _get_swagger_call_limits = None
-    _instances = []
 
     def __init__(self, path=None, application=None, user=None, header=None,
                  throttle: bool = False, timeout: float = -1.0):
@@ -114,145 +114,121 @@ class API:
 
         :rtype: object
         """
-        for index, instance in enumerate(API._instances):  # [obj, initialized, args, kwargs] = instance
-            if self == instance[0]:  # find the record with a matching obj id
-                if not instance[1]:  # if not already initialized
+        # if present, load the configuration file
+        config_contents = None
+        if path is None:
+            path = os.getcwd()
+        self._config_location = os.path.join(path, 'ebay_rest.json')
+        if os.path.isfile(self._config_location):
+            try:
+                with open(self._config_location, 'r') as f:
+                    config_contents = json.loads(f.read())
+            except IOError:
+                raise Error(number=1, reason='Unable to open ' + self._config_location)
 
-                    # if present, load the configuration file
-                    config_contents = None
-                    if path is None:
-                        path = os.getcwd()
-                    self._config_location = os.path.join(path, 'ebay_rest.json')
-                    if os.path.isfile(self._config_location):
-                        try:
-                            with open(self._config_location, 'r') as f:
-                                config_contents = json.loads(f.read())
-                        except IOError:
-                            raise Error(number=1, reason='Unable to open ' + self._config_location)
+        # get configuration sections from parameters or the loaded file
+        try:
+            self._application = self._process_config_section(config_contents, 'applications', application)
+        except Error:
+            raise
+        try:
+            self._user = self._process_config_section(config_contents, 'users', user)
+        except Error:
+            raise
+        try:
+            self._header = self._process_config_section(config_contents, 'headers', header)
+        except Error:
+            raise
 
-                    # get configuration sections from parameters or the loaded file
-                    try:
-                        self._application = self._process_config_section(config_contents, 'applications', application)
-                    except Error:
-                        raise
-                    try:
-                        self._user = self._process_config_section(config_contents, 'users', user)
-                    except Error:
-                        raise
-                    try:
-                        self._header = self._process_config_section(config_contents, 'headers', header)
-                    except Error:
-                        raise
+        # check the application keys and values
+        # True if the dictionary key is required and False when optional.
+        application_keys = [('app_id', True), ('cert_id', True), ('dev_id', True), ('redirect_uri', True)]
+        try:
+            self._check_keys(self._application, application_keys, 'application')
+        except Error:
+            raise
 
-                    # check the application keys and values
-                    # True if the dictionary key is required and False when optional.
-                    application_keys = [('app_id', True), ('cert_id', True), ('dev_id', True), ('redirect_uri', True)]
-                    try:
-                        self._check_keys(self._application, application_keys, 'application')
-                    except Error:
-                        raise
+        # check the user keys and values
+        user_keys = [('email_or_username', True), ('password', True),
+                     ('scopes', False), ('token', False), ('token_expiry', False)]
+        try:
+            self._check_keys(self._user, user_keys, 'user')
+        except Error:
+            raise
 
-                    # check the user keys and values
-                    user_keys = [('email_or_username', True), ('password', True),
-                                 ('scopes', False), ('token', False), ('token_expiry', False)]
-                    try:
-                        self._check_keys(self._user, user_keys, 'user')
-                    except Error:
-                        raise
+        # Determine if we are using the sandbox. Of course production is the only alternative.
+        self._sandbox = self._application['cert_id'].startswith('SBX-')
 
-                    # Determine if we are using the sandbox. Of course production is the only alternative.
-                    self._sandbox = self._application['cert_id'].startswith('SBX-')
+        # check the header keys and values
 
-                    # check the header keys and values
+        # get valid marketplace ids
+        self._marketplace_ids = []
+        for global_id_value in Reference.get_global_id_values():
+            self._marketplace_ids.append(global_id_value['global_id'].replace('-', '_'))
 
-                    # get valid marketplace ids
-                    self._marketplace_ids = []
-                    for global_id_value in Reference.get_global_id_values():
-                        self._marketplace_ids.append(global_id_value['global_id'].replace('-', '_'))
+        header_keys_values = [
+            ('content_language', None),  # TODO add allowed values
+            ('country', list(Reference.get_country_codes().keys())),
+            ('currency', None),  # TODO add allowed values
+            ('marketplace_id', self._marketplace_ids),
+            ('zip', None)  # None indicates that any value is acceptable.
+        ]
+        try:
+            self._check_header(header_keys_values)
+        except Error:
+            raise
 
-                    header_keys_values = [
-                        ('content_language', None),  # TODO add allowed values
-                        ('country', list(Reference.get_country_codes().keys())),
-                        ('currency', None),  # TODO add allowed values
-                        ('marketplace_id', self._marketplace_ids),
-                        ('zip', None)  # None indicates that any value is acceptable.
-                    ]
-                    try:
-                        self._check_header(header_keys_values)
-                    except Error:
-                        raise
+        # check the throttle parameters
+        detail = None
+        if throttle not in (True, False):
+            detail = "Parameter throttle must be unspecified, True or False."
+        else:
+            self._throttle = throttle
+        if not isinstance(timeout, float):
+            detail = "Parameter timeout must be unspecified or a float."
+        elif timeout != -1.0 and timeout <= 0.0:
+            detail = "Parameter timeout must be unspecified, -1 or positive."
+        else:
+            self._timeout = timeout
+        if detail:
+            raise Error(number=1, reason="Bad throttling parameters.", detail=detail)
 
-                    # check the throttle parameters
-                    detail = None
-                    if throttle not in (True, False):
-                        detail = "Parameter throttle must be unspecified, True or False."
-                    else:
-                        self._throttle = throttle
-                    if not isinstance(timeout, float):
-                        detail = "Parameter timeout must be unspecified or a float."
-                    elif timeout != -1.0 and timeout <= 0.0:
-                        detail = "Parameter timeout must be unspecified, -1 or positive."
-                    else:
-                        self._timeout = timeout
-                    if detail:
-                        raise Error(number=1, reason="Bad throttling parameters.", detail=detail)
+        # pre-process headers to expedite frequent usage
 
-                    # pre-process headers to expedite frequent usage
+        # for shipping information accuracy https://developer.ebay.com/api-docs/buy/static/api-browse.html
+        self._end_user_ctx = None
+        if 'country' in self._header:
+            if len(self._header['country']) > 0:
+                self._end_user_ctx = "contextualLocation=country=" + self._header['country']
+                if 'zip' in self._header:
+                    if len(self._header['zip']) > 0:
+                        self._end_user_ctx += ",zip=" + self._header['zip']
 
-                    # for shipping information accuracy https://developer.ebay.com/api-docs/buy/static/api-browse.html
-                    self._end_user_ctx = None
-                    if 'country' in self._header:
-                        if len(self._header['country']) > 0:
-                            self._end_user_ctx = "contextualLocation=country=" + self._header['country']
-                            if 'zip' in self._header:
-                                if len(self._header['zip']) > 0:
-                                    self._end_user_ctx += ",zip=" + self._header['zip']
+        try:
+            self._token = Token(
+                self._sandbox,
 
-                    try:
-                        self._token = Token(
-                            self._sandbox,
+                # application/client credentials
+                client_id=self._application['app_id'],
+                client_secret=self._application['cert_id'],
+                dev_id=self._application['dev_id'],
+                ru_name=self._application['redirect_uri'],
 
-                            # application/client credentials
-                            client_id=self._application['app_id'],
-                            client_secret=self._application['cert_id'],
-                            dev_id=self._application['dev_id'],
-                            ru_name=self._application['redirect_uri'],
+                # user credentials
+                user_id=self._user['email_or_username'],
+                user_password=self._user['password'],
 
-                            # user credentials
-                            user_id=self._user['email_or_username'],
-                            user_password=self._user['password'],
+                user_scopes=None if 'scopes' not in self._user else self._user['scopes'],
 
-                            user_scopes=None if 'scopes' not in self._user else self._user['scopes'],
+                # user token supply
+                user_refresh_token=None if 'token' not in self._user else self._user['token'],
+                user_refresh_token_expiry=None if 'token_expiry' not in self._user else self._user[
+                    'token_expiry'],
+            )
+        except Error:
+            raise
 
-                            # user token supply
-                            user_refresh_token=None if 'token' not in self._user else self._user['token'],
-                            user_refresh_token_expiry=None if 'token_expiry' not in self._user else self._user[
-                                'token_expiry'],
-                        )
-                    except Error:
-                        raise
-
-                    instance[1] = True  # success!
-
-                return
-
-        logging.debug("An instance that __new__ created should always be found!")  # abnormal fail
         return
-
-    def __new__(cls, *args, **kwargs):
-        """ When init parameters match, conserve resources, reuse an old initialized object instead of making a new.
-
-        The Singleton pattern is semi in play here. https://en.wikipedia.org/wiki/Singleton_pattern
-        Beware, in __init__ only use "self.whatever" variables to remember initialization parameters.
-        """
-        for old_instance in cls._instances:
-            [old_obj, old_initialized, old_args, old_kwargs] = old_instance
-            if old_initialized and (args == old_args) and (kwargs == old_kwargs):
-                return old_obj
-        new_obj = super(API, cls).__new__(cls)
-        instance = [new_obj, False, args, kwargs]  # see __init__ where initialized is changed to True
-        cls._instances.append(instance)
-        return new_obj
 
     @staticmethod
     def _process_config_section(config_contents, section, parameter):
@@ -556,24 +532,15 @@ class API:
         """
         if not self._sandbox:  # eBay does not limit calls to the sandbox
 
-            if not self._throttle:
+            # the base_path check prevents endless recursive calls to self.developer_analytics_get_rate_limits()
+            if not self._throttle or base_path.startswith('/developer/analytics'):
                 Rates.decrement_rate(base_path=base_path, rate_keys=rate_keys)
             else:
-
-                # initialize the ability to get rates
-                if API._get_swagger_call_limits is None:
-                    try:
-                        # api = API(sandbox=False, throttle=False)
-                        api = API(throttle=False)
-                    except Error:
-                        raise
-                    else:
-                        API._get_swagger_call_limits = api.developer_analytics_get_rate_limits
 
                 # if rates need to be refreshed, then do so.
                 if Rates.need_refresh():
                     try:
-                        limits = API._get_swagger_call_limits()
+                        limits = self.developer_analytics_get_rate_limits()
                     except Error:
                         raise
                     else:

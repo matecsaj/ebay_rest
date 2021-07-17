@@ -3,6 +3,7 @@
 # 2. cd .. (Or, somehow make the project root the current directory.)
 # 3. python -m unittest tests.ebay_rest
 
+# Avoid of repeating the exact same API calls, because it appears to trigger an "Internal Server Error" at eBay.
 
 # Standard library imports
 import datetime
@@ -43,6 +44,11 @@ class APIFinances(unittest.TestCase):
 class APIMarketplaces(unittest.TestCase):
     """ Test things that are different between marketplaces. """
 
+    @classmethod
+    def setUpClass(cls):
+        # TODO Stop ignoring the warning and remedy the resource leak.
+        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
+
     def test_credentials_from_dicts(self):  # set credentials via dicts
         try:
             with open('ebay_rest.json', 'r') as f:
@@ -74,6 +80,7 @@ class APIMarketplaces(unittest.TestCase):
             except Error as error:
                 self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
             else:
+                # TODO remedy linter warning 'Expected type 'Union[type, Tuple[type, ...]]', got 'Multiton' instead'
                 self.assertIsInstance(api, API, 'An API object was not returned.')
 
     def test_object_reuse(self):  # Do the same parameters return the same API object?
@@ -90,11 +97,10 @@ class APIMarketplaces(unittest.TestCase):
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
+            # TODO remedy linter warning 'Expected type 'Union[type, Tuple[type, ...]]', got 'Multiton' instead'
             self.assertIsInstance(api, API, 'An API object was not returned.')
 
     def test_shipping_accuracy(self):  # Is closer shipping cheaper?
-        # TODO Stop ignoring the warning and remedy the resource leak.
-        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
 
         # domestic
         # d_market = 'EBAY_ENCA'    # set in header
@@ -221,7 +227,6 @@ class APIOther(unittest.TestCase):
     def setUpClass(cls):
         # TODO Stop ignoring the warning and remedy the resource leak.
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
-        cls.q = 'black'
         cls._api = API(application='sandbox_1', user='sandbox_1', header='US')
 
     # test paging calls
@@ -234,7 +239,7 @@ class APIOther(unittest.TestCase):
     def test_paging_limit_over_page_size(self):
         count = 0
         limit = 350
-        for item in self._api.buy_browse_search(limit=limit, q=self.q):
+        for item in self._api.buy_browse_search(limit=limit, q='silver'):
             self.assertTrue(isinstance(item['item_id'], str))
             count += 1
             if count >= limit + 500:  # break out if way past the desired limit
@@ -249,7 +254,7 @@ class APIOther(unittest.TestCase):
 
     def test_positional_one_kw_none(self):
         try:
-            for item in self._api.buy_browse_search(q=self.q):
+            for item in self._api.buy_browse_search(q='red'):
                 try:
                     item_detail = self._api.buy_browse_get_item(item_id=item['item_id'], fieldgroups='PRODUCT')
                 except Error as error:
@@ -264,11 +269,11 @@ class APIOther(unittest.TestCase):
         pass  # TODO
 
     def test_positional_zero_kw_some(self):
-        self.assertIsNotNone(self._api.buy_browse_search(q=self.q),
+        self.assertIsNotNone(self._api.buy_browse_search(q='blue'),
                              msg="A call with zero positional and no kw arguments failed.")
 
     def test_positional_one_kw_some(self):
-        for item in self._api.buy_browse_search(q=self.q):
+        for item in self._api.buy_browse_search(q='yellow'):
             self.assertIsNotNone(self._api.buy_browse_get_item(item_id=item['item_id'], fieldgroups='PRODUCT'),
                                  msg="A call with one positional and some kw arguments failed.")
             break
@@ -474,34 +479,40 @@ class APISell(unittest.TestCase):
                 pass
 
 
-class APIThrottled(unittest.TestCase):
+class APIThrottle(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
         # TODO Stop ignoring the warning and remedy the resource leak.
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
-        cls._api = API(application='sandbox_1', user='sandbox_1', header='US', throttle=True, timeout=60.0)
 
-    def test_finding_one_item(self):
-        count = 0
-        item_id = None
-        for item in self._api.buy_browse_search(limit=1, q='lego'):
-            self.assertTrue(isinstance(item['item_id'], str))
-            item_id = item['item_id']
-            count += 1
-            break
-        self.assertTrue(count == 1)
-        if item_id:
-            item = self._api.buy_browse_get_item(item_id=item_id)
-            self.assertTrue(isinstance(item, dict))
-
-    def test_finding_three_hundred_items(self):
-        count = 0
-        for item in self._api.buy_browse_search(limit=1, q='lego'):
-            self.assertTrue(isinstance(item['item_id'], str))
-            count += 1
-            break
-        self.assertTrue(count == 1)
+    def test_start(self):    # all initialization options and for each the first and second usage
+        for environment in ('production', 'sandbox'):
+            for (throttle, timeout) in ((False, None), (True, None), (True, 60.0)):
+                try:
+                    if timeout is None:
+                        api = API(application=environment+'_1', user=environment+'_1',
+                                  header='US', throttle=throttle)
+                    else:
+                        api = API(application=environment+'_1', user=environment+'_1',
+                                  header='US', throttle=throttle, timeout=timeout)
+                except Error as error:
+                    self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                else:
+                    try:
+                        item_id = None
+                        for item in api.buy_browse_search(limit=1, q='lego'):
+                            self.assertTrue(isinstance(item['item_id'], str))
+                            item_id = item['item_id']
+                    except Error as error:
+                        self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                    else:
+                        if item_id:
+                            try:
+                                item = api.buy_browse_get_item(item_id=item_id)
+                                self.assertTrue(isinstance(item, dict))
+                            except Error as error:
+                                self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
 
 
 class DateTimeTests(unittest.TestCase):

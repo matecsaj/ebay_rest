@@ -8,8 +8,10 @@ import time
 # Local imports
 from .date_time import DateTime
 from .error import Error
+from .multiton import Multiton
 
 
+# @Multiton  # return the same object when the __init__ params are identical
 class Rates:
     """ Manages call limit and utilization data for an eBay application.
 
@@ -18,6 +20,8 @@ class Rates:
     _lock = threading.Lock()    # secure this lock before updating or reading class variables
     _refresh_date_time = None   # the soonest it is advisable to refresh rates data from eBay
     _cache = None               # cache of the most recent rates re-organized to expedite lookups
+
+    # TODO Handle the case where more than one "app_id" is used in parallel, perhaps create a pool indexed by "app_id".
 
     @staticmethod
     def decrement_rate(base_path: str, rate_keys: list) -> None:
