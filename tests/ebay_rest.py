@@ -3,7 +3,7 @@
 # 2. cd .. (Or, somehow make the project root the current directory.)
 # 3. python -m unittest tests.ebay_rest
 
-# Avoid of repeating the exact same API calls, because it appears to trigger an "Internal Server Error" at eBay.
+# Don't repeat API calls with the same parameters, because it appears to trigger an "Internal (Server) Error" at eBay.
 
 # Standard library imports
 import datetime

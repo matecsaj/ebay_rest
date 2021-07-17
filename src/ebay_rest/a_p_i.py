@@ -205,6 +205,11 @@ class API:
                         self._end_user_ctx += ",zip=" + self._header['zip']
 
         try:
+            self._rates = Rates(app_id=self._application['app_id'])
+        except Error:
+            raise
+
+        try:
             self._token = Token(
                 self._sandbox,
 
@@ -534,21 +539,22 @@ class API:
 
             # the base_path check prevents endless recursive calls to self.developer_analytics_get_rate_limits()
             if not self._throttle or base_path.startswith('/developer/analytics'):
-                Rates.decrement_rate(base_path=base_path, rate_keys=rate_keys)
+                self._rates.decrement_rate(base_path=base_path, rate_keys=rate_keys)
             else:
 
                 # if rates need to be refreshed, then do so.
-                if Rates.need_refresh():
+                if self._rates.need_refresh():
                     try:
                         limits = self.developer_analytics_get_rate_limits()
                     except Error:
                         raise
                     else:
-                        Rates.refresh_developer_analytics(rate_limits=limits['rate_limits'])
+                        self._rates.refresh_developer_analytics(rate_limits=limits['rate_limits'])
 
                 # decrement the rate, throttling if needed
                 try:
-                    Rates.decrement_rate_throttled(base_path=base_path, rate_keys=rate_keys, timeout=self._timeout)
+                    self._rates.decrement_rate_throttled(base_path=base_path, rate_keys=rate_keys,
+                                                         timeout=self._timeout)
                 except Error:
                     raise
 

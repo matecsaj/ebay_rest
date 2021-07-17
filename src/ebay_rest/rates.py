@@ -11,20 +11,26 @@ from .error import Error
 from .multiton import Multiton
 
 
-# @Multiton  # return the same object when the __init__ params are identical
+@Multiton  # return the same object when the __init__ params are identical
 class Rates:
     """ Manages call limit and utilization data for an eBay application.
 
     https://developer.ebay.com/api-docs/developer/analytics/resources/rate_limit/methods/getRateLimits
     """
-    _lock = threading.Lock()    # secure this lock before updating or reading class variables
-    _refresh_date_time = None   # the soonest it is advisable to refresh rates data from eBay
-    _cache = None               # cache of the most recent rates re-organized to expedite lookups
 
-    # TODO Handle the case where more than one "app_id" is used in parallel, perhaps create a pool indexed by "app_id".
+    def __init__(self, app_id):
+        """
+        Maintain a set of daily limits for each app_id. Be lazy about it when throttling is not used.
 
-    @staticmethod
-    def decrement_rate(base_path: str, rate_keys: list) -> None:
+        :param app_id: eBay keeps a set of daily limits for each app_id.
+        """
+        self._app_id = app_id    # save because it eases debugging
+
+        self._lock = threading.Lock()  # secure this lock before updating or reading class variables
+        self._refresh_date_time = None  # the soonest it is advisable to refresh rates data from eBay
+        self._cache = None  # cache of the most recent rates re-organized to expedite lookups
+
+    def decrement_rate(self, base_path: str, rate_keys: list) -> None:
         """
         Decrement the remaining count of calls associated with a name.
 
@@ -38,14 +44,13 @@ class Rates:
 
         :return: None
         """
-        with Rates._lock:
-            rate_dict = Rates.find_rate_dict(base_path, rate_keys)
+        with self._lock:
+            rate_dict = self._find_rate_dict(base_path, rate_keys)
             if rate_dict:
                 if rate_dict['remaining'] > 0:
                     rate_dict['remaining'] -= 1
 
-    @staticmethod
-    def decrement_rate_throttled(base_path: str, rate_keys: list, timeout: float) -> None:
+    def decrement_rate_throttled(self, base_path: str, rate_keys: list, timeout: float) -> None:
         """
         Decrement the remaining count of calls associated with a name.
 
@@ -72,8 +77,8 @@ class Rates:
         timeout_used = 0
         redo = True
         while redo:
-            Rates._lock.acquire()
-            rate_dict = Rates.find_rate_dict(base_path, rate_keys)
+            self._lock.acquire()
+            rate_dict = self._find_rate_dict(base_path, rate_keys)
             if rate_dict is None:
                 redo = False
             else:
@@ -91,7 +96,7 @@ class Rates:
 
                     if remaining > 0:
                         rate_dict['remaining'] = remaining - 1
-                    Rates._lock.release()
+                    self._lock.release()
                     redo = False
 
                 else:
@@ -110,50 +115,23 @@ class Rates:
                         if wait_seconds > timeout_remaining:      # don't wait any longer than the caller wants
                             wait_seconds = timeout_remaining
 
-                    Rates._lock.release()
+                    self._lock.release()
                     time.sleep(wait_seconds)
                     timeout_used += wait_seconds
 
-    @staticmethod
-    def find_rate_dict(base_path: str, rate_keys: list) -> dict or None:
-        """
-        Get the index so the rate object associated with a name.
-
-        The caller must have a lock.
-
-        https://developer.ebay.com/api-docs/developer/analytics/resources/rate_limit/methods/getRateLimits
-
-        :param
-        base_path (str) :
-
-        :param
-        rate_keys (list) : Strings, keys used to lookup a rate
-
-        :return: a rates dict or None
-        """
-        cache = Rates._cache
-        if not cache:
-            return None
-        else:
-            [resource_name_base, resource_name_module] = rate_keys
-
-            key = base_path + '|' + resource_name_base
-
-            cache = Rates._cache
-            if key in cache:
-                result = cache[key]
-            else:
-                key = key + resource_name_module
-                if key in cache:
-                    result = cache[key]
+    def need_refresh(self) -> bool:
+        """ Return True if the rates need refreshing. """
+        with self._lock:
+            if self._refresh_date_time:
+                if self._refresh_date_time > DateTime.now():
+                    result = False
                 else:
-                    logging.debug('Unable to find rates for: ' + key)
-                    result = None
+                    result = True
+            else:
+                result = True
+        return result
 
-            return result
-
-    @staticmethod
-    def refresh_developer_analytics(rate_limits) -> None:
+    def refresh_developer_analytics(self, rate_limits) -> None:
         """ Refresh the local Developer Analytics values and when the next refresh is recommended. """
 
         if not rate_limits:
@@ -197,20 +175,43 @@ class Rates:
             else:
                 refresh_date_time = soonest_reset
 
-        with Rates._lock:
-            Rates._cache = cache
-            Rates._rate_limits = rate_limits
-            Rates._refresh_date_time = refresh_date_time
+        with self._lock:
+            self._cache = cache
+            self._refresh_date_time = refresh_date_time
 
-    @staticmethod
-    def need_refresh() -> bool:
-        """ Return True if the rates need refreshing. """
-        with Rates._lock:
-            if Rates._refresh_date_time:
-                if Rates._refresh_date_time > DateTime.now():
-                    result = False
-                else:
-                    result = True
+    def _find_rate_dict(self, base_path: str, rate_keys: list) -> dict or None:
+        """
+        Get the index so the rate object associated with a name.
+
+        The caller must have a lock.
+
+        https://developer.ebay.com/api-docs/developer/analytics/resources/rate_limit/methods/getRateLimits
+
+        :param
+        base_path (str) :
+
+        :param
+        rate_keys (list) : Strings, keys used to lookup a rate
+
+        :return: a rates dict or None
+        """
+        cache = self._cache
+        if not cache:
+            return None
+        else:
+            [resource_name_base, resource_name_module] = rate_keys
+
+            key = base_path + '|' + resource_name_base
+
+            cache = self._cache
+            if key in cache:
+                result = cache[key]
             else:
-                result = True
-        return result
+                key = key + resource_name_module
+                if key in cache:
+                    result = cache[key]
+                else:
+                    logging.debug('Unable to find rates for: ' + key)
+                    result = None
+
+            return result

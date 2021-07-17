@@ -1,5 +1,5 @@
 # ebay_rest
-A Python 3 pip package that conveniently wraps eBay’s REST APIs.
+A Python 3 pip package that wraps eBay’s REST APIs.
 
 ## Installation
 
@@ -91,7 +91,7 @@ print(help(Reference))
 * Avoid exhausting memory by making the call within a ["for" loop](https://docs.python.org/3/reference/compound_stmts.html#for).
 
 ##
-**Q:** Why am I getting an "Internal Server Error" at eBay? 
+**Q:** Why is eBay giving an "Internal Error" or "Internal Server Error"? 
 
 **A:** Rapidly repeating an API call with the same parameter values can trigger this.
 ##
