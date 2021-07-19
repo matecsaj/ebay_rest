@@ -216,7 +216,7 @@ class LineItem(object):
     def ebay_collect_and_remit_taxes(self):
         """Gets the ebay_collect_and_remit_taxes of this LineItem.  # noqa: E501
 
-        This container will be returned if the order line item is subject to a 'Collect and Remit' tax that eBay will collect and remit to the proper taxing authority on the buyer's behalf. 'Collect and Remit' tax includes US state-mandated sales tax, 'Goods and Services' tax in Australia or New Zealand, VAT collected for UK, and starting on July 1, 2021, VAT will be collected in EU countries. The amount of this tax is shown in the amount field, and the type of tax is shown in the taxType field. eBay will display the tax type and amount during checkout in accordance with the buyer's address, and handle collection and remittance of the tax without requiring the seller to take any action.  # noqa: E501
+        This container will be returned if the order line item is subject to a 'Collect and Remit' tax that eBay will collect and remit to the proper taxing authority on the buyer's behalf. 'Collect and Remit' tax includes US state-mandated sales tax, 'Goods and Services' tax in Australia or New Zealand, and VAT collected for UK and EU countries. The amount of this tax is shown in the amount field, and the type of tax is shown in the taxType field. eBay will display the tax type and amount during checkout in accordance with the buyer's address, and handle collection and remittance of the tax without requiring the seller to take any action.  # noqa: E501
 
         :return: The ebay_collect_and_remit_taxes of this LineItem.  # noqa: E501
         :rtype: list[EbayCollectAndRemitTax]
@@ -227,7 +227,7 @@ class LineItem(object):
     def ebay_collect_and_remit_taxes(self, ebay_collect_and_remit_taxes):
         """Sets the ebay_collect_and_remit_taxes of this LineItem.
 
-        This container will be returned if the order line item is subject to a 'Collect and Remit' tax that eBay will collect and remit to the proper taxing authority on the buyer's behalf. 'Collect and Remit' tax includes US state-mandated sales tax, 'Goods and Services' tax in Australia or New Zealand, VAT collected for UK, and starting on July 1, 2021, VAT will be collected in EU countries. The amount of this tax is shown in the amount field, and the type of tax is shown in the taxType field. eBay will display the tax type and amount during checkout in accordance with the buyer's address, and handle collection and remittance of the tax without requiring the seller to take any action.  # noqa: E501
+        This container will be returned if the order line item is subject to a 'Collect and Remit' tax that eBay will collect and remit to the proper taxing authority on the buyer's behalf. 'Collect and Remit' tax includes US state-mandated sales tax, 'Goods and Services' tax in Australia or New Zealand, and VAT collected for UK and EU countries. The amount of this tax is shown in the amount field, and the type of tax is shown in the taxType field. eBay will display the tax type and amount during checkout in accordance with the buyer's address, and handle collection and remittance of the tax without requiring the seller to take any action.  # noqa: E501
 
         :param ebay_collect_and_remit_taxes: The ebay_collect_and_remit_taxes of this LineItem.  # noqa: E501
         :type: list[EbayCollectAndRemitTax]

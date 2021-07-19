@@ -239,7 +239,7 @@ class APIOther(unittest.TestCase):
     def test_paging_limit_over_page_size(self):
         count = 0
         limit = 350
-        for item in self._api.buy_browse_search(limit=limit, q='silver'):
+        for item in self._api.buy_browse_search(limit=limit, q='pink'):
             self.assertTrue(isinstance(item['item_id'], str))
             count += 1
             if count >= limit + 500:  # break out if way past the desired limit
@@ -293,8 +293,7 @@ class APIOther(unittest.TestCase):
 
     # Test things that have broken in the past
 
-    def test_buying_options(self):
-        """ Does buying option filtering work? """
+    def test_buying_options(self):      # Does buying option filtering work?
         options = ['FIXED_PRICE', 'BEST_OFFER']     # on Production 'AUCTION' is also an option
         for option in options:
             try:

@@ -286,7 +286,8 @@ class Process:
 
         code = f"    def {name}_{method}(self, {params}):{ignore_long}\n"
         code += docstring
-        code += f"        return self._method_{method_type}(" \
+        code += "        try:\n"
+        code += f"            return self._method_{method_type}(" \
                 f"{name}.Configuration," \
                 f" '{self.base_paths[name]}'," \
                 f" {name}.{self._camel(module)}," \
@@ -306,7 +307,10 @@ class Process:
             code += f" **kwargs"
         else:
             code += f" None"
-        code += f"){ignore_long}\n\n"
+        code += f"){ignore_long}\n"
+        code += "        except Error:\n"
+        code += "            raise\n"
+        code += "\n"
 
         return code
 
