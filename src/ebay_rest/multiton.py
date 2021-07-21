@@ -53,7 +53,9 @@ class Multiton(object):
                     raise
                 self.instances.append(instance)
 
-            # record when we are touching this instance
+            return_object = instance['object']
+
+            # record when we are touching the instance
             d_t = datetime.datetime.now()
             instance['touched'] = d_t
 
@@ -67,8 +69,7 @@ class Multiton(object):
             for index in reversed(to_delete):
                 del self.instances[index]
 
-            # return the object from this instance
-            return instance['object']
+            return return_object
 
     def __getattr__(self, attr):
         return getattr(self.cls, attr)

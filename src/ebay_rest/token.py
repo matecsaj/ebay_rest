@@ -142,7 +142,10 @@ class UserToken:
         if user_refresh_token is not None:
             if user_refresh_token_expiry is not None:
                 self._allow_get_user_consent = False
-                self._user_refresh_token_expiry = DateTime.from_string(user_refresh_token_expiry)
+                try:
+                    self._user_refresh_token_expiry = DateTime.from_string(user_refresh_token_expiry)
+                except Error as error:
+                    raise Error(number=1, reason='user_refresh_token_expiry value error', detail=error.reason)
                 try:
                     self._user_refresh_token = _OAuthToken(
                         refresh_token=self._user_refresh_token,
@@ -236,7 +239,7 @@ class UserToken:
         sign_in_url (str): The redirect URL for gaining user consent
         """
 
-        delay = 5  # delay seconds to give the page an opportunity to render
+        delay = 5  # delay seconds to give the page an opportunity to render and the user to act on a possible captcha
 
         # Don't move the import to the top of the file because not everyone uses this method.
         # In README.md note the extra installation steps.
@@ -273,18 +276,15 @@ class UserToken:
                 is_auth_successful = True
             else:
                 is_auth_successful = False
-        if not is_auth_successful:
-            reason = (
-                f"Authorization unsuccessful, check userid & password:"
-                f" {self._user_id} {self._user_password}"
-            )
-            raise Error(number=1, reason=reason)
 
-        # Check we have the code in the browser URL
-        if 'code' in parsed:
-            return parsed['code']
+        if is_auth_successful:
+            if 'code' in parsed:
+                return parsed['code'][0]        # recently added [0]
+            else:
+                raise Error(number=1, reason="Unable to obtain code.")
         else:
-            raise Error(number=1, reason="Unable to obtain code.")
+            reason = f"Authorization unsuccessful, check userid & password:{self._user_id} {self._user_password}"
+            raise Error(number=1, reason=reason)
 
     def _refresh_user_token(self):
         """Exchange a refresh token for a current user token."""

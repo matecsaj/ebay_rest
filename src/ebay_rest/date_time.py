@@ -44,7 +44,10 @@ class DateTime:
             reason = 'The to_string parameter should be a datetime, not a ' + str(type(d_t)) + '.'
             raise Error(number=1, reason=reason)
         else:
-            string = d_t.strftime(DateTime._EBAY_DATE_FORMAT)
+            try:
+                string = d_t.strftime(DateTime._EBAY_DATE_FORMAT)
+            except ValueError:
+                raise Error(number=1, reason='Value Error.')
             return string[0:10] + 'T' + string[11:23] + 'Z'
 
     @staticmethod
@@ -62,5 +65,10 @@ class DateTime:
             reason = 'The from_string parameter should be a string, not a ' + str(type(d_t_string)) + '.'
             raise Error(number=1, reason=reason)
         else:
-            d_t = datetime.strptime(d_t_string, DateTime._EBAY_DATE_FORMAT)
+            try:
+                d_t = datetime.strptime(d_t_string, DateTime._EBAY_DATE_FORMAT)
+            except ValueError as error:
+                raise Error(number=1,
+                            reason='date time string formatting error, should be like 2004-08-04T19:09:02.768Z',
+                            detail=error.args[0])
             return d_t.replace(tzinfo=timezone.utc)

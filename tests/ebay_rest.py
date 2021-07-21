@@ -8,7 +8,6 @@
 # Standard library imports
 import datetime
 import json
-import random
 import os
 import unittest
 import warnings
@@ -19,26 +18,8 @@ from currency_converter import CurrencyConverter
 # Local imports
 from src.ebay_rest import API, DateTime, Error, Reference
 
-
-class APIFinances(unittest.TestCase):
-    CONTENT_LANGUAGE = 'en-US'
-    CURRENCY = 'USD'
-    MARKETPLACE_ID = 'EBAY_US'
-
-    @classmethod
-    def setUpClass(cls):
-        # TODO Stop ignoring the warning and remedy the resource leak.
-        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
-        cls._api = API(application='sandbox_1', user='sandbox_1', header='US')
-
-    # https://developer.ebay.com/api-docs/sell/finances/resources/transaction/methods/getTransactionSummary
-    def test_get_transaction_summary(self):
-        try:
-            result = self._api.sell_finances_get_transaction_summary(filter="transactionStatus:{PAYOUT}")
-        except Error as error:
-            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
-        else:
-            self.assertTrue('credit_count' in result)
+# TODO Lines like the following should go. Stop ignoring the warning and remedy the resource leak.
+# warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
 
 
 class APIMarketplaces(unittest.TestCase):
@@ -46,7 +27,6 @@ class APIMarketplaces(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        # TODO Stop ignoring the warning and remedy the resource leak.
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
 
     def test_credentials_from_dicts(self):  # set credentials via dicts
@@ -225,9 +205,19 @@ class APIOther(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        # TODO Stop ignoring the warning and remedy the resource leak.
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
-        cls._api = API(application='sandbox_1', user='sandbox_1', header='US')
+        try:
+            cls._api = API(application='sandbox_1', user='sandbox_1', header='US')
+        except Error as error:
+            cls.number = error.number
+            cls.reason = error.reason
+            cls.detail = error.detail
+        else:
+            cls.number = None
+
+    def setUp(self):
+        if self.number is not None:
+            self.fail(f'Error {self.number} is {self.reason}  {self.detail}.\n')
 
     # test paging calls
 
@@ -238,11 +228,11 @@ class APIOther(unittest.TestCase):
 
     def test_paging_limit_over_page_size(self):
         count = 0
-        limit = 350
-        for item in self._api.buy_browse_search(limit=limit, q='pink'):
+        limit = 201
+        for item in self._api.buy_browse_search(limit=limit, q='red'):
             self.assertTrue(isinstance(item['item_id'], str))
             count += 1
-            if count >= limit + 500:  # break out if way past the desired limit
+            if count >= limit * 2:  # break out if way past the desired limit
                 break
         self.assertTrue(count == limit)
 
@@ -312,177 +302,35 @@ class APIOther(unittest.TestCase):
                 message = 'The search for ' + option + ' items returned no items or a non-auction item.'
                 self.assertTrue(success, message)
 
-
-@unittest.skip  # TODO finish it
-class APISell(unittest.TestCase):
-    SANDBOX = False  # STRONG WARNING. Don't make this True.
-    MARKETPLACE_ID = 'EBAY_US'
-    CURRENCY = 'CAD'
-
-    def test_create_item_listing(self):
-
+    # https://developer.ebay.com/api-docs/sell/finances/resources/transaction/methods/getTransactionSummary
+    def test_get_transaction_summary(self):
         try:
-            api = API(application='sandbox_1', user='sandbox_1', header='US', throttle=True)
+            result = self._api.sell_finances_get_transaction_summary(filter="transactionStatus:{PAYOUT}")
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
+            self.assertTrue('credit_count' in result)
 
-            # It is required that the seller be opted in to Business Policies before being able to create live eBay
-            # listings through the Inventory API. Sellers can opt-in to Business Policies through My eBay or by using
-            # the Account API's optInToProgram call. Similarly, payment, return, and fulfillment listing policies may
-            # be created/managed in My eBay or by using the listing policy calls of the Account API.
-            # https://developer.ebay.com/api-docs/sell/account/resources/fulfillment_policy/methods/createFulfillmentPolicy
+    def test_sell_account(self):
+        """
+        It is required that the seller be opted in to Business Policies before being able to create live eBay
+        listings through the Inventory API. Sellers can opt-in to Business Policies through My eBay or by using
+        the Account API's optInToProgram call. Similarly, payment, return, and fulfillment listing policies may
+        be created/managed in My eBay or by using the listing policy calls of the Account API.
+        https://developer.ebay.com/api-docs/sell/account/resources/fulfillment_policy/methods/createFulfillmentPolicy
+        """
+        try:
+            body = {"programType": "SELLING_POLICY_MANAGEMENT"}
 
-            try:
-                body = {"programType": "SELLING_POLICY_MANAGEMENT"}
-
-                api.sell_account_opt_in_to_program(body=body)
-            except Error as error:
-                self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
-
-            # "fulfillmentPolicyId": "string",  # TODO
-            try:
-                body = {
-                    "categoryTypes": [
-                        {
-                            "default": True,
-                            "name": "ALL_EXCLUDING_MOTORS_VEHICLES"
-                        }
-                    ],
-                    "handlingTime": {
-                        "unit": "BUSINESS_DAY",
-                        "value": 1
-                    },
-                    "marketplaceId": self.MARKETPLACE_ID,
-                    "name": "default",
-                    "shippingOptions": [
-                        {
-                            "costType": "FLAT_RATE",
-                            "optionType": "DOMESTIC",
-                            "packageHandlingCost": {
-                                "currency": self.CURRENCY,
-                                "value": "0"
-                            },
-                            "rateTableId": "string",
-                            "shippingServices": [
-                                {
-                                    "additionalShippingCost": {
-                                        "currency": self.CURRENCY,
-                                        "value": "0"
-                                    },
-                                    "buyerResponsibleForShipping": False,
-                                    "cashOnDeliveryFee": {
-                                        "currency": self.CURRENCY,
-                                        "value": "0"
-                                    },
-                                    "freeShipping": True,
-                                }
-                            ]
-                        },
-                        {
-                            "costType": "FLAT_RATE",
-                            "optionType": "INTERNATIONAL",
-                            "packageHandlingCost": {
-                                "currency": self.CURRENCY,
-                                "value": "0"
-                            },
-                            "rateTableId": "string",
-                            "shippingServices": [
-                                {
-                                    "additionalShippingCost": {
-                                        "currency": self.CURRENCY,
-                                        "value": "0"
-                                    },
-                                    "buyerResponsibleForShipping": False,
-                                    "cashOnDeliveryFee": {
-                                        "currency": self.CURRENCY,
-                                        "value": "0"
-                                    },
-                                    "freeShipping": True,
-                                }
-                            ]
-                        }
-                    ],
-                }
-                response = api.sell_account_create_fulfillment_policy(body=body)
-            except Error as error:
-                self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
-
-            # "paymentPolicyId": "string",  # TODO
-
-            # "returnPolicyId": "string",  # TODO
-
-            # This call creates an offer for a specific inventory item on a specific eBay marketplace.
-            # It is up to the sellers whether they want to create a complete offer (with all necessary details)
-            # right from the start, or sellers can provide only some information with the initial createOffer call, and
-            # then make one or more subsequent updateOffer calls to complete the offer and prepare to publish the offer.
-            # Upon first creating an offer, the following fields are required in the request payload: sku,
-            # marketplaceId, and (listing) format.
-            # Other information that will be required before an offer can be published are highlighted below.
-            # These settings are either set with createOffer, or they can be set with a subsequent updateOffer call:
-            # Inventory location Offer price Available quantity eBay listing category Referenced listing policy profiles
-            # to set payment, return, and fulfillment values/settings Note:
-            # Though the includeCatalogProductDetails parameter is not required to be submitted in the request,
-            # the parameter defaults to true if omitted. If the call is successful,
-            # a unique offerId value is returned in the response.
-            # This value will be required for many other offer-related calls.
-            # Note that this call only stages an offer for publishing.
-            # The seller must run the publishOffer call to convert the offer to an active eBay listing.
-            # In addition to the authorization header, which is required for all eBay REST API calls,
-            # the createOffer call also requires the Content-Language header, that sets the natural language that
-            # will be used in the field values of the request payload. For US English, the code value passed in
-            # this header should be en-US. To view other supported Content-Language values, and to read more about all
-            # supported HTTP headers for eBay REST API calls, see the HTTP request headers topic in the Using
-            # eBay REST full APIs document. For those who prefer to create multiple offers (up to 25 at a time) with one
-            # call, the bulkCreateOffer method can be used.  # noqa: E501
-            #
-            # :param EbayOfferDetailsWithKeys body: Details of the offer for the channel (required)
-            #
-            # :param str content_language: This request header sets the natural language that will be provided in the
-            # field values of the request payload. (required)
-            #
-            # :return: OfferResponse
-
-            sku = random.randrange(10000000000000, 90000000000000)
-
-            body = {
-                "availableQuantity": 1,
-                "categoryId": "171228",  # Fiction & Literature
-                "format": "AUCTION",
-                "listingDescription": "Tap dancing accordion players get the most dates.",
-                "listingDuration": "DAYS_7",
-                "listingPolicies": {
-                    "fulfillmentPolicyId": "string",  # TODO
-                    "paymentPolicyId": "string",  # TODO
-                    "returnPolicyId": "string",  # TODO
-                },
-                "marketplaceId": self.MARKETPLACE_ID,
-                "merchantLocationKey": "string",
-                "pricingSummary": {
-                    "auctionStartPrice": {
-                        "currency": self.CURRENCY,
-                        "value": "1.00"
-                    },
-                    "price": {
-                        "currency": self.CURRENCY,
-                        "value": "1.00"
-                    },
-                },
-                "sku": sku,
-            }
-            try:
-                result = api.sell_inventory_create_offer(body=body, content_language='en-US')
-            except Error as error:
-                self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
-            else:
-                pass
+            self._api.sell_account_opt_in_to_program(body=body)
+        except Error as error:
+            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
 
 
 class APIThrottle(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        # TODO Stop ignoring the warning and remedy the resource leak.
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
 
     def test_start(self):    # all initialization options and for each the first and second usage
