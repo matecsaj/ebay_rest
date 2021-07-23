@@ -10,7 +10,7 @@ from .error import Error
 class Multiton(object):
     """
     When init parameters match, reuse an old initialized object instead of making a new one.
-    Objects that have not be reused for an hour will be dropped from the pool.
+    Objects that have not be been reused for an hour will be dropped from the pool.
 
     Use this when the cost of object creation is high or there is a big benefit to object sharing.
 
@@ -23,7 +23,7 @@ class Multiton(object):
     Multiton is a class decorator, and here is an example of how to use it.
 
     @Multiton
-    class YourClass(metaclass=Multiton):
+    class YourClass:
         pass
 
     Debugging tip, temporarily comment out the decorator is if object reuse is confusing diagnosis.
@@ -32,6 +32,10 @@ class Multiton(object):
     """
     def __init__(self, cls):
         self.__dict__.update({'instances': list(), 'lock': threading.Lock(), 'cls': cls})
+        # The above accomplishes the following, without triggering a Pycharm warning and endless recursion.
+        # self.instances = list()
+        # self.lock = threading.Lock()
+        # self.cls = cls
 
     def __call__(self, *args, **kwargs):
         with self.lock:

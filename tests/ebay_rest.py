@@ -5,6 +5,8 @@
 
 # Don't repeat API calls with the same parameters, because it appears to trigger an "Internal (Server) Error" at eBay.
 
+# Whenever possible, run tests on the sandbox instead of production.
+
 # Standard library imports
 import datetime
 import json
@@ -18,12 +20,47 @@ from currency_converter import CurrencyConverter
 # Local imports
 from src.ebay_rest import API, DateTime, Error, Reference
 
+
 # TODO Lines like the following should go. Stop ignoring the warning and remedy the resource leak.
 # warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
 
+class APIBothEnvironmentsSingleSiteTests(unittest.TestCase):
 
-class APIMarketplaces(unittest.TestCase):
-    """ Test things that are different between marketplaces. """
+    @classmethod
+    def setUpClass(cls):
+        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
+
+    def test_start(self):  # all initialization options and for each the first and second usage
+        for environment in ('production', 'sandbox'):
+            for (throttle, timeout) in ((False, None), (True, None), (True, 60.0)):
+                try:
+                    if timeout is None:
+                        api = API(application=environment + '_1', user=environment + '_1',
+                                  header='US', throttle=throttle)
+                    else:
+                        api = API(application=environment + '_1', user=environment + '_1',
+                                  header='US', throttle=throttle, timeout=timeout)
+                except Error as error:
+                    self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                else:
+                    try:
+                        item_id = None
+                        for item in api.buy_browse_search(limit=1, q='lego'):
+                            self.assertTrue(isinstance(item['item_id'], str))
+                            item_id = item['item_id']
+                    except Error as error:
+                        self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                    else:
+                        if item_id:
+                            try:
+                                item = api.buy_browse_get_item(item_id=item_id)
+                                self.assertTrue(isinstance(item, dict))
+                            except Error as error:
+                                self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+
+
+class APISandboxMultipleSiteTests(unittest.TestCase):
+    """ API test that require multiple marketplaces and that can be done on the sandbox. """
 
     @classmethod
     def setUpClass(cls):
@@ -56,7 +93,7 @@ class APIMarketplaces(unittest.TestCase):
             self.assertIsInstance(header, dict, 'Failed to load header credentials.')
 
             try:
-                api = API(application=application, user=user, header=header)    # params are dicts
+                api = API(application=application, user=user, header=header)  # params are dicts
             except Error as error:
                 self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
             else:
@@ -70,7 +107,7 @@ class APIMarketplaces(unittest.TestCase):
         self.assertEqual(a1, a2)
         self.assertNotEqual(a1, b)
 
-    def test_credential_path(self):     # supply a path to ebay_rest.json
+    def test_credential_path(self):  # supply a path to ebay_rest.json
         path = os.getcwd()
         try:
             api = API(path=path, application='sandbox_1', user='sandbox_1', header='US')
@@ -106,7 +143,7 @@ class APIMarketplaces(unittest.TestCase):
         # low priced items are targeted because free shipping for them is unlikely
         # black items are targeted because they are plentiful, and the q parameter is mandatory
         try:
-            filter_ = f'deliveryCountry:{f_country},itemLocationCountry:{d_country},price:[1..2],'\
+            filter_ = f'deliveryCountry:{f_country},itemLocationCountry:{d_country},price:[1..2],' \
                       f'priceCurrency:{d_currency} '
             for item in d_api.buy_browse_search(q='black', filter=filter_, limit=10):
                 item_id = item['item_id']
@@ -201,7 +238,8 @@ class APIMarketplaces(unittest.TestCase):
         return False
 
 
-class APIOther(unittest.TestCase):
+class APISandboxSingleSiteTests(unittest.TestCase):
+    """" API tests that can be done on a single marketplace and in the sandbox. """
 
     @classmethod
     def setUpClass(cls):
@@ -219,22 +257,10 @@ class APIOther(unittest.TestCase):
         if self.number is not None:
             self.fail(f'Error {self.number} is {self.reason}  {self.detail}.\n')
 
-    # test paging calls
-
     def test_paging_no_results(self):
         for item in self._api.buy_browse_search(q='atomic-donkey-kick--this-will-not-be-found-Geraldine'):
-            self.assertTrue(isinstance(item['item_id'], str))
+            self.assertTrue(isinstance(item['item_id'], str), "Malformed item.")
             self.fail(msg='No items should be returned.')
-
-    def test_paging_limit_over_page_size(self):
-        count = 0
-        limit = 201
-        for item in self._api.buy_browse_search(limit=limit, q='red'):
-            self.assertTrue(isinstance(item['item_id'], str))
-            count += 1
-            if count >= limit * 2:  # break out if way past the desired limit
-                break
-        self.assertTrue(count == limit)
 
     # test positional and kw arguments to ebay api calls
 
@@ -283,8 +309,8 @@ class APIOther(unittest.TestCase):
 
     # Test things that have broken in the past
 
-    def test_buying_options(self):      # Does buying option filtering work?
-        options = ['FIXED_PRICE', 'BEST_OFFER']     # on Production 'AUCTION' is also an option
+    def test_buying_options(self):  # Does buying option filtering work?
+        options = ['FIXED_PRICE', 'BEST_OFFER']  # on Production 'AUCTION' is also an option
         for option in options:
             try:
                 success = None
@@ -327,39 +353,44 @@ class APIOther(unittest.TestCase):
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
 
 
-class APIThrottle(unittest.TestCase):
+class APIProductionSingleTests(unittest.TestCase):
+    """" API tests that can be done on a single marketplace and must in be in system production. """
 
     @classmethod
     def setUpClass(cls):
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
+        try:
+            cls._api = API(application='production_1', user='production_1', header='US')
+        except Error as error:
+            cls.number = error.number
+            cls.reason = error.reason
+            cls.detail = error.detail
+        else:
+            cls.number = None
 
-    def test_start(self):    # all initialization options and for each the first and second usage
-        for environment in ('production', 'sandbox'):
-            for (throttle, timeout) in ((False, None), (True, None), (True, 60.0)):
-                try:
-                    if timeout is None:
-                        api = API(application=environment+'_1', user=environment+'_1',
-                                  header='US', throttle=throttle)
-                    else:
-                        api = API(application=environment+'_1', user=environment+'_1',
-                                  header='US', throttle=throttle, timeout=timeout)
-                except Error as error:
-                    self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
-                else:
-                    try:
-                        item_id = None
-                        for item in api.buy_browse_search(limit=1, q='lego'):
-                            self.assertTrue(isinstance(item['item_id'], str))
-                            item_id = item['item_id']
-                    except Error as error:
-                        self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
-                    else:
-                        if item_id:
-                            try:
-                                item = api.buy_browse_get_item(item_id=item_id)
-                                self.assertTrue(isinstance(item, dict))
-                            except Error as error:
-                                self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+    def setUp(self):
+        if self.number is not None:
+            self.fail(f'Error {self.number} is {self.reason}  {self.detail}.\n')
+
+    def test_page_boundaries(self):    # can't find keywords that always have plenty of results on the sandbox
+        limit_and_keywords = (
+            (1, 'red',),          # start at one because zero is not allowed
+            (2, 'orange',),
+            (198, 'yellow',),
+            (199, 'green',),
+            (200, 'blue',),        # the biggest page can hold 200 items
+            (201, 'indigo',),
+            (202, 'violet',),
+        )
+        for (limit, keywords) in limit_and_keywords:
+            counter = 0
+            safety = limit + 5
+            for item in self._api.buy_browse_search(limit=limit, q=keywords):
+                self.assertTrue(isinstance(item['item_id'], str), "Malformed item.")
+                counter += 1
+                if counter >= safety:
+                    break
+            self.assertTrue(counter == limit, f"Page boundary error on limit {limit}.")
 
 
 class DateTimeTests(unittest.TestCase):
