@@ -35,14 +35,14 @@
                 "https://api.ebay.com/oauth/api_scope/sell.account",
                 "https://api.ebay.com/oauth/api_scope/sell.fulfillment"
             ],
-            "token": "",
-            "token_expiry": ""
+            "refresh_token": "",
+            "refresh_token_expiry": ""
         },
         "sandbox_1": {
             "email_or_username": "placeholder",
             "password": "placeholder",
-            "token": "",
-            "token_expiry": ""
+            "refresh_token": "",
+            "refresh_token_expiry": ""
         }
     },
     "headers": {
