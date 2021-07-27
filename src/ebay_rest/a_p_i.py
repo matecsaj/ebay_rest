@@ -152,7 +152,7 @@ class API:
 
         # check the user keys and values
         user_keys = [('email_or_username', True), ('password', True),
-                     ('scopes', False), ('token', False), ('token_expiry', False)]
+                     ('scopes', False), ('refresh_token', False), ('refresh_token_expiry', False)]
         try:
             self._check_keys(self._user, user_keys, 'user')
         except Error:
@@ -244,9 +244,9 @@ class API:
                 user_scopes=None if 'scopes' not in self._user else self._user['scopes'],
 
                 # user token supply
-                user_refresh_token=None if 'token' not in self._user else self._user['token'],
-                user_refresh_token_expiry=None if 'token_expiry' not in self._user else self._user[
-                    'token_expiry'],
+                user_refresh_token=None if 'refresh_token' not in self._user else self._user['refresh_token'],
+                user_refresh_token_expiry=None if 'refresh_token_expiry' not in self._user else self._user[
+                    'refresh_token_expiry'],
             )
         except Error:
             raise

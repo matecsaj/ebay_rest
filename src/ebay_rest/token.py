@@ -142,6 +142,8 @@ class UserToken:
         if user_refresh_token is not None:
             if user_refresh_token_expiry is not None:
                 self._allow_get_user_consent = False
+                if self._user_scopes is None:
+                    self._determine_user_scopes()
                 try:
                     self._user_refresh_token_expiry = DateTime.from_string(user_refresh_token_expiry)
                 except Error as error:
@@ -267,15 +269,11 @@ class UserToken:
         parsed = parse_qs(qs, encoding='utf-8')
         browser.quit()
 
-        # Assume authorization was successful if isAuthSuccessful missing
         # Check isAuthSuccessful is true, if present
-        if 'isAuthSuccessful' not in parsed:
-            is_auth_successful = True
-        else:
+        is_auth_successful = False
+        if 'isAuthSuccessful' in parsed:
             if 'true' == parsed['isAuthSuccessful'][0]:
                 is_auth_successful = True
-            else:
-                is_auth_successful = False
 
         if is_auth_successful:
             if 'code' in parsed:
