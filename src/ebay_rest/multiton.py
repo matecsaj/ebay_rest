@@ -43,14 +43,11 @@ class Multiton(object):
             key = (args, kwargs)
 
             # search for a matching old instance
-            found = False
             for instance in self.instances:
                 if instance['key'] == key:
-                    found = True
                     break
 
-            # if not found then create a new instance
-            if not found:
+            else:   # if not found then create a new instance
                 try:
                     instance = {'key': key, 'object': self.cls(*args, **kwargs)}
                 except Error:
