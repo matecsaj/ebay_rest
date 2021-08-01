@@ -65,6 +65,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
+        cls.currency_converter = CurrencyConverter()  # this is slow, so do it once
 
     def test_credentials_from_dicts(self):
         """ set credentials via dicts """
@@ -207,8 +208,8 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
             elif shipping_cost['converted_from_currency'] == currency:
                 cost = float(shipping_cost['converted_from_value'])
             else:
-                c = CurrencyConverter()
-                cost = c.convert(float(shipping_cost['value']), shipping_cost['currency'], currency)
+                cost = self.currency_converter.convert(float(shipping_cost['value']),
+                                                       shipping_cost['currency'], currency)
             if cost is not None:
                 costs.append(cost)
             else:
