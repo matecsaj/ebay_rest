@@ -3,6 +3,7 @@
         "array_type_sql": null,
         "children": [
             "ebay_item_additional_images",
+            "ebay_item_authenticity_guarantee",
             "ebay_item_authenticity_verification",
             "ebay_item_available_coupons",
             "ebay_item_buying_options",
@@ -310,6 +311,26 @@
         "required": true,
         "shape": "array_of_container"
     },
+    "ebay_item_authenticity_guarantee": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "description",
+                "name_sql": "description",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "terms_web_url",
+                "name_sql": "terms_web_url",
+                "required": false,
+                "type_sql": "varchar"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
     "ebay_item_authenticity_verification": {
         "array_type_sql": null,
         "children": [],
@@ -333,15 +354,10 @@
     "ebay_item_available_coupons": {
         "array_type_sql": "AvailableCoupon",
         "children": [
+            "ebay_item_available_coupons_constraint",
             "ebay_item_available_coupons_discount_amount"
         ],
         "fields": [
-            {
-                "name_python": "constraints",
-                "name_sql": "constraints",
-                "required": false,
-                "type_sql": "varchar"
-            },
             {
                 "name_python": "discount_type",
                 "name_sql": "discount_type",
@@ -369,6 +385,20 @@
         ],
         "required": true,
         "shape": "array_of_container"
+    },
+    "ebay_item_available_coupons_constraint": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "expiration_date",
+                "name_sql": "expiration_date",
+                "required": false,
+                "type_sql": "timestamp with time zone"
+            }
+        ],
+        "required": false,
+        "shape": "container"
     },
     "ebay_item_available_coupons_discount_amount": {
         "array_type_sql": null,

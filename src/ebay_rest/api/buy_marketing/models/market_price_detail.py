@@ -56,7 +56,7 @@ class MarketPriceDetail(object):
     def condition_group(self):
         """Gets the condition_group of this MarketPriceDetail.  # noqa: E501
 
-        The name for the condition of the product. For example: NEW Note: In all eBay marketplaces, Condition ID 2000 now maps to an item condition of 'Certified Refurbished', and not 'Manufacturer Refurbished'. To list an item as 'Certified Refurbished', a seller must be pre-qualified by eBay for this feature.  # noqa: E501
+        The name for the condition of the product. For example: NEW Note: As of September 1, 2021, condition ID 2500 ('Seller Refurbished') is no longer a valid item condition in the Cell Phones &amp; Smartphones category (category ID 9355) for the following marketplaces: US, Canada, UK, Germany, and Australia. This refurbished item condition has been replaced by three new refurbished values, which include 'Excellent - Refurbished' (condition ID 2010), 'Very Good - Refurbished' (condition ID 2020), and 'Good - Refurbished' (condition ID 2030).  # noqa: E501
 
         :return: The condition_group of this MarketPriceDetail.  # noqa: E501
         :rtype: str
@@ -67,7 +67,7 @@ class MarketPriceDetail(object):
     def condition_group(self, condition_group):
         """Sets the condition_group of this MarketPriceDetail.
 
-        The name for the condition of the product. For example: NEW Note: In all eBay marketplaces, Condition ID 2000 now maps to an item condition of 'Certified Refurbished', and not 'Manufacturer Refurbished'. To list an item as 'Certified Refurbished', a seller must be pre-qualified by eBay for this feature.  # noqa: E501
+        The name for the condition of the product. For example: NEW Note: As of September 1, 2021, condition ID 2500 ('Seller Refurbished') is no longer a valid item condition in the Cell Phones &amp; Smartphones category (category ID 9355) for the following marketplaces: US, Canada, UK, Germany, and Australia. This refurbished item condition has been replaced by three new refurbished values, which include 'Excellent - Refurbished' (condition ID 2010), 'Very Good - Refurbished' (condition ID 2020), and 'Good - Refurbished' (condition ID 2030).  # noqa: E501
 
         :param condition_group: The condition_group of this MarketPriceDetail.  # noqa: E501
         :type: str
@@ -79,7 +79,7 @@ class MarketPriceDetail(object):
     def condition_ids(self):
         """Gets the condition_ids of this MarketPriceDetail.  # noqa: E501
 
-        An array of condition identifiers for the product. Note: In all eBay marketplaces, Condition ID 2000 now maps to an item condition of 'Certified Refurbished', and not 'Manufacturer Refurbished'. To list an item as 'Certified Refurbished', a seller must be pre-qualified by eBay for this feature.  # noqa: E501
+        An array of condition identifiers for the product. Note: As of September 1, 2021, condition ID 2500 ('Seller Refurbished') is no longer a valid item condition in the Cell Phones &amp; Smartphones category (category ID 9355) for the following marketplaces: US, Canada, UK, Germany, and Australia. This refurbished item condition has been replaced by three new refurbished values, which include 'Excellent - Refurbished' (condition ID 2010), 'Very Good - Refurbished' (condition ID 2020), and 'Good - Refurbished' (condition ID 2030).  # noqa: E501
 
         :return: The condition_ids of this MarketPriceDetail.  # noqa: E501
         :rtype: list[str]
@@ -90,7 +90,7 @@ class MarketPriceDetail(object):
     def condition_ids(self, condition_ids):
         """Sets the condition_ids of this MarketPriceDetail.
 
-        An array of condition identifiers for the product. Note: In all eBay marketplaces, Condition ID 2000 now maps to an item condition of 'Certified Refurbished', and not 'Manufacturer Refurbished'. To list an item as 'Certified Refurbished', a seller must be pre-qualified by eBay for this feature.  # noqa: E501
+        An array of condition identifiers for the product. Note: As of September 1, 2021, condition ID 2500 ('Seller Refurbished') is no longer a valid item condition in the Cell Phones &amp; Smartphones category (category ID 9355) for the following marketplaces: US, Canada, UK, Germany, and Australia. This refurbished item condition has been replaced by three new refurbished values, which include 'Excellent - Refurbished' (condition ID 2010), 'Very Good - Refurbished' (condition ID 2020), and 'Good - Refurbished' (condition ID 2030).  # noqa: E501
 
         :param condition_ids: The condition_ids of this MarketPriceDetail.  # noqa: E501
         :type: list[str]

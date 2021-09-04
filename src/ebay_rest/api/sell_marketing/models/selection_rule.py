@@ -140,7 +140,7 @@ class SelectionRule(object):
     def listing_condition_ids(self):
         """Gets the listing_condition_ids of this SelectionRule.  # noqa: E501
 
-        The ID of the listing's condition. Note: In all eBay marketplaces, Condition ID 2000 now maps to an item condition of 'Certified Refurbished', and not 'Manufacturer Refurbished'. To list an item as 'Certified Refurbished', a seller must be pre-qualified by eBay for this feature. Valid values: 1000 = New 2000 = Certified refurbished 2500 = Seller refurbished 3000 = Used/Like new/Pre owned  # noqa: E501
+        The ID of the listing's condition. For more information, see Item condition ID and name values. Note: As of September 1, 2021, condition ID 2500 ('Seller Refurbished') is no longer a valid item condition in the Cell Phones &amp; Smartphones category (category ID 9355) for the following marketplaces: US, Canada, UK, Germany, and Australia. This refurbished item condition has been replaced by three new refurbished values, which include 'Excellent - Refurbished' (condition ID 2010), 'Very Good - Refurbished' (condition ID 2020), and 'Good - Refurbished' (condition ID 2030). Note: In all eBay marketplaces, Condition ID 2000 now maps to an item condition of 'Certified - Refurbished', and not 'Manufacturer Refurbished'. To list an item as 'Certified Refurbished', a seller must be pre-qualified by eBay for this feature.  # noqa: E501
 
         :return: The listing_condition_ids of this SelectionRule.  # noqa: E501
         :rtype: list[str]
@@ -151,7 +151,7 @@ class SelectionRule(object):
     def listing_condition_ids(self, listing_condition_ids):
         """Sets the listing_condition_ids of this SelectionRule.
 
-        The ID of the listing's condition. Note: In all eBay marketplaces, Condition ID 2000 now maps to an item condition of 'Certified Refurbished', and not 'Manufacturer Refurbished'. To list an item as 'Certified Refurbished', a seller must be pre-qualified by eBay for this feature. Valid values: 1000 = New 2000 = Certified refurbished 2500 = Seller refurbished 3000 = Used/Like new/Pre owned  # noqa: E501
+        The ID of the listing's condition. For more information, see Item condition ID and name values. Note: As of September 1, 2021, condition ID 2500 ('Seller Refurbished') is no longer a valid item condition in the Cell Phones &amp; Smartphones category (category ID 9355) for the following marketplaces: US, Canada, UK, Germany, and Australia. This refurbished item condition has been replaced by three new refurbished values, which include 'Excellent - Refurbished' (condition ID 2010), 'Very Good - Refurbished' (condition ID 2020), and 'Good - Refurbished' (condition ID 2030). Note: In all eBay marketplaces, Condition ID 2000 now maps to an item condition of 'Certified - Refurbished', and not 'Manufacturer Refurbished'. To list an item as 'Certified Refurbished', a seller must be pre-qualified by eBay for this feature.  # noqa: E501
 
         :param listing_condition_ids: The listing_condition_ids of this SelectionRule.  # noqa: E501
         :type: list[str]

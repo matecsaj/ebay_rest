@@ -267,39 +267,45 @@ class APISandboxSingleSiteTests(unittest.TestCase):
             self.assertTrue(isinstance(item['item_id'], str), "Malformed item.")
             self.fail(msg='No items should be returned.')
 
-    def test_positional_zero_kw_none(self):
+    def test_positional_none_kw_none(self):
         """ Try a call with no positional arguments and no keyword arguments. """
-        self.assertIsNotNone(self._api.developer_analytics_get_rate_limits(),
-                             msg="A call with zero positional and no kw arguments failed.")
+        try:
+            result = self._api.sell_compliance_get_listing_violations_summary()
+        except Error as error:
+            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+        else:
+            msg = "A call with zero positional and no kw arguments failed."
+            self.assertIsNotNone('violation_summaries' in result, msg=msg)
 
-    def test_positional_one_kw_none(self):
+    def test_positional_some_kw_none(self):
+        # https://developer.ebay.com/api-docs/commerce/taxonomy/resources/category_tree/methods/getDefaultCategoryTreeId
+        try:
+            result = self._api.commerce_taxonomy_get_default_category_tree_id('EBAY_US')
+        except Error as error:
+            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+        else:
+            self.assertTrue('category_tree_id' in result, msg="A call with some positional and no kw arguments failed.")
+
+    def test_positional_none_kw_some(self):
         try:
             for item in self._api.buy_browse_search(q='red'):
-                try:
-                    item_detail = self._api.buy_browse_get_item(item_id=item['item_id'], fieldgroups='PRODUCT')
-                except Error as error:
-                    self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
-                else:
-                    self.assertIsNotNone(item_detail, msg="A call with one positional and no kw arguments failed.")
+                self.assertTrue('item_id' in item, msg="A call with some positional and no kw arguments failed.")
                 break
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
 
-    def test_positional_two_kw_none(self):
-        pass  # TODO
-
-    def test_positional_zero_kw_some(self):
-        self.assertIsNotNone(self._api.buy_browse_search(q='blue'),
-                             msg="A call with zero positional and no kw arguments failed.")
-
-    def test_positional_one_kw_some(self):
-        for item in self._api.buy_browse_search(q='yellow'):
-            self.assertIsNotNone(self._api.buy_browse_get_item(item_id=item['item_id'], fieldgroups='PRODUCT'),
-                                 msg="A call with one positional and some kw arguments failed.")
-            break
-
-    def test_positional_two_kw_some(self):
-        pass  # TODO
+    def test_positional_some_kw_some(self):
+        # https://developer.ebay.com/api-docs/commerce/taxonomy/resources/category_tree/methods/getCompatibilityPropertyValues # noqa: E501
+        try:
+            result = self._api.commerce_taxonomy_get_compatibility_property_values(0,
+                                                                                   compatibility_property='Model',
+                                                                                   category_id=33559,
+                                                                                   filter='Year:2018,Make:Honda')
+        except Error as error:
+            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+        else:
+            msg = "A call with some positional and no kw arguments failed."
+            self.assertTrue('compatibility_property_values' in result, msg=msg)
 
     def test_try_except_else_api(self):
         """  Test that an exception occurs when expected. """

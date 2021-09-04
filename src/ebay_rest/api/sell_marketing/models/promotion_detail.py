@@ -285,7 +285,7 @@ class PromotionDetail(object):
     def promotion_image_url(self):
         """Gets the promotion_image_url of this PromotionDetail.  # noqa: E501
 
-        Not applicable for VOLUME_DISCOUNT promotions, this field is a URL that points to an image for the promotion. This image is displayed on the seller's All Offers page. The URL must point to either JPEG or PNG image and it must be a minimum of 500x500 pixels in dimension and cannot exceed 12Mb in size.  # noqa: E501
+        Required for CODED_COUPON and MARKDOWN_SALE promotions, optional for ORDER_DISCOUNT promotions, and not applicable for VOLUME_DISCOUNT promotions, this field is a URL that points to an image for the promotion. This image is displayed on the seller's All Offers page. The URL must point to either JPEG or PNG image and it must be a minimum of 500x500 pixels in dimension and cannot exceed 12Mb in size.  # noqa: E501
 
         :return: The promotion_image_url of this PromotionDetail.  # noqa: E501
         :rtype: str
@@ -296,7 +296,7 @@ class PromotionDetail(object):
     def promotion_image_url(self, promotion_image_url):
         """Sets the promotion_image_url of this PromotionDetail.
 
-        Not applicable for VOLUME_DISCOUNT promotions, this field is a URL that points to an image for the promotion. This image is displayed on the seller's All Offers page. The URL must point to either JPEG or PNG image and it must be a minimum of 500x500 pixels in dimension and cannot exceed 12Mb in size.  # noqa: E501
+        Required for CODED_COUPON and MARKDOWN_SALE promotions, optional for ORDER_DISCOUNT promotions, and not applicable for VOLUME_DISCOUNT promotions, this field is a URL that points to an image for the promotion. This image is displayed on the seller's All Offers page. The URL must point to either JPEG or PNG image and it must be a minimum of 500x500 pixels in dimension and cannot exceed 12Mb in size.  # noqa: E501
 
         :param promotion_image_url: The promotion_image_url of this PromotionDetail.  # noqa: E501
         :type: str
