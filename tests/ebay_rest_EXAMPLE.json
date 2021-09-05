@@ -47,7 +47,7 @@
     },
     "headers": {
         "ENCA": {
-            "content_language": "en-US",
+            "content_language": "en-CA",
             "country" : "CA",
             "currency": "CAD",
             "marketplace_id": "EBAY_ENCA",
