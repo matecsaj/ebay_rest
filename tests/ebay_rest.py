@@ -45,9 +45,14 @@ class APIBothEnvironmentsSingleSiteTests(unittest.TestCase):
                 else:
                     try:
                         item_id = None
-                        for item in api.buy_browse_search(limit=1, q='lego'):
-                            self.assertTrue(isinstance(item['item_id'], str))
-                            item_id = item['item_id']
+                        for record in api.buy_browse_search(limit=1, q='lego'):
+                            if 'record' not in record:
+                                self.assertTrue('total' in record, f'Unexpected non-record{record}.')
+                            else:
+                                item = record['record']
+                                self.assertTrue(isinstance(item['item_id'], str))
+                                item_id = item['item_id']
+                                break
                     except Error as error:
                         self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
                     else:
@@ -150,35 +155,40 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
         try:
             filter_ = f'deliveryCountry:{f_country},itemLocationCountry:{d_country},price:[1..2],' \
                       f'priceCurrency:{d_currency} '
-            for item in d_api.buy_browse_search(q='black', filter=filter_, limit=10):
-                item_id = item['item_id']
-                if item['item_location']['country'] == d_country:
-                    # get the lowest domestic shipping cost
-                    try:
-                        d_item = d_api.buy_browse_get_item(item_id=item_id, fieldgroups='PRODUCT')
-                    except Error as error:
-                        self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
-                    d_shipping = self._get_lowest_shipping(d_item, d_country, shipping_currency)
 
-                    # get the lowest foreign shipping cost
-                    try:
-                        f_item = f_api.buy_browse_get_item(item_id=item_id, fieldgroups='PRODUCT')
-                    except Error as error:
-                        self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
-                    f_shipping = self._get_lowest_shipping(f_item, f_country, shipping_currency)
-
-                    # compare costs, inconclusive when equal or some None
-                    if (d_shipping is not None) and (f_shipping is not None):
-                        if d_shipping < f_shipping:
-                            tally += 1  # what we would expect most of the time
-                        elif d_shipping > f_shipping:
-                            tally -= 1  # very rare, put a break point here find trouble
-                        else:
-                            tally = tally  # flat rate world wide shipping is possible
-                    else:
-                        pass  # self.fail(f'For {item_id} both shipping costs can not be found.')
+            for record in d_api.buy_browse_search(q='black', filter=filter_, limit=10):
+                if 'record' not in record:
+                    self.assertTrue('total' in record, f'Unexpected non-record{record}.')
                 else:
-                    self.fail(f'Item {item_id} is supposed to be located in {d_country}.')
+                    item = record['record']
+                    item_id = item['item_id']
+                    if item['item_location']['country'] == d_country:
+                        # get the lowest domestic shipping cost
+                        try:
+                            d_item = d_api.buy_browse_get_item(item_id=item_id, fieldgroups='PRODUCT')
+                        except Error as error:
+                            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                        d_shipping = self._get_lowest_shipping(d_item, d_country, shipping_currency)
+
+                        # get the lowest foreign shipping cost
+                        try:
+                            f_item = f_api.buy_browse_get_item(item_id=item_id, fieldgroups='PRODUCT')
+                        except Error as error:
+                            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                        f_shipping = self._get_lowest_shipping(f_item, f_country, shipping_currency)
+
+                        # compare costs, inconclusive when equal or some None
+                        if (d_shipping is not None) and (f_shipping is not None):
+                            if d_shipping < f_shipping:
+                                tally += 1  # what we would expect most of the time
+                            elif d_shipping > f_shipping:
+                                tally -= 1  # very rare, put a break point here find trouble
+                            else:
+                                tally = tally  # flat rate world wide shipping is possible
+                        else:
+                            pass  # self.fail(f'For {item_id} both shipping costs can not be found.')
+                    else:
+                        self.fail(f'Item {item_id} is supposed to be located in {d_country}.')
 
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
@@ -263,9 +273,15 @@ class APISandboxSingleSiteTests(unittest.TestCase):
             self.fail(f'Error {self.number} is {self.reason}  {self.detail}.\n')
 
     def test_paging_no_results(self):
-        for item in self._api.buy_browse_search(q='atomic-donkey-kick--this-will-not-be-found-Geraldine'):
-            self.assertTrue(isinstance(item['item_id'], str), "Malformed item.")
-            self.fail(msg='No items should be returned.')
+        for record in self._api.buy_browse_search(q='atomic-donkey-kick--this-will-not-be-found-Geraldine'):
+            if 'record' not in record:
+                self.assertTrue('total' in record, f'Unexpected non-record{record}.')
+                self.assertEqual(record['total']['records_yielded'], 0)
+                self.assertEqual(record['total']['records_available'], 0)
+            else:
+                item = record['record']
+                self.assertTrue(isinstance(item['item_id'], str), "Malformed item.")
+                self.fail(msg='No items should be returned.')
 
     def test_positional_none_kw_none(self):
         """ Try a call with no positional arguments and no keyword arguments. """
@@ -288,9 +304,13 @@ class APISandboxSingleSiteTests(unittest.TestCase):
 
     def test_positional_none_kw_some(self):
         try:
-            for item in self._api.buy_browse_search(q='red'):
-                self.assertTrue('item_id' in item, msg="A call with some positional and no kw arguments failed.")
-                break
+            for record in self._api.buy_browse_search(q='red'):
+                if 'record' in record:
+                    item = record['record']
+                    self.assertTrue('item_id' in item, msg="A call with some positional and no kw arguments failed.")
+                    break
+                else:
+                    self.assertTrue('total' in record, f'Unexpected non-record{record}.')
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
 
@@ -324,12 +344,16 @@ class APISandboxSingleSiteTests(unittest.TestCase):
                 success = None
                 keywords = 'black'
                 filter_ = 'buyingOptions:{' + option + '}'
-                for item in self._api.buy_browse_search(q=keywords, filter=filter_, limit=500):
-                    if option in item['buying_options']:
-                        success = True
+                for record in self._api.buy_browse_search(q=keywords, filter=filter_, limit=500):
+                    if 'record' not in record:
+                        self.assertTrue('total' in record, f'Unexpected non-record{record}.')
                     else:
-                        success = False
-                        break
+                        item = record['record']
+                        if option in item['buying_options']:
+                            success = True
+                        else:
+                            success = False
+                            break
             except Error as error:
                 self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
             else:
@@ -383,7 +407,7 @@ class APIProductionSingleTests(unittest.TestCase):
         if self.number is not None:
             self.fail(f'Error {self.number} is {self.reason}  {self.detail}.\n')
 
-    def test_page_boundaries(self):
+    def test_hidden_page_boundaries(self):
         """
         Warning, this can't be run in the sandbox, because searches do not return enough results.
         """
@@ -399,11 +423,15 @@ class APIProductionSingleTests(unittest.TestCase):
         for (limit, keywords) in limit_and_keywords:
             counter = 0
             safety = limit + 5
-            for item in self._api.buy_browse_search(limit=limit, q=keywords):
-                self.assertTrue(isinstance(item['item_id'], str), "Malformed item.")
-                counter += 1
-                if counter >= safety:
-                    break
+            for record in self._api.buy_browse_search(limit=limit, q=keywords):
+                if 'record' not in record:
+                    self.assertTrue('total' in record, f'Unexpected non-record{record}.')
+                else:
+                    item = record['record']
+                    self.assertTrue(isinstance(item['item_id'], str), "Malformed item.")
+                    counter += 1
+                    if counter >= safety:
+                        break
             self.assertTrue(counter == limit, f"Page boundary error on limit {limit}.")
 
 

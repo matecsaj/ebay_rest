@@ -413,7 +413,10 @@ class API:
         :param kwargs:
         :return:
         """
+        page_controls = ['href', 'limit', 'next', 'offset', 'prev', 'total', 'warnings']
         page_limit = 200  # the maximum number of records per page, as dictated by eBay
+        yield_record_count = 0
+        yielded_info = list()
 
         # co-opt some parameters
         if 'offset' in kwargs:
@@ -445,6 +448,7 @@ class API:
         offset = 0  # start at the first record; yes the record index starts at zero
         record_list_key = None  # a placeholder for the dictionary key that will refer to the list of records
         loop = True
+        result = None
         while loop:
 
             try:
@@ -463,20 +467,32 @@ class API:
                 for key in result:
                     if isinstance(result[key], list):
                         record_list_key = key
+                        page_controls.append(key)
                         break
                     # it will not be found when the record set is totally empty
 
-            # determine the number of records in the current page
+            # Yield unique non-record information.
+            for key in result:
+                if key not in page_controls:
+                    if result[key] is not None:
+                        yield_info = {key: result[key]}
+                        if yield_info not in yielded_info:
+                            # TODO For some 'warnings' handle the problem or raise an exception.
+                            yield yield_info
+                            yielded_info.append(yield_info)
+
+            # Determine the number of records in the current page.
             records_in_page = 0
             if record_list_key is not None:  # is the record set totally empty?
                 if record_list_key in result:  # is current page is well formed page?
                     if result[record_list_key] is not None:  # does the current page have > zero results?
                         records_in_page = len(result[record_list_key])  # all good, get the record count
 
-            # yield each record to the caller, perhaps stop looping, and prepare the next page's offset
+            # Yield each record then stop looping and prepare the next page's offset.
             if records_in_page:
                 for element in result[record_list_key]:
-                    yield element
+                    yield {'record': element}
+                    yield_record_count += 1
                     if records_desired is not None:
                         records_desired -= 1
                         if records_desired <= 0:
@@ -487,6 +503,13 @@ class API:
                     loop = False
             else:
                 loop = False
+
+        # Warning, if the caller stopped this generator prematurely then the following will not happen.
+        if result is None:
+            yield_max = 0
+        else:
+            yield_max = result['total']
+        yield {'total': {'records_yielded': yield_record_count, 'records_available': yield_max } }
 
     def _get_swagger_method(self, function_configuration, base_path, function_instance, function_client,
                             method, user_access_token, params):
