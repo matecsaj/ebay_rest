@@ -67,10 +67,12 @@ from .api import sell_negotiation
 from .api.sell_negotiation.rest import ApiException as SellNegotiationException
 from .api import sell_recommendation
 from .api.sell_recommendation.rest import ApiException as SellRecommendationException
+
+
 # ANCHOR-er_imports-END"
 
 
-@Multiton   # return the same object when the __init__ params are identical
+@Multiton  # return the same object when the __init__ params are identical
 class API:
     """ A wrapper for all of eBay's REST-ful APIs.
 
@@ -168,12 +170,23 @@ class API:
         for global_id_value in Reference.get_global_id_values():
             self._marketplace_ids.append(global_id_value['global_id'].replace('-', '_'))
 
+        # get all the languages that marketplaces use
+        marketplace_languages = set()
+        for marketplace_id_value in Reference.get_marketplace_id_values().values():
+            for key in marketplace_id_value[1]:
+                marketplace_languages.add(key)
+        marketplace_languages = list(marketplace_languages)
+
         header_keys_values = [
-            ('content_language', None),  # TODO add allowed values
+            ('accept_language', marketplace_languages),
+            ('affiliate_campaign_id', None),  # None indicates that any value is acceptable.
+            ('affiliate_reference_id', None),
+            ('device_id', None),
+            ('content_language', marketplace_languages),
             ('country', list(Reference.get_country_codes().keys())),
-            ('currency', None),  # TODO add allowed values
+            ('currency', list(Reference.get_currency_codes().keys())),
             ('marketplace_id', self._marketplace_ids),
-            ('zip', None)  # None indicates that any value is acceptable.
+            ('zip', None)
         ]
         try:
             self._check_header(header_keys_values)
@@ -195,7 +208,7 @@ class API:
         if detail:
             raise Error(number=1, reason="Bad throttling parameters.", detail=detail)
 
-        if self._sandbox:   # The sandbox will not return rates so there is no point to doing throttling.
+        if self._sandbox:  # The sandbox will not return rates so there is no point to doing throttling.
             self._throttle = False
             self._timeout = -1.0
             self._rates = None
@@ -206,16 +219,27 @@ class API:
             except Error:
                 raise
 
-        # pre-process headers to expedite frequent usage
-
-        # for shipping information accuracy https://developer.ebay.com/api-docs/buy/static/api-browse.html
-        self._end_user_ctx = None
+        # pre-load the multi-purpose header self._end_user_ctx
+        equates = list()
+        if 'affiliate_campaign_id' in self._header:
+            if len(self._header['affiliate_campaign_id']) > 0:
+                equates.append("affiliateCampaignId=" + self._header['affiliate_campaign_id'])
+        if 'affiliate_reference_id' in self._header:
+            if len(self._header['affiliate_reference_id']) > 0:
+                equates.append("affiliateReferenceId=" + self._header['affiliate_reference_id'])
         if 'country' in self._header:
             if len(self._header['country']) > 0:
-                self._end_user_ctx = "contextualLocation=country=" + self._header['country']
+                equates.append("contextualLocation=country=" + self._header['country'])
                 if 'zip' in self._header:
                     if len(self._header['zip']) > 0:
-                        self._end_user_ctx += ",zip=" + self._header['zip']
+                        equates.append(",zip=" + self._header['zip'])
+        if 'device_id' in self._header:
+            if len(self._header['device_id']) > 0:
+                equates.append("deviceId=" + self._header['device_id'])
+        if equates:
+            self._end_user_ctx = ''.join(equates)
+        else:
+            self._end_user_ctx = None
 
         try:
             self._application_token = ApplicationToken(
@@ -509,7 +533,7 @@ class API:
             yield_max = 0
         else:
             yield_max = result['total']
-        yield {'total': {'records_yielded': yield_record_count, 'records_available': yield_max } }
+        yield {'total': {'records_yielded': yield_record_count, 'records_available': yield_max}}
 
     def _get_swagger_method(self, function_configuration, base_path, function_instance, function_client,
                             method, user_access_token, params):
@@ -537,26 +561,36 @@ class API:
         # create an instance of the API class
         api_instance = function_instance(function_client(configuration))
 
-        # In the header for 'X-EBAY-C-MARKETPLACE-ID'
-        # eBay's docs say to supply a Marketplace ID from this table
-        # https://developer.ebay.com/api-docs/static/rest-request-components.html#marketpl
-        # yet, eBay's API Explorer
-        # https://developer.ebay.com/my/api_test_tool
-        # uses Global Ids from this table with dashes replaced with underscores
-        # https://developer.ebay.com/Devzone/merchandising/docs/CallRef/Enums/GlobalIdList.html
+        # The request headers that eBay accepts are mostly described here.
+        # https://developer.ebay.com/api-docs/static/rest-request-components.html#headers
 
-        # beware that the site_id is a bit different for the Buy API
-        # https://developer.ebay.com/api-docs/buy/static/ref-marketplace-supported.html
+        # Accept, Accept-Charset & Accept-Encoding
+        # Do nothing because the Swagger generated code handles them.
+
+        # Accept-Language
+        if self._header['accept_language']:
+            api_instance.api_client.default_headers['Accept-Language'] = self._header['accept_language']
+
+        # Authorization
+        # Do nothing because the Swagger generated code handles it.
+
+        # Content-Language
+        if self._header['content_language']:
+            api_instance.api_client.default_headers['Content-Language'] = self._header['content_language']
+
+        # X-EBAY-C-MARKETPLACE-ID
         marketplace_id = self._header['marketplace_id']
-        if user_access_token:
+        # some calls have a positional parameter for this, and the header must use the same value
+        if user_access_token:  # all such calls happen to require a user access token
+            # TODO instead it would be safter to check if 'method' is in a list of belongers
             for param in (params or []):
                 if param in self._marketplace_ids:
                     marketplace_id = param
-        # if '/buy/offer' in base_path:
         api_instance.api_client.default_headers['X-EBAY-C-MARKETPLACE-ID'] = marketplace_id
 
-        # if self._locale:
-        #    api_instance.api_client.default_headers['Content-Language'] = self._locale
+        # X-EBAY-C-ENDUSERCTX
+        # beware that the site_id is a bit different for the Buy API
+        # https://developer.ebay.com/api-docs/buy/static/ref-marketplace-supported.html
 
         # header for shipping information accuracy per https://developer.ebay.com/api-docs/buy/static/api-browse.html
         if '/buy/browse' in base_path and self._end_user_ctx:
@@ -698,7 +732,10 @@ class API:
         :return: CompatibilityResponse
         """
         try:
-            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi, buy_browse.ApiClient, 'check_compatibility', BuyBrowseException, False, ['buy.browse', 'item'], (x_ebay_c_marketplace_id, item_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi,
+                                       buy_browse.ApiClient, 'check_compatibility', BuyBrowseException, False,
+                                       ['buy.browse', 'item'], (x_ebay_c_marketplace_id, item_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -712,7 +749,9 @@ class API:
         :return: Item
         """
         try:
-            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi, buy_browse.ApiClient, 'get_item', BuyBrowseException, False, ['buy.browse', 'item'], item_id, **kwargs)  # noqa: E501
+            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi,
+                                       buy_browse.ApiClient, 'get_item', BuyBrowseException, False,
+                                       ['buy.browse', 'item'], item_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -728,7 +767,9 @@ class API:
         :return: Item
         """
         try:
-            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi, buy_browse.ApiClient, 'get_item_by_legacy_id', BuyBrowseException, False, ['buy.browse', 'item'], legacy_item_id, **kwargs)  # noqa: E501
+            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi,
+                                       buy_browse.ApiClient, 'get_item_by_legacy_id', BuyBrowseException, False,
+                                       ['buy.browse', 'item'], legacy_item_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -742,7 +783,9 @@ class API:
         :return: Items
         """
         try:
-            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi, buy_browse.ApiClient, 'get_items', BuyBrowseException, False, ['buy.browse', 'item'], None, **kwargs)  # noqa: E501
+            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi,
+                                       buy_browse.ApiClient, 'get_items', BuyBrowseException, False,
+                                       ['buy.browse', 'item'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -755,7 +798,9 @@ class API:
         :return: ItemGroup
         """
         try:
-            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi, buy_browse.ApiClient, 'get_items_by_item_group', BuyBrowseException, False, ['buy.browse', 'item'], item_group_id, **kwargs)  # noqa: E501
+            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi,
+                                       buy_browse.ApiClient, 'get_items_by_item_group', BuyBrowseException, False,
+                                       ['buy.browse', 'item'], item_group_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -780,7 +825,9 @@ class API:
         :return: SearchPagedCollection
         """
         try:
-            return self._method_paged(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemSummaryApi, buy_browse.ApiClient, 'search', BuyBrowseException, False, ['buy.browse', 'item_summary'], None, **kwargs)  # noqa: E501
+            return self._method_paged(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemSummaryApi,
+                                      buy_browse.ApiClient, 'search', BuyBrowseException, False,
+                                      ['buy.browse', 'item_summary'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -801,7 +848,9 @@ class API:
         :return: SearchPagedCollection
         """
         try:
-            return self._method_paged(buy_browse.Configuration, '/buy/browse/v1', buy_browse.SearchByImageApi, buy_browse.ApiClient, 'search_by_image', BuyBrowseException, False, ['buy.browse', 'search_by_image'], None, **kwargs)  # noqa: E501
+            return self._method_paged(buy_browse.Configuration, '/buy/browse/v1', buy_browse.SearchByImageApi,
+                                      buy_browse.ApiClient, 'search_by_image', BuyBrowseException, False,
+                                      ['buy.browse', 'search_by_image'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -814,7 +863,9 @@ class API:
         :return: RemoteShopcartResponse
         """
         try:
-            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ShoppingCartApi, buy_browse.ApiClient, 'add_item', BuyBrowseException, True, ['buy.browse', 'shopping_cart'], None, **kwargs)  # noqa: E501
+            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ShoppingCartApi,
+                                       buy_browse.ApiClient, 'add_item', BuyBrowseException, True,
+                                       ['buy.browse', 'shopping_cart'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -826,7 +877,9 @@ class API:
         :return: RemoteShopcartResponse
         """
         try:
-            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ShoppingCartApi, buy_browse.ApiClient, 'get_shopping_cart', BuyBrowseException, True, ['buy.browse', 'shopping_cart'], None, **kwargs)  # noqa: E501
+            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ShoppingCartApi,
+                                       buy_browse.ApiClient, 'get_shopping_cart', BuyBrowseException, True,
+                                       ['buy.browse', 'shopping_cart'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -839,7 +892,9 @@ class API:
         :return: RemoteShopcartResponse
         """
         try:
-            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ShoppingCartApi, buy_browse.ApiClient, 'remove_item', BuyBrowseException, True, ['buy.browse', 'shopping_cart'], None, **kwargs)  # noqa: E501
+            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ShoppingCartApi,
+                                       buy_browse.ApiClient, 'remove_item', BuyBrowseException, True,
+                                       ['buy.browse', 'shopping_cart'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -852,7 +907,9 @@ class API:
         :return: RemoteShopcartResponse
         """
         try:
-            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ShoppingCartApi, buy_browse.ApiClient, 'update_quantity', BuyBrowseException, True, ['buy.browse', 'shopping_cart'], None, **kwargs)  # noqa: E501
+            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ShoppingCartApi,
+                                       buy_browse.ApiClient, 'update_quantity', BuyBrowseException, True,
+                                       ['buy.browse', 'shopping_cart'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -870,7 +927,9 @@ class API:
         :return: DealItemSearchResponse
         """
         try:
-            return self._method_paged(buy_deal.Configuration, '/buy/deal/v1', buy_deal.DealItemApi, buy_deal.ApiClient, 'get_deal_items', BuyDealException, False, ['buy.deal', 'deal_item'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+            return self._method_paged(buy_deal.Configuration, '/buy/deal/v1', buy_deal.DealItemApi, buy_deal.ApiClient,
+                                      'get_deal_items', BuyDealException, False, ['buy.deal', 'deal_item'],
+                                      x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -884,7 +943,9 @@ class API:
         :return: Event
         """
         try:
-            return self._method_single(buy_deal.Configuration, '/buy/deal/v1', buy_deal.EventApi, buy_deal.ApiClient, 'get_event', BuyDealException, False, ['buy.deal', 'event'], (x_ebay_c_marketplace_id, event_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_deal.Configuration, '/buy/deal/v1', buy_deal.EventApi, buy_deal.ApiClient,
+                                       'get_event', BuyDealException, False, ['buy.deal', 'event'],
+                                       (x_ebay_c_marketplace_id, event_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -899,7 +960,9 @@ class API:
         :return: EventSearchResponse
         """
         try:
-            return self._method_paged(buy_deal.Configuration, '/buy/deal/v1', buy_deal.EventApi, buy_deal.ApiClient, 'get_events', BuyDealException, False, ['buy.deal', 'event'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+            return self._method_paged(buy_deal.Configuration, '/buy/deal/v1', buy_deal.EventApi, buy_deal.ApiClient,
+                                      'get_events', BuyDealException, False, ['buy.deal', 'event'],
+                                      x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -917,7 +980,9 @@ class API:
         :return: EventItemSearchResponse
         """
         try:
-            return self._method_paged(buy_deal.Configuration, '/buy/deal/v1', buy_deal.EventItemApi, buy_deal.ApiClient, 'get_event_items', BuyDealException, False, ['buy.deal', 'event_item'], (event_ids, x_ebay_c_marketplace_id), **kwargs)  # noqa: E501
+            return self._method_paged(buy_deal.Configuration, '/buy/deal/v1', buy_deal.EventItemApi, buy_deal.ApiClient,
+                                      'get_event_items', BuyDealException, False, ['buy.deal', 'event_item'],
+                                      (event_ids, x_ebay_c_marketplace_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -934,7 +999,10 @@ class API:
         :return: ItemResponse
         """
         try:
-            return self._method_single(buy_feed.Configuration, '/buy/feed/v1_beta', buy_feed.ItemApi, buy_feed.ApiClient, 'get_item_feed', BuyFeedException, False, ['buy.feed', 'item'], (x_ebay_c_marketplace_id, range, feed_scope, category_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_feed.Configuration, '/buy/feed/v1_beta', buy_feed.ItemApi,
+                                       buy_feed.ApiClient, 'get_item_feed', BuyFeedException, False,
+                                       ['buy.feed', 'item'], (x_ebay_c_marketplace_id, range, feed_scope, category_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -951,11 +1019,15 @@ class API:
         :return: ItemGroupResponse
         """
         try:
-            return self._method_single(buy_feed.Configuration, '/buy/feed/v1_beta', buy_feed.ItemGroupApi, buy_feed.ApiClient, 'get_item_group_feed', BuyFeedException, False, ['buy.feed', 'item_group'], (x_ebay_c_marketplace_id, feed_scope, category_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_feed.Configuration, '/buy/feed/v1_beta', buy_feed.ItemGroupApi,
+                                       buy_feed.ApiClient, 'get_item_group_feed', BuyFeedException, False,
+                                       ['buy.feed', 'item_group'], (x_ebay_c_marketplace_id, feed_scope, category_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def buy_feed_get_item_priority_feed(self, x_ebay_c_marketplace_id, range, category_id, _date, **kwargs):  # noqa: E501
+    def buy_feed_get_item_priority_feed(self, x_ebay_c_marketplace_id, range, category_id, _date,
+                                        **kwargs):  # noqa: E501
         """get_item_priority_feed  # noqa: E501
 
         Using this method, you can download a TSV_GZIP (tab separated value gzip) Item Priority feed file, which allows you to track changes (deltas) in the status of your priority items, such as when an item is added or removed from a campaign. The delta feed tracks the changes to the status of items within a category you specify in the input URI. You can also specify a specific date for the feed you want returned. Important: You must consume the daily feeds (Item, Item Group) before consuming the Item Priority feed. This ensures that your inventory is up to date. URLs for this method Production URL: https://api.ebay.com/buy/feed/v1_beta/item_priority? Sandbox URL: https://api.sandbox.ebay.com/buy/feed/v1_beta/item_priority? Downloading feed files Note: Filters are applied to the feed files. For details, see Feed File Filters. When curating the items returned, be sure to code as if these filters are not applied as they can be changed or removed in the future. Priority Item feed files are binary gzip files. If the file is larger than 100 MB, the download must be streamed in chunks. You specify the size of the chunks in bytes using the Range request header. The Content-range response header indicates where in the full resource this partial chunk of data belongs and the total number of bytes in the file. For more information about using these headers, see Retrieving a gzip feed file. In addition to the API, there is an open source Feed SDK written in Java that downloads, combines files into a single file when needed, and unzips the entire feed file. It also lets you specify field filters to curate the items in the file. Note: The response is always a TSV_GZIP file. However for documentation purposes, the response is shown as JSON fields so that the value returned in each column can be explained. The order of the response fields, shows you the order of the columns in the feed file. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
@@ -967,11 +1039,15 @@ class API:
         :return: ItemPriorityResponse
         """
         try:
-            return self._method_single(buy_feed.Configuration, '/buy/feed/v1_beta', buy_feed.ItemPriorityApi, buy_feed.ApiClient, 'get_item_priority_feed', BuyFeedException, False, ['buy.feed', 'item_priority'], (x_ebay_c_marketplace_id, range, category_id, _date), **kwargs)  # noqa: E501
+            return self._method_single(buy_feed.Configuration, '/buy/feed/v1_beta', buy_feed.ItemPriorityApi,
+                                       buy_feed.ApiClient, 'get_item_priority_feed', BuyFeedException, False,
+                                       ['buy.feed', 'item_priority'],
+                                       (x_ebay_c_marketplace_id, range, category_id, _date), **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def buy_feed_get_item_snapshot_feed(self, x_ebay_c_marketplace_id, range, category_id, snapshot_date, **kwargs):  # noqa: E501
+    def buy_feed_get_item_snapshot_feed(self, x_ebay_c_marketplace_id, range, category_id, snapshot_date,
+                                        **kwargs):  # noqa: E501
         """get_item_snapshot_feed  # noqa: E501
 
         The Hourly Snapshot feed file is generated each hour every day for most categories. This method lets you download an Hourly Snapshot TSV_GZIP (tab-separated value gzip) feed file containing the details of all the items that have changed within the specified day and hour for a specific category. This means to generate the 8AM file of items that have changed from 8AM and 8:59AM, the service starts at 9AM. You can retrieve the 8AM snapshot file at 10AM. Snapshot feeds now include new listings. You can check itemCreationDate to identify listings that were newly created within the specified hour. Note: Filters are applied to the feed files. For details, see Feed File Filters. When curating the items returned, be sure to code as if these filters are not applied as they can be changed or removed in the future. You can use the response from this method to update the item details of items stored in your database. By looking at the value of itemSnapshotDate for a given item, you will be able to tell which information is the latest. Important: When the value of the availability column is UNAVAILABLE, only the itemId and availability columns are populated. URLs for this method Production URL: https://api.ebay.com/buy/feed/v1_beta/item_snapshot? Sandbox URL: https://api.sandbox.ebay.com/buy/feed/v1_beta/item_snapshot? Downloading feed files Hourly snapshot feed files are binary gzip files. If the file is larger than 100 MB, the download must be streamed in chunks. You specify the size of the chunks in bytes using the Range request header. The Content-range response header indicates where in the full resource this partial chunk of data belongs and the total number of bytes in the file. For more information about using these headers, see Retrieving a gzip feed file. Note: The response is always a TSV_GZIP file. However for documentation purposes, the response is shown as JSON fields so that the value returned in each column can be explained. The order of the response fields, shows you the order of the columns in the feed file. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
@@ -983,7 +1059,11 @@ class API:
         :return: ItemSnapshotResponse
         """
         try:
-            return self._method_single(buy_feed.Configuration, '/buy/feed/v1_beta', buy_feed.ItemSnapshotApi, buy_feed.ApiClient, 'get_item_snapshot_feed', BuyFeedException, False, ['buy.feed', 'item_snapshot'], (x_ebay_c_marketplace_id, range, category_id, snapshot_date), **kwargs)  # noqa: E501
+            return self._method_single(buy_feed.Configuration, '/buy/feed/v1_beta', buy_feed.ItemSnapshotApi,
+                                       buy_feed.ApiClient, 'get_item_snapshot_feed', BuyFeedException, False,
+                                       ['buy.feed', 'item_snapshot'],
+                                       (x_ebay_c_marketplace_id, range, category_id, snapshot_date),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -999,7 +1079,10 @@ class API:
         :return: BestSellingProductResponse
         """
         try:
-            return self._method_single(buy_marketing.Configuration, '/buy/marketing/v1_beta', buy_marketing.MerchandisedProductApi, buy_marketing.ApiClient, 'get_also_bought_by_product', BuyMarketingException, False, ['buy.marketing', 'merchandised_product'], None, **kwargs)  # noqa: E501
+            return self._method_single(buy_marketing.Configuration, '/buy/marketing/v1_beta',
+                                       buy_marketing.MerchandisedProductApi, buy_marketing.ApiClient,
+                                       'get_also_bought_by_product', BuyMarketingException, False,
+                                       ['buy.marketing', 'merchandised_product'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1015,7 +1098,10 @@ class API:
         :return: BestSellingProductResponse
         """
         try:
-            return self._method_single(buy_marketing.Configuration, '/buy/marketing/v1_beta', buy_marketing.MerchandisedProductApi, buy_marketing.ApiClient, 'get_also_viewed_by_product', BuyMarketingException, False, ['buy.marketing', 'merchandised_product'], None, **kwargs)  # noqa: E501
+            return self._method_single(buy_marketing.Configuration, '/buy/marketing/v1_beta',
+                                       buy_marketing.MerchandisedProductApi, buy_marketing.ApiClient,
+                                       'get_also_viewed_by_product', BuyMarketingException, False,
+                                       ['buy.marketing', 'merchandised_product'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1031,7 +1117,11 @@ class API:
         :return: BestSellingProductResponse
         """
         try:
-            return self._method_single(buy_marketing.Configuration, '/buy/marketing/v1_beta', buy_marketing.MerchandisedProductApi, buy_marketing.ApiClient, 'get_merchandised_products', BuyMarketingException, False, ['buy.marketing', 'merchandised_product'], (category_id, metric_name), **kwargs)  # noqa: E501
+            return self._method_single(buy_marketing.Configuration, '/buy/marketing/v1_beta',
+                                       buy_marketing.MerchandisedProductApi, buy_marketing.ApiClient,
+                                       'get_merchandised_products', BuyMarketingException, False,
+                                       ['buy.marketing', 'merchandised_product'], (category_id, metric_name),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1053,7 +1143,10 @@ class API:
         :return: SalesHistoryPagedCollection
         """
         try:
-            return self._method_paged(buy_marketplace_insights.Configuration, '/buy/marketplace_insights/v1_beta', buy_marketplace_insights.ItemSalesApi, buy_marketplace_insights.ApiClient, 'search', BuyMarketplaceInsightsException, False, ['buy.marketplace.insights', 'item_sales'], None, **kwargs)  # noqa: E501
+            return self._method_paged(buy_marketplace_insights.Configuration, '/buy/marketplace_insights/v1_beta',
+                                      buy_marketplace_insights.ItemSalesApi, buy_marketplace_insights.ApiClient,
+                                      'search', BuyMarketplaceInsightsException, False,
+                                      ['buy.marketplace.insights', 'item_sales'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1067,7 +1160,10 @@ class API:
         :return: Bidding
         """
         try:
-            return self._method_single(buy_offer.Configuration, '/buy/offer/v1_beta', buy_offer.BiddingApi, buy_offer.ApiClient, 'get_bidding', BuyOfferException, True, ['buy.offer', 'bidding'], (item_id, x_ebay_c_marketplace_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_offer.Configuration, '/buy/offer/v1_beta', buy_offer.BiddingApi,
+                                       buy_offer.ApiClient, 'get_bidding', BuyOfferException, True,
+                                       ['buy.offer', 'bidding'], (item_id, x_ebay_c_marketplace_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1082,7 +1178,10 @@ class API:
         :return: PlaceProxyBidResponse
         """
         try:
-            return self._method_single(buy_offer.Configuration, '/buy/offer/v1_beta', buy_offer.BiddingApi, buy_offer.ApiClient, 'place_proxy_bid', BuyOfferException, True, ['buy.offer', 'bidding'], (x_ebay_c_marketplace_id, item_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_offer.Configuration, '/buy/offer/v1_beta', buy_offer.BiddingApi,
+                                       buy_offer.ApiClient, 'place_proxy_bid', BuyOfferException, True,
+                                       ['buy.offer', 'bidding'], (x_ebay_c_marketplace_id, item_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1097,11 +1196,15 @@ class API:
         :return: GuestCheckoutSessionResponseV2
         """
         try:
-            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi, buy_order.ApiClient, 'apply_guest_coupon', BuyOrderException, False, ['buy.order', 'guest_checkout_session'], (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi,
+                                       buy_order.ApiClient, 'apply_guest_coupon', BuyOrderException, False,
+                                       ['buy.order', 'guest_checkout_session'],
+                                       (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def buy_order_get_guest_checkout_session(self, checkout_session_id, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
+    def buy_order_get_guest_checkout_session(self, checkout_session_id, x_ebay_c_marketplace_id,
+                                             **kwargs):  # noqa: E501
         """get_guest_checkout_session  # noqa: E501
 
         Note: This version of the Order API (v2) currently only supports the guest payment flow for eBay managed payments. To view the v1_beta version of the Order API, which includes both member and guest checkout payment flows, refer to the Order_v1 API documentation. (Limited Release) This method is only available to select developers approved by business units. This method returns the details of the specified guest checkout session. The checkoutSessionId is passed in as a URI parameter and is required. This method has no request payload. For a list of supported sites and other restrictions, see API Restrictions in the Order API overview. The URLs for this method are: Production URL: https://apix.ebay.com/buy/order/v2/guest_checkout_session/{checkoutSessionId} Sandbox URL: https://apix.sandbox.ebay.com/buy/order/v2/guest_checkout_session/{checkoutSessionId}  # noqa: E501
@@ -1111,7 +1214,10 @@ class API:
         :return: GuestCheckoutSessionResponseV2
         """
         try:
-            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi, buy_order.ApiClient, 'get_guest_checkout_session', BuyOrderException, False, ['buy.order', 'guest_checkout_session'], (checkout_session_id, x_ebay_c_marketplace_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi,
+                                       buy_order.ApiClient, 'get_guest_checkout_session', BuyOrderException, False,
+                                       ['buy.order', 'guest_checkout_session'],
+                                       (checkout_session_id, x_ebay_c_marketplace_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1126,7 +1232,10 @@ class API:
         :return: GuestCheckoutSessionResponseV2
         """
         try:
-            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi, buy_order.ApiClient, 'initiate_guest_checkout_session', BuyOrderException, False, ['buy.order', 'guest_checkout_session'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi,
+                                       buy_order.ApiClient, 'initiate_guest_checkout_session', BuyOrderException, False,
+                                       ['buy.order', 'guest_checkout_session'], x_ebay_c_marketplace_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1141,7 +1250,10 @@ class API:
         :return: GuestCheckoutSessionResponseV2
         """
         try:
-            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi, buy_order.ApiClient, 'remove_guest_coupon', BuyOrderException, False, ['buy.order', 'guest_checkout_session'], (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi,
+                                       buy_order.ApiClient, 'remove_guest_coupon', BuyOrderException, False,
+                                       ['buy.order', 'guest_checkout_session'],
+                                       (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1156,11 +1268,15 @@ class API:
         :return: GuestCheckoutSessionResponseV2
         """
         try:
-            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi, buy_order.ApiClient, 'update_guest_quantity', BuyOrderException, False, ['buy.order', 'guest_checkout_session'], (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi,
+                                       buy_order.ApiClient, 'update_guest_quantity', BuyOrderException, False,
+                                       ['buy.order', 'guest_checkout_session'],
+                                       (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def buy_order_update_guest_shipping_address(self, x_ebay_c_marketplace_id, checkout_session_id, **kwargs):  # noqa: E501
+    def buy_order_update_guest_shipping_address(self, x_ebay_c_marketplace_id, checkout_session_id,
+                                                **kwargs):  # noqa: E501
         """update_guest_shipping_address  # noqa: E501
 
         Note: This version of the Order API (v2) currently only supports the guest payment flow for eBay managed payments. To view the v1_beta version of the Order API, which includes both member and guest checkout payment flows, refer to the Order_v1 API documentation. (Limited Release) This method is only available to select developers approved by business units. This method changes the shipping address for the order in an eBay guest checkout session. All the line items in an order must be shipped to the same address, but the shipping method can be specific to the line item. Note: If the address submitted cannot be validated, a warning message will be returned. This does not prevent the method from executing, but you may want to verify the address. For a list of supported sites and other restrictions, see API Restrictions in the Order API overview. The URLs for this method are: Production URL: https://apix.ebay.com/buy/order/v2/guest_checkout_session/{checkoutSessionId}/update_shipping_address Sandbox URL: https://apix.sandbox.ebay.com/buy/order/v2/guest_checkout_session/{checkoutSessionId}/update_shipping_address  # noqa: E501
@@ -1171,11 +1287,15 @@ class API:
         :return: GuestCheckoutSessionResponseV2
         """
         try:
-            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi, buy_order.ApiClient, 'update_guest_shipping_address', BuyOrderException, False, ['buy.order', 'guest_checkout_session'], (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi,
+                                       buy_order.ApiClient, 'update_guest_shipping_address', BuyOrderException, False,
+                                       ['buy.order', 'guest_checkout_session'],
+                                       (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def buy_order_update_guest_shipping_option(self, x_ebay_c_marketplace_id, checkout_session_id, **kwargs):  # noqa: E501
+    def buy_order_update_guest_shipping_option(self, x_ebay_c_marketplace_id, checkout_session_id,
+                                               **kwargs):  # noqa: E501
         """update_guest_shipping_option  # noqa: E501
 
         Note: This version of the Order API (v2) currently only supports the guest payment flow for eBay managed payments. To view the v1_beta version of the Order API, which includes both member and guest checkout payment flows, refer to the Order_v1 API documentation. (Limited Release) This method is only available to select developers approved by business units. This method changes the shipping method for the specified line item in an eBay guest checkout session. The shipping option can be set for each line item. This gives the shopper the ability choose the cost of shipping for each line item. For a list of supported sites and other restrictions, see API Restrictions in the Order API overview. The URLs for this method are: Production URL: https://apix.ebay.com/buy/order/v2/guest_checkout_session/{checkoutSessionId}/update_shipping_option Sandbox URL: https://apix.sandbox.ebay.com/buy/order/v2/guest_checkout_session/{checkoutSessionId}/update_shipping_option  # noqa: E501
@@ -1186,7 +1306,10 @@ class API:
         :return: GuestCheckoutSessionResponseV2
         """
         try:
-            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi, buy_order.ApiClient, 'update_guest_shipping_option', BuyOrderException, False, ['buy.order', 'guest_checkout_session'], (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi,
+                                       buy_order.ApiClient, 'update_guest_shipping_option', BuyOrderException, False,
+                                       ['buy.order', 'guest_checkout_session'],
+                                       (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1199,7 +1322,9 @@ class API:
         :return: GuestPurchaseOrderV2
         """
         try:
-            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestPurchaseOrderApi, buy_order.ApiClient, 'get_guest_purchase_order', BuyOrderException, False, ['buy.order', 'guest_purchase_order'], purchase_order_id, **kwargs)  # noqa: E501
+            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestPurchaseOrderApi,
+                                       buy_order.ApiClient, 'get_guest_purchase_order', BuyOrderException, False,
+                                       ['buy.order', 'guest_purchase_order'], purchase_order_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1212,7 +1337,10 @@ class API:
         :return: Product
         """
         try:
-            return self._method_single(commerce_catalog.Configuration, '/commerce/catalog/v1_beta', commerce_catalog.ProductApi, commerce_catalog.ApiClient, 'get_product', CommerceCatalogException, True, ['commerce.catalog', 'product'], epid, **kwargs)  # noqa: E501
+            return self._method_single(commerce_catalog.Configuration, '/commerce/catalog/v1_beta',
+                                       commerce_catalog.ProductApi, commerce_catalog.ApiClient, 'get_product',
+                                       CommerceCatalogException, True, ['commerce.catalog', 'product'], epid,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1232,7 +1360,10 @@ class API:
         :return: ProductSearchResponse
         """
         try:
-            return self._method_paged(commerce_catalog.Configuration, '/commerce/catalog/v1_beta', commerce_catalog.ProductSummaryApi, commerce_catalog.ApiClient, 'search', CommerceCatalogException, True, ['commerce.catalog', 'product_summary'], None, **kwargs)  # noqa: E501
+            return self._method_paged(commerce_catalog.Configuration, '/commerce/catalog/v1_beta',
+                                      commerce_catalog.ProductSummaryApi, commerce_catalog.ApiClient, 'search',
+                                      CommerceCatalogException, True, ['commerce.catalog', 'product_summary'], None,
+                                      **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1246,11 +1377,15 @@ class API:
         :return: CharityOrg
         """
         try:
-            return self._method_single(commerce_charity.Configuration, '/commerce/charity/v1', commerce_charity.CharityOrgApi, commerce_charity.ApiClient, 'get_charity_org', CommerceCharityException, False, ['commerce.charity', 'charity_org'], (charity_org_id, x_ebay_c_marketplace_id), **kwargs)  # noqa: E501
+            return self._method_single(commerce_charity.Configuration, '/commerce/charity/v1',
+                                       commerce_charity.CharityOrgApi, commerce_charity.ApiClient, 'get_charity_org',
+                                       CommerceCharityException, False, ['commerce.charity', 'charity_org'],
+                                       (charity_org_id, x_ebay_c_marketplace_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def commerce_charity_get_charity_org_by_legacy_id(self, x_ebay_c_marketplace_id, legacy_charity_org_id, **kwargs):  # noqa: E501
+    def commerce_charity_get_charity_org_by_legacy_id(self, x_ebay_c_marketplace_id, legacy_charity_org_id,
+                                                      **kwargs):  # noqa: E501
         """get_charity_org_by_legacy_id  # noqa: E501
 
         This call allows users to retrieve the details for a specific charitable organization using its legacy charity ID, which has also been referred to as the charity number, external ID, and PayPal Giving Fund ID. The legacy charity ID&nbsp;is separate from eBay&rsquo;s generic charity ID.  # noqa: E501
@@ -1260,7 +1395,11 @@ class API:
         :return: CharityOrg
         """
         try:
-            return self._method_single(commerce_charity.Configuration, '/commerce/charity/v1', commerce_charity.CharityOrgApi, commerce_charity.ApiClient, 'get_charity_org_by_legacy_id', CommerceCharityException, False, ['commerce.charity', 'charity_org'], (x_ebay_c_marketplace_id, legacy_charity_org_id), **kwargs)  # noqa: E501
+            return self._method_single(commerce_charity.Configuration, '/commerce/charity/v1',
+                                       commerce_charity.CharityOrgApi, commerce_charity.ApiClient,
+                                       'get_charity_org_by_legacy_id', CommerceCharityException, False,
+                                       ['commerce.charity', 'charity_org'],
+                                       (x_ebay_c_marketplace_id, legacy_charity_org_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1277,7 +1416,10 @@ class API:
         :return: CharitySearchResponse
         """
         try:
-            return self._method_paged(commerce_charity.Configuration, '/commerce/charity/v1', commerce_charity.CharityOrgApi, commerce_charity.ApiClient, 'get_charity_orgs', CommerceCharityException, False, ['commerce.charity', 'charity_org'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+            return self._method_paged(commerce_charity.Configuration, '/commerce/charity/v1',
+                                      commerce_charity.CharityOrgApi, commerce_charity.ApiClient, 'get_charity_orgs',
+                                      CommerceCharityException, False, ['commerce.charity', 'charity_org'],
+                                      x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1289,7 +1431,10 @@ class API:
         :return: UserResponse
         """
         try:
-            return self._method_single(commerce_identity.Configuration, '/commerce/identity/v1', commerce_identity.UserApi, commerce_identity.ApiClient, 'get_user', CommerceIdentityException, True, ['commerce.identity', 'user'], None, **kwargs)  # noqa: E501
+            return self._method_single(commerce_identity.Configuration, '/commerce/identity/v1',
+                                       commerce_identity.UserApi, commerce_identity.ApiClient, 'get_user',
+                                       CommerceIdentityException, True, ['commerce.identity', 'user'], None,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1301,7 +1446,10 @@ class API:
         :return: Config
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.ConfigApi, commerce_notification.ApiClient, 'get_config', CommerceNotificationException, False, ['commerce.notification', 'config'], None, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
+                                       commerce_notification.ConfigApi, commerce_notification.ApiClient, 'get_config',
+                                       CommerceNotificationException, False, ['commerce.notification', 'config'], None,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1314,7 +1462,10 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.ConfigApi, commerce_notification.ApiClient, 'update_config', CommerceNotificationException, False, ['commerce.notification', 'config'], None, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
+                                       commerce_notification.ConfigApi, commerce_notification.ApiClient,
+                                       'update_config', CommerceNotificationException, False,
+                                       ['commerce.notification', 'config'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1327,7 +1478,10 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.DestinationApi, commerce_notification.ApiClient, 'create_destination', CommerceNotificationException, False, ['commerce.notification', 'destination'], None, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
+                                       commerce_notification.DestinationApi, commerce_notification.ApiClient,
+                                       'create_destination', CommerceNotificationException, False,
+                                       ['commerce.notification', 'destination'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1340,7 +1494,10 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.DestinationApi, commerce_notification.ApiClient, 'delete_destination', CommerceNotificationException, False, ['commerce.notification', 'destination'], destination_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
+                                       commerce_notification.DestinationApi, commerce_notification.ApiClient,
+                                       'delete_destination', CommerceNotificationException, False,
+                                       ['commerce.notification', 'destination'], destination_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1353,7 +1510,10 @@ class API:
         :return: Destination
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.DestinationApi, commerce_notification.ApiClient, 'get_destination', CommerceNotificationException, False, ['commerce.notification', 'destination'], destination_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
+                                       commerce_notification.DestinationApi, commerce_notification.ApiClient,
+                                       'get_destination', CommerceNotificationException, False,
+                                       ['commerce.notification', 'destination'], destination_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1367,7 +1527,10 @@ class API:
         :return: DestinationSearchResponse
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.DestinationApi, commerce_notification.ApiClient, 'get_destinations', CommerceNotificationException, False, ['commerce.notification', 'destination'], None, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
+                                       commerce_notification.DestinationApi, commerce_notification.ApiClient,
+                                       'get_destinations', CommerceNotificationException, False,
+                                       ['commerce.notification', 'destination'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1381,7 +1544,10 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.DestinationApi, commerce_notification.ApiClient, 'update_destination', CommerceNotificationException, False, ['commerce.notification', 'destination'], destination_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
+                                       commerce_notification.DestinationApi, commerce_notification.ApiClient,
+                                       'update_destination', CommerceNotificationException, False,
+                                       ['commerce.notification', 'destination'], destination_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1394,7 +1560,10 @@ class API:
         :return: PublicKey
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.PublicKeyApi, commerce_notification.ApiClient, 'get_public_key', CommerceNotificationException, False, ['commerce.notification', 'public_key'], public_key_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
+                                       commerce_notification.PublicKeyApi, commerce_notification.ApiClient,
+                                       'get_public_key', CommerceNotificationException, False,
+                                       ['commerce.notification', 'public_key'], public_key_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1407,7 +1576,10 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'create_subscription', CommerceNotificationException, False, ['commerce.notification', 'subscription'], None, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
+                                       commerce_notification.SubscriptionApi, commerce_notification.ApiClient,
+                                       'create_subscription', CommerceNotificationException, False,
+                                       ['commerce.notification', 'subscription'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1420,7 +1592,11 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'delete_subscription', CommerceNotificationException, False, ['commerce.notification', 'subscription'], subscription_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
+                                       commerce_notification.SubscriptionApi, commerce_notification.ApiClient,
+                                       'delete_subscription', CommerceNotificationException, False,
+                                       ['commerce.notification', 'subscription'], subscription_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1433,7 +1609,11 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'disable_subscription', CommerceNotificationException, False, ['commerce.notification', 'subscription'], subscription_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
+                                       commerce_notification.SubscriptionApi, commerce_notification.ApiClient,
+                                       'disable_subscription', CommerceNotificationException, False,
+                                       ['commerce.notification', 'subscription'], subscription_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1446,7 +1626,11 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'enable_subscription', CommerceNotificationException, False, ['commerce.notification', 'subscription'], subscription_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
+                                       commerce_notification.SubscriptionApi, commerce_notification.ApiClient,
+                                       'enable_subscription', CommerceNotificationException, False,
+                                       ['commerce.notification', 'subscription'], subscription_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1459,7 +1643,11 @@ class API:
         :return: Subscription
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'get_subscription', CommerceNotificationException, False, ['commerce.notification', 'subscription'], subscription_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
+                                       commerce_notification.SubscriptionApi, commerce_notification.ApiClient,
+                                       'get_subscription', CommerceNotificationException, False,
+                                       ['commerce.notification', 'subscription'], subscription_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1473,7 +1661,10 @@ class API:
         :return: SubscriptionSearchResponse
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'get_subscriptions', CommerceNotificationException, False, ['commerce.notification', 'subscription'], None, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
+                                       commerce_notification.SubscriptionApi, commerce_notification.ApiClient,
+                                       'get_subscriptions', CommerceNotificationException, False,
+                                       ['commerce.notification', 'subscription'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1486,7 +1677,10 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'test', CommerceNotificationException, False, ['commerce.notification', 'subscription'], subscription_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
+                                       commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'test',
+                                       CommerceNotificationException, False, ['commerce.notification', 'subscription'],
+                                       subscription_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1500,7 +1694,11 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'update_subscription', CommerceNotificationException, False, ['commerce.notification', 'subscription'], subscription_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
+                                       commerce_notification.SubscriptionApi, commerce_notification.ApiClient,
+                                       'update_subscription', CommerceNotificationException, False,
+                                       ['commerce.notification', 'subscription'], subscription_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1513,7 +1711,10 @@ class API:
         :return: Topic
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.TopicApi, commerce_notification.ApiClient, 'get_topic', CommerceNotificationException, False, ['commerce.notification', 'topic'], topic_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
+                                       commerce_notification.TopicApi, commerce_notification.ApiClient, 'get_topic',
+                                       CommerceNotificationException, False, ['commerce.notification', 'topic'],
+                                       topic_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1527,7 +1728,10 @@ class API:
         :return: TopicSearchResponse
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.TopicApi, commerce_notification.ApiClient, 'get_topics', CommerceNotificationException, False, ['commerce.notification', 'topic'], None, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
+                                       commerce_notification.TopicApi, commerce_notification.ApiClient, 'get_topics',
+                                       CommerceNotificationException, False, ['commerce.notification', 'topic'], None,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1540,7 +1744,10 @@ class API:
         :return: GetCategoriesAspectResponse
         """
         try:
-            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1', commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient, 'fetch_item_aspects', CommerceTaxonomyException, False, ['commerce.taxonomy', 'category_tree'], category_tree_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1',
+                                       commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient,
+                                       'fetch_item_aspects', CommerceTaxonomyException, False,
+                                       ['commerce.taxonomy', 'category_tree'], category_tree_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1554,7 +1761,11 @@ class API:
         :return: CategorySubtree
         """
         try:
-            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1', commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient, 'get_category_subtree', CommerceTaxonomyException, False, ['commerce.taxonomy', 'category_tree'], (category_id, category_tree_id), **kwargs)  # noqa: E501
+            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1',
+                                       commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient,
+                                       'get_category_subtree', CommerceTaxonomyException, False,
+                                       ['commerce.taxonomy', 'category_tree'], (category_id, category_tree_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1568,7 +1779,11 @@ class API:
         :return: CategorySuggestionResponse
         """
         try:
-            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1', commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient, 'get_category_suggestions', CommerceTaxonomyException, False, ['commerce.taxonomy', 'category_tree'], (category_tree_id, q), **kwargs)  # noqa: E501
+            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1',
+                                       commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient,
+                                       'get_category_suggestions', CommerceTaxonomyException, False,
+                                       ['commerce.taxonomy', 'category_tree'], (category_tree_id, q),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1581,7 +1796,10 @@ class API:
         :return: CategoryTree
         """
         try:
-            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1', commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient, 'get_category_tree', CommerceTaxonomyException, False, ['commerce.taxonomy', 'category_tree'], category_tree_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1',
+                                       commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient,
+                                       'get_category_tree', CommerceTaxonomyException, False,
+                                       ['commerce.taxonomy', 'category_tree'], category_tree_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1595,11 +1813,16 @@ class API:
         :return: GetCompatibilityMetadataResponse
         """
         try:
-            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1', commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient, 'get_compatibility_properties', CommerceTaxonomyException, False, ['commerce.taxonomy', 'category_tree'], (category_tree_id, category_id), **kwargs)  # noqa: E501
+            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1',
+                                       commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient,
+                                       'get_compatibility_properties', CommerceTaxonomyException, False,
+                                       ['commerce.taxonomy', 'category_tree'], (category_tree_id, category_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def commerce_taxonomy_get_compatibility_property_values(self, category_tree_id, compatibility_property, category_id, **kwargs):  # noqa: E501
+    def commerce_taxonomy_get_compatibility_property_values(self, category_tree_id, compatibility_property, category_id,
+                                                            **kwargs):  # noqa: E501
         """Get Compatibility Property Values  # noqa: E501
 
         This call retrieves applicable compatible vehicle property values based on the specified eBay marketplace, specified eBay category, and filters used in the request. Compatible vehicle properties are returned in the compatibilityProperties.name field of a getCompatibilityProperties response. One compatible vehicle property applicable to the specified eBay marketplace and eBay category is specified through the required compatibility_property filter. Then, the user has the option of further restricting the compatible vehicle property values that are returned in the response by specifying one or more compatible vehicle property name/value pairs through the filter query parameter. See the documentation in URI parameters section for more information on using the compatibility_property and filter query parameters together to customize the data that is retrieved.  # noqa: E501
@@ -1611,7 +1834,11 @@ class API:
         :return: GetCompatibilityPropertyValuesResponse
         """
         try:
-            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1', commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient, 'get_compatibility_property_values', CommerceTaxonomyException, False, ['commerce.taxonomy', 'category_tree'], (category_tree_id, compatibility_property, category_id), **kwargs)  # noqa: E501
+            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1',
+                                       commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient,
+                                       'get_compatibility_property_values', CommerceTaxonomyException, False,
+                                       ['commerce.taxonomy', 'category_tree'],
+                                       (category_tree_id, compatibility_property, category_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1625,7 +1852,10 @@ class API:
         :return: BaseCategoryTree
         """
         try:
-            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1', commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient, 'get_default_category_tree_id', CommerceTaxonomyException, False, ['commerce.taxonomy', 'category_tree'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1',
+                                       commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient,
+                                       'get_default_category_tree_id', CommerceTaxonomyException, False,
+                                       ['commerce.taxonomy', 'category_tree'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1639,7 +1869,11 @@ class API:
         :return: AspectMetadata
         """
         try:
-            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1', commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient, 'get_item_aspects_for_category', CommerceTaxonomyException, False, ['commerce.taxonomy', 'category_tree'], (category_id, category_tree_id), **kwargs)  # noqa: E501
+            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1',
+                                       commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient,
+                                       'get_item_aspects_for_category', CommerceTaxonomyException, False,
+                                       ['commerce.taxonomy', 'category_tree'], (category_id, category_tree_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1652,7 +1886,10 @@ class API:
         :return: TranslateResponse
         """
         try:
-            return self._method_single(commerce_translation.Configuration, '/commerce/translation/v1_beta', commerce_translation.LanguageApi, commerce_translation.ApiClient, 'translate', CommerceTranslationException, False, ['commerce.translation', 'language'], body, **kwargs)  # noqa: E501
+            return self._method_single(commerce_translation.Configuration, '/commerce/translation/v1_beta',
+                                       commerce_translation.LanguageApi, commerce_translation.ApiClient, 'translate',
+                                       CommerceTranslationException, False, ['commerce.translation', 'language'], body,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1666,7 +1903,10 @@ class API:
         :return: RateLimitsResponse
         """
         try:
-            return self._method_single(developer_analytics.Configuration, '/developer/analytics/v1_beta', developer_analytics.RateLimitApi, developer_analytics.ApiClient, 'get_rate_limits', DeveloperAnalyticsException, False, ['developer.analytics', 'rate_limit'], None, **kwargs)  # noqa: E501
+            return self._method_single(developer_analytics.Configuration, '/developer/analytics/v1_beta',
+                                       developer_analytics.RateLimitApi, developer_analytics.ApiClient,
+                                       'get_rate_limits', DeveloperAnalyticsException, False,
+                                       ['developer.analytics', 'rate_limit'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1680,7 +1920,10 @@ class API:
         :return: RateLimitsResponse
         """
         try:
-            return self._method_single(developer_analytics.Configuration, '/developer/analytics/v1_beta', developer_analytics.UserRateLimitApi, developer_analytics.ApiClient, 'get_user_rate_limits', DeveloperAnalyticsException, True, ['developer.analytics', 'user_rate_limit'], None, **kwargs)  # noqa: E501
+            return self._method_single(developer_analytics.Configuration, '/developer/analytics/v1_beta',
+                                       developer_analytics.UserRateLimitApi, developer_analytics.ApiClient,
+                                       'get_user_rate_limits', DeveloperAnalyticsException, True,
+                                       ['developer.analytics', 'user_rate_limit'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1693,7 +1936,10 @@ class API:
         :return: SetFulfillmentPolicyResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.FulfillmentPolicyApi, sell_account.ApiClient, 'create_fulfillment_policy', SellAccountException, True, ['sell.account', 'fulfillment_policy'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1',
+                                       sell_account.FulfillmentPolicyApi, sell_account.ApiClient,
+                                       'create_fulfillment_policy', SellAccountException, True,
+                                       ['sell.account', 'fulfillment_policy'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1706,7 +1952,11 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.FulfillmentPolicyApi, sell_account.ApiClient, 'delete_fulfillment_policy', SellAccountException, True, ['sell.account', 'fulfillment_policy'], fulfillment_policy_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1',
+                                       sell_account.FulfillmentPolicyApi, sell_account.ApiClient,
+                                       'delete_fulfillment_policy', SellAccountException, True,
+                                       ['sell.account', 'fulfillment_policy'], fulfillment_policy_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1719,7 +1969,10 @@ class API:
         :return: FulfillmentPolicyResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.FulfillmentPolicyApi, sell_account.ApiClient, 'get_fulfillment_policies', SellAccountException, True, ['sell.account', 'fulfillment_policy'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1',
+                                       sell_account.FulfillmentPolicyApi, sell_account.ApiClient,
+                                       'get_fulfillment_policies', SellAccountException, True,
+                                       ['sell.account', 'fulfillment_policy'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1732,7 +1985,11 @@ class API:
         :return: FulfillmentPolicy
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.FulfillmentPolicyApi, sell_account.ApiClient, 'get_fulfillment_policy', SellAccountException, True, ['sell.account', 'fulfillment_policy'], fulfillment_policy_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1',
+                                       sell_account.FulfillmentPolicyApi, sell_account.ApiClient,
+                                       'get_fulfillment_policy', SellAccountException, True,
+                                       ['sell.account', 'fulfillment_policy'], fulfillment_policy_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1746,7 +2003,11 @@ class API:
         :return: FulfillmentPolicy
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.FulfillmentPolicyApi, sell_account.ApiClient, 'get_fulfillment_policy_by_name', SellAccountException, True, ['sell.account', 'fulfillment_policy'], (marketplace_id, name), **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1',
+                                       sell_account.FulfillmentPolicyApi, sell_account.ApiClient,
+                                       'get_fulfillment_policy_by_name', SellAccountException, True,
+                                       ['sell.account', 'fulfillment_policy'], (marketplace_id, name),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1760,7 +2021,11 @@ class API:
         :return: SetFulfillmentPolicyResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.FulfillmentPolicyApi, sell_account.ApiClient, 'update_fulfillment_policy', SellAccountException, True, ['sell.account', 'fulfillment_policy'], (body, fulfillment_policy_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1',
+                                       sell_account.FulfillmentPolicyApi, sell_account.ApiClient,
+                                       'update_fulfillment_policy', SellAccountException, True,
+                                       ['sell.account', 'fulfillment_policy'], (body, fulfillment_policy_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1772,11 +2037,14 @@ class API:
         :return: KycResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.KycApi, sell_account.ApiClient, 'get_kyc', SellAccountException, True, ['sell.account', 'kyc'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.KycApi,
+                                       sell_account.ApiClient, 'get_kyc', SellAccountException, True,
+                                       ['sell.account', 'kyc'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def sell_account_get_payments_program_onboarding(self, marketplace_id, payments_program_type, **kwargs):  # noqa: E501
+    def sell_account_get_payments_program_onboarding(self, marketplace_id, payments_program_type,
+                                                     **kwargs):  # noqa: E501
         """get_payments_program_onboarding  # noqa: E501
 
         This method retrieves a seller's onboarding status of eBay managed payments for a specified marketplace. The overall onboarding status of the seller and the status of each onboarding step is returned. Presently, the only supported payments program type is EBAY_PAYMENTS. See Managed Payments on eBay and Payments Terms of Use. Note: Managed payments availability: eBay managed payments is presently available in the US and Germany, and will roll out to Canada, UK, and Australia in July 2020.  # noqa: E501
@@ -1786,7 +2054,10 @@ class API:
         :return: PaymentsProgramOnboardingResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.OnboardingApi, sell_account.ApiClient, 'get_payments_program_onboarding', SellAccountException, True, ['sell.account', 'onboarding'], (marketplace_id, payments_program_type), **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.OnboardingApi,
+                                       sell_account.ApiClient, 'get_payments_program_onboarding', SellAccountException,
+                                       True, ['sell.account', 'onboarding'], (marketplace_id, payments_program_type),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1799,7 +2070,9 @@ class API:
         :return: SetPaymentPolicyResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi, sell_account.ApiClient, 'create_payment_policy', SellAccountException, True, ['sell.account', 'payment_policy'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi,
+                                       sell_account.ApiClient, 'create_payment_policy', SellAccountException, True,
+                                       ['sell.account', 'payment_policy'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1812,7 +2085,9 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi, sell_account.ApiClient, 'delete_payment_policy', SellAccountException, True, ['sell.account', 'payment_policy'], payment_policy_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi,
+                                       sell_account.ApiClient, 'delete_payment_policy', SellAccountException, True,
+                                       ['sell.account', 'payment_policy'], payment_policy_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1825,7 +2100,9 @@ class API:
         :return: PaymentPolicyResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi, sell_account.ApiClient, 'get_payment_policies', SellAccountException, True, ['sell.account', 'payment_policy'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi,
+                                       sell_account.ApiClient, 'get_payment_policies', SellAccountException, True,
+                                       ['sell.account', 'payment_policy'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1838,7 +2115,9 @@ class API:
         :return: PaymentPolicy
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi, sell_account.ApiClient, 'get_payment_policy', SellAccountException, True, ['sell.account', 'payment_policy'], payment_policy_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi,
+                                       sell_account.ApiClient, 'get_payment_policy', SellAccountException, True,
+                                       ['sell.account', 'payment_policy'], payment_policy_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1852,7 +2131,10 @@ class API:
         :return: PaymentPolicy
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi, sell_account.ApiClient, 'get_payment_policy_by_name', SellAccountException, True, ['sell.account', 'payment_policy'], (marketplace_id, name), **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi,
+                                       sell_account.ApiClient, 'get_payment_policy_by_name', SellAccountException, True,
+                                       ['sell.account', 'payment_policy'], (marketplace_id, name),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1866,7 +2148,10 @@ class API:
         :return: SetPaymentPolicyResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi, sell_account.ApiClient, 'update_payment_policy', SellAccountException, True, ['sell.account', 'payment_policy'], (body, payment_policy_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi,
+                                       sell_account.ApiClient, 'update_payment_policy', SellAccountException, True,
+                                       ['sell.account', 'payment_policy'], (body, payment_policy_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1880,7 +2165,10 @@ class API:
         :return: PaymentsProgramResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentsProgramApi, sell_account.ApiClient, 'get_payments_program', SellAccountException, True, ['sell.account', 'payments_program'], (marketplace_id, payments_program_type), **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentsProgramApi,
+                                       sell_account.ApiClient, 'get_payments_program', SellAccountException, True,
+                                       ['sell.account', 'payments_program'], (marketplace_id, payments_program_type),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1892,7 +2180,9 @@ class API:
         :return: SellingPrivileges
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PrivilegeApi, sell_account.ApiClient, 'get_privileges', SellAccountException, True, ['sell.account', 'privilege'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PrivilegeApi,
+                                       sell_account.ApiClient, 'get_privileges', SellAccountException, True,
+                                       ['sell.account', 'privilege'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1904,7 +2194,9 @@ class API:
         :return: Programs
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ProgramApi, sell_account.ApiClient, 'get_opted_in_programs', SellAccountException, True, ['sell.account', 'program'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ProgramApi,
+                                       sell_account.ApiClient, 'get_opted_in_programs', SellAccountException, True,
+                                       ['sell.account', 'program'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1917,7 +2209,9 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ProgramApi, sell_account.ApiClient, 'opt_in_to_program', SellAccountException, True, ['sell.account', 'program'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ProgramApi,
+                                       sell_account.ApiClient, 'opt_in_to_program', SellAccountException, True,
+                                       ['sell.account', 'program'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1930,7 +2224,9 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ProgramApi, sell_account.ApiClient, 'opt_out_of_program', SellAccountException, True, ['sell.account', 'program'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ProgramApi,
+                                       sell_account.ApiClient, 'opt_out_of_program', SellAccountException, True,
+                                       ['sell.account', 'program'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1943,7 +2239,9 @@ class API:
         :return: RateTableResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.RateTableApi, sell_account.ApiClient, 'get_rate_tables', SellAccountException, True, ['sell.account', 'rate_table'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.RateTableApi,
+                                       sell_account.ApiClient, 'get_rate_tables', SellAccountException, True,
+                                       ['sell.account', 'rate_table'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1956,7 +2254,9 @@ class API:
         :return: SetReturnPolicyResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi, sell_account.ApiClient, 'create_return_policy', SellAccountException, True, ['sell.account', 'return_policy'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi,
+                                       sell_account.ApiClient, 'create_return_policy', SellAccountException, True,
+                                       ['sell.account', 'return_policy'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1969,7 +2269,9 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi, sell_account.ApiClient, 'delete_return_policy', SellAccountException, True, ['sell.account', 'return_policy'], return_policy_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi,
+                                       sell_account.ApiClient, 'delete_return_policy', SellAccountException, True,
+                                       ['sell.account', 'return_policy'], return_policy_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1982,7 +2284,9 @@ class API:
         :return: ReturnPolicyResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi, sell_account.ApiClient, 'get_return_policies', SellAccountException, True, ['sell.account', 'return_policy'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi,
+                                       sell_account.ApiClient, 'get_return_policies', SellAccountException, True,
+                                       ['sell.account', 'return_policy'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1995,7 +2299,9 @@ class API:
         :return: ReturnPolicy
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi, sell_account.ApiClient, 'get_return_policy', SellAccountException, True, ['sell.account', 'return_policy'], return_policy_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi,
+                                       sell_account.ApiClient, 'get_return_policy', SellAccountException, True,
+                                       ['sell.account', 'return_policy'], return_policy_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2009,7 +2315,10 @@ class API:
         :return: ReturnPolicy
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi, sell_account.ApiClient, 'get_return_policy_by_name', SellAccountException, True, ['sell.account', 'return_policy'], (marketplace_id, name), **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi,
+                                       sell_account.ApiClient, 'get_return_policy_by_name', SellAccountException, True,
+                                       ['sell.account', 'return_policy'], (marketplace_id, name),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2023,7 +2332,10 @@ class API:
         :return: SetReturnPolicyResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi, sell_account.ApiClient, 'update_return_policy', SellAccountException, True, ['sell.account', 'return_policy'], (body, return_policy_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi,
+                                       sell_account.ApiClient, 'update_return_policy', SellAccountException, True,
+                                       ['sell.account', 'return_policy'], (body, return_policy_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2038,7 +2350,10 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.SalesTaxApi, sell_account.ApiClient, 'create_or_replace_sales_tax', SellAccountException, True, ['sell.account', 'sales_tax'], (body, country_code, jurisdiction_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.SalesTaxApi,
+                                       sell_account.ApiClient, 'create_or_replace_sales_tax', SellAccountException,
+                                       True, ['sell.account', 'sales_tax'], (body, country_code, jurisdiction_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2052,7 +2367,10 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.SalesTaxApi, sell_account.ApiClient, 'delete_sales_tax', SellAccountException, True, ['sell.account', 'sales_tax'], (country_code, jurisdiction_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.SalesTaxApi,
+                                       sell_account.ApiClient, 'delete_sales_tax', SellAccountException, True,
+                                       ['sell.account', 'sales_tax'], (country_code, jurisdiction_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2066,7 +2384,10 @@ class API:
         :return: SalesTax
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.SalesTaxApi, sell_account.ApiClient, 'get_sales_tax', SellAccountException, True, ['sell.account', 'sales_tax'], (country_code, jurisdiction_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.SalesTaxApi,
+                                       sell_account.ApiClient, 'get_sales_tax', SellAccountException, True,
+                                       ['sell.account', 'sales_tax'], (country_code, jurisdiction_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2079,11 +2400,14 @@ class API:
         :return: SalesTaxes
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.SalesTaxApi, sell_account.ApiClient, 'get_sales_taxes', SellAccountException, True, ['sell.account', 'sales_tax'], country_code, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.SalesTaxApi,
+                                       sell_account.ApiClient, 'get_sales_taxes', SellAccountException, True,
+                                       ['sell.account', 'sales_tax'], country_code, **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def sell_analytics_get_customer_service_metric(self, customer_service_metric_type, evaluation_marketplace_id, evaluation_type, **kwargs):  # noqa: E501
+    def sell_analytics_get_customer_service_metric(self, customer_service_metric_type, evaluation_marketplace_id,
+                                                   evaluation_type, **kwargs):  # noqa: E501
         """get_customer_service_metric  # noqa: E501
 
         Use this method to retrieve a seller's performance and rating for the customer service metric. Control the response from the getCustomerServiceMetric method using the following path and query parameters: customer_service_metric_type controls the type of customer service transactions evaluated for the metric rating. evaluation_type controls the period you want to review. evaluation_marketplace_id specifies the target marketplace for the evaluation. Currently, metric data is returned for only peer benchmarking. For more detail on the workings of peer benchmarking, see Service metrics policy.  # noqa: E501
@@ -2094,7 +2418,12 @@ class API:
         :return: GetCustomerServiceMetricResponse
         """
         try:
-            return self._method_single(sell_analytics.Configuration, '/sell/analytics/v1', sell_analytics.CustomerServiceMetricApi, sell_analytics.ApiClient, 'get_customer_service_metric', SellAnalyticsException, True, ['sell.analytics', 'customer_service_metric'], (customer_service_metric_type, evaluation_marketplace_id, evaluation_type), **kwargs)  # noqa: E501
+            return self._method_single(sell_analytics.Configuration, '/sell/analytics/v1',
+                                       sell_analytics.CustomerServiceMetricApi, sell_analytics.ApiClient,
+                                       'get_customer_service_metric', SellAnalyticsException, True,
+                                       ['sell.analytics', 'customer_service_metric'],
+                                       (customer_service_metric_type, evaluation_marketplace_id, evaluation_type),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2106,7 +2435,10 @@ class API:
         :return: FindSellerStandardsProfilesResponse
         """
         try:
-            return self._method_single(sell_analytics.Configuration, '/sell/analytics/v1', sell_analytics.SellerStandardsProfileApi, sell_analytics.ApiClient, 'find_seller_standards_profiles', SellAnalyticsException, True, ['sell.analytics', 'seller_standards_profile'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_analytics.Configuration, '/sell/analytics/v1',
+                                       sell_analytics.SellerStandardsProfileApi, sell_analytics.ApiClient,
+                                       'find_seller_standards_profiles', SellAnalyticsException, True,
+                                       ['sell.analytics', 'seller_standards_profile'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2120,7 +2452,11 @@ class API:
         :return: StandardsProfile
         """
         try:
-            return self._method_single(sell_analytics.Configuration, '/sell/analytics/v1', sell_analytics.SellerStandardsProfileApi, sell_analytics.ApiClient, 'get_seller_standards_profile', SellAnalyticsException, True, ['sell.analytics', 'seller_standards_profile'], (cycle, program), **kwargs)  # noqa: E501
+            return self._method_single(sell_analytics.Configuration, '/sell/analytics/v1',
+                                       sell_analytics.SellerStandardsProfileApi, sell_analytics.ApiClient,
+                                       'get_seller_standards_profile', SellAnalyticsException, True,
+                                       ['sell.analytics', 'seller_standards_profile'], (cycle, program),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2136,7 +2472,10 @@ class API:
         :return: Report
         """
         try:
-            return self._method_single(sell_analytics.Configuration, '/sell/analytics/v1', sell_analytics.TrafficReportApi, sell_analytics.ApiClient, 'get_traffic_report', SellAnalyticsException, True, ['sell.analytics', 'traffic_report'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_analytics.Configuration, '/sell/analytics/v1',
+                                       sell_analytics.TrafficReportApi, sell_analytics.ApiClient, 'get_traffic_report',
+                                       SellAnalyticsException, True, ['sell.analytics', 'traffic_report'], None,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2154,7 +2493,11 @@ class API:
         :return: PagedComplianceViolationCollection
         """
         try:
-            return self._method_paged(sell_compliance.Configuration, '/sell/compliance/v1', sell_compliance.ListingViolationApi, sell_compliance.ApiClient, 'get_listing_violations', SellComplianceException, True, ['sell.compliance', 'listing_violation'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+            return self._method_paged(sell_compliance.Configuration, '/sell/compliance/v1',
+                                      sell_compliance.ListingViolationApi, sell_compliance.ApiClient,
+                                      'get_listing_violations', SellComplianceException, True,
+                                      ['sell.compliance', 'listing_violation'], x_ebay_c_marketplace_id,
+                                      **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2167,7 +2510,10 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_compliance.Configuration, '/sell/compliance/v1', sell_compliance.ListingViolationApi, sell_compliance.ApiClient, 'suppress_violation', SellComplianceException, True, ['sell.compliance', 'listing_violation'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_compliance.Configuration, '/sell/compliance/v1',
+                                       sell_compliance.ListingViolationApi, sell_compliance.ApiClient,
+                                       'suppress_violation', SellComplianceException, True,
+                                       ['sell.compliance', 'listing_violation'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2181,7 +2527,10 @@ class API:
         :return: ComplianceSummary
         """
         try:
-            return self._method_single(sell_compliance.Configuration, '/sell/compliance/v1', sell_compliance.ListingViolationSummaryApi, sell_compliance.ApiClient, 'get_listing_violations_summary', SellComplianceException, True, ['sell.compliance', 'listing_violation_summary'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_compliance.Configuration, '/sell/compliance/v1',
+                                       sell_compliance.ListingViolationSummaryApi, sell_compliance.ApiClient,
+                                       'get_listing_violations_summary', SellComplianceException, True,
+                                       ['sell.compliance', 'listing_violation_summary'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2195,7 +2544,10 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.CustomerServiceMetricTaskApi, sell_feed.ApiClient, 'create_customer_service_metric_task', SellFeedException, True, ['sell.feed', 'customer_service_metric_task'], (body, accept_language), **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.CustomerServiceMetricTaskApi,
+                                       sell_feed.ApiClient, 'create_customer_service_metric_task', SellFeedException,
+                                       True, ['sell.feed', 'customer_service_metric_task'], (body, accept_language),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2208,7 +2560,9 @@ class API:
         :return: ServiceMetricsTask
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.CustomerServiceMetricTaskApi, sell_feed.ApiClient, 'get_customer_service_metric_task', SellFeedException, True, ['sell.feed', 'customer_service_metric_task'], task_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.CustomerServiceMetricTaskApi,
+                                       sell_feed.ApiClient, 'get_customer_service_metric_task', SellFeedException, True,
+                                       ['sell.feed', 'customer_service_metric_task'], task_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2225,7 +2579,9 @@ class API:
         :return: CustomerServiceMetricTaskCollection
         """
         try:
-            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.CustomerServiceMetricTaskApi, sell_feed.ApiClient, 'get_customer_service_metric_tasks', SellFeedException, True, ['sell.feed', 'customer_service_metric_task'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.CustomerServiceMetricTaskApi,
+                                      sell_feed.ApiClient, 'get_customer_service_metric_tasks', SellFeedException, True,
+                                      ['sell.feed', 'customer_service_metric_task'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2239,7 +2595,9 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.InventoryTaskApi, sell_feed.ApiClient, 'create_inventory_task', SellFeedException, True, ['sell.feed', 'inventory_task'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.InventoryTaskApi,
+                                       sell_feed.ApiClient, 'create_inventory_task', SellFeedException, True,
+                                       ['sell.feed', 'inventory_task'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2252,7 +2610,9 @@ class API:
         :return: InventoryTask
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.InventoryTaskApi, sell_feed.ApiClient, 'get_inventory_task', SellFeedException, True, ['sell.feed', 'inventory_task'], task_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.InventoryTaskApi,
+                                       sell_feed.ApiClient, 'get_inventory_task', SellFeedException, True,
+                                       ['sell.feed', 'inventory_task'], task_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2270,7 +2630,9 @@ class API:
         :return: InventoryTaskCollection
         """
         try:
-            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.InventoryTaskApi, sell_feed.ApiClient, 'get_inventory_tasks', SellFeedException, True, ['sell.feed', 'inventory_task'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.InventoryTaskApi,
+                                      sell_feed.ApiClient, 'get_inventory_tasks', SellFeedException, True,
+                                      ['sell.feed', 'inventory_task'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2284,7 +2646,9 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.OrderTaskApi, sell_feed.ApiClient, 'create_order_task', SellFeedException, True, ['sell.feed', 'order_task'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.OrderTaskApi,
+                                       sell_feed.ApiClient, 'create_order_task', SellFeedException, True,
+                                       ['sell.feed', 'order_task'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2297,7 +2661,9 @@ class API:
         :return: OrderTask
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.OrderTaskApi, sell_feed.ApiClient, 'get_order_task', SellFeedException, True, ['sell.feed', 'order_task'], task_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.OrderTaskApi,
+                                       sell_feed.ApiClient, 'get_order_task', SellFeedException, True,
+                                       ['sell.feed', 'order_task'], task_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2315,7 +2681,9 @@ class API:
         :return: OrderTaskCollection
         """
         try:
-            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.OrderTaskApi, sell_feed.ApiClient, 'get_order_tasks', SellFeedException, True, ['sell.feed', 'order_task'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.OrderTaskApi,
+                                      sell_feed.ApiClient, 'get_order_tasks', SellFeedException, True,
+                                      ['sell.feed', 'order_task'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2328,7 +2696,9 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi, sell_feed.ApiClient, 'create_schedule', SellFeedException, True, ['sell.feed', 'schedule'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi,
+                                       sell_feed.ApiClient, 'create_schedule', SellFeedException, True,
+                                       ['sell.feed', 'schedule'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2341,7 +2711,9 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi, sell_feed.ApiClient, 'delete_schedule', SellFeedException, True, ['sell.feed', 'schedule'], schedule_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi,
+                                       sell_feed.ApiClient, 'delete_schedule', SellFeedException, True,
+                                       ['sell.feed', 'schedule'], schedule_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2354,7 +2726,9 @@ class API:
         :return: StreamingOutput
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi, sell_feed.ApiClient, 'get_latest_result_file', SellFeedException, True, ['sell.feed', 'schedule'], schedule_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi,
+                                       sell_feed.ApiClient, 'get_latest_result_file', SellFeedException, True,
+                                       ['sell.feed', 'schedule'], schedule_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2367,7 +2741,9 @@ class API:
         :return: UserScheduleResponse
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi, sell_feed.ApiClient, 'get_schedule', SellFeedException, True, ['sell.feed', 'schedule'], schedule_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi,
+                                       sell_feed.ApiClient, 'get_schedule', SellFeedException, True,
+                                       ['sell.feed', 'schedule'], schedule_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2380,7 +2756,9 @@ class API:
         :return: ScheduleTemplateResponse
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi, sell_feed.ApiClient, 'get_schedule_template', SellFeedException, True, ['sell.feed', 'schedule'], schedule_template_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi,
+                                       sell_feed.ApiClient, 'get_schedule_template', SellFeedException, True,
+                                       ['sell.feed', 'schedule'], schedule_template_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2395,7 +2773,9 @@ class API:
         :return: ScheduleTemplateCollection
         """
         try:
-            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi, sell_feed.ApiClient, 'get_schedule_templates', SellFeedException, True, ['sell.feed', 'schedule'], feed_type, **kwargs)  # noqa: E501
+            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi,
+                                      sell_feed.ApiClient, 'get_schedule_templates', SellFeedException, True,
+                                      ['sell.feed', 'schedule'], feed_type, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2410,7 +2790,9 @@ class API:
         :return: UserScheduleCollection
         """
         try:
-            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi, sell_feed.ApiClient, 'get_schedules', SellFeedException, True, ['sell.feed', 'schedule'], feed_type, **kwargs)  # noqa: E501
+            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi,
+                                      sell_feed.ApiClient, 'get_schedules', SellFeedException, True,
+                                      ['sell.feed', 'schedule'], feed_type, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2424,7 +2806,9 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi, sell_feed.ApiClient, 'update_schedule', SellFeedException, True, ['sell.feed', 'schedule'], (body, schedule_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi,
+                                       sell_feed.ApiClient, 'update_schedule', SellFeedException, True,
+                                       ['sell.feed', 'schedule'], (body, schedule_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2438,7 +2822,9 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient, 'create_task', SellFeedException, True, ['sell.feed', 'task'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient,
+                                       'create_task', SellFeedException, True, ['sell.feed', 'task'], body,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2451,7 +2837,9 @@ class API:
         :return: StreamingOutput
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient, 'get_input_file', SellFeedException, True, ['sell.feed', 'task'], task_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient,
+                                       'get_input_file', SellFeedException, True, ['sell.feed', 'task'], task_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2464,7 +2852,9 @@ class API:
         :return: StreamingOutput
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient, 'get_result_file', SellFeedException, True, ['sell.feed', 'task'], task_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient,
+                                       'get_result_file', SellFeedException, True, ['sell.feed', 'task'], task_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2477,7 +2867,9 @@ class API:
         :return: Task
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient, 'get_task', SellFeedException, True, ['sell.feed', 'task'], task_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient,
+                                       'get_task', SellFeedException, True, ['sell.feed', 'task'], task_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2495,7 +2887,9 @@ class API:
         :return: TaskCollection
         """
         try:
-            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient, 'get_tasks', SellFeedException, True, ['sell.feed', 'task'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient,
+                                      'get_tasks', SellFeedException, True, ['sell.feed', 'task'], None,
+                                      **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2516,7 +2910,9 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient, 'upload_file', SellFeedException, True, ['sell.feed', 'task'], task_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient,
+                                       'upload_file', SellFeedException, True, ['sell.feed', 'task'], task_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2529,7 +2925,9 @@ class API:
         :return: Payout
         """
         try:
-            return self._method_single(sell_finances.Configuration, '/sell/finances/v1', sell_finances.PayoutApi, sell_finances.ApiClient, 'get_payout', SellFinancesException, True, ['sell.finances', 'payout'], payout_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_finances.Configuration, '/sell/finances/v1', sell_finances.PayoutApi,
+                                       sell_finances.ApiClient, 'get_payout', SellFinancesException, True,
+                                       ['sell.finances', 'payout'], payout_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2542,7 +2940,9 @@ class API:
         :return: PayoutSummaryResponse
         """
         try:
-            return self._method_single(sell_finances.Configuration, '/sell/finances/v1', sell_finances.PayoutApi, sell_finances.ApiClient, 'get_payout_summary', SellFinancesException, True, ['sell.finances', 'payout'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_finances.Configuration, '/sell/finances/v1', sell_finances.PayoutApi,
+                                       sell_finances.ApiClient, 'get_payout_summary', SellFinancesException, True,
+                                       ['sell.finances', 'payout'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2558,7 +2958,9 @@ class API:
         :return: Payouts
         """
         try:
-            return self._method_paged(sell_finances.Configuration, '/sell/finances/v1', sell_finances.PayoutApi, sell_finances.ApiClient, 'get_payouts', SellFinancesException, True, ['sell.finances', 'payout'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_finances.Configuration, '/sell/finances/v1', sell_finances.PayoutApi,
+                                      sell_finances.ApiClient, 'get_payouts', SellFinancesException, True,
+                                      ['sell.finances', 'payout'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2570,7 +2972,10 @@ class API:
         :return: SellerFundsSummaryResponse
         """
         try:
-            return self._method_single(sell_finances.Configuration, '/sell/finances/v1', sell_finances.SellerFundsSummaryApi, sell_finances.ApiClient, 'get_seller_funds_summary', SellFinancesException, True, ['sell.finances', 'seller_funds_summary'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_finances.Configuration, '/sell/finances/v1',
+                                       sell_finances.SellerFundsSummaryApi, sell_finances.ApiClient,
+                                       'get_seller_funds_summary', SellFinancesException, True,
+                                       ['sell.finances', 'seller_funds_summary'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2583,7 +2988,9 @@ class API:
         :return: TransactionSummaryResponse
         """
         try:
-            return self._method_single(sell_finances.Configuration, '/sell/finances/v1', sell_finances.TransactionApi, sell_finances.ApiClient, 'get_transaction_summary', SellFinancesException, True, ['sell.finances', 'transaction'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_finances.Configuration, '/sell/finances/v1', sell_finances.TransactionApi,
+                                       sell_finances.ApiClient, 'get_transaction_summary', SellFinancesException, True,
+                                       ['sell.finances', 'transaction'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2599,7 +3006,9 @@ class API:
         :return: Transactions
         """
         try:
-            return self._method_paged(sell_finances.Configuration, '/sell/finances/v1', sell_finances.TransactionApi, sell_finances.ApiClient, 'get_transactions', SellFinancesException, True, ['sell.finances', 'transaction'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_finances.Configuration, '/sell/finances/v1', sell_finances.TransactionApi,
+                                      sell_finances.ApiClient, 'get_transactions', SellFinancesException, True,
+                                      ['sell.finances', 'transaction'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2612,7 +3021,9 @@ class API:
         :return: Transfer
         """
         try:
-            return self._method_single(sell_finances.Configuration, '/sell/finances/v1', sell_finances.TransferApi, sell_finances.ApiClient, 'get_transfer', SellFinancesException, True, ['sell.finances', 'transfer'], transfer_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_finances.Configuration, '/sell/finances/v1', sell_finances.TransferApi,
+                                       sell_finances.ApiClient, 'get_transfer', SellFinancesException, True,
+                                       ['sell.finances', 'transfer'], transfer_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2626,7 +3037,10 @@ class API:
         :return: Order
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.OrderApi, sell_fulfillment.ApiClient, 'get_order', SellFulfillmentException, True, ['sell.fulfillment', 'order'], order_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
+                                       sell_fulfillment.OrderApi, sell_fulfillment.ApiClient, 'get_order',
+                                       SellFulfillmentException, True, ['sell.fulfillment', 'order'], order_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2643,7 +3057,9 @@ class API:
         :return: OrderSearchPagedCollection
         """
         try:
-            return self._method_paged(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.OrderApi, sell_fulfillment.ApiClient, 'get_orders', SellFulfillmentException, True, ['sell.fulfillment', 'order'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.OrderApi,
+                                      sell_fulfillment.ApiClient, 'get_orders', SellFulfillmentException, True,
+                                      ['sell.fulfillment', 'order'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2656,7 +3072,10 @@ class API:
         :return: Refund
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.OrderApi, sell_fulfillment.ApiClient, 'issue_refund', SellFulfillmentException, True, ['sell.fulfillment', 'order'], order_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
+                                       sell_fulfillment.OrderApi, sell_fulfillment.ApiClient, 'issue_refund',
+                                       SellFulfillmentException, True, ['sell.fulfillment', 'order'], order_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2670,7 +3089,11 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'accept_payment_dispute', SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'], payment_dispute_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
+                                       sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient,
+                                       'accept_payment_dispute', SellFulfillmentException, True,
+                                       ['sell.fulfillment', 'payment_dispute'], payment_dispute_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2684,7 +3107,10 @@ class API:
         :return: AddEvidencePaymentDisputeResponse
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'add_evidence', SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'], payment_dispute_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
+                                       sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'add_evidence',
+                                       SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'],
+                                       payment_dispute_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2698,7 +3124,11 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'contest_payment_dispute', SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'], payment_dispute_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
+                                       sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient,
+                                       'contest_payment_dispute', SellFulfillmentException, True,
+                                       ['sell.fulfillment', 'payment_dispute'], payment_dispute_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2713,7 +3143,11 @@ class API:
         :return: list[str]
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'fetch_evidence_content', SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'], (payment_dispute_id, evidence_id, file_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
+                                       sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient,
+                                       'fetch_evidence_content', SellFulfillmentException, True,
+                                       ['sell.fulfillment', 'payment_dispute'],
+                                       (payment_dispute_id, evidence_id, file_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2726,7 +3160,10 @@ class API:
         :return: PaymentDisputeActivityHistory
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'get_activities', SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'], payment_dispute_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
+                                       sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'get_activities',
+                                       SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'],
+                                       payment_dispute_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2739,7 +3176,11 @@ class API:
         :return: PaymentDispute
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'get_payment_dispute', SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'], payment_dispute_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
+                                       sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient,
+                                       'get_payment_dispute', SellFulfillmentException, True,
+                                       ['sell.fulfillment', 'payment_dispute'], payment_dispute_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2758,7 +3199,10 @@ class API:
         :return: DisputeSummaryResponse
         """
         try:
-            return self._method_paged(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'get_payment_dispute_summaries', SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
+                                      sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient,
+                                      'get_payment_dispute_summaries', SellFulfillmentException, True,
+                                      ['sell.fulfillment', 'payment_dispute'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2772,7 +3216,11 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'update_evidence', SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'], payment_dispute_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
+                                       sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient,
+                                       'update_evidence', SellFulfillmentException, True,
+                                       ['sell.fulfillment', 'payment_dispute'], payment_dispute_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2785,7 +3233,11 @@ class API:
         :return: FileEvidence
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'upload_evidence_file', SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'], payment_dispute_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
+                                       sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient,
+                                       'upload_evidence_file', SellFulfillmentException, True,
+                                       ['sell.fulfillment', 'payment_dispute'], payment_dispute_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2799,7 +3251,11 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.ShippingFulfillmentApi, sell_fulfillment.ApiClient, 'create_shipping_fulfillment', SellFulfillmentException, True, ['sell.fulfillment', 'shipping_fulfillment'], (body, order_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
+                                       sell_fulfillment.ShippingFulfillmentApi, sell_fulfillment.ApiClient,
+                                       'create_shipping_fulfillment', SellFulfillmentException, True,
+                                       ['sell.fulfillment', 'shipping_fulfillment'], (body, order_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2813,7 +3269,11 @@ class API:
         :return: ShippingFulfillment
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.ShippingFulfillmentApi, sell_fulfillment.ApiClient, 'get_shipping_fulfillment', SellFulfillmentException, True, ['sell.fulfillment', 'shipping_fulfillment'], (fulfillment_id, order_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
+                                       sell_fulfillment.ShippingFulfillmentApi, sell_fulfillment.ApiClient,
+                                       'get_shipping_fulfillment', SellFulfillmentException, True,
+                                       ['sell.fulfillment', 'shipping_fulfillment'], (fulfillment_id, order_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2826,7 +3286,10 @@ class API:
         :return: ShippingFulfillmentPagedCollection
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.ShippingFulfillmentApi, sell_fulfillment.ApiClient, 'get_shipping_fulfillments', SellFulfillmentException, True, ['sell.fulfillment', 'shipping_fulfillment'], order_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
+                                       sell_fulfillment.ShippingFulfillmentApi, sell_fulfillment.ApiClient,
+                                       'get_shipping_fulfillments', SellFulfillmentException, True,
+                                       ['sell.fulfillment', 'shipping_fulfillment'], order_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2839,7 +3302,10 @@ class API:
         :return: BulkInventoryItemResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemApi, sell_inventory.ApiClient, 'bulk_create_or_replace_inventory_item', SellInventoryException, True, ['sell.inventory', 'inventory_item'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
+                                       sell_inventory.InventoryItemApi, sell_inventory.ApiClient,
+                                       'bulk_create_or_replace_inventory_item', SellInventoryException, True,
+                                       ['sell.inventory', 'inventory_item'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2852,7 +3318,10 @@ class API:
         :return: BulkGetInventoryItemResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemApi, sell_inventory.ApiClient, 'bulk_get_inventory_item', SellInventoryException, True, ['sell.inventory', 'inventory_item'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
+                                       sell_inventory.InventoryItemApi, sell_inventory.ApiClient,
+                                       'bulk_get_inventory_item', SellInventoryException, True,
+                                       ['sell.inventory', 'inventory_item'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2865,7 +3334,10 @@ class API:
         :return: BulkPriceQuantityResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemApi, sell_inventory.ApiClient, 'bulk_update_price_quantity', SellInventoryException, True, ['sell.inventory', 'inventory_item'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
+                                       sell_inventory.InventoryItemApi, sell_inventory.ApiClient,
+                                       'bulk_update_price_quantity', SellInventoryException, True,
+                                       ['sell.inventory', 'inventory_item'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2880,7 +3352,11 @@ class API:
         :return: BaseResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemApi, sell_inventory.ApiClient, 'create_or_replace_inventory_item', SellInventoryException, True, ['sell.inventory', 'inventory_item'], (body, content_language, sku), **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
+                                       sell_inventory.InventoryItemApi, sell_inventory.ApiClient,
+                                       'create_or_replace_inventory_item', SellInventoryException, True,
+                                       ['sell.inventory', 'inventory_item'], (body, content_language, sku),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2893,7 +3369,10 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemApi, sell_inventory.ApiClient, 'delete_inventory_item', SellInventoryException, True, ['sell.inventory', 'inventory_item'], sku, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
+                                       sell_inventory.InventoryItemApi, sell_inventory.ApiClient,
+                                       'delete_inventory_item', SellInventoryException, True,
+                                       ['sell.inventory', 'inventory_item'], sku, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2906,7 +3385,10 @@ class API:
         :return: InventoryItemWithSkuLocaleGroupid
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemApi, sell_inventory.ApiClient, 'get_inventory_item', SellInventoryException, True, ['sell.inventory', 'inventory_item'], sku, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
+                                       sell_inventory.InventoryItemApi, sell_inventory.ApiClient, 'get_inventory_item',
+                                       SellInventoryException, True, ['sell.inventory', 'inventory_item'], sku,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2920,11 +3402,15 @@ class API:
         :return: InventoryItems
         """
         try:
-            return self._method_paged(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemApi, sell_inventory.ApiClient, 'get_inventory_items', SellInventoryException, True, ['sell.inventory', 'inventory_item'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_inventory.Configuration, '/sell/inventory/v1',
+                                      sell_inventory.InventoryItemApi, sell_inventory.ApiClient, 'get_inventory_items',
+                                      SellInventoryException, True, ['sell.inventory', 'inventory_item'], None,
+                                      **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def sell_inventory_create_or_replace_inventory_item_group(self, body, content_language, inventory_item_group_key, **kwargs):  # noqa: E501
+    def sell_inventory_create_or_replace_inventory_item_group(self, body, content_language, inventory_item_group_key,
+                                                              **kwargs):  # noqa: E501
         """create_or_replace_inventory_item_group  # noqa: E501
 
         This call creates a new inventory item group or updates an existing inventory item group. It is up to sellers whether they want to create a complete inventory item group record right from the start, or sellers can provide only some information with the initial createOrReplaceInventoryItemGroup call, and then make one or more additional createOrReplaceInventoryItemGroup calls to complete the inventory item group record. Upon first creating an inventory item group record, the only required elements are the inventoryItemGroupKey identifier in the call URI, and the members of the inventory item group specified through the variantSKUs array in the request payload. In the case of updating/replacing an existing inventory item group, this call does a complete replacement of the existing inventory item group record, so all fields (including the member SKUs) that make up the inventory item group are required, regardless of whether their values changed. So, when replacing/updating an inventory item group record, it is advised that the seller run a getInventoryItemGroup call for that inventory item group to see all of its current values/settings/members before attempting to update the record. And if changes are made to an inventory item group that is part of a live, multiple-variation eBay listing, these changes automatically update the eBay listing. For example, if a SKU value is removed from the inventory item group, the corresponding product variation will be removed from the eBay listing as well. In addition to the required inventory item group identifier and member SKUs, other key information that is set with this call include: Title and description of the inventory item group. The string values provided in these fields will actually become the listing title and listing description of the listing once the first SKU of the inventory item group is published successfully Common aspects that inventory items in the qroup share Product aspects that vary within each product variation Links to images demonstrating the variations of the product, and these images should correspond to the product aspect that is set with the variesBy.aspectsImageVariesBy field In addition to the authorization header, which is required for all eBay REST API calls, the createOrReplaceInventoryItemGroup call also requires the Content-Language header, that sets the natural language that will be used in the field values of the request payload. For US English, the code value passed in this header should be en-US. To view other supported Content-Language values, and to read more about all supported HTTP headers for eBay REST API calls, see the HTTP request headers topic in the Using eBay RESTful APIs document.  # noqa: E501
@@ -2935,7 +3421,11 @@ class API:
         :return: BaseResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemGroupApi, sell_inventory.ApiClient, 'create_or_replace_inventory_item_group', SellInventoryException, True, ['sell.inventory', 'inventory_item_group'], (body, content_language, inventory_item_group_key), **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
+                                       sell_inventory.InventoryItemGroupApi, sell_inventory.ApiClient,
+                                       'create_or_replace_inventory_item_group', SellInventoryException, True,
+                                       ['sell.inventory', 'inventory_item_group'],
+                                       (body, content_language, inventory_item_group_key), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2948,7 +3438,11 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemGroupApi, sell_inventory.ApiClient, 'delete_inventory_item_group', SellInventoryException, True, ['sell.inventory', 'inventory_item_group'], inventory_item_group_key, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
+                                       sell_inventory.InventoryItemGroupApi, sell_inventory.ApiClient,
+                                       'delete_inventory_item_group', SellInventoryException, True,
+                                       ['sell.inventory', 'inventory_item_group'], inventory_item_group_key,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2961,7 +3455,11 @@ class API:
         :return: InventoryItemGroup
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemGroupApi, sell_inventory.ApiClient, 'get_inventory_item_group', SellInventoryException, True, ['sell.inventory', 'inventory_item_group'], inventory_item_group_key, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
+                                       sell_inventory.InventoryItemGroupApi, sell_inventory.ApiClient,
+                                       'get_inventory_item_group', SellInventoryException, True,
+                                       ['sell.inventory', 'inventory_item_group'], inventory_item_group_key,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2974,7 +3472,9 @@ class API:
         :return: BulkMigrateListingResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.ListingApi, sell_inventory.ApiClient, 'bulk_migrate_listing', SellInventoryException, True, ['sell.inventory', 'listing'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.ListingApi,
+                                       sell_inventory.ApiClient, 'bulk_migrate_listing', SellInventoryException, True,
+                                       ['sell.inventory', 'listing'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2988,7 +3488,10 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi, sell_inventory.ApiClient, 'create_inventory_location', SellInventoryException, True, ['sell.inventory', 'location'], (body, merchant_location_key), **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi,
+                                       sell_inventory.ApiClient, 'create_inventory_location', SellInventoryException,
+                                       True, ['sell.inventory', 'location'], (body, merchant_location_key),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3001,7 +3504,10 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi, sell_inventory.ApiClient, 'delete_inventory_location', SellInventoryException, True, ['sell.inventory', 'location'], merchant_location_key, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi,
+                                       sell_inventory.ApiClient, 'delete_inventory_location', SellInventoryException,
+                                       True, ['sell.inventory', 'location'], merchant_location_key,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3014,7 +3520,10 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi, sell_inventory.ApiClient, 'disable_inventory_location', SellInventoryException, True, ['sell.inventory', 'location'], merchant_location_key, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi,
+                                       sell_inventory.ApiClient, 'disable_inventory_location', SellInventoryException,
+                                       True, ['sell.inventory', 'location'], merchant_location_key,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3027,7 +3536,10 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi, sell_inventory.ApiClient, 'enable_inventory_location', SellInventoryException, True, ['sell.inventory', 'location'], merchant_location_key, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi,
+                                       sell_inventory.ApiClient, 'enable_inventory_location', SellInventoryException,
+                                       True, ['sell.inventory', 'location'], merchant_location_key,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3040,7 +3552,9 @@ class API:
         :return: InventoryLocationResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi, sell_inventory.ApiClient, 'get_inventory_location', SellInventoryException, True, ['sell.inventory', 'location'], merchant_location_key, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi,
+                                       sell_inventory.ApiClient, 'get_inventory_location', SellInventoryException, True,
+                                       ['sell.inventory', 'location'], merchant_location_key, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3054,7 +3568,9 @@ class API:
         :return: LocationResponse
         """
         try:
-            return self._method_paged(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi, sell_inventory.ApiClient, 'get_inventory_locations', SellInventoryException, True, ['sell.inventory', 'location'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi,
+                                      sell_inventory.ApiClient, 'get_inventory_locations', SellInventoryException, True,
+                                      ['sell.inventory', 'location'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3068,7 +3584,10 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi, sell_inventory.ApiClient, 'update_inventory_location', SellInventoryException, True, ['sell.inventory', 'location'], (body, merchant_location_key), **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi,
+                                       sell_inventory.ApiClient, 'update_inventory_location', SellInventoryException,
+                                       True, ['sell.inventory', 'location'], (body, merchant_location_key),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3081,7 +3600,9 @@ class API:
         :return: BulkOfferResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'bulk_create_offer', SellInventoryException, True, ['sell.inventory', 'offer'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
+                                       sell_inventory.ApiClient, 'bulk_create_offer', SellInventoryException, True,
+                                       ['sell.inventory', 'offer'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3094,7 +3615,9 @@ class API:
         :return: BulkPublishResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'bulk_publish_offer', SellInventoryException, True, ['sell.inventory', 'offer'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
+                                       sell_inventory.ApiClient, 'bulk_publish_offer', SellInventoryException, True,
+                                       ['sell.inventory', 'offer'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3108,7 +3631,9 @@ class API:
         :return: OfferResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'create_offer', SellInventoryException, True, ['sell.inventory', 'offer'], (body, content_language), **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
+                                       sell_inventory.ApiClient, 'create_offer', SellInventoryException, True,
+                                       ['sell.inventory', 'offer'], (body, content_language), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3121,7 +3646,9 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'delete_offer', SellInventoryException, True, ['sell.inventory', 'offer'], offer_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
+                                       sell_inventory.ApiClient, 'delete_offer', SellInventoryException, True,
+                                       ['sell.inventory', 'offer'], offer_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3134,7 +3661,9 @@ class API:
         :return: FeesSummaryResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'get_listing_fees', SellInventoryException, True, ['sell.inventory', 'offer'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
+                                       sell_inventory.ApiClient, 'get_listing_fees', SellInventoryException, True,
+                                       ['sell.inventory', 'offer'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3147,7 +3676,9 @@ class API:
         :return: EbayOfferDetailsWithAll
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'get_offer', SellInventoryException, True, ['sell.inventory', 'offer'], offer_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
+                                       sell_inventory.ApiClient, 'get_offer', SellInventoryException, True,
+                                       ['sell.inventory', 'offer'], offer_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3164,7 +3695,9 @@ class API:
         :return: Offers
         """
         try:
-            return self._method_paged(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'get_offers', SellInventoryException, True, ['sell.inventory', 'offer'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
+                                      sell_inventory.ApiClient, 'get_offers', SellInventoryException, True,
+                                      ['sell.inventory', 'offer'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3177,7 +3710,9 @@ class API:
         :return: PublishResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'publish_offer', SellInventoryException, True, ['sell.inventory', 'offer'], offer_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
+                                       sell_inventory.ApiClient, 'publish_offer', SellInventoryException, True,
+                                       ['sell.inventory', 'offer'], offer_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3190,7 +3725,10 @@ class API:
         :return: PublishResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'publish_offer_by_inventory_item_group', SellInventoryException, True, ['sell.inventory', 'offer'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
+                                       sell_inventory.ApiClient, 'publish_offer_by_inventory_item_group',
+                                       SellInventoryException, True, ['sell.inventory', 'offer'], body,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3205,7 +3743,10 @@ class API:
         :return: OfferResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'update_offer', SellInventoryException, True, ['sell.inventory', 'offer'], (body, content_language, offer_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
+                                       sell_inventory.ApiClient, 'update_offer', SellInventoryException, True,
+                                       ['sell.inventory', 'offer'], (body, content_language, offer_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3218,7 +3759,9 @@ class API:
         :return: WithdrawResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'withdraw_offer', SellInventoryException, True, ['sell.inventory', 'offer'], offer_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
+                                       sell_inventory.ApiClient, 'withdraw_offer', SellInventoryException, True,
+                                       ['sell.inventory', 'offer'], offer_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3231,11 +3774,15 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'withdraw_offer_by_inventory_item_group', SellInventoryException, True, ['sell.inventory', 'offer'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
+                                       sell_inventory.ApiClient, 'withdraw_offer_by_inventory_item_group',
+                                       SellInventoryException, True, ['sell.inventory', 'offer'], body,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def sell_inventory_create_or_replace_product_compatibility(self, body, content_language, sku, **kwargs):  # noqa: E501
+    def sell_inventory_create_or_replace_product_compatibility(self, body, content_language, sku,
+                                                               **kwargs):  # noqa: E501
         """create_or_replace_product_compatibility  # noqa: E501
 
         This call is used by the seller to create or replace a list of products that are compatible with the inventory item. The inventory item is identified with a SKU value in the URI. Product compatibility is currently only applicable to motor vehicle parts and accessory categories, but more categories may be supported in the future. In addition to the authorization header, which is required for all eBay REST API calls, the createOrReplaceProductCompatibility call also requires the Content-Language header, that sets the natural language that will be used in the field values of the request payload. For US English, the code value passed in this header should be en-US. To view other supported Content-Language values, and to read more about all supported HTTP headers for eBay REST API calls, see the HTTP request headers topic in the Using eBay RESTful APIs document.  # noqa: E501
@@ -3246,7 +3793,11 @@ class API:
         :return: BaseResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.ProductCompatibilityApi, sell_inventory.ApiClient, 'create_or_replace_product_compatibility', SellInventoryException, True, ['sell.inventory', 'product_compatibility'], (body, content_language, sku), **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
+                                       sell_inventory.ProductCompatibilityApi, sell_inventory.ApiClient,
+                                       'create_or_replace_product_compatibility', SellInventoryException, True,
+                                       ['sell.inventory', 'product_compatibility'], (body, content_language, sku),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3259,7 +3810,10 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.ProductCompatibilityApi, sell_inventory.ApiClient, 'delete_product_compatibility', SellInventoryException, True, ['sell.inventory', 'product_compatibility'], sku, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
+                                       sell_inventory.ProductCompatibilityApi, sell_inventory.ApiClient,
+                                       'delete_product_compatibility', SellInventoryException, True,
+                                       ['sell.inventory', 'product_compatibility'], sku, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3272,7 +3826,10 @@ class API:
         :return: Compatibility
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.ProductCompatibilityApi, sell_inventory.ApiClient, 'get_product_compatibility', SellInventoryException, True, ['sell.inventory', 'product_compatibility'], sku, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
+                                       sell_inventory.ProductCompatibilityApi, sell_inventory.ApiClient,
+                                       'get_product_compatibility', SellInventoryException, True,
+                                       ['sell.inventory', 'product_compatibility'], sku, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3287,7 +3844,9 @@ class API:
         :return: ItemDraftResponse
         """
         try:
-            return self._method_single(sell_listing.Configuration, '/sell/listing/v1_beta', sell_listing.ItemDraftApi, sell_listing.ApiClient, 'create_item_draft', SellListingException, True, ['sell.listing', 'item_draft'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_listing.Configuration, '/sell/listing/v1_beta', sell_listing.ItemDraftApi,
+                                       sell_listing.ApiClient, 'create_item_draft', SellListingException, True,
+                                       ['sell.listing', 'item_draft'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3300,7 +3859,10 @@ class API:
         :return: Shipment
         """
         try:
-            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta', sell_logistics.ShipmentApi, sell_logistics.ApiClient, 'cancel_shipment', SellLogisticsException, True, ['sell.logistics', 'shipment'], shipment_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta',
+                                       sell_logistics.ShipmentApi, sell_logistics.ApiClient, 'cancel_shipment',
+                                       SellLogisticsException, True, ['sell.logistics', 'shipment'], shipment_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3313,7 +3875,10 @@ class API:
         :return: Shipment
         """
         try:
-            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta', sell_logistics.ShipmentApi, sell_logistics.ApiClient, 'create_from_shipping_quote', SellLogisticsException, True, ['sell.logistics', 'shipment'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta',
+                                       sell_logistics.ShipmentApi, sell_logistics.ApiClient,
+                                       'create_from_shipping_quote', SellLogisticsException, True,
+                                       ['sell.logistics', 'shipment'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3326,7 +3891,10 @@ class API:
         :return: list[str]
         """
         try:
-            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta', sell_logistics.ShipmentApi, sell_logistics.ApiClient, 'download_label_file', SellLogisticsException, True, ['sell.logistics', 'shipment'], shipment_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta',
+                                       sell_logistics.ShipmentApi, sell_logistics.ApiClient, 'download_label_file',
+                                       SellLogisticsException, True, ['sell.logistics', 'shipment'], shipment_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3339,7 +3907,10 @@ class API:
         :return: Shipment
         """
         try:
-            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta', sell_logistics.ShipmentApi, sell_logistics.ApiClient, 'get_shipment', SellLogisticsException, True, ['sell.logistics', 'shipment'], shipment_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta',
+                                       sell_logistics.ShipmentApi, sell_logistics.ApiClient, 'get_shipment',
+                                       SellLogisticsException, True, ['sell.logistics', 'shipment'], shipment_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3352,7 +3923,10 @@ class API:
         :return: ShippingQuote
         """
         try:
-            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta', sell_logistics.ShippingQuoteApi, sell_logistics.ApiClient, 'create_shipping_quote', SellLogisticsException, True, ['sell.logistics', 'shipping_quote'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta',
+                                       sell_logistics.ShippingQuoteApi, sell_logistics.ApiClient,
+                                       'create_shipping_quote', SellLogisticsException, True,
+                                       ['sell.logistics', 'shipping_quote'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3365,7 +3939,10 @@ class API:
         :return: ShippingQuote
         """
         try:
-            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta', sell_logistics.ShippingQuoteApi, sell_logistics.ApiClient, 'get_shipping_quote', SellLogisticsException, True, ['sell.logistics', 'shipping_quote'], shipping_quote_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta',
+                                       sell_logistics.ShippingQuoteApi, sell_logistics.ApiClient, 'get_shipping_quote',
+                                       SellLogisticsException, True, ['sell.logistics', 'shipping_quote'],
+                                       shipping_quote_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3379,7 +3956,10 @@ class API:
         :return: BulkCreateAdsByInventoryReferenceResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'bulk_create_ads_by_inventory_reference', SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
+                                       sell_marketing.ApiClient, 'bulk_create_ads_by_inventory_reference',
+                                       SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3393,7 +3973,10 @@ class API:
         :return: BulkAdResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'bulk_create_ads_by_listing_id', SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
+                                       sell_marketing.ApiClient, 'bulk_create_ads_by_listing_id',
+                                       SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3407,7 +3990,10 @@ class API:
         :return: BulkDeleteAdsByInventoryReferenceResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'bulk_delete_ads_by_inventory_reference', SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
+                                       sell_marketing.ApiClient, 'bulk_delete_ads_by_inventory_reference',
+                                       SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3421,7 +4007,10 @@ class API:
         :return: BulkDeleteAdResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'bulk_delete_ads_by_listing_id', SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
+                                       sell_marketing.ApiClient, 'bulk_delete_ads_by_listing_id',
+                                       SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3435,7 +4024,10 @@ class API:
         :return: BulkCreateAdsByInventoryReferenceResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'bulk_update_ads_bid_by_inventory_reference', SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
+                                       sell_marketing.ApiClient, 'bulk_update_ads_bid_by_inventory_reference',
+                                       SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3449,7 +4041,10 @@ class API:
         :return: BulkAdResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'bulk_update_ads_bid_by_listing_id', SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
+                                       sell_marketing.ApiClient, 'bulk_update_ads_bid_by_listing_id',
+                                       SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3463,7 +4058,9 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'create_ad_by_listing_id', SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
+                                       sell_marketing.ApiClient, 'create_ad_by_listing_id', SellMarketingException,
+                                       True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3477,7 +4074,10 @@ class API:
         :return: AdReferences
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'create_ads_by_inventory_reference', SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
+                                       sell_marketing.ApiClient, 'create_ads_by_inventory_reference',
+                                       SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3491,7 +4091,9 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'delete_ad', SellMarketingException, True, ['sell.marketing', 'ad'], (ad_id, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
+                                       sell_marketing.ApiClient, 'delete_ad', SellMarketingException, True,
+                                       ['sell.marketing', 'ad'], (ad_id, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3505,7 +4107,10 @@ class API:
         :return: AdIds
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'delete_ads_by_inventory_reference', SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
+                                       sell_marketing.ApiClient, 'delete_ads_by_inventory_reference',
+                                       SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3519,7 +4124,9 @@ class API:
         :return: Ad
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'get_ad', SellMarketingException, True, ['sell.marketing', 'ad'], (ad_id, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
+                                       sell_marketing.ApiClient, 'get_ad', SellMarketingException, True,
+                                       ['sell.marketing', 'ad'], (ad_id, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3535,11 +4142,14 @@ class API:
         :return: AdPagedCollection
         """
         try:
-            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'get_ads', SellMarketingException, True, ['sell.marketing', 'ad'], campaign_id, **kwargs)  # noqa: E501
+            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
+                                      sell_marketing.ApiClient, 'get_ads', SellMarketingException, True,
+                                      ['sell.marketing', 'ad'], campaign_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def sell_marketing_get_ads_by_inventory_reference(self, campaign_id, inventory_reference_id, inventory_reference_type, **kwargs):  # noqa: E501
+    def sell_marketing_get_ads_by_inventory_reference(self, campaign_id, inventory_reference_id,
+                                                      inventory_reference_type, **kwargs):  # noqa: E501
         """get_ads_by_inventory_reference  # noqa: E501
 
         This method retrieves Promoted Listings ads associated with listings that are managed with the Inventory API from the specified campaign. Supply the campaign_id as a path parameter and use query parameters to specify the inventory_reference_id and inventory_reference_type pairs. In the Inventory API, an inventory reference ID is either a seller-defined SKU value or an inventoryItemGroupKey (a seller-defined ID for an inventory item group, which is an entity that's used in the Inventory API to create a multiple-variation listing). To indicate a listing managed by the Inventory API, you must always specify both an inventory_reference_id and the associated inventory_reference_type. Call getCampaigns to retrieve all of the seller's the current campaign IDs.  # noqa: E501
@@ -3550,7 +4160,11 @@ class API:
         :return: Ads
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'get_ads_by_inventory_reference', SellMarketingException, True, ['sell.marketing', 'ad'], (campaign_id, inventory_reference_id, inventory_reference_type), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
+                                       sell_marketing.ApiClient, 'get_ads_by_inventory_reference',
+                                       SellMarketingException, True, ['sell.marketing', 'ad'],
+                                       (campaign_id, inventory_reference_id, inventory_reference_type),
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3565,7 +4179,9 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'update_bid', SellMarketingException, True, ['sell.marketing', 'ad'], (body, ad_id, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
+                                       sell_marketing.ApiClient, 'update_bid', SellMarketingException, True,
+                                       ['sell.marketing', 'ad'], (body, ad_id, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3578,7 +4194,9 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdReportApi, sell_marketing.ApiClient, 'get_report', SellMarketingException, True, ['sell.marketing', 'ad_report'], report_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdReportApi,
+                                       sell_marketing.ApiClient, 'get_report', SellMarketingException, True,
+                                       ['sell.marketing', 'ad_report'], report_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3590,7 +4208,10 @@ class API:
         :return: ReportMetadatas
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdReportMetadataApi, sell_marketing.ApiClient, 'get_report_metadata', SellMarketingException, False, ['sell.marketing', 'ad_report_metadata'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
+                                       sell_marketing.AdReportMetadataApi, sell_marketing.ApiClient,
+                                       'get_report_metadata', SellMarketingException, False,
+                                       ['sell.marketing', 'ad_report_metadata'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3603,7 +4224,10 @@ class API:
         :return: ReportMetadata
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdReportMetadataApi, sell_marketing.ApiClient, 'get_report_metadata_for_report_type', SellMarketingException, False, ['sell.marketing', 'ad_report_metadata'], report_type, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
+                                       sell_marketing.AdReportMetadataApi, sell_marketing.ApiClient,
+                                       'get_report_metadata_for_report_type', SellMarketingException, False,
+                                       ['sell.marketing', 'ad_report_metadata'], report_type, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3616,7 +4240,10 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdReportTaskApi, sell_marketing.ApiClient, 'create_report_task', SellMarketingException, True, ['sell.marketing', 'ad_report_task'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
+                                       sell_marketing.AdReportTaskApi, sell_marketing.ApiClient, 'create_report_task',
+                                       SellMarketingException, True, ['sell.marketing', 'ad_report_task'], body,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3629,7 +4256,10 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdReportTaskApi, sell_marketing.ApiClient, 'delete_report_task', SellMarketingException, True, ['sell.marketing', 'ad_report_task'], report_task_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
+                                       sell_marketing.AdReportTaskApi, sell_marketing.ApiClient, 'delete_report_task',
+                                       SellMarketingException, True, ['sell.marketing', 'ad_report_task'],
+                                       report_task_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3642,7 +4272,10 @@ class API:
         :return: ReportTask
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdReportTaskApi, sell_marketing.ApiClient, 'get_report_task', SellMarketingException, True, ['sell.marketing', 'ad_report_task'], report_task_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
+                                       sell_marketing.AdReportTaskApi, sell_marketing.ApiClient, 'get_report_task',
+                                       SellMarketingException, True, ['sell.marketing', 'ad_report_task'],
+                                       report_task_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3657,7 +4290,10 @@ class API:
         :return: ReportTaskPagedCollection
         """
         try:
-            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdReportTaskApi, sell_marketing.ApiClient, 'get_report_tasks', SellMarketingException, True, ['sell.marketing', 'ad_report_task'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1',
+                                      sell_marketing.AdReportTaskApi, sell_marketing.ApiClient, 'get_report_tasks',
+                                      SellMarketingException, True, ['sell.marketing', 'ad_report_task'], None,
+                                      **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3671,7 +4307,9 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'clone_campaign', SellMarketingException, True, ['sell.marketing', 'campaign'], (body, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
+                                       sell_marketing.ApiClient, 'clone_campaign', SellMarketingException, True,
+                                       ['sell.marketing', 'campaign'], (body, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3684,7 +4322,9 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'create_campaign', SellMarketingException, True, ['sell.marketing', 'campaign'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
+                                       sell_marketing.ApiClient, 'create_campaign', SellMarketingException, True,
+                                       ['sell.marketing', 'campaign'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3697,7 +4337,9 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'delete_campaign', SellMarketingException, True, ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
+                                       sell_marketing.ApiClient, 'delete_campaign', SellMarketingException, True,
+                                       ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3710,7 +4352,9 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'end_campaign', SellMarketingException, True, ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
+                                       sell_marketing.ApiClient, 'end_campaign', SellMarketingException, True,
+                                       ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3725,7 +4369,10 @@ class API:
         :return: Campaigns
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'find_campaign_by_ad_reference', SellMarketingException, True, ['sell.marketing', 'campaign'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
+                                       sell_marketing.ApiClient, 'find_campaign_by_ad_reference',
+                                       SellMarketingException, True, ['sell.marketing', 'campaign'], None,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3738,7 +4385,9 @@ class API:
         :return: Campaign
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'get_campaign', SellMarketingException, True, ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
+                                       sell_marketing.ApiClient, 'get_campaign', SellMarketingException, True,
+                                       ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3751,7 +4400,9 @@ class API:
         :return: Campaign
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'get_campaign_by_name', SellMarketingException, True, ['sell.marketing', 'campaign'], campaign_name, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
+                                       sell_marketing.ApiClient, 'get_campaign_by_name', SellMarketingException, True,
+                                       ['sell.marketing', 'campaign'], campaign_name, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3769,7 +4420,9 @@ class API:
         :return: CampaignPagedCollection
         """
         try:
-            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'get_campaigns', SellMarketingException, True, ['sell.marketing', 'campaign'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
+                                      sell_marketing.ApiClient, 'get_campaigns', SellMarketingException, True,
+                                      ['sell.marketing', 'campaign'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3782,7 +4435,9 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'pause_campaign', SellMarketingException, True, ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
+                                       sell_marketing.ApiClient, 'pause_campaign', SellMarketingException, True,
+                                       ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3795,7 +4450,9 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'resume_campaign', SellMarketingException, True, ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
+                                       sell_marketing.ApiClient, 'resume_campaign', SellMarketingException, True,
+                                       ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3809,7 +4466,10 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'update_campaign_identification', SellMarketingException, True, ['sell.marketing', 'campaign'], (body, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
+                                       sell_marketing.ApiClient, 'update_campaign_identification',
+                                       SellMarketingException, True, ['sell.marketing', 'campaign'],
+                                       (body, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3822,7 +4482,10 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.ItemPriceMarkdownApi, sell_marketing.ApiClient, 'create_item_price_markdown_promotion', SellMarketingException, True, ['sell.marketing', 'item_price_markdown'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
+                                       sell_marketing.ItemPriceMarkdownApi, sell_marketing.ApiClient,
+                                       'create_item_price_markdown_promotion', SellMarketingException, True,
+                                       ['sell.marketing', 'item_price_markdown'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3835,7 +4498,10 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.ItemPriceMarkdownApi, sell_marketing.ApiClient, 'delete_item_price_markdown_promotion', SellMarketingException, True, ['sell.marketing', 'item_price_markdown'], promotion_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
+                                       sell_marketing.ItemPriceMarkdownApi, sell_marketing.ApiClient,
+                                       'delete_item_price_markdown_promotion', SellMarketingException, True,
+                                       ['sell.marketing', 'item_price_markdown'], promotion_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3848,7 +4514,10 @@ class API:
         :return: ItemPriceMarkdown
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.ItemPriceMarkdownApi, sell_marketing.ApiClient, 'get_item_price_markdown_promotion', SellMarketingException, True, ['sell.marketing', 'item_price_markdown'], promotion_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
+                                       sell_marketing.ItemPriceMarkdownApi, sell_marketing.ApiClient,
+                                       'get_item_price_markdown_promotion', SellMarketingException, True,
+                                       ['sell.marketing', 'item_price_markdown'], promotion_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3862,7 +4531,10 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.ItemPriceMarkdownApi, sell_marketing.ApiClient, 'update_item_price_markdown_promotion', SellMarketingException, True, ['sell.marketing', 'item_price_markdown'], promotion_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
+                                       sell_marketing.ItemPriceMarkdownApi, sell_marketing.ApiClient,
+                                       'update_item_price_markdown_promotion', SellMarketingException, True,
+                                       ['sell.marketing', 'item_price_markdown'], promotion_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3875,7 +4547,10 @@ class API:
         :return: BaseResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.ItemPromotionApi, sell_marketing.ApiClient, 'create_item_promotion', SellMarketingException, True, ['sell.marketing', 'item_promotion'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
+                                       sell_marketing.ItemPromotionApi, sell_marketing.ApiClient,
+                                       'create_item_promotion', SellMarketingException, True,
+                                       ['sell.marketing', 'item_promotion'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3888,7 +4563,10 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.ItemPromotionApi, sell_marketing.ApiClient, 'delete_item_promotion', SellMarketingException, True, ['sell.marketing', 'item_promotion'], promotion_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
+                                       sell_marketing.ItemPromotionApi, sell_marketing.ApiClient,
+                                       'delete_item_promotion', SellMarketingException, True,
+                                       ['sell.marketing', 'item_promotion'], promotion_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3901,7 +4579,10 @@ class API:
         :return: ItemPromotionResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.ItemPromotionApi, sell_marketing.ApiClient, 'get_item_promotion', SellMarketingException, True, ['sell.marketing', 'item_promotion'], promotion_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
+                                       sell_marketing.ItemPromotionApi, sell_marketing.ApiClient, 'get_item_promotion',
+                                       SellMarketingException, True, ['sell.marketing', 'item_promotion'], promotion_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3915,7 +4596,10 @@ class API:
         :return: BaseResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.ItemPromotionApi, sell_marketing.ApiClient, 'update_item_promotion', SellMarketingException, True, ['sell.marketing', 'item_promotion'], promotion_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
+                                       sell_marketing.ItemPromotionApi, sell_marketing.ApiClient,
+                                       'update_item_promotion', SellMarketingException, True,
+                                       ['sell.marketing', 'item_promotion'], promotion_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3933,7 +4617,9 @@ class API:
         :return: None
         """
         try:
-            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionApi, sell_marketing.ApiClient, 'get_listing_set', SellMarketingException, True, ['sell.marketing', 'promotion'], promotion_id, **kwargs)  # noqa: E501
+            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionApi,
+                                      sell_marketing.ApiClient, 'get_listing_set', SellMarketingException, True,
+                                      ['sell.marketing', 'promotion'], promotion_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3952,7 +4638,9 @@ class API:
         :return: PromotionsPagedCollection
         """
         try:
-            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionApi, sell_marketing.ApiClient, 'get_promotions', SellMarketingException, True, ['sell.marketing', 'promotion'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionApi,
+                                      sell_marketing.ApiClient, 'get_promotions', SellMarketingException, True,
+                                      ['sell.marketing', 'promotion'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3965,7 +4653,9 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionApi, sell_marketing.ApiClient, 'pause_promotion', SellMarketingException, True, ['sell.marketing', 'promotion'], promotion_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionApi,
+                                       sell_marketing.ApiClient, 'pause_promotion', SellMarketingException, True,
+                                       ['sell.marketing', 'promotion'], promotion_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3978,7 +4668,9 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionApi, sell_marketing.ApiClient, 'resume_promotion', SellMarketingException, True, ['sell.marketing', 'promotion'], promotion_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionApi,
+                                       sell_marketing.ApiClient, 'resume_promotion', SellMarketingException, True,
+                                       ['sell.marketing', 'promotion'], promotion_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3996,7 +4688,10 @@ class API:
         :return: PromotionsReportPagedCollection
         """
         try:
-            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionReportApi, sell_marketing.ApiClient, 'get_promotion_reports', SellMarketingException, True, ['sell.marketing', 'promotion_report'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1',
+                                      sell_marketing.PromotionReportApi, sell_marketing.ApiClient,
+                                      'get_promotion_reports', SellMarketingException, True,
+                                      ['sell.marketing', 'promotion_report'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4009,7 +4704,11 @@ class API:
         :return: SummaryReportResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionSummaryReportApi, sell_marketing.ApiClient, 'get_promotion_summary_report', SellMarketingException, True, ['sell.marketing', 'promotion_summary_report'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
+                                       sell_marketing.PromotionSummaryReportApi, sell_marketing.ApiClient,
+                                       'get_promotion_summary_report', SellMarketingException, True,
+                                       ['sell.marketing', 'promotion_summary_report'], marketplace_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4022,7 +4721,9 @@ class API:
         :return: SalesTaxJurisdictions
         """
         try:
-            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.CountryApi, sell_metadata.ApiClient, 'get_sales_tax_jurisdictions', SellMetadataException, False, ['sell.metadata', 'country'], country_code, **kwargs)  # noqa: E501
+            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.CountryApi,
+                                       sell_metadata.ApiClient, 'get_sales_tax_jurisdictions', SellMetadataException,
+                                       False, ['sell.metadata', 'country'], country_code, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4036,7 +4737,10 @@ class API:
         :return: AutomotivePartsCompatibilityPolicyResponse
         """
         try:
-            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi, sell_metadata.ApiClient, 'get_automotive_parts_compatibility_policies', SellMetadataException, False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi,
+                                       sell_metadata.ApiClient, 'get_automotive_parts_compatibility_policies',
+                                       SellMetadataException, False, ['sell.metadata', 'marketplace'], marketplace_id,
+                                       **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4050,7 +4754,9 @@ class API:
         :return: ItemConditionPolicyResponse
         """
         try:
-            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi, sell_metadata.ApiClient, 'get_item_condition_policies', SellMetadataException, False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi,
+                                       sell_metadata.ApiClient, 'get_item_condition_policies', SellMetadataException,
+                                       False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4064,7 +4770,9 @@ class API:
         :return: ListingStructurePolicyResponse
         """
         try:
-            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi, sell_metadata.ApiClient, 'get_listing_structure_policies', SellMetadataException, False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi,
+                                       sell_metadata.ApiClient, 'get_listing_structure_policies', SellMetadataException,
+                                       False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4078,7 +4786,9 @@ class API:
         :return: NegotiatedPricePolicyResponse
         """
         try:
-            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi, sell_metadata.ApiClient, 'get_negotiated_price_policies', SellMetadataException, False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi,
+                                       sell_metadata.ApiClient, 'get_negotiated_price_policies', SellMetadataException,
+                                       False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4092,7 +4802,9 @@ class API:
         :return: ProductAdoptionPolicyResponse
         """
         try:
-            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi, sell_metadata.ApiClient, 'get_product_adoption_policies', SellMetadataException, False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi,
+                                       sell_metadata.ApiClient, 'get_product_adoption_policies', SellMetadataException,
+                                       False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4106,7 +4818,9 @@ class API:
         :return: ReturnPolicyResponse
         """
         try:
-            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi, sell_metadata.ApiClient, 'get_return_policies', SellMetadataException, False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi,
+                                       sell_metadata.ApiClient, 'get_return_policies', SellMetadataException, False,
+                                       ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4121,7 +4835,9 @@ class API:
         :return: PagedEligibleItemCollection
         """
         try:
-            return self._method_paged(sell_negotiation.Configuration, '/sell/negotiation/v1', sell_negotiation.OfferApi, sell_negotiation.ApiClient, 'find_eligible_items', SellNegotiationException, True, ['sell.negotiation', 'offer'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+            return self._method_paged(sell_negotiation.Configuration, '/sell/negotiation/v1', sell_negotiation.OfferApi,
+                                      sell_negotiation.ApiClient, 'find_eligible_items', SellNegotiationException, True,
+                                      ['sell.negotiation', 'offer'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4135,7 +4851,10 @@ class API:
         :return: SendOfferToInterestedBuyersCollectionResponse
         """
         try:
-            return self._method_single(sell_negotiation.Configuration, '/sell/negotiation/v1', sell_negotiation.OfferApi, sell_negotiation.ApiClient, 'send_offer_to_interested_buyers', SellNegotiationException, True, ['sell.negotiation', 'offer'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_negotiation.Configuration, '/sell/negotiation/v1',
+                                       sell_negotiation.OfferApi, sell_negotiation.ApiClient,
+                                       'send_offer_to_interested_buyers', SellNegotiationException, True,
+                                       ['sell.negotiation', 'offer'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4152,7 +4871,11 @@ class API:
         :return: PagedListingRecommendationCollection
         """
         try:
-            return self._method_paged(sell_recommendation.Configuration, '/sell/recommendation/v1', sell_recommendation.ListingRecommendationApi, sell_recommendation.ApiClient, 'find_listing_recommendations', SellRecommendationException, True, ['sell.recommendation', 'listing_recommendation'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+            return self._method_paged(sell_recommendation.Configuration, '/sell/recommendation/v1',
+                                      sell_recommendation.ListingRecommendationApi, sell_recommendation.ApiClient,
+                                      'find_listing_recommendations', SellRecommendationException, True,
+                                      ['sell.recommendation', 'listing_recommendation'], x_ebay_c_marketplace_id,
+                                      **kwargs)  # noqa: E501
         except Error:
             raise
 

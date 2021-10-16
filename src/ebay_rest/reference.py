@@ -34,6 +34,16 @@ class Reference:
         return Reference._get('country_codes')
 
     @staticmethod
+    def get_currency_codes():
+        """ Get eBay country code information.
+
+        A partial list of standard 3-digit ISO 4217 currency codes for currency used in countries around the world.
+
+        Source https://developer.ebay.com/devzone/xml/docs/Reference/eBay/types/CurrencyCodeType.html.
+        """
+        return Reference._get('currency_codes')
+
+    @staticmethod
     def get_item_fields_modified():
         """ Get eBay item "response" field information.
 

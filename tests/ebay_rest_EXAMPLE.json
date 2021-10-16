@@ -47,23 +47,35 @@
     },
     "headers": {
         "ENCA": {
+            "accept_language": "en-CA",
+            "affiliate_campaign_id": "",
+            "affiliate_reference_id": "",
             "content_language": "en-CA",
             "country" : "CA",
             "currency": "CAD",
+            "device_id": "",
             "marketplace_id": "EBAY_ENCA",
             "zip": "K1M 1M4"
         },
         "GB": {
-            "content_language": "en-US",
+            "accept_language": "en-GB",
+            "affiliate_campaign_id": "",
+            "affiliate_reference_id": "",
+            "content_language": "en-GB",
             "country" : "GB",
             "currency": "GBP",
+            "device_id": "",
             "marketplace_id": "EBAY_GB",
             "zip": "SW1A 1AA"
         },
         "US": {
+            "accept_language": "en-US",
+            "affiliate_campaign_id": "",
+            "affiliate_reference_id": "",
             "content_language": "en-US",
             "country": "US",
             "currency": "USD",
+            "device_id": "",
             "marketplace_id": "EBAY_US",
             "zip": "20500"
         }

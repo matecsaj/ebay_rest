@@ -20,26 +20,26 @@
     "EBAY_BE": [
         "Belgium",
         {
-            " nl-BE": [
-                "https://www.benl.ebay.be/",
-                "Nederlandse"
-            ],
             "fr-BE": [
                 "https://www.befr.ebay.be/",
                 "Fran\u00e7aise"
+            ],
+            "nl-BE": [
+                "https://www.benl.ebay.be/",
+                "Nederlandse"
             ]
         }
     ],
     "EBAY_CA": [
         "Canada",
         {
-            " fr-CA": [
-                "https://www.cafr.ebay.ca/",
-                "Fran\u00e7aise"
-            ],
             "en-CA": [
                 "https://www.ebay.ca",
                 "English"
+            ],
+            "fr-CA": [
+                "https://www.cafr.ebay.ca/",
+                "Fran\u00e7aise"
             ]
         }
     ],

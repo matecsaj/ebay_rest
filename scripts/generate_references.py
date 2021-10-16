@@ -214,6 +214,40 @@ def get_country_codes():
     return dict_
 
 
+def get_currency_codes():
+    print("Find the eBay's Currency Codes.")
+
+    # load the target webpage
+    url = 'https://developer.ebay.com/devzone/xml/docs/Reference/eBay/types/CurrencyCodeType.html'
+    soup = get_soup_via_link(url)
+
+    # find the rows regarding Response Fields.
+    table = soup.find('table')
+    rows = table.find_all('tr')
+
+    # put the rows into a table of data
+    data = []
+    for row in rows:
+        cols = row.find_all('td')
+        cols = [ele.text.strip() for ele in cols]
+        data.append([ele for ele in cols if ele])  # Get rid of empty values
+
+    # ignore header, convert to a dict & delete bad values
+    dict_ = {}
+    for datum in data[1:]:
+        dict_[datum[0]] = datum[1]
+
+    bad_values = ('CustomCode',)
+    to_delete = set()
+    for key, value in dict_.items():
+        if key in bad_values or 'replaced' in value:
+            to_delete.add(key)
+    for key in to_delete:
+        del dict_[key]
+
+    return dict_
+
+
 def get_global_id_values():
     print("Find the eBay's Global ID Values.")
 
@@ -271,6 +305,7 @@ def get_marketplace_id_values():
     my_dict = dict()
     for datum in data[1:]:
         [marketplace_id, country, marketplace_site, locale_support] = datum
+        locale_support = locale_support.replace(' ', '')
         locales = locale_support.split(',')     # convert comma separated locales to a list of strings
         sites = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
                            marketplace_site)
@@ -467,6 +502,7 @@ def use_cache(should_use, object_name, get_function, get_param):
 
 
 def main():
+    currency_codes = get_currency_codes()
     country_codes = get_country_codes()
     marketplace_id_values = get_marketplace_id_values()
     global_id_values = get_global_id_values()
@@ -570,6 +606,7 @@ def main():
     path = '../src/ebay_rest/references/'
     sources_names = [
                      (country_codes, 'country_codes'),
+                     (currency_codes, 'currency_codes'),
                      (global_id_values, 'global_id_values'),
                      (containers, 'item_fields_modified'),
                      (enums, 'item_enums_modified'),

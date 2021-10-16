@@ -104,7 +104,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
             except Error as error:
                 self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
             else:
-                # TODO remedy linter warning 'Expected type 'Union[type, Tuple[type, ...]]', got 'Multiton' instead'
+                # Ignore the PyCharm linter bug 'Expected type 'Union[type, Tuple[type, ...]]', got 'Multiton' instead'
                 self.assertIsInstance(api, API, 'An API object was not returned.')
 
     def test_object_reuse(self):
@@ -123,7 +123,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
-            # TODO remedy linter warning 'Expected type 'Union[type, Tuple[type, ...]]', got 'Multiton' instead'
+            # Ignore the PyCharm linter bug 'Expected type 'Union[type, Tuple[type, ...]]', got 'Multiton' instead'
             self.assertIsInstance(api, API, 'An API object was not returned.')
 
     def test_shipping_accuracy(self):
