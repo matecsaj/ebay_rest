@@ -67,8 +67,6 @@ from .api import sell_negotiation
 from .api.sell_negotiation.rest import ApiException as SellNegotiationException
 from .api import sell_recommendation
 from .api.sell_recommendation.rest import ApiException as SellRecommendationException
-
-
 # ANCHOR-er_imports-END"
 
 
@@ -732,10 +730,7 @@ class API:
         :return: CompatibilityResponse
         """
         try:
-            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi,
-                                       buy_browse.ApiClient, 'check_compatibility', BuyBrowseException, False,
-                                       ['buy.browse', 'item'], (x_ebay_c_marketplace_id, item_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi, buy_browse.ApiClient, 'check_compatibility', BuyBrowseException, False, ['buy.browse', 'item'], (x_ebay_c_marketplace_id, item_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -749,9 +744,7 @@ class API:
         :return: Item
         """
         try:
-            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi,
-                                       buy_browse.ApiClient, 'get_item', BuyBrowseException, False,
-                                       ['buy.browse', 'item'], item_id, **kwargs)  # noqa: E501
+            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi, buy_browse.ApiClient, 'get_item', BuyBrowseException, False, ['buy.browse', 'item'], item_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -767,9 +760,7 @@ class API:
         :return: Item
         """
         try:
-            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi,
-                                       buy_browse.ApiClient, 'get_item_by_legacy_id', BuyBrowseException, False,
-                                       ['buy.browse', 'item'], legacy_item_id, **kwargs)  # noqa: E501
+            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi, buy_browse.ApiClient, 'get_item_by_legacy_id', BuyBrowseException, False, ['buy.browse', 'item'], legacy_item_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -783,9 +774,7 @@ class API:
         :return: Items
         """
         try:
-            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi,
-                                       buy_browse.ApiClient, 'get_items', BuyBrowseException, False,
-                                       ['buy.browse', 'item'], None, **kwargs)  # noqa: E501
+            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi, buy_browse.ApiClient, 'get_items', BuyBrowseException, False, ['buy.browse', 'item'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -798,9 +787,7 @@ class API:
         :return: ItemGroup
         """
         try:
-            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi,
-                                       buy_browse.ApiClient, 'get_items_by_item_group', BuyBrowseException, False,
-                                       ['buy.browse', 'item'], item_group_id, **kwargs)  # noqa: E501
+            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemApi, buy_browse.ApiClient, 'get_items_by_item_group', BuyBrowseException, False, ['buy.browse', 'item'], item_group_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -821,13 +808,11 @@ class API:
         :param str limit: The number of items, from the result set, returned in a single page. Default: 50 Maximum number of items per page (limit): 200 Maximum number of items in a result set: 10,000
         :param str offset: Specifies the number of items to skip in the result set. This is used with the limit field to control the pagination of the output. If offset is 0 and limit is 10, the method will retrieve items 1-10 from the list of items returned, if offset is 10 and limit is 10, the method will retrieve items 11 thru 20 from the list of items returned. Valid Values: 0-10,000 (inclusive) Default: 0 Maximum number of items returned: 10,000
         :param str q: A string consisting of one or more keywords that are used to search for items on eBay. The keywords are handled as follows: If the keywords are separated by a space, it is treated as an AND. In the following example, the query returns items that have iphone AND ipad. /buy/browse/v1/item_summary/search?q=iphone ipad If the keywords are input using parentheses and separated by a comma, or if they are URL-encoded, it is treated as an OR. In the following examples, the query returns items that have iphone OR ipad. /buy/browse/v1/item_summary/search?q=(iphone, ipad) /buy/browse/v1/item_summary/search?q=%28iphone%2c%20ipad%29 Restriction: The * wildcard character is not allowed in this field. Required: The method must have category_ids, epid, gtin, or q (or any combination of these).
-        :param str sort: Specifies the order and the field name to use to sort the items. You can sort items by price (in ascending or descending order) or by distance (only applicable if the &quot;pickup&quot; filters are used, and only ascending order is supported). You can also sort items by listing date, with the most recently listed (newest) items appearing first. Note: To sort in descending order, insert a hyphen (-) before the field name. If no sort parameter is submitted, the result set is sorted by &quot;Best Match&quot;. The following are examples of using the sort query parameter. Sort Result sort=price Sorts by price in ascending order (lowest price first) sort=-price Sorts by price in descending order (highest price first) sort=distance Sorts by distance in ascending order (shortest distance first) sort=newlyListed Sorts by listing date (most recently listed/newest items first) Default: Ascending For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/buy/browse/types/cos:SortField
+        :param str sort: Specifies the order and the field name to use to sort the items. You can sort items by price (in ascending or descending order) or by distance (only applicable if the &quot;pickup&quot; filters are used, and only ascending order is supported). You can also sort items by listing date, with the most recently listed (newest) items appearing first. Note: To sort in descending order, insert a hyphen (-) before the field name. If no sort parameter is submitted, the result set is sorted by &quot;Best Match&quot;. The following are examples of using the sort query parameter. Sort Result sort=price Sorts by price in ascending order (lowest price first) sort=-price Sorts by price in descending order (highest price first) sort=distance Sorts by distance in ascending order (shortest distance first) sort=newlyListed Sorts by listing date (most recently listed/newest items first) sort=endingSoonest Sorts by date/time the listing ends (listings nearest to end date/time first) Default: Ascending For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/buy/browse/types/cos:SortField
         :return: SearchPagedCollection
         """
         try:
-            return self._method_paged(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemSummaryApi,
-                                      buy_browse.ApiClient, 'search', BuyBrowseException, False,
-                                      ['buy.browse', 'item_summary'], None, **kwargs)  # noqa: E501
+            return self._method_paged(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ItemSummaryApi, buy_browse.ApiClient, 'search', BuyBrowseException, False, ['buy.browse', 'item_summary'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -844,13 +829,11 @@ class API:
         :param str filter: This field supports multiple field filters that can be used to limit/customize the result set. For example: /buy/browse/v1/item_summary/search?q=shirt&amp;filter=price:[10..50] You can also combine filters. /buy/browse/v1/item_summary/search?q=shirt&amp;filter=price:[10..50],sellers:{rpseller|bigSal} The following are the supported filters. For details and examples for all the filters, see Buy API Field Filters. bidCount buyingOptions charityOnly conditionIds conditions deliveryCountry deliveryOptions deliveryPostalCode excludeCategoryIds excludeSellers guaranteedDeliveryInDays itemEndDate itemLocationCountry itemStartDate maxDeliveryCost paymentMethods pickupCountry pickupPostalCode pickupRadius pickupRadiusUnit price priceCurrency qualifiedPrograms returnsAccepted sellerAccountTypes sellers For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/buy/browse/types/cos:FilterField
         :param str limit: The number of items, from the result set, returned in a single page. Default: 50 Maximum number of items per page (limit): 200 Maximum number of items in a result set: 10,000
         :param str offset: The number of items to skip in the result set. This is used with the limit field to control the pagination of the output. If offset is 0 and limit is 10, the method will retrieve items 1-10 from the list of items returned, if offset is 10 and limit is 10, the method will retrieve items 11 thru 20 from the list of items returned. Valid Values: 0-10,000 (inclusive) Default: 0 Maximum number of items returned: 10,000
-        :param str sort: Specifies the order and the field name to use to sort the items. You can sort items by price (in ascending or descending order) or by distance (only applicable if the &quot;pickup&quot; filters are used, and only ascending order is supported). You can also sort items by listing date, with the most recently listed (newest) items appearing first. Note: To sort in descending order, insert a hyphen (-) before the field name. If no sort parameter is submitted, the result set is sorted by &quot;Best Match&quot;. The following are examples of using the sort query parameter. Sort Result sort=price Sorts by price in ascending order (lowest price first) sort=-price Sorts by price in descending order (highest price first) sort=distance Sorts by distance in ascending order (shortest distance first) sort=newlyListed Sorts by listing date (most recently listed/newest items first) Default: Ascending For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/buy/browse/types/cos:SortField
+        :param str sort: Specifies the order and the field name to use to sort the items. You can sort items by price (in ascending or descending order) or by distance (only applicable if the &quot;pickup&quot; filters are used, and only ascending order is supported). You can also sort items by listing date, with the most recently listed (newest) items appearing first. Note: To sort in descending order, insert a hyphen (-) before the field name. If no sort parameter is submitted, the result set is sorted by &quot;Best Match&quot;. The following are examples of using the sort query parameter. Sort Result sort=price Sorts by price in ascending order (lowest price first) sort=-price Sorts by price in descending order (highest price first) sort=distance Sorts by distance in ascending order (shortest distance first) sort=newlyListed Sorts by listing date (most recently listed/newest items first) sort=endingSoonest Sorts by date/time the listing ends (listings nearest to end date/time first) Default: Ascending For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/buy/browse/types/cos:SortField
         :return: SearchPagedCollection
         """
         try:
-            return self._method_paged(buy_browse.Configuration, '/buy/browse/v1', buy_browse.SearchByImageApi,
-                                      buy_browse.ApiClient, 'search_by_image', BuyBrowseException, False,
-                                      ['buy.browse', 'search_by_image'], None, **kwargs)  # noqa: E501
+            return self._method_paged(buy_browse.Configuration, '/buy/browse/v1', buy_browse.SearchByImageApi, buy_browse.ApiClient, 'search_by_image', BuyBrowseException, False, ['buy.browse', 'search_by_image'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -863,9 +846,7 @@ class API:
         :return: RemoteShopcartResponse
         """
         try:
-            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ShoppingCartApi,
-                                       buy_browse.ApiClient, 'add_item', BuyBrowseException, True,
-                                       ['buy.browse', 'shopping_cart'], None, **kwargs)  # noqa: E501
+            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ShoppingCartApi, buy_browse.ApiClient, 'add_item', BuyBrowseException, True, ['buy.browse', 'shopping_cart'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -877,9 +858,7 @@ class API:
         :return: RemoteShopcartResponse
         """
         try:
-            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ShoppingCartApi,
-                                       buy_browse.ApiClient, 'get_shopping_cart', BuyBrowseException, True,
-                                       ['buy.browse', 'shopping_cart'], None, **kwargs)  # noqa: E501
+            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ShoppingCartApi, buy_browse.ApiClient, 'get_shopping_cart', BuyBrowseException, True, ['buy.browse', 'shopping_cart'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -892,9 +871,7 @@ class API:
         :return: RemoteShopcartResponse
         """
         try:
-            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ShoppingCartApi,
-                                       buy_browse.ApiClient, 'remove_item', BuyBrowseException, True,
-                                       ['buy.browse', 'shopping_cart'], None, **kwargs)  # noqa: E501
+            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ShoppingCartApi, buy_browse.ApiClient, 'remove_item', BuyBrowseException, True, ['buy.browse', 'shopping_cart'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -907,9 +884,7 @@ class API:
         :return: RemoteShopcartResponse
         """
         try:
-            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ShoppingCartApi,
-                                       buy_browse.ApiClient, 'update_quantity', BuyBrowseException, True,
-                                       ['buy.browse', 'shopping_cart'], None, **kwargs)  # noqa: E501
+            return self._method_single(buy_browse.Configuration, '/buy/browse/v1', buy_browse.ShoppingCartApi, buy_browse.ApiClient, 'update_quantity', BuyBrowseException, True, ['buy.browse', 'shopping_cart'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -927,9 +902,7 @@ class API:
         :return: DealItemSearchResponse
         """
         try:
-            return self._method_paged(buy_deal.Configuration, '/buy/deal/v1', buy_deal.DealItemApi, buy_deal.ApiClient,
-                                      'get_deal_items', BuyDealException, False, ['buy.deal', 'deal_item'],
-                                      x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+            return self._method_paged(buy_deal.Configuration, '/buy/deal/v1', buy_deal.DealItemApi, buy_deal.ApiClient, 'get_deal_items', BuyDealException, False, ['buy.deal', 'deal_item'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -943,9 +916,7 @@ class API:
         :return: Event
         """
         try:
-            return self._method_single(buy_deal.Configuration, '/buy/deal/v1', buy_deal.EventApi, buy_deal.ApiClient,
-                                       'get_event', BuyDealException, False, ['buy.deal', 'event'],
-                                       (x_ebay_c_marketplace_id, event_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_deal.Configuration, '/buy/deal/v1', buy_deal.EventApi, buy_deal.ApiClient, 'get_event', BuyDealException, False, ['buy.deal', 'event'], (x_ebay_c_marketplace_id, event_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -960,9 +931,7 @@ class API:
         :return: EventSearchResponse
         """
         try:
-            return self._method_paged(buy_deal.Configuration, '/buy/deal/v1', buy_deal.EventApi, buy_deal.ApiClient,
-                                      'get_events', BuyDealException, False, ['buy.deal', 'event'],
-                                      x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+            return self._method_paged(buy_deal.Configuration, '/buy/deal/v1', buy_deal.EventApi, buy_deal.ApiClient, 'get_events', BuyDealException, False, ['buy.deal', 'event'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -980,17 +949,16 @@ class API:
         :return: EventItemSearchResponse
         """
         try:
-            return self._method_paged(buy_deal.Configuration, '/buy/deal/v1', buy_deal.EventItemApi, buy_deal.ApiClient,
-                                      'get_event_items', BuyDealException, False, ['buy.deal', 'event_item'],
-                                      (event_ids, x_ebay_c_marketplace_id), **kwargs)  # noqa: E501
+            return self._method_paged(buy_deal.Configuration, '/buy/deal/v1', buy_deal.EventItemApi, buy_deal.ApiClient, 'get_event_items', BuyDealException, False, ['buy.deal', 'event_item'], (event_ids, x_ebay_c_marketplace_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def buy_feed_get_item_feed(self, x_ebay_c_marketplace_id, range, feed_scope, category_id, **kwargs):  # noqa: E501
+    def buy_feed_get_item_feed(self, accept, x_ebay_c_marketplace_id, range, feed_scope, category_id, **kwargs):  # noqa: E501
         """get_item_feed  # noqa: E501
 
-        This method lets you download a TSV_GZIP (tab separated value gzip) Item feed file. The feed file contains all the items from all the child categories of the specified category. The first line of the file is the header, which labels the columns and indicates the order of the values on each line. Each header is described in the Response fields section. There are two types of item feed files generated: A daily Item feed file containing all the newly listed items for a specific category, date, and marketplace (feed_scope = NEWLY_LISTED) A weekly Item Bootstrap feed file containing all the items in a specific category and marketplace (feed_scope = ALL_ACTIVE) Note: Filters are applied to the feed files. For details, see Feed File Filters. When curating the items returned, be sure to code as if these filters are not applied as they can be changed or removed in the future. URLs for this method Production URL: https://api.ebay.com/buy/feed/v1_beta/item? Sandbox URL: https://api.sandbox.ebay.com/buy/feed/v1_beta/item? Downloading feed files Item feed files are binary gzip files. If the file is larger than 100 MB, the download must be streamed in chunks. You specify the size of the chunks in bytes using the Range request header. The Content-range response header indicates where in the full resource this partial chunk of data belongs and the total number of bytes in the file. For more information about using these headers, see Retrieving a gzip feed file. In addition to the API, there is an open source Feed SDK written in Java that downloads, combines files into a single file when needed, and unzips the entire feed file. It also lets you specify field filters to curate the items in the file. Note: The response is always a TSV_GZIP file. However for documentation purposes, the response is shown as JSON fields so that the value returned in each column can be explained. The order of the response fields, shows you the order of the columns in the feed file. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
+        This method lets you download a TSV_GZIP (tab separated value gzip) Item feed file. The feed file contains all the items from all the child categories of the specified category. The first line of the file is the header, which labels the columns and indicates the order of the values on each line. Each header is described in the Response fields section. There are two types of item feed files generated: A daily Item feed file containing all the newly listed items for a specific category, date, and marketplace (feed_scope = NEWLY_LISTED) A weekly Item Bootstrap feed file containing all the items in a specific category and marketplace (feed_scope = ALL_ACTIVE) Note: Filters are applied to the feed files. For details, see Feed File Filters. When curating the items returned, be sure to code as if these filters are not applied as they can be changed or removed in the future. URLs for this method Production URL: https://api.ebay.com/buy/feed/v1_beta/item? Sandbox URL: https://api.sandbox.ebay.com/buy/feed/v1_beta/item? Downloading feed files Item feed files are binary gzip files. If the file is larger than 100 MB, the download must be streamed in chunks. You specify the size of the chunks in bytes using the Range request header. The Content-range response header indicates where in the full resource this partial chunk of data belongs and the total number of bytes in the file. For more information about using these headers, see Retrieving a gzip feed file. In addition to the API, there is an open source Feed SDK written in Java that downloads, combines files into a single file when needed, and unzips the entire feed file. It also lets you specify field filters to curate the items in the file. Note: A successful call will always return a TSV.GZIP file; however, unsuccessful calls generate errors that are returned in JSON format. For documentation purposes, the successful call response is shown below as JSON fields so that the value returned in each column can be explained. The order of the response fields shows the order of the columns in the feed file. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
 
+        :param  : The formats that the client accepts for the response. A successful call will always return a TSV.GZIP file; however, unsuccessful calls generate errors that are returned in JSON format. Default: application/json,text/tab-separated-values (required)
         :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. Note: This value is case sensitive. For example: &nbsp;&nbsp;X-EBAY-C-MARKETPLACE-ID = EBAY_US For a list of supported sites see, API Restrictions. (required)
         :param str range: This header specifies the range in bytes of the chunks of the gzip file being returned. Format: bytes=startpos-endpos For example, the following retrieves the first 10 MBs of the feed file. &nbsp;&nbsp;Range bytes=0-10485760 For more information about using this header, see Retrieving a gzip feed file. Maximum: 100 MB (10MB in the Sandbox) (required)
         :param str feed_scope: Specifies the type of feed file to return. Valid Values: NEWLY_LISTED - Returns the daily Item feed file containing all Good 'Til Cancelled items that were listed on the day specified by the date parameter in the category specified by the category_id parameter. /item?feed_scope=NEWLY_LISTED&amp;category_id=15032&amp;date=20170925 ALL_ACTIVE - Returns the weekly Item Bootstrap feed file containing all the Good 'Til Cancelled items in the category specified by the category_id parameter. Note: Bootstrap files are generated every Tuesday and the file is available on Wednesday. However, the exact time the file is available can vary so we recommend you download the Bootstrap file on Thursday. The items in the file are the items that were in the specified category on Sunday. /item?feed_scope=ALL_ACTIVE&amp;category_id=15032 (required)
@@ -999,18 +967,16 @@ class API:
         :return: ItemResponse
         """
         try:
-            return self._method_single(buy_feed.Configuration, '/buy/feed/v1_beta', buy_feed.ItemApi,
-                                       buy_feed.ApiClient, 'get_item_feed', BuyFeedException, False,
-                                       ['buy.feed', 'item'], (x_ebay_c_marketplace_id, range, feed_scope, category_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(buy_feed.Configuration, '/buy/feed/v1_beta', buy_feed.ItemApi, buy_feed.ApiClient, 'get_item_feed', BuyFeedException, False, ['buy.feed', 'item'], (accept, x_ebay_c_marketplace_id, range, feed_scope, category_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def buy_feed_get_item_group_feed(self, x_ebay_c_marketplace_id, feed_scope, category_id, **kwargs):  # noqa: E501
+    def buy_feed_get_item_group_feed(self, accept, x_ebay_c_marketplace_id, feed_scope, category_id, **kwargs):  # noqa: E501
         """get_item_group_feed  # noqa: E501
 
-        This method lets you download a TSV_GZIP (tab separated value gzip) Item Group feed file. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. There are two types of item group feed files generated: A daily Item Group feed file containing the item group variation information associated with items returned in the Item feed file for a specific day, category, and marketplace. (feed_scope = NEWLY_LISTED) A weekly Item Group Bootstrap feed file containing all the item group variation information associated with items returned in the Item Bootstrap feed file for all the items in a specific category. (feed_scope = ALL_ACTIVE) Note: Filters are applied to the feed files. For details, see Feed File Filters. When curating the items returned, be sure to code as if these filters are not applied as they can be changed or removed in the future. The contents of these feed files are based on the contents of the corresponding daily Item or Item Bootstrap feed file. When a new Item or Item Bootstrap feed file is generated, the service reads the file and if an item in the file has a primaryItemGroupId value, which indicates the item is part of an item group, it uses that value to return the item group (parent item) information for that item in the corresponding Item Group or Item Group Bootstrap feed file. This information includes the name/value pair of the aspects of the items in this group returned in the variesByLocalizedAspects column. For example, if the item was a shirt some of the variation names could be Size, Color, etc. Also the images for the various aspects are returned in the additionalImageUrls column. The first line in any feed file is the header, which labels the columns and indicates the order of the values on each line. Each header is described in the Response fields section. Combining the Item Group and Item feed files The Item Group or Item Group Bootstrap feed file contains details about the item group (parent item), including the item group ID itemGroupId. You match the value of itemGroupId from the Item Group feed file with the value of primaryItemGroupId from the corresponding daily Item or Item Bootstrap feed file. URLs for this method Production URL: https://api.ebay.com/buy/feed/v1_beta/item_group? Sandbox URL: https://api.sandbox.ebay.com/buy/feed/v1_beta/item_group? Downloading feed files Item Group feed files are binary gzip files. If the file is larger than 100 MB, the download must be streamed in chunks. You specify the size of the chunks in bytes using the Range request header. The content-range response header indicates where in the full resource this partial chunk of data belongs and the total number of bytes in the file. For more information about using these headers, see Retrieving a gzip feed file. Note: The response is always only a TSV_GZIP file. However for documentation purposes, the response is shown as JSON fields so that the value returned in each column can be explained. The order of the response fields, shows you the order of the columns in the feed file. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
+        This method lets you download a TSV_GZIP (tab separated value gzip) Item Group feed file. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. There are two types of item group feed files generated: A daily Item Group feed file containing the item group variation information associated with items returned in the Item feed file for a specific day, category, and marketplace. (feed_scope = NEWLY_LISTED) A weekly Item Group Bootstrap feed file containing all the item group variation information associated with items returned in the Item Bootstrap feed file for all the items in a specific category. (feed_scope = ALL_ACTIVE) Note: Filters are applied to the feed files. For details, see Feed File Filters. When curating the items returned, be sure to code as if these filters are not applied as they can be changed or removed in the future. The contents of these feed files are based on the contents of the corresponding daily Item or Item Bootstrap feed file. When a new Item or Item Bootstrap feed file is generated, the service reads the file and if an item in the file has a primaryItemGroupId value, which indicates the item is part of an item group, it uses that value to return the item group (parent item) information for that item in the corresponding Item Group or Item Group Bootstrap feed file. This information includes the name/value pair of the aspects of the items in this group returned in the variesByLocalizedAspects column. For example, if the item was a shirt some of the variation names could be Size, Color, etc. Also the images for the various aspects are returned in the additionalImageUrls column. The first line in any feed file is the header, which labels the columns and indicates the order of the values on each line. Each header is described in the Response fields section. Combining the Item Group and Item feed files The Item Group or Item Group Bootstrap feed file contains details about the item group (parent item), including the item group ID itemGroupId. You match the value of itemGroupId from the Item Group feed file with the value of primaryItemGroupId from the corresponding daily Item or Item Bootstrap feed file. URLs for this method Production URL: https://api.ebay.com/buy/feed/v1_beta/item_group? Sandbox URL: https://api.sandbox.ebay.com/buy/feed/v1_beta/item_group? Downloading feed files Item Group feed files are binary gzip files. If the file is larger than 100 MB, the download must be streamed in chunks. You specify the size of the chunks in bytes using the Range request header. The content-range response header indicates where in the full resource this partial chunk of data belongs and the total number of bytes in the file. For more information about using these headers, see Retrieving a gzip feed file. Note: A successful call will always return a TSV.GZIP file; however, unsuccessful calls generate errors that are returned in JSON format. For documentation purposes, the successful call response is shown below as JSON fields so that the value returned in each column can be explained. The order of the response fields shows the order of the columns in the feed file. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
 
+        :param  : The formats that the client accepts for the response. A successful call will always return a TSV.GZIP file; however, unsuccessful calls generate errors that are returned in JSON format. Default: application/json,text/tab-separated-values (required)
         :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. Note: This value is case sensitive. For example: &nbsp;&nbsp;X-EBAY-C-MARKETPLACE-ID = EBAY_US For a list of supported sites see, API Restrictions. (required)
         :param str feed_scope: Specifies the type of file to return. Valid Values: NEWLY_LISTED - Returns the Item Group feed file containing the item group variation information for items in the daily Item feed file that were associated with an item group. The items in this type of Item feed file are items that were listed on the day specified by the date parameter in the category specified by the category_id parameter. /item_group?feed_scope=NEWLY_LISTED&amp;category_id=15032&amp;date=20170925 ALL_ACTIVE - Returns the weekly Item Group Bootstrap file containing the item group variation information for items in the weekly Item Bootstrap feed file that were associated with an item group. The items are Good 'Til Cancelled items in the category specified by the category_id parameter. Note: Bootstrap files are generated every Tuesday and the file is available on Wednesday. However, the exact time the file is available can vary so we recommend you download the Bootstrap file on Thursday. The item groups in the file are for the items that were in the specified category on Sunday. /item_group?feed_scope=ALL_ACTIVE&amp;category_id=15032 (required)
         :param str category_id: An eBay top-level category ID of the items to be returned in the feed file. The list of eBay category IDs changes over time and category IDs are not the same across all the eBay marketplaces. To get a list of the top-level categories for a marketplaces, you can use the Taxonomy API getCategoryTree method. This method retrieves the complete category tree for the marketplace. The top-level categories are identified by the categoryTreeNodeLevel field. For example: &nbsp;&nbsp;&quot;categoryTreeNodeLevel&quot;: 1 For details see Get Categories for Buy APIs. Restriction: Must be a top-level category (required)
@@ -1019,19 +985,16 @@ class API:
         :return: ItemGroupResponse
         """
         try:
-            return self._method_single(buy_feed.Configuration, '/buy/feed/v1_beta', buy_feed.ItemGroupApi,
-                                       buy_feed.ApiClient, 'get_item_group_feed', BuyFeedException, False,
-                                       ['buy.feed', 'item_group'], (x_ebay_c_marketplace_id, feed_scope, category_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(buy_feed.Configuration, '/buy/feed/v1_beta', buy_feed.ItemGroupApi, buy_feed.ApiClient, 'get_item_group_feed', BuyFeedException, False, ['buy.feed', 'item_group'], (accept, x_ebay_c_marketplace_id, feed_scope, category_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def buy_feed_get_item_priority_feed(self, x_ebay_c_marketplace_id, range, category_id, _date,
-                                        **kwargs):  # noqa: E501
+    def buy_feed_get_item_priority_feed(self, accept, x_ebay_c_marketplace_id, range, category_id, _date, **kwargs):  # noqa: E501
         """get_item_priority_feed  # noqa: E501
 
-        Using this method, you can download a TSV_GZIP (tab separated value gzip) Item Priority feed file, which allows you to track changes (deltas) in the status of your priority items, such as when an item is added or removed from a campaign. The delta feed tracks the changes to the status of items within a category you specify in the input URI. You can also specify a specific date for the feed you want returned. Important: You must consume the daily feeds (Item, Item Group) before consuming the Item Priority feed. This ensures that your inventory is up to date. URLs for this method Production URL: https://api.ebay.com/buy/feed/v1_beta/item_priority? Sandbox URL: https://api.sandbox.ebay.com/buy/feed/v1_beta/item_priority? Downloading feed files Note: Filters are applied to the feed files. For details, see Feed File Filters. When curating the items returned, be sure to code as if these filters are not applied as they can be changed or removed in the future. Priority Item feed files are binary gzip files. If the file is larger than 100 MB, the download must be streamed in chunks. You specify the size of the chunks in bytes using the Range request header. The Content-range response header indicates where in the full resource this partial chunk of data belongs and the total number of bytes in the file. For more information about using these headers, see Retrieving a gzip feed file. In addition to the API, there is an open source Feed SDK written in Java that downloads, combines files into a single file when needed, and unzips the entire feed file. It also lets you specify field filters to curate the items in the file. Note: The response is always a TSV_GZIP file. However for documentation purposes, the response is shown as JSON fields so that the value returned in each column can be explained. The order of the response fields, shows you the order of the columns in the feed file. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
+        Using this method, you can download a TSV_GZIP (tab separated value gzip) Item Priority feed file, which allows you to track changes (deltas) in the status of your priority items, such as when an item is added or removed from a campaign. The delta feed tracks the changes to the status of items within a category you specify in the input URI. You can also specify a specific date for the feed you want returned. Important: You must consume the daily feeds (Item, Item Group) before consuming the Item Priority feed. This ensures that your inventory is up to date. URLs for this method Production URL: https://api.ebay.com/buy/feed/v1_beta/item_priority? Sandbox URL: https://api.sandbox.ebay.com/buy/feed/v1_beta/item_priority? Downloading feed files Note: Filters are applied to the feed files. For details, see Feed File Filters. When curating the items returned, be sure to code as if these filters are not applied as they can be changed or removed in the future. Priority Item feed files are binary gzip files. If the file is larger than 100 MB, the download must be streamed in chunks. You specify the size of the chunks in bytes using the Range request header. The Content-range response header indicates where in the full resource this partial chunk of data belongs and the total number of bytes in the file. For more information about using these headers, see Retrieving a gzip feed file. In addition to the API, there is an open source Feed SDK written in Java that downloads, combines files into a single file when needed, and unzips the entire feed file. It also lets you specify field filters to curate the items in the file. Note: A successful call will always return a TSV.GZIP file; however, unsuccessful calls generate errors that are returned in JSON format. For documentation purposes, the successful call response is shown below as JSON fields so that the value returned in each column can be explained. The order of the response fields shows the order of the columns in the feed file. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
 
+        :param  : The formats that the client accepts for the response. A successful call will always return a TSV.GZIP file; however, unsuccessful calls generate errors that are returned in JSON format. Default: application/json,text/tab-separated-values (required)
         :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. Note: This value is case sensitive. For example: &nbsp;&nbsp;X-EBAY-C-MARKETPLACE-ID = EBAY_US For a list of supported sites see, Buy API Support by Marketplace. (required)
         :param str range: Header specifying content range to be retrieved. Only supported range is bytes. Example : bytes = 0-102400. (required)
         :param str category_id: An eBay top-level category ID of the items to be returned in the feed file. The list of eBay category IDs changes over time and category IDs are not the same across all the eBay marketplaces. To get a list of the top-level categories for a marketplaces, you can use the Taxonomy API getCategoryTree method. This method retrieves the complete category tree for the marketplace. The top-level categories are identified by the categoryTreeNodeLevel field. For example: &nbsp;&nbsp;&quot;categoryTreeNodeLevel&quot;: 1 For details see Get the eBay categories of a marketplace. Restriction: Must be a top-level category (required)
@@ -1039,19 +1002,16 @@ class API:
         :return: ItemPriorityResponse
         """
         try:
-            return self._method_single(buy_feed.Configuration, '/buy/feed/v1_beta', buy_feed.ItemPriorityApi,
-                                       buy_feed.ApiClient, 'get_item_priority_feed', BuyFeedException, False,
-                                       ['buy.feed', 'item_priority'],
-                                       (x_ebay_c_marketplace_id, range, category_id, _date), **kwargs)  # noqa: E501
+            return self._method_single(buy_feed.Configuration, '/buy/feed/v1_beta', buy_feed.ItemPriorityApi, buy_feed.ApiClient, 'get_item_priority_feed', BuyFeedException, False, ['buy.feed', 'item_priority'], (accept, x_ebay_c_marketplace_id, range, category_id, _date), **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def buy_feed_get_item_snapshot_feed(self, x_ebay_c_marketplace_id, range, category_id, snapshot_date,
-                                        **kwargs):  # noqa: E501
+    def buy_feed_get_item_snapshot_feed(self, accept, x_ebay_c_marketplace_id, range, category_id, snapshot_date, **kwargs):  # noqa: E501
         """get_item_snapshot_feed  # noqa: E501
 
-        The Hourly Snapshot feed file is generated each hour every day for most categories. This method lets you download an Hourly Snapshot TSV_GZIP (tab-separated value gzip) feed file containing the details of all the items that have changed within the specified day and hour for a specific category. This means to generate the 8AM file of items that have changed from 8AM and 8:59AM, the service starts at 9AM. You can retrieve the 8AM snapshot file at 10AM. Snapshot feeds now include new listings. You can check itemCreationDate to identify listings that were newly created within the specified hour. Note: Filters are applied to the feed files. For details, see Feed File Filters. When curating the items returned, be sure to code as if these filters are not applied as they can be changed or removed in the future. You can use the response from this method to update the item details of items stored in your database. By looking at the value of itemSnapshotDate for a given item, you will be able to tell which information is the latest. Important: When the value of the availability column is UNAVAILABLE, only the itemId and availability columns are populated. URLs for this method Production URL: https://api.ebay.com/buy/feed/v1_beta/item_snapshot? Sandbox URL: https://api.sandbox.ebay.com/buy/feed/v1_beta/item_snapshot? Downloading feed files Hourly snapshot feed files are binary gzip files. If the file is larger than 100 MB, the download must be streamed in chunks. You specify the size of the chunks in bytes using the Range request header. The Content-range response header indicates where in the full resource this partial chunk of data belongs and the total number of bytes in the file. For more information about using these headers, see Retrieving a gzip feed file. Note: The response is always a TSV_GZIP file. However for documentation purposes, the response is shown as JSON fields so that the value returned in each column can be explained. The order of the response fields, shows you the order of the columns in the feed file. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
+        The Hourly Snapshot feed file is generated each hour every day for most categories. This method lets you download an Hourly Snapshot TSV_GZIP (tab-separated value gzip) feed file containing the details of all the items that have changed within the specified day and hour for a specific category. This means to generate the 8AM file of items that have changed from 8AM and 8:59AM, the service starts at 9AM. You can retrieve the 8AM snapshot file at 10AM. Snapshot feeds now include new listings. You can check itemCreationDate to identify listings that were newly created within the specified hour. Note: Filters are applied to the feed files. For details, see Feed File Filters. When curating the items returned, be sure to code as if these filters are not applied as they can be changed or removed in the future. You can use the response from this method to update the item details of items stored in your database. By looking at the value of itemSnapshotDate for a given item, you will be able to tell which information is the latest. Important: When the value of the availability column is UNAVAILABLE, only the itemId and availability columns are populated. URLs for this method Production URL: https://api.ebay.com/buy/feed/v1_beta/item_snapshot? Sandbox URL: https://api.sandbox.ebay.com/buy/feed/v1_beta/item_snapshot? Downloading feed files Hourly snapshot feed files are binary gzip files. If the file is larger than 100 MB, the download must be streamed in chunks. You specify the size of the chunks in bytes using the Range request header. The Content-range response header indicates where in the full resource this partial chunk of data belongs and the total number of bytes in the file. For more information about using these headers, see Retrieving a gzip feed file. Note: A successful call will always return a TSV.GZIP file; however, unsuccessful calls generate errors that are returned in JSON format. For documentation purposes, the successful call response is shown below as JSON fields so that the value returned in each column can be explained. The order of the response fields shows the order of the columns in the feed file. Restrictions For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
 
+        :param  : The formats that the client accepts for the response. A successful call will always return a TSV.GZIP file; however, unsuccessful calls generate errors that are returned in JSON format. Default: application/json,text/tab-separated-values (required)
         :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. Note: This value is case sensitive. For example: &nbsp;&nbsp;X-EBAY-C-MARKETPLACE-ID = EBAY_US For a list of supported sites see, API Restrictions. (required)
         :param str range: This header specifies the range in bytes of the chunks of the gzip file being returned. Format: bytes=startpos-endpos For example, the following retrieves the first 10 MBs of the feed file. &nbsp;&nbsp;Range bytes=0-10485760 For more information about using this header, see Retrieving a gzip feed file. Maximum: 100 MB (10MB in the Sandbox) (required)
         :param str category_id: An eBay top-level category ID of the items to be returned in the feed file. The list of eBay category IDs changes over time and category IDs are not the same across all the eBay marketplaces. To get a list of the top-level categories for a marketplace, you can use the Taxonomy API getCategoryTree method. This method retrieves the complete category tree for the marketplace. The top-level categories are identified by the categoryTreeNodeLevel field. For example: &nbsp;&nbsp;&quot;categoryTreeNodeLevel&quot;: 1 For details see Get Categories for Buy APIs. Restriction: Must be a top-level category (required)
@@ -1059,11 +1019,7 @@ class API:
         :return: ItemSnapshotResponse
         """
         try:
-            return self._method_single(buy_feed.Configuration, '/buy/feed/v1_beta', buy_feed.ItemSnapshotApi,
-                                       buy_feed.ApiClient, 'get_item_snapshot_feed', BuyFeedException, False,
-                                       ['buy.feed', 'item_snapshot'],
-                                       (x_ebay_c_marketplace_id, range, category_id, snapshot_date),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(buy_feed.Configuration, '/buy/feed/v1_beta', buy_feed.ItemSnapshotApi, buy_feed.ApiClient, 'get_item_snapshot_feed', BuyFeedException, False, ['buy.feed', 'item_snapshot'], (accept, x_ebay_c_marketplace_id, range, category_id, snapshot_date), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1079,10 +1035,7 @@ class API:
         :return: BestSellingProductResponse
         """
         try:
-            return self._method_single(buy_marketing.Configuration, '/buy/marketing/v1_beta',
-                                       buy_marketing.MerchandisedProductApi, buy_marketing.ApiClient,
-                                       'get_also_bought_by_product', BuyMarketingException, False,
-                                       ['buy.marketing', 'merchandised_product'], None, **kwargs)  # noqa: E501
+            return self._method_single(buy_marketing.Configuration, '/buy/marketing/v1_beta', buy_marketing.MerchandisedProductApi, buy_marketing.ApiClient, 'get_also_bought_by_product', BuyMarketingException, False, ['buy.marketing', 'merchandised_product'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1098,10 +1051,7 @@ class API:
         :return: BestSellingProductResponse
         """
         try:
-            return self._method_single(buy_marketing.Configuration, '/buy/marketing/v1_beta',
-                                       buy_marketing.MerchandisedProductApi, buy_marketing.ApiClient,
-                                       'get_also_viewed_by_product', BuyMarketingException, False,
-                                       ['buy.marketing', 'merchandised_product'], None, **kwargs)  # noqa: E501
+            return self._method_single(buy_marketing.Configuration, '/buy/marketing/v1_beta', buy_marketing.MerchandisedProductApi, buy_marketing.ApiClient, 'get_also_viewed_by_product', BuyMarketingException, False, ['buy.marketing', 'merchandised_product'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1117,11 +1067,7 @@ class API:
         :return: BestSellingProductResponse
         """
         try:
-            return self._method_single(buy_marketing.Configuration, '/buy/marketing/v1_beta',
-                                       buy_marketing.MerchandisedProductApi, buy_marketing.ApiClient,
-                                       'get_merchandised_products', BuyMarketingException, False,
-                                       ['buy.marketing', 'merchandised_product'], (category_id, metric_name),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(buy_marketing.Configuration, '/buy/marketing/v1_beta', buy_marketing.MerchandisedProductApi, buy_marketing.ApiClient, 'get_merchandised_products', BuyMarketingException, False, ['buy.marketing', 'merchandised_product'], (category_id, metric_name), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1143,10 +1089,7 @@ class API:
         :return: SalesHistoryPagedCollection
         """
         try:
-            return self._method_paged(buy_marketplace_insights.Configuration, '/buy/marketplace_insights/v1_beta',
-                                      buy_marketplace_insights.ItemSalesApi, buy_marketplace_insights.ApiClient,
-                                      'search', BuyMarketplaceInsightsException, False,
-                                      ['buy.marketplace.insights', 'item_sales'], None, **kwargs)  # noqa: E501
+            return self._method_paged(buy_marketplace_insights.Configuration, '/buy/marketplace_insights/v1_beta', buy_marketplace_insights.ItemSalesApi, buy_marketplace_insights.ApiClient, 'search', BuyMarketplaceInsightsException, False, ['buy.marketplace.insights', 'item_sales'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1160,10 +1103,7 @@ class API:
         :return: Bidding
         """
         try:
-            return self._method_single(buy_offer.Configuration, '/buy/offer/v1_beta', buy_offer.BiddingApi,
-                                       buy_offer.ApiClient, 'get_bidding', BuyOfferException, True,
-                                       ['buy.offer', 'bidding'], (item_id, x_ebay_c_marketplace_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(buy_offer.Configuration, '/buy/offer/v1_beta', buy_offer.BiddingApi, buy_offer.ApiClient, 'get_bidding', BuyOfferException, True, ['buy.offer', 'bidding'], (item_id, x_ebay_c_marketplace_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1178,10 +1118,7 @@ class API:
         :return: PlaceProxyBidResponse
         """
         try:
-            return self._method_single(buy_offer.Configuration, '/buy/offer/v1_beta', buy_offer.BiddingApi,
-                                       buy_offer.ApiClient, 'place_proxy_bid', BuyOfferException, True,
-                                       ['buy.offer', 'bidding'], (x_ebay_c_marketplace_id, item_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(buy_offer.Configuration, '/buy/offer/v1_beta', buy_offer.BiddingApi, buy_offer.ApiClient, 'place_proxy_bid', BuyOfferException, True, ['buy.offer', 'bidding'], (x_ebay_c_marketplace_id, item_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1196,15 +1133,11 @@ class API:
         :return: GuestCheckoutSessionResponseV2
         """
         try:
-            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi,
-                                       buy_order.ApiClient, 'apply_guest_coupon', BuyOrderException, False,
-                                       ['buy.order', 'guest_checkout_session'],
-                                       (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi, buy_order.ApiClient, 'apply_guest_coupon', BuyOrderException, False, ['buy.order', 'guest_checkout_session'], (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def buy_order_get_guest_checkout_session(self, checkout_session_id, x_ebay_c_marketplace_id,
-                                             **kwargs):  # noqa: E501
+    def buy_order_get_guest_checkout_session(self, checkout_session_id, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """get_guest_checkout_session  # noqa: E501
 
         Note: This version of the Order API (v2) currently only supports the guest payment flow for eBay managed payments. To view the v1_beta version of the Order API, which includes both member and guest checkout payment flows, refer to the Order_v1 API documentation. (Limited Release) This method is only available to select developers approved by business units. This method returns the details of the specified guest checkout session. The checkoutSessionId is passed in as a URI parameter and is required. This method has no request payload. For a list of supported sites and other restrictions, see API Restrictions in the Order API overview. The URLs for this method are: Production URL: https://apix.ebay.com/buy/order/v2/guest_checkout_session/{checkoutSessionId} Sandbox URL: https://apix.sandbox.ebay.com/buy/order/v2/guest_checkout_session/{checkoutSessionId}  # noqa: E501
@@ -1214,10 +1147,7 @@ class API:
         :return: GuestCheckoutSessionResponseV2
         """
         try:
-            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi,
-                                       buy_order.ApiClient, 'get_guest_checkout_session', BuyOrderException, False,
-                                       ['buy.order', 'guest_checkout_session'],
-                                       (checkout_session_id, x_ebay_c_marketplace_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi, buy_order.ApiClient, 'get_guest_checkout_session', BuyOrderException, False, ['buy.order', 'guest_checkout_session'], (checkout_session_id, x_ebay_c_marketplace_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1232,10 +1162,7 @@ class API:
         :return: GuestCheckoutSessionResponseV2
         """
         try:
-            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi,
-                                       buy_order.ApiClient, 'initiate_guest_checkout_session', BuyOrderException, False,
-                                       ['buy.order', 'guest_checkout_session'], x_ebay_c_marketplace_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi, buy_order.ApiClient, 'initiate_guest_checkout_session', BuyOrderException, False, ['buy.order', 'guest_checkout_session'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1250,10 +1177,7 @@ class API:
         :return: GuestCheckoutSessionResponseV2
         """
         try:
-            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi,
-                                       buy_order.ApiClient, 'remove_guest_coupon', BuyOrderException, False,
-                                       ['buy.order', 'guest_checkout_session'],
-                                       (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi, buy_order.ApiClient, 'remove_guest_coupon', BuyOrderException, False, ['buy.order', 'guest_checkout_session'], (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1268,15 +1192,11 @@ class API:
         :return: GuestCheckoutSessionResponseV2
         """
         try:
-            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi,
-                                       buy_order.ApiClient, 'update_guest_quantity', BuyOrderException, False,
-                                       ['buy.order', 'guest_checkout_session'],
-                                       (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi, buy_order.ApiClient, 'update_guest_quantity', BuyOrderException, False, ['buy.order', 'guest_checkout_session'], (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def buy_order_update_guest_shipping_address(self, x_ebay_c_marketplace_id, checkout_session_id,
-                                                **kwargs):  # noqa: E501
+    def buy_order_update_guest_shipping_address(self, x_ebay_c_marketplace_id, checkout_session_id, **kwargs):  # noqa: E501
         """update_guest_shipping_address  # noqa: E501
 
         Note: This version of the Order API (v2) currently only supports the guest payment flow for eBay managed payments. To view the v1_beta version of the Order API, which includes both member and guest checkout payment flows, refer to the Order_v1 API documentation. (Limited Release) This method is only available to select developers approved by business units. This method changes the shipping address for the order in an eBay guest checkout session. All the line items in an order must be shipped to the same address, but the shipping method can be specific to the line item. Note: If the address submitted cannot be validated, a warning message will be returned. This does not prevent the method from executing, but you may want to verify the address. For a list of supported sites and other restrictions, see API Restrictions in the Order API overview. The URLs for this method are: Production URL: https://apix.ebay.com/buy/order/v2/guest_checkout_session/{checkoutSessionId}/update_shipping_address Sandbox URL: https://apix.sandbox.ebay.com/buy/order/v2/guest_checkout_session/{checkoutSessionId}/update_shipping_address  # noqa: E501
@@ -1287,15 +1207,11 @@ class API:
         :return: GuestCheckoutSessionResponseV2
         """
         try:
-            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi,
-                                       buy_order.ApiClient, 'update_guest_shipping_address', BuyOrderException, False,
-                                       ['buy.order', 'guest_checkout_session'],
-                                       (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi, buy_order.ApiClient, 'update_guest_shipping_address', BuyOrderException, False, ['buy.order', 'guest_checkout_session'], (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def buy_order_update_guest_shipping_option(self, x_ebay_c_marketplace_id, checkout_session_id,
-                                               **kwargs):  # noqa: E501
+    def buy_order_update_guest_shipping_option(self, x_ebay_c_marketplace_id, checkout_session_id, **kwargs):  # noqa: E501
         """update_guest_shipping_option  # noqa: E501
 
         Note: This version of the Order API (v2) currently only supports the guest payment flow for eBay managed payments. To view the v1_beta version of the Order API, which includes both member and guest checkout payment flows, refer to the Order_v1 API documentation. (Limited Release) This method is only available to select developers approved by business units. This method changes the shipping method for the specified line item in an eBay guest checkout session. The shipping option can be set for each line item. This gives the shopper the ability choose the cost of shipping for each line item. For a list of supported sites and other restrictions, see API Restrictions in the Order API overview. The URLs for this method are: Production URL: https://apix.ebay.com/buy/order/v2/guest_checkout_session/{checkoutSessionId}/update_shipping_option Sandbox URL: https://apix.sandbox.ebay.com/buy/order/v2/guest_checkout_session/{checkoutSessionId}/update_shipping_option  # noqa: E501
@@ -1306,10 +1222,7 @@ class API:
         :return: GuestCheckoutSessionResponseV2
         """
         try:
-            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi,
-                                       buy_order.ApiClient, 'update_guest_shipping_option', BuyOrderException, False,
-                                       ['buy.order', 'guest_checkout_session'],
-                                       (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
+            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestCheckoutSessionApi, buy_order.ApiClient, 'update_guest_shipping_option', BuyOrderException, False, ['buy.order', 'guest_checkout_session'], (x_ebay_c_marketplace_id, checkout_session_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1322,9 +1235,7 @@ class API:
         :return: GuestPurchaseOrderV2
         """
         try:
-            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestPurchaseOrderApi,
-                                       buy_order.ApiClient, 'get_guest_purchase_order', BuyOrderException, False,
-                                       ['buy.order', 'guest_purchase_order'], purchase_order_id, **kwargs)  # noqa: E501
+            return self._method_single(buy_order.Configuration, '/buy/order/v2', buy_order.GuestPurchaseOrderApi, buy_order.ApiClient, 'get_guest_purchase_order', BuyOrderException, False, ['buy.order', 'guest_purchase_order'], purchase_order_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1337,10 +1248,7 @@ class API:
         :return: Product
         """
         try:
-            return self._method_single(commerce_catalog.Configuration, '/commerce/catalog/v1_beta',
-                                       commerce_catalog.ProductApi, commerce_catalog.ApiClient, 'get_product',
-                                       CommerceCatalogException, True, ['commerce.catalog', 'product'], epid,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(commerce_catalog.Configuration, '/commerce/catalog/v1_beta', commerce_catalog.ProductApi, commerce_catalog.ApiClient, 'get_product', CommerceCatalogException, True, ['commerce.catalog', 'product'], epid, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1360,10 +1268,7 @@ class API:
         :return: ProductSearchResponse
         """
         try:
-            return self._method_paged(commerce_catalog.Configuration, '/commerce/catalog/v1_beta',
-                                      commerce_catalog.ProductSummaryApi, commerce_catalog.ApiClient, 'search',
-                                      CommerceCatalogException, True, ['commerce.catalog', 'product_summary'], None,
-                                      **kwargs)  # noqa: E501
+            return self._method_paged(commerce_catalog.Configuration, '/commerce/catalog/v1_beta', commerce_catalog.ProductSummaryApi, commerce_catalog.ApiClient, 'search', CommerceCatalogException, True, ['commerce.catalog', 'product_summary'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1377,15 +1282,11 @@ class API:
         :return: CharityOrg
         """
         try:
-            return self._method_single(commerce_charity.Configuration, '/commerce/charity/v1',
-                                       commerce_charity.CharityOrgApi, commerce_charity.ApiClient, 'get_charity_org',
-                                       CommerceCharityException, False, ['commerce.charity', 'charity_org'],
-                                       (charity_org_id, x_ebay_c_marketplace_id), **kwargs)  # noqa: E501
+            return self._method_single(commerce_charity.Configuration, '/commerce/charity/v1', commerce_charity.CharityOrgApi, commerce_charity.ApiClient, 'get_charity_org', CommerceCharityException, False, ['commerce.charity', 'charity_org'], (charity_org_id, x_ebay_c_marketplace_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def commerce_charity_get_charity_org_by_legacy_id(self, x_ebay_c_marketplace_id, legacy_charity_org_id,
-                                                      **kwargs):  # noqa: E501
+    def commerce_charity_get_charity_org_by_legacy_id(self, x_ebay_c_marketplace_id, legacy_charity_org_id, **kwargs):  # noqa: E501
         """get_charity_org_by_legacy_id  # noqa: E501
 
         This call allows users to retrieve the details for a specific charitable organization using its legacy charity ID, which has also been referred to as the charity number, external ID, and PayPal Giving Fund ID. The legacy charity ID&nbsp;is separate from eBay&rsquo;s generic charity ID.  # noqa: E501
@@ -1395,11 +1296,7 @@ class API:
         :return: CharityOrg
         """
         try:
-            return self._method_single(commerce_charity.Configuration, '/commerce/charity/v1',
-                                       commerce_charity.CharityOrgApi, commerce_charity.ApiClient,
-                                       'get_charity_org_by_legacy_id', CommerceCharityException, False,
-                                       ['commerce.charity', 'charity_org'],
-                                       (x_ebay_c_marketplace_id, legacy_charity_org_id), **kwargs)  # noqa: E501
+            return self._method_single(commerce_charity.Configuration, '/commerce/charity/v1', commerce_charity.CharityOrgApi, commerce_charity.ApiClient, 'get_charity_org_by_legacy_id', CommerceCharityException, False, ['commerce.charity', 'charity_org'], (x_ebay_c_marketplace_id, legacy_charity_org_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1416,10 +1313,7 @@ class API:
         :return: CharitySearchResponse
         """
         try:
-            return self._method_paged(commerce_charity.Configuration, '/commerce/charity/v1',
-                                      commerce_charity.CharityOrgApi, commerce_charity.ApiClient, 'get_charity_orgs',
-                                      CommerceCharityException, False, ['commerce.charity', 'charity_org'],
-                                      x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+            return self._method_paged(commerce_charity.Configuration, '/commerce/charity/v1', commerce_charity.CharityOrgApi, commerce_charity.ApiClient, 'get_charity_orgs', CommerceCharityException, False, ['commerce.charity', 'charity_org'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1431,10 +1325,7 @@ class API:
         :return: UserResponse
         """
         try:
-            return self._method_single(commerce_identity.Configuration, '/commerce/identity/v1',
-                                       commerce_identity.UserApi, commerce_identity.ApiClient, 'get_user',
-                                       CommerceIdentityException, True, ['commerce.identity', 'user'], None,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(commerce_identity.Configuration, '/commerce/identity/v1', commerce_identity.UserApi, commerce_identity.ApiClient, 'get_user', CommerceIdentityException, True, ['commerce.identity', 'user'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1446,10 +1337,7 @@ class API:
         :return: Config
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
-                                       commerce_notification.ConfigApi, commerce_notification.ApiClient, 'get_config',
-                                       CommerceNotificationException, False, ['commerce.notification', 'config'], None,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.ConfigApi, commerce_notification.ApiClient, 'get_config', CommerceNotificationException, False, ['commerce.notification', 'config'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1462,42 +1350,33 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
-                                       commerce_notification.ConfigApi, commerce_notification.ApiClient,
-                                       'update_config', CommerceNotificationException, False,
-                                       ['commerce.notification', 'config'], None, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.ConfigApi, commerce_notification.ApiClient, 'update_config', CommerceNotificationException, False, ['commerce.notification', 'config'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def commerce_notification_create_destination(self, **kwargs):  # noqa: E501
         """create_destination  # noqa: E501
 
-        This method allows applications to create a destination. A destination is an endpoint that receives HTTP push notifications. A single destination for all topics is valid, as is individual destinations for each topic. To update a destination, use the updateDestination call. The destination created will need to be referenced while creating or updating a subscription to a topic. Note: The destination should be created and ready to respond with the expected challengeResponse for the endpoint to be registered successfully. Refer to the Notification API overview for more information.  # noqa: E501
+        This method allows applications to create a destination. A destination is an endpoint that receives HTTP push notifications.<br /><br />A single destination for all topics is valid, as is individual destinations for each topic.<br /><br />To update a destination, use the <strong>updateDestination</strong> call.<br /><br />The destination created will need to be referenced while creating or updating a subscription to a topic.<br/><br/><span class=\"tablenote\"><b>Note:</b> The destination should be created and ready to respond with the expected <b>challengeResponse</b> for the endpoint to be registered successfully. Refer to the <a href=\"/api-docs/commerce/notification/overview.html\">Notification API overview</a> for more information.</span>  # noqa: E501
 
         :param DestinationRequest body: The create destination request.
         :return: object
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
-                                       commerce_notification.DestinationApi, commerce_notification.ApiClient,
-                                       'create_destination', CommerceNotificationException, False,
-                                       ['commerce.notification', 'destination'], None, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.DestinationApi, commerce_notification.ApiClient, 'create_destination', CommerceNotificationException, False, ['commerce.notification', 'destination'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def commerce_notification_delete_destination(self, destination_id, **kwargs):  # noqa: E501
         """delete_destination  # noqa: E501
 
-        This method provides applications a way to delete a destination. The same destination ID can be used by many destinations. Trying to delete an active destination results in an error. You can disable a subscription, and when the destination is no longer in use, you can delete it.  # noqa: E501
+        This method provides applications a way to delete a destination.<br /><br />The same destination ID can be used by many destinations.<br /><br />Trying to delete an active destination results in an error. You can disable a subscription, and when the destination is no longer in use, you can delete it.  # noqa: E501
 
         :param str destination_id: The unique identifier for the destination. (required)
         :return: None
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
-                                       commerce_notification.DestinationApi, commerce_notification.ApiClient,
-                                       'delete_destination', CommerceNotificationException, False,
-                                       ['commerce.notification', 'destination'], destination_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.DestinationApi, commerce_notification.ApiClient, 'delete_destination', CommerceNotificationException, False, ['commerce.notification', 'destination'], destination_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1510,10 +1389,7 @@ class API:
         :return: Destination
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
-                                       commerce_notification.DestinationApi, commerce_notification.ApiClient,
-                                       'get_destination', CommerceNotificationException, False,
-                                       ['commerce.notification', 'destination'], destination_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.DestinationApi, commerce_notification.ApiClient, 'get_destination', CommerceNotificationException, False, ['commerce.notification', 'destination'], destination_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1522,64 +1398,52 @@ class API:
 
         This method allows applications to retrieve a paginated collection of destination resources and related details. The details include the destination names, statuses, and configurations, including the endpoints and verification tokens.  # noqa: E501
 
-        :param str limit: The number of items, from the result set, returned in a single page. Range is from 10-100. If this parameter is omitted, the default value is used. Default: 20 Maximum: 100 items per page
+        :param str limit: The number of items, from the result set, returned in a single page. Range is from 10-100. If this parameter is omitted, the default value is used.<br/><br/><b>Default:</b> 20<br/><br/><b>Maximum:</b> 100 items per page
         :param str continuation_token: The continuation token for the next set of results.
         :return: DestinationSearchResponse
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
-                                       commerce_notification.DestinationApi, commerce_notification.ApiClient,
-                                       'get_destinations', CommerceNotificationException, False,
-                                       ['commerce.notification', 'destination'], None, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.DestinationApi, commerce_notification.ApiClient, 'get_destinations', CommerceNotificationException, False, ['commerce.notification', 'destination'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def commerce_notification_update_destination(self, destination_id, **kwargs):  # noqa: E501
         """update_destination  # noqa: E501
 
-        This method allows applications to update a destination. Note: The destination should be created and ready to respond with the expected challengeResponse for the endpoint to be registered successfully. Refer to the Notification API overview for more information.  # noqa: E501
+        This method allows applications to update a destination.<br/><br/><span class=\"tablenote\"><b>Note:</b> The destination should be created and ready to respond with the expected <b>challengeResponse</b> for the endpoint to be registered successfully. Refer to the <a href=\"/api-docs/commerce/notification/overview.html\">Notification API overview</a> for more information.</span>  # noqa: E501
 
         :param str destination_id: The unique identifier for the destination. (required)
         :param DestinationRequest body: The create subscription request.
         :return: None
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
-                                       commerce_notification.DestinationApi, commerce_notification.ApiClient,
-                                       'update_destination', CommerceNotificationException, False,
-                                       ['commerce.notification', 'destination'], destination_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.DestinationApi, commerce_notification.ApiClient, 'update_destination', CommerceNotificationException, False, ['commerce.notification', 'destination'], destination_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def commerce_notification_get_public_key(self, public_key_id, **kwargs):  # noqa: E501
         """get_public_key  # noqa: E501
 
-        This method allows users to retrieve a public key using a specified key ID. The public key that is returned in the response payload is used to process and validate eBay notifications. The public key ID, which is a required request parameter for this method, is retrieved from the Base64-encoded X-EBAY-SIGNATURE header that is included in the eBay notification. Note: For more details about how to process eBay push notifications and validate notification message payloads, see the Notification API overview.  # noqa: E501
+        This method allows users to retrieve a public key using a specified key ID. The public key that is returned in the response payload is used to process and validate eBay notifications.<br /><br />The public key ID, which is a required request parameter for this method, is retrieved from the Base64-encoded <b>X-EBAY-SIGNATURE</b> header that is included in the eBay notification.<br /><br /><span class=\"tablenote\"><b>Note:</b> For more details about how to process eBay push notifications and validate notification message payloads, see the <a href=\"/api-docs/commerce/notification/overview.html\">Notification API overview</a>.</span>  # noqa: E501
 
-        :param str public_key_id: The unique key ID that is used to retrieve the public key. Note: This is retrieved from the X-EBAY-SIGNATURE header that is included with the push notification. (required)
+        :param str public_key_id: The unique key ID that is used to retrieve the public key.<br /><br /><span class=\"tablenote\"><b>Note: </b>This is retrieved from the <b>X-EBAY-SIGNATURE</b> header that is included with the push notification.</span> (required)
         :return: PublicKey
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
-                                       commerce_notification.PublicKeyApi, commerce_notification.ApiClient,
-                                       'get_public_key', CommerceNotificationException, False,
-                                       ['commerce.notification', 'public_key'], public_key_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.PublicKeyApi, commerce_notification.ApiClient, 'get_public_key', CommerceNotificationException, False, ['commerce.notification', 'public_key'], public_key_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def commerce_notification_create_subscription(self, **kwargs):  # noqa: E501
         """create_subscription  # noqa: E501
 
-        This method allows applications to create a subscription for a topic and supported schema version. Subscriptions allow applications to express interest in notifications and keep receiving the information relevant to their business. Each application and topic-schema pairing to a subscription should have a 1:1 cardinality. You can create the subscription in disabled mode, test it (see the test method), and when everything is ready, you can enable the subscription (see the enableSubscription method). Note: If an application is not authorized to subscribe to a topic, for example, if your authorization does not include the list of scopes required for the topic, an error code of 195011 is returned.  # noqa: E501
+        This method allows applications to create a subscription for a topic and supported schema version. Subscriptions allow applications to express interest in notifications and keep receiving the information relevant to their business.<br/><br/>Each application and topic-schema pairing to a subscription should have a 1:1 cardinality.<br/><br/>You can create the subscription in disabled mode, test it (see the <b>test</b> method), and when everything is ready, you can enable the subscription (see the <b>enableSubscription</b> method).<br /><br /><span class=\"tablenote\"><b>Note:</b> If an application is not authorized to subscribe to a topic, for example, if your authorization does not include the list of scopes required for the topic, an error code of 195011 is returned.</span>  # noqa: E501
 
         :param CreateSubscriptionRequest body: The create subscription request.
         :return: object
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
-                                       commerce_notification.SubscriptionApi, commerce_notification.ApiClient,
-                                       'create_subscription', CommerceNotificationException, False,
-                                       ['commerce.notification', 'subscription'], None, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'create_subscription', CommerceNotificationException, False, ['commerce.notification', 'subscription'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1592,146 +1456,114 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
-                                       commerce_notification.SubscriptionApi, commerce_notification.ApiClient,
-                                       'delete_subscription', CommerceNotificationException, False,
-                                       ['commerce.notification', 'subscription'], subscription_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'delete_subscription', CommerceNotificationException, False, ['commerce.notification', 'subscription'], subscription_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def commerce_notification_disable_subscription(self, subscription_id, **kwargs):  # noqa: E501
         """disable_subscription  # noqa: E501
 
-        This method disables a subscription, which prevents the subscription from providing notifications. To restart a subscription, call enableSubscription.  # noqa: E501
+        This method disables a subscription, which prevents the subscription from providing notifications. To restart a subscription, call <strong>enableSubscription</strong>.  # noqa: E501
 
         :param str subscription_id: The unique identifier for the subscription. (required)
         :return: None
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
-                                       commerce_notification.SubscriptionApi, commerce_notification.ApiClient,
-                                       'disable_subscription', CommerceNotificationException, False,
-                                       ['commerce.notification', 'subscription'], subscription_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'disable_subscription', CommerceNotificationException, False, ['commerce.notification', 'subscription'], subscription_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def commerce_notification_enable_subscription(self, subscription_id, **kwargs):  # noqa: E501
         """enable_subscription  # noqa: E501
 
-        This method allows applications to enable a disabled subscription. To pause (or disable) an enabled subscription, call disableSubscription.  # noqa: E501
+        This method allows applications to enable a disabled subscription. To pause (or disable) an enabled subscription, call <strong>disableSubscription</strong>.  # noqa: E501
 
         :param str subscription_id: The unique identifier for the subscription. (required)
         :return: None
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
-                                       commerce_notification.SubscriptionApi, commerce_notification.ApiClient,
-                                       'enable_subscription', CommerceNotificationException, False,
-                                       ['commerce.notification', 'subscription'], subscription_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'enable_subscription', CommerceNotificationException, False, ['commerce.notification', 'subscription'], subscription_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def commerce_notification_get_subscription(self, subscription_id, **kwargs):  # noqa: E501
         """get_subscription  # noqa: E501
 
-        This method allows applications to retrieve subscription details for the specified subscription. Specify the subscription to retrieve using the subscription_id. Use the getSubscriptions method to browse all subscriptions if you do not know the subscription_id. Subscriptions allow applications to express interest in notifications and keep receiving the information relevant to their business.  # noqa: E501
+        This method allows applications to retrieve subscription details for the specified subscription.<br /><br />Specify the subscription to retrieve using the <strong>subscription_id</strong>. Use the <strong>getSubscriptions</strong> method to browse all subscriptions if you do not know the <strong>subscription_id</strong>.<br /><br />Subscriptions allow applications to express interest in notifications and keep receiving the information relevant to their business.  # noqa: E501
 
         :param str subscription_id: The unique identifier for the subscription. (required)
         :return: Subscription
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
-                                       commerce_notification.SubscriptionApi, commerce_notification.ApiClient,
-                                       'get_subscription', CommerceNotificationException, False,
-                                       ['commerce.notification', 'subscription'], subscription_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'get_subscription', CommerceNotificationException, False, ['commerce.notification', 'subscription'], subscription_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def commerce_notification_get_subscriptions(self, **kwargs):  # noqa: E501
         """get_subscriptions  # noqa: E501
 
-        This method allows applications to retrieve a list of all subscriptions. The list returned is a paginated collection of subscription resources. Subscriptions allow applications to express interest in notifications and keep receiving the information relevant to their business.  # noqa: E501
+        This method allows applications to retrieve a list of all subscriptions. The list returned is a paginated collection of subscription resources.<br /><br />Subscriptions allow applications to express interest in notifications and keep receiving the information relevant to their business.  # noqa: E501
 
-        :param str limit: The number of items, from the result set, returned in a single page. Range is from 10-100. If this parameter is omitted, the default value is used. Default: 20 Maximum: 100 items per page
+        :param str limit: The number of items, from the result set, returned in a single page. Range is from 10-100. If this parameter is omitted, the default value is used.<br/><br/><b>Default:</b> 20<br/><br/><b>Maximum:</b> 100 items per page
         :param str continuation_token: The continuation token for the next set of results.
         :return: SubscriptionSearchResponse
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
-                                       commerce_notification.SubscriptionApi, commerce_notification.ApiClient,
-                                       'get_subscriptions', CommerceNotificationException, False,
-                                       ['commerce.notification', 'subscription'], None, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'get_subscriptions', CommerceNotificationException, False, ['commerce.notification', 'subscription'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def commerce_notification_test(self, subscription_id, **kwargs):  # noqa: E501
         """test  # noqa: E501
 
-        This method triggers a mocked test payload that includes a notification ID, publish date, and so on. Use this method to test your subscription end-to-end. You can create the subscription in disabled mode, test it using this method, and when everything is ready, you can enable the subscription (see the enableSubscription method). Note: Use the notificationId to tell the difference between a test payload and a real payload.  # noqa: E501
+        This method triggers a mocked test payload that includes a notification ID, publish date, and so on. Use this method to test your subscription end-to-end.<br /><br />You can create the subscription in disabled mode, test it using this method, and when everything is ready, you can enable the subscription (see the <strong>enableSubscription</strong> method).<br /><br /><span class=\"tablenote\"><b>Note:</b> Use the <strong>notificationId</strong> to tell the difference between a test payload and a real payload.</span>  # noqa: E501
 
         :param str subscription_id: The unique identifier for the subscription. (required)
         :return: None
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
-                                       commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'test',
-                                       CommerceNotificationException, False, ['commerce.notification', 'subscription'],
-                                       subscription_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'test', CommerceNotificationException, False, ['commerce.notification', 'subscription'], subscription_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def commerce_notification_update_subscription(self, subscription_id, **kwargs):  # noqa: E501
         """update_subscription  # noqa: E501
 
-        This method allows applications to update a subscription. Subscriptions allow applications to express interest in notifications and keep receiving the information relevant to their business. Note: This call returns an error if an application is not authorized to subscribe to a topic. You can pause and restart a subscription. See the disableSubscription and enableSubscription methods.  # noqa: E501
+        This method allows applications to update a subscription. Subscriptions allow applications to express interest in notifications and keep receiving the information relevant to their business.<br /><br /><span class=\"tablenote\"><b>Note:</b> This call returns an error if an application is not authorized to subscribe to a topic.</span><br/><br/>You can pause and restart a subscription. See the <b>disableSubscription</b> and <b>enableSubscription</b> methods.  # noqa: E501
 
         :param str subscription_id: The unique identifier for the subscription. (required)
         :param UpdateSubscriptionRequest body: The create subscription request.
         :return: None
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
-                                       commerce_notification.SubscriptionApi, commerce_notification.ApiClient,
-                                       'update_subscription', CommerceNotificationException, False,
-                                       ['commerce.notification', 'subscription'], subscription_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.SubscriptionApi, commerce_notification.ApiClient, 'update_subscription', CommerceNotificationException, False, ['commerce.notification', 'subscription'], subscription_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def commerce_notification_get_topic(self, topic_id, **kwargs):  # noqa: E501
         """get_topic  # noqa: E501
 
-        This method allows applications to retrieve details for the specified topic. This information includes supported schema versions, formats, and other metadata for the topic. Applications can subscribe to any of the topics for a supported schema version and format, limited by the authorization scopes required to subscribe to the topic. A topic specifies the type of information to be received and the data types associated with an event. An event occurs in the eBay system, such as when a user requests deletion or revokes access for an application. An event is an instance of an event type (topic). Specify the topic to retrieve using the topic_id URI parameter. Note: Use the getTopics method to find a topic if you do not know the topic ID.  # noqa: E501
+        This method allows applications to retrieve details for the specified topic. This information includes supported schema versions, formats, and other metadata for the topic.<br /><br />Applications can subscribe to any of the topics for a supported schema version and format, limited by the authorization scopes required to subscribe to the topic.<br /><br />A topic specifies the type of information to be received and the data types associated with an event. An event occurs in the eBay system, such as when a user requests deletion or revokes access for an application. An event is an instance of an event type (topic).<br /><br />Specify the topic to retrieve using the <b>topic_id</b> URI parameter.<br /><br /><span class=\"tablenote\"><b>Note:</b> Use the <a href=\"/api-docs/commerce/notification/resources/topic/methods/getTopics\">getTopics</a> method to find a topic if you do not know the topic ID.</span>  # noqa: E501
 
         :param str topic_id: The ID of the topic for which to retrieve the details. (required)
         :return: Topic
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
-                                       commerce_notification.TopicApi, commerce_notification.ApiClient, 'get_topic',
-                                       CommerceNotificationException, False, ['commerce.notification', 'topic'],
-                                       topic_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.TopicApi, commerce_notification.ApiClient, 'get_topic', CommerceNotificationException, False, ['commerce.notification', 'topic'], topic_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def commerce_notification_get_topics(self, **kwargs):  # noqa: E501
         """get_topics  # noqa: E501
 
-        This method returns a paginated collection of all supported topics, along with the details for the topics. This information includes supported schema versions, formats, and other metadata for the topics. Applications can subscribe to any of the topics for a supported schema version and format, limited by the authorization scopes required to subscribe to the topic. A topic specifies the type of information to be received and the data types associated with an event. An event occurs in the eBay system, such as when a user requests deletion or revokes access for an application. An event is an instance of an event type (topic).  # noqa: E501
+        This method returns a paginated collection of all supported topics, along with the details for the topics. This information includes supported schema versions, formats, and other metadata for the topics.<br /><br />Applications can subscribe to any of the topics for a supported schema version and format, limited by the authorization scopes required to subscribe to the topic.<br /><br />A topic specifies the type of information to be received and the data types associated with an event. An event occurs in the eBay system, such as when a user requests deletion or revokes access for an application. An event is an instance of an event type (topic).  # noqa: E501
 
-        :param str limit: The maximum number of items to return per page from the result set. A result set is the complete set of results returned by the method. Range is from 10-100. If this parameter is omitted, the default value is used. Default: 20 Maximum: 100 items per page
+        :param str limit: The maximum number of items to return per page from the result set. A result set is the complete set of results returned by the method. Range is from 10-100. <br /><br />If this parameter is omitted, the default value is used.<br/><br/><b> Default:</b> 20<br /><br /><b>Maximum:</b> 100 items per page
         :param str continuation_token: The token used to access the next set of results.
         :return: TopicSearchResponse
         """
         try:
-            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1',
-                                       commerce_notification.TopicApi, commerce_notification.ApiClient, 'get_topics',
-                                       CommerceNotificationException, False, ['commerce.notification', 'topic'], None,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(commerce_notification.Configuration, '/commerce/notification/v1', commerce_notification.TopicApi, commerce_notification.ApiClient, 'get_topics', CommerceNotificationException, False, ['commerce.notification', 'topic'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1744,10 +1576,7 @@ class API:
         :return: GetCategoriesAspectResponse
         """
         try:
-            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1',
-                                       commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient,
-                                       'fetch_item_aspects', CommerceTaxonomyException, False,
-                                       ['commerce.taxonomy', 'category_tree'], category_tree_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1', commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient, 'fetch_item_aspects', CommerceTaxonomyException, False, ['commerce.taxonomy', 'category_tree'], category_tree_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1761,11 +1590,7 @@ class API:
         :return: CategorySubtree
         """
         try:
-            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1',
-                                       commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient,
-                                       'get_category_subtree', CommerceTaxonomyException, False,
-                                       ['commerce.taxonomy', 'category_tree'], (category_id, category_tree_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1', commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient, 'get_category_subtree', CommerceTaxonomyException, False, ['commerce.taxonomy', 'category_tree'], (category_id, category_tree_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1779,11 +1604,7 @@ class API:
         :return: CategorySuggestionResponse
         """
         try:
-            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1',
-                                       commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient,
-                                       'get_category_suggestions', CommerceTaxonomyException, False,
-                                       ['commerce.taxonomy', 'category_tree'], (category_tree_id, q),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1', commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient, 'get_category_suggestions', CommerceTaxonomyException, False, ['commerce.taxonomy', 'category_tree'], (category_tree_id, q), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1796,10 +1617,7 @@ class API:
         :return: CategoryTree
         """
         try:
-            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1',
-                                       commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient,
-                                       'get_category_tree', CommerceTaxonomyException, False,
-                                       ['commerce.taxonomy', 'category_tree'], category_tree_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1', commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient, 'get_category_tree', CommerceTaxonomyException, False, ['commerce.taxonomy', 'category_tree'], category_tree_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1813,16 +1631,11 @@ class API:
         :return: GetCompatibilityMetadataResponse
         """
         try:
-            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1',
-                                       commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient,
-                                       'get_compatibility_properties', CommerceTaxonomyException, False,
-                                       ['commerce.taxonomy', 'category_tree'], (category_tree_id, category_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1', commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient, 'get_compatibility_properties', CommerceTaxonomyException, False, ['commerce.taxonomy', 'category_tree'], (category_tree_id, category_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def commerce_taxonomy_get_compatibility_property_values(self, category_tree_id, compatibility_property, category_id,
-                                                            **kwargs):  # noqa: E501
+    def commerce_taxonomy_get_compatibility_property_values(self, category_tree_id, compatibility_property, category_id, **kwargs):  # noqa: E501
         """Get Compatibility Property Values  # noqa: E501
 
         This call retrieves applicable compatible vehicle property values based on the specified eBay marketplace, specified eBay category, and filters used in the request. Compatible vehicle properties are returned in the compatibilityProperties.name field of a getCompatibilityProperties response. One compatible vehicle property applicable to the specified eBay marketplace and eBay category is specified through the required compatibility_property filter. Then, the user has the option of further restricting the compatible vehicle property values that are returned in the response by specifying one or more compatible vehicle property name/value pairs through the filter query parameter. See the documentation in URI parameters section for more information on using the compatibility_property and filter query parameters together to customize the data that is retrieved.  # noqa: E501
@@ -1834,11 +1647,7 @@ class API:
         :return: GetCompatibilityPropertyValuesResponse
         """
         try:
-            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1',
-                                       commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient,
-                                       'get_compatibility_property_values', CommerceTaxonomyException, False,
-                                       ['commerce.taxonomy', 'category_tree'],
-                                       (category_tree_id, compatibility_property, category_id), **kwargs)  # noqa: E501
+            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1', commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient, 'get_compatibility_property_values', CommerceTaxonomyException, False, ['commerce.taxonomy', 'category_tree'], (category_tree_id, compatibility_property, category_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1852,10 +1661,7 @@ class API:
         :return: BaseCategoryTree
         """
         try:
-            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1',
-                                       commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient,
-                                       'get_default_category_tree_id', CommerceTaxonomyException, False,
-                                       ['commerce.taxonomy', 'category_tree'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1', commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient, 'get_default_category_tree_id', CommerceTaxonomyException, False, ['commerce.taxonomy', 'category_tree'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1869,11 +1675,7 @@ class API:
         :return: AspectMetadata
         """
         try:
-            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1',
-                                       commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient,
-                                       'get_item_aspects_for_category', CommerceTaxonomyException, False,
-                                       ['commerce.taxonomy', 'category_tree'], (category_id, category_tree_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(commerce_taxonomy.Configuration, '/commerce/taxonomy/v1', commerce_taxonomy.CategoryTreeApi, commerce_taxonomy.ApiClient, 'get_item_aspects_for_category', CommerceTaxonomyException, False, ['commerce.taxonomy', 'category_tree'], (category_id, category_tree_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1886,10 +1688,7 @@ class API:
         :return: TranslateResponse
         """
         try:
-            return self._method_single(commerce_translation.Configuration, '/commerce/translation/v1_beta',
-                                       commerce_translation.LanguageApi, commerce_translation.ApiClient, 'translate',
-                                       CommerceTranslationException, False, ['commerce.translation', 'language'], body,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(commerce_translation.Configuration, '/commerce/translation/v1_beta', commerce_translation.LanguageApi, commerce_translation.ApiClient, 'translate', CommerceTranslationException, False, ['commerce.translation', 'language'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1903,10 +1702,7 @@ class API:
         :return: RateLimitsResponse
         """
         try:
-            return self._method_single(developer_analytics.Configuration, '/developer/analytics/v1_beta',
-                                       developer_analytics.RateLimitApi, developer_analytics.ApiClient,
-                                       'get_rate_limits', DeveloperAnalyticsException, False,
-                                       ['developer.analytics', 'rate_limit'], None, **kwargs)  # noqa: E501
+            return self._method_single(developer_analytics.Configuration, '/developer/analytics/v1_beta', developer_analytics.RateLimitApi, developer_analytics.ApiClient, 'get_rate_limits', DeveloperAnalyticsException, False, ['developer.analytics', 'rate_limit'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -1920,269 +1716,219 @@ class API:
         :return: RateLimitsResponse
         """
         try:
-            return self._method_single(developer_analytics.Configuration, '/developer/analytics/v1_beta',
-                                       developer_analytics.UserRateLimitApi, developer_analytics.ApiClient,
-                                       'get_user_rate_limits', DeveloperAnalyticsException, True,
-                                       ['developer.analytics', 'user_rate_limit'], None, **kwargs)  # noqa: E501
+            return self._method_single(developer_analytics.Configuration, '/developer/analytics/v1_beta', developer_analytics.UserRateLimitApi, developer_analytics.ApiClient, 'get_user_rate_limits', DeveloperAnalyticsException, True, ['developer.analytics', 'user_rate_limit'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_create_fulfillment_policy(self, body, **kwargs):  # noqa: E501
         """create_fulfillment_policy  # noqa: E501
 
-        This method creates a new fulfillment policy where the policy encapsulates seller's terms for fulfilling item purchases. Fulfillment policies include the shipment options that the seller offers to buyers. Each policy targets a marketplaceId and categoryTypes.name combination and you can create multiple policies for each combination. Be aware that some marketplaces require a specific fulfillment policy for vehicle listings. A successful request returns the URI to the new policy in the Location response header and the ID for the new policy is returned in the response payload. Tip: For details on creating and using the business policies supported by the Account API, see eBay business policies. Marketplaces and locales Policy instructions can be localized by providing a locale in the Accept-Language HTTP request header. For example, the following setting displays field values from the request body in German: Accept-Language: de-DE. Target the specific locale of a marketplace that supports multiple locales using the Content-Language request header. For example, target the French locale of the Canadian marketplace by specifying the fr-CA locale for Content-Language. Likewise, target the Dutch locale of the Belgium marketplace by setting Content-Language: nl-BE. Tip: For details on headers, see HTTP request headers.  # noqa: E501
+        This method creates a new fulfillment policy where the policy encapsulates seller's terms for fulfilling item purchases. Fulfillment policies include the shipment options that the seller offers to buyers.  <br><br>Each policy targets a <b>marketplaceId</b> and <code>categoryTypes.</code><b>name</b> combination and you can create multiple policies for each combination. Be aware that some marketplaces require a specific fulfillment policy for vehicle listings.  <br><br>A successful request returns the URI to the new policy in the <b>Location</b> response header and the ID for the new policy is returned in the response payload.  <p class=\"tablenote\"><b>Tip:</b> For details on creating and using the business policies supported by the Account API, see <a href=\"/api-docs/sell/static/seller-accounts/business-policies.html\">eBay business policies</a>.</p>  <p><b>Marketplaces and locales</b></p>  <p>Policy instructions can be localized by providing a locale in the <code>Accept-Language</code> HTTP request header. For example, the following setting displays field values from the request body in German: <code>Accept-Language: de-DE</code>.</p>  <p>Target the specific locale of a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, target the French locale of the Canadian marketplace by specifying the <code>fr-CA</code> locale for <code>Content-Language</code>. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>.</p> <p class=\"tablenote\"><b>Tip:</b> For details on headers, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.</p><p><b>Using the eBay standard envelope service (eSE)</b></p>  <p>The eBay standard envelope service (eSE) is a domestic envelope service with tracking through eBay. This service applies to specific Trading Cards categories (not all categories are supported), and to Coins & Paper Money, Postcards, and Stamps. See <a href=\"/api-docs/sell/static/seller-accounts/using-the-ebay-standard-envelope-service.html\" target=\"_blank\">Using the eBay standard envelope (eSE) service</a>.</p>  # noqa: E501
 
         :param FulfillmentPolicyRequest body: Request to create a seller account fulfillment policy. (required)
         :return: SetFulfillmentPolicyResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1',
-                                       sell_account.FulfillmentPolicyApi, sell_account.ApiClient,
-                                       'create_fulfillment_policy', SellAccountException, True,
-                                       ['sell.account', 'fulfillment_policy'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.FulfillmentPolicyApi, sell_account.ApiClient, 'create_fulfillment_policy', SellAccountException, True, ['sell.account', 'fulfillment_policy'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_delete_fulfillment_policy(self, fulfillment_policy_id, **kwargs):  # noqa: E501
         """delete_fulfillment_policy  # noqa: E501
 
-        This method deletes a fulfillment policy. Supply the ID of the policy you want to delete in the fulfillmentPolicyId path parameter. Note that you cannot delete the default fulfillment policy.  # noqa: E501
+        This method deletes a fulfillment policy. Supply the ID of the policy you want to delete in the <b>fulfillmentPolicyId</b> path parameter. Note that you cannot delete the default fulfillment policy.  # noqa: E501
 
         :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy to delete. (required)
         :return: None
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1',
-                                       sell_account.FulfillmentPolicyApi, sell_account.ApiClient,
-                                       'delete_fulfillment_policy', SellAccountException, True,
-                                       ['sell.account', 'fulfillment_policy'], fulfillment_policy_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.FulfillmentPolicyApi, sell_account.ApiClient, 'delete_fulfillment_policy', SellAccountException, True, ['sell.account', 'fulfillment_policy'], fulfillment_policy_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_get_fulfillment_policies(self, marketplace_id, **kwargs):  # noqa: E501
         """get_fulfillment_policies  # noqa: E501
 
-        This method retrieves all the fulfillment policies configured for the marketplace you specify using the marketplace_id query parameter. Marketplaces and locales Get the correct policies for a marketplace that supports multiple locales using the Content-Language request header. For example, get the policies for the French locale of the Canadian marketplace by specifying fr-CA for the Content-Language header. Likewise, target the Dutch locale of the Belgium marketplace by setting Content-Language: nl-BE. For details on header values, see HTTP request headers.  # noqa: E501
+        This method retrieves all the fulfillment policies configured for the marketplace you specify using the <code>marketplace_id</code> query parameter.  <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policies for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get the policies for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank\">HTTP request headers</a>.  # noqa: E501
 
         :param str marketplace_id: This query parameter specifies the eBay marketplace of the policies you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
         :return: FulfillmentPolicyResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1',
-                                       sell_account.FulfillmentPolicyApi, sell_account.ApiClient,
-                                       'get_fulfillment_policies', SellAccountException, True,
-                                       ['sell.account', 'fulfillment_policy'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.FulfillmentPolicyApi, sell_account.ApiClient, 'get_fulfillment_policies', SellAccountException, True, ['sell.account', 'fulfillment_policy'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_get_fulfillment_policy(self, fulfillment_policy_id, **kwargs):  # noqa: E501
         """get_fulfillment_policy  # noqa: E501
 
-        This method retrieves the complete details of a fulfillment policy. Supply the ID of the policy you want to retrieve using the fulfillmentPolicyId path parameter.  # noqa: E501
+        This method retrieves the complete details of a fulfillment policy. Supply the ID of the policy you want to retrieve using the <b>fulfillmentPolicyId</b> path parameter.  # noqa: E501
 
         :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy you want to retrieve. (required)
         :return: FulfillmentPolicy
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1',
-                                       sell_account.FulfillmentPolicyApi, sell_account.ApiClient,
-                                       'get_fulfillment_policy', SellAccountException, True,
-                                       ['sell.account', 'fulfillment_policy'], fulfillment_policy_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.FulfillmentPolicyApi, sell_account.ApiClient, 'get_fulfillment_policy', SellAccountException, True, ['sell.account', 'fulfillment_policy'], fulfillment_policy_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_get_fulfillment_policy_by_name(self, marketplace_id, name, **kwargs):  # noqa: E501
         """get_fulfillment_policy_by_name  # noqa: E501
 
-        This method retrieves the complete details for a single fulfillment policy. In the request, supply both the policy name and its associated marketplace_id as query parameters. Marketplaces and locales Get the correct policy for a marketplace that supports multiple locales using the Content-Language request header. For example, get a policy for the French locale of the Canadian marketplace by specifying fr-CA for the Content-Language header. Likewise, target the Dutch locale of the Belgium marketplace by setting Content-Language: nl-BE. For details on header values, see HTTP request headers.  # noqa: E501
+        This method retrieves the complete details for a single fulfillment policy. In the request, supply both the policy <code>name</code> and its associated <code>marketplace_id</code> as query parameters.   <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policy for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get a policy for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.  # noqa: E501
 
         :param str marketplace_id: This query parameter specifies the eBay marketplace of the policy you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
         :param str name: This query parameter specifies the user-defined name of the fulfillment policy you want to retrieve. (required)
         :return: FulfillmentPolicy
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1',
-                                       sell_account.FulfillmentPolicyApi, sell_account.ApiClient,
-                                       'get_fulfillment_policy_by_name', SellAccountException, True,
-                                       ['sell.account', 'fulfillment_policy'], (marketplace_id, name),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.FulfillmentPolicyApi, sell_account.ApiClient, 'get_fulfillment_policy_by_name', SellAccountException, True, ['sell.account', 'fulfillment_policy'], (marketplace_id, name), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_update_fulfillment_policy(self, body, fulfillment_policy_id, **kwargs):  # noqa: E501
         """update_fulfillment_policy  # noqa: E501
 
-        This method updates an existing fulfillment policy. Specify the policy you want to update using the fulfillment_policy_id path parameter. Supply a complete policy payload with the updates you want to make; this call overwrites the existing policy with the new details specified in the payload.  # noqa: E501
+        This method updates an existing fulfillment policy. Specify the policy you want to update using the <b>fulfillment_policy_id</b> path parameter. Supply a complete policy payload with the updates you want to make; this call overwrites the existing policy with the new details specified in the payload.  # noqa: E501
 
         :param FulfillmentPolicyRequest body: Fulfillment policy request (required)
         :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy you want to update. (required)
         :return: SetFulfillmentPolicyResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1',
-                                       sell_account.FulfillmentPolicyApi, sell_account.ApiClient,
-                                       'update_fulfillment_policy', SellAccountException, True,
-                                       ['sell.account', 'fulfillment_policy'], (body, fulfillment_policy_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.FulfillmentPolicyApi, sell_account.ApiClient, 'update_fulfillment_policy', SellAccountException, True, ['sell.account', 'fulfillment_policy'], (body, fulfillment_policy_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_get_kyc(self, **kwargs):  # noqa: E501
         """get_kyc  # noqa: E501
 
-        This method is used by sellers onboarded for eBay managed payments, or sellers who are currently going through, or who are eligible for onboarding for eBay managed payments. With this method, a seller can discover if there are any action items in regards to providing more documentation and/or information about themselves, their company, or the bank account they are or will be using for seller payouts. These 'action items' are also know as 'Know Your Customer' (or KYC) checks. This method does not require any parameters other than the OAuth user token associated with the seller's account. If the managed payments seller does not currently have any pending 'KYC' action items, only a 204 No Content HTTP status code is returned, and no response payload. Note: This method is not applicable for sellers who are not eligible for eBay managed payments. For sellers who sell on one or more eBay marketplaces that currently support managed payments, they can check on their managed payments onboarding status by using the getPaymentsProgramOnboarding method.  # noqa: E501
+        This method is used by sellers onboarded for eBay managed payments, or sellers who are currently going through, or who are eligible for onboarding for eBay managed payments. With this method, a seller can discover if there are any action items in regards to providing more documentation and/or information about themselves, their company, or the bank account they are or will be using for seller payouts. These 'action items' are also know as 'Know Your Customer' (or KYC) checks.<br><br>This method does not require any parameters other than the OAuth user token associated with the seller's account.<br><br>If the managed payments seller does not currently have any pending 'KYC' action items, only a <code>204 No Content</code> HTTP status code is returned, and no response payload. <br><br><span class=\"tablenote\"><b>Note</b>: This method is not applicable for sellers who are not eligible for eBay managed payments. For sellers who sell on one or more eBay marketplaces that currently support managed payments, they can check on their managed payments onboarding status by using the <a href=\"../../payments_program/onboarding/methods/getPaymentsProgramOnboarding\">getPaymentsProgramOnboarding</a> method. </span>  # noqa: E501
 
         :return: KycResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.KycApi,
-                                       sell_account.ApiClient, 'get_kyc', SellAccountException, True,
-                                       ['sell.account', 'kyc'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.KycApi, sell_account.ApiClient, 'get_kyc', SellAccountException, True, ['sell.account', 'kyc'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def sell_account_get_payments_program_onboarding(self, marketplace_id, payments_program_type,
-                                                     **kwargs):  # noqa: E501
+    def sell_account_get_payments_program_onboarding(self, marketplace_id, payments_program_type, **kwargs):  # noqa: E501
         """get_payments_program_onboarding  # noqa: E501
 
-        This method retrieves a seller's onboarding status of eBay managed payments for a specified marketplace. The overall onboarding status of the seller and the status of each onboarding step is returned. Presently, the only supported payments program type is EBAY_PAYMENTS. See Managed Payments on eBay and Payments Terms of Use. Note: Managed payments availability: eBay managed payments is presently available in the US and Germany, and will roll out to Canada, UK, and Australia in July 2020.  # noqa: E501
+        This method retrieves a seller's onboarding status of eBay managed payments for a specified marketplace. The overall onboarding status of the seller and the status of each onboarding step is returned. <p>Presently, the only supported payments program type is <code>EBAY_PAYMENTS</code>. See <a href=\"https://pages.ebay.com/seller-center/service-and-payments/managed-payments-on-ebay.html\" target=\"_blank\">Managed Payments on eBay</a> and <a href=\"https://pages.ebay.com/payment/2.0/terms.html\" target=\"_blank\">Payments Terms of Use</a>.</p><p> <span class=\"tablenote\"><strong>Note:</strong> Managed payments availability: <a href=\"/managed-payments\">eBay managed payments</a> is presently available in the US and Germany, and will roll out to Canada, UK, and Australia in July 2020.</span></p>  # noqa: E501
 
         :param str marketplace_id: The eBay marketplace ID associated with the onboarding status to retrieve. Only enums for marketplaces that support or will soon support eBay managed payments are allowed. Error 20408 is returned for any other eBay marketplace. No response payload is returned with this error. (required)
-        :param str payments_program_type: The type of payments program whose status is returned by the call. Presently, the only supported payments program is EBAY_PAYMENTS. For details on the program, see Payments Terms of Use. (required)
+        :param str payments_program_type: The type of payments program whose status is returned by the call. Presently, the only supported payments program is <code>EBAY_PAYMENTS</code>. For details on the program, see <a href=\"https://pages.ebay.com/payment/2.0/terms.html\" target=\"_blank\">Payments Terms of Use</a>.  (required)
         :return: PaymentsProgramOnboardingResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.OnboardingApi,
-                                       sell_account.ApiClient, 'get_payments_program_onboarding', SellAccountException,
-                                       True, ['sell.account', 'onboarding'], (marketplace_id, payments_program_type),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.OnboardingApi, sell_account.ApiClient, 'get_payments_program_onboarding', SellAccountException, True, ['sell.account', 'onboarding'], (marketplace_id, payments_program_type), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_create_payment_policy(self, body, **kwargs):  # noqa: E501
         """create_payment_policy  # noqa: E501
 
-        This method creates a new payment policy where the policy encapsulates seller's terms for purchase payments. Each policy targets a marketplaceId and categoryTypes.name combination and you can create multiple policies for each combination. Be aware that some marketplaces require a specific payment policy for vehicle listings. A successful request returns the URI to the new policy in the Location response header and the ID for the new policy is returned in the response payload. Tip: For details on creating and using the business policies supported by the Account API, see eBay business policies. Marketplaces and locales Policy instructions can be localized by providing a locale in the Accept-Language HTTP request header. For example, the following setting displays field values from the request body in German: Accept-Language: de-DE. Target the specific locale of a marketplace that supports multiple locales using the Content-Language request header. For example, target the French locale of the Canadian marketplace by specifying the fr-CA locale for Content-Language. Likewise, target the Dutch locale of the Belgium marketplace by setting Content-Language: nl-BE. Tip: For details on headers, see HTTP request headers.  # noqa: E501
+        This method creates a new payment policy where the policy encapsulates seller's terms for purchase payments.  <br><br>Each policy targets a <b>marketplaceId</b> and <code>categoryTypes.</code><b>name</b> combination and you can create multiple policies for each combination. Be aware that some marketplaces require a specific payment policy for vehicle listings.  <br><br>A successful request returns the URI to the new policy in the <b>Location</b> response header and the ID for the new policy is returned in the response payload.  <p class=\"tablenote\"><b>Tip:</b> For details on creating and using the business policies supported by the Account API, see <a href=\"/api-docs/sell/static/seller-accounts/business-policies.html\">eBay business policies</a>.</p>  <p><b>Marketplaces and locales</b></p>  <p>Policy instructions can be localized by providing a locale in the <code>Accept-Language</code> HTTP request header. For example, the following setting displays field values from the request body in German: <code>Accept-Language: de-DE</code>.</p>  <p>Target the specific locale of a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, target the French locale of the Canadian marketplace by specifying the <code>fr-CA</code> locale for <code>Content-Language</code>. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>.</p> <p class=\"tablenote\"><b>Tip:</b> For details on headers, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.</p>  # noqa: E501
 
         :param PaymentPolicyRequest body: Payment policy request (required)
         :return: SetPaymentPolicyResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi,
-                                       sell_account.ApiClient, 'create_payment_policy', SellAccountException, True,
-                                       ['sell.account', 'payment_policy'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi, sell_account.ApiClient, 'create_payment_policy', SellAccountException, True, ['sell.account', 'payment_policy'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_delete_payment_policy(self, payment_policy_id, **kwargs):  # noqa: E501
         """delete_payment_policy  # noqa: E501
 
-        This method deletes a payment policy. Supply the ID of the policy you want to delete in the paymentPolicyId path parameter. Note that you cannot delete the default payment policy.  # noqa: E501
+        This method deletes a payment policy. Supply the ID of the policy you want to delete in the <b>paymentPolicyId</b> path parameter. Note that you cannot delete the default payment policy.  # noqa: E501
 
         :param str payment_policy_id: This path parameter specifies the ID of the payment policy you want to delete. (required)
         :return: None
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi,
-                                       sell_account.ApiClient, 'delete_payment_policy', SellAccountException, True,
-                                       ['sell.account', 'payment_policy'], payment_policy_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi, sell_account.ApiClient, 'delete_payment_policy', SellAccountException, True, ['sell.account', 'payment_policy'], payment_policy_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_get_payment_policies(self, marketplace_id, **kwargs):  # noqa: E501
         """get_payment_policies  # noqa: E501
 
-        This method retrieves all the payment policies configured for the marketplace you specify using the marketplace_id query parameter. Marketplaces and locales Get the correct policies for a marketplace that supports multiple locales using the Content-Language request header. For example, get the policies for the French locale of the Canadian marketplace by specifying fr-CA for the Content-Language header. Likewise, target the Dutch locale of the Belgium marketplace by setting Content-Language: nl-BE. For details on header values, see HTTP request headers.  # noqa: E501
+        This method retrieves all the payment policies configured for the marketplace you specify using the <code>marketplace_id</code> query parameter.  <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policies for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get the policies for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank\">HTTP request headers</a>.  # noqa: E501
 
         :param str marketplace_id: This query parameter specifies the eBay marketplace of the policies you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
         :return: PaymentPolicyResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi,
-                                       sell_account.ApiClient, 'get_payment_policies', SellAccountException, True,
-                                       ['sell.account', 'payment_policy'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi, sell_account.ApiClient, 'get_payment_policies', SellAccountException, True, ['sell.account', 'payment_policy'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_get_payment_policy(self, payment_policy_id, **kwargs):  # noqa: E501
         """get_payment_policy  # noqa: E501
 
-        This method retrieves the complete details of a payment policy. Supply the ID of the policy you want to retrieve using the paymentPolicyId path parameter.  # noqa: E501
+        This method retrieves the complete details of a payment policy. Supply the ID of the policy you want to retrieve using the <b>paymentPolicyId</b> path parameter.  # noqa: E501
 
         :param str payment_policy_id: This path parameter specifies the ID of the payment policy you want to retrieve. (required)
         :return: PaymentPolicy
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi,
-                                       sell_account.ApiClient, 'get_payment_policy', SellAccountException, True,
-                                       ['sell.account', 'payment_policy'], payment_policy_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi, sell_account.ApiClient, 'get_payment_policy', SellAccountException, True, ['sell.account', 'payment_policy'], payment_policy_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_get_payment_policy_by_name(self, marketplace_id, name, **kwargs):  # noqa: E501
         """get_payment_policy_by_name  # noqa: E501
 
-        This method retrieves the complete details of a single payment policy. Supply both the policy name and its associated marketplace_id in the request query parameters. Marketplaces and locales Get the correct policy for a marketplace that supports multiple locales using the Content-Language request header. For example, get a policy for the French locale of the Canadian marketplace by specifying fr-CA for the Content-Language header. Likewise, target the Dutch locale of the Belgium marketplace by setting Content-Language: nl-BE. For details on header values, see HTTP request headers.  # noqa: E501
+        This method retrieves the complete details of a single payment policy. Supply both the policy <code>name</code> and its associated <code>marketplace_id</code> in the request query parameters.   <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policy for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get a policy for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.  # noqa: E501
 
         :param str marketplace_id: This query parameter specifies the eBay marketplace of the policy you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
         :param str name: This query parameter specifies the user-defined name of the payment policy you want to retrieve. (required)
         :return: PaymentPolicy
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi,
-                                       sell_account.ApiClient, 'get_payment_policy_by_name', SellAccountException, True,
-                                       ['sell.account', 'payment_policy'], (marketplace_id, name),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi, sell_account.ApiClient, 'get_payment_policy_by_name', SellAccountException, True, ['sell.account', 'payment_policy'], (marketplace_id, name), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_update_payment_policy(self, body, payment_policy_id, **kwargs):  # noqa: E501
         """update_payment_policy  # noqa: E501
 
-        This method updates an existing payment policy. Specify the policy you want to update using the payment_policy_id path parameter. Supply a complete policy payload with the updates you want to make; this call overwrites the existing policy with the new details specified in the payload.  # noqa: E501
+        This method updates an existing payment policy. Specify the policy you want to update using the <b>payment_policy_id</b> path parameter. Supply a complete policy payload with the updates you want to make; this call overwrites the existing policy with the new details specified in the payload.  # noqa: E501
 
         :param PaymentPolicyRequest body: Payment policy request (required)
         :param str payment_policy_id: This path parameter specifies the ID of the payment policy you want to update. (required)
         :return: SetPaymentPolicyResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi,
-                                       sell_account.ApiClient, 'update_payment_policy', SellAccountException, True,
-                                       ['sell.account', 'payment_policy'], (body, payment_policy_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentPolicyApi, sell_account.ApiClient, 'update_payment_policy', SellAccountException, True, ['sell.account', 'payment_policy'], (body, payment_policy_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_get_payments_program(self, marketplace_id, payments_program_type, **kwargs):  # noqa: E501
         """get_payments_program  # noqa: E501
 
-        This method returns whether or not the user is opted-in to the specified payments program. Sellers opt-in to payments programs by marketplace and you use the marketplace_id path parameter to specify the marketplace of the status flag you want returned. Note: Currently, the only supported payments program is eBay Payments. For details, see: Managed Payments on eBay Payments Terms of Use  # noqa: E501
+        This method returns whether or not the user is opted-in to the specified payments program. Sellers opt-in to payments programs by marketplace and you use the <b>marketplace_id</b> path parameter to specify the marketplace of the status flag you want returned.  <br><br><span class=\"tablenote\"><b>Note:</b> Currently, the only supported payments program is <b>eBay Payments</b>. For details, see: <ul><li><a href=\"https://pages.ebay.com/seller-center/service-and-payments/managed-payments-on-ebay.html\" target=\"_blank\">Managed Payments on eBay</a></li> <li><a href=\"https://pages.ebay.com/payment/2.0/terms.html\" target=\"_blank\">Payments Terms of Use</a></li></ul></span>  # noqa: E501
 
         :param str marketplace_id: This path parameter specifies the eBay marketplace of the payments program for which you want to retrieve the seller's status. (required)
-        :param str payments_program_type: This path parameter specifies the payments program whose status is returned by the call. Currently the only supported payments program is EBAY_PAYMENTS. For details on the program, see Payments Terms of Use. (required)
+        :param str payments_program_type: This path parameter specifies the payments program whose status is returned by the call.  <br><br>Currently the only supported payments program is <code>EBAY_PAYMENTS</code>. For details on the program, see <a href=\"https://pages.ebay.com/payment/2.0/terms.html\" target=\"_blank\">Payments Terms of Use</a>. (required)
         :return: PaymentsProgramResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentsProgramApi,
-                                       sell_account.ApiClient, 'get_payments_program', SellAccountException, True,
-                                       ['sell.account', 'payments_program'], (marketplace_id, payments_program_type),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PaymentsProgramApi, sell_account.ApiClient, 'get_payments_program', SellAccountException, True, ['sell.account', 'payments_program'], (marketplace_id, payments_program_type), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_get_privileges(self, **kwargs):  # noqa: E501
         """get_privileges  # noqa: E501
 
-        This method retrieves the seller's current set of privileges. The call returns whether or not the seller's eBay registration has been completed, as well as the details of their site-wide sellingLimit (the amount and quantity they can sell on a given day).  # noqa: E501
+        This method retrieves the seller's current set of privileges. The call returns whether or not the seller's eBay registration has been completed, as well as the details of their site-wide <b>sellingLimit</b> (the amount and quantity they can sell on a given day).  # noqa: E501
 
         :return: SellingPrivileges
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PrivilegeApi,
-                                       sell_account.ApiClient, 'get_privileges', SellAccountException, True,
-                                       ['sell.account', 'privilege'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.PrivilegeApi, sell_account.ApiClient, 'get_privileges', SellAccountException, True, ['sell.account', 'privilege'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2194,288 +1940,239 @@ class API:
         :return: Programs
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ProgramApi,
-                                       sell_account.ApiClient, 'get_opted_in_programs', SellAccountException, True,
-                                       ['sell.account', 'program'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ProgramApi, sell_account.ApiClient, 'get_opted_in_programs', SellAccountException, True, ['sell.account', 'program'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_opt_in_to_program(self, body, **kwargs):  # noqa: E501
         """opt_in_to_program  # noqa: E501
 
-        This method opts the seller in to an eBay seller program. Refer to the Account API overview for information about available eBay seller programs. Note: It can take up to 24-hours for eBay to process your request to opt-in to a Seller Program. Use the getOptedInPrograms call to check the status of your request after the processing period has passed.  # noqa: E501
+        This method opts the seller in to an eBay seller program. Refer to the <a href=\"/api-docs/sell/account/overview.html#opt-in\" target=\"_blank\">Account API overview</a> for information about available eBay seller programs.<br /><br /><span class=\"tablenote\"><b>Note:</b> It can take up to 24-hours for eBay to process your request to opt-in to a Seller Program. Use the <a href=\"/api-docs/sell/account/resources/program/methods/getOptedInPrograms\" target=\"_blank\">getOptedInPrograms</a> call to check the status of your request after the processing period has passed.</span>  # noqa: E501
 
         :param Program body: Program being opted-in to. (required)
         :return: object
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ProgramApi,
-                                       sell_account.ApiClient, 'opt_in_to_program', SellAccountException, True,
-                                       ['sell.account', 'program'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ProgramApi, sell_account.ApiClient, 'opt_in_to_program', SellAccountException, True, ['sell.account', 'program'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_opt_out_of_program(self, body, **kwargs):  # noqa: E501
         """opt_out_of_program  # noqa: E501
 
-        This method opts the seller out of a seller program to which you have previously opted-in to. Get a list of the seller programs you have opted-in to using the getOptedInPrograms call.  # noqa: E501
+        This method opts the seller out of a seller program to which you have previously opted-in to. Get a list of the seller programs you have opted-in to using the <b>getOptedInPrograms</b> call.  # noqa: E501
 
         :param Program body: Program being opted-out of. (required)
         :return: object
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ProgramApi,
-                                       sell_account.ApiClient, 'opt_out_of_program', SellAccountException, True,
-                                       ['sell.account', 'program'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ProgramApi, sell_account.ApiClient, 'opt_out_of_program', SellAccountException, True, ['sell.account', 'program'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_get_rate_tables(self, **kwargs):  # noqa: E501
         """get_rate_tables  # noqa: E501
 
-        This method retrieves a seller's shipping rate tables for the country specified in the country_code query parameter. If you call this method without specifying a country code, the call returns all the seller's shipping rate tables. The method's response includes a rateTableId for each table defined by the seller. Use a table's ID value in a fulfillment policy to specify the shipping rate table to use for that policy's DOMESTIC or INTERNATIONAL shipping option (make sure the locality of the rate table matches the optionType of the shipping option). This call currently supports getting rate tables related to the following marketplaces: EBAY_AU EBAY_CA EBAY_DE EBAY_ES EBAY_FR EBAY_GB EBAY_IT EBAY_US Note: Rate tables created with the Trading API might not have been assigned a rateTableId at the time of their creation. This method can assign and return rateTableId values for rate tables with missing IDs if you make a request using the country_code where the seller has defined rate tables. Sellers can define up to 40 shipping rate tables for their account, which lets them set up different rate tables for each of the marketplaces they sell into. Go to My eBay &gt; Account &gt; Site Preferences to create and maintain the rate tables. For more, see Using shipping rate tables. If you're using the Trading API, use the rate table ID values in the RateTableDetails container of the Add/Revise/Relist calls. If the locality for a rate table is set to DOMESTIC, pass the ID value in the RateTableDetails.DomesticRateTableId field. Otherwise, if locality is INTERNATIONAL, pass the ID value in RateTableDetails.InternationalRateTableId.  # noqa: E501
+        This method retrieves a seller's <i>shipping rate tables</i> for the country specified in the <b>country_code</b> query parameter. If you call this method without specifying a country code, the call returns all the seller's shipping rate tables.  <br><br>The method's response includes a <b>rateTableId</b> for each table defined by the seller. Use a table's ID value in a fulfillment policy to specify the shipping rate table to use for that policy's DOMESTIC or INTERNATIONAL shipping option (make sure the <b>locality</b> of the rate table matches the <b>optionType</b> of the shipping option).  <br><br>This call currently supports getting rate tables related to the following marketplaces:<ul><li><code>EBAY_AU</code></li> <li><code>EBAY_CA</code></li> <li><code>EBAY_DE</code></li> <li><code>EBAY_ES</code></li> <li><code>EBAY_FR</code></li> <li><code>EBAY_GB</code></li> <li><code>EBAY_IT</code></li> <li><code>EBAY_US</code></li></ul>  <span class=\"tablenote\"><b>Note:</b> Rate tables created with the Trading API might not have been assigned a <b>rateTableId</b> at the time of their creation. This method can assign and return <b>rateTableId</b> values for rate tables with missing IDs if you make a request using the <b>country_code</b> where the seller has defined rate tables.</span>  <br><br>Sellers can define up to 40 shipping rate tables for their account, which lets them set up different rate tables for each of the marketplaces they sell into. Go to <b>My eBay > Account > Site Preferences</b> to create and maintain the rate tables. For more, see <a href=\"https://pages.ebay.com/help/pay/shipping-costs.html#tables\">Using shipping rate tables</a>.  <p>If you're using the Trading API, use the rate table ID values in the <b>RateTableDetails</b> container of the Add/Revise/Relist calls. If the <b>locality</b> for a rate table is set to <code>DOMESTIC</code>, pass the ID value in the <b>RateTableDetails.DomesticRateTableId</b> field. Otherwise, if <b>locality</b> is <code>INTERNATIONAL</code>, pass the ID value in <b>RateTableDetails.InternationalRateTableId</b>.</p>  # noqa: E501
 
-        :param str country_code: This query parameter specifies the two-letter ISO 3166 code of country for which you want shipping-rate table information. If you do not specify a county code, the request returns all the seller-defined rate tables. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:CountryCodeEnum
+        :param str country_code: This query parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> code of country for which you want shipping-rate table information. If you do not specify a county code, the request returns all the seller-defined rate tables. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:CountryCodeEnum
         :return: RateTableResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.RateTableApi,
-                                       sell_account.ApiClient, 'get_rate_tables', SellAccountException, True,
-                                       ['sell.account', 'rate_table'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.RateTableApi, sell_account.ApiClient, 'get_rate_tables', SellAccountException, True, ['sell.account', 'rate_table'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_create_return_policy(self, body, **kwargs):  # noqa: E501
         """create_return_policy  # noqa: E501
 
-        This method creates a new return policy where the policy encapsulates seller's terms for returning items. Use the Metadata API method getReturnPolicies to determine which categories require you to supply a return policy for the marketplace(s) into which you list. Each policy targets a marketplaceId and categoryTypes.name combination and you can create multiple policies for each combination. A successful request returns the URI to the new policy in the Location response header and the ID for the new policy is returned in the response payload. Tip: For details on creating and using the business policies supported by the Account API, see eBay business policies. Marketplaces and locales Policy instructions can be localized by providing a locale in the Accept-Language HTTP request header. For example, the following setting displays field values from the request body in German: Accept-Language: de-DE. Target the specific locale of a marketplace that supports multiple locales using the Content-Language request header. For example, target the French locale of the Canadian marketplace by specifying the fr-CA locale for Content-Language. Likewise, target the Dutch locale of the Belgium marketplace by setting Content-Language: nl-BE. Tip: For details on headers, see HTTP request headers.  # noqa: E501
+        This method creates a new return policy where the policy encapsulates seller's terms for returning items. Use the Metadata API method <b>getReturnPolicies</b> to determine which categories require you to supply a return policy for the marketplace(s) into which you list.  <br><br>Each policy targets a <b>marketplaceId</b> and <code>categoryTypes.</code><b>name</b> combination and you can create multiple policies for each combination.  <br><br>A successful request returns the URI to the new policy in the <b>Location</b> response header and the ID for the new policy is returned in the response payload.  <p class=\"tablenote\"><b>Tip:</b> For details on creating and using the business policies supported by the Account API, see <a href=\"/api-docs/sell/static/seller-accounts/business-policies.html\">eBay business policies</a>.</p>  <p><b>Marketplaces and locales</b></p>  <p>Policy instructions can be localized by providing a locale in the <code>Accept-Language</code> HTTP request header. For example, the following setting displays field values from the request body in German: <code>Accept-Language: de-DE</code>.</p>  <p>Target the specific locale of a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, target the French locale of the Canadian marketplace by specifying the <code>fr-CA</code> locale for <code>Content-Language</code>. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>.</p> <p class=\"tablenote\"><b>Tip:</b> For details on headers, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.</p>  # noqa: E501
 
         :param ReturnPolicyRequest body: Return policy request (required)
         :return: SetReturnPolicyResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi,
-                                       sell_account.ApiClient, 'create_return_policy', SellAccountException, True,
-                                       ['sell.account', 'return_policy'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi, sell_account.ApiClient, 'create_return_policy', SellAccountException, True, ['sell.account', 'return_policy'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_delete_return_policy(self, return_policy_id, **kwargs):  # noqa: E501
         """delete_return_policy  # noqa: E501
 
-        This method deletes a return policy. Supply the ID of the policy you want to delete in the returnPolicyId path parameter. Note that you cannot delete the default return policy.  # noqa: E501
+        This method deletes a return policy. Supply the ID of the policy you want to delete in the <b>returnPolicyId</b> path parameter. Note that you cannot delete the default return policy.  # noqa: E501
 
         :param str return_policy_id: This path parameter specifies the ID of the return policy you want to delete. (required)
         :return: None
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi,
-                                       sell_account.ApiClient, 'delete_return_policy', SellAccountException, True,
-                                       ['sell.account', 'return_policy'], return_policy_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi, sell_account.ApiClient, 'delete_return_policy', SellAccountException, True, ['sell.account', 'return_policy'], return_policy_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_get_return_policies(self, marketplace_id, **kwargs):  # noqa: E501
         """get_return_policies  # noqa: E501
 
-        This method retrieves all the return policies configured for the marketplace you specify using the marketplace_id query parameter. Marketplaces and locales Get the correct policies for a marketplace that supports multiple locales using the Content-Language request header. For example, get the policies for the French locale of the Canadian marketplace by specifying fr-CA for the Content-Language header. Likewise, target the Dutch locale of the Belgium marketplace by setting Content-Language: nl-BE. For details on header values, see HTTP request headers.  # noqa: E501
+        This method retrieves all the return policies configured for the marketplace you specify using the <code>marketplace_id</code> query parameter.  <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policies for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get the policies for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank\">HTTP request headers</a>.  # noqa: E501
 
         :param str marketplace_id: This query parameter specifies the ID of the eBay marketplace of the policy you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
         :return: ReturnPolicyResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi,
-                                       sell_account.ApiClient, 'get_return_policies', SellAccountException, True,
-                                       ['sell.account', 'return_policy'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi, sell_account.ApiClient, 'get_return_policies', SellAccountException, True, ['sell.account', 'return_policy'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_get_return_policy(self, return_policy_id, **kwargs):  # noqa: E501
         """get_return_policy  # noqa: E501
 
-        This method retrieves the complete details of the return policy specified by the returnPolicyId path parameter.  # noqa: E501
+        This method retrieves the complete details of the return policy specified by the <b>returnPolicyId</b> path parameter.  # noqa: E501
 
         :param str return_policy_id: This path parameter specifies the of the return policy you want to retrieve. (required)
         :return: ReturnPolicy
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi,
-                                       sell_account.ApiClient, 'get_return_policy', SellAccountException, True,
-                                       ['sell.account', 'return_policy'], return_policy_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi, sell_account.ApiClient, 'get_return_policy', SellAccountException, True, ['sell.account', 'return_policy'], return_policy_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_get_return_policy_by_name(self, marketplace_id, name, **kwargs):  # noqa: E501
         """get_return_policy_by_name  # noqa: E501
 
-        This method retrieves the complete details of a single return policy. Supply both the policy name and its associated marketplace_id in the request query parameters. Marketplaces and locales Get the correct policy for a marketplace that supports multiple locales using the Content-Language request header. For example, get a policy for the French locale of the Canadian marketplace by specifying fr-CA for the Content-Language header. Likewise, target the Dutch locale of the Belgium marketplace by setting Content-Language: nl-BE. For details on header values, see HTTP request headers.  # noqa: E501
+        This method retrieves the complete details of a single return policy. Supply both the policy <code>name</code> and its associated <code>marketplace_id</code> in the request query parameters.   <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policy for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get a policy for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.  # noqa: E501
 
         :param str marketplace_id: This query parameter specifies the ID of the eBay marketplace of the policy you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
         :param str name: This query parameter specifies the user-defined name of the return policy you want to retrieve. (required)
         :return: ReturnPolicy
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi,
-                                       sell_account.ApiClient, 'get_return_policy_by_name', SellAccountException, True,
-                                       ['sell.account', 'return_policy'], (marketplace_id, name),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi, sell_account.ApiClient, 'get_return_policy_by_name', SellAccountException, True, ['sell.account', 'return_policy'], (marketplace_id, name), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_update_return_policy(self, body, return_policy_id, **kwargs):  # noqa: E501
         """update_return_policy  # noqa: E501
 
-        This method updates an existing return policy. Specify the policy you want to update using the return_policy_id path parameter. Supply a complete policy payload with the updates you want to make; this call overwrites the existing policy with the new details specified in the payload.  # noqa: E501
+        This method updates an existing return policy. Specify the policy you want to update using the <b>return_policy_id</b> path parameter. Supply a complete policy payload with the updates you want to make; this call overwrites the existing policy with the new details specified in the payload.  # noqa: E501
 
         :param ReturnPolicyRequest body: Container for a return policy request. (required)
         :param str return_policy_id: This path parameter specifies the ID of the return policy you want to update. (required)
         :return: SetReturnPolicyResponse
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi,
-                                       sell_account.ApiClient, 'update_return_policy', SellAccountException, True,
-                                       ['sell.account', 'return_policy'], (body, return_policy_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.ReturnPolicyApi, sell_account.ApiClient, 'update_return_policy', SellAccountException, True, ['sell.account', 'return_policy'], (body, return_policy_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_create_or_replace_sales_tax(self, body, country_code, jurisdiction_id, **kwargs):  # noqa: E501
         """create_or_replace_sales_tax  # noqa: E501
 
-        This method creates or updates a sales tax table entry for a jurisdiction. Specify the tax table entry you want to configure using the two path parameters: countryCode and jurisdictionId. A tax table entry for a jurisdiction is comprised of two fields: one for the jurisdiction's sales-tax rate and another that's a boolean value indicating whether or not shipping and handling are taxed in the jurisdiction. You can set up tax tables for countries that support different tax jurisdictions. Currently, only Canada, India, and the US support separate tax jurisdictions. If you sell into any of these countries, you can set up tax tables for any of the country's jurisdictions. Retrieve valid jurisdiction IDs using getSalesTaxJurisdictions in the Metadata API. For details on using this call, see Establishing sales-tax tables. Important! Starting in January 2019, eBay will begin to calculate, collect, and remit sales tax on behalf of sellers for items shipped to customers. This feature is rolling out on specific dates to specific US states as defined on the following page: eBay sales tax collection. Once eBay starts to collect sales tax for a state, no action is required on the seller's part and there will be no charges or fees for eBay automatically calculating, collecting and remitting sales tax. The sales-tax collection process will apply to all the sales in the states that support this feature, whether the seller is located in or outside of the United States. When a buyer purchases an item on eBay, and the ship-to address is one of the states where eBay collects the sales tax, eBay will calculate and add the applicable sales tax at checkout. The buyer will pay both the cost of the item along with the sales tax. eBay will collect and remit the tax.  # noqa: E501
+        This method creates or updates a sales tax table entry for a jurisdiction. Specify the tax table entry you want to configure using the two path parameters: <b>countryCode</b> and <b>jurisdictionId</b>.  <br><br>A tax table entry for a jurisdiction is comprised of two fields: one for the jurisdiction's sales-tax rate and another that's a boolean value indicating whether or not shipping and handling are taxed in the jurisdiction.  <br><br>You can set up <i>tax tables</i> for countries that support different <i>tax jurisdictions</i>. Currently, only Canada, India, and the US support separate tax jurisdictions. If you sell into any of these countries, you can set up tax tables for any of the country's jurisdictions. Retrieve valid jurisdiction IDs using <b>getSalesTaxJurisdictions</b> in the Metadata API.  <br><br>For details on using this call, see <a href=\"/api-docs/sell/static/seller-accounts/tax-tables.html\">Establishing sales-tax tables</a>. <br><br><span class=\"tablenote\"><b>Important!</b> Starting in January 2019, eBay will begin to calculate, collect, and remit sales tax on behalf of sellers for items shipped to customers. This feature is rolling out on specific dates to specific US states as defined on the following page: <a href=\"https://www.ebay.com/help/selling/fees-credits-invoices/taxes-import-charges?id=4121#section4\" target=\"_balnk\">eBay sales tax collection</a>. <br><br>Once eBay starts to collect sales tax for a state, no action is required on the seller's part and there will be no charges or fees for eBay automatically calculating, collecting and remitting sales tax. The sales-tax collection process will apply to all the sales in the states that support this feature, whether the seller is located in or outside of the United States.  <br><br>When a buyer purchases an item on eBay, and the ship-to address is one of the states where eBay collects the sales tax, eBay will calculate and add the applicable sales tax at checkout. The buyer will pay both the cost of the item along with the sales tax. eBay will collect and remit the tax.</span>  # noqa: E501
 
         :param SalesTaxBase body: A container that describes the how the sales tax is calculated. (required)
-        :param str country_code: This path parameter specifies the two-letter ISO 3166 code for the country for which you want to create tax table entry. (required)
+        :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> code for the country for which you want to create tax table entry. (required)
         :param str jurisdiction_id: This path parameter specifies the ID of the sales-tax jurisdiction for the table entry you want to create. (required)
         :return: None
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.SalesTaxApi,
-                                       sell_account.ApiClient, 'create_or_replace_sales_tax', SellAccountException,
-                                       True, ['sell.account', 'sales_tax'], (body, country_code, jurisdiction_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.SalesTaxApi, sell_account.ApiClient, 'create_or_replace_sales_tax', SellAccountException, True, ['sell.account', 'sales_tax'], (body, country_code, jurisdiction_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_delete_sales_tax(self, country_code, jurisdiction_id, **kwargs):  # noqa: E501
         """delete_sales_tax  # noqa: E501
 
-        This call deletes a tax table entry for a jurisdiction. Specify the jurisdiction to delete using the countryCode and jurisdictionId path parameters.  # noqa: E501
+        This call deletes a tax table entry for a jurisdiction. Specify the jurisdiction to delete using the <b>countryCode</b> and <b>jurisdictionId</b> path parameters.  # noqa: E501
 
-        :param str country_code: This path parameter specifies the two-letter ISO 3166 code for the country whose tax table entry you want to delete. (required)
+        :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> code for the country whose tax table entry you want to delete. (required)
         :param str jurisdiction_id: This path parameter specifies the ID of the sales tax jurisdiction whose table entry you want to delete. (required)
         :return: None
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.SalesTaxApi,
-                                       sell_account.ApiClient, 'delete_sales_tax', SellAccountException, True,
-                                       ['sell.account', 'sales_tax'], (country_code, jurisdiction_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.SalesTaxApi, sell_account.ApiClient, 'delete_sales_tax', SellAccountException, True, ['sell.account', 'sales_tax'], (country_code, jurisdiction_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_get_sales_tax(self, country_code, jurisdiction_id, **kwargs):  # noqa: E501
         """get_sales_tax  # noqa: E501
 
-        This call gets the current tax table entry for a specific tax jurisdiction. Specify the jurisdiction to retrieve using the countryCode and jurisdictionId path parameters.  # noqa: E501
+        This call gets the current tax table entry for a specific tax jurisdiction. Specify the jurisdiction to retrieve using the <b>countryCode</b> and <b>jurisdictionId</b> path parameters.  # noqa: E501
 
-        :param str country_code: This path parameter specifies the two-letter ISO 3166 code for the country whose tax table you want to retrieve. (required)
+        :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> code for the country whose tax table you want to retrieve. (required)
         :param str jurisdiction_id: This path parameter specifies the ID of the sales tax jurisdiction for the tax table entry you want to retrieve. (required)
         :return: SalesTax
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.SalesTaxApi,
-                                       sell_account.ApiClient, 'get_sales_tax', SellAccountException, True,
-                                       ['sell.account', 'sales_tax'], (country_code, jurisdiction_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.SalesTaxApi, sell_account.ApiClient, 'get_sales_tax', SellAccountException, True, ['sell.account', 'sales_tax'], (country_code, jurisdiction_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_account_get_sales_taxes(self, country_code, **kwargs):  # noqa: E501
         """get_sales_taxes  # noqa: E501
 
-        Use this call to retrieve a sales tax table that the seller established for a specific country. Specify the tax table to retrieve using the country_code query parameter.  # noqa: E501
+        Use this call to retrieve a sales tax table that the seller established for a specific country. Specify the tax table to retrieve using the <code>country_code</code> query parameter.  # noqa: E501
 
-        :param str country_code: This path parameter specifies the two-letter ISO 3166 code for the country whose tax table you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:CountryCodeEnum (required)
+        :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> code for the country whose tax table you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:CountryCodeEnum (required)
         :return: SalesTaxes
         """
         try:
-            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.SalesTaxApi,
-                                       sell_account.ApiClient, 'get_sales_taxes', SellAccountException, True,
-                                       ['sell.account', 'sales_tax'], country_code, **kwargs)  # noqa: E501
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.SalesTaxApi, sell_account.ApiClient, 'get_sales_taxes', SellAccountException, True, ['sell.account', 'sales_tax'], country_code, **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def sell_analytics_get_customer_service_metric(self, customer_service_metric_type, evaluation_marketplace_id,
-                                                   evaluation_type, **kwargs):  # noqa: E501
+    def sell_analytics_get_customer_service_metric(self, customer_service_metric_type, evaluation_marketplace_id, evaluation_type, **kwargs):  # noqa: E501
         """get_customer_service_metric  # noqa: E501
 
-        Use this method to retrieve a seller's performance and rating for the customer service metric. Control the response from the getCustomerServiceMetric method using the following path and query parameters: customer_service_metric_type controls the type of customer service transactions evaluated for the metric rating. evaluation_type controls the period you want to review. evaluation_marketplace_id specifies the target marketplace for the evaluation. Currently, metric data is returned for only peer benchmarking. For more detail on the workings of peer benchmarking, see Service metrics policy.  # noqa: E501
+        Use this method to retrieve a seller's performance and rating for the customer service metric.  <br><br>Control the response from the <b>getCustomerServiceMetric</b> method using the following path and query parameters: <ul><li><b>customer_service_metric_type</b> controls the type of customer service transactions evaluated for the metric rating.</li> <li><b>evaluation_type</b> controls the period you want to review.</li> <li><b>evaluation_marketplace_id</b> specifies the target marketplace for the evaluation.</li></ul> Currently, metric data is returned for only peer benchmarking. For details on the workings of peer benchmarking, see <a href=\"https://www.ebay.com/help/policies/selling-policies/seller-performance-policy/service-metrics-policy?id=4769\" title=\"eBay Help pages\" target=\"_blank\">Service metrics policy</a>.  <br><br>For details on using and understanding the response from this method, see <a href=\"/api-docs/sell/static/performance/customer-service-metric.html\" title=\"Selling Integration Guide\">Interpreting customer service metric ratings</a>.  # noqa: E501
 
-        :param str customer_service_metric_type: Use this path parameter to specify the type of customer service metrics and benchmark data you want returned for the seller. Supported types are: ITEM_NOT_AS_DESCRIBED ITEM_NOT_RECEIVED (required)
-        :param str evaluation_marketplace_id: Use this query parameter to specify the Marketplace ID to evaluate for the customer service metrics and benchmark data. For the list of supported marketplaces, see Analytics API requirements and restrictions. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/analytics/types/bas:MarketplaceIdEnum (required)
-        :param str evaluation_type: Use this path parameter to specify the type of the seller evaluation you want returned, either: CURRENT &ndash; A monthly evaluation that occurs on the 20th of every month. PROJECTED &ndash; A daily evaluation that provides a projection of how the seller is currently performing with regards to the upcoming evaluation period. (required)
+        :param str customer_service_metric_type: Use this path parameter to specify the type of customer service metrics and benchmark data you want returned for the seller. Supported types are: <ul><li><code>ITEM_NOT_AS_DESCRIBED</code></li><li><code>ITEM_NOT_RECEIVED</code></li></ul> (required)
+        :param str evaluation_marketplace_id: Use this query parameter to specify the Marketplace ID to evaluate for the customer service metrics and benchmark data.  <br><br>For the list of supported marketplaces, see <a href=\"/api-docs/sell/analytics/static/overview.html#requirements\" title=\"Analytics API Overview\" target=\"_blank\">Analytics API requirements and restrictions</a>. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/analytics/types/bas:MarketplaceIdEnum (required)
+        :param str evaluation_type: Use this path parameter to specify the type of the seller evaluation you want returned, either: <ul><li><code>CURRENT</code> &ndash; A monthly evaluation that occurs on the 20th of every month.</li> <li><code>PROJECTED</code> &ndash; A daily evaluation that provides a projection of how the seller is currently performing with regards to the upcoming evaluation period.</li></ul> (required)
         :return: GetCustomerServiceMetricResponse
         """
         try:
-            return self._method_single(sell_analytics.Configuration, '/sell/analytics/v1',
-                                       sell_analytics.CustomerServiceMetricApi, sell_analytics.ApiClient,
-                                       'get_customer_service_metric', SellAnalyticsException, True,
-                                       ['sell.analytics', 'customer_service_metric'],
-                                       (customer_service_metric_type, evaluation_marketplace_id, evaluation_type),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_analytics.Configuration, '/sell/analytics/v1', sell_analytics.CustomerServiceMetricApi, sell_analytics.ApiClient, 'get_customer_service_metric', SellAnalyticsException, True, ['sell.analytics', 'customer_service_metric'], (customer_service_metric_type, evaluation_marketplace_id, evaluation_type), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_analytics_find_seller_standards_profiles(self, **kwargs):  # noqa: E501
         """find_seller_standards_profiles  # noqa: E501
 
-        This call retrieves all the standards profiles for the associated seller. A standards profile is a set of eBay seller metrics and the seller's associated compliance values (either TOP_RATED, ABOVE_STANDARD, or BELOW_STANDARD). A seller's multiple profiles are distinguished by two criteria, a &quot;program&quot; and a &quot;cycle.&quot; A profile's program is one of three regions where the seller may have done business, or PROGRAM_GLOBAL to indicate all marketplaces where the seller has done business. The cycle value specifies whether the standards compliance values were determined at the last official eBay evaluation or at the time of the request.  # noqa: E501
+        This call retrieves all the standards profiles for the associated seller.  <br><br>A <i>standards profile </i> is a set of eBay seller metrics and the seller's associated compliance values (either <code>TOP_RATED</code>, <code>ABOVE_STANDARD</code>, or <code>BELOW_STANDARD</code>).  <br><br>A seller's multiple profiles are distinguished by two criteria, a \"program\" and a \"cycle.\" A profile's <i>program </i> is one of three regions where the seller may have done business, or <code>PROGRAM_GLOBAL</code> to indicate all marketplaces where the seller has done business. The <i>cycle</i> value specifies whether the standards compliance values were determined at the last official eBay evaluation or at the time of the request.  # noqa: E501
 
         :return: FindSellerStandardsProfilesResponse
         """
         try:
-            return self._method_single(sell_analytics.Configuration, '/sell/analytics/v1',
-                                       sell_analytics.SellerStandardsProfileApi, sell_analytics.ApiClient,
-                                       'find_seller_standards_profiles', SellAnalyticsException, True,
-                                       ['sell.analytics', 'seller_standards_profile'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_analytics.Configuration, '/sell/analytics/v1', sell_analytics.SellerStandardsProfileApi, sell_analytics.ApiClient, 'find_seller_standards_profiles', SellAnalyticsException, True, ['sell.analytics', 'seller_standards_profile'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_analytics_get_seller_standards_profile(self, cycle, program, **kwargs):  # noqa: E501
         """get_seller_standards_profile  # noqa: E501
 
-        This call retrieves a single standards profile for the associated seller. A standards profile is a set of eBay seller metrics and the seller's associated compliance values (either TOP_RATED, ABOVE_STANDARD, or BELOW_STANDARD). A seller can have multiple profiles distinguished by two criteria, a &quot;program&quot; and a &quot;cycle.&quot; A profile's program is one of three regions where the seller may have done business, or PROGRAM_GLOBAL to indicate all marketplaces where the seller has done business. The cycle value specifies whether the standards compliance values were determined at the last official eBay evaluation (CURRENT) or at the time of the request (PROJECTED). Both cycle and a program values are required URI parameters for this method.  # noqa: E501
+        This call retrieves a single standards profile for the associated seller.  <br><br>A <i>standards profile </i> is a set of eBay seller metrics and the seller's associated compliance values (either <code>TOP_RATED</code>, <code>ABOVE_STANDARD</code>, or <code>BELOW_STANDARD</code>).  <br><br>A seller can have multiple profiles distinguished by two criteria, a \"program\" and a \"cycle.\" A profile's <i>program </i> is one of three regions where the seller may have done business, or <code>PROGRAM_GLOBAL</code> to indicate all marketplaces where the seller has done business. The <i>cycle</i> value specifies whether the standards compliance values were determined at the last official eBay evaluation (<code>CURRENT</code>) or at the time of the request (<code>PROJECTED</code>). Both cycle and a program values are required URI parameters for this method.  # noqa: E501
 
-        :param str cycle: The period covered by the returned standards profile evaluation. Supply one of two values, CURRENT means the response reflects eBay's most recent monthly standards evaluation and PROJECTED means the response reflect the seller's projected monthly evaluation, as calculated at the time of the request. (required)
-        :param str program: This input value specifies the region used to determine the seller's standards profile. Supply one of the four following values, PROGRAM_DE, PROGRAM_UK, PROGRAM_US, or PROGRAM_GLOBAL. (required)
+        :param str cycle: The period covered by the returned standards profile evaluation.  <br><br>Supply one of two values, <code>CURRENT</code> means the response reflects eBay's most recent monthly standards evaluation and <code>PROJECTED</code> means the response reflect the seller's projected monthly evaluation, as calculated at the time of the request. (required)
+        :param str program: This input value specifies the region used to determine the seller's standards profile.  <br><br>Supply one of the four following values, <code>PROGRAM_DE</code>, <code>PROGRAM_UK</code>, <code>PROGRAM_US</code>, or <code>PROGRAM_GLOBAL</code>. (required)
         :return: StandardsProfile
         """
         try:
-            return self._method_single(sell_analytics.Configuration, '/sell/analytics/v1',
-                                       sell_analytics.SellerStandardsProfileApi, sell_analytics.ApiClient,
-                                       'get_seller_standards_profile', SellAnalyticsException, True,
-                                       ['sell.analytics', 'seller_standards_profile'], (cycle, program),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_analytics.Configuration, '/sell/analytics/v1', sell_analytics.SellerStandardsProfileApi, sell_analytics.ApiClient, 'get_seller_standards_profile', SellAnalyticsException, True, ['sell.analytics', 'seller_standards_profile'], (cycle, program), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_analytics_get_traffic_report(self, **kwargs):  # noqa: E501
         """get_traffic_report  # noqa: E501
 
-        This method returns a report that details the user traffic received by a seller's listings. A traffic report gives sellers the ability to review how often their listings appeared on eBay, how many times their listings are viewed, and how many purchases were made. The report also returns the report's start and end dates, and the date the information was last updated. When using this call: Be sure to URL-encode the values you pass in query parameters, as described in URI parameters. See the request samples below for details. You can only specify a single metric in the sort parameter and the specified metric must be listed in the metric parameter of your request. Parameter names are case sensitive, but metric names are not. For example, the following are correct: sort=LISTING_IMPRESSION_TOTAL sort=listing_impression_total metric=listing_impression_total However, these are incorrect: SORT=LISTING_IMPRESSION_TOTAL SORT=listing_impression_total Metric=listing_impression_total For more information, see Traffic report details.  # noqa: E501
+        This method returns a report that details the user traffic received by a seller's listings. <br><br>A traffic report gives sellers the ability to review how often their listings appeared on eBay, how many times their listings are viewed, and how many purchases were made. The report also returns the report's start and end dates, and the date the information was last updated.  <br><br>When using this call: <ul><li>Be sure to URL-encode the values you pass in query parameters, as described in <a href=\"/api-docs/static/rest-request-components.html#parameters\">URI parameters</a>. See the request samples below for details.</li> <li>You can only specify a single metric in the <b>sort</b> parameter and the specified metric must be listed in the <b>metric</b> parameter of your request.</li> <li>Parameter names are case sensitive, but metric names are not. <p>For example, the following are <i>correct</i>:</p> <ul><li><code>sort=LISTING_IMPRESSION_TOTAL</code></li> <li><code>sort=listing_impression_total</code></li> <li><code>metric=listing_impression_total</code></li></ul> However, these are <i>incorrect</i>: <ul><li><code>SORT=LISTING_IMPRESSION_TOTAL</code></li> <li><code>SORT=listing_impression_total</code></li> <li><code>Metric=listing_impression_total</code></li></ul></ul> For more information, see <a href=\"/api-docs/sell/static/performance/traffic-report.html\">Traffic report details</a><br /><br /><span class=\"tablenote\"><b>Note:</b> Beginning on October 4, 2021, the options for the following <b>metric</b> inputs will change:<ul><li>Sorting on the <b>SALES_CONVERSION_RATE</b> metric will no longer be supported</li><li>Sorting on the <b>TRANSACTION</b> metric will no longer support ascending order; only descending order will be supported</li><li><b>LISTING_VIEWS_SOURCE_DIRECT</b> will only support a 90-day query range from October 4, 2021 until early January 2022, at which time it will again support a two year query range.</li></ul></span>  # noqa: E501
 
-        :param str dimension: This query parameter specifies the dimension, or &quot;attribute,&quot; that is applied to the report metric. Valid values: DAY or LISTING Examples If you specify dimension=DAY and metric=CLICK_THROUGH_RATE, the traffic report contains the number of times an item displayed on a search results page and the buyer clicked through to the View Item page for each day in the date range, as in: 12-06-17: 32, 12-07-17: 54, ... If you specify dimension=LISTING and metric=LISTING_IMPRESSION_STORE, the traffic report contains the number of times that listing appeared on the seller's store during the specified date range. For example, LISTING_IMPRESSION_STORE: 157 means the item appeared 157 times in the store during the date range.
-        :param str filter: This query parameter refines the information returned in the traffic report. Configure the following properties of the filter parameter to tune the traffic report to your needs: date_range Limits the report to the specified range of dates. Format the date range by enclosing the earliest date and end date for the report in brackets (&quot;[ ]&quot;), as follows: [YYYYMMDD..YYYYMMDD] The maximum range between the start and end dates is 90 days, and the earliest start date you can specify is two years prior to the current date, which is defined as 730 days (365 * 2), not accounting for Leap Year. The last date for which traffic data exists is a value called lastUpdatedDate. eBay returns an error if you specify a date range greater than 90 days, or the start date is after the lastUpdatedDate. If the specified end date is beyond the lastUpdatedDate, eBay returns data up to the lastUpdatedDate. Required: Always listing_ids This filter limits the results to only the supplied list of listingId values. You can specify to 200 different listingId values. Enclose the list of IDs with curly braces (&quot;{ }&quot;), and separate multiple values with a pipe character (&quot;|&quot;). This filter only returns data for listings that have been either active or sold in last 90 days, and any unsold listings in the last 30 days. All listings must be the seller's and they must be listed on the marketplace specified by the marketplace_ids filter argument. marketplace_ids This filter limits the report to seller data related to only the specified marketplace ID (currently the filter allows only a single marketplace ID). Enclose the marketplace ID in curly braces (&quot;{ }&quot;). Valid values: EBAY_AU EBAY_DE EBAY_GB EBAY_US EBAY_MOTORS Required if you set the dimension parameter to DAY. traffic_source Limits the report to either Promoted Listings items or non-Promoted Listings (organic) items. Valid values are ORGANIC and PROMOTED_LISTINGS. Enclose the list of values with curly braces (&quot;{ }&quot;), and separate multiple values with a pipe character (&quot;|&quot;) The default is both values. Example filter parameter The following example shows how to configure the filter parameter with the marketplace_ids and date_range filters: filter=marketplace_ids:{EBAY_US},date_range:[20170601..20170828] Note: You must URL encode all the values you supply in the filter parameter, as described in URL parameters. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/analytics/types/csb:FilterField
-        :param str metric: This query parameter specifies the metrics you want covered in the report. Specify a comma-separated list of the metrics you want included in the report. Valid values: CLICK_THROUGH_RATE The number of times an item displays on the search results page divided by the number of times buyers clicked through to its View Item page. Localized name: Click through rate LISTING_IMPRESSION_SEARCH_RESULTS_PAGE The number of times the seller's listings displayed on the search results page. Note, the listing might not have been visible to the buyer due to its position on the page. Localized name: Listing impressions from the search results page LISTING_IMPRESSION_STORE The number of times the seller's listings displayed on the seller's store. Note, the listing might not have been visible to the buyer due to its position on the page. Localized name: Listing impressions from your Store LISTING_IMPRESSION_TOTAL The total number of times the seller's listings displayed on the search results page OR in the seller's store. The item is counted each time it displays on either page. However, the listing might not have been visible to the buyer due to its position on the page. This is a combination of: LISTING_IMPRESSION_SEARCH_RESULTS_PAGE + LISTING_IMPRESSION_STORE. Localized name: Total listing impressions LISTING_VIEWS_SOURCE_DIRECT The number of times a View Item page was directly accessed, such as when a buyer navigates to the page using a bookmark. Localized name: Direct views LISTING_VIEWS_SOURCE_OFF_EBAY The number of times a View Item page was accessed via a site other than eBay, such as when a buyer clicks on a link to the listing from a search engine page. Localized name: Off eBay views LISTING_VIEWS_SOURCE_OTHER_EBAY The number of times a View Item page was accessed from an eBay page that is not either the search results page or the seller's store. Localized name: Views from non-search and non-store pages within eBay LISTING_VIEWS_SOURCE_SEARCH_RESULTS_PAGE The number of times the item displayed on the search results page. Localized name: Views on the search results page LISTING_VIEWS_SOURCE_STORE The number of times a View Item page was accessed via the seller's store. Localized name: Views from your Store LISTING_VIEWS_TOTAL Total number of listings viewed. This number sums: LISTING_VIEWS_SOURCE_DIRECT LISTING_VIEWS_SOURCE_OFF_EBAY LISTING_VIEWS_SOURCE_OTHER_EBAY LISTING_VIEWS_SOURCE_SEARCH_RESULTS_PAGE LISTING_VIEWS_SOURCE_STORE. Localized name: Total views SALES_CONVERSION_RATE The number of completed transactions divided by the number of View Item page views. Equals: TRANSACTION / LISTING_VIEWS_TOTAL Localized name: Sales conversion rate TRANSACTION The total number of completed transactions. Localized name: Transaction count
-        :param str sort: This query parameter sorts the report on the specified metric. The metric you specify must be included in the configuration of the report's metric parameter. Sorting is helpful when you want to review how a specific metric is performing, such as the CLICK_THROUGH_RATE. Reports can be sorted in ascending or descending order. Precede the value of a descending-order request with a minus sign (&quot;-&quot;), for example: sort=-CLICK_THROUGH_RATE. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/analytics/types/csb:SortField
+        :param str dimension: This query parameter specifies the <i>dimension</i>, or \"attribute,\" that is applied to the report <b>metric</b>.  <br><br><b>Valid values:</b> <code>DAY</code> or <code>LISTING</code>  <br><br><b>Examples</b> <ul><li>If you specify <code>dimension=DAY</code> and <code>metric=CLICK_THROUGH_RATE</code>, the traffic report contains the number of times an item displayed on a search results page and the buyer clicked through to the View Item page for each day in the date range, as in: <br><code>12-06-17: 32, 12-07-17: 54, ...</code></li> <li>If you specify <code>dimension=LISTING</code> and <code>metric=LISTING_IMPRESSION_STORE</code>, the traffic report contains the number of times that listing appeared on the seller's store during the specified date range. <br><br>For example, <code>LISTING_IMPRESSION_STORE: 157</code> means the item appeared 157 times in the store during the date range.</li></ul> <!-- Dimension - Enables user to specify input to slice the data that the user is interested in - For example specify listing and days as dimensions to get traffic report for all the sellers listings grouped by listing and days. Refer to DimensionEnum) -->
+        :param str filter: This query parameter refines the information returned in the traffic report.  <br><br>Configure the following properties of the <b>filter</b> parameter to tune the traffic report to your needs: <ul> <li><b>date_range</b> <br>Limits the report to the specified range of dates.  <br><br>Format the date range by enclosing the earliest date and end date for the report in brackets (\"<code>[ ]</code>\"), as follows: <br><code>[YYYYMMDD..YYYYMMDD]</code>  <br><br>The maximum range between the start and end dates is 90 days, and the earliest start date you can specify is two years prior to the current date, which is defined as 730 days (365 &#42; 2), not accounting for Leap Year.  <br><br><a name=\"lastUDate\"></a>The last date for which traffic data exists is a value called <b>lastUpdatedDate</b>. eBay returns an error if you specify a date range greater than 90 days, or the start date is after the lastUpdatedDate. If the specified end date is beyond the lastUpdatedDate, eBay returns data up to the lastUpdatedDate.  <br><br><b>Required:</b> Always</li> <li><b>listing_ids</b> <br>This filter limits the results to only the supplied list of <b>listingId</b> values. <br><br>You can specify to 200 different <b>listingId</b> values. Enclose the list of IDs with curly braces (\"<code>{ }</code>\"), and separate multiple values with a pipe character (\"<code>|</code>\").  <br><br>This filter only returns data for listings that have been either active or sold in last 90 days, and any unsold listings in the last 30 days. All listings must be the seller's and they  must be listed on the marketplace specified by the <b>marketplace_ids</b> filter argument.</li> <li><b>marketplace_ids</b> <br>This filter limits the report to seller data related to only the specified marketplace ID (currently the filter allows only a single marketplace ID). Enclose the marketplace ID in curly braces (\"<code>{ }</code>\").  <br><br><b>Valid values:</b> <ul class=\"compact\"><li><code>EBAY_AU</code></li> <li><code>EBAY_DE</code></li> <li><code>EBAY_GB</code></li> <li><code>EBAY_US</code></li> <li><code>EBAY_MOTORS</code></li></ul> <br><b>Required if</b> you set the <b>dimension</b> parameter to <code>DAY</code>.</li></ul> <br><b>Example filter parameter</b> <br>The following example shows how to configure the <b>filter</b> parameter with the <b>marketplace_ids</b> and <b>date_range</b> filters: <p><code>filter=marketplace_ids:{EBAY_US},date_range:[20170601..20170828]</code> <p><span class=\"tablenote\"><b>Note: </b> You must URL encode all the values you supply in the <b>filter</b> parameter, as described in <a href=\"/api-docs/static/rest-request-components.html#parameters\">URL parameters</a>.</span></p> <!-- **Filter results based on the specified filter parameters- window_days (WindowDaysEnum), date_range, marketplace_id (MarketplaceIdEnum - Only EBAY_US, EBAY_MOTORS_US, EBAY_GB, EBAY_AU, EBAY_DE are supported), listing_ids, traffic_source (Takes a list. Supported values: ORGANIC, PROMOTED_LISTINGS). Valid filters come from QueryParamEnum --> For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/analytics/types/csb:FilterField
+        :param str metric: <a name=\"metrics\"></a>This query parameter specifies the metrics you want covered in the report.  <br><br>Specify a comma-separated list of the metrics you want included in the report.  <br><br><b>Valid values:</b><ul> <li><b>CLICK_THROUGH_RATE</b>  <br>The number of times an item displays on the search results page divided by the number of times buyers clicked through to its View Item page. <br><b>Localized name: </b> Click through rate</li> <li><b>LISTING_IMPRESSION_SEARCH_RESULTS_PAGE </b> <br>The number of times the seller's listings displayed on the search results page. Note, the listing might not have been visible to the buyer due to its position on the page. <br><b>Localized name: </b> Listing impressions from the search results page</li> <li><b>LISTING_IMPRESSION_STORE </b> <br> The number of times the seller's listings displayed on the seller's store. Note, the listing might not have been visible to the buyer due to its position on the page. <br><b>Localized name: </b> Listing impressions from your Store</li> <li><b>LISTING_IMPRESSION_TOTAL</b>  <br> The total number of times the seller's listings displayed on the search results page OR in the seller's store. The item is counted each time it displays on either page. However, the listing might not have been visible to the buyer due to its position on the page. <br>This is a combination of:  LISTING_IMPRESSION_SEARCH_RESULTS_PAGE <b>+</b> LISTING_IMPRESSION_STORE. <br><b>Localized name: </b> Total listing impressions</li> <li><b>LISTING_VIEWS_SOURCE_DIRECT</b> <br> The number of times a View Item page was directly accessed, such as when a buyer navigates to the page using a bookmark.<br><b>Localized name: </b> Direct views</li> <li><b> LISTING_VIEWS_SOURCE_OFF_EBAY</b>  <br>The number of times a View Item page was accessed via a site other than eBay, such as when a buyer clicks on a link to the listing from a search engine page. <br><b>Localized name: </b> Off eBay views</li> <li><b>LISTING_VIEWS_SOURCE_OTHER_EBAY</b>  <br> The number of times a View Item page was accessed from an eBay page that is not either the search results page or the seller's store. <br><b>Localized name: </b>Views from non-search and non-store pages within eBay</li> <li><b>LISTING_VIEWS_SOURCE_SEARCH_RESULTS_PAGE</b>  <br> The number of times the item displayed on the search results page. <br><b>Localized name: </b> Views on the search results page</li> <li><b>LISTING_VIEWS_SOURCE_STORE</b>  <br> The number of times a View Item page was accessed via the seller's store. <br><b>Localized name: </b> Views from your Store</li> <li><b>LISTING_VIEWS_TOTAL </b> <br> Total number of listings viewed. <br>This number sums: <br>LISTING_VIEWS_SOURCE_DIRECT <br> LISTING_VIEWS_SOURCE_OFF_EBAY <br>LISTING_VIEWS_SOURCE_OTHER_EBAY <br>LISTING_VIEWS_SOURCE_SEARCH_RESULTS_PAGE <br>LISTING_VIEWS_SOURCE_STORE. <br><b>Localized name: </b> Total views</li> <li><b>SALES_CONVERSION_RATE</b> <br>The number of completed transactions divided by the number of View Item page views. Equals: <br>TRANSACTION <b>/</b> LISTING_VIEWS_TOTAL <br><b>Localized name: </b> Sales conversion rate</li> <li><b>TRANSACTION</b>  <br>The total number of completed transactions. <br><b>Localized name: </b> Transaction count</li></ul> <!-- Metric - Lets the user specify the list of fields that they would like to see in the report. Allowed values: LISTING_IMPRESSION_SEARCH_RESULTS_PAGE, LISTING_IMPRESSION_STORE, LISTING_IMPRESSION_TOTAL, LISTING_VIEWS_SOURCE_SEARCH_RESULTS_PAGE, LISTING_VIEWS_SOURCE_STORE, LISTING_VIEWS_SOURCE_DIRECT, LISTING_VIEWS_SOURCE_OTHER_EBAY, LISTING_VIEWS_SOURCE_OFF_EBAY, LISTING_VIEWS_TOTAL, TRANSACTION_TOTAL, CLICK_THROUGH_RATE, SALES_CONVERSION_RATE (DataMetricEnum) -->
+        :param str sort: This query parameter sorts the report on the specified metric.  <br><br>The metric you specify must be included in the configuration of the report's <a href=\"#metrics\">metric</a> parameter.  <br><br>Sorting is helpful when you want to review how a specific metric is performing, such as the CLICK_THROUGH_RATE.  <br><br>Reports can be sorted in ascending or descending order. Precede the value of a descending-order request with a minus sign (\"<code>-</code>\"), for example: <code>sort=-CLICK_THROUGH_RATE</code>.<br /><br /><span class=\"tablenote\"><b>Note:</b> Beginning on October 4, 2021, the options for the following <b>metric</b> inputs will change:<ul><li>Sorting on the <b>SALES_CONVERSION_RATE</b> metric will no longer be supported</li><li>Sorting on the <b>TRANSACTION</b> metric will no longer support ascending order; only descending order will be supported</li><li><b>LISTING_VIEWS_SOURCE_DIRECT</b> will only support a 90-day query range from October 4, 2021 until early January 2022, at which time it will again support a two year query range.</li></ul></span><!-- Sort order for a collection of resources: Specify the metric value to be sorted. Allowed values are from DataMetricEnum --> For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/analytics/types/csb:SortField
         :return: Report
         """
         try:
-            return self._method_single(sell_analytics.Configuration, '/sell/analytics/v1',
-                                       sell_analytics.TrafficReportApi, sell_analytics.ApiClient, 'get_traffic_report',
-                                       SellAnalyticsException, True, ['sell.analytics', 'traffic_report'], None,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_analytics.Configuration, '/sell/analytics/v1', sell_analytics.TrafficReportApi, sell_analytics.ApiClient, 'get_traffic_report', SellAnalyticsException, True, ['sell.analytics', 'traffic_report'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2493,11 +2190,7 @@ class API:
         :return: PagedComplianceViolationCollection
         """
         try:
-            return self._method_paged(sell_compliance.Configuration, '/sell/compliance/v1',
-                                      sell_compliance.ListingViolationApi, sell_compliance.ApiClient,
-                                      'get_listing_violations', SellComplianceException, True,
-                                      ['sell.compliance', 'listing_violation'], x_ebay_c_marketplace_id,
-                                      **kwargs)  # noqa: E501
+            return self._method_paged(sell_compliance.Configuration, '/sell/compliance/v1', sell_compliance.ListingViolationApi, sell_compliance.ApiClient, 'get_listing_violations', SellComplianceException, True, ['sell.compliance', 'listing_violation'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2510,10 +2203,7 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_compliance.Configuration, '/sell/compliance/v1',
-                                       sell_compliance.ListingViolationApi, sell_compliance.ApiClient,
-                                       'suppress_violation', SellComplianceException, True,
-                                       ['sell.compliance', 'listing_violation'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_compliance.Configuration, '/sell/compliance/v1', sell_compliance.ListingViolationApi, sell_compliance.ApiClient, 'suppress_violation', SellComplianceException, True, ['sell.compliance', 'listing_violation'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2527,10 +2217,7 @@ class API:
         :return: ComplianceSummary
         """
         try:
-            return self._method_single(sell_compliance.Configuration, '/sell/compliance/v1',
-                                       sell_compliance.ListingViolationSummaryApi, sell_compliance.ApiClient,
-                                       'get_listing_violations_summary', SellComplianceException, True,
-                                       ['sell.compliance', 'listing_violation_summary'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_compliance.Configuration, '/sell/compliance/v1', sell_compliance.ListingViolationSummaryApi, sell_compliance.ApiClient, 'get_listing_violations_summary', SellComplianceException, True, ['sell.compliance', 'listing_violation_summary'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2544,10 +2231,7 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.CustomerServiceMetricTaskApi,
-                                       sell_feed.ApiClient, 'create_customer_service_metric_task', SellFeedException,
-                                       True, ['sell.feed', 'customer_service_metric_task'], (body, accept_language),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.CustomerServiceMetricTaskApi, sell_feed.ApiClient, 'create_customer_service_metric_task', SellFeedException, True, ['sell.feed', 'customer_service_metric_task'], (body, accept_language), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2560,9 +2244,7 @@ class API:
         :return: ServiceMetricsTask
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.CustomerServiceMetricTaskApi,
-                                       sell_feed.ApiClient, 'get_customer_service_metric_task', SellFeedException, True,
-                                       ['sell.feed', 'customer_service_metric_task'], task_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.CustomerServiceMetricTaskApi, sell_feed.ApiClient, 'get_customer_service_metric_task', SellFeedException, True, ['sell.feed', 'customer_service_metric_task'], task_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2579,9 +2261,7 @@ class API:
         :return: CustomerServiceMetricTaskCollection
         """
         try:
-            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.CustomerServiceMetricTaskApi,
-                                      sell_feed.ApiClient, 'get_customer_service_metric_tasks', SellFeedException, True,
-                                      ['sell.feed', 'customer_service_metric_task'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.CustomerServiceMetricTaskApi, sell_feed.ApiClient, 'get_customer_service_metric_tasks', SellFeedException, True, ['sell.feed', 'customer_service_metric_task'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2595,9 +2275,7 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.InventoryTaskApi,
-                                       sell_feed.ApiClient, 'create_inventory_task', SellFeedException, True,
-                                       ['sell.feed', 'inventory_task'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.InventoryTaskApi, sell_feed.ApiClient, 'create_inventory_task', SellFeedException, True, ['sell.feed', 'inventory_task'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2610,9 +2288,7 @@ class API:
         :return: InventoryTask
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.InventoryTaskApi,
-                                       sell_feed.ApiClient, 'get_inventory_task', SellFeedException, True,
-                                       ['sell.feed', 'inventory_task'], task_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.InventoryTaskApi, sell_feed.ApiClient, 'get_inventory_task', SellFeedException, True, ['sell.feed', 'inventory_task'], task_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2630,9 +2306,7 @@ class API:
         :return: InventoryTaskCollection
         """
         try:
-            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.InventoryTaskApi,
-                                      sell_feed.ApiClient, 'get_inventory_tasks', SellFeedException, True,
-                                      ['sell.feed', 'inventory_task'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.InventoryTaskApi, sell_feed.ApiClient, 'get_inventory_tasks', SellFeedException, True, ['sell.feed', 'inventory_task'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2646,9 +2320,7 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.OrderTaskApi,
-                                       sell_feed.ApiClient, 'create_order_task', SellFeedException, True,
-                                       ['sell.feed', 'order_task'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.OrderTaskApi, sell_feed.ApiClient, 'create_order_task', SellFeedException, True, ['sell.feed', 'order_task'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2661,9 +2333,7 @@ class API:
         :return: OrderTask
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.OrderTaskApi,
-                                       sell_feed.ApiClient, 'get_order_task', SellFeedException, True,
-                                       ['sell.feed', 'order_task'], task_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.OrderTaskApi, sell_feed.ApiClient, 'get_order_task', SellFeedException, True, ['sell.feed', 'order_task'], task_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2681,9 +2351,7 @@ class API:
         :return: OrderTaskCollection
         """
         try:
-            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.OrderTaskApi,
-                                      sell_feed.ApiClient, 'get_order_tasks', SellFeedException, True,
-                                      ['sell.feed', 'order_task'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.OrderTaskApi, sell_feed.ApiClient, 'get_order_tasks', SellFeedException, True, ['sell.feed', 'order_task'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2696,9 +2364,7 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi,
-                                       sell_feed.ApiClient, 'create_schedule', SellFeedException, True,
-                                       ['sell.feed', 'schedule'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi, sell_feed.ApiClient, 'create_schedule', SellFeedException, True, ['sell.feed', 'schedule'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2711,9 +2377,7 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi,
-                                       sell_feed.ApiClient, 'delete_schedule', SellFeedException, True,
-                                       ['sell.feed', 'schedule'], schedule_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi, sell_feed.ApiClient, 'delete_schedule', SellFeedException, True, ['sell.feed', 'schedule'], schedule_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2726,9 +2390,7 @@ class API:
         :return: StreamingOutput
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi,
-                                       sell_feed.ApiClient, 'get_latest_result_file', SellFeedException, True,
-                                       ['sell.feed', 'schedule'], schedule_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi, sell_feed.ApiClient, 'get_latest_result_file', SellFeedException, True, ['sell.feed', 'schedule'], schedule_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2741,9 +2403,7 @@ class API:
         :return: UserScheduleResponse
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi,
-                                       sell_feed.ApiClient, 'get_schedule', SellFeedException, True,
-                                       ['sell.feed', 'schedule'], schedule_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi, sell_feed.ApiClient, 'get_schedule', SellFeedException, True, ['sell.feed', 'schedule'], schedule_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2756,9 +2416,7 @@ class API:
         :return: ScheduleTemplateResponse
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi,
-                                       sell_feed.ApiClient, 'get_schedule_template', SellFeedException, True,
-                                       ['sell.feed', 'schedule'], schedule_template_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi, sell_feed.ApiClient, 'get_schedule_template', SellFeedException, True, ['sell.feed', 'schedule'], schedule_template_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2773,9 +2431,7 @@ class API:
         :return: ScheduleTemplateCollection
         """
         try:
-            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi,
-                                      sell_feed.ApiClient, 'get_schedule_templates', SellFeedException, True,
-                                      ['sell.feed', 'schedule'], feed_type, **kwargs)  # noqa: E501
+            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi, sell_feed.ApiClient, 'get_schedule_templates', SellFeedException, True, ['sell.feed', 'schedule'], feed_type, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2790,9 +2446,7 @@ class API:
         :return: UserScheduleCollection
         """
         try:
-            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi,
-                                      sell_feed.ApiClient, 'get_schedules', SellFeedException, True,
-                                      ['sell.feed', 'schedule'], feed_type, **kwargs)  # noqa: E501
+            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi, sell_feed.ApiClient, 'get_schedules', SellFeedException, True, ['sell.feed', 'schedule'], feed_type, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2806,9 +2460,7 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi,
-                                       sell_feed.ApiClient, 'update_schedule', SellFeedException, True,
-                                       ['sell.feed', 'schedule'], (body, schedule_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.ScheduleApi, sell_feed.ApiClient, 'update_schedule', SellFeedException, True, ['sell.feed', 'schedule'], (body, schedule_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2822,9 +2474,7 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient,
-                                       'create_task', SellFeedException, True, ['sell.feed', 'task'], body,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient, 'create_task', SellFeedException, True, ['sell.feed', 'task'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2837,9 +2487,7 @@ class API:
         :return: StreamingOutput
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient,
-                                       'get_input_file', SellFeedException, True, ['sell.feed', 'task'], task_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient, 'get_input_file', SellFeedException, True, ['sell.feed', 'task'], task_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2852,9 +2500,7 @@ class API:
         :return: StreamingOutput
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient,
-                                       'get_result_file', SellFeedException, True, ['sell.feed', 'task'], task_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient, 'get_result_file', SellFeedException, True, ['sell.feed', 'task'], task_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2867,9 +2513,7 @@ class API:
         :return: Task
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient,
-                                       'get_task', SellFeedException, True, ['sell.feed', 'task'], task_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient, 'get_task', SellFeedException, True, ['sell.feed', 'task'], task_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2887,9 +2531,7 @@ class API:
         :return: TaskCollection
         """
         try:
-            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient,
-                                      'get_tasks', SellFeedException, True, ['sell.feed', 'task'], None,
-                                      **kwargs)  # noqa: E501
+            return self._method_paged(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient, 'get_tasks', SellFeedException, True, ['sell.feed', 'task'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2910,156 +2552,134 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient,
-                                       'upload_file', SellFeedException, True, ['sell.feed', 'task'], task_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_feed.Configuration, '/sell/feed/v1', sell_feed.TaskApi, sell_feed.ApiClient, 'upload_file', SellFeedException, True, ['sell.feed', 'task'], task_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_finances_get_payout(self, payout_id, **kwargs):  # noqa: E501
         """get_payout  # noqa: E501
 
-        This method retrieves details on a specific seller payout. The unique identifier of the payout is passed in as a path parameter at the end of the call URI. The getPayouts method can be used to retrieve the unique identifier of a payout, or the user can check Seller Hub.  # noqa: E501
+        This method retrieves details on a specific seller payout. The unique identifier of the payout is passed in as a path parameter at the end of the call URI. <br/><br/>The <b>getPayouts</b> method can be used to retrieve the unique identifier of a payout, or the user can check Seller Hub.  # noqa: E501
 
-        :param str payout_id: The unique identifier of the payout is passed in as a path parameter at the end of the call URI. The getPayouts method can be used to retrieve the unique identifier of a payout, or the user can check Seller Hub to get the payout ID. (required)
+        :param str payout_id: The unique identifier of the payout is passed in as a path parameter at the end of the call URI. <br/><br/>The <b>getPayouts</b> method can be used to retrieve the unique identifier of a payout, or the user can check Seller Hub to get the payout ID. (required)
         :return: Payout
         """
         try:
-            return self._method_single(sell_finances.Configuration, '/sell/finances/v1', sell_finances.PayoutApi,
-                                       sell_finances.ApiClient, 'get_payout', SellFinancesException, True,
-                                       ['sell.finances', 'payout'], payout_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_finances.Configuration, '/sell/finances/v1', sell_finances.PayoutApi, sell_finances.ApiClient, 'get_payout', SellFinancesException, True, ['sell.finances', 'payout'], payout_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_finances_get_payout_summary(self, **kwargs):  # noqa: E501
         """get_payout_summary  # noqa: E501
 
-        This method is used to retrieve cumulative values for payouts in a particular state, or all states. The metadata in the response includes total payouts, the total number of monetary transactions (sales, refunds, credits) associated with those payouts, and the total dollar value of all payouts. If the filter query parameter is used to filter by payout status, only one payout status value may be used. If the filter query parameter is not used to filter by a specific payout status, cumulative values for payouts in all states are returned. The user can also use the filter query parameter to specify a date range, and then only payouts that were processed within that date range are considered.  # noqa: E501
+        This method is used to retrieve cumulative values for payouts in a particular state, or all states. The metadata in the response includes total payouts, the total number of monetary transactions (sales, refunds, credits) associated with those payouts, and the total dollar value of all payouts.<br/><br/>If the <b>filter</b> query parameter is used to filter by payout status, only one payout status value may be used. If the <b>filter</b> query parameter is not used to filter by a specific payout status, cumulative values for payouts in all states are returned.<br/><br/>The user can also use the <b>filter</b> query parameter to specify a date range, and then only payouts that were processed within that date range are considered.  # noqa: E501
 
-        :param str filter: The two filter types that can be used here are discussed below. One or both of these filter types can be used. If none of these filters are used, the data returned in the response will reflect payouts, in all states, processed within the last 90 days. payoutDate: consider payouts processed within a specific range of dates. The date format to use is YYYY-MM-DDTHH:MM:SS.SSSZ. Below is the proper syntax to use if filtering by a date range: https://apiz.ebay.com/sell/finances/v1/payout_summary?filter=payoutDate:[2018-12-17T00:00:01.000Z..2018-12-24T00:00:01.000Z] Alternatively, the user could omit the ending date, and the date range would include the starting date and up to 90 days past that date, or the current date if the starting date is less than 90 days in the past. payoutStatus: consider only the payouts in a particular state. Only one payout state can be specified with this filter. The supported payoutStatus values are as follows: INITIATED: search for payouts that have been initiated but not processed. SUCCEEDED: consider only successful payouts. RETRYABLE_FAILED: consider only payouts that failed, but ones which will be tried again. TERMINAL_FAILED: consider only payouts that failed, and ones that will not be tried again. REVERSED: consider only payouts that were reversed. Below is the proper syntax to use if filtering by payout status: https://apiz.ebay.com/sell/finances/v1/payout_summary?filter=payoutStatus:{SUCCEEDED} If both the payoutDate and payoutStatus filters are used, only the payouts that satisfy both criteria are considered in the results. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:FilterField
+        :param str filter: The two filter types that can be used here are discussed below. One or both of these filter types can be used. If none of these filters are used, the data returned in the response will reflect payouts, in all states, processed within the last 90 days. <ul><li><b>payoutDate</b>: consider payouts processed within a specific range of dates. The date format to use is <code>YYYY-MM-DDTHH:MM:SS.SSSZ</code>. Below is the proper syntax to use if filtering by a date range: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/payout_summary?filter=payoutDate:[2018-12-17T00:00:01.000Z..2018-12-24T00:00:01.000Z]</code><br/><br/>Alternatively, the user could omit the ending date, and the date range would include the starting date and up to 90 days past that date, or the current date if the starting date is less than 90 days in the past.</li> <li><b>payoutStatus</b>: consider only the payouts in a particular state. Only one payout state can be specified with this filter. The supported <b>payoutStatus</b> values are as follows:<ul><li><code>INITIATED</code>: search for payouts that have been initiated but not processed.</li><li><code>SUCCEEDED</code>: consider only successful payouts.</li><li><code>RETRYABLE_FAILED</code>: consider only payouts that failed, but ones which will be tried again.</li><li><code>TERMINAL_FAILED</code>: consider only payouts that failed, and ones that will not be tried again.</li><li> <code>REVERSED</code>: consider only payouts that were reversed. </li></ul>Below is the proper syntax to use if filtering by payout status: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/payout_summary?filter=payoutStatus:{SUCCEEDED}</code></ul><br/>If both the <b>payoutDate</b> and <b>payoutStatus</b> filters are used, only the payouts that satisfy both criteria are considered in the results. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:FilterField
         :return: PayoutSummaryResponse
         """
         try:
-            return self._method_single(sell_finances.Configuration, '/sell/finances/v1', sell_finances.PayoutApi,
-                                       sell_finances.ApiClient, 'get_payout_summary', SellFinancesException, True,
-                                       ['sell.finances', 'payout'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_finances.Configuration, '/sell/finances/v1', sell_finances.PayoutApi, sell_finances.ApiClient, 'get_payout_summary', SellFinancesException, True, ['sell.finances', 'payout'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_finances_get_payouts(self, **kwargs):  # noqa: E501
         """get_payouts  # noqa: E501
 
-        This method is used to retrieve the details of one or more seller payouts. By using the filter query parameter, users can retrieve payouts processed within a specific date range, and/or they can retrieve payouts in a specific state. There are also pagination and sort query parameters that allow users to control the payouts that are returned in the response. If no payouts match the input criteria, an empty payload is returned.  # noqa: E501
+        This method is used to retrieve the details of one or more seller payouts. By using the <b>filter</b> query parameter, users can retrieve payouts processed within a specific date range, and/or they can retrieve payouts in a specific state.<br/><br/>There are also pagination and sort query parameters that allow users to control the payouts that are returned in the response.<br/><br/>If no payouts match the input criteria, an empty payload is returned.  # noqa: E501
 
-        :param str filter: The three filter types that can be used here are discussed below. If none of these filters are used, all recent payouts in all states are returned: payoutDate: search for payouts within a specific range of dates. The date format to use is YYYY-MM-DDTHH:MM:SS.SSSZ. Below is the proper syntax to use if filtering by a date range: https://apiz.ebay.com/sell/finances/v1/payout?filter=payoutDate:[2018-12-17T00:00:01.000Z..2018-12-24T00:00:01.000Z] Alternatively, the user could omit the ending date, and the date range would include the starting date and up to 90 days past that date, or the current date if the starting date is less than 90 days in the past. lastAttemptedPayoutDate: search for attempted payouts that failed within a specific range of dates. In order to use this filter, the payoutStatus filter must also be used and its value must be set to RETRYABLE_FAILED. The date format to use is YYYY-MM-DDTHH:MM:SS.SSSZ. The same syntax used for the payoutDate filter is also used for the lastAttemptedPayoutDate filter. This filter is only applicable (and will return results) if one or more seller payouts have failed, but are retryable. payoutStatus: search for payouts in a particular state. Only one payout state can be specified with this filter. The supported payoutStatus values are as follows: INITIATED: search for payouts that have been initiated but not processed. SUCCEEDED: search for successful payouts. RETRYABLE_FAILED: search for payouts that failed, but ones which will be tried again. This value must be used if filtering by lastAttemptedPayoutDate. TERMINAL_FAILED: search for payouts that failed, and ones that will not be tried again. REVERSED: search for payouts that were reversed. Below is the proper syntax to use if filtering by payout status: https://apiz.ebay.com/sell/finances/v1/payout?filter=payoutStatus:{SUCCEEDED} If both the payoutDate and payoutStatus filters are used, payouts must satisfy both criteria to be returned. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:FilterField
-        :param str sort: By default, payouts or failed payouts that match the input criteria are sorted in ascending order according to the payout date/last attempted payout date (oldest payouts returned first). To view payouts in descending order instead (most recent payouts/attempted payouts first), you would include the sort query parameter, and then set the value of its field parameter to payoutDate or lastAttemptedPayoutDate (if searching for failed, retrybable payouts). Below is the proper syntax to use if filtering by a payout date range in descending order: https://apiz.ebay.com/sell/finances/v1/payout?filter=payoutDate:[2018-12-17T00:00:01.000Z..2018-12-24T00:00:01.000Z]&amp;sort=payoutDate Payouts can only be sorted according to payout date, and can not be sorted by payout status. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:SortField
-        :param str limit: The number of payouts to return per page of the result set. Use this parameter in conjunction with the offset parameter to control the pagination of the output. For example, if offset is set to 10 and limit is set to 10, the method retrieves payouts 11 thru 20 from the result set. Note: This feature employs a zero-based list, where the first payout in the results set has an offset value of 0. Maximum: 200 Default: 20
-        :param str offset: This integer value indicates the actual position that the first payout returned on the current page has in the results set. So, if you wanted to view the 11th payout of the result set, you would set the offset value in the request to 10. In the request, you can use the offset parameter in conjunction with the limit parameter to control the pagination of the output. For example, if offset is set to 30 and limit is set to 10, the method retrieves payouts 31 thru 40 from the resulting collection of payouts. Note: This feature employs a zero-based list, where the first payout in the results set has an offset value of 0. Default: 0 (zero)
+        :param str filter: The three filter types that can be used here are discussed below. If none of these filters are used, all recent payouts in all states are returned:<ul><li><b>payoutDate</b>: search for payouts within a specific range of dates. The date format to use is <code>YYYY-MM-DDTHH:MM:SS.SSSZ</code>. Below is the proper syntax to use if filtering by a date range: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/payout?filter=payoutDate:[2018-12-17T00:00:01.000Z..2018-12-24T00:00:01.000Z]</code><br/><br/>Alternatively, the user could omit the ending date, and the date range would include the starting date and up to 90 days past that date, or the current date if the starting date is less than 90 days in the past.</li><li><b>lastAttemptedPayoutDate</b>: search for attempted payouts that failed within a specific range of dates. In order to use this filter, the <b>payoutStatus</b> filter must also be used and its value must be set to <code>RETRYABLE_FAILED</code>. The date format to use is <code>YYYY-MM-DDTHH:MM:SS.SSSZ</code>. The same syntax used for the <b>payoutDate</b> filter is also used for the <b>lastAttemptedPayoutDate</b> filter. <br><br>This filter is only applicable (and will return results) if one or more seller payouts have failed, but are retryable.</li> <li><b>payoutStatus</b>: search for payouts in a particular state. Only one payout state can be specified with this filter. The supported <b>payoutStatus</b> values are as follows:<ul><li><code>INITIATED</code>: search for payouts that have been initiated but not processed.</li><li><code>SUCCEEDED</code>: search for successful payouts.</li><li><code>RETRYABLE_FAILED</code>: search for payouts that failed, but ones which will be tried again. This value must be used if filtering by <b>lastAttemptedPayoutDate</b>. </li><li><code>TERMINAL_FAILED</code>: search for payouts that failed, and ones that will not be tried again.</li><li> <code>REVERSED</code>: search for payouts that were reversed. </li></ul>Below is the proper syntax to use if filtering by payout status: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/payout?filter=payoutStatus:{SUCCEEDED}</code></ul><br/>If both the <b>payoutDate</b> and <b>payoutStatus</b> filters are used, payouts must satisfy both criteria to be returned. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:FilterField
+        :param str sort: By default, payouts or failed payouts that match the input criteria are sorted in ascending order according to the payout date/last attempted payout date (oldest payouts returned first). <br><br>To view payouts in descending order instead (most recent payouts/attempted payouts first), you would include the <b>sort</b> query parameter, and then set the value of its <b>field</b> parameter to <code>payoutDate</code> or <code>lastAttemptedPayoutDate</code> (if searching for failed, retrybable payouts). Below is the proper syntax to use if filtering by a payout date range in descending order: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/payout?filter=payoutDate:[2018-12-17T00:00:01.000Z..2018-12-24T00:00:01.000Z]&sort=payoutDate</code><br/><br/>Payouts can only be sorted according to payout date, and can not be sorted by payout status. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:SortField
+        :param str limit: The number of payouts to return per page of the result set. Use this parameter in conjunction with the <b>offset</b> parameter to control the pagination of the output. <br /><br /> For example, if <b>offset</b> is set to <code>10</code> and <b>limit</b> is set to <code>10</code>, the method retrieves payouts 11 thru 20 from the result set. <br /><br /> <span class=\"tablenote\"><strong>Note:</strong> This feature employs a zero-based list, where the first payout in the results set has an offset value of <code>0</code>. </span> <br /><br /> <b>Maximum:</b> <code>200</code> <br /> <b>Default:</b> <code>20</code>
+        :param str offset: This integer value indicates the actual position that the first payout returned on the current page has in the results set. So, if you wanted to view the 11th payout of the result set, you would set the <strong>offset</strong> value in the request to <code>10</code>. <br><br>In the request, you can use the <b>offset</b> parameter in conjunction with the <b>limit</b> parameter to control the pagination of the output. For example, if <b>offset</b> is set to <code>30</code> and <b>limit</b> is set to <code>10</code>, the method retrieves payouts 31 thru 40 from the resulting collection of payouts. <br /><br /> <span class=\"tablenote\"><strong>Note:</strong> This feature employs a zero-based list, where the first payout in the results set has an offset value of <code>0</code>.</span><br /><br /><b>Default:</b> <code>0</code> (zero)
         :return: Payouts
         """
         try:
-            return self._method_paged(sell_finances.Configuration, '/sell/finances/v1', sell_finances.PayoutApi,
-                                      sell_finances.ApiClient, 'get_payouts', SellFinancesException, True,
-                                      ['sell.finances', 'payout'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_finances.Configuration, '/sell/finances/v1', sell_finances.PayoutApi, sell_finances.ApiClient, 'get_payouts', SellFinancesException, True, ['sell.finances', 'payout'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_finances_get_seller_funds_summary(self, **kwargs):  # noqa: E501
         """get_seller_funds_summary  # noqa: E501
 
-        This method retrieves all pending funds that have not yet been distributed through a seller payout. There are no input parameters for this method. The response payload includes available funds, funds being processed, funds on hold, and also an aggregate count of all three of these categories. If there are no funds that are pending, on hold, or being processed for the seller's account, no response payload is returned, and an http status code of 204 - No Content is returned instead.  # noqa: E501
+        This method retrieves all pending funds that have not yet been distributed through a seller payout.<br><br>There are no input parameters for this method. The response payload includes available funds, funds being processed, funds on hold, and also an aggregate count of all three of these categories.<br><br>If there are no funds that are pending, on hold, or being processed for the seller's account, no response payload is returned, and an http status code of <code>204 - No Content</code> is returned instead.  # noqa: E501
 
         :return: SellerFundsSummaryResponse
         """
         try:
-            return self._method_single(sell_finances.Configuration, '/sell/finances/v1',
-                                       sell_finances.SellerFundsSummaryApi, sell_finances.ApiClient,
-                                       'get_seller_funds_summary', SellFinancesException, True,
-                                       ['sell.finances', 'seller_funds_summary'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_finances.Configuration, '/sell/finances/v1', sell_finances.SellerFundsSummaryApi, sell_finances.ApiClient, 'get_seller_funds_summary', SellFinancesException, True, ['sell.finances', 'seller_funds_summary'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_finances_get_transaction_summary(self, **kwargs):  # noqa: E501
         """get_transaction_summary  # noqa: E501
 
-        This method is used to retrieve cumulative values for five types of monetary transactions (order sales, seller credits, buyer refunds, buyer-initiated payment disputes, eBay shipping label purchases, and transfers). If applicable, the number of payment holds and the amount of the holds are also returned. See the description for the filter query parameter for more information on the available filters. Note: Unless the transactionType filter is used to retrieve a specific type of monetary transaction (sale, buyer refund, seller credit, payment dispute, shipping label, transfer), the creditCount and creditAmount response fields account for both order sales and seller credits (the count and value is not distinguished between the two monetary transaction types).  # noqa: E501
+        This method is used to retrieve cumulative values for five types of monetary transactions (order sales, seller credits, buyer refunds, buyer-initiated payment disputes, eBay shipping label purchases, and transfers). If applicable, the number of payment holds and the amount of the holds are also returned. <br/><br/>See the description for the <b>filter</b> query parameter for more information on the available filters.<br/><br/><span class=\"tablenote\"><strong>Note:</strong> Unless the <b>transactionType</b> filter is used to retrieve a specific type of monetary transaction (sale, buyer refund, seller credit, payment dispute, shipping label, transfer), the <b>creditCount</b> and <b>creditAmount</b> response fields account for both order sales and seller credits (the count and value is not distinguished between the two monetary transaction types).</span>  # noqa: E501
 
-        :param str filter: Numerous filters are available for the getTransactionSummary method, and these filters are discussed below. One or more of these filter types can be used. The transactionStatus filter must be used. All other filters are optional. transactionStatus: the data returned in the response pertains to the sales, payouts, and transfer status set. The supported transactionStatus values are as follows: PAYOUT: only consider monetary transactions where the proceeds from the sales order(s) have been paid out to the seller's bank account. FUNDS_PROCESSING: only consider monetary transactions where the proceeds from the sales order(s) are currently being processed. FUNDS_AVAILABLE_FOR_PAYOUT: only consider monetary transactions where the proceeds from the sales order(s) are available for a seller payout, but processing has not yet begun. FUNDS_ON_HOLD: only consider monetary transactions where the proceeds from the sales order(s) are currently being held by eBay, and are not yet available for a seller payout. COMPLETED: this indicates that the funds for the corresponding TRANSFER monetary transaction have transferred and the transaction has completed. FAILED: this indicates the process has failed for the corresponding TRANSFER monetary transaction. Below is the proper syntax to use when setting up the transactionStatus filter: https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=transactionStatus:{PAYOUT} transactionDate: only consider monetary transactions that occurred within a specific range of dates. Note: All dates must be input using UTC format (YYYY-MM-DDTHH:MM:SS.SSSZ) and should be adjusted accordingly for the local timezone of the user. Below is the proper syntax to use if filtering by a date range: https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=transactionDate:[2018-10-23T00:00:01.000Z..2018-11-09T00:00:01.000Z] Alternatively, the user could omit the ending date, and the date range would include the starting date and up to 90 days past that date, or the current date if the starting date is less than 90 days in the past. transactionType: only consider a specific type of monetary transaction. The supported transactionType values are as follows: SALE: a sales order. REFUND: a refund to the buyer after an order cancellation or return. CREDIT: a credit issued by eBay to the seller's account. DISPUTE: a monetary transaction associated with a payment dispute between buyer and seller. NON_SALE_CHARGE: a monetary transaction involving a seller transferring money to eBay for the balance of a charge for NON_SALE_CHARGE transactions (transactions that contain non-transactional seller fees). These can include a one-time payment, monthly/yearly subscription fees charged monthly, NRC charges, and fee credits. SHIPPING_LABEL: a monetary transaction where eBay is billing the seller for an eBay shipping label. Note that the shipping label functionality will initially only be available to a select number of sellers. TRANSFER: A transfer is a monetary transaction where eBay is billing the seller for reimbursement of a charge. An example of a transfer is a seller reimbursing eBay for a buyer refund.Below is the proper syntax to use if filtering by a monetary transaction type: https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=transactionType:{SALE} buyerUsername: only consider monetary transactions involving a specific buyer (specified with the buyer's eBay user ID). Below is the proper syntax to use if filtering by a specific eBay buyer: https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=buyerUsername:{buyer1234} salesRecordReference: only consider monetary transactions corresponding to a specific order (identified with a Selling Manager order identifier). Below is the proper syntax to use if filtering by a specific Selling Manager Sales Record ID: https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=salesRecordReference:{123} Note: For all orders originating after February 1, 2020, a value of 0 will be returned in the salesRecordReference field. So, this filter will only be useful to retrieve orders than occurred before this date. payoutId: only consider monetary transactions related to a specific seller payout (identified with a Payout ID). This value is auto-generated by eBay once the seller payout is set to be processed. Below is the proper syntax to use if filtering by a specific Payout ID: https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=payoutId:{5000106638} transactionId: the unique identifier of a monetary transaction. For a sales order, the orderId filter should be used instead. Only the monetary transaction(s) associated with this transactionId value are returned. Note: This filter cannot be used alone; the transactionType must also be specified when filtering by transaction ID. Below is the proper syntax to use if filtering by a specific transaction ID: https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=transactionId:{03-03620-33763}&amp;filter=transactionType:{SALE} orderId: the unique identifier of a sales order. For any other monetary transaction, the transactionId filter should be used instead. Only the monetary transaction(s) associated with this orderId value are returned. Below is the proper syntax to use if filtering by a specific order ID: https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=orderId:{03-03620-33763} For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:FilterField
+        :param str filter: Numerous filters are available for the <strong>getTransactionSummary</strong> method, and these filters are discussed below. One or more of these filter types can be used. The <b>transactionStatus</b> filter must be used. All other filters are optional. <ul><li><b>transactionStatus</b>: the data returned in the response pertains to the sales, payouts, and transfer status set. The supported <b>transactionStatus</b> values are as follows:<ul><li><code>PAYOUT</code>: only consider monetary transactions where the proceeds from the sales order(s) have been paid out to the seller's bank account.</li><li><code>FUNDS_PROCESSING</code>: only consider monetary transactions where the proceeds from the sales order(s) are currently being processed.</li><li><code>FUNDS_AVAILABLE_FOR_PAYOUT</code>: only consider monetary transactions where the proceeds from the sales order(s) are available for a seller payout, but processing has not yet begun.</li><li><code>FUNDS_ON_HOLD</code>: only consider monetary transactions where the proceeds from the sales order(s) are currently being held by eBay, and are not yet available for a seller payout.</li><li><code>COMPLETED</code>: this indicates that the funds for the corresponding <code>TRANSFER</code> monetary transaction have transferred and the transaction has completed.</li><li><code>FAILED</code>: this indicates the process has failed for the corresponding <code>TRANSFER</code> monetary transaction. </li></ul>Below is the proper syntax to use when setting up the <b>transactionStatus</b> filter: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=transactionStatus:&#123;PAYOUT&#125;</code></li><li><b>transactionDate</b>: only consider monetary transactions that occurred within a specific range of dates.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> All dates must be input using UTC format (<code>YYYY-MM-DDTHH:MM:SS.SSSZ</code>) and should be adjusted accordingly for the local timezone of the user.</span><br /><br />Below is the proper syntax to use if filtering by a date range: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=transactionDate:&#91;2018-10-23T00:00:01.000Z..2018-11-09T00:00:01.000Z&#93;</code><br/><br/>Alternatively, the user could omit the ending date, and the date range would include the starting date and up to 90 days past that date, or the current date if the starting date is less than 90 days in the past.</li>  <li><b>transactionType</b>: only consider a specific type of monetary transaction. The supported <b>transactionType</b> values are as follows:<ul><li><code>SALE</code>: a sales order.</li><li> <code>REFUND</code>: a refund to the buyer after an order cancellation or return.</li><li><code>CREDIT</code>: a credit issued by eBay to the seller's account.</li><li><code>DISPUTE</code>: a monetary transaction associated with a payment dispute between buyer and seller.</li><li><code>NON_SALE_CHARGE</code>: a monetary transaction involving a seller transferring money to eBay for the balance of a charge for NON_SALE_CHARGE transactions (transactions that contain non-transactional seller fees). These can include a one-time payment, monthly/yearly subscription fees charged monthly, NRC charges, and fee credits.</li><li><code>SHIPPING_LABEL</code>: a monetary transaction where eBay is billing the seller for an eBay shipping label. Note that the shipping label functionality will initially only be available to a select number of sellers.</li><li><code>TRANSFER</code>: A transfer is a monetary transaction where eBay is billing the seller for reimbursement of a charge. An example of a transfer is a seller reimbursing eBay for a buyer refund.</li></ul>Below is the proper syntax to use if filtering by a monetary transaction type: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=transactionType:{SALE}</code></li><li><b>buyerUsername</b>: only consider monetary transactions involving a specific buyer (specified with the buyer's eBay user ID). Below is the proper syntax to use if filtering by a specific eBay buyer: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=buyerUsername:&#123;buyer1234&#125;</code> </li><li><b>salesRecordReference</b>: only consider monetary transactions corresponding to a specific order (identified with a Selling Manager order identifier). Below is the proper syntax to use if filtering by a specific Selling Manager Sales Record ID: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=salesRecordReference:&#123;123&#125;</code><br/><br/><span class=\"tablenote\"><strong>Note:</strong> For all orders originating after February 1, 2020, a value of <code>0</code> will be returned in the <b>salesRecordReference</b> field. So, this filter will only be useful to retrieve orders than occurred before this date.</span> </li><li><b>payoutId</b>: only consider monetary transactions related to a specific seller payout (identified with a Payout ID). This value is auto-generated by eBay once the seller payout is set to be processed. Below is the proper syntax to use if filtering by a specific Payout ID: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=payoutId:&#123;5000106638&#125;</code>  </li><li><b>transactionId</b>: the unique identifier of a monetary transaction. For a sales order, the <b>orderId</b> filter should be used instead. Only the monetary transaction(s) associated with this <b>transactionId</b> value are returned.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> This filter cannot be used alone; the <b>transactionType</b> must also be specified when filtering by transaction ID.</span><br /><br />Below is the proper syntax to use if filtering by a specific transaction ID: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=transactionId:{03-03620-33763}&filter=transactionType:{SALE}</code> </li><li><b>orderId</b>: the unique identifier of a sales order. For any other monetary transaction, the <b>transactionId</b> filter should be used instead. Only the monetary transaction(s) associated with this <b>orderId</b> value are returned. Below is the proper syntax to use if filtering by a specific order ID: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=orderId:{03-03620-33763}</code> </li></ul> For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:FilterField
         :return: TransactionSummaryResponse
         """
         try:
-            return self._method_single(sell_finances.Configuration, '/sell/finances/v1', sell_finances.TransactionApi,
-                                       sell_finances.ApiClient, 'get_transaction_summary', SellFinancesException, True,
-                                       ['sell.finances', 'transaction'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_finances.Configuration, '/sell/finances/v1', sell_finances.TransactionApi, sell_finances.ApiClient, 'get_transaction_summary', SellFinancesException, True, ['sell.finances', 'transaction'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_finances_get_transactions(self, **kwargs):  # noqa: E501
         """get_transactions  # noqa: E501
 
-        This method allows a seller to retrieve one or monetary transactions. In this case, 'monetary transactions' include sales orders, buyer refunds, seller credits, buyer-initiated payment disputes, eBay shipping label purchases, and transfers. There are numerous input filters available for use, including filters to retrieve specific types of monetary transactions, to retrieve monetary transactions processed within a specific date range, or to retrieve monetary transactions in a specific state. See the filter field for more information on each filter, and how each one is used. There are also pagination and sort query parameters that allow users to further control the monetary transactions that are returned in the response. If no monetary transactions match the input criteria, an http status code of 204 No Content is returned with no response payload.  # noqa: E501
+        This method allows a seller to retrieve one or monetary transactions. In this case, 'monetary transactions' include sales orders, buyer refunds, seller credits, buyer-initiated payment disputes, eBay shipping label purchases, and transfers. There are numerous input filters available for use, including filters to retrieve specific types of monetary transactions, to retrieve monetary transactions processed within a specific date range, or to retrieve monetary transactions in a specific state. See the <b>filter</b> field for more information on each filter, and how each one is used. <br/><br/>There are also pagination and sort query parameters that allow users to further control the monetary transactions that are returned in the response.<br/><br/>If no monetary transactions match the input criteria, an http status code of <em>204 No Content</em> is returned with no response payload.  # noqa: E501
 
-        :param str filter: Numerous filters are available for the getTransactions method, and these filters are discussed below. One or more of these filter types can be used. If none of these filters are used, all monetary transactions from the last 90 days are returned: transactionDate: search for monetary transactions that occurred within a specific range of dates. Note: All dates must be input using UTC format (YYYY-MM-DDTHH:MM:SS.SSSZ) and should be adjusted accordingly for the local timezone of the user. Below is the proper syntax to use if filtering by a date range: https://apiz.ebay.com/sell/finances/v1/transaction?filter=transactionDate:[2018-10-23T00:00:01.000Z..2018-11-09T00:00:01.000Z] Alternatively, the user could omit the ending date, and the date range would include the starting date and up to 90 days past that date, or the current date if the starting date is less than 90 days in the past. transactionType: search for a specific type of monetary transaction. The supported transactionType values are as follows: SALE: a sales order. REFUND: a refund to the buyer after an order cancellation or return. CREDIT: a credit issued by eBay to the seller's account. DISPUTE: a monetary transaction associated with a payment dispute between buyer and seller. NON_SALE_CHARGE: a monetary transaction involving a seller transferring money to eBay for the balance of a charge for NON_SALE_CHARGE transactions (transactions that contain non-transactional seller fees). These can include a one-time payment, monthly/yearly subscription fees charged monthly, NRC charges, and fee credits. SHIPPING_LABEL: a monetary transaction where eBay is billing the seller for an eBay shipping label. Note that the shipping label functionality will initially only be available to a select number of sellers. TRANSFER: A transfer is a monetary transaction where eBay is billing the seller for reimbursement of a charge. An example of a transfer is a seller reimbursing eBay for a buyer refund.Below is the proper syntax to use if filtering by a monetary transaction type: https://apiz.ebay.com/sell/finances/v1/transaction?filter=transactionType:{SALE} transactionStatus: this filter type is only applicable for sales orders, and allows the user to filter seller payouts in a particular state. The supported transactionStatus values are as follows: PAYOUT: this indicates that the proceeds from the corresponding sales order has been paid out to the seller's account. FUNDS_PROCESSING: this indicates that the funds for the corresponding monetary transaction are currently being processed. FUNDS_AVAILABLE_FOR_PAYOUT: this indicates that the proceeds from the corresponding sales order are available for a seller payout, but processing has not yet begun. FUNDS_ON_HOLD: this indicates that the proceeds from the corresponding sales order are currently being held by eBay, and are not yet available for a seller payout. COMPLETED: this indicates that the funds for the corresponding TRANSFER monetary transaction have transferred and the transaction has completed. FAILED: this indicates the process has failed for the corresponding TRANSFER monetary transaction. Below is the proper syntax to use if filtering by transaction status: https://apiz.ebay.com/sell/finances/v1/transaction?filter=transactionStatus:{PAYOUT} buyerUsername: the eBay user ID of the buyer involved in the monetary transaction. Only monetary transactions involving this buyer are returned. Below is the proper syntax to use if filtering by a specific eBay buyer: https://apiz.ebay.com/sell/finances/v1/transaction?filter=buyerUsername:{buyer1234} salesRecordReference: the unique Selling Manager identifier of the order involved in the monetary transaction. Only monetary transactions involving this Selling Manager Sales Record ID are returned. Below is the proper syntax to use if filtering by a specific Selling Manager Sales Record ID: https://apiz.ebay.com/sell/finances/v1/transaction?filter=salesRecordReference:{123} Note: For all orders originating after February 1, 2020, a value of 0 will be returned in the salesRecordReference field. So, this filter will only be useful to retrieve orders than occurred before this date. payoutId: the unique identifier of a seller payout. This value is auto-generated by eBay once the seller payout is set to be processed. Only monetary transactions involving this Payout ID are returned. Below is the proper syntax to use if filtering by a specific Payout ID: https://apiz.ebay.com/sell/finances/v1/transaction?filter=payoutId:{5000106638} transactionId: the unique identifier of a monetary transaction. For a sales order, the orderId filter should be used instead. Only the monetary transaction defined by the identifier is returned. Note: This filter cannot be used alone; the transactionType must also be specified when filtering by transaction ID. Below is the proper syntax to use if filtering by a specific transaction ID: https://apiz.ebay.com/sell/finances/v1/transaction?filter=transactionId:{03-03620-33763}&amp;filter=transactionType:{SALE} orderId: the unique identifier of a sales order. For any other monetary transaction, the transactionId filter should be used instead. Only the sales order defined by the identifier is returned. Below is the proper syntax to use if filtering by a specific order ID: https://apiz.ebay.com/sell/finances/v1/transaction?filter=orderId:{03-03620-33763} For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:FilterField
-        :param str sort: Sorting is not yet available for the getTransactions method. By default, monetary transactions that match the input criteria are sorted in descending order according to the transaction date. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:SortField
-        :param str limit: The number of monetary transactions to return per page of the result set. Use this parameter in conjunction with the offset parameter to control the pagination of the output. For example, if offset is set to 10 and limit is set to 10, the method retrieves monetary transactions 11 thru 20 from the result set. Note: This feature employs a zero-based list, where the first item in the list has an offset of 0. If an orderId, transactionId, or payoutId filter is included in the request, any limit value will be ignored. Maximum: 1000 Default: 20
-        :param str offset: This integer value indicates the actual position that the first monetary transaction returned on the current page has in the results set. So, if you wanted to view the 11th monetary transaction of the result set, you would set the offset value in the request to 10. In the request, you can use the offset parameter in conjunction with the limit parameter to control the pagination of the output. For example, if offset is set to 30 and limit is set to 10, the method retrieves transactions 31 thru 40 from the resulting collection of transactions. Note: This feature employs a zero-based list, where the first item in the list has an offset of 0. Default: 0 (zero)
+        :param str filter: Numerous filters are available for the <strong>getTransactions</strong> method, and these filters are discussed below. One or more of these filter types can be used. If none of these filters are used, all monetary transactions from the last 90 days are returned:<ul><li><b>transactionDate</b>: search for monetary transactions that occurred within a specific range of dates.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> All dates must be input using UTC format (<code>YYYY-MM-DDTHH:MM:SS.SSSZ</code>) and should be adjusted accordingly for the local timezone of the user.</span><br /><br />Below is the proper syntax to use if filtering by a date range: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/transaction?filter=transactionDate:[2018-10-23T00:00:01.000Z..2018-11-09T00:00:01.000Z]</code><br/><br/>Alternatively, the user could omit the ending date, and the date range would include the starting date and up to 90 days past that date, or the current date if the starting date is less than 90 days in the past.</li>  <li><b>transactionType</b>: search for a specific type of monetary transaction. The supported <b>transactionType</b> values are as follows:<ul><li><code>SALE</code>: a sales order.</li><li> <code>REFUND</code>: a refund to the buyer after an order cancellation or return.</li><li><code>CREDIT</code>: a credit issued by eBay to the seller's account.</li><li><code>DISPUTE</code>: a monetary transaction associated with a payment dispute between buyer and seller.</li><li><code>NON_SALE_CHARGE</code>: a monetary transaction involving a seller transferring money to eBay for the balance of a charge for NON_SALE_CHARGE transactions (transactions that contain non-transactional seller fees). These can include a one-time payment, monthly/yearly subscription fees charged monthly, NRC charges, and fee credits.</li><li><code>SHIPPING_LABEL</code>: a monetary transaction where eBay is billing the seller for an eBay shipping label. Note that the shipping label functionality will initially only be available to a select number of sellers.</li><li><code>TRANSFER</code>: A transfer is a monetary transaction where eBay is billing the seller for reimbursement of a charge. An example of a transfer is a seller reimbursing eBay for a buyer refund.</li></ul>Below is the proper syntax to use if filtering by a monetary transaction type: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/transaction?filter=transactionType:{SALE}</code></li><li><b>transactionStatus</b>: this filter type is only applicable for sales orders, and allows the user to filter seller payouts in a particular state.  The supported <b>transactionStatus</b> values are as follows:<ul><li><code>PAYOUT</code>: this indicates that the proceeds from the corresponding sales order has been paid out to the seller's account.</li><li><code>FUNDS_PROCESSING</code>: this indicates that the funds for the corresponding monetary transaction are currently being processed.</li><li><code>FUNDS_AVAILABLE_FOR_PAYOUT</code>: this indicates that the proceeds from the corresponding sales order are available for a seller payout, but processing has not yet begun.</li><li><code>FUNDS_ON_HOLD</code>: this indicates that the proceeds from the corresponding sales order are currently being held by eBay, and are not yet available for a seller payout.</li><li><code>COMPLETED</code>: this indicates that the funds for the corresponding <code>TRANSFER</code> monetary transaction have transferred and the transaction has completed.</li><li><code>FAILED</code>: this indicates the process has failed for the corresponding <code>TRANSFER</code> monetary transaction. </li></ul>Below is the proper syntax to use if filtering by transaction status: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/transaction?filter=transactionStatus:{PAYOUT}</code></li><li><b>buyerUsername</b>: the eBay user ID of the buyer involved in the monetary transaction. Only monetary transactions involving this buyer are returned. Below is the proper syntax to use if filtering by a specific eBay buyer: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/transaction?filter=buyerUsername:{buyer1234}</code> </li><li><b>salesRecordReference</b>: the unique Selling Manager identifier of the order involved in the monetary transaction. Only monetary transactions involving this Selling Manager Sales Record ID are returned. Below is the proper syntax to use if filtering by a specific Selling Manager Sales Record ID: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/transaction?filter=salesRecordReference:{123}</code><br/><br/><span class=\"tablenote\"><strong>Note:</strong> For all orders originating after February 1, 2020, a value of <code>0</code> will be returned in the <b>salesRecordReference</b> field. So, this filter will only be useful to retrieve orders than occurred before this date. </span></li><li><b>payoutId</b>: the unique identifier of a seller payout. This value is auto-generated by eBay once the seller payout is set to be processed. Only monetary transactions involving this Payout ID are returned. Below is the proper syntax to use if filtering by a specific Payout ID: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/transaction?filter=payoutId:{5000106638}</code>  </li><li><b>transactionId</b>: the unique identifier of a monetary transaction. For a sales order, the <b>orderId</b> filter should be used instead. Only the monetary transaction defined by the identifier is returned.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> This filter cannot be used alone; the <b>transactionType</b> must also be specified when filtering by transaction ID.</span><br /><br />Below is the proper syntax to use if filtering by a specific transaction ID: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/transaction?filter=transactionId:{03-03620-33763}&filter=transactionType:{SALE}</code> </li><li><b>orderId</b>: the unique identifier of a sales order. For any other monetary transaction, the <b>transactionId</b> filter should be used instead. Only the sales order defined by the identifier is returned. Below is the proper syntax to use if filtering by a specific order ID: <br/><br/><code>https://apiz.ebay.com/sell/finances/v1/transaction?filter=orderId:{03-03620-33763}</code> </li></ul> For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:FilterField
+        :param str sort: Sorting is not yet available for the <b>getTransactions</b> method. By default, monetary transactions that match the input criteria are sorted in descending order according to the transaction date. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:SortField
+        :param str limit: The number of monetary transactions to return per page of the result set. Use this parameter in conjunction with the <b>offset</b> parameter to control the pagination of the output. <br /><br /> For example, if <b>offset</b> is set to <code>10</code> and <b>limit</b> is set to <code>10</code>, the method retrieves monetary transactions 11 thru 20 from the result set. <br /><br /> <span class=\"tablenote\"><strong>Note:</strong> This feature employs a zero-based list, where the first item in the list has an offset of <code>0</code>. If an <b>orderId</b>, <b>transactionId</b>, or <b>payoutId</b> filter is included in the request, any <b>limit</b> value will be ignored.</span> <br /><br /> <b>Maximum:</b><code> 1000</code> <br /> <b>Default:</b><code> 20</code>
+        :param str offset: This integer value indicates the actual position that the first monetary transaction returned on the current page has in the results set. So, if you wanted to view the 11th monetary transaction of the result set, you would set the <strong>offset</strong> value in the request to <code>10</code>. <br><br>In the request, you can use the <b>offset</b> parameter in conjunction with the <b>limit</b> parameter to control the pagination of the output. For example, if <b>offset</b> is set to <code>30</code> and <b>limit</b> is set to <code>10</code>, the method retrieves transactions 31 thru 40 from the resulting collection of transactions. <br /><br /> <span class=\"tablenote\"><strong>Note:</strong> This feature employs a zero-based list, where the first item in the list has an offset of <code>0</code>.</span><br/><b>Default:</b> <code>0</code> (zero)
         :return: Transactions
         """
         try:
-            return self._method_paged(sell_finances.Configuration, '/sell/finances/v1', sell_finances.TransactionApi,
-                                      sell_finances.ApiClient, 'get_transactions', SellFinancesException, True,
-                                      ['sell.finances', 'transaction'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_finances.Configuration, '/sell/finances/v1', sell_finances.TransactionApi, sell_finances.ApiClient, 'get_transactions', SellFinancesException, True, ['sell.finances', 'transaction'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_finances_get_transfer(self, transfer_id, **kwargs):  # noqa: E501
         """get_transfer  # noqa: E501
 
-        This method retrieves detailed information regarding a TRANSFER transaction type. A TRANSFER is a monetary transaction type that involves a seller transferring money to eBay for reimbursement of one or more charges. For example, when a seller reimburses eBay for a buyer refund. If an ID is passed into the URI that is an identifier for another transaction type, this call will return an http status code of 404 Not found.  # noqa: E501
+        This method retrieves detailed information regarding a <code>TRANSFER</code> transaction type. A <code>TRANSFER</code> is a  monetary transaction type that involves a seller transferring money to eBay for reimbursement of one or more charges. For example, when a seller reimburses eBay for a buyer refund.<br><br>If an ID is passed into the URI that is an identifier for another transaction type, this call will return an http status code of <code>404 Not found</code>.  # noqa: E501
 
-        :param str transfer_id: The unique identifier of the TRANSFER transaction type you wish to retrieve. (required)
+        :param str transfer_id: The unique identifier of the <code>TRANSFER</code> transaction type you wish to retrieve. (required)
         :return: Transfer
         """
         try:
-            return self._method_single(sell_finances.Configuration, '/sell/finances/v1', sell_finances.TransferApi,
-                                       sell_finances.ApiClient, 'get_transfer', SellFinancesException, True,
-                                       ['sell.finances', 'transfer'], transfer_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_finances.Configuration, '/sell/finances/v1', sell_finances.TransferApi, sell_finances.ApiClient, 'get_transfer', SellFinancesException, True, ['sell.finances', 'transfer'], transfer_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_fulfillment_get_order(self, order_id, **kwargs):  # noqa: E501
         """get_order  # noqa: E501
 
-        Use this call to retrieve the contents of an order based on its unique identifier, orderId. This value was returned in the getOrders call's orders.orderId field when you searched for orders by creation date, modification date, or fulfillment status. Include the optional fieldGroups query parameter set to TAX_BREAKDOWN to return a breakdown of the taxes and fees. The returned Order object contains information you can use to create and process fulfillments, including: Information about the buyer and seller Information about the order's line items The plans for packaging, addressing and shipping the order The status of payment, packaging, addressing, and shipping the order A summary of monetary amounts specific to the order such as pricing, payments, and shipping costs A summary of applied taxes and fees, and optionally a breakdown of each  # noqa: E501
+        Use this call to retrieve the contents of an order based on its unique identifier, <i>orderId</i>. This value was returned in the <b> getOrders</b> call's <b>orders.orderId</b> field when you searched for orders by creation date, modification date, or fulfillment status. Include the optional <b>fieldGroups</b> query parameter set to <code>TAX_BREAKDOWN</code> to return a breakdown of the taxes and fees. <br /><br /> The returned <b>Order</b> object contains information you can use to create and process fulfillments, including: <ul> <li>Information about the buyer and seller</li> <li>Information about the order's line items</li> <li> The plans for packaging, addressing and shipping the order</li> <li>The status of payment, packaging, addressing, and shipping the order</li> <li>A summary of monetary amounts specific to the order such as pricing, payments, and shipping costs</li> <li>A summary of applied taxes and fees, and optionally a breakdown of each </li></ul>  # noqa: E501
 
-        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the getOrders method in the orders.orderId field. Note: A new order ID format was introduced to all eBay APIs (legacy and REST) in June 2019. In REST APIs that return Order IDs, including the Fulfillment API, all order IDs are returned in the new format, but the getOrder method will accept both the legacy and new format order ID. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers will be automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support. (required)
-        :param str field_groups: The response type associated with the order. The only presently supported value is TAX_BREAKDOWN. This type returns a breakdown of tax and fee values associated with the order.
+        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the <b>getOrders</b> method in the <b>orders.orderId</b> field. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> A new order ID format was introduced to all eBay APIs (legacy and REST) in June 2019. In REST APIs that return Order IDs, including the Fulfillment API, all order IDs are returned in the new format, but the <strong>getOrder</strong> method will accept both the legacy and new format order ID. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers will be automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support. </span> (required)
+        :param str field_groups: The response type associated with the order. The only presently supported value is <code>TAX_BREAKDOWN</code>. This type returns a breakdown of tax and fee values associated with the order.
         :return: Order
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
-                                       sell_fulfillment.OrderApi, sell_fulfillment.ApiClient, 'get_order',
-                                       SellFulfillmentException, True, ['sell.fulfillment', 'order'], order_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.OrderApi, sell_fulfillment.ApiClient, 'get_order', SellFulfillmentException, True, ['sell.fulfillment', 'order'], order_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_fulfillment_get_orders(self, **kwargs):  # noqa: E501
         """get_orders  # noqa: E501
 
-        Use this call to search for and retrieve one or more orders based on their creation date, last modification date, or fulfillment status using the filter parameter. You can alternatively specify a list of orders using the orderIds parameter. Include the optional fieldGroups query parameter set to TAX_BREAKDOWN to return a breakdown of the taxes and fees. The returned Order objects contain information you can use to create and process fulfillments, including: Information about the buyer and seller Information about the order's line items The plans for packaging, addressing and shipping the order The status of payment, packaging, addressing, and shipping the order A summary of monetary amounts specific to the order such as pricing, payments, and shipping costs A summary of applied taxes and fees, and optionally a breakdown of each Important: In this call, the cancelStatus.cancelRequests array is returned but is always empty. Use the getOrder call instead, which returns this array fully populated with information about any cancellation requests.  # noqa: E501
+        Use this call to search for and retrieve one or more orders based on their creation date, last modification date, or fulfillment status using the <b>filter</b> parameter. You can alternatively specify a list of orders using the <b>orderIds</b> parameter. Include the optional <b>fieldGroups</b> query parameter set to <code>TAX_BREAKDOWN</code> to return a breakdown of the taxes and fees. <br /><br /> The returned <b>Order</b> objects contain information you can use to create and process fulfillments, including: <ul> <li>Information about the buyer and seller</li> <li>Information about the order's line items</li> <li>The plans for packaging, addressing and shipping the order</li> <li>The status of payment, packaging, addressing, and shipping the order</li> <li>A summary of monetary amounts specific to the order such as pricing, payments, and shipping costs</li> <li>A summary of applied taxes and fees, and optionally a breakdown of each </li></ul> <br /><br /> <span class=\"tablenote\"><strong>Important:</strong> In this call, the <b>cancelStatus.cancelRequests</b> array is returned but is always empty. Use the <b>getOrder</b> call instead, which returns this array fully populated with information about any cancellation requests.</span>  # noqa: E501
 
-        :param str field_groups: The response type associated with the order. The only presently supported value is TAX_BREAKDOWN. This type returns a breakdown of tax and fee values associated with the order.
-        :param str filter: One or more comma-separated criteria for narrowing down the collection of orders returned by this call. These criteria correspond to specific fields in the response payload. Multiple filter criteria combine to further restrict the results. Note: Currently, filter returns data from only the last 90 days. If the orderIds parameter is included in the request, the filter parameter will be ignored. The available criteria are as follows: creationdate The time period during which qualifying orders were created (the orders.creationDate field). In the URI, this is expressed as a starting timestamp, with or without an ending timestamp (in brackets). The timestamps are in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock.For example: creationdate:[2016-02-21T08:25:43.511Z..] identifies orders created on or after the given timestamp. creationdate:[2016-02-21T08:25:43.511Z..2016-04-21T08:25:43.511Z] identifies orders created between the given timestamps, inclusive. lastmodifieddate The time period during which qualifying orders were last modified (the orders.modifiedDate field). In the URI, this is expressed as a starting timestamp, with or without an ending timestamp (in brackets). The timestamps are in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock.For example: lastmodifieddate:[2016-05-15T08:25:43.511Z..] identifies orders modified on or after the given timestamp. lastmodifieddate:[2016-05-15T08:25:43.511Z..2016-05-31T08:25:43.511Z] identifies orders modified between the given timestamps, inclusive. Note: If creationdate and lastmodifieddate are both included, only creationdate is used. orderfulfillmentstatus The degree to which qualifying orders have been shipped (the orders.orderFulfillmentStatus field). In the URI, this is expressed as one of the following value combinations: orderfulfillmentstatus:{NOT_STARTED|IN_PROGRESS} specifies orders for which no shipping fulfillments have been started, plus orders for which at least one shipping fulfillment has been started but not completed. orderfulfillmentstatus:{FULFILLED|IN_PROGRESS} specifies orders for which all shipping fulfillments have been completed, plus orders for which at least one shipping fulfillment has been started but not completed. Note: The values NOT_STARTED, IN_PROGRESS, and FULFILLED can be used in various combinations, but only the combinations shown here are currently supported. Here is an example of a getOrders call using all of these filters: GET https://api.ebay.com/sell/v1/order? filter=creationdate:%5B2016-03-21T08:25:43.511Z..2016-04-21T08:25:43.511Z%5D, lastmodifieddate:%5B2016-05-15T08:25:43.511Z..%5D, orderfulfillmentstatus:%7BNOT_STARTED%7CIN_PROGRESS%7D Note: This call requires that certain special characters in the URI query string be percent-encoded: &nbsp;&nbsp;&nbsp;&nbsp;[ = %5B &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;] = %5D &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ = %7B &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| = %7C &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} = %7D This query filter example uses these codes. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/fulfillment/types/api:FilterField
-        :param str limit: The number of orders to return per page of the result set. Use this parameter in conjunction with the offset parameter to control the pagination of the output. For example, if offset is set to 10 and limit is set to 10, the call retrieves orders 11 thru 20 from the result set. Note: This feature employs a zero-based list, where the first item in the list has an offset of 0. If the orderIds parameter is included in the request, this parameter will be ignored. Maximum: 1000 Default: 50
-        :param str offset: Specifies the number of orders to skip in the result set before returning the first order in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
-        :param str order_ids: A comma-separated list of the unique identifiers of the orders to retrieve (maximum 50). If one or more order ID values are specified through the orderIds query parameter, all other query parameters will be ignored. Note: A new order ID format was introduced to all eBay APIs (legacy and REST) in June 2019. In REST APIs that return Order IDs, including the Fulfillment API, all order IDs are returned in the new format, but the getOrders method will accept both the legacy and new format order ID. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers will be automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support.
+        :param str field_groups: The response type associated with the order. The only presently supported value is <code>TAX_BREAKDOWN</code>. This type returns a breakdown of tax and fee values associated with the order.
+        :param str filter: One or more comma-separated criteria for narrowing down the collection of orders returned by this call. These criteria correspond to specific fields in the response payload. Multiple filter criteria combine to further restrict the results. <br /><br /> <span class=\"tablenote\"><strong>Note:</strong> Currently, <b>filter</b> returns data from only the last 90 days. If the <b>orderIds</b> parameter is included in the request, the <b>filter</b> parameter will be ignored.</span> <br /><br /> The available criteria are as follows: <dl> <dt><code><b>creationdate</b></code></dt> <dd>The time period during which qualifying orders were created (the <b>orders.creationDate</b> field). In the URI, this is expressed as a starting timestamp, with or without an ending timestamp (in brackets). The timestamps are in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock.For example: <ul> <li><code>creationdate:[2016-02-21T08:25:43.511Z..]</code> identifies orders created on or after the given timestamp.</li> <li><code>creationdate:[2016-02-21T08:25:43.511Z..2016-04-21T08:25:43.511Z]</code> identifies orders created between the given timestamps, inclusive.</li> </ul> </dd> <dt><code><b>lastmodifieddate</b></code></dt> <dd>The time period during which qualifying orders were last modified (the <b>orders.modifiedDate</b> field).  In the URI, this is expressed as a starting timestamp, with or without an ending timestamp (in brackets). The timestamps are in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock.For example: <ul> <li><code>lastmodifieddate:[2016-05-15T08:25:43.511Z..]</code> identifies orders modified on or after the given timestamp.</li> <li><code>lastmodifieddate:[2016-05-15T08:25:43.511Z..2016-05-31T08:25:43.511Z]</code> identifies orders modified between the given timestamps, inclusive.</li> </ul> <span class=\"tablenote\"><strong>Note:</strong> If <b>creationdate</b> and <b>lastmodifieddate</b> are both included, only <b>creationdate</b> is used.</span> <br /><br /></dd> <dt><code><b>orderfulfillmentstatus</b></code></dt> <dd>The degree to which qualifying orders have been shipped (the <b>orders.orderFulfillmentStatus</b> field). In the URI, this is expressed as one of the following value combinations: <ul> <li><code>orderfulfillmentstatus:{NOT_STARTED|IN_PROGRESS}</code> specifies orders for which no shipping fulfillments have been started, plus orders for which at least one shipping fulfillment has been started but not completed.</li> <li><code>orderfulfillmentstatus:{FULFILLED|IN_PROGRESS}</code> specifies orders for which all shipping fulfillments have been completed, plus orders for which at least one shipping fulfillment has been started but not completed.</li> </ul> <span class=\"tablenote\"><strong>Note:</strong> The values <code>NOT_STARTED</code>, <code>IN_PROGRESS</code>, and <code>FULFILLED</code> can be used in various combinations, but only the combinations shown here are currently supported.</span> </dd> </dl> Here is an example of a <b>getOrders</b> call using all of these filters: <br /><br /> <code>GET https://api.ebay.com/sell/v1/order?<br />filter=<b>creationdate</b>:%5B2016-03-21T08:25:43.511Z..2016-04-21T08:25:43.511Z%5D,<br /><b>lastmodifieddate</b>:%5B2016-05-15T08:25:43.511Z..%5D,<br /><b>orderfulfillmentstatus</b>:%7BNOT_STARTED%7CIN_PROGRESS%7D</code> <br /><br /> <span class=\"tablenote\"><strong>Note:</strong> This call requires that certain special characters in the URI query string be percent-encoded: <br /> &nbsp;&nbsp;&nbsp;&nbsp;<code>[</code> = <code>%5B</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>]</code> = <code>%5D</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>{</code> = <code>%7B</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>|</code> = <code>%7C</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>}</code> = <code>%7D</code> <br /> This query filter example uses these codes.</span> For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/fulfillment/types/api:FilterField
+        :param str limit: The number of orders to return per page of the result set. Use this parameter in conjunction with the <b>offset</b> parameter to control the pagination of the output. <br /><br /> For example, if <b>offset</b> is set to <code>10</code> and <b>limit</b> is set to <code>10</code>, the call retrieves orders 11 thru 20 from the result set. <br /><br /> <span class=\"tablenote\"><strong>Note:</strong> This feature employs a zero-based list, where the first item in the list has an offset of <code>0</code>. If the <b>orderIds</b> parameter is included in the request, this parameter will be ignored.</span> <br /><br /> <b>Maximum:</b> <code>1000</code> <br /> <b>Default:</b> <code>50</code>
+        :param str offset: Specifies the number of orders to skip in the result set before returning the first order in the paginated response.  <p>Combine <b>offset</b> with the <b>limit</b> query parameter to control the items returned in the response. For example, if you supply an <b>offset</b> of <code>0</code> and a <b>limit</b> of <code>10</code>, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If <b>offset</b> is <code>10</code> and <b>limit</b> is <code>20</code>, the first page of the response contains items 11-30 from the complete result set.</p> <p><b>Default:</b> 0</p>
+        :param str order_ids: A comma-separated list of the unique identifiers of the orders to retrieve (maximum 50). If one or more order ID values are specified through the <b>orderIds</b> query parameter, all other query parameters will be ignored. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> A new order ID format was introduced to all eBay APIs (legacy and REST) in June 2019. In REST APIs that return Order IDs, including the Fulfillment API, all order IDs are returned in the new format, but the <strong>getOrders</strong> method will accept both the legacy and new format order ID. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers will be automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support. </span>
         :return: OrderSearchPagedCollection
         """
         try:
-            return self._method_paged(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.OrderApi,
-                                      sell_fulfillment.ApiClient, 'get_orders', SellFulfillmentException, True,
-                                      ['sell.fulfillment', 'order'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.OrderApi, sell_fulfillment.ApiClient, 'get_orders', SellFulfillmentException, True, ['sell.fulfillment', 'order'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3067,87 +2687,69 @@ class API:
         """Issue Refund  # noqa: E501
 
 
-        :param str order_id: The unique identifier of the order. Order IDs are returned in the getOrders method (and GetOrders call of Trading API). The issueRefund method supports the legacy API Order IDs and REST API order IDs. Note: In the Trading API (and other legacy APIs), Order IDs are transitioning to a new format. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers will be automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support. For developers and sellers who are already integrated with the Trading API's order management calls, this change shouldn't impact your integration unless you parse the existing order identifiers (e.g., OrderID or OrderLineItemID), or otherwise infer meaning from the format (e.g., differentiating between a single line item order versus a multiple line item order). Because we realize that some integrations may have logic that is dependent upon the identifier format, eBay is rolling out the Trading API change with version control to support a transition period of approximately 9 months before applications must switch to the new format completely. See the OrderID field description in the GetOrders call for more details and requirements on transitioning to the new Order ID format. (required)
+        :param str order_id: The unique identifier of the order. Order IDs are returned in the <b>getOrders</b> method (and <b>GetOrders</b> call of Trading API). The <b>issueRefund</b> method supports the legacy API Order IDs and REST API order IDs.<br/><br/><span class=\"tablenote\"><strong>Note:</strong> In the Trading API (and other legacy APIs), Order IDs are transitioning to a new format. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers will be automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support.<br/><br/>For developers and sellers who are already integrated with the Trading API's order management calls, this change shouldn't impact your integration unless you parse the existing order identifiers (e.g., <b>OrderID</b> or <b>OrderLineItemID</b>), or otherwise infer meaning from the format (e.g., differentiating between a single line item order versus a multiple line item order). Because we realize that some integrations may have logic that is dependent upon the identifier format, eBay is rolling out the Trading API change with version control to support a transition period of approximately 9 months before applications must switch to the new format completely. See the <a href=\"https://developer.ebay.com/devzone/XML/docs/Reference/eBay/GetOrders.html#Request.OrderIDArray.OrderID\" target=\"_blank\">OrderID field description</a> in the <b>GetOrders</b> call for more details and requirements on transitioning to the new Order ID format.</span> (required)
         :param IssueRefundRequest body:
         :return: Refund
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
-                                       sell_fulfillment.OrderApi, sell_fulfillment.ApiClient, 'issue_refund',
-                                       SellFulfillmentException, True, ['sell.fulfillment', 'order'], order_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.OrderApi, sell_fulfillment.ApiClient, 'issue_refund', SellFulfillmentException, True, ['sell.fulfillment', 'order'], order_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_fulfillment_accept_payment_dispute(self, payment_dispute_id, **kwargs):  # noqa: E501
         """Accept Payment Dispute  # noqa: E501
 
-        This method is used if the seller wishes to accept a payment dispute. The unique identifier of the payment dispute is passed in as a path parameter, and unique identifiers for payment disputes can be retrieved with the getPaymentDisputeSummaries method. The revision field in the request payload is required, and the returnAddress field should be supplied if the seller is expecting the buyer to return the item. See the Request Payload section for more information on theste fields.  # noqa: E501
+        This method is used if the seller wishes to accept a payment dispute. The unique identifier of the payment dispute is passed in as a path parameter, and unique identifiers for payment disputes can be retrieved with the <strong>getPaymentDisputeSummaries</strong> method.<br><br>The <strong>revision</strong> field in the request payload is required, and the <strong>returnAddress</strong> field should be supplied if the seller is expecting the buyer to return the item. See the Request Payload section for more information on theste fields.  # noqa: E501
 
-        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed into the call URI to identify the payment dispute for which the user plans to accept. This identifier is automatically created by eBay once the payment dispute comes into the eBay managed payments system. The unique identifier for payment disputes is returned in the paymentDisputeId field in the getPaymentDisputeSummaries response. This path parameter is required, and the actual identifier value is passed in right after the payment_dispute resource. See the Resource URI above. (required)
+        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed into the call URI to identify the payment dispute for which the user plans to accept. This identifier is automatically created by eBay once the payment dispute comes into the eBay managed payments system. The unique identifier for payment disputes is returned in the <strong>paymentDisputeId</strong> field in the <strong>getPaymentDisputeSummaries</strong> response.<br><br>This path parameter is required, and the actual identifier value is passed in right after the <strong>payment_dispute</strong> resource. See the Resource URI above. (required)
         :param AcceptPaymentDisputeRequest body:
         :return: None
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
-                                       sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient,
-                                       'accept_payment_dispute', SellFulfillmentException, True,
-                                       ['sell.fulfillment', 'payment_dispute'], payment_dispute_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'accept_payment_dispute', SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'], payment_dispute_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_fulfillment_add_evidence(self, payment_dispute_id, **kwargs):  # noqa: E501
         """Add an Evidence File  # noqa: E501
 
-        This method is used by the seller to add one or more evidence files to address a payment dispute initiated by the buyer. The unique identifier of the payment dispute is passed in as a path parameter, and unique identifiers for payment disputes can be retrieved with the getPaymentDisputeSummaries method. Note: All evidence files should be uploaded using addEvidence and updateEvidence before the seller decides to contest the payment dispute. Once the seller has officially contested the dispute (using contestPaymentDispute or through My eBay), the addEvidence and updateEvidence methods can no longer be used. In the evidenceRequests array of the getPaymentDispute response, eBay prompts the seller with the type of evidence file(s) that will be needed to contest the payment dispute. The file(s) to add are identified through the files array in the request payload. Adding one or more new evidence files for a payment dispute triggers the creation of an evidence file, and the unique identifier for the new evidence file is automatically generated and returned in the evidenceId field of the addEvidence response payload upon a successful call. The type of evidence being added should be specified in the evidenceType field. All files being added (if more than one) should correspond to this evidence type. Upon a successful call, an evidenceId value is returned in the response. This indicates that a new evidence set has been created for the payment dispute, and this evidence set includes the evidence file(s) that were passed in to the fileId array. The evidenceId value will be needed if the seller wishes to add to the evidence set by using the updateEvidence method, or if they want to retrieve a specific evidence file within the evidence set by using the fetchEvidenceContent method.  # noqa: E501
+        This method is used by the seller to add one or more evidence files to address a payment dispute initiated by the buyer. The unique identifier of the payment dispute is passed in as a path parameter, and unique identifiers for payment disputes can be retrieved with the <strong>getPaymentDisputeSummaries</strong> method.<br/><br/><span class=\"tablenote\"><strong>Note:</strong> All evidence files should be uploaded using <strong>addEvidence</strong> and <strong>updateEvidence</strong>  before the seller decides to contest the payment dispute. Once the seller has officially contested the dispute (using <strong>contestPaymentDispute</strong> or through My eBay), the <strong>addEvidence</strong> and <strong>updateEvidence</strong> methods can no longer be used. In the <strong>evidenceRequests</strong> array of the <strong>getPaymentDispute</strong> response, eBay prompts the seller with the type of evidence file(s) that will be needed to contest the payment dispute.</span><br><br>The file(s) to add are identified through the <strong>files</strong> array in the request payload.  Adding one or more new evidence files for a payment dispute triggers the creation of an evidence file, and the unique identifier for the new evidence file is automatically generated and returned in the <strong>evidenceId</strong> field of the <strong>addEvidence</strong> response payload upon a successful call.<br><br>The type of evidence being added should be specified in the <strong>evidenceType</strong> field. All files being added (if more than one) should correspond to this evidence type.<br><br>Upon a successful call, an <strong>evidenceId</strong> value is returned in the response. This indicates that a new evidence set has been created for the payment dispute, and this evidence set includes the evidence file(s) that were passed in to the <strong>fileId</strong> array. The <strong>evidenceId</strong> value will be needed if the seller wishes to add to the evidence set by using the <strong>updateEvidence</strong> method, or if they want to retrieve a specific evidence file within the evidence set by using the <strong>fetchEvidenceContent</strong> method.  # noqa: E501
 
-        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed into the call URI to identify the payment dispute for which the user plans to add evidence for a contested payment dispute. This identifier is automatically created by eBay once the payment dispute comes into the eBay managed payments system. The unique identifier for payment disputes is returned in the paymentDisputeId field in the getPaymentDisputeSummaries response. This path parameter is required, and the actual identifier value is passed in right after the payment_dispute resource. See the Resource URI above. (required)
+        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed into the call URI to identify the payment dispute for which the user plans to add evidence for a contested payment dispute. This identifier is automatically created by eBay once the payment dispute comes into the eBay managed payments system. The unique identifier for payment disputes is returned in the <strong>paymentDisputeId</strong> field in the <strong>getPaymentDisputeSummaries</strong> response.<br><br>This path parameter is required, and the actual identifier value is passed in right after the <strong>payment_dispute</strong> resource. See the Resource URI above. (required)
         :param AddEvidencePaymentDisputeRequest body:
         :return: AddEvidencePaymentDisputeResponse
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
-                                       sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'add_evidence',
-                                       SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'],
-                                       payment_dispute_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'add_evidence', SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'], payment_dispute_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_fulfillment_contest_payment_dispute(self, payment_dispute_id, **kwargs):  # noqa: E501
         """Contest Payment Dispute  # noqa: E501
 
-        This method is used if the seller wishes to contest a payment dispute initiated by the buyer. The unique identifier of the payment dispute is passed in as a path parameter, and unique identifiers for payment disputes can be retrieved with the getPaymentDisputeSummaries method. Note: Before contesting a payment dispute, the seller must upload all evidence files using the addEvidence and updateEvidence methods. Once the seller has officially contested the dispute (using contestPaymentDispute), the addEvidence and updateEvidence methods can no longer be used. In the evidenceRequests array of the getPaymentDispute response, eBay prompts the seller with the type of evidence file(s) that will be needed to contest the payment dispute. If a seller decides to contest a payment dispute, that seller should be prepared to provide evidential documents such as proof of delivery, proof of authentication, or other documents. The type of evidential documents that the seller will provide will depend on why the buyer initiated the payment dispute. The revision field in the request payload is required, and the returnAddress field should be supplied if the seller is expecting the buyer to return the item. See the Request Payload section for more information on theste fields.  # noqa: E501
+        This method is used if the seller wishes to contest a payment dispute initiated by the buyer. The unique identifier of the payment dispute is passed in as a path parameter, and unique identifiers for payment disputes can be retrieved with the <strong>getPaymentDisputeSummaries</strong> method.<br/><br/><span class=\"tablenote\"><strong>Note:</strong> Before contesting a payment dispute, the seller must upload all evidence files using the <strong>addEvidence</strong> and <strong>updateEvidence</strong> methods. Once the seller has officially contested the dispute (using <strong>contestPaymentDispute</strong>), the <strong>addEvidence</strong> and <strong>updateEvidence</strong> methods can no longer be used. In the <strong>evidenceRequests</strong> array of the <strong>getPaymentDispute</strong> response, eBay prompts the seller with the type of evidence file(s) that will be needed to contest the payment dispute.</span><br><br>If a seller decides to contest a payment dispute, that seller should be prepared to provide evidential documents such as proof of delivery, proof of authentication, or other documents. The type of evidential documents that the seller will provide will depend on why the buyer initiated the payment dispute.<br><br>The <strong>revision</strong> field in the request payload is required, and the <strong>returnAddress</strong> field should be supplied if the seller is expecting the buyer to return the item. See the Request Payload section for more information on theste fields.  # noqa: E501
 
-        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed into the call URI to identify the payment dispute for which the user plans to contest. This identifier is automatically created by eBay once the payment dispute comes into the eBay managed payments system. The unique identifier for payment disputes is returned in the paymentDisputeId field in the getPaymentDisputeSummaries response. This path parameter is required, and the actual identifier value is passed in right after the payment_dispute resource. See the Resource URI above. (required)
+        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed into the call URI to identify the payment dispute for which the user plans to contest. This identifier is automatically created by eBay once the payment dispute comes into the eBay managed payments system. The unique identifier for payment disputes is returned in the <strong>paymentDisputeId</strong> field in the <strong>getPaymentDisputeSummaries</strong> response.<br><br>This path parameter is required, and the actual identifier value is passed in right after the <strong>payment_dispute</strong> resource. See the Resource URI above. (required)
         :param ContestPaymentDisputeRequest body:
         :return: None
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
-                                       sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient,
-                                       'contest_payment_dispute', SellFulfillmentException, True,
-                                       ['sell.fulfillment', 'payment_dispute'], payment_dispute_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'contest_payment_dispute', SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'], payment_dispute_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_fulfillment_fetch_evidence_content(self, payment_dispute_id, evidence_id, file_id, **kwargs):  # noqa: E501
         """Get Payment Dispute Evidence File  # noqa: E501
 
-        This call retrieves a specific evidence file for a payment dispute. The following three identifying parameters are needed in the call URI: payment_dispute_id: the identifier of the payment dispute. The identifier of each payment dispute is returned in the getPaymentDisputeSummaries response. evidence_id: the identifier of the evidential file set. The identifier of an evidential file set for a payment dispute is returned under the evidence array in the getPaymentDispute response. file_id: the identifier of an evidential file. This file must belong to the evidential file set identified through the evidence_id query parameter. The identifier of each evidential file is returned under the evidence.files array in the getPaymentDispute response. An actual binary file is returned if the call is successful. An error will occur if any of three identifiers are invalid.  # noqa: E501
+        This call retrieves a specific evidence file for a payment dispute. The following three identifying parameters are needed in the call URI:<ul><li><strong>payment_dispute_id</strong>: the identifier of the payment dispute. The identifier of each payment dispute is returned in the <strong>getPaymentDisputeSummaries</strong> response.</li><li><strong>evidence_id</strong>: the identifier of the evidential file set. The identifier of an evidential file set for a payment dispute is returned under the <strong>evidence</strong> array in the <strong>getPaymentDispute</strong> response.</li><li><strong>file_id</strong>: the identifier of an evidential file. This file must belong to the evidential file set identified through the <strong>evidence_id</strong> query parameter. The identifier of each evidential file is returned under the <strong>evidence.files</strong> array in the <strong>getPaymentDispute</strong> response.</li></ul><p>An actual binary file is returned if the call is successful. An error will occur if any of three identifiers are invalid.</p>  # noqa: E501
 
-        :param str payment_dispute_id: The identifier of the payment dispute. The identifier of each payment dispute is returned in the getPaymentDisputeSummaries response. This identifier is passed in as a path parameter at the end of the call URI. (required)
-        :param str evidence_id: The identifier of the evidential file set. The identifier of an evidential file set for a payment dispute is returned under the evidence array in the getPaymentDispute response. Below is an example of the syntax to use for this query parameter: evidence_id=12345678 (required)
-        :param str file_id: The identifier of an evidential file. This file must belong to the evidential file set identified through the evidence_id query parameter. The identifier of each evidential file is returned under the evidence.files array in the getPaymentDispute response. Below is an example of the syntax to use for this query parameter: file_id=12345678 (required)
+        :param str payment_dispute_id: The identifier of the payment dispute. The identifier of each payment dispute is returned in the <strong>getPaymentDisputeSummaries</strong> response. This identifier is passed in as a path parameter at the end of the call URI. (required)
+        :param str evidence_id: The identifier of the evidential file set. The identifier of an evidential file set for a payment dispute is returned under the <strong>evidence</strong> array in the <strong>getPaymentDispute</strong> response.<br><br>Below is an example of the syntax to use for this query parameter:<br/><br/><code>evidence_id=12345678</code> (required)
+        :param str file_id: The identifier of an evidential file. This file must belong to the evidential file set identified through the <strong>evidence_id</strong> query parameter. The identifier of each evidential file is returned under the <strong>evidence.files</strong> array in the <strong>getPaymentDispute</strong> response. <br><br>Below is an example of the syntax to use for this query parameter:<br/><br/><code>file_id=12345678</code>  (required)
         :return: list[str]
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
-                                       sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient,
-                                       'fetch_evidence_content', SellFulfillmentException, True,
-                                       ['sell.fulfillment', 'payment_dispute'],
-                                       (payment_dispute_id, evidence_id, file_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'fetch_evidence_content', SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'], (payment_dispute_id, evidence_id, file_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3156,140 +2758,111 @@ class API:
 
         This method retrieve a log of activity for a payment dispute. The identifier of the payment dispute is passed in as a path parameter. The output includes a timestamp for each action of the payment dispute, from creation to resolution, and all steps in between.  # noqa: E501
 
-        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed in at the end of the call URI to identify the payment dispute for which the user wishes to see all activity. This identifier is automatically created by eBay once the payment dispute comes into the eBay managed payments system. The unique identifier for payment disputes is returned in the paymentDisputeId field in the getPaymentDisputeSummaries response. This path parameter is required, and the actual identifier value is passed in right after the payment_dispute resource. See the Resource URI above. (required)
+        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed in at the end of the call URI to identify the payment dispute for which the user wishes to see all activity. This identifier is automatically created by eBay once the payment dispute comes into the eBay managed payments system. The unique identifier for payment disputes is returned in the <strong>paymentDisputeId</strong> field in the <strong>getPaymentDisputeSummaries</strong> response.<br><br>This path parameter is required, and the actual identifier value is passed in right after the <strong>payment_dispute</strong> resource. See the Resource URI above. (required)
         :return: PaymentDisputeActivityHistory
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
-                                       sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'get_activities',
-                                       SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'],
-                                       payment_dispute_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'get_activities', SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'], payment_dispute_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_fulfillment_get_payment_dispute(self, payment_dispute_id, **kwargs):  # noqa: E501
         """Get Payment Dispute Details  # noqa: E501
 
-        This method retrieves detailed information on a specific payment dispute. The payment dispute identifier is passed in as path parameter at the end of the call URI. Below is a summary of the information that is retrieved: Current status of payment dispute Amount of the payment dispute Reason the payment dispute was opened Order and line items associated with the payment dispute Seller response options if an action is currently required on the payment dispute Details on the results of the payment dispute if it has been closed Details on any evidence that was provided by the seller to fight the payment dispute  # noqa: E501
+        This method retrieves detailed information on a specific payment dispute. The payment dispute identifier is passed in as path parameter at the end of the call URI.<br/><br/>Below is a summary of the information that is retrieved:<ul><li>Current status of payment dispute</li><li>Amount of the payment dispute</li><li>Reason the payment dispute was opened</li><li>Order and line items associated with the payment dispute</li><li>Seller response options if an action is currently required on the payment dispute</li><li>Details on the results of the payment dispute if it has been closed</li><li>Details on any evidence that was provided by the seller to fight the payment dispute</li></ul>  # noqa: E501
 
-        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed in at the end of the call URI to identify the payment dispute to retrieve. This identifier is automatically created by eBay once the payment dispute comes into the eBay managed payments system. The unique identifier for payment disputes is returned in the paymentDisputeId field in the getPaymentDisputeSummaries response. (required)
+        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed in at the end of the call URI to identify the payment dispute to retrieve. This identifier is automatically created by eBay once the payment dispute comes into the eBay managed payments system. The unique identifier for payment disputes is returned in the <strong>paymentDisputeId</strong> field in the <strong>getPaymentDisputeSummaries</strong> response. (required)
         :return: PaymentDispute
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
-                                       sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient,
-                                       'get_payment_dispute', SellFulfillmentException, True,
-                                       ['sell.fulfillment', 'payment_dispute'], payment_dispute_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'get_payment_dispute', SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'], payment_dispute_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_fulfillment_get_payment_dispute_summaries(self, **kwargs):  # noqa: E501
         """Search Payment Dispute by Filters  # noqa: E501
 
-        This method is used retrieve one or more payment disputes filed against the seller. These payment disputes can be open or recently closed. The following filter types are available in the request payload to control the payment disputes that are returned: Dispute filed against a specific order (order_id parameter is used) Dispute(s) filed by a specific buyer (buyer_username parameter is used) Dispute(s) filed within a specific date range (open_date_from and/or open_date_to parameters are used) Disputes in a specific state (payment_dispute_status parameter is used)More than one of these filter types can be used together. See the request payload request fields for more information about how each filter is used. If none of the filters are used, all open and recently closed payment disputes are returned. Pagination is also available. See the limit and offset fields for more information on how pagination is used for this method.  # noqa: E501
+        This method is used retrieve one or more payment disputes filed against the seller. These payment disputes can be open or recently closed. The following filter types are available in the request payload to control the payment disputes that are returned:<ul><li>Dispute filed against a specific order (<b>order_id</b> parameter is used)</li><li>Dispute(s) filed by a specific buyer (<b>buyer_username</b> parameter is used)</li><li>Dispute(s) filed within a specific date range (<b>open_date_from</b> and/or <b>open_date_to</b> parameters are used)</li><li>Disputes in a specific state (<b>payment_dispute_status</b> parameter is used)</li></ul>More than one of these filter types can be used together. See the request payload request fields for more information about how each filter is used.<br/><br/>If none of the filters are used, all open and recently closed payment disputes are returned.<br/><br/>Pagination is also available. See the <b>limit</b> and <b>offset</b> fields for more information on how pagination is used for this method.  # noqa: E501
 
-        :param str order_id: This filter is used if the seller wishes to retrieve one or more payment disputes filed against a specific order. It is possible that there can be more than one dispute filed against an order if the order has multiple line items. If this filter is used, any other filters are ignored. Note: The order identifier passed into this field must be an Order ID in the new format. The legacy APIs still support the old and new order ID format to identify orders, but only the new order ID format is supported in REST-based APIs. eBay rolled out a new Order ID format in June 2019.
+        :param str order_id: This filter is used if the seller wishes to retrieve one or more payment disputes filed against a specific order. It is possible that there can be more than one dispute filed against an order if the order has multiple line items. If this filter is used, any other filters are ignored.<br/><br/><span class=\"tablenote\"><strong>Note:</strong> The order identifier passed into this field must be an Order ID in the new format. The legacy APIs still support the old and new order ID format to identify orders, but only the new order ID format is supported in REST-based APIs. eBay rolled out a new Order ID format in June 2019.</span>
         :param str buyer_username: This filter is used if the seller wishes to retrieve one or more payment disputes opened by a specific seller. The string that is passed in to this query parameter is the eBay user ID of the buyer.
-        :param str open_date_from: The open_date_from and/or open_date_to date filters are used if the seller wishes to retrieve payment disputes opened within a specific date range. A maximum date range that may be set with the open_date_from and/or open_date_to filters is 90 days. These date filters use the ISO-8601 24-hour date and time format, and time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The open_date_from field sets the beginning date of the date range, and can be set as far back as 18 months from the present time. If a open_date_from field is used, but a open_date_to field is not used, the open_date_to value will default to 90 days after the date specified in the open_date_from field, or to the present time if less than 90 days in the past. The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.
-        :param str open_date_to: The open_date_from and/or open_date_to date filters are used if the seller wishes to retrieve payment disputes opened within a specific date range. A maximum date range that may be set with the open_date_from and/or open_date_to filters is 90 days. These date filters use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The open_date_to field sets the ending date of the date range, and can be set up to 90 days from the date set in the open_date_from field. The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.
-        :param str payment_dispute_status: This filter is used if the seller wishes to only retrieve payment disputes in a specific state. More than one value can be specified. If no payment_dispute_status filter is used, payment disputes in all states are returned in the response. See DisputeStateEnum type for supported values.
-        :param str limit: The value passed in this query parameter sets the maximum number of payment disputes to return per page of data. The value passed in this field should be an integer from 1 to 200. If this query parameter is not set, up to 200 records will be returned on each page of results. Min: 1; Max: 200; Default: 200
-        :param str offset: This field is used to specify the number of records to skip in the result set before returning the first payment dispute in the paginated response. A zero-based index is used, so if you set the offset value to 0 (default value), the first payment dispute in the result set appears at the top of the response. Combine offset with the limit parameter to control the payment disputes returned in the response. For example, if you supply an offset value of 0 and a limit value of 10, the response will contain the first 10 payment disputes from the result set that matches the input criteria. If you supply an offset value of 10 and a limit value of 20, the response will contain payment disputes 11-30 from the result set that matches the input criteria. Min: 0; Max: total number of payment disputes - 1; Default: 0
+        :param str open_date_from: The <b>open_date_from</b> and/or <b>open_date_to</b> date filters are used if the seller wishes to retrieve payment disputes opened within a specific date range. A maximum date range that may be set with the <b>open_date_from</b> and/or <b>open_date_to</b> filters is 90 days. These date filters use the ISO-8601 24-hour date and time format, and time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu.<br><br>The <b>open_date_from</b> field sets the beginning date of the date range, and can be set as far back as 18 months from the present time. If a <b>open_date_from</b> field is used, but a <b>open_date_to</b> field is not used, the <b>open_date_to</b> value will default to 90 days after the date specified in the <b>open_date_from</b> field, or to the present time if less than 90 days in the past.<br/><br/>The ISO-8601 format looks like this: <em>yyyy-MM-ddThh:mm.ss.sssZ</em>. An example would be <code>2019-08-04T19:09:02.768Z</code>.
+        :param str open_date_to: The <b>open_date_from</b> and/or <b>open_date_to</b> date filters are used if the seller wishes to retrieve payment disputes opened within a specific date range. A maximum date range that may be set with the <b>open_date_from</b> and/or <b>open_date_to</b> filters is 90 days. These date filters use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu.<br><br>The <b>open_date_to</b> field sets the ending date of the date range, and can be set up to 90 days from the date set in the <b>open_date_from</b> field. <br/><br/>The ISO-8601 format looks like this: <em>yyyy-MM-ddThh:mm.ss.sssZ</em>. An example would be <code>2019-08-04T19:09:02.768Z</code>.
+        :param str payment_dispute_status: This filter is used if the seller wishes to only retrieve payment disputes in a specific state. More than one value can be specified. If no <b>payment_dispute_status</b> filter is used, payment disputes in all states are returned in the response. See <strong>DisputeStateEnum</strong> type for supported values.
+        :param str limit: The value passed in this query parameter sets the maximum number of payment disputes to return per page of data. The value passed in this field should be an integer from 1 to 200. If this query parameter is not set, up to 200 records will be returned on each page of results.<br><br><b>Min</b>: 1; <b>Max</b>: 200; <b>Default</b>: 200
+        :param str offset: This field is used to specify the number of records to skip in the result set before returning the first payment dispute in the paginated response. A zero-based index is used, so if you set the <b>offset</b> value to <code>0</code> (default value), the first payment dispute in the result set appears at the top of the response. <br/><br/>Combine <b>offset</b> with the <b>limit</b> parameter to control the payment disputes returned in the response. For example, if you supply an <b>offset</b> value of <code>0</code> and a <b>limit</b> value of <code>10</code>, the response will contain the first 10 payment disputes from the result set that matches the input criteria. If you supply an <b>offset</b> value of <code>10</code> and a <b>limit</b> value of <code>20</code>, the response will contain payment disputes 11-30 from the result set that matches the input criteria.<br><br><b>Min</b>: 0; <b>Max</b>: total number of payment disputes - 1; <b>Default</b>: 0
         :return: DisputeSummaryResponse
         """
         try:
-            return self._method_paged(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
-                                      sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient,
-                                      'get_payment_dispute_summaries', SellFulfillmentException, True,
-                                      ['sell.fulfillment', 'payment_dispute'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'get_payment_dispute_summaries', SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_fulfillment_update_evidence(self, payment_dispute_id, **kwargs):  # noqa: E501
         """Update evidence  # noqa: E501
 
-        This method is used by the seller to update an existing evidence set for a payment dispute with one or more evidence files. The unique identifier of the payment dispute is passed in as a path parameter, and unique identifiers for payment disputes can be retrieved with the getPaymentDisputeSummaries method. Note: All evidence files should be uploaded using addEvidence and updateEvidence before the seller decides to contest the payment dispute. Once the seller has officially contested the dispute (using contestPaymentDispute or through My eBay), the addEvidence and updateEvidence methods can no longer be used. In the evidenceRequests array of the getPaymentDispute response, eBay prompts the seller with the type of evidence file(s) that will be needed to contest the payment dispute. The unique identifier of the evidence set to update is specified through the evidenceId field, and the file(s) to add are identified through the files array in the request payload. The unique identifier for an evidence file is automatically generated and returned in the fileId field of the uploadEvidence response payload upon a successful call. Sellers must make sure to capture the fileId value for each evidence file that is uploaded with the uploadEvidence method. The type of evidence being added should be specified in the evidenceType field. All files being added (if more than one) should correspond to this evidence type. Upon a successful call, an http status code of 204 Success is returned. There is no response payload unless an error occurs. To verify that a new file is a part of the evidence set, the seller can use the fetchEvidenceContent method, passing in the proper evidenceId and fileId values.  # noqa: E501
+        This method is used by the seller to update an existing evidence set for a payment dispute with one or more evidence files. The unique identifier of the payment dispute is passed in as a path parameter, and unique identifiers for payment disputes can be retrieved with the <strong>getPaymentDisputeSummaries</strong> method.<br/><br/><span class=\"tablenote\"><strong>Note:</strong> All evidence files should be uploaded using <strong>addEvidence</strong> and <strong>updateEvidence</strong>  before the seller decides to contest the payment dispute. Once the seller has officially contested the dispute (using <strong>contestPaymentDispute</strong> or through My eBay), the <strong>addEvidence</strong> and <strong>updateEvidence</strong> methods can no longer be used. In the <strong>evidenceRequests</strong> array of the <strong>getPaymentDispute</strong> response, eBay prompts the seller with the type of evidence file(s) that will be needed to contest the payment dispute.</span><br><br>The unique identifier of the evidence set to update is specified through the <strong>evidenceId</strong> field, and the file(s) to add are identified through the <strong>files</strong> array in the request payload. The unique identifier for an evidence file is automatically generated and returned in the <strong>fileId</strong> field of the <strong>uploadEvidence</strong> response payload upon a successful call. Sellers must make sure to capture the <strong>fileId</strong> value for each evidence file that is uploaded with the <strong>uploadEvidence</strong> method.<br><br>The type of evidence being added should be specified in the <strong>evidenceType</strong> field.  All files being added (if more than one) should correspond to this evidence type.<br><br>Upon a successful call, an http status code of <code>204 Success</code> is returned. There is no response payload unless an error occurs. To verify that a new file is a part of the evidence set, the seller can use the <strong>fetchEvidenceContent</strong> method, passing in the proper <strong>evidenceId</strong> and <strong>fileId</strong> values.  # noqa: E501
 
-        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed into the call URI to identify the payment dispute for which the user plans to update the evidence set for a contested payment dispute. This identifier is automatically created by eBay once the payment dispute comes into the eBay managed payments system. The unique identifier for payment disputes is returned in the paymentDisputeId field in the getPaymentDisputeSummaries response. This path parameter is required, and the actual identifier value is passed in right after the payment_dispute resource. See the Resource URI above. (required)
+        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed into the call URI to identify the payment dispute for which the user plans to update the evidence set for a contested payment dispute. This identifier is automatically created by eBay once the payment dispute comes into the eBay managed payments system. The unique identifier for payment disputes is returned in the <strong>paymentDisputeId</strong> field in the <strong>getPaymentDisputeSummaries</strong> response.<br><br>This path parameter is required, and the actual identifier value is passed in right after the <strong>payment_dispute</strong> resource. See the Resource URI above. (required)
         :param UpdateEvidencePaymentDisputeRequest body:
         :return: None
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
-                                       sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient,
-                                       'update_evidence', SellFulfillmentException, True,
-                                       ['sell.fulfillment', 'payment_dispute'], payment_dispute_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'update_evidence', SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'], payment_dispute_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_fulfillment_upload_evidence_file(self, payment_dispute_id, **kwargs):  # noqa: E501
         """Upload an Evidence File  # noqa: E501
 
-        This method is used to upload an evidence file for a contested payment dispute. The unique identifier of the payment dispute is passed in as a path parameter, and unique identifiers for payment disputes can be retrieved with the getPaymentDisputeSummaries method. The uploadEvidenceFile only uploads an encrypted, binary image file (using multipart/form-data HTTP request header), and does not have a request payload. The three image formats supported at this time are .JPEG, .JPG, and .PNG. Once the file is successfully uploaded, the seller will need to grab the fileId value in the response payload to add this file to a new evidence set using the addEvidence method, or to add this file to an existing evidence set using the updateEvidence method.  # noqa: E501
+        This method is used to upload an evidence file for a contested payment dispute. The unique identifier of the payment dispute is passed in as a path parameter, and unique identifiers for payment disputes can be retrieved with the <strong>getPaymentDisputeSummaries</strong> method.<br><br>The <strong>uploadEvidenceFile</strong> only uploads an encrypted, binary image file (using multipart/form-data HTTP request header), and does not have a request payload. The three image formats supported at this time are .JPEG, .JPG, and .PNG.<br><br>Once the file is successfully uploaded, the seller will need to grab the <strong>fileId</strong> value in the response payload to add this file to a new evidence set using the <strong>addEvidence</strong> method, or to add this file to an existing evidence set using the <strong>updateEvidence</strong> method.  # noqa: E501
 
-        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed into the call URI to identify the payment dispute for which the user plans to upload an evidence file. This identifier is automatically created by eBay once the payment dispute comes into the eBay managed payments system. The unique identifier for payment disputes is returned in the paymentDisputeId field in the getPaymentDisputeSummaries response. This path parameter is required, and the actual identifier value is passed in right after the payment_dispute resource. See the Resource URI above. (required)
+        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed into the call URI to identify the payment dispute for which the user plans to upload an evidence file. This identifier is automatically created by eBay once the payment dispute comes into the eBay managed payments system. The unique identifier for payment disputes is returned in the <strong>paymentDisputeId</strong> field in the <strong>getPaymentDisputeSummaries</strong> response.<br><br>This path parameter is required, and the actual identifier value is passed in right after the <strong>payment_dispute</strong> resource. See the Resource URI above. (required)
         :return: FileEvidence
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
-                                       sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient,
-                                       'upload_evidence_file', SellFulfillmentException, True,
-                                       ['sell.fulfillment', 'payment_dispute'], payment_dispute_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.PaymentDisputeApi, sell_fulfillment.ApiClient, 'upload_evidence_file', SellFulfillmentException, True, ['sell.fulfillment', 'payment_dispute'], payment_dispute_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_fulfillment_create_shipping_fulfillment(self, body, order_id, **kwargs):  # noqa: E501
         """create_shipping_fulfillment  # noqa: E501
 
-        When you group an order's line items into one or more packages, each package requires a corresponding plan for handling, addressing, and shipping; this is a shipping fulfillment. For each package, execute this call once to generate a shipping fulfillment associated with that package. Note: A single line item in an order can consist of multiple units of a purchased item, and one unit can consist of multiple parts or components. Although these components might be provided by the manufacturer in separate packaging, the seller must include all components of a given line item in the same package. Before using this call for a given package, you must determine which line items are in the package. If the package has been shipped, you should provide the date of shipment in the request. If not provided, it will default to the current date and time.  # noqa: E501
+        When you group an order's line items into one or more packages, each package requires a corresponding plan for handling, addressing, and shipping; this is a <i>shipping fulfillment</i>. For each package, execute this call once to generate a shipping fulfillment associated with that package. <br /><br /> <span class=\"tablenote\"><strong>Note:</strong> A single line item in an order can consist of multiple units of a purchased item, and one unit can consist of multiple parts or components. Although these components might be provided by the manufacturer in separate packaging, the seller must include all components of a given line item in the same package.</span> <br /><br />Before using this call for a given package, you must determine which line items are in the package. If the package has been shipped, you should provide the date of shipment in the request. If not provided, it will default to the current date and time.  # noqa: E501
 
         :param ShippingFulfillmentDetails body: fulfillment payload (required)
-        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the getOrders method in the orders.orderId field. Note: A new order ID format was introduced to all eBay APIs (legacy and REST) in June 2019. In REST APIs that return Order IDs, including the Fulfillment API, all order IDs are returned in the new format, but the createShippingFulfillment method will accept both the legacy and new format order ID. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers will be automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support. (required)
+        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the <b>getOrders</b> method in the <b>orders.orderId</b> field. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> A new order ID format was introduced to all eBay APIs (legacy and REST) in June 2019. In REST APIs that return Order IDs, including the Fulfillment API, all order IDs are returned in the new format, but the <strong>createShippingFulfillment</strong> method will accept both the legacy and new format order ID. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers will be automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support. </span> (required)
         :return: object
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
-                                       sell_fulfillment.ShippingFulfillmentApi, sell_fulfillment.ApiClient,
-                                       'create_shipping_fulfillment', SellFulfillmentException, True,
-                                       ['sell.fulfillment', 'shipping_fulfillment'], (body, order_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.ShippingFulfillmentApi, sell_fulfillment.ApiClient, 'create_shipping_fulfillment', SellFulfillmentException, True, ['sell.fulfillment', 'shipping_fulfillment'], (body, order_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_fulfillment_get_shipping_fulfillment(self, fulfillment_id, order_id, **kwargs):  # noqa: E501
         """get_shipping_fulfillment  # noqa: E501
 
-        Use this call to retrieve the contents of a fulfillment based on its unique identifier, fulfillmentId (combined with the associated order's orderId). The fulfillmentId value was originally generated by the createShippingFulfillment call, and is returned by the getShippingFulfillments call in the members.fulfillmentId field.  # noqa: E501
+        Use this call to retrieve the contents of a fulfillment based on its unique identifier, <b>fulfillmentId</b> (combined with the associated order's <b>orderId</b>). The <b>fulfillmentId</b> value was originally generated by the <b>createShippingFulfillment</b> call, and is returned by the <b>getShippingFulfillments</b> call in the <b>members.fulfillmentId</b> field.  # noqa: E501
 
-        :param str fulfillment_id: The unique identifier of the fulfillment. This eBay-generated value was created by the Create Shipping Fulfillment call, and returned by the getShippingFulfillments call in the fulfillments.fulfillmentId field; for example, 9405509699937003457459. (required)
-        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the getOrders method in the orders.orderId field. Note: A new order ID format was introduced to all eBay APIs (legacy and REST) in June 2019. In REST APIs that return Order IDs, including the Fulfillment API, all order IDs are returned in the new format, but the getShippingFulfillment method will accept both the legacy and new format order ID. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers will be automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support. (required)
+        :param str fulfillment_id: The unique identifier of the fulfillment. This eBay-generated value was created by the <b>Create Shipping Fulfillment</b> call, and returned by the <b>getShippingFulfillments</b> call in the <b>fulfillments.fulfillmentId</b> field; for example, <code>9405509699937003457459</code>. (required)
+        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the <b>getOrders</b> method in the <b>orders.orderId</b> field. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> A new order ID format was introduced to all eBay APIs (legacy and REST) in June 2019. In REST APIs that return Order IDs, including the Fulfillment API, all order IDs are returned in the new format, but the <strong>getShippingFulfillment</strong> method will accept both the legacy and new format order ID. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers will be automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support. </span> (required)
         :return: ShippingFulfillment
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
-                                       sell_fulfillment.ShippingFulfillmentApi, sell_fulfillment.ApiClient,
-                                       'get_shipping_fulfillment', SellFulfillmentException, True,
-                                       ['sell.fulfillment', 'shipping_fulfillment'], (fulfillment_id, order_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.ShippingFulfillmentApi, sell_fulfillment.ApiClient, 'get_shipping_fulfillment', SellFulfillmentException, True, ['sell.fulfillment', 'shipping_fulfillment'], (fulfillment_id, order_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_fulfillment_get_shipping_fulfillments(self, order_id, **kwargs):  # noqa: E501
         """get_shipping_fulfillments  # noqa: E501
 
-        Use this call to retrieve the contents of all fulfillments currently defined for a specified order based on the order's unique identifier, orderId. This value is returned in the getOrders call's members.orderId field when you search for orders by creation date or shipment status.  # noqa: E501
+        Use this call to retrieve the contents of all fulfillments currently defined for a specified order based on the order's unique identifier, <b>orderId</b>. This value is returned in the <b>getOrders</b> call's <b>members.orderId</b> field when you search for orders by creation date or shipment status.  # noqa: E501
 
-        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the getOrders method in the orders.orderId field. Note: A new order ID format was introduced to all eBay APIs (legacy and REST) in June 2019. In REST APIs that return Order IDs, including the Fulfillment API, all order IDs are returned in the new format, but the getShippingFulfillments method will accept both the legacy and new format order ID. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers will be automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support. (required)
+        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the <b>getOrders</b> method in the <b>orders.orderId</b> field. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> A new order ID format was introduced to all eBay APIs (legacy and REST) in June 2019. In REST APIs that return Order IDs, including the Fulfillment API, all order IDs are returned in the new format, but the <strong>getShippingFulfillments</strong> method will accept both the legacy and new format order ID. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers will be automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support. </span> (required)
         :return: ShippingFulfillmentPagedCollection
         """
         try:
-            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1',
-                                       sell_fulfillment.ShippingFulfillmentApi, sell_fulfillment.ApiClient,
-                                       'get_shipping_fulfillments', SellFulfillmentException, True,
-                                       ['sell.fulfillment', 'shipping_fulfillment'], order_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_fulfillment.Configuration, '/sell/fulfillment/v1', sell_fulfillment.ShippingFulfillmentApi, sell_fulfillment.ApiClient, 'get_shipping_fulfillments', SellFulfillmentException, True, ['sell.fulfillment', 'shipping_fulfillment'], order_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3302,10 +2875,7 @@ class API:
         :return: BulkInventoryItemResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
-                                       sell_inventory.InventoryItemApi, sell_inventory.ApiClient,
-                                       'bulk_create_or_replace_inventory_item', SellInventoryException, True,
-                                       ['sell.inventory', 'inventory_item'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemApi, sell_inventory.ApiClient, 'bulk_create_or_replace_inventory_item', SellInventoryException, True, ['sell.inventory', 'inventory_item'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3318,10 +2888,7 @@ class API:
         :return: BulkGetInventoryItemResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
-                                       sell_inventory.InventoryItemApi, sell_inventory.ApiClient,
-                                       'bulk_get_inventory_item', SellInventoryException, True,
-                                       ['sell.inventory', 'inventory_item'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemApi, sell_inventory.ApiClient, 'bulk_get_inventory_item', SellInventoryException, True, ['sell.inventory', 'inventory_item'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3334,10 +2901,7 @@ class API:
         :return: BulkPriceQuantityResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
-                                       sell_inventory.InventoryItemApi, sell_inventory.ApiClient,
-                                       'bulk_update_price_quantity', SellInventoryException, True,
-                                       ['sell.inventory', 'inventory_item'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemApi, sell_inventory.ApiClient, 'bulk_update_price_quantity', SellInventoryException, True, ['sell.inventory', 'inventory_item'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3352,11 +2916,7 @@ class API:
         :return: BaseResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
-                                       sell_inventory.InventoryItemApi, sell_inventory.ApiClient,
-                                       'create_or_replace_inventory_item', SellInventoryException, True,
-                                       ['sell.inventory', 'inventory_item'], (body, content_language, sku),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemApi, sell_inventory.ApiClient, 'create_or_replace_inventory_item', SellInventoryException, True, ['sell.inventory', 'inventory_item'], (body, content_language, sku), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3369,10 +2929,7 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
-                                       sell_inventory.InventoryItemApi, sell_inventory.ApiClient,
-                                       'delete_inventory_item', SellInventoryException, True,
-                                       ['sell.inventory', 'inventory_item'], sku, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemApi, sell_inventory.ApiClient, 'delete_inventory_item', SellInventoryException, True, ['sell.inventory', 'inventory_item'], sku, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3385,10 +2942,7 @@ class API:
         :return: InventoryItemWithSkuLocaleGroupid
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
-                                       sell_inventory.InventoryItemApi, sell_inventory.ApiClient, 'get_inventory_item',
-                                       SellInventoryException, True, ['sell.inventory', 'inventory_item'], sku,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemApi, sell_inventory.ApiClient, 'get_inventory_item', SellInventoryException, True, ['sell.inventory', 'inventory_item'], sku, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3402,15 +2956,11 @@ class API:
         :return: InventoryItems
         """
         try:
-            return self._method_paged(sell_inventory.Configuration, '/sell/inventory/v1',
-                                      sell_inventory.InventoryItemApi, sell_inventory.ApiClient, 'get_inventory_items',
-                                      SellInventoryException, True, ['sell.inventory', 'inventory_item'], None,
-                                      **kwargs)  # noqa: E501
+            return self._method_paged(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemApi, sell_inventory.ApiClient, 'get_inventory_items', SellInventoryException, True, ['sell.inventory', 'inventory_item'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def sell_inventory_create_or_replace_inventory_item_group(self, body, content_language, inventory_item_group_key,
-                                                              **kwargs):  # noqa: E501
+    def sell_inventory_create_or_replace_inventory_item_group(self, body, content_language, inventory_item_group_key, **kwargs):  # noqa: E501
         """create_or_replace_inventory_item_group  # noqa: E501
 
         This call creates a new inventory item group or updates an existing inventory item group. It is up to sellers whether they want to create a complete inventory item group record right from the start, or sellers can provide only some information with the initial createOrReplaceInventoryItemGroup call, and then make one or more additional createOrReplaceInventoryItemGroup calls to complete the inventory item group record. Upon first creating an inventory item group record, the only required elements are the inventoryItemGroupKey identifier in the call URI, and the members of the inventory item group specified through the variantSKUs array in the request payload. In the case of updating/replacing an existing inventory item group, this call does a complete replacement of the existing inventory item group record, so all fields (including the member SKUs) that make up the inventory item group are required, regardless of whether their values changed. So, when replacing/updating an inventory item group record, it is advised that the seller run a getInventoryItemGroup call for that inventory item group to see all of its current values/settings/members before attempting to update the record. And if changes are made to an inventory item group that is part of a live, multiple-variation eBay listing, these changes automatically update the eBay listing. For example, if a SKU value is removed from the inventory item group, the corresponding product variation will be removed from the eBay listing as well. In addition to the required inventory item group identifier and member SKUs, other key information that is set with this call include: Title and description of the inventory item group. The string values provided in these fields will actually become the listing title and listing description of the listing once the first SKU of the inventory item group is published successfully Common aspects that inventory items in the qroup share Product aspects that vary within each product variation Links to images demonstrating the variations of the product, and these images should correspond to the product aspect that is set with the variesBy.aspectsImageVariesBy field In addition to the authorization header, which is required for all eBay REST API calls, the createOrReplaceInventoryItemGroup call also requires the Content-Language header, that sets the natural language that will be used in the field values of the request payload. For US English, the code value passed in this header should be en-US. To view other supported Content-Language values, and to read more about all supported HTTP headers for eBay REST API calls, see the HTTP request headers topic in the Using eBay RESTful APIs document.  # noqa: E501
@@ -3421,11 +2971,7 @@ class API:
         :return: BaseResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
-                                       sell_inventory.InventoryItemGroupApi, sell_inventory.ApiClient,
-                                       'create_or_replace_inventory_item_group', SellInventoryException, True,
-                                       ['sell.inventory', 'inventory_item_group'],
-                                       (body, content_language, inventory_item_group_key), **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemGroupApi, sell_inventory.ApiClient, 'create_or_replace_inventory_item_group', SellInventoryException, True, ['sell.inventory', 'inventory_item_group'], (body, content_language, inventory_item_group_key), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3438,11 +2984,7 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
-                                       sell_inventory.InventoryItemGroupApi, sell_inventory.ApiClient,
-                                       'delete_inventory_item_group', SellInventoryException, True,
-                                       ['sell.inventory', 'inventory_item_group'], inventory_item_group_key,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemGroupApi, sell_inventory.ApiClient, 'delete_inventory_item_group', SellInventoryException, True, ['sell.inventory', 'inventory_item_group'], inventory_item_group_key, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3455,11 +2997,7 @@ class API:
         :return: InventoryItemGroup
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
-                                       sell_inventory.InventoryItemGroupApi, sell_inventory.ApiClient,
-                                       'get_inventory_item_group', SellInventoryException, True,
-                                       ['sell.inventory', 'inventory_item_group'], inventory_item_group_key,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.InventoryItemGroupApi, sell_inventory.ApiClient, 'get_inventory_item_group', SellInventoryException, True, ['sell.inventory', 'inventory_item_group'], inventory_item_group_key, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3472,9 +3010,7 @@ class API:
         :return: BulkMigrateListingResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.ListingApi,
-                                       sell_inventory.ApiClient, 'bulk_migrate_listing', SellInventoryException, True,
-                                       ['sell.inventory', 'listing'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.ListingApi, sell_inventory.ApiClient, 'bulk_migrate_listing', SellInventoryException, True, ['sell.inventory', 'listing'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3488,10 +3024,7 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi,
-                                       sell_inventory.ApiClient, 'create_inventory_location', SellInventoryException,
-                                       True, ['sell.inventory', 'location'], (body, merchant_location_key),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi, sell_inventory.ApiClient, 'create_inventory_location', SellInventoryException, True, ['sell.inventory', 'location'], (body, merchant_location_key), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3504,10 +3037,7 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi,
-                                       sell_inventory.ApiClient, 'delete_inventory_location', SellInventoryException,
-                                       True, ['sell.inventory', 'location'], merchant_location_key,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi, sell_inventory.ApiClient, 'delete_inventory_location', SellInventoryException, True, ['sell.inventory', 'location'], merchant_location_key, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3520,10 +3050,7 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi,
-                                       sell_inventory.ApiClient, 'disable_inventory_location', SellInventoryException,
-                                       True, ['sell.inventory', 'location'], merchant_location_key,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi, sell_inventory.ApiClient, 'disable_inventory_location', SellInventoryException, True, ['sell.inventory', 'location'], merchant_location_key, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3536,10 +3063,7 @@ class API:
         :return: object
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi,
-                                       sell_inventory.ApiClient, 'enable_inventory_location', SellInventoryException,
-                                       True, ['sell.inventory', 'location'], merchant_location_key,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi, sell_inventory.ApiClient, 'enable_inventory_location', SellInventoryException, True, ['sell.inventory', 'location'], merchant_location_key, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3552,9 +3076,7 @@ class API:
         :return: InventoryLocationResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi,
-                                       sell_inventory.ApiClient, 'get_inventory_location', SellInventoryException, True,
-                                       ['sell.inventory', 'location'], merchant_location_key, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi, sell_inventory.ApiClient, 'get_inventory_location', SellInventoryException, True, ['sell.inventory', 'location'], merchant_location_key, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3568,9 +3090,7 @@ class API:
         :return: LocationResponse
         """
         try:
-            return self._method_paged(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi,
-                                      sell_inventory.ApiClient, 'get_inventory_locations', SellInventoryException, True,
-                                      ['sell.inventory', 'location'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi, sell_inventory.ApiClient, 'get_inventory_locations', SellInventoryException, True, ['sell.inventory', 'location'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3584,10 +3104,7 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi,
-                                       sell_inventory.ApiClient, 'update_inventory_location', SellInventoryException,
-                                       True, ['sell.inventory', 'location'], (body, merchant_location_key),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.LocationApi, sell_inventory.ApiClient, 'update_inventory_location', SellInventoryException, True, ['sell.inventory', 'location'], (body, merchant_location_key), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3600,9 +3117,7 @@ class API:
         :return: BulkOfferResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
-                                       sell_inventory.ApiClient, 'bulk_create_offer', SellInventoryException, True,
-                                       ['sell.inventory', 'offer'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'bulk_create_offer', SellInventoryException, True, ['sell.inventory', 'offer'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3615,9 +3130,7 @@ class API:
         :return: BulkPublishResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
-                                       sell_inventory.ApiClient, 'bulk_publish_offer', SellInventoryException, True,
-                                       ['sell.inventory', 'offer'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'bulk_publish_offer', SellInventoryException, True, ['sell.inventory', 'offer'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3631,9 +3144,7 @@ class API:
         :return: OfferResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
-                                       sell_inventory.ApiClient, 'create_offer', SellInventoryException, True,
-                                       ['sell.inventory', 'offer'], (body, content_language), **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'create_offer', SellInventoryException, True, ['sell.inventory', 'offer'], (body, content_language), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3646,9 +3157,7 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
-                                       sell_inventory.ApiClient, 'delete_offer', SellInventoryException, True,
-                                       ['sell.inventory', 'offer'], offer_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'delete_offer', SellInventoryException, True, ['sell.inventory', 'offer'], offer_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3661,9 +3170,7 @@ class API:
         :return: FeesSummaryResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
-                                       sell_inventory.ApiClient, 'get_listing_fees', SellInventoryException, True,
-                                       ['sell.inventory', 'offer'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'get_listing_fees', SellInventoryException, True, ['sell.inventory', 'offer'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3676,9 +3183,7 @@ class API:
         :return: EbayOfferDetailsWithAll
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
-                                       sell_inventory.ApiClient, 'get_offer', SellInventoryException, True,
-                                       ['sell.inventory', 'offer'], offer_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'get_offer', SellInventoryException, True, ['sell.inventory', 'offer'], offer_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3695,9 +3200,7 @@ class API:
         :return: Offers
         """
         try:
-            return self._method_paged(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
-                                      sell_inventory.ApiClient, 'get_offers', SellInventoryException, True,
-                                      ['sell.inventory', 'offer'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'get_offers', SellInventoryException, True, ['sell.inventory', 'offer'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3710,9 +3213,7 @@ class API:
         :return: PublishResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
-                                       sell_inventory.ApiClient, 'publish_offer', SellInventoryException, True,
-                                       ['sell.inventory', 'offer'], offer_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'publish_offer', SellInventoryException, True, ['sell.inventory', 'offer'], offer_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3725,10 +3226,7 @@ class API:
         :return: PublishResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
-                                       sell_inventory.ApiClient, 'publish_offer_by_inventory_item_group',
-                                       SellInventoryException, True, ['sell.inventory', 'offer'], body,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'publish_offer_by_inventory_item_group', SellInventoryException, True, ['sell.inventory', 'offer'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3743,10 +3241,7 @@ class API:
         :return: OfferResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
-                                       sell_inventory.ApiClient, 'update_offer', SellInventoryException, True,
-                                       ['sell.inventory', 'offer'], (body, content_language, offer_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'update_offer', SellInventoryException, True, ['sell.inventory', 'offer'], (body, content_language, offer_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3759,9 +3254,7 @@ class API:
         :return: WithdrawResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
-                                       sell_inventory.ApiClient, 'withdraw_offer', SellInventoryException, True,
-                                       ['sell.inventory', 'offer'], offer_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'withdraw_offer', SellInventoryException, True, ['sell.inventory', 'offer'], offer_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3774,15 +3267,11 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi,
-                                       sell_inventory.ApiClient, 'withdraw_offer_by_inventory_item_group',
-                                       SellInventoryException, True, ['sell.inventory', 'offer'], body,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.OfferApi, sell_inventory.ApiClient, 'withdraw_offer_by_inventory_item_group', SellInventoryException, True, ['sell.inventory', 'offer'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def sell_inventory_create_or_replace_product_compatibility(self, body, content_language, sku,
-                                                               **kwargs):  # noqa: E501
+    def sell_inventory_create_or_replace_product_compatibility(self, body, content_language, sku, **kwargs):  # noqa: E501
         """create_or_replace_product_compatibility  # noqa: E501
 
         This call is used by the seller to create or replace a list of products that are compatible with the inventory item. The inventory item is identified with a SKU value in the URI. Product compatibility is currently only applicable to motor vehicle parts and accessory categories, but more categories may be supported in the future. In addition to the authorization header, which is required for all eBay REST API calls, the createOrReplaceProductCompatibility call also requires the Content-Language header, that sets the natural language that will be used in the field values of the request payload. For US English, the code value passed in this header should be en-US. To view other supported Content-Language values, and to read more about all supported HTTP headers for eBay REST API calls, see the HTTP request headers topic in the Using eBay RESTful APIs document.  # noqa: E501
@@ -3793,11 +3282,7 @@ class API:
         :return: BaseResponse
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
-                                       sell_inventory.ProductCompatibilityApi, sell_inventory.ApiClient,
-                                       'create_or_replace_product_compatibility', SellInventoryException, True,
-                                       ['sell.inventory', 'product_compatibility'], (body, content_language, sku),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.ProductCompatibilityApi, sell_inventory.ApiClient, 'create_or_replace_product_compatibility', SellInventoryException, True, ['sell.inventory', 'product_compatibility'], (body, content_language, sku), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3810,10 +3295,7 @@ class API:
         :return: None
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
-                                       sell_inventory.ProductCompatibilityApi, sell_inventory.ApiClient,
-                                       'delete_product_compatibility', SellInventoryException, True,
-                                       ['sell.inventory', 'product_compatibility'], sku, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.ProductCompatibilityApi, sell_inventory.ApiClient, 'delete_product_compatibility', SellInventoryException, True, ['sell.inventory', 'product_compatibility'], sku, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3826,27 +3308,22 @@ class API:
         :return: Compatibility
         """
         try:
-            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1',
-                                       sell_inventory.ProductCompatibilityApi, sell_inventory.ApiClient,
-                                       'get_product_compatibility', SellInventoryException, True,
-                                       ['sell.inventory', 'product_compatibility'], sku, **kwargs)  # noqa: E501
+            return self._method_single(sell_inventory.Configuration, '/sell/inventory/v1', sell_inventory.ProductCompatibilityApi, sell_inventory.ApiClient, 'get_product_compatibility', SellInventoryException, True, ['sell.inventory', 'product_compatibility'], sku, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_listing_create_item_draft(self, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """create_item_draft  # noqa: E501
 
-        This call gives Partners the ability to create an eBay draft of a item for their seller using information from their site. This lets the Partner increase the exposure of items on their site and leverage the eBay user listing experience seamlessly. This experience provides guidance on pricing, aspects, etc. and recommendations that help create a listing that is complete and improves the exposure of the listing in search results. After the listing draft is created, the seller logs into their eBay account and uses the listing experience to finish the listing and publish the item on eBay.  # noqa: E501
+        This call gives Partners the ability to create an eBay draft of a item for their seller using information from their site. <br /><br />This lets the Partner increase the exposure of items on their site and leverage the eBay user listing experience seamlessly. This experience provides guidance on pricing, aspects, etc. and recommendations that help create a listing that is complete and improves the exposure of the listing in search results. <br /><br />After the listing draft is created, the seller logs into their eBay account and uses the listing experience to finish the listing and publish the item on eBay.  # noqa: E501
 
-        :param str x_ebay_c_marketplace_id: Use this header to specify an eBay marketplace ID. For a list of supported sites, see API Restrictions in the Listing API overview. (required)
+        :param str x_ebay_c_marketplace_id: Use this header to specify an eBay marketplace ID. For a list of supported sites, see <a href=\"/api-docs/sell/listing/overview.html#API\">API Restrictions</a> in the Listing API overview.  (required)
         :param ItemDraft body:
-        :param str content_language: Use this header to specify the natural language of the seller. For details, see Content-Language in HTTP request headers. Required: For EBAY_CA in French. (Content-Language = fr-CA)
+        :param str content_language: Use this header to specify the natural language of the seller. For details, see Content-Language in <a href=\"/api-docs/static/rest-request-components.html#headers\">HTTP request headers</a>. <br /><br /><b> Required: </b>For EBAY_CA in French. <br /><br />(Content-Language = <code>fr-CA</code>)
         :return: ItemDraftResponse
         """
         try:
-            return self._method_single(sell_listing.Configuration, '/sell/listing/v1_beta', sell_listing.ItemDraftApi,
-                                       sell_listing.ApiClient, 'create_item_draft', SellListingException, True,
-                                       ['sell.listing', 'item_draft'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_listing.Configuration, '/sell/listing/v1_beta', sell_listing.ItemDraftApi, sell_listing.ApiClient, 'create_item_draft', SellListingException, True, ['sell.listing', 'item_draft'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3859,10 +3336,7 @@ class API:
         :return: Shipment
         """
         try:
-            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta',
-                                       sell_logistics.ShipmentApi, sell_logistics.ApiClient, 'cancel_shipment',
-                                       SellLogisticsException, True, ['sell.logistics', 'shipment'], shipment_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta', sell_logistics.ShipmentApi, sell_logistics.ApiClient, 'cancel_shipment', SellLogisticsException, True, ['sell.logistics', 'shipment'], shipment_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3875,10 +3349,7 @@ class API:
         :return: Shipment
         """
         try:
-            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta',
-                                       sell_logistics.ShipmentApi, sell_logistics.ApiClient,
-                                       'create_from_shipping_quote', SellLogisticsException, True,
-                                       ['sell.logistics', 'shipment'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta', sell_logistics.ShipmentApi, sell_logistics.ApiClient, 'create_from_shipping_quote', SellLogisticsException, True, ['sell.logistics', 'shipment'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3891,10 +3362,7 @@ class API:
         :return: list[str]
         """
         try:
-            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta',
-                                       sell_logistics.ShipmentApi, sell_logistics.ApiClient, 'download_label_file',
-                                       SellLogisticsException, True, ['sell.logistics', 'shipment'], shipment_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta', sell_logistics.ShipmentApi, sell_logistics.ApiClient, 'download_label_file', SellLogisticsException, True, ['sell.logistics', 'shipment'], shipment_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3907,10 +3375,7 @@ class API:
         :return: Shipment
         """
         try:
-            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta',
-                                       sell_logistics.ShipmentApi, sell_logistics.ApiClient, 'get_shipment',
-                                       SellLogisticsException, True, ['sell.logistics', 'shipment'], shipment_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta', sell_logistics.ShipmentApi, sell_logistics.ApiClient, 'get_shipment', SellLogisticsException, True, ['sell.logistics', 'shipment'], shipment_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3923,10 +3388,7 @@ class API:
         :return: ShippingQuote
         """
         try:
-            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta',
-                                       sell_logistics.ShippingQuoteApi, sell_logistics.ApiClient,
-                                       'create_shipping_quote', SellLogisticsException, True,
-                                       ['sell.logistics', 'shipping_quote'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta', sell_logistics.ShippingQuoteApi, sell_logistics.ApiClient, 'create_shipping_quote', SellLogisticsException, True, ['sell.logistics', 'shipping_quote'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3939,776 +3401,651 @@ class API:
         :return: ShippingQuote
         """
         try:
-            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta',
-                                       sell_logistics.ShippingQuoteApi, sell_logistics.ApiClient, 'get_shipping_quote',
-                                       SellLogisticsException, True, ['sell.logistics', 'shipping_quote'],
-                                       shipping_quote_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_logistics.Configuration, '/sell/logistics/v1_beta', sell_logistics.ShippingQuoteApi, sell_logistics.ApiClient, 'get_shipping_quote', SellLogisticsException, True, ['sell.logistics', 'shipping_quote'], shipping_quote_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_bulk_create_ads_by_inventory_reference(self, body, campaign_id, **kwargs):  # noqa: E501
         """bulk_create_ads_by_inventory_reference  # noqa: E501
 
-        This method adds multiple listings that are managed with the Inventory API to an existing Promoted Listings campaign. For each listing specified in the request, this method: Creates an ad for the listing. Sets the bid percentage (also known as the ad rate) for the ad. Associates the ad with the specified campaign. To create an ad for a listing, specify its inventoryReferenceId and inventoryReferenceType, plus the bidPercentage for the ad in the payload of the request. Specify the campaign to associate the ads to with using the campaign_id path parameter. In the Inventory API, an inventory reference ID is either a seller-defined SKU value or an inventoryItemGroupKey (a seller-defined ID for a multiple-variation listing). You can specify a maximum of 500 items per call and each campaign can have ads for a maximum of 50,000 items. Be aware when using this call that each variation in a multiple-variation listing creates an individual ad. Use createCampaign to create a new campaign and use getCampaigns to get a list of existing campaigns.  # noqa: E501
+        This method adds multiple listings that are managed with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a> to an existing Promoted Listings campaign. <p>For each listing specified in the request, this method:</p>  <ul><li>Creates an ad for the listing.</li> <li>Sets the bid percentage (also known as the <i>ad rate</i>) for the ad.</li> <li>Associates the ad with the specified campaign.</li></ul>  <p>To create an ad for a listing, specify its <b>inventoryReferenceId</b> and <b>inventoryReferenceType</b>, plus the <b>bidPercentage</b> for the ad in the payload of the request. Specify the campaign to associate the ads to with using the <b>campaign_id</b> path parameter.</p>  <p>In the Inventory API, an <i>inventory reference ID</i> is either a seller-defined <b>SKU</b> value or an <b>inventoryItemGroupKey</b> (a seller-defined ID for a multiple-variation listing).</p>  <p>You can specify a maximum of <b>500 items per call</b> and each campaign can have ads for a maximum of 50,000 items. Be aware when using this call that each variation in a multiple-variation listing creates an individual ad.</p>  <p>Use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/createCampaign\">createCampaign</a> to create a new campaign and use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to get a list of existing campaigns.</p>  # noqa: E501
 
         :param BulkCreateAdsByInventoryReferenceRequest body: The container for the bulk request to create ads for eBay inventory reference IDs. eBay inventory reference IDs are seller-defined IDs used by theInventory API. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: BulkCreateAdsByInventoryReferenceResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
-                                       sell_marketing.ApiClient, 'bulk_create_ads_by_inventory_reference',
-                                       SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'bulk_create_ads_by_inventory_reference', SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_bulk_create_ads_by_listing_id(self, body, campaign_id, **kwargs):  # noqa: E501
         """bulk_create_ads_by_listing_id  # noqa: E501
 
-        This method adds multiple listings to an existing Promoted Listings campaign using listingId values generated by either the Trading API or Inventory API. For each listing ID specified in the request, this method: Creates an ad for the listing. Sets the bid percentage (also known as the ad rate) for the ad. Associates the ad with the specified campaign. To create an ad for a listing, specify its listingId, plus the bidPercentage for the ad in the payload of the request. Specify the campaign to associate the ads with using the campaign_id path parameter. Listing IDs are generated by eBay when a seller creates listings with the Trading API. You can specify a maximum of 500 listings per call and each campaign can have ads for a maximum of 50,000 items. Be aware when using this call that each variation in a multiple-variation listing creates an individual ad. Use createCampaign to create a new campaign and use getCampaigns to get a list of existing campaigns.  # noqa: E501
+        This method adds multiple listings to an existing Promoted Listings campaign using <b>listingId</b> values generated by either the <a href=\"/Devzone/XML/docs/Reference/eBay/index.html\" title=\"Trading API Reference\">Trading API</a> or <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>.  <p>For each listing ID specified in the request, this method:</p>  <ul><li>Creates an ad for the listing.</li> <li>Sets the bid percentage (also known as the <i>ad rate</i>) for the ad.</li> <li>Associates the ad with the specified campaign.</li></ul>  <p>To create an ad for a listing, specify its <b>listingId</b>, plus the <b>bidPercentage</b> for the ad in the payload of the request. Specify the campaign to associate the ads with using the <b>campaign_id</b> path parameter. Listing IDs are generated by eBay when a seller creates listings with the Trading API.</p>  <p>You can specify a maximum of <b>500 listings per call</b> and each campaign can have ads for a maximum of 50,000 items. Be aware when using this call that each variation in a multiple-variation listing creates an individual ad.</p>  <p>Use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/createCampaign\">createCampaign</a> to create a new campaign and use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to get a list of existing campaigns.</p>  # noqa: E501
 
         :param BulkCreateAdRequest body: The container for the bulk request to create ads for eBay listing IDs. eBay listing IDs are generated by the Trading API and Inventory API when the listing is created on eBay. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: BulkAdResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
-                                       sell_marketing.ApiClient, 'bulk_create_ads_by_listing_id',
-                                       SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'bulk_create_ads_by_listing_id', SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_bulk_delete_ads_by_inventory_reference(self, body, campaign_id, **kwargs):  # noqa: E501
         """bulk_delete_ads_by_inventory_reference  # noqa: E501
 
-        This method works with listings created with the Inventory API. The method deletes a set of ads, as specified by a list of inventory reference IDs, from the specified campaign. Inventory reference IDs are seller-defined IDs that are used with the Inventory API. Pass the campaign_id as a path parameter and populate the payload with a list of inventoryReferenceId and inventoryReferenceType pairs that you want to delete. Get the campaign IDs for a seller by calling getCampaigns and call getAds to get a list of the seller's inventory reference IDs.  # noqa: E501
+        This method works with listings created with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>.  <p>The method deletes a set of ads, as specified by a list of inventory reference IDs, from the specified campaign. <i>Inventory reference IDs</i> are seller-defined IDs that are used with the Inventory API</a>.</p>  <p>Pass the <b>campaign_id</b> as a path parameter and populate the payload with a list of <b>inventoryReferenceId</b> and <b>inventoryReferenceType</b> pairs that you want to delete.</p>  <p>Get the campaign IDs for a seller by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> and call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to get a list of the seller's inventory reference IDs.</p>  # noqa: E501
 
-        :param BulkDeleteAdsByInventoryReferenceRequest body: This request object defines the fields for a bulkDeleteAdsByInventoryReference request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param BulkDeleteAdsByInventoryReferenceRequest body: This request object defines the fields for a <b>bulkDeleteAdsByInventoryReference</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: BulkDeleteAdsByInventoryReferenceResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
-                                       sell_marketing.ApiClient, 'bulk_delete_ads_by_inventory_reference',
-                                       SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'bulk_delete_ads_by_inventory_reference', SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_bulk_delete_ads_by_listing_id(self, body, campaign_id, **kwargs):  # noqa: E501
         """bulk_delete_ads_by_listing_id  # noqa: E501
 
-        This method works with listing IDs created with either the Trading API or the Inventory API. The method deletes a set of ads, as specified by a list of listingID values from a Promoted Listings campaign. A listing ID value is generated by eBay when a seller creates a listing with either the Trading API and Inventory API. Pass the campaign_id as a path parameter and populate the payload with the set of listing IDs that you want to delete. Get the campaign IDs for a seller by calling getCampaigns and call getAds to get a list of the seller's inventory reference IDs.  # noqa: E501
+        This method works with listing IDs created with either the <a href=\"/Devzone/XML/docs/Reference/eBay/index.html\" title=\"Trading API Reference\">Trading API</a> or the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>.  <p>The method deletes a set of ads, as specified by a list of <b>listingID</b> values from a Promoted Listings campaign. A listing ID value is generated by eBay when a seller creates a listing with either the Trading API and Inventory API.</p>  <p>Pass the <b>campaign_id</b> as a path parameter and populate the payload with the set of listing IDs that you want to delete.</p>  <p>Get the campaign IDs for a seller by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> and call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to get a list of the seller's inventory reference IDs.</p>  # noqa: E501
 
-        :param BulkDeleteAdRequest body: This request object defines the fields for the bulkDeleteAdsByListingId request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param BulkDeleteAdRequest body: This request object defines the fields for the <b>bulkDeleteAdsByListingId</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: BulkDeleteAdResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
-                                       sell_marketing.ApiClient, 'bulk_delete_ads_by_listing_id',
-                                       SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'bulk_delete_ads_by_listing_id', SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_bulk_update_ads_bid_by_inventory_reference(self, body, campaign_id, **kwargs):  # noqa: E501
         """bulk_update_ads_bid_by_inventory_reference  # noqa: E501
 
-        This method works with listings that are managed with the Inventory API. The method updates the bidPercentage values for a set of ads associated with the specified campaign. Specify the campaign_id as a path parameter and supply a list of inventoryReferenceId and inventoryReferenceType pairs with the updated bidPercentage values in the request body. In the Inventory API, an inventory reference ID is either a seller-defined SKU value or an inventoryItemGroupKey (a seller-defined ID for a multiple-variation listing). Get the campaign IDs for a seller by calling getCampaigns and call getAds to get a list of the seller's inventory reference IDs.  # noqa: E501
+        This method works with listings that are managed with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>. <p>The method updates the <b>bidPercentage</b> values for a set of ads associated with the specified campaign.</p>  <p>Specify the <b>campaign_id</b> as a path parameter and supply a list of <b>inventoryReferenceId</b> and <b>inventoryReferenceType</b> pairs with the updated <b>bidPercentage</b> values in the request body.</p>  <p>In the Inventory API, an <i>inventory reference ID</i> is either a seller-defined <b>SKU</b> value or an <b>inventoryItemGroupKey</b> (a seller-defined ID for a multiple-variation listing).</p>  <p>Get the campaign IDs for a seller by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> and call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to get a list of the seller's inventory reference IDs.</p>  # noqa: E501
 
-        :param BulkCreateAdsByInventoryReferenceRequest body: This request object defines the fields for the BulkCreateAdsByInventoryReference request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param BulkCreateAdsByInventoryReferenceRequest body: This request object defines the fields for the <b>BulkCreateAdsByInventoryReference</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: BulkCreateAdsByInventoryReferenceResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
-                                       sell_marketing.ApiClient, 'bulk_update_ads_bid_by_inventory_reference',
-                                       SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'bulk_update_ads_bid_by_inventory_reference', SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_bulk_update_ads_bid_by_listing_id(self, body, campaign_id, **kwargs):  # noqa: E501
         """bulk_update_ads_bid_by_listing_id  # noqa: E501
 
-        This method works with listings created with either the Trading API or the Inventory API. The method updates the bidPercentage values for a set of ads associated with the specified campaign. Specify the campaign_id as a path parameter and supply a set of listing IDs with their associated updated bidPercentage values in the request body. An eBay listing ID is generated when a listing is created with the Trading API. Get the campaign IDs for a seller by calling getCampaigns and call getAds to get a list of the seller's inventory reference IDs.  # noqa: E501
+        This method works with listings created with either the <a href=\"/Devzone/XML/docs/Reference/eBay/index.html\" title=\"Trading API Reference\">Trading API</a> or the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>.  <p>The method updates the <b>bidPercentage</b> values for a set of ads associated with the specified campaign.</p>  <p>Specify the <b>campaign_id</b> as a path parameter and supply a set of listing IDs with their associated updated <b>bidPercentage</b> values in the request body. An eBay listing ID is generated when a listing is created with the Trading API.</p>  <p>Get the campaign IDs for a seller by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> and call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to get a list of the seller's inventory reference IDs.</p>  # noqa: E501
 
-        :param BulkCreateAdRequest body: This request object defines the fields for the BulkCreateAdsByListingId request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param BulkCreateAdRequest body: This request object defines the fields for the <b>BulkCreateAdsByListingId</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: BulkAdResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
-                                       sell_marketing.ApiClient, 'bulk_update_ads_bid_by_listing_id',
-                                       SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'bulk_update_ads_bid_by_listing_id', SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_create_ad_by_listing_id(self, body, campaign_id, **kwargs):  # noqa: E501
         """create_ad_by_listing_id  # noqa: E501
 
-        This method works with listings created with either the Trading API or the Inventory API. The method: Creates an ad for the specified listing ID. Sets the bid percentage (also known as the &quot;ad rate&quot;) for the ad. Associates the ad with the specified campaign. To create an ad for a listing, specify its listingId, plus the bidPercentage for the ad in the payload of the request. Specify the campaign to associate the ad with using the campaign_id path parameter. Listing IDs are generated by eBay when a seller creates listings with the Trading API or Inventory API. Each campaign can have ads for a maximum of 50,000 items, and each item in a multiple-variation listing is considered as an single item. Use createCampaign to create a new campaign and use getCampaigns to get a list of existing campaigns.  # noqa: E501
+        This method works with listings created with either the <a href=\"/Devzone/XML/docs/Reference/eBay/index.html\" title=\"Trading API Reference\">Trading API</a> or the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>. <p>The method:</p> <ul><li>Creates an ad for the specified listing ID.</li> <li>Sets the bid percentage (also known as the \"ad rate\") for the ad.</li> <li>Associates the ad with the specified campaign.</li></ul>  <p>To create an ad for a listing, specify its <b>listingId</b>, plus the <b>bidPercentage</b> for the ad in the payload of the request. Specify the campaign to associate the ad with using the <b>campaign_id</b> path parameter. Listing IDs are generated by eBay when a seller creates listings with the Trading API or Inventory API.</p>  <p>Each campaign can have ads for a maximum of 50,000 items, and each item in a multiple-variation listing is considered as an single item.</p>  <p>Use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/createCampaign\">createCampaign</a> to create a new campaign and use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to get a list of existing campaigns.</p>  # noqa: E501
 
-        :param CreateAdRequest body: This request object defines the fields used in the createAdByListingId request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param CreateAdRequest body: This request object defines the fields used in the <b>createAdByListingId</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: object
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
-                                       sell_marketing.ApiClient, 'create_ad_by_listing_id', SellMarketingException,
-                                       True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'create_ad_by_listing_id', SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_create_ads_by_inventory_reference(self, body, campaign_id, **kwargs):  # noqa: E501
         """create_ads_by_inventory_reference  # noqa: E501
 
-        This method works with listings that are managed with the Inventory API. The method: Creates an ad for the specified listing. Sets the bid percentage (also known as the &quot;ad rate&quot;) for the ad. Associates the ad with the specified campaign. To create an ad for a listing, specify its inventoryReferenceId and inventoryReferenceType, plus the bidPercentage for the ad in the payload of the request. Specify the campaign to associate the ad with using the campaign_id path parameter. In the Inventory API, an inventory reference ID is either a seller-defined SKU value or an inventoryItemGroupKey (a seller-defined ID for a multiple-variation listing). Each campaign can have ads for a maximum of 50,000 items, and each item in a multiple-variation listing is considered as an individual item. Use createCampaign to create a new campaign and use getCampaigns to get a list of existing campaigns.  # noqa: E501
+        This method works with listings that are managed with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>.  <p>The method:</p> <ul><li>Creates an ad for the specified listing.</li> <li>Sets the bid percentage (also known as the \"ad rate\") for the ad.</li> <li>Associates the ad with the specified campaign.</li></ul>  <p>To create an ad for a listing, specify its <b>inventoryReferenceId</b> and <b>inventoryReferenceType</b>, plus the <b>bidPercentage</b> for the ad in the payload of the request. Specify the campaign to associate the ad with using the <b>campaign_id</b> path parameter.</p>  <p>In the Inventory API, an <i>inventory reference ID</i> is either a seller-defined <b>SKU</b> value or an <b>inventoryItemGroupKey</b> (a seller-defined ID for a multiple-variation listing).</p>  <p>Each campaign can have ads for a maximum of 50,000 items, and each item in a multiple-variation listing is considered as an individual item.</p>  <p>Use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/createCampaign\">createCampaign</a> to create a new campaign and use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to get a list of existing campaigns.</p>  # noqa: E501
 
-        :param CreateAdsByInventoryReferenceRequest body: This request object defines the fields used in the createAdsByInventoryReference request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param CreateAdsByInventoryReferenceRequest body: This request object defines the fields used in the <b>createAdsByInventoryReference</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: AdReferences
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
-                                       sell_marketing.ApiClient, 'create_ads_by_inventory_reference',
-                                       SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'create_ads_by_inventory_reference', SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_delete_ad(self, ad_id, campaign_id, **kwargs):  # noqa: E501
         """delete_ad  # noqa: E501
 
-        This method removes the specified ad from the specified campaign. Pass the ID of the ad to delete with the ID of the campaign associated with the ad as path parameters to the call. Call getCampaigns to get the current list of the seller's campaign IDs.  # noqa: E501
+        This method removes the specified ad from the specified campaign.  <p>Pass the ID of the ad to delete with the ID of the campaign associated with the ad as path parameters to the call.</p> <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to get the current list of the seller's campaign IDs.</p>  # noqa: E501
 
         :param str ad_id: Identifier of an ad. This ID was generated when the ad was created. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
-                                       sell_marketing.ApiClient, 'delete_ad', SellMarketingException, True,
-                                       ['sell.marketing', 'ad'], (ad_id, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'delete_ad', SellMarketingException, True, ['sell.marketing', 'ad'], (ad_id, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_delete_ads_by_inventory_reference(self, body, campaign_id, **kwargs):  # noqa: E501
         """delete_ads_by_inventory_reference  # noqa: E501
 
-        This method works with listings that are managed with the Inventory API. The method deletes ads using a list of seller-defined inventory reference IDs, used with the Inventory API, that are associated with the specified campaign ID. Specify the campaign ID (as a path parameter) and a list of inventoryReferenceId and inventoryReferenceType pairs to be deleted. Call getCampaigns to get a list of the seller's current campaign IDs.  # noqa: E501
+        This method works with listings that are managed with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>.  <p>The method deletes ads using a list of seller-defined inventory reference IDs, used with the Inventory API, that are associated with the specified campaign ID.</p> <p>Specify the campaign ID (as a path parameter) and a list of <b>inventoryReferenceId</b> and <b>inventoryReferenceType</b> pairs to be deleted.</p>  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to get a list of the seller's current campaign IDs.</p>  # noqa: E501
 
-        :param DeleteAdsByInventoryReferenceRequest body: This request object defines the fields for the deleteAdsByInventoryReference request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param DeleteAdsByInventoryReferenceRequest body: This request object defines the fields for the <b>deleteAdsByInventoryReference</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: AdIds
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
-                                       sell_marketing.ApiClient, 'delete_ads_by_inventory_reference',
-                                       SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'delete_ads_by_inventory_reference', SellMarketingException, True, ['sell.marketing', 'ad'], (body, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_get_ad(self, ad_id, campaign_id, **kwargs):  # noqa: E501
         """get_ad  # noqa: E501
 
-        This method retrieves the specified ad from the specified campaign. In the request, supply the campaign_id and ad_id as path parameters. Call getCampaigns to retrieve a list of the seller's current campaign IDs and call getAds to retrieve their current ad IDs.  # noqa: E501
+        This method retrieves the specified ad from the specified campaign.  <p>In the request, supply the <b>campaign_id</b> and <b>ad_id</b> as path parameters.</p> <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve a list of the seller's current campaign IDs and call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to retrieve their current ad IDs.</p>  # noqa: E501
 
         :param str ad_id: Identifier of an ad. This ID was generated when the ad was created. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: Ad
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
-                                       sell_marketing.ApiClient, 'get_ad', SellMarketingException, True,
-                                       ['sell.marketing', 'ad'], (ad_id, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'get_ad', SellMarketingException, True, ['sell.marketing', 'ad'], (ad_id, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_get_ads(self, campaign_id, **kwargs):  # noqa: E501
         """get_ads  # noqa: E501
 
-        This method retrieves Promoted Listings ads that are associated with listings created with either the Trading API or the Inventory API. The method retrieves ads related to the specified campaign. Specify the Promoted Listings campaign to target with the campaign_id path parameter. Because of the large number of possible results, you can use query parameters to paginate the result set by specifying a limit, which dictates how many ads to return on each page of the response. You can also specify how many ads to skip in the result set before returning the first result using the offset path parameter. Call getCampaigns to retrieve the current campaign IDs for the seller.  # noqa: E501
+        This method retrieves Promoted Listings ads that are associated with listings created with either the <a href=\"/Devzone/XML/docs/Reference/eBay/index.html\" title=\"Trading API Reference\">Trading API</a> or the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>. <p>The method retrieves ads related to the specified campaign. Specify the Promoted Listings campaign to target with the <b>campaign_id</b> path parameter.</p>  <p>Because of the large number of possible results, you can use query parameters to paginate the result set by specifying a <b>limit</b>, which dictates how many ads to return on each page of the response. You can also specify how many ads to skip in the result set before returning the first result using the <b>offset</b> path parameter.</p>  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve the current campaign IDs for the seller.</p>  # noqa: E501
 
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
-        :param str limit: Specifies the maximum number of ads to return on a page in the paginated response. Default: 10 Maximum: 500
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
+        :param str limit: Specifies the maximum number of ads to return on a page in the paginated response. <p><b>Default: </b>10 <br><b>Maximum:</b> 500</p>
         :param str listing_ids: A comma separated list of listing IDs. The response includes only active ads (ads associated with a RUNNING campaign). The results do not include listing IDs that are excluded by other conditions.
-        :param str offset: Specifies the number of ads to skip in the result set before returning the first ad in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
+        :param str offset: Specifies the number of ads to skip in the result set before returning the first ad in the paginated response.  <p>Combine <b>offset</b> with the <b>limit</b> query parameter to control the items returned in the response. For example, if you supply an <b>offset</b> of <code>0</code> and a <b>limit</b> of <code>10</code>, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If <b>offset</b> is <code>10</code> and <b>limit</b> is <code>20</code>, the first page of the response contains items 11-30 from the complete result set.</p> <p><b>Default:</b> 0</p>
         :return: AdPagedCollection
         """
         try:
-            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
-                                      sell_marketing.ApiClient, 'get_ads', SellMarketingException, True,
-                                      ['sell.marketing', 'ad'], campaign_id, **kwargs)  # noqa: E501
+            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'get_ads', SellMarketingException, True, ['sell.marketing', 'ad'], campaign_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
-    def sell_marketing_get_ads_by_inventory_reference(self, campaign_id, inventory_reference_id,
-                                                      inventory_reference_type, **kwargs):  # noqa: E501
+    def sell_marketing_get_ads_by_inventory_reference(self, campaign_id, inventory_reference_id, inventory_reference_type, **kwargs):  # noqa: E501
         """get_ads_by_inventory_reference  # noqa: E501
 
-        This method retrieves Promoted Listings ads associated with listings that are managed with the Inventory API from the specified campaign. Supply the campaign_id as a path parameter and use query parameters to specify the inventory_reference_id and inventory_reference_type pairs. In the Inventory API, an inventory reference ID is either a seller-defined SKU value or an inventoryItemGroupKey (a seller-defined ID for an inventory item group, which is an entity that's used in the Inventory API to create a multiple-variation listing). To indicate a listing managed by the Inventory API, you must always specify both an inventory_reference_id and the associated inventory_reference_type. Call getCampaigns to retrieve all of the seller's the current campaign IDs.  # noqa: E501
+        This method retrieves Promoted Listings ads associated with listings that are managed with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a> from the specified campaign.  <p>Supply the <b>campaign_id</b> as a path parameter and use query parameters to specify the <b>inventory_reference_id</b> and <b>inventory_reference_type</b> pairs.</p>  <p>In the Inventory API, an <i>inventory reference ID</i> is either a seller-defined <b>SKU</b> value or an <b>inventoryItemGroupKey</b> (a seller-defined ID for an inventory item group, which is an entity that's used in the Inventory API to create a multiple-variation listing). To indicate a listing managed by the Inventory API, you must always specify both an <b>inventory_reference_id</b> and the associated <b>inventory_reference_type</b>.</p>  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve all of the seller's the current campaign IDs.</p>  # noqa: E501
 
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
-        :param str inventory_reference_id: The inventory reference ID associated with the ad you want returned. A seller's inventory reference ID is the ID of either a listing or the ID of an inventory item group (the parent of a multi-variation listing, such as a shirt that is available in multiple sizes and colors). You must always supply in both an inventory_reference_id and an inventory_reference_type. (required)
-        :param str inventory_reference_type: The type of the inventory reference ID. Set this value to either INVENTORY_ITEM (a single listing) or INVENTORY_ITEM_GROUP (a multi-variation listing). You must always pass in both an inventory_reference_id and an inventory_reference_type. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
+        :param str inventory_reference_id: The inventory reference ID associated with the ad you want returned. A seller's inventory reference ID is the ID of either a listing or the ID of an inventory item group (the parent of a multi-variation listing, such as a shirt that is available in multiple sizes and colors). You must always supply in both an <b>inventory_reference_id</b> and an <b>inventory_reference_type</b>. (required)
+        :param str inventory_reference_type: The type of the inventory reference ID. Set this value to either <code>INVENTORY_ITEM</CODE> (a single listing) or <code>INVENTORY_ITEM_GROUP</CODE> (a multi-variation listing). You must always pass in both an <b>inventory_reference_id</b> and an <b>inventory_reference_type</b>.  (required)
         :return: Ads
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
-                                       sell_marketing.ApiClient, 'get_ads_by_inventory_reference',
-                                       SellMarketingException, True, ['sell.marketing', 'ad'],
-                                       (campaign_id, inventory_reference_id, inventory_reference_type),
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'get_ads_by_inventory_reference', SellMarketingException, True, ['sell.marketing', 'ad'], (campaign_id, inventory_reference_id, inventory_reference_type), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_update_bid(self, body, ad_id, campaign_id, **kwargs):  # noqa: E501
         """update_bid  # noqa: E501
 
-        This method updates the bid percentage (also known as the &quot;ad rate&quot;) for the specified ad in the specified campaign. In the request, supply the campaign_id and ad_id as path parameters, and supply the new bidPercentage value in the payload of the call. Call getCampaigns to retrieve a seller's current campaign IDs and call getAds to get their ad IDs.  # noqa: E501
+        This method updates the bid percentage (also known as the \"ad rate\") for the specified ad in the specified campaign. <p>In the request, supply the <b>campaign_id</b> and <b>ad_id</b> as path parameters, and supply the new <b>bidPercentage</b> value in the payload of the call.</p>  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve a seller's current campaign IDs and call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to get their ad IDs.</p>  # noqa: E501
 
-        :param UpdateBidPercentageRequest body: This type defines the fields for the updateBid request. (required)
+        :param UpdateBidPercentageRequest body: This type defines the fields for the <b>updateBid</b> request. (required)
         :param str ad_id: A unique eBay-assigned ID for an ad that's generated when an ad is created. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi,
-                                       sell_marketing.ApiClient, 'update_bid', SellMarketingException, True,
-                                       ['sell.marketing', 'ad'], (body, ad_id, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdApi, sell_marketing.ApiClient, 'update_bid', SellMarketingException, True, ['sell.marketing', 'ad'], (body, ad_id, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_get_report(self, report_id, **kwargs):  # noqa: E501
         """get_report  # noqa: E501
 
-        This call downloads the report as specified by the report_id path parameter. Call createReportTask to schedule and generate a Promoted Listings report. All date values are returned in UTC format (yyyy-MM-ddThh:mm:ss.sssZ).  # noqa: E501
+        This call downloads the report as specified by the <b>report_id</b> path parameter.  <br><br>Call <a href=\"/api-docs/sell/marketing/resources/ad_report_task/methods/createReportTask\" title=\"createReportTask API docs\">createReportTask</a> to schedule and generate a Promoted Listings report. All date values are returned in UTC format (<code>yyyy-MM-ddThh:mm:ss.sssZ</code>).  # noqa: E501
 
-        :param str report_id: The unique ID of the Promoted Listings report you want to get. This ID is generated by eBay when you run a report task with a call to createReportTask. Get all the seller's report IDs by calling getReportTasks. (required)
+        :param str report_id: The unique ID of the Promoted Listings report you want to get. <p>This ID is generated by eBay when you run a report task with a call to <a href=\"/api-docs/sell/marketing/resources/ad_report_task/methods/createReportTask\">createReportTask</a>. Get all the seller's report IDs by calling <a href=\"/api-docs/sell/marketing/resources/ad_report_task/methods/getReportTasks\">getReportTasks</a>.</p> (required)
         :return: object
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdReportApi,
-                                       sell_marketing.ApiClient, 'get_report', SellMarketingException, True,
-                                       ['sell.marketing', 'ad_report'], report_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdReportApi, sell_marketing.ApiClient, 'get_report', SellMarketingException, True, ['sell.marketing', 'ad_report'], report_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_get_report_metadata(self, **kwargs):  # noqa: E501
         """get_report_metadata  # noqa: E501
 
-        This call retrieves information that details the fields used in each of the Promoted Listings reports. Use the returned information to configure the different types of Promoted Listings reports. The request for this method does not use a payload or any URI parameters.  # noqa: E501
+        This call retrieves information that details the fields used in each of the Promoted Listings reports. Use the returned information to configure the different types of Promoted Listings reports.  <p> The request for this method does not use a payload or any URI parameters.</p>  # noqa: E501
 
         :return: ReportMetadatas
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
-                                       sell_marketing.AdReportMetadataApi, sell_marketing.ApiClient,
-                                       'get_report_metadata', SellMarketingException, False,
-                                       ['sell.marketing', 'ad_report_metadata'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdReportMetadataApi, sell_marketing.ApiClient, 'get_report_metadata', SellMarketingException, False, ['sell.marketing', 'ad_report_metadata'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_get_report_metadata_for_report_type(self, report_type, **kwargs):  # noqa: E501
         """get_report_metadata_for_report_type  # noqa: E501
 
-        This call retrieves metadata that details the fields used by a specific Promoted Listings report type. Use the report_type path parameter to indicate metadata to retrieve. This method does not use a request payload.  # noqa: E501
+        This call retrieves metadata that details the fields used by a specific Promoted Listings report type. Use the <b>report_type</b> path parameter to indicate metadata to retrieve.  <p>This method does not use a request payload.</p>  # noqa: E501
 
-        :param str report_type: The name of the report type whose metadata you want to get. For details about each report type, see ReportTypeEnum. Valid values: &nbsp;&nbsp;&nbsp;ACCOUNT_PERFORMANCE_REPORT &nbsp;&nbsp;&nbsp;CAMPAIGN_PERFORMANCE_REPORT &nbsp;&nbsp;&nbsp;CAMPAIGN_PERFORMANCE_SUMMARY_REPORT &nbsp;&nbsp;&nbsp;LISTING_PERFORMANCE_REPORT &nbsp;&nbsp;&nbsp;INVENTORY_PERFORMANCE_REPORT (required)
+        :param str report_type: The name of the report type whose metadata you want to get.  <br><br>For details about each report type, see <a href=\"/api-docs/sell/marketing/types/plr:ReportTypeEnum\">ReportTypeEnum</a>. <br><br><b>Valid values:</b> <br>&nbsp;&nbsp;&nbsp;<code>ACCOUNT_PERFORMANCE_REPORT</code> <br>&nbsp;&nbsp;&nbsp;<code>CAMPAIGN_PERFORMANCE_REPORT</code> <br>&nbsp;&nbsp;&nbsp;<code>CAMPAIGN_PERFORMANCE_SUMMARY_REPORT</code> <br>&nbsp;&nbsp;&nbsp;<code>LISTING_PERFORMANCE_REPORT</code> <br>&nbsp;&nbsp;&nbsp;<code>INVENTORY_PERFORMANCE_REPORT</code> (required)
         :return: ReportMetadata
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
-                                       sell_marketing.AdReportMetadataApi, sell_marketing.ApiClient,
-                                       'get_report_metadata_for_report_type', SellMarketingException, False,
-                                       ['sell.marketing', 'ad_report_metadata'], report_type, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdReportMetadataApi, sell_marketing.ApiClient, 'get_report_metadata_for_report_type', SellMarketingException, False, ['sell.marketing', 'ad_report_metadata'], report_type, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_create_report_task(self, body, **kwargs):  # noqa: E501
         """create_report_task  # noqa: E501
 
-        This method creates a report task, which generates a Promoted Listings report based on the values specified in the call. The report is generated based on the criteria you specify, including the report type, the report's dimensions and metrics, the report's start and end dates, the listings to include in the report, and more. Metrics are the quantitative measurements in the report while dimensions specify the attributes of the data included in the reports. When creating a report task, you can specify the items you want included in the report. The items you specify, using either listingId or inventoryReference values, must be in a Promoted Listings campaign for them to be included in the report. For details on the required and optional fields for each report type, see Creating Promoted Listings reports. This call returns the URL to the report task in the Location response header, and the URL includes the report-task ID. Reports often take time to generate and it's common for this call to return an HTTP status of 202, which indicates the report is being generated. Call getReportTasks (or getReportTask with the report-task ID) to determine the status of a Promoted Listings report. When a report is complete, eBay sets its status to SUCCESS and you can download it using the URL returned in the reportHref field of the getReportTask call. Report files are tab-separated value gzip files with a file extension of .tsv.gz. Note: This call fails if you don't submit all the required fields for the specified report type. Fields not supported by the specified report type are ignored. Call getReportMetadata to retrieve a list of the fields you need to configure for each Promoted Listings report type.  # noqa: E501
+        This method creates a <i>report task</i>, which generates a Promoted Listings report based on the values specified in the call.  <p>The report is generated based on the criteria you specify, including the report type, the report's dimensions and metrics, the report's start and end dates, the listings to include in the report, and more. <i>Metrics </i>are the quantitative measurements in the report while <i>dimensions</i> specify the attributes of the data included in the reports.</p>  <p>When creating a report task, you can specify the items you want included in the report. The items you specify, using either <b>listingId</b> or <b>inventoryReference</b> values, must be in a Promoted Listings campaign for them to be included in the report.</p>  <p>For details on the required and optional fields for each report type, see <a href=\"/api-docs/sell/static/marketing/pl-reports.html\">Creating Promoted Listings reports</a>.</p>  <p>This call returns the URL to the report task in the <b>Location</b> response header, and the URL includes the report-task ID.</p>  <p>Reports often take time to generate and it's common for this call to return an HTTP status of <code>202</code>, which indicates the report is being generated. Call <a href=\"/api-docs/sell/marketing/resources/ad_report_task/methods/getReportTasks\">getReportTasks</a> (or <a href=\"/api-docs/sell/marketing/resources/ad_report_task/methods/getReportTask\">getReportTask</a> with the report-task ID) to determine the status of a Promoted Listings report. When a report is complete, eBay sets its status to <b>SUCCESS</b> and you can download it using the URL returned in the <b>reportHref</b> field of the <b>getReportTask</b> call. Report files are tab-separated value gzip files with a file extension of <code>.tsv.gz</code>.</p>  <p class=\"tablenote\"><b>Note:</b> This call fails if you don't submit all the required fields for the specified report type. Fields not supported by the specified report type are ignored. Call <a href=\"/api-docs/sell/marketing/resources/ad_report_metadata/methods/getReportMetadata\">getReportMetadata</a> to retrieve a list of the fields you need to configure for each Promoted Listings report type.</p>  # noqa: E501
 
         :param CreateReportTask body: The container for the fields that define the report task. (required)
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
-                                       sell_marketing.AdReportTaskApi, sell_marketing.ApiClient, 'create_report_task',
-                                       SellMarketingException, True, ['sell.marketing', 'ad_report_task'], body,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdReportTaskApi, sell_marketing.ApiClient, 'create_report_task', SellMarketingException, True, ['sell.marketing', 'ad_report_task'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_delete_report_task(self, report_task_id, **kwargs):  # noqa: E501
         """delete_report_task  # noqa: E501
 
-        This call deletes the report task specified by the report_task_id path parameter. This method also deletes any reports generated by the report task. Report task IDs are generated by eBay when you call createReportTask. Get a complete list of a seller's report-task IDs by calling getReportTasks.  # noqa: E501
+        This call deletes the report task specified by the <b>report_task_id</b> path parameter. This method also deletes any reports generated by the report task.  <p>Report task IDs are generated by eBay when you call <a href=\"/api-docs/sell/marketing/resources/ad_report_task/methods/createReportTask\">createReportTask</a>. Get a complete list of a seller's report-task IDs by calling <a href=\"/api-docs/sell/marketing/resources/ad_report_task/methods/getReportTasks\">getReportTasks</a>.</p>  # noqa: E501
 
-        :param str report_task_id: A unique eBay-assigned ID for the report task that's generated when the report task is created by a call to createReportTask. (required)
+        :param str report_task_id: A unique eBay-assigned ID for the report task that's generated when the report task is created by a call to <a href=\"/api-docs/sell/marketing/resources/ad_report_task/methods/createReportTask\">createReportTask</a>. (required)
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
-                                       sell_marketing.AdReportTaskApi, sell_marketing.ApiClient, 'delete_report_task',
-                                       SellMarketingException, True, ['sell.marketing', 'ad_report_task'],
-                                       report_task_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdReportTaskApi, sell_marketing.ApiClient, 'delete_report_task', SellMarketingException, True, ['sell.marketing', 'ad_report_task'], report_task_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_get_report_task(self, report_task_id, **kwargs):  # noqa: E501
         """get_report_task  # noqa: E501
 
-        This call returns the details of a specific Promoted Listings report task, as specified by the report_task_id path parameter. The report task includes the report criteria (such as the report dimensions, metrics, and included listing) and the report-generation rules (such as starting and ending dates for the specified report task). Report-task IDs are generated by eBay when you call createReportTask. Get a complete list of a seller's report-task IDs by calling getReportTasks.  # noqa: E501
+        This call returns the details of a specific Promoted Listings report task, as specified by the <b>report_task_id</b> path parameter. <p>The report task includes the report criteria (such as the report dimensions, metrics, and included listing) and the report-generation rules (such as starting and ending dates for the specified report task).</p>  <p>Report-task IDs are generated by eBay when you call <a href=\"/api-docs/sell/marketing/resources/ad_report_task/methods/createReportTask\">createReportTask</a>. Get a complete list of a seller's report-task IDs by calling <a href=\"/api-docs/sell/marketing/resources/ad_report_task/methods/getReportTasks\">getReportTasks</a>.</p>  # noqa: E501
 
-        :param str report_task_id: A unique eBay-assigned ID for the report task that's generated when the report task is created by a call to createReportTask. (required)
+        :param str report_task_id: A unique eBay-assigned ID for the report task that's generated when the report task is created by a call to <a href=\"/api-docs/sell/marketing/resources/ad_report_task/methods/createReportTask\">createReportTask</a>. (required)
         :return: ReportTask
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
-                                       sell_marketing.AdReportTaskApi, sell_marketing.ApiClient, 'get_report_task',
-                                       SellMarketingException, True, ['sell.marketing', 'ad_report_task'],
-                                       report_task_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdReportTaskApi, sell_marketing.ApiClient, 'get_report_task', SellMarketingException, True, ['sell.marketing', 'ad_report_task'], report_task_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_get_report_tasks(self, **kwargs):  # noqa: E501
         """get_report_tasks  # noqa: E501
 
-        This method returns information on all the existing report tasks related to a seller. Use the report_task_statuses query parameter to control which reports to return. You can paginate the result set by specifying a limit, which dictates how many report tasks to return on each page of the response. Use the offset parameter to specify how many reports to skip in the result set before returning the first result.  # noqa: E501
+        This method returns information on all the existing report tasks related to a seller. <p>Use the <b>report_task_statuses</b> query parameter to control which reports to return. You can paginate the result set by specifying a <b>limit</b>, which dictates how many report tasks to return on each page of the response. Use the <b>offset</b> parameter to specify how many reports to skip in the result set before returning the first result.</p>  # noqa: E501
 
-        :param str limit: Specifies the maximum number of report tasks to return on a page in the paginated response. Default: 10 Maximum: 500
-        :param str offset: Specifies the number of report tasks to skip in the result set before returning the first report in the paginated response. Combine offset with the limit query parameter to control the reports returned in the response. For example, if you supply an offset of 0 and a limit of 10, the response contains the first 10 reports from the complete list of report tasks retrieved by the call. If offset is 10 and limit is 10, the first page of the response contains reports 11-20 from the complete result set. Default: 0
-        :param str report_task_statuses: This parameter filters the returned report tasks by their status. Supply a comma-separated list of the report statuses you want returned. The results are filtered to include only the report statuses you specify. Note: The results might not include some report tasks if other search conditions exclude them. Valid values: &nbsp;&nbsp;&nbsp;PENDING &nbsp;&nbsp;&nbsp;SUCCESS &nbsp;&nbsp;&nbsp;FAILED
+        :param str limit: Specifies the maximum number of report tasks to return on a page in the paginated response.  <p><b>Default:</b> 10<br><b>Maximum:</b> 500</p>
+        :param str offset: Specifies the number of report tasks to skip in the result set before returning the first report in the paginated response.  <p>Combine <b>offset</b> with the <b>limit</b> query parameter to control the reports returned in the response. For example, if you supply an <b>offset</b> of <code>0</code> and a <b>limit</b> of <code>10</code>, the response contains the first 10 reports from the complete list of report tasks retrieved by the call. If <b>offset</b> is <code>10</code> and <b>limit</b> is <code>10</code>, the first page of the response contains reports 11-20 from the complete result set.</p> <b>Default:</b> 0
+        :param str report_task_statuses: This parameter filters the returned report tasks by their status. Supply a comma-separated list of the report statuses you want returned. The results are filtered to include only the report statuses you specify.  <p><b>Note: </b>The results might not include some report tasks if other search conditions exclude them.</p>  <b>Valid values: </b> <br>&nbsp;&nbsp;&nbsp;<code>PENDING</code> <br>&nbsp;&nbsp;&nbsp;<code>SUCCESS</code> <br>&nbsp;&nbsp;&nbsp;<code>FAILED</code>
         :return: ReportTaskPagedCollection
         """
         try:
-            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1',
-                                      sell_marketing.AdReportTaskApi, sell_marketing.ApiClient, 'get_report_tasks',
-                                      SellMarketingException, True, ['sell.marketing', 'ad_report_task'], None,
-                                      **kwargs)  # noqa: E501
+            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.AdReportTaskApi, sell_marketing.ApiClient, 'get_report_tasks', SellMarketingException, True, ['sell.marketing', 'ad_report_task'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_clone_campaign(self, body, campaign_id, **kwargs):  # noqa: E501
         """clone_campaign  # noqa: E501
 
-        This method clones (makes a copy of) the specified campaign. To clone a campaign, supply the campaign_id as a path parameter in your call, there is no call payload. The ID of the newly-cloned campaign is returned in the Location response header. Call getCampaigns to retrieve a seller's current campaign IDs Requirement: In order to clone a campaign, the campaignStatus must be ENDED and the campaign must define a set of selection rules (it must be a rules-based campaign).  # noqa: E501
+        This method clones (makes a copy of) the specified campaign. <p>To clone a campaign, supply the <b>campaign_id</b> as a path parameter in your call, there is no call payload.</p>  <p>The ID of the newly-cloned campaign is returned in the <b>Location</b> response header.  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve a seller's current campaign IDs</p>  <p><b>Requirement: </b>In order to clone a campaign, the <b>campaignStatus</b> must be <code>ENDED</code> and the campaign must define a set of selection rules (it must be a rules-based campaign).</p>  # noqa: E501
 
         :param CloneCampaignRequest body: This type defines the fields for a clone campaign request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: object
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
-                                       sell_marketing.ApiClient, 'clone_campaign', SellMarketingException, True,
-                                       ['sell.marketing', 'campaign'], (body, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'clone_campaign', SellMarketingException, True, ['sell.marketing', 'campaign'], (body, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_create_campaign(self, body, **kwargs):  # noqa: E501
         """create_campaign  # noqa: E501
 
-        This method creates a Promoted Listings ad campaign. A Promoted Listings campaign is the structure into which you place the ads for the listings you want to promote. Identify the items you want to place into a campaign either by &quot;key&quot; or by &quot;rule&quot; as follows: Rules-based campaigns &ndash; A rules-based campaign adds items to the campaign according to the criteria you specify in your call to createCampaign. Key-based campaigns &ndash; Add items to an existing campaign using either listing ID values or Inventory Reference values: Add listingId values to an existing campaign by calling either createAdByListingID or bulkCreateAdsByListingId. Add inventoryReference values to an existing campaign by calling either createAdByInventoryReference or bulkCreateAdsByInventoryReference. Note: No matter how you add items to a Promoted Listings campaign, each campaign can contain ads for a maximum of 50,000 items. If a rules-based campaign identifies more than 50,000 items, ads are created for only the first 50,000 items identified by the specified criteria, and ads are not created for the remaining items. Creating a campaign To create a basic campaign, supply: The user-defined campaign name The start date (and optionally the end date) of the campaign The eBay marketplace on which the campaign is hosted Details on the campaign funding model The campaign funding model specifies how the Promoted Listings fee is calculated. Currently, the only supported funding model is COST_PER_SALE. For complete information on how the fee is calculated and when it applies, see Promoted Listings fees. If you populate the campaignCriterion object in your createCampaign request, campaign &quot;ads&quot; are created by &quot;rule&quot; for the listings that meet the criteria you specify, and these ads are associated with the newly created campaign. For details on creating Promoted Listings campaigns and how to select the items to be included in your campaigns, see Creating a Promoted Listings campaign. For recommendations on which listings are prime for a Promoted Listings ad campaign and to get guidance on how to set the bidPercentage field, see Using the Recommendation API to help configure campaigns. Tip: See Promoted Listings requirements and restrictions for the details on the marketplaces that support Promoted Listings via the API.  # noqa: E501
+        This method creates a Promoted Listings ad campaign. <p>A Promoted Listings <i>campaign</i> is the structure into which you place the ads for the listings you want to promote.</p>  <p>Identify the items you want to place into a campaign either by \"key\" or by \"rule\" as follows:</p> <ul><li><b>Rules-based campaigns</b> &ndash; A rules-based campaign adds items to the campaign according to the <i>criteria</i> you specify in your call to <b>createCampaign</b>.</li> <li><b>Key-based campaigns</b> &ndash; Add items to an existing campaign using either listing ID values or Inventory Reference values: <ul><li>Add <b>listingId</b> values to an existing campaign by calling either <b>createAdByListingID</b> or <b>bulkCreateAdsByListingId</b>.</li>  <li>Add <b>inventoryReference</b> values to an existing campaign by calling either <b>createAdByInventoryReference</b> or <b>bulkCreateAdsByInventoryReference</b>.</li></ul></li></ul>  <p class=\"tablenote\"><b>Note:</b> No matter how you add items to a Promoted Listings campaign, each campaign can contain ads for a maximum of 50,000 items. <br><br>If a rules-based campaign identifies more than 50,000 items, ads are created for only the first 50,000 items identified by the specified criteria, and ads are not created for the remaining items.</p>  <p><b>Creating a campaign</b></p> <p>To create a basic campaign, supply:</p>  <ul><li>The user-defined campaign name</li> <li>The start date (and optionally the end date) of the campaign</li> <li>The eBay marketplace on which the campaign is hosted</li> <li>Details on the campaign funding model</li></ul>  <p>The campaign funding model specifies how the Promoted Listings fee is calculated. Currently, the only supported funding model is <code>COST_PER_SALE</code>. For complete information on how the fee is calculated and when it applies, see <a href=\"/api-docs/sell/static/marketing/promoted-listings.html#pl-fees\">Promoted Listings fees</a>.</p>   <p>If you populate the <b>campaignCriterion</b> object in your <b>createCampaign</b> request, campaign \"ads\" are created by \"rule\" for the listings that meet the criteria you specify, and these ads are associated with the newly created campaign.</p>  <p>For details on creating Promoted Listings campaigns and how to select the items to be included in your campaigns, see <a href=\"/api-docs/sell/static/marketing/pl-create-campaign.html\">Creating a Promoted Listings campaign</a>.</p>  <p>For recommendations on which listings are prime for a Promoted Listings ad campaign and to get guidance on how to set the <b>bidPercentage</b> field, see <a href=\"/api-docs/sell/static/marketing/pl-reco-api.html\">Using the Recommendation API to help configure campaigns</a>.</p>  <p class=\"tablenote\"><b>Tip:</b> See <a href=\"/api-docs/sell/marketing/static/overview.html#PL-requirements\">Promoted Listings requirements and restrictions</a> for the details on the marketplaces that support Promoted Listings via the API.</p>  # noqa: E501
 
         :param CreateCampaignRequest body: This type defines the fields for the create campaign request. (required)
         :return: object
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
-                                       sell_marketing.ApiClient, 'create_campaign', SellMarketingException, True,
-                                       ['sell.marketing', 'campaign'], body, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'create_campaign', SellMarketingException, True, ['sell.marketing', 'campaign'], body, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_delete_campaign(self, campaign_id, **kwargs):  # noqa: E501
         """delete_campaign  # noqa: E501
 
-        This method deletes the campaign specified by the campaign_id query parameter. Note: You can delete only campaigns that have ended. Call getCampaigns to retrieve the campaign_id and the campaign status (RUNNING, PAUSED, ENDED, and so on) for all the seller's campaigns.  # noqa: E501
+        This method deletes the campaign specified by the <code>campaign_id</code> query parameter.  <p class=\"tablenote\"><b>Note: </b> You can delete only campaigns that have ended.</p>  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve the <b>campaign_id</b> and the campaign status (<code>RUNNING</code>, <code>PAUSED</code>, <code>ENDED</code>, and so on) for all the seller's campaigns.</p>  # noqa: E501
 
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
-                                       sell_marketing.ApiClient, 'delete_campaign', SellMarketingException, True,
-                                       ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'delete_campaign', SellMarketingException, True, ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_end_campaign(self, campaign_id, **kwargs):  # noqa: E501
         """end_campaign  # noqa: E501
 
-        This method ends an active (RUNNINGM) or paused campaign. Specify the campaign you want to end by supplying its campaign ID in a query parameter. Call getCampaigns to retrieve the campaign_id and the campaign status (RUNNING, PAUSED, ENDED, and so on) for all the seller's campaigns.  # noqa: E501
+        This method ends an active (<code>RUNNINGM</code>) or paused campaign. Specify the campaign you want to end by supplying its  campaign ID in a query parameter.  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve the <b>campaign_id</b> and the campaign status (<code>RUNNING</code>, <code>PAUSED</code>, <code>ENDED</code>, and so on) for all the seller's campaigns.</p>  # noqa: E501
 
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
-                                       sell_marketing.ApiClient, 'end_campaign', SellMarketingException, True,
-                                       ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'end_campaign', SellMarketingException, True, ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_find_campaign_by_ad_reference(self, **kwargs):  # noqa: E501
         """find_campaign_by_ad_reference  # noqa: E501
 
-        This method retrieves the campaigns containing the listing that is specified using either a listing ID, or an inventory reference ID and inventory reference type pair. eBay listing IDs are generated by either the Trading API or the Inventory API when you create a listing. An inventory reference ID can be either a seller-defined SKU or inventoryItemGroupKey, as specified in the Inventory API. Note: This request accepts either a listing_id, or an inventory_reference_id and inventory_reference_type pair, as used in the Inventory API.  # noqa: E501
+        This method retrieves the campaigns containing the listing that is specified using either a listing ID, or an inventory reference ID and inventory reference type pair.  <p>eBay <i>listing IDs</i> are generated by either the <a href=\"/Devzone/XML/docs/Reference/eBay/index.html\" title=\"Trading API Reference\">Trading API</a> or the <a href=\"/api-docs/sell/inventory/resources/methods\">Inventory API</a> when you create a listing.</p>  <p> An <i>inventory reference ID</i> can be either a seller-defined <b>SKU</b> or <b>inventoryItemGroupKey</b>, as specified in the Inventory API.</p>  <p class=\"tablenote\"><b>Note:</b> This request accepts either a <b>listing_id</b>, <i>or</i> an <b>inventory_reference_id</b> and <b>inventory_reference_type</b> pair, as used in the Inventory API.</p>  # noqa: E501
 
-        :param str inventory_reference_id: The seller's inventory reference ID of the listing to be used to find the campaign in which it is associated. You must always pass in both inventory_reference_id and inventory_reference_type.
-        :param str inventory_reference_type: The type of the seller's inventory reference ID, which is a listing or group of items. You must always pass in both inventory_reference_id and inventory_reference_type.
+        :param str inventory_reference_id: The seller's inventory reference ID of the listing to be used to find the campaign in which it is associated. You must always pass in both  <b>inventory_reference_id</b> and <b>inventory_reference_type</b>.
+        :param str inventory_reference_type: The type of the seller's inventory reference ID, which is a listing or group of items. You must always pass in both <b>inventory_reference_id</b> and <b>inventory_reference_type</b>.
         :param str listing_id: Identifier of the eBay listing associated with the ad.
         :return: Campaigns
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
-                                       sell_marketing.ApiClient, 'find_campaign_by_ad_reference',
-                                       SellMarketingException, True, ['sell.marketing', 'campaign'], None,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'find_campaign_by_ad_reference', SellMarketingException, True, ['sell.marketing', 'campaign'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_get_campaign(self, campaign_id, **kwargs):  # noqa: E501
         """get_campaign  # noqa: E501
 
-        This method retrieves the details of a single campaign, as specified with the campaign_id query parameter. This method returns all the details of a campaign (including the campaign's the selection rules), except the for the listing IDs or inventory reference IDs included in the campaign. These IDs are returned by getAds. Call getCampaigns to retrieve a list of the seller's campaign IDs.  # noqa: E501
+        This method retrieves the details of a single campaign, as specified with the <b>campaign_id</b> query parameter.  <p>This method returns all the details of a campaign (including the campaign's the selection rules), except the for the listing IDs or inventory reference IDs included in the campaign. These IDs are returned by <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a>.</p>  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve a list of the seller's campaign IDs.</p>  # noqa: E501
 
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: Campaign
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
-                                       sell_marketing.ApiClient, 'get_campaign', SellMarketingException, True,
-                                       ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'get_campaign', SellMarketingException, True, ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_get_campaign_by_name(self, campaign_name, **kwargs):  # noqa: E501
         """get_campaign_by_name  # noqa: E501
 
-        This method retrieves the details of a single campaign, as specified with the campaign_name query parameter. Note that the campaign name you specify must be an exact, case-sensitive match of the name of the campaign you want to retrieve. This method returns all the details of a campaign (including the campaign's the selection rules), except the for the listing IDs or inventory reference IDs included in the campaign. These IDs are returned by getAds. Call getCampaigns to retrieve a list of the seller's campaign names.  # noqa: E501
+        This method retrieves the details of a single campaign, as specified with the <b>campaign_name</b> query parameter. Note that the campaign name you specify must be an exact, case-sensitive match of the name of the campaign you want to retrieve.</p>  <p>This method returns all the details of a campaign (including the campaign's the selection rules), except the for the listing IDs or inventory reference IDs included in the campaign. These IDs are returned by <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a>.</p>  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve a list of the seller's campaign names.</p>  # noqa: E501
 
         :param str campaign_name: Name of the campaign. (required)
         :return: Campaign
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
-                                       sell_marketing.ApiClient, 'get_campaign_by_name', SellMarketingException, True,
-                                       ['sell.marketing', 'campaign'], campaign_name, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'get_campaign_by_name', SellMarketingException, True, ['sell.marketing', 'campaign'], campaign_name, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_get_campaigns(self, **kwargs):  # noqa: E501
         """get_campaigns  # noqa: E501
 
-        This method retrieves the details for all the campaigns of a seller, including the campaign's the selection rules. Note that this method does not return the listing IDs or inventory reference IDs of the items included in the ad campaign. Call getAds to retrieve these IDs. You can filter the result set by a campaign name, end date range, start date range, or campaign status. You can also paginate the records returned from the result set using the limit query parameter, and control which records to return using the offset parameter.  # noqa: E501
+        This method retrieves the details for all the campaigns of a seller, including the campaign's the selection rules. <p>Note that this method does not return the listing IDs or inventory reference IDs of the items included in the ad campaign. Call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to retrieve these IDs.</p>  <p>You can filter the result set by a campaign name, end date range, start date range, or campaign status. You can also paginate the records returned from the result set using the <b>limit</b> query parameter, and control which records to return using the  <b>offset</b> parameter.</p>  # noqa: E501
 
-        :param str campaign_name: Specifies the campaign name. The results are filtered to include only the campaign by the specified name. Note: The results might be null if other filters exclude the campaign with this name. Maximum: 1 campaign name
-        :param str campaign_status: Specifies the campaign status. The results are filtered to include only campaigns that are in the specified states. Note: The results might not include all the campaigns with this status if other filters exclude them. Valid values: See CampaignStatusEnum Maximum: 1 status
-        :param str end_date_range: Specifies the range of a campaign's end date. The results are filtered to include only campaigns with an end date that is within specified range. Valid format (UTC): &nbsp;&nbsp;&nbsp;&nbsp;yyyy-MM-ddThh:mm:ssZ..yyyy-MM-ddThh:mm:ssZ&nbsp;&nbsp; (campaign ends within this range) &nbsp;&nbsp;&nbsp;&nbsp;yyyy-MM-ddThh:mm:ssZ..&nbsp;&nbsp;(campaign ends on or after this date) &nbsp;&nbsp;&nbsp;&nbsp;..yyyy-MM-ddThh:mm:ssZ&nbsp;&nbsp; (campaign ends on or before this date) &nbsp;&nbsp;&nbsp;&nbsp;2016-09-08T00:00:00Z..2016-09-09T00:00:00Z&nbsp;&nbsp; (campaign ends on September 8, 2016) Note: The results might not include all the campaigns ending on this date if other filters exclude them.
-        :param str limit: Specifies the maximum number of campaigns to return on a page in the paginated response. Default: 10 Maximum: 500
-        :param str offset: Specifies the number of campaigns to skip in the result set before returning the first report in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
-        :param str start_date_range: Specifies the range of a campaign's start date in which to filter the results. The results are filtered to include only campaigns with a start date that is equal to this date or is within specified range. Valid format (UTC): &nbsp;&nbsp;&nbsp;&nbsp;yyyy-MM-ddThh:mm:ssZ..yyyy-MM-ddThh:mm:ssZ&nbsp;&nbsp; (starts within this range) &nbsp;&nbsp;&nbsp;&nbsp;yyyy-MM-ddThh:mm:ssZ..&nbsp;&nbsp;(campaign starts on or after this date) &nbsp;&nbsp;&nbsp;&nbsp;..yyyy-MM-ddThh:mm:ssZ&nbsp;&nbsp; (campaign starts on or before this date) &nbsp;&nbsp;&nbsp;&nbsp;2016-09-08T00:00.00.000Z..2016-09-09T00:00:00Z&nbsp;&nbsp; (campaign starts on September 8, 2016) Note: The results might not include all the campaigns with this start date if other filters exclude them.
+        :param str campaign_name: Specifies the campaign name. The results are filtered to include only the campaign by the specified name.<br /><br /><b>Note: </b>The results might be null if other filters exclude the campaign with this name. <br /><br /><b>Maximum: </b> 1 campaign name
+        :param str campaign_status: Specifies the campaign status. The results are filtered to include only campaigns that are in the specified states. <br /><br /><b>Note: </b>The results might not include all the campaigns with this status if other filters exclude them. <br /><br /><b>Valid values:</b> See <a href=\"/api-docs/sell/marketing/types/pls:CampaignStatusEnum\">CampaignStatusEnum</a> <br /><br /><b>Maximum: </b> 1 status
+        :param str end_date_range: Specifies the range of a campaign's end date. The results are filtered to include only campaigns with an end date that is within specified range. <br><br><b>Valid format (UTC): </b> <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<code>yyyy-MM-ddThh:mm:ssZ..yyyy-MM-ddThh:mm:ssZ&nbsp;&nbsp;</code> (campaign ends within this range) <br>&nbsp;&nbsp;&nbsp;&nbsp;<code>yyyy-MM-ddThh:mm:ssZ..&nbsp;&nbsp;</code>(campaign ends on or after this date)<br>&nbsp;&nbsp;&nbsp;&nbsp;<code>..yyyy-MM-ddThh:mm:ssZ&nbsp;&nbsp;</code> (campaign ends on or before this date)<br>&nbsp;&nbsp;&nbsp;&nbsp;<code>2016-09-08T00:00:00Z..2016-09-09T00:00:00Z&nbsp;&nbsp;</code> (campaign ends on September 8, 2016) <br /><br /><b>Note: </b>The results might not include all the campaigns ending on this date if other filters exclude them.
+        :param str limit: <p>Specifies the maximum number of campaigns to return on a page in the paginated response.</p>  <b>Default: </b>10 <br><b>Maximum: </b> 500
+        :param str offset: Specifies the number of campaigns to skip in the result set before returning the first report in the paginated response.  <p>Combine <b>offset</b> with the <b>limit</b> query parameter to control the items returned in the response. For example, if you supply an <b>offset</b> of <code>0</code> and a <b>limit</b> of <code>10</code>, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If <b>offset</b> is <code>10</code> and <b>limit</b> is <code>20</code>, the first page of the response contains items 11-30 from the complete result set.</p> <p><b>Default:</b> 0</p>
+        :param str start_date_range: Specifies the range of a campaign's start date in which to filter the results. The results are filtered to include only campaigns with a start date that is equal to this date or is within specified range.<br><br><b>Valid format (UTC): </b> <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<code>yyyy-MM-ddThh:mm:ssZ..yyyy-MM-ddThh:mm:ssZ&nbsp;&nbsp;</code> (starts within this range)<br>&nbsp;&nbsp;&nbsp;&nbsp;<code>yyyy-MM-ddThh:mm:ssZ..&nbsp;&nbsp;</code>(campaign starts on or after this date)<br>&nbsp;&nbsp;&nbsp;&nbsp;<code>..yyyy-MM-ddThh:mm:ssZ&nbsp;&nbsp;</code> (campaign starts on or before this date)<br>&nbsp;&nbsp;&nbsp;&nbsp;<code>2016-09-08T00:00.00.000Z..2016-09-09T00:00:00Z&nbsp;&nbsp;</code> (campaign starts on September 8, 2016)   <br /><br /><b>Note: </b>The results might not include all the campaigns with this start date if other filters exclude them.
         :return: CampaignPagedCollection
         """
         try:
-            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
-                                      sell_marketing.ApiClient, 'get_campaigns', SellMarketingException, True,
-                                      ['sell.marketing', 'campaign'], None, **kwargs)  # noqa: E501
+            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'get_campaigns', SellMarketingException, True, ['sell.marketing', 'campaign'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_pause_campaign(self, campaign_id, **kwargs):  # noqa: E501
         """pause_campaign  # noqa: E501
 
-        This method pauses an active (RUNNING) campaign. You can restarted by calling resumeCampaign, as long as the campaign's end date is in the future. Note: The listings associated with a paused campaign cannot be added into another campaign. Call getCampaigns to retrieve the campaign_id and the campaign status (RUNNING, PAUSED, ENDED, and so on) for all the seller's campaigns.  # noqa: E501
+        This method pauses an active (RUNNING) campaign.  <p>You can restarted by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/resumeCampaign\">resumeCampaign</a>, as long as the campaign's end date is in the future.</p>  <p><b>Note: </b> The listings associated with a paused campaign cannot be added into another campaign.</p>  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve the <b>campaign_id</b> and the campaign status (<code>RUNNING</code>, <code>PAUSED</code>, <code>ENDED</code>, and so on) for all the seller's campaigns.</p>  # noqa: E501
 
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
-                                       sell_marketing.ApiClient, 'pause_campaign', SellMarketingException, True,
-                                       ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'pause_campaign', SellMarketingException, True, ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_resume_campaign(self, campaign_id, **kwargs):  # noqa: E501
         """resume_campaign  # noqa: E501
 
-        This method resumes a paused campaign, as long as it's end date is in the future. Supply the campaign_id for the campaign you want to restart as a query parameter in the request. Call getCampaigns to retrieve the campaign_id and the campaign status (RUNNING, PAUSED, ENDED, and so on) for all the seller's campaigns.  # noqa: E501
+        This method resumes a paused campaign, as long as it's end date is in the future. Supply the <b>campaign_id</b> for the campaign you want to restart as a query parameter in the request.  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve the <b>campaign_id</b> and the campaign status (<code>RUNNING</code>, <code>PAUSED</code>, <code>ENDED</code>, and so on) for all the seller's campaigns.</p>  # noqa: E501
 
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
-                                       sell_marketing.ApiClient, 'resume_campaign', SellMarketingException, True,
-                                       ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'resume_campaign', SellMarketingException, True, ['sell.marketing', 'campaign'], campaign_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_update_campaign_identification(self, body, campaign_id, **kwargs):  # noqa: E501
         """update_campaign_identification  # noqa: E501
 
-        This method replaces the name and the start and end dates of a campaign. Specify the campaign_id you want to update as a URI parameter, and configure the campaignName and startDate in the request payload. If you want to change only the end date of the campaign, specify the current campaign name and set startDate to the current date (you cannot use a start date that is in the past), and set the endDate as desired. Note that if you do not set a new end date in this call, any current endDate value will be set to null. To preserve the currently-set end date, you must specify the value again in your request. Call getCampaigns to retrieve a seller's campaign details, including the campaign ID, campaign name, and the start and end dates of the campaign.  # noqa: E501
+        This method replaces the name and the start and end dates of a campaign.  <p>Specify the <b>campaign_id</b> you want to update as a URI parameter, and configure the <b>campaignName</b> and <b>startDate</b> in the request payload.  <p>If you want to change only the end date of the campaign, specify the current campaign name and set <b>startDate</b> to the current date (you cannot use a start date that is in the past), and set the <b>endDate</b> as desired. Note that if you do not set a new end date in this call, any current <b>endDate</b> value will be set to <code>null</code>. To preserve the currently-set end date, you must specify the value again in your request.</p>  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve a seller's campaign details, including the campaign ID, campaign name, and the start and end dates of the campaign.  # noqa: E501
 
         :param UpdateCampaignIdentificationRequest body: This type defines the fields to updated the campaign name and start and end dates. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi,
-                                       sell_marketing.ApiClient, 'update_campaign_identification',
-                                       SellMarketingException, True, ['sell.marketing', 'campaign'],
-                                       (body, campaign_id), **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.CampaignApi, sell_marketing.ApiClient, 'update_campaign_identification', SellMarketingException, True, ['sell.marketing', 'campaign'], (body, campaign_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_create_item_price_markdown_promotion(self, **kwargs):  # noqa: E501
         """create_item_price_markdown_promotion  # noqa: E501
 
-        This method creates an item price markdown promotion (know simply as a &quot;markdown promotion&quot;) where a discount amount is applied directly to the items included the promotion. Discounts can be specified as either a monetary amount or a percentage off the standard sales price. eBay highlights promoted items by placing teasers for the items throughout the online sales flows. Unlike an item promotion, a markdown promotion does not require the buyer meet a &quot;threshold&quot; before the offer takes effect. With markdown promotions, all the buyer needs to do is purchase the item to receive the promotion benefit. Important: There are some restrictions for which listings are available for price markdown promotions. For details, see Promotions Manager requirements and restrictions. In addition, we recommend you list items at competitive prices before including them in your markdown promotions. For an extensive list of pricing recommendations, see the Growth tab in Seller Hub. There are two ways to add items to markdown promotions: Key-based promotions select items using either the listing IDs or inventory reference IDs of the items you want to promote. Note that if you use inventory reference IDs, you must specify both the inventoryReferenceId and the associated inventoryReferenceType of the item(s) you want to include the promotion. Rule-based promotions select items using a list of eBay category IDs or seller Store category IDs. Rules can further constrain items in a promotion by minimum and maximum prices, brands, and item conditions. New promotions must be created in either a DRAFT or a SCHEDULED state. Use the DRAFT state when you are initially creating a promotion and you want to be sure it's correctly configured before scheduling it to run. When you create a promotion, the promotion ID is returned in the Location response header. Use this ID to reference the promotion in subsequent requests (such as to schedule a promotion that's in a DRAFT state). Tip: Refer to Promotions Manager in the Selling Integration Guide for details and examples showing how to create and manage seller promotions. Markdown promotions are available on all eBay marketplaces. For more information, see Promotions Manager requirements and restrictions.  # noqa: E501
+        This method creates an <b>item price markdown promotion</b> (know simply as a \"markdown promotion\") where a discount amount is applied directly to the items included the promotion. Discounts can be specified as either a monetary amount or a percentage off the standard sales price. eBay highlights promoted items by placing teasers for the items throughout the online sales flows.  <p>Unlike an <a href=\"/api-docs/sell/marketing/resources/item_promotion/methods/createItemPromotion\">item promotion</a>, a markdown promotion does not require the buyer meet a \"threshold\" before the offer takes effect. With markdown promotions, all the buyer needs to do is purchase the item to receive the promotion benefit.</p>  <p class=\"tablenote\"><b>Important:</b> There are some restrictions for which listings are available for price markdown promotions. For details, see <a href=\"/api-docs/sell/marketing/static/overview.html#PM-requirements\">Promotions Manager requirements and restrictions</a>. <br><br>In addition, we recommend you list items at competitive prices before including them in your markdown promotions. For an extensive list of pricing recommendations, see the <b>Growth</b> tab in Seller Hub.</p> <p>There are two ways to add items to markdown promotions:</p> <ul><li><b>Key-based promotions</b> select items using either the listing IDs or inventory reference IDs of the items you want to promote. Note that if you use inventory reference IDs, you must specify both the <b>inventoryReferenceId</b> and the associated <b>inventoryReferenceType</b> of the item(s) you want to include the promotion.</li>  <li><b>Rule-based promotions</b> select items using a list of eBay category IDs or seller Store category IDs. Rules can further constrain items in a promotion by minimum and maximum prices, brands, and item conditions.</li></ul>  <p>New promotions must be created in either a <code>DRAFT</code> or a <code>SCHEDULED</code> state. Use the DRAFT state when you are initially creating a promotion and you want to be sure it's correctly configured before scheduling it to run. When you create a promotion, the promotion ID is returned in the <b>Location</b> response header. Use this ID to reference the promotion in subsequent requests (such as to schedule a promotion that's in a DRAFT state).</p>  <p class=\"tablenote\"><b>Tip:</b> Refer to <a href=\"/api-docs/sell/static/marketing/promotions-manager.html\">Promotions Manager</a> in the <i>Selling Integration Guide</i> for details and examples showing how to create and manage seller promotions.</p>  <p>Markdown promotions are available on all eBay marketplaces. For more information, see <a href=\"/api-docs/sell/marketing/static/overview.html#PM-requirements\">Promotions Manager requirements and restrictions</a>.</p>  # noqa: E501
 
         :param ItemPriceMarkdown body: This type defines the fields that describe an item price markdown promotion.
         :return: object
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
-                                       sell_marketing.ItemPriceMarkdownApi, sell_marketing.ApiClient,
-                                       'create_item_price_markdown_promotion', SellMarketingException, True,
-                                       ['sell.marketing', 'item_price_markdown'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.ItemPriceMarkdownApi, sell_marketing.ApiClient, 'create_item_price_markdown_promotion', SellMarketingException, True, ['sell.marketing', 'item_price_markdown'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_delete_item_price_markdown_promotion(self, promotion_id, **kwargs):  # noqa: E501
         """delete_item_price_markdown_promotion  # noqa: E501
 
-        This method deletes the item price markdown promotion specified by the promotion_id path parameter. Call getPromotions to retrieve the IDs of a seller's promotions. You can delete any promotion with the exception of those that are currently active (RUNNING). To end a running promotion, call updateItemPriceMarkdownPromotion and adjust the endDate field as appropriate.  # noqa: E501
+        This method deletes the item price markdown promotion specified by the <b>promotion_id</b> path parameter. Call <a href=\"/api-docs/sell/marketing/resources/promotion/methods/getPromotions\">getPromotions</a> to retrieve the IDs of a seller's promotions.  <br><br>You can delete any promotion with the exception of those that are currently active (RUNNING). To end a running promotion, call <a href=\"/api-docs/sell/marketing/resources/item_price_markdown/methods/updateItemPriceMarkdownPromotion\">updateItemPriceMarkdownPromotion</a> and adjust the <b>endDate</b> field as appropriate.  # noqa: E501
 
-        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to delete plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an &quot;at sign&quot; (@). The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Example: 1********5@EBAY_US (required)
+        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to delete plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (<b>@</b>).  <br><br>The ID of the promotion (<b>promotionId</b>) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. <br><br><b>Example:</b> <code>1********5@EBAY_US</code> (required)
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
-                                       sell_marketing.ItemPriceMarkdownApi, sell_marketing.ApiClient,
-                                       'delete_item_price_markdown_promotion', SellMarketingException, True,
-                                       ['sell.marketing', 'item_price_markdown'], promotion_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.ItemPriceMarkdownApi, sell_marketing.ApiClient, 'delete_item_price_markdown_promotion', SellMarketingException, True, ['sell.marketing', 'item_price_markdown'], promotion_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_get_item_price_markdown_promotion(self, promotion_id, **kwargs):  # noqa: E501
         """get_item_price_markdown_promotion  # noqa: E501
 
-        This method returns the complete details of the item price markdown promotion that's indicated by the promotion_id path parameter. Call getPromotions to retrieve the IDs of a seller's promotions.  # noqa: E501
+        This method returns the complete details of the item price markdown promotion that's indicated by the <b>promotion_id</b> path parameter. <br><br>Call <a href=\"/api-docs/sell/marketing/resources/promotion/methods/getPromotions\">getPromotions</a> to retrieve the IDs of a seller's promotions.  # noqa: E501
 
-        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to get plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an &quot;at sign&quot; (@). The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Example: 1********5@EBAY_US (required)
+        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to get plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (<b>@</b>).  <br><br>The ID of the promotion (<b>promotionId</b>) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. <br><br><b>Example:</b> <code>1********5@EBAY_US</code> (required)
         :return: ItemPriceMarkdown
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
-                                       sell_marketing.ItemPriceMarkdownApi, sell_marketing.ApiClient,
-                                       'get_item_price_markdown_promotion', SellMarketingException, True,
-                                       ['sell.marketing', 'item_price_markdown'], promotion_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.ItemPriceMarkdownApi, sell_marketing.ApiClient, 'get_item_price_markdown_promotion', SellMarketingException, True, ['sell.marketing', 'item_price_markdown'], promotion_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_update_item_price_markdown_promotion(self, promotion_id, **kwargs):  # noqa: E501
         """update_item_price_markdown_promotion  # noqa: E501
 
-        This method updates the specified item price markdown promotion with the new configuration that you supply in the payload of the request. Specify the promotion you want to update using the promotion_id path parameter. Call getPromotions to retrieve the IDs of a seller's promotions. When updating a promotion, supply all the fields that you used to configure the original promotion (and not just the fields you are updating). eBay replaces the specified promotion with the values you supply in the update request and if you don't pass a field that currently has a value, the update request fails. The parameters you are allowed to update with this request depend on the status of the promotion you're updating: DRAFT or SCHEDULED promotions: You can update any of the parameters in these promotions that have not yet started to run, including the discountRules. RUNNING promotions: You can change the endDate and the item's inventory but you cannot change the promotional discount or the promotion's start date. ENDED promotions: Nothing can be changed.  # noqa: E501
+        This method updates the specified item price markdown promotion with the new configuration that you supply in the payload of the request. Specify the promotion you want to update using the <b>promotion_id</b> path parameter. Call <a href=\"/api-docs/sell/marketing/resources/promotion/methods/getPromotions\">getPromotions</a> to retrieve the IDs of a seller's promotions.  <br><br>When updating a promotion, supply all the fields that you used to configure the original promotion (and not just the fields you are updating). eBay replaces the specified promotion with the values you supply in the update request and if you don't pass a field that currently has a value, the update request fails.  <br><br>The parameters you are allowed to update with this request depend on the status of the promotion you're updating:  <ul><li>DRAFT or SCHEDULED promotions: You can update any of the parameters in these promotions that have not yet started to run, including the <b>discountRules</b>.</li> <li>RUNNING promotions: You can change the <b>endDate</b> and the item's inventory but you cannot change the promotional discount or the promotion's start date.</li> <li>ENDED promotions: Nothing can be changed.</li></ul>  # noqa: E501
 
-        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to update plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an &quot;at sign&quot; (@). The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Example: 1********5@EBAY_US (required)
+        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to update plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (<b>@</b>).  <br><br>The ID of the promotion (<b>promotionId</b>) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. <br><br><b>Example:</b> <code>1********5@EBAY_US</code> (required)
         :param ItemPriceMarkdown body: This type defines the fields that describe an item price markdown promotion.
         :return: object
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
-                                       sell_marketing.ItemPriceMarkdownApi, sell_marketing.ApiClient,
-                                       'update_item_price_markdown_promotion', SellMarketingException, True,
-                                       ['sell.marketing', 'item_price_markdown'], promotion_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.ItemPriceMarkdownApi, sell_marketing.ApiClient, 'update_item_price_markdown_promotion', SellMarketingException, True, ['sell.marketing', 'item_price_markdown'], promotion_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_create_item_promotion(self, **kwargs):  # noqa: E501
         """create_item_promotion  # noqa: E501
 
-        This method creates an item promotion, where the buyer receives a discount when they meet the buying criteria that's set for the promotion. Known here as &quot;threshold promotions&quot;, these promotions trigger when a threshold is met. eBay highlights promoted items by placing teasers for the promoted items throughout the online buyer flows. Discounts are specified as either a monetary amount or a percentage off the standard sales price of a listing, letting you offer deals such as &quot;Buy 1 Get 1&quot; and &quot;Buy $50, get 20% off&quot;. Volume pricing promotions increase the value of the discount as the buyer increases the quantity they purchase. Coded Coupons provide unique codes that a buyer can use during checkout to receive a discount. The seller can specify the number of times a buyer can use the coupon and the maximum amount across all purchases that can be discounted using the coupon. The coupon code can also be made public (appearing on the seller&rsquo;s Offer page, search pages, the item listing, and the checkout page) or private (only on the seller&rsquo;s Offer page, but the seller can include the code in email and social media). Note: Coded Coupons are currently available in the US, UK, DE, FR, IT, ES, and AU marketplaces. There are two ways to add items to a threshold promotion: Key-based promotions select items using either the listing IDs or inventory reference IDs of the items you want to promote. Note that if you use inventory reference IDs, you must specify both the inventoryReferenceId and the associated inventoryReferenceType of the item(s) you want to include the promotion. Rule-based promotions select items using a list of eBay category IDs or seller Store category IDs. Rules can further constrain items in a promotion by minimum and maximum prices, brands, and item conditions. You must create a new promotion in either a DRAFT or SCHEDULED state. Use the DRAFT state when you are initially creating a promotion and you want to be sure it's correctly configured before scheduling it to run. When you create a promotion, the promotion ID is returned in the Location response header. Use this ID to reference the promotion in subsequent requests. Tip: Refer to the Selling Integration Guide for details and examples showing how to create and manage threshold promotions using the Promotions Manager. For information on the eBay marketplaces that support item promotions, see Promotions Manager requirements and restrictions.  # noqa: E501
+        <p>This method creates an <b>item promotion</b>, where the buyer receives a discount when they meet the buying criteria that's set for the promotion. Known here as \"threshold promotions\", these promotions trigger when a threshold is met.</p>  <p>eBay highlights promoted items by placing teasers for the promoted items throughout the online buyer flows.</p>  <p><i>Discounts</i> are specified as either a monetary amount or a percentage off the standard sales price of a listing, letting you offer deals such as \"Buy 1 Get 1\" and \"Buy $50, get 20% off\".</p> <p><i>Volume pricing</i> promotions increase the value of the discount as the buyer increases the quantity they purchase.</p> <p><i>Coded Coupons</i> provide unique codes that a buyer can use during checkout to receive a discount. The seller can specify the number of times a buyer can use the coupon and the maximum amount across all purchases that can be discounted using the coupon. The coupon code can also be made public (appearing on the seller’s Offer page, search pages, the item listing, and the checkout page) or private (only on the seller’s Offer page, but the seller can include the code in email and social media).</p> <p class=\"tablenote\"><b>Note</b>: Coded Coupons are currently available in the US, UK, DE, FR, IT, ES, and AU marketplaces.</p><p>There are two ways to add items to a threshold promotion:</p>  <ul><li><b>Key-based promotions</b> select items using either the listing IDs or inventory reference IDs of the items you want to promote. Note that if you use inventory reference IDs, you must specify both the <b>inventoryReferenceId</b> and the associated <b>inventoryReferenceType</b> of the item(s) you want to include the promotion.</li> <li><b>Rule-based promotions</b> select items using a list of eBay category IDs or seller Store category IDs. Rules can further constrain items in a promotion by minimum and maximum prices, brands, and item conditions.</li></ul>  <p>You must create a new promotion in either a <code>DRAFT</code> or <code>SCHEDULED</code> state. Use the DRAFT state when you are initially creating a promotion and you want to be sure it's correctly configured before scheduling it to run. When you create a promotion, the promotion ID is returned in the <b>Location</b> response header. Use this ID to reference the promotion in subsequent requests.</p>  <p class=\"tablenote\"><b>Tip:</b> Refer to the <a href=\"/api-docs/sell/static/marketing/promotions-manager.html\">Selling Integration Guide</a> for details and examples showing how to create and manage threshold promotions using the Promotions Manager.</p>  <p>For information on the eBay marketplaces that support item promotions, see <a href=\"/api-docs/sell/marketing/static/overview.html#PM-requirements\">Promotions Manager requirements and restrictions</a>.</p>  # noqa: E501
 
         :param ItemPromotion body: This type defines the fields that describe an item promotion.
         :return: BaseResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
-                                       sell_marketing.ItemPromotionApi, sell_marketing.ApiClient,
-                                       'create_item_promotion', SellMarketingException, True,
-                                       ['sell.marketing', 'item_promotion'], None, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.ItemPromotionApi, sell_marketing.ApiClient, 'create_item_promotion', SellMarketingException, True, ['sell.marketing', 'item_promotion'], None, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_delete_item_promotion(self, promotion_id, **kwargs):  # noqa: E501
         """delete_item_promotion  # noqa: E501
 
-        This method deletes the threshold promotion specified by the promotion_id path parameter. Call getPromotions to retrieve the IDs of a seller's promotions. You can delete any promotion with the exception of those that are currently active (RUNNING). To end a running threshold promotion, call updateItemPromotion and adjust the endDate field as appropriate.  # noqa: E501
+        This method deletes the threshold promotion specified by the <b>promotion_id</b> path parameter. Call <a href=\"/api-docs/sell/marketing/resources/promotion/methods/getPromotions\">getPromotions</a> to retrieve the IDs of a seller's promotions.  <br><br>You can delete any promotion with the exception of those that are currently active (RUNNING). To end a running threshold promotion, call <a href=\"/api-docs/sell/marketing/resources/item_promotion/methods/updateItemPromotion\">updateItemPromotion</a> and adjust the <b>endDate</b> field as appropriate.  # noqa: E501
 
-        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to delete plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an &quot;at sign&quot; (@). The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Example: 1********5@EBAY_US (required)
+        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to delete plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (<b>@</b>).  <br><br>The ID of the promotion (<b>promotionId</b>) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. <br><br><b>Example:</b> <code>1********5@EBAY_US</code> (required)
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
-                                       sell_marketing.ItemPromotionApi, sell_marketing.ApiClient,
-                                       'delete_item_promotion', SellMarketingException, True,
-                                       ['sell.marketing', 'item_promotion'], promotion_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.ItemPromotionApi, sell_marketing.ApiClient, 'delete_item_promotion', SellMarketingException, True, ['sell.marketing', 'item_promotion'], promotion_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_get_item_promotion(self, promotion_id, **kwargs):  # noqa: E501
         """get_item_promotion  # noqa: E501
 
-        This method returns the complete details of the threshold promotion specified by the promotion_id path parameter. Call getPromotions to retrieve the IDs of a seller's promotions.  # noqa: E501
+        This method returns the complete details of the threshold promotion specified by the <b>promotion_id</b> path parameter. Call <a href=\"/api-docs/sell/marketing/resources/promotion/methods/getPromotions\">getPromotions</a> to retrieve the IDs of a seller's promotions.  # noqa: E501
 
-        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to retrieve plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an &quot;at sign&quot; (@). The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Example: 1********5@EBAY_US (required)
+        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to retrieve plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (<b>@</b>).  <br><br>The ID of the promotion (<b>promotionId</b>) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. <br><br><b>Example:</b> <code>1********5@EBAY_US</code> (required)
         :return: ItemPromotionResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
-                                       sell_marketing.ItemPromotionApi, sell_marketing.ApiClient, 'get_item_promotion',
-                                       SellMarketingException, True, ['sell.marketing', 'item_promotion'], promotion_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.ItemPromotionApi, sell_marketing.ApiClient, 'get_item_promotion', SellMarketingException, True, ['sell.marketing', 'item_promotion'], promotion_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_update_item_promotion(self, promotion_id, **kwargs):  # noqa: E501
         """update_item_promotion  # noqa: E501
 
-        This method updates the specified threshold promotion with the new configuration that you supply in the request. Indicate the promotion you want to update using the promotion_id path parameter. Call getPromotions to retrieve the IDs of a seller's promotions. When updating a promotion, supply all the fields that you used to configure the original promotion (and not just the fields you are updating). eBay replaces the specified promotion with the values you supply in the update request and if you don't pass a field that currently has a value, the update request will fail. The parameters you are allowed to update with this request depend on the status of the promotion you're updating: DRAFT or SCHEDULED promotions: You can update any of the parameters in these promotions that have not yet started to run, including the discountRules. RUNNING or PAUSED promotions: You can change the endDate and the item's inventory but you cannot change the promotional discount or the promotion's start date. ENDED promotions: Nothing can be changed. Tip: When updating a RUNNING or PAUSED promotion, set the status field to SCHEDULED for the update request. When the promotion is updated, the previous status (either RUNNING or PAUSED) is retained.  # noqa: E501
+        This method updates the specified threshold promotion with the new configuration that you supply in the request. Indicate the promotion you want to update using the <b>promotion_id</b> path parameter.  <p>Call <a href=\"/api-docs/sell/marketing/resources/promotion/methods/getPromotions\">getPromotions</a> to retrieve the IDs of a seller's promotions.</p>  <p>When updating a promotion, supply all the fields that you used to configure the original promotion (and not just the fields you are updating). eBay replaces the specified promotion with the values you supply in the update request and if you don't pass a field that currently has a value, the update request will fail.</p>  <p>The parameters you are allowed to update with this request depend on the status of the promotion you're updating:  <ul><li>DRAFT or SCHEDULED promotions: You can update any of the parameters in these promotions that have not yet started to run, including the <b>discountRules</b>.</li> <li>RUNNING or PAUSED promotions: You can change the <b>endDate</b> and the item's inventory but you cannot change the promotional discount or the promotion's start date.</li> <li>ENDED promotions: Nothing can be changed.</li></ul> <p class=\"tablenote\"><b>Tip:</b> When updating a <code>RUNNING</code> or <code>PAUSED</code> promotion, set the <b>status</b> field to <code>SCHEDULED</code> for the update request. When the promotion is updated, the previous status (either <code>RUNNING</code> or <code>PAUSED</code>) is retained.</p>  # noqa: E501
 
-        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to update plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an &quot;at sign&quot; (@). The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Example: 1********5@EBAY_US (required)
+        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to update plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (<b>@</b>).  <br><br>The ID of the promotion (<b>promotionId</b>) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. <br><br><b>Example:</b> <code>1********5@EBAY_US</code> (required)
         :param ItemPromotion body: This type defines the fields that describe an item promotion.
         :return: BaseResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
-                                       sell_marketing.ItemPromotionApi, sell_marketing.ApiClient,
-                                       'update_item_promotion', SellMarketingException, True,
-                                       ['sell.marketing', 'item_promotion'], promotion_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.ItemPromotionApi, sell_marketing.ApiClient, 'update_item_promotion', SellMarketingException, True, ['sell.marketing', 'item_promotion'], promotion_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_get_listing_set(self, promotion_id, **kwargs):  # noqa: E501
         """get_listing_set  # noqa: E501
 
-        This method returns the set of listings associated with the promotion_id specified in the path parameter. Call getPromotions to retrieve the IDs of a seller's promotions. The listing details are returned in a paginated set and you can control and results returned using the following query parameters: limit, offset, q, sort, and status. Maximum associated listings returned: 200 Default number of listings returned: 200  # noqa: E501
+        <p>This method returns the set of listings associated with the <b>promotion_id</b> specified in the path parameter. Call <a href=\"/api-docs/sell/marketing/resources/promotion/methods/getPromotions\">getPromotions</a> to retrieve the IDs of a seller's promotions.  <p>The listing details are returned in a paginated set and you can control and results returned using the following query parameters: <b>limit</b>, <b>offset</b>, <b>q</b>, <b>sort</b>, and <b>status</b>.</p>  <ul><li><b>Maximum associated listings returned:</b> 200</li>  <li><b>Default number of listings returned:</b> 200</li></ul>  # noqa: E501
 
-        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to get plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an &quot;at sign&quot; (@). The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Example: 1********5@EBAY_US (required)
-        :param str limit: Specifies the maximum number of promotions returned on a page from the result set. Default: 200 Maximum: 200
-        :param str offset: Specifies the number of promotions to skip in the result set before returning the first promotion in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
+        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to get plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (<b>@</b>).  <br><br>The ID of the promotion (<b>promotionId</b>) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. <br><br><b>Example:</b> <code>1********5@EBAY_US</code> (required)
+        :param str limit: Specifies the maximum number of promotions returned on a page from the result set. <br><br><b>Default:</b> 200<br><b>Maximum:</b> 200
+        :param str offset: Specifies the number of promotions to skip in the result set before returning the first promotion in the paginated response.  <p>Combine <b>offset</b> with the <b>limit</b> query parameter to control the items returned in the response. For example, if you supply an <b>offset</b> of <code>0</code> and a <b>limit</b> of <code>10</code>, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If <b>offset</b> is <code>10</code> and <b>limit</b> is <code>20</code>, the first page of the response contains items 11-30 from the complete result set.</p> <p><b>Default:</b> 0</p>
         :param str q: Reserved for future use.
-        :param str sort: Specifies the order in which to sort the associated listings in the response. If you precede the supplied value with a dash, the response is sorted in reverse order. Example: &nbsp;&nbsp;&nbsp;sort=PRICE - Sorts the associated listings by their current price in ascending order &nbsp;&nbsp;&nbsp;sort=-TITLE - Sorts the associated listings by their title in descending alphabetical order (Z-Az-a) Valid values: AVAILABLE PRICE TITLE For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/marketing/types/csb:SortField
-        :param str status: This query parameter applies only to markdown promotions. It filters the response based on the indicated status of the promotion. Currently, the only supported value for this parameter is MARKED_DOWN, which indicates active markdown promotions. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/marketing/types/sme:ItemMarkdownStatusEnum
+        :param str sort: Specifies the order in which to sort the associated listings in the response. If you precede the supplied value with a dash, the response is sorted in reverse order.  <br><br><b>Example:</b> <br>&nbsp;&nbsp;&nbsp;<code>sort=PRICE</code> - Sorts the associated listings by their current price in ascending order <br>&nbsp;&nbsp;&nbsp;<code>sort=-TITLE</code> - Sorts the associated listings by their title in descending alphabetical order (Z-Az-a)  <br><br><b>Valid values</b>:<ul class=\"compact\"><li>AVAILABLE</li> <li>PRICE</li> <li>TITLE</li></ul> For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/marketing/types/csb:SortField
+        :param str status: This query parameter applies only to markdown promotions. It filters the response based on the indicated status of the promotion. Currently, the only supported value for this parameter is <code>MARKED_DOWN</code>, which indicates active markdown promotions. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/marketing/types/sme:ItemMarkdownStatusEnum
         :return: None
         """
         try:
-            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionApi,
-                                      sell_marketing.ApiClient, 'get_listing_set', SellMarketingException, True,
-                                      ['sell.marketing', 'promotion'], promotion_id, **kwargs)  # noqa: E501
+            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionApi, sell_marketing.ApiClient, 'get_listing_set', SellMarketingException, True, ['sell.marketing', 'promotion'], promotion_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_get_promotions(self, marketplace_id, **kwargs):  # noqa: E501
         """get_promotions  # noqa: E501
 
-        This method returns a list of a seller's undeleted promotions. The call returns up to 200 currently-available promotions on the specified marketplace. While the response body does not include the promotion's discountRules or inventoryCriterion containers, it does include the promotionHref (which you can use to retrieve the complete details of the promotion). Use query parameters to sort and filter the results by the number of promotions to return, the promotion state or type, and the eBay marketplace. You can also supply keywords to limit the response to the promotions that contain that keywords in the title of the promotion. Maximum returned: 200  # noqa: E501
+        This method returns a list of a seller's undeleted promotions. <p>The call returns up to 200 currently-available promotions on the specified marketplace. While the response body does not include the promotion's <b>discountRules</b> or <b>inventoryCriterion</b> containers, it does include the <b>promotionHref</b> (which you can use to retrieve the complete details of the promotion).</p>  <p>Use query parameters to sort and filter the results by the number of promotions to return, the promotion state or type, and the eBay marketplace. You can also supply keywords to limit the response to the promotions that contain that keywords in the title of the promotion.</p> <p><b>Maximum returned:</b> 200</p>  # noqa: E501
 
-        :param str marketplace_id: The eBay marketplace ID of the site where the promotion is hosted. Valid values: EBAY_AU = Australia EBAY_DE = Germany EBAY_ES = Spain EBAY_FR = France EBAY_GB = Great Britain EBAY_IT = Italy EBAY_US = United States (required)
-        :param str limit: Specifies the maximum number of promotions returned on a page from the result set. Default: 200 Maximum: 200
-        :param str offset: Specifies the number of promotions to skip in the result set before returning the first promotion in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
-        :param str promotion_status: Specifies the promotion state by which you want to filter the results. The response contains only those promotions that match the state you specify. Valid values: DRAFT SCHEDULED RUNNING PAUSED ENDEDMaximum number of input values: 1
-        :param str promotion_type: Filters the returned promotions based on their campaign promotion type. Specify one of the following values to indicate the promotion type you want returned: CODED_COUPON &ndash; A coupon code promotion set with createItemPromotion. MARKDOWN_SALE &ndash; A markdown promotion set with createItemPriceMarkdownPromotion. ORDER_DISCOUNT &ndash; A threshold promotion set with createItemPromotion. VOLUME_DISCOUNT &ndash; A volume pricing promotion set with createItemPromotion.
-        :param str q: A string consisting of one or more keywords. eBay filters the response by returning only the promotions that contain the supplied keywords in the promotion title. Example: &quot;iPhone&quot; or &quot;Harry Potter.&quot; Commas that separate keywords are ignored. For example, a keyword string of &quot;iPhone, iPad&quot; equals &quot;iPhone iPad&quot;, and each results in a response that contains promotions with both &quot;iPhone&quot; and &quot;iPad&quot; in the title.
-        :param str sort: Specifies the order for how to sort the response. If you precede the supplied value with a dash, the response is sorted in reverse order. Example: &nbsp;&nbsp;&nbsp;sort=END_DATE &nbsp; Sorts the promotions in the response by their end dates in ascending order &nbsp;&nbsp;&nbsp;sort=-PROMOTION_NAME &nbsp; Sorts the promotions by their promotion name in descending alphabetical order (Z-Az-a) Valid values: START_DATE END_DATE PROMOTION_NAME For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/marketing/types/csb:SortField
+        :param str marketplace_id: The eBay marketplace ID of the site where the promotion is hosted.  <p><b>Valid values:</b></p>  <ul><li><code>EBAY_AU</code> = Australia</li> <li><code>EBAY_DE</code> = Germany</li> <li><code>EBAY_ES</code> = Spain</li> <li><code>EBAY_FR</code> = France</li> <li><code>EBAY_GB</code> = Great Britain</li> <li><code>EBAY_IT</code> = Italy</li> <li><code>EBAY_US</code> = United States</li></ul> (required)
+        :param str limit: Specifies the maximum number of promotions returned on a page from the result set.  <br><br><b>Default:</b> 200 <br><b>Maximum:</b> 200
+        :param str offset: Specifies the number of promotions to skip in the result set before returning the first promotion in the paginated response.  <p>Combine <b>offset</b> with the <b>limit</b> query parameter to control the items returned in the response. For example, if you supply an <b>offset</b> of <code>0</code> and a <b>limit</b> of <code>10</code>, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If <b>offset</b> is <code>10</code> and <b>limit</b> is <code>20</code>, the first page of the response contains items 11-30 from the complete result set.</p> <p><b>Default:</b> 0</p>
+        :param str promotion_status: Specifies the promotion state by which you want to filter the results. The response contains only those promotions that match the state you specify.  <br><br><b>Valid values:</b> <ul><li><code>DRAFT</code></li> <li><code>SCHEDULED</code></li> <li><code>RUNNING</code></li> <li><code>PAUSED</code></li> <li><code>ENDED</code></li></ul><b>Maximum number of input values:</b> 1
+        :param str promotion_type: Filters the returned promotions based on their campaign promotion type. Specify one of the following values to indicate the promotion type you want returned: <ul><li><code>CODED_COUPON</code> &ndash; A coupon code promotion set with <b>createItemPromotion</b>.</li> <li><code>MARKDOWN_SALE</code> &ndash; A markdown promotion set with <b>createItemPriceMarkdownPromotion</b>.</li> <li><code>ORDER_DISCOUNT</code> &ndash; A threshold promotion set with <b>createItemPromotion</b>.</li> <li><code>VOLUME_DISCOUNT</code> &ndash; A volume pricing promotion set with <b>createItemPromotion</b>.</li></ul>
+        :param str q: A string consisting of one or more <i>keywords</i>. eBay filters the response by returning only the promotions that contain the supplied keywords in the promotion title.  <br><br><b>Example:</b> \"iPhone\" or \"Harry Potter.\"  <br><br>Commas that separate keywords are ignored. For example, a keyword string of \"iPhone, iPad\" equals \"iPhone iPad\", and each results in a response that contains promotions with both \"iPhone\" and \"iPad\" in the title.
+        :param str sort: Specifies the order for how to sort the response. If you precede the supplied value with a dash, the response is sorted in reverse order.  <br><br><b>Example:</b> <br>&nbsp;&nbsp;&nbsp;<code>sort=END_DATE</code> &nbsp; Sorts the promotions in the response by their end dates in ascending order <br>&nbsp;&nbsp;&nbsp;<code>sort=-PROMOTION_NAME</code> &nbsp; Sorts the promotions by their promotion name in descending alphabetical order (Z-Az-a)  <br><br><b>Valid values</b>:<ul><li><code>START_DATE</code></li> <li><code>END_DATE</code></li> <li><code>PROMOTION_NAME</code></li></ul> For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/marketing/types/csb:SortField
         :return: PromotionsPagedCollection
         """
         try:
-            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionApi,
-                                      sell_marketing.ApiClient, 'get_promotions', SellMarketingException, True,
-                                      ['sell.marketing', 'promotion'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionApi, sell_marketing.ApiClient, 'get_promotions', SellMarketingException, True, ['sell.marketing', 'promotion'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_pause_promotion(self, promotion_id, **kwargs):  # noqa: E501
         """pause_promotion  # noqa: E501
 
-        This method pauses a currently-active (RUNNING) threshold promotion and changes the state of the promotion from RUNNING to PAUSED. Pausing a promotion makes the promotion temporarily unavailable to buyers and any currently-incomplete transactions will not receive the promotional offer until the promotion is resumed. Also, promotion teasers are not displayed when a promotion is paused. Pass the ID of the promotion you want to pause using the promotion_id path parameter. Call getPromotions to retrieve the IDs of the seller's promotions. Note: You can only pause threshold promotions (you cannot pause markdown promotions).  # noqa: E501
+        This method pauses a currently-active (RUNNING) threshold promotion and changes the state of the promotion from <code>RUNNING</code> to <code>PAUSED</code>. Pausing a promotion makes the promotion temporarily unavailable to buyers and any currently-incomplete transactions will not receive the promotional offer until the promotion is resumed. Also, promotion teasers are not displayed when a promotion is paused.  <br><br>Pass the ID of the promotion you want to pause using the <b>promotion_id</b> path parameter. Call <a href=\"/api-docs/sell/marketing/resources/promotion/methods/getPromotions\">getPromotions</a> to retrieve the IDs of the seller's promotions. <br><br><b>Note:</b> You can only pause threshold promotions (you cannot pause markdown promotions).  # noqa: E501
 
-        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to pause plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an &quot;at sign&quot; (@). The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Example: 1********5@EBAY_US (required)
+        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to pause plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (<b>@</b>).  <br><br>The ID of the promotion (<b>promotionId</b>) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. <br><br><b>Example:</b> <code>1********5@EBAY_US</code> (required)
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionApi,
-                                       sell_marketing.ApiClient, 'pause_promotion', SellMarketingException, True,
-                                       ['sell.marketing', 'promotion'], promotion_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionApi, sell_marketing.ApiClient, 'pause_promotion', SellMarketingException, True, ['sell.marketing', 'promotion'], promotion_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_resume_promotion(self, promotion_id, **kwargs):  # noqa: E501
         """resume_promotion  # noqa: E501
 
-        This method restarts a threshold promotion that was previously paused and changes the state of the promotion from PAUSED to RUNNING. Only promotions that have been previously paused can be resumed. Resuming a promotion reinstates the promotional teasers and any transactions that were in motion before the promotion was paused will again be eligible for the promotion. Pass the ID of the promotion you want to resume using the promotion_id path parameter. Call getPromotions to retrieve the IDs of the seller's promotions.  # noqa: E501
+        This method restarts a threshold promotion that was previously paused and changes the state of the promotion from <code>PAUSED</code> to <code>RUNNING</code>. Only promotions that have been previously paused can be resumed. Resuming a promotion reinstates the promotional teasers and any transactions that were in motion before the promotion was paused will again be eligible for the promotion.  <br><br>Pass the ID of the promotion you want to resume using the <b>promotion_id</b> path parameter. Call <a href=\"/api-docs/sell/marketing/resources/promotion/methods/getPromotions\">getPromotions</a> to retrieve the IDs of the seller's promotions.  # noqa: E501
 
-        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to resume plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an &quot;at sign&quot; (@). The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Example: 1********5@EBAY_US (required)
+        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to resume plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (<b>@</b>).  <br><br>The ID of the promotion (<b>promotionId</b>) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. <br><br><b>Example:</b> <code>1********5@EBAY_US</code> (required)
         :return: None
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionApi,
-                                       sell_marketing.ApiClient, 'resume_promotion', SellMarketingException, True,
-                                       ['sell.marketing', 'promotion'], promotion_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionApi, sell_marketing.ApiClient, 'resume_promotion', SellMarketingException, True, ['sell.marketing', 'promotion'], promotion_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_get_promotion_reports(self, marketplace_id, **kwargs):  # noqa: E501
         """get_promotion_reports  # noqa: E501
 
-        This method generates a report that lists the seller's running, paused, and ended promotions for the specified eBay marketplace. The result set can be filtered by the promotion status and the number of results to return. You can also supply keywords to limit the report to promotions that contain the specified keywords. Specify the eBay marketplace for which you want the report run using the marketplace_id query parameter. Supply additional query parameters to control the report as needed.  # noqa: E501
+        This method generates a report that lists the seller's running, paused, and ended promotions for the specified eBay marketplace. The result set can be filtered by the promotion status and the number of results to return. You can also supply <i>keywords</i> to limit the report to promotions that contain the specified keywords. <br><br>Specify the eBay marketplace for which you want the report run using the <b>marketplace_id</b> query parameter. Supply additional query parameters to control the report as needed.  # noqa: E501
 
-        :param str marketplace_id: The eBay marketplace ID of the site for which you want the promotions report. Valid values: EBAY_AU = Australia EBAY_DE = Germany EBAY_ES = Spain EBAY_FR = France EBAY_GB = Great Britain EBAY_IT = Italy EBAY_US = United States (required)
-        :param str limit: Specifies the maximum number of promotions returned on a page from the result set. Default: 200 Maximum: 200
-        :param str offset: Specifies the number of promotions to skip in the result set before returning the first promotion in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
-        :param str promotion_status: Limits the results to the promotions that are in the state specified by this query parameter. Valid values: DRAFT SCHEDULED RUNNING PAUSED ENDEDMaximum number of values supported: 1
-        :param str promotion_type: Filters the returned promotions in the report based on their campaign promotion type. Specify one of the following values to indicate the promotion type you want returned in the report: CODED_COUPON &ndash; A coupon code promotion set with createItemPromotion. MARKDOWN_SALE &ndash; A markdown promotion set with createItemPriceMarkdownPromotion. ORDER_DISCOUNT &ndash; A threshold promotion set with createItemPromotion. VOLUME_DISCOUNT &ndash; A volume pricing promotion set with createItemPromotion.
-        :param str q: A string consisting of one or more keywords. eBay filters the response by returning only the promotions that contain the supplied keywords in the promotion title. Example: &quot;iPhone&quot; or &quot;Harry Potter.&quot; Commas that separate keywords are ignored. For example, a keyword string of &quot;iPhone, iPad&quot; equals &quot;iPhone iPad&quot;, and each results in a response that contains promotions with both &quot;iPhone&quot; and &quot;iPad&quot; in the title.
+        :param str marketplace_id: The eBay marketplace ID of the site for which you want the promotions report.  <p><b>Valid values:</b>  </p><ul><li><code>EBAY_AU</code> = Australia</li> <li><code>EBAY_DE</code> = Germany</li> <li><code>EBAY_ES</code> = Spain</li> <li><code>EBAY_FR</code> = France</li> <li><code>EBAY_GB</code> = Great Britain</li> <li><code>EBAY_IT</code> = Italy</li> <li><code>EBAY_US</code> = United States</li></ul> (required)
+        :param str limit: Specifies the maximum number of promotions returned on a page from the result set.  <br><br><b>Default:</b> 200 <br><b>Maximum:</b> 200
+        :param str offset: Specifies the number of promotions to skip in the result set before returning the first promotion in the paginated response.  <p>Combine <b>offset</b> with the <b>limit</b> query parameter to control the items returned in the response. For example, if you supply an <b>offset</b> of <code>0</code> and a <b>limit</b> of <code>10</code>, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If <b>offset</b> is <code>10</code> and <b>limit</b> is <code>20</code>, the first page of the response contains items 11-30 from the complete result set.</p> <p><b>Default:</b> 0</p>
+        :param str promotion_status: Limits the results to the promotions that are in the state specified by this query parameter.  <br><br><b>Valid values:</b> <ul><li><code>DRAFT</code></li> <li><code>SCHEDULED</code></li> <li><code>RUNNING</code></li> <li><code>PAUSED</code></li> <li><code>ENDED</code></li></ul><b>Maximum number of values supported:</b> 1
+        :param str promotion_type: Filters the returned promotions in the report based on their campaign promotion type. Specify one of the following values to indicate the promotion type you want returned in the report: <ul><li><code>CODED_COUPON</code> &ndash; A coupon code promotion set with <b>createItemPromotion</b>.</li> <li><code>MARKDOWN_SALE</code> &ndash; A markdown promotion set with <b>createItemPriceMarkdownPromotion</b>.</li> <li><code>ORDER_DISCOUNT</code> &ndash; A threshold promotion set with <b>createItemPromotion</b>.</li> <li><code>VOLUME_DISCOUNT</code> &ndash; A volume pricing promotion set with <b>createItemPromotion</b>.</li></ul>
+        :param str q: A string consisting of one or more <i>keywords</i>. eBay filters the response by returning only the promotions that contain the supplied keywords in the promotion title.  <br><br><b>Example:</b> \"iPhone\" or \"Harry Potter.\"  <br><br>Commas that separate keywords are ignored. For example, a keyword string of \"iPhone, iPad\" equals \"iPhone iPad\", and each results in a response that contains promotions with both \"iPhone\" and \"iPad\" in the title.
         :return: PromotionsReportPagedCollection
         """
         try:
-            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1',
-                                      sell_marketing.PromotionReportApi, sell_marketing.ApiClient,
-                                      'get_promotion_reports', SellMarketingException, True,
-                                      ['sell.marketing', 'promotion_report'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_paged(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionReportApi, sell_marketing.ApiClient, 'get_promotion_reports', SellMarketingException, True, ['sell.marketing', 'promotion_report'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_marketing_get_promotion_summary_report(self, marketplace_id, **kwargs):  # noqa: E501
         """get_promotion_summary_report  # noqa: E501
 
-        This method generates a report that summarizes the seller's promotions for the specified eBay marketplace. The report returns information on RUNNING, PAUSED, and ENDED promotions (deleted reports are not returned) and summarizes the seller's campaign performance for all promotions on a given site. For information about summary reports, see Reading the item promotion Summary report.  # noqa: E501
+        This method generates a report that summarizes the seller's promotions for the specified eBay marketplace. The report returns information on <code>RUNNING</code>, <code>PAUSED</code>, and <code>ENDED</code> promotions (deleted reports are not returned) and summarizes the seller's campaign performance for all promotions on a given site.  <br><br>For information about summary reports, see <a href=\"/api-docs/sell/static/marketing/pm-summary-report.html\">Reading the item promotion Summary report</a>.  # noqa: E501
 
-        :param str marketplace_id: The eBay marketplace ID of the site you for which you want a promotion summary report. Valid values: EBAY_AU = Australia EBAY_DE = Germany EBAY_ES = Spain EBAY_FR = France EBAY_GB = Great Britain EBAY_IT = Italy EBAY_US = United States (required)
+        :param str marketplace_id: The eBay marketplace ID of the site you for which you want a promotion summary report.  <p><b>Valid values:</b></p>  <ul><li><code>EBAY_AU</code> = Australia</li> <li><code>EBAY_DE</code> = Germany</li> <li><code>EBAY_ES</code> = Spain</li> <li><code>EBAY_FR</code> = France</li> <li><code>EBAY_GB</code> = Great Britain</li> <li><code>EBAY_IT</code> = Italy</li> <li><code>EBAY_US</code> = United States</li></ul> (required)
         :return: SummaryReportResponse
         """
         try:
-            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1',
-                                       sell_marketing.PromotionSummaryReportApi, sell_marketing.ApiClient,
-                                       'get_promotion_summary_report', SellMarketingException, True,
-                                       ['sell.marketing', 'promotion_summary_report'], marketplace_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_marketing.Configuration, '/sell/marketing/v1', sell_marketing.PromotionSummaryReportApi, sell_marketing.ApiClient, 'get_promotion_summary_report', SellMarketingException, True, ['sell.marketing', 'promotion_summary_report'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4721,9 +4058,7 @@ class API:
         :return: SalesTaxJurisdictions
         """
         try:
-            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.CountryApi,
-                                       sell_metadata.ApiClient, 'get_sales_tax_jurisdictions', SellMetadataException,
-                                       False, ['sell.metadata', 'country'], country_code, **kwargs)  # noqa: E501
+            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.CountryApi, sell_metadata.ApiClient, 'get_sales_tax_jurisdictions', SellMetadataException, False, ['sell.metadata', 'country'], country_code, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4737,26 +4072,21 @@ class API:
         :return: AutomotivePartsCompatibilityPolicyResponse
         """
         try:
-            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi,
-                                       sell_metadata.ApiClient, 'get_automotive_parts_compatibility_policies',
-                                       SellMetadataException, False, ['sell.metadata', 'marketplace'], marketplace_id,
-                                       **kwargs)  # noqa: E501
+            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi, sell_metadata.ApiClient, 'get_automotive_parts_compatibility_policies', SellMetadataException, False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
     def sell_metadata_get_item_condition_policies(self, marketplace_id, **kwargs):  # noqa: E501
         """get_item_condition_policies  # noqa: E501
 
-        This method returns item condition metadata on one, multiple, or all eBay categories on an eBay marketplace. This metadata consists of the different item conditions (with IDs) that an eBay category supports, and a boolean to indicate if an eBay category requires an item condition. The identifier of the eBay marketplace is passed in as a path parameter, and unless one or more eBay category IDs are passed in through the filter query parameter, this method will return metadata on every single category for the specified marketplace. If you only want to view item condition metadata for one eBay category or a select group of eBay categories, you can pass in up to 50 eBay category ID through the filter query parameter. Important!: Certified - Refurbished-eligible sellers, and sellers who are eligible to list with the new values (EXCELLENT_REFURBISHED, VERY_GOOD_REFURBISHED, and GOOD_REFURBISHED) in category 9355, must use an OAuth token created with the authorization code grant flow and https://api.ebay.com/oauth/api_scope/sell.inventory scope in order to retrieve the 'Certified - Refurbished' conditions (condition ID's 2000, 2010, 2020, and 2030) for the relevant categories. These restricted item conditions will not be returned if an OAuth token created with the client credentials grant flow and https://api.ebay.com/oauth/api_scope scope is used, or if any seller is not eligible to list with that item condition. See the Specifying OAuth scopes topic for more information about specifying scopes. Tip: If you retrieve metadata on all eBay categories for a marketplace, the response payload can be quite large. For this reason, we suggest that you consider using the Accept-Encoding request header and set its value to application/gzip. By doing this, the response payload output will be compressed into a GZIP file.  # noqa: E501
+        This method returns item condition metadata on one, multiple, or all eBay categories on an eBay marketplace. This metadata consists of the different item conditions (with IDs) that an eBay category supports, and a boolean to indicate if an eBay category requires an item condition. The identifier of the eBay marketplace is passed in as a path parameter, and unless one or more eBay category IDs are passed in through the filter query parameter, this method will return metadata on every single category for the specified marketplace. If you only want to view item condition metadata for one eBay category or a select group of eBay categories, you can pass in up to 50 eBay category ID through the filter query parameter. Important!: Certified - Refurbished-eligible sellers, and sellers who are eligible to list with the new values (EXCELLENT_REFURBISHED, VERY_GOOD_REFURBISHED, and GOOD_REFURBISHED) in category 9355, must use an OAuth token created with the authorization code grant flow and https://api.ebay.com/oauth/api_scope/sell.inventory scope in order to retrieve the refurbished conditions for the relevant categories. These restricted item conditions will not be returned if an OAuth token created with the client credentials grant flow and https://api.ebay.com/oauth/api_scope scope is used, or if any seller is not eligible to list with that item condition. See the Specifying OAuth scopes topic for more information about specifying scopes. Tip: If you retrieve metadata on all eBay categories for a marketplace, the response payload can be quite large. For this reason, we suggest that you consider using the Accept-Encoding request header and set its value to application/gzip. By doing this, the response payload output will be compressed into a GZIP file.  # noqa: E501
 
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved. See the following page for a list of valid eBay marketplace IDs: Request components. (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply categoryId values for the sections of the tree you want returned. When you specify a categoryId value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node. The parameter takes a list of categoryId values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 categoryId values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned. Example: filter=categoryIds:{100|101|102} Note that you must URL-encode the parameter list, which results in the following filter for the above example: &nbsp;&nbsp;filter=categoryIds%3A%7B100%7C101%7C102%7D
         :return: ItemConditionPolicyResponse
         """
         try:
-            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi,
-                                       sell_metadata.ApiClient, 'get_item_condition_policies', SellMetadataException,
-                                       False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi, sell_metadata.ApiClient, 'get_item_condition_policies', SellMetadataException, False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4770,9 +4100,7 @@ class API:
         :return: ListingStructurePolicyResponse
         """
         try:
-            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi,
-                                       sell_metadata.ApiClient, 'get_listing_structure_policies', SellMetadataException,
-                                       False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi, sell_metadata.ApiClient, 'get_listing_structure_policies', SellMetadataException, False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4786,9 +4114,7 @@ class API:
         :return: NegotiatedPricePolicyResponse
         """
         try:
-            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi,
-                                       sell_metadata.ApiClient, 'get_negotiated_price_policies', SellMetadataException,
-                                       False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi, sell_metadata.ApiClient, 'get_negotiated_price_policies', SellMetadataException, False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4802,9 +4128,7 @@ class API:
         :return: ProductAdoptionPolicyResponse
         """
         try:
-            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi,
-                                       sell_metadata.ApiClient, 'get_product_adoption_policies', SellMetadataException,
-                                       False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi, sell_metadata.ApiClient, 'get_product_adoption_policies', SellMetadataException, False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4818,9 +4142,7 @@ class API:
         :return: ReturnPolicyResponse
         """
         try:
-            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi,
-                                       sell_metadata.ApiClient, 'get_return_policies', SellMetadataException, False,
-                                       ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi, sell_metadata.ApiClient, 'get_return_policies', SellMetadataException, False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4835,9 +4157,7 @@ class API:
         :return: PagedEligibleItemCollection
         """
         try:
-            return self._method_paged(sell_negotiation.Configuration, '/sell/negotiation/v1', sell_negotiation.OfferApi,
-                                      sell_negotiation.ApiClient, 'find_eligible_items', SellNegotiationException, True,
-                                      ['sell.negotiation', 'offer'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+            return self._method_paged(sell_negotiation.Configuration, '/sell/negotiation/v1', sell_negotiation.OfferApi, sell_negotiation.ApiClient, 'find_eligible_items', SellNegotiationException, True, ['sell.negotiation', 'offer'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4851,10 +4171,7 @@ class API:
         :return: SendOfferToInterestedBuyersCollectionResponse
         """
         try:
-            return self._method_single(sell_negotiation.Configuration, '/sell/negotiation/v1',
-                                       sell_negotiation.OfferApi, sell_negotiation.ApiClient,
-                                       'send_offer_to_interested_buyers', SellNegotiationException, True,
-                                       ['sell.negotiation', 'offer'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+            return self._method_single(sell_negotiation.Configuration, '/sell/negotiation/v1', sell_negotiation.OfferApi, sell_negotiation.ApiClient, 'send_offer_to_interested_buyers', SellNegotiationException, True, ['sell.negotiation', 'offer'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -4871,11 +4188,7 @@ class API:
         :return: PagedListingRecommendationCollection
         """
         try:
-            return self._method_paged(sell_recommendation.Configuration, '/sell/recommendation/v1',
-                                      sell_recommendation.ListingRecommendationApi, sell_recommendation.ApiClient,
-                                      'find_listing_recommendations', SellRecommendationException, True,
-                                      ['sell.recommendation', 'listing_recommendation'], x_ebay_c_marketplace_id,
-                                      **kwargs)  # noqa: E501
+            return self._method_paged(sell_recommendation.Configuration, '/sell/recommendation/v1', sell_recommendation.ListingRecommendationApi, sell_recommendation.ApiClient, 'find_listing_recommendations', SellRecommendationException, True, ['sell.recommendation', 'listing_recommendation'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         except Error:
             raise
 

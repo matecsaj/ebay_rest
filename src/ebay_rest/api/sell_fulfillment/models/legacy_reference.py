@@ -51,7 +51,7 @@ class LegacyReference(object):
     def legacy_item_id(self):
         """Gets the legacy_item_id of this LegacyReference.  # noqa: E501
 
-        The unique identifier of a listing in legacy/Trading API format. Note: Both legacyItemId and legacyTransactionId are needed to identify an order line item.  # noqa: E501
+        The unique identifier of a listing in legacy/Trading API format. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> Both <b>legacyItemId</b> and <b>legacyTransactionId</b> are needed to identify an order line item. </span>  # noqa: E501
 
         :return: The legacy_item_id of this LegacyReference.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class LegacyReference(object):
     def legacy_item_id(self, legacy_item_id):
         """Sets the legacy_item_id of this LegacyReference.
 
-        The unique identifier of a listing in legacy/Trading API format. Note: Both legacyItemId and legacyTransactionId are needed to identify an order line item.  # noqa: E501
+        The unique identifier of a listing in legacy/Trading API format. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> Both <b>legacyItemId</b> and <b>legacyTransactionId</b> are needed to identify an order line item. </span>  # noqa: E501
 
         :param legacy_item_id: The legacy_item_id of this LegacyReference.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class LegacyReference(object):
     def legacy_transaction_id(self):
         """Gets the legacy_transaction_id of this LegacyReference.  # noqa: E501
 
-        The unique identifier of a sale/transaction in legacy/Trading API format. A 'transaction ID' is created once a buyer purchases a 'Buy It Now' item or if an auction listing ends with a winning bidder. Note: Both legacyItemId and legacyTransactionId are needed to identify an order line item.  # noqa: E501
+        The unique identifier of a sale/transaction in legacy/Trading API format. A 'transaction ID' is created once a buyer purchases a 'Buy It Now' item or if an auction listing ends with a winning bidder. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> Both <b>legacyItemId</b> and <b>legacyTransactionId</b> are needed to identify an order line item. </span>  # noqa: E501
 
         :return: The legacy_transaction_id of this LegacyReference.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class LegacyReference(object):
     def legacy_transaction_id(self, legacy_transaction_id):
         """Sets the legacy_transaction_id of this LegacyReference.
 
-        The unique identifier of a sale/transaction in legacy/Trading API format. A 'transaction ID' is created once a buyer purchases a 'Buy It Now' item or if an auction listing ends with a winning bidder. Note: Both legacyItemId and legacyTransactionId are needed to identify an order line item.  # noqa: E501
+        The unique identifier of a sale/transaction in legacy/Trading API format. A 'transaction ID' is created once a buyer purchases a 'Buy It Now' item or if an auction listing ends with a winning bidder. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> Both <b>legacyItemId</b> and <b>legacyTransactionId</b> are needed to identify an order line item. </span>  # noqa: E501
 
         :param legacy_transaction_id: The legacy_transaction_id of this LegacyReference.  # noqa: E501
         :type: str

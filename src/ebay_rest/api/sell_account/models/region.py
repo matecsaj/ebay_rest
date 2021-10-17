@@ -51,7 +51,7 @@ class Region(object):
     def region_name(self):
         """Gets the region_name of this Region.  # noqa: E501
 
-        A string that indicates the name of a region, as defined by eBay. A &quot;region&quot; can be either a 'world region' (e.g., the &quot;Middle East&quot; or &quot;Southeast Asia&quot;) or a country, as represented with a two-letter country code. Use GeteBayDetails to get the values accepted by this field. The values that you're allowed to use for a specific regionName field depend on the context in which you are setting the value. For details on how to set the values for this field, see The shipToLocations container.  # noqa: E501
+        A string that indicates the name of a region, as defined by eBay. A \"region\" can be either a 'world region' (e.g., the \"Middle East\" or \"Southeast Asia\") or a country, as represented with a two-letter country code. Use <b>GeteBayDetails</b> to get the values accepted by this field. <p>The values that you're allowed to use for a specific <b>regionName</b> field depend on the context in which you are setting the value. For details on how to set the values for this field, see <a href=\"/api-docs/sell/static/seller-accounts/ht_shipping-worldwide.html#shipToLocations\">The shipToLocations container</a>.  # noqa: E501
 
         :return: The region_name of this Region.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class Region(object):
     def region_name(self, region_name):
         """Sets the region_name of this Region.
 
-        A string that indicates the name of a region, as defined by eBay. A &quot;region&quot; can be either a 'world region' (e.g., the &quot;Middle East&quot; or &quot;Southeast Asia&quot;) or a country, as represented with a two-letter country code. Use GeteBayDetails to get the values accepted by this field. The values that you're allowed to use for a specific regionName field depend on the context in which you are setting the value. For details on how to set the values for this field, see The shipToLocations container.  # noqa: E501
+        A string that indicates the name of a region, as defined by eBay. A \"region\" can be either a 'world region' (e.g., the \"Middle East\" or \"Southeast Asia\") or a country, as represented with a two-letter country code. Use <b>GeteBayDetails</b> to get the values accepted by this field. <p>The values that you're allowed to use for a specific <b>regionName</b> field depend on the context in which you are setting the value. For details on how to set the values for this field, see <a href=\"/api-docs/sell/static/seller-accounts/ht_shipping-worldwide.html#shipToLocations\">The shipToLocations container</a>.  # noqa: E501
 
         :param region_name: The region_name of this Region.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class Region(object):
     def region_type(self):
         """Gets the region_type of this Region.  # noqa: E501
 
-        Reserved for future use. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:RegionTypeEnum'>eBay API documentation</a>  # noqa: E501
+        Reserved for future use. <!--The region's type, which can be one of the following: 'COUNTRY', 'COUNTRY_REGION', 'STATE_OR_PROVINCE', 'WORLD_REGION', or 'WORLDWIDE'.--> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:RegionTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The region_type of this Region.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class Region(object):
     def region_type(self, region_type):
         """Sets the region_type of this Region.
 
-        Reserved for future use. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:RegionTypeEnum'>eBay API documentation</a>  # noqa: E501
+        Reserved for future use. <!--The region's type, which can be one of the following: 'COUNTRY', 'COUNTRY_REGION', 'STATE_OR_PROVINCE', 'WORLD_REGION', or 'WORLDWIDE'.--> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:RegionTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param region_type: The region_type of this Region.  # noqa: E501
         :type: str

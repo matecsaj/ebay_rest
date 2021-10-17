@@ -100,7 +100,7 @@ class AppliedPromotion(object):
     def promotion_id(self):
         """Gets the promotion_id of this AppliedPromotion.  # noqa: E501
 
-        An eBay-generated unique identifier of the sales promotion. Multiple types of sales promotions are available to eBay Store owners, including order size/volume discounts, shipping discounts, special coupons, and price markdowns. Sales promotions can be managed through the Marketing tab of Seller Hub in My eBay, or by using the Trading API's SetPromotionalSale call or the Marketing API's createItemPromotion method.  # noqa: E501
+        An eBay-generated unique identifier of the sales promotion.<br/><br/> Multiple types of sales promotions are available to eBay Store owners, including order size/volume discounts, shipping discounts, special coupons, and price markdowns. Sales promotions can be managed through the Marketing tab of Seller Hub in My eBay, or by using the Trading API's <b>SetPromotionalSale</b> call or the Marketing API's <b>createItemPromotion</b> method.  # noqa: E501
 
         :return: The promotion_id of this AppliedPromotion.  # noqa: E501
         :rtype: str
@@ -111,7 +111,7 @@ class AppliedPromotion(object):
     def promotion_id(self, promotion_id):
         """Sets the promotion_id of this AppliedPromotion.
 
-        An eBay-generated unique identifier of the sales promotion. Multiple types of sales promotions are available to eBay Store owners, including order size/volume discounts, shipping discounts, special coupons, and price markdowns. Sales promotions can be managed through the Marketing tab of Seller Hub in My eBay, or by using the Trading API's SetPromotionalSale call or the Marketing API's createItemPromotion method.  # noqa: E501
+        An eBay-generated unique identifier of the sales promotion.<br/><br/> Multiple types of sales promotions are available to eBay Store owners, including order size/volume discounts, shipping discounts, special coupons, and price markdowns. Sales promotions can be managed through the Marketing tab of Seller Hub in My eBay, or by using the Trading API's <b>SetPromotionalSale</b> call or the Marketing API's <b>createItemPromotion</b> method.  # noqa: E501
 
         :param promotion_id: The promotion_id of this AppliedPromotion.  # noqa: E501
         :type: str

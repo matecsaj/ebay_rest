@@ -162,7 +162,7 @@ class Order(object):
     def buyer_checkout_notes(self):
         """Gets the buyer_checkout_notes of this Order.  # noqa: E501
 
-        This field contains any comments that the buyer left for the seller about the order during checkout process. This field is only returned if a buyer left comments at checkout time.  # noqa: E501
+        This field contains any comments that the buyer left for the seller about the order during checkout process. This field is only returned if a buyer left comments at checkout time.   # noqa: E501
 
         :return: The buyer_checkout_notes of this Order.  # noqa: E501
         :rtype: str
@@ -173,7 +173,7 @@ class Order(object):
     def buyer_checkout_notes(self, buyer_checkout_notes):
         """Sets the buyer_checkout_notes of this Order.
 
-        This field contains any comments that the buyer left for the seller about the order during checkout process. This field is only returned if a buyer left comments at checkout time.  # noqa: E501
+        This field contains any comments that the buyer left for the seller about the order during checkout process. This field is only returned if a buyer left comments at checkout time.   # noqa: E501
 
         :param buyer_checkout_notes: The buyer_checkout_notes of this Order.  # noqa: E501
         :type: str
@@ -206,7 +206,7 @@ class Order(object):
     def creation_date(self):
         """Gets the creation_date of this Order.  # noqa: E501
 
-        The date and time that the order was created. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+        The date and time that the order was created. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. <br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :return: The creation_date of this Order.  # noqa: E501
         :rtype: str
@@ -217,7 +217,7 @@ class Order(object):
     def creation_date(self, creation_date):
         """Sets the creation_date of this Order.
 
-        The date and time that the order was created. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+        The date and time that the order was created. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. <br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :param creation_date: The creation_date of this Order.  # noqa: E501
         :type: str
@@ -229,7 +229,7 @@ class Order(object):
     def ebay_collect_and_remit_tax(self):
         """Gets the ebay_collect_and_remit_tax of this Order.  # noqa: E501
 
-        This field is only returned if true, and indicates that eBay will collect tax (US state-mandated sales tax, 'Goods and Services' tax in Australia or New Zealand, and VAT collected for UK and EU countries) for at least one line item in the order, and remit the tax to the taxing authority of the buyer's residence. If this field is returned, the seller should search for one or more ebayCollectAndRemitTaxes containers at the line item level to get more information about the type of tax and the amount.  # noqa: E501
+        This field is only returned if <code>true</code>, and indicates that eBay will collect tax (US state-mandated sales tax, 'Goods and Services' tax in Australia or New Zealand, and VAT collected for UK and EU countries) for at least one line item in the order, and remit the tax to the taxing authority of the buyer's residence. If this field is returned, the seller should search for one or more <strong>ebayCollectAndRemitTaxes</strong> containers at the line item level to get more information about the type of tax and the amount.  # noqa: E501
 
         :return: The ebay_collect_and_remit_tax of this Order.  # noqa: E501
         :rtype: bool
@@ -240,7 +240,7 @@ class Order(object):
     def ebay_collect_and_remit_tax(self, ebay_collect_and_remit_tax):
         """Sets the ebay_collect_and_remit_tax of this Order.
 
-        This field is only returned if true, and indicates that eBay will collect tax (US state-mandated sales tax, 'Goods and Services' tax in Australia or New Zealand, and VAT collected for UK and EU countries) for at least one line item in the order, and remit the tax to the taxing authority of the buyer's residence. If this field is returned, the seller should search for one or more ebayCollectAndRemitTaxes containers at the line item level to get more information about the type of tax and the amount.  # noqa: E501
+        This field is only returned if <code>true</code>, and indicates that eBay will collect tax (US state-mandated sales tax, 'Goods and Services' tax in Australia or New Zealand, and VAT collected for UK and EU countries) for at least one line item in the order, and remit the tax to the taxing authority of the buyer's residence. If this field is returned, the seller should search for one or more <strong>ebayCollectAndRemitTaxes</strong> containers at the line item level to get more information about the type of tax and the amount.  # noqa: E501
 
         :param ebay_collect_and_remit_tax: The ebay_collect_and_remit_tax of this Order.  # noqa: E501
         :type: bool
@@ -252,7 +252,7 @@ class Order(object):
     def fulfillment_hrefs(self):
         """Gets the fulfillment_hrefs of this Order.  # noqa: E501
 
-        This array contains a list of one or more getShippingFulfillment call URIs that can be used to retrieve shipping fulfillments that have been set up for the order.  # noqa: E501
+        This array contains a list of one or more <strong>getShippingFulfillment</strong> call URIs that can be used to retrieve shipping fulfillments that have been set up for the order.  # noqa: E501
 
         :return: The fulfillment_hrefs of this Order.  # noqa: E501
         :rtype: list[str]
@@ -263,7 +263,7 @@ class Order(object):
     def fulfillment_hrefs(self, fulfillment_hrefs):
         """Sets the fulfillment_hrefs of this Order.
 
-        This array contains a list of one or more getShippingFulfillment call URIs that can be used to retrieve shipping fulfillments that have been set up for the order.  # noqa: E501
+        This array contains a list of one or more <strong>getShippingFulfillment</strong> call URIs that can be used to retrieve shipping fulfillments that have been set up for the order.  # noqa: E501
 
         :param fulfillment_hrefs: The fulfillment_hrefs of this Order.  # noqa: E501
         :type: list[str]
@@ -275,7 +275,7 @@ class Order(object):
     def fulfillment_start_instructions(self):
         """Gets the fulfillment_start_instructions of this Order.  # noqa: E501
 
-        This container consists of a set of specifications for fulfilling the order, including the type of fulfillment, shipping carrier and service, shipping address, and estimated delivery window. These instructions are derived from the buyer's and seller's eBay account preferences, the listing parameters, and the buyer's checkout selections. The seller can use them as a starting point for packaging, addressing, and shipping the order. Note: Although this container is presented as an array, it currently returns only one set of fulfillment specifications. Additional array members will be supported in future functionality.  # noqa: E501
+        This container consists of a set of specifications for fulfilling the order, including the type of fulfillment, shipping carrier and service, shipping address, and estimated delivery window. These instructions are derived from the buyer's and seller's eBay account preferences, the listing parameters, and the buyer's checkout selections. The seller can use them as a starting point for packaging, addressing, and shipping the order.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> Although this container is presented as an array, it currently returns only one set of fulfillment specifications. Additional array members will be supported in future functionality.</span>  # noqa: E501
 
         :return: The fulfillment_start_instructions of this Order.  # noqa: E501
         :rtype: list[FulfillmentStartInstruction]
@@ -286,7 +286,7 @@ class Order(object):
     def fulfillment_start_instructions(self, fulfillment_start_instructions):
         """Sets the fulfillment_start_instructions of this Order.
 
-        This container consists of a set of specifications for fulfilling the order, including the type of fulfillment, shipping carrier and service, shipping address, and estimated delivery window. These instructions are derived from the buyer's and seller's eBay account preferences, the listing parameters, and the buyer's checkout selections. The seller can use them as a starting point for packaging, addressing, and shipping the order. Note: Although this container is presented as an array, it currently returns only one set of fulfillment specifications. Additional array members will be supported in future functionality.  # noqa: E501
+        This container consists of a set of specifications for fulfilling the order, including the type of fulfillment, shipping carrier and service, shipping address, and estimated delivery window. These instructions are derived from the buyer's and seller's eBay account preferences, the listing parameters, and the buyer's checkout selections. The seller can use them as a starting point for packaging, addressing, and shipping the order.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> Although this container is presented as an array, it currently returns only one set of fulfillment specifications. Additional array members will be supported in future functionality.</span>  # noqa: E501
 
         :param fulfillment_start_instructions: The fulfillment_start_instructions of this Order.  # noqa: E501
         :type: list[FulfillmentStartInstruction]
@@ -298,7 +298,7 @@ class Order(object):
     def last_modified_date(self):
         """Gets the last_modified_date of this Order.  # noqa: E501
 
-        The date and time that the order was last modified. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+        The date and time that the order was last modified. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. <br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :return: The last_modified_date of this Order.  # noqa: E501
         :rtype: str
@@ -309,7 +309,7 @@ class Order(object):
     def last_modified_date(self, last_modified_date):
         """Sets the last_modified_date of this Order.
 
-        The date and time that the order was last modified. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+        The date and time that the order was last modified. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. <br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :param last_modified_date: The last_modified_date of this Order.  # noqa: E501
         :type: str
@@ -321,7 +321,7 @@ class Order(object):
     def legacy_order_id(self):
         """Gets the legacy_order_id of this Order.  # noqa: E501
 
-        The unique identifier of the order in legacy format, as traditionally used by the Trading API (and other legacy APIs). Both the orderId field and this field are always returned. Note: In June 2019, Order IDs in REST APIs transitioned to a new format. For the Trading and other legacy APIs, by using version control/compatibility level, users have the option of using the older legacy order ID format, or they can migrate to the new order ID format, which is the same order ID format being used by REST APIs. Although users of the Trading API (and other legacy APIs) can now transition to the new order ID format, this legacyOrderId field will still return order IDs in the old format to distinguish between the old and new order IDs.  # noqa: E501
+        The unique identifier of the order in legacy format, as traditionally used by the Trading API (and other legacy APIs). Both the <b>orderId</b> field and this field are always returned. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> In June 2019, Order IDs in REST APIs transitioned to a new format. For the Trading and other legacy APIs, by using version control/compatibility level, users have the option of using the older legacy order ID format, or they can migrate to the new order ID format, which is the same order ID format being used by REST APIs. Although users of the Trading API (and other legacy APIs) can now transition to the new order ID format, this <strong>legacyOrderId</strong> field will still return order IDs in the old format to distinguish between the old and new order IDs.</span>  # noqa: E501
 
         :return: The legacy_order_id of this Order.  # noqa: E501
         :rtype: str
@@ -332,7 +332,7 @@ class Order(object):
     def legacy_order_id(self, legacy_order_id):
         """Sets the legacy_order_id of this Order.
 
-        The unique identifier of the order in legacy format, as traditionally used by the Trading API (and other legacy APIs). Both the orderId field and this field are always returned. Note: In June 2019, Order IDs in REST APIs transitioned to a new format. For the Trading and other legacy APIs, by using version control/compatibility level, users have the option of using the older legacy order ID format, or they can migrate to the new order ID format, which is the same order ID format being used by REST APIs. Although users of the Trading API (and other legacy APIs) can now transition to the new order ID format, this legacyOrderId field will still return order IDs in the old format to distinguish between the old and new order IDs.  # noqa: E501
+        The unique identifier of the order in legacy format, as traditionally used by the Trading API (and other legacy APIs). Both the <b>orderId</b> field and this field are always returned. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> In June 2019, Order IDs in REST APIs transitioned to a new format. For the Trading and other legacy APIs, by using version control/compatibility level, users have the option of using the older legacy order ID format, or they can migrate to the new order ID format, which is the same order ID format being used by REST APIs. Although users of the Trading API (and other legacy APIs) can now transition to the new order ID format, this <strong>legacyOrderId</strong> field will still return order IDs in the old format to distinguish between the old and new order IDs.</span>  # noqa: E501
 
         :param legacy_order_id: The legacy_order_id of this Order.  # noqa: E501
         :type: str
@@ -367,7 +367,7 @@ class Order(object):
     def order_fulfillment_status(self):
         """Gets the order_fulfillment_status of this Order.  # noqa: E501
 
-        The degree to which fulfillment of the order is complete. See the OrderFulfillmentStatus type definition for more information about each possible fulfillment state. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:OrderFulfillmentStatus'>eBay API documentation</a>  # noqa: E501
+        The degree to which fulfillment of the order is complete. See the <strong>OrderFulfillmentStatus</strong> type definition for more information about each possible fulfillment state. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:OrderFulfillmentStatus'>eBay API documentation</a>  # noqa: E501
 
         :return: The order_fulfillment_status of this Order.  # noqa: E501
         :rtype: str
@@ -378,7 +378,7 @@ class Order(object):
     def order_fulfillment_status(self, order_fulfillment_status):
         """Sets the order_fulfillment_status of this Order.
 
-        The degree to which fulfillment of the order is complete. See the OrderFulfillmentStatus type definition for more information about each possible fulfillment state. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:OrderFulfillmentStatus'>eBay API documentation</a>  # noqa: E501
+        The degree to which fulfillment of the order is complete. See the <strong>OrderFulfillmentStatus</strong> type definition for more information about each possible fulfillment state. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:OrderFulfillmentStatus'>eBay API documentation</a>  # noqa: E501
 
         :param order_fulfillment_status: The order_fulfillment_status of this Order.  # noqa: E501
         :type: str
@@ -390,7 +390,7 @@ class Order(object):
     def order_id(self):
         """Gets the order_id of this Order.  # noqa: E501
 
-        The unique identifier of the order. Both the legacyOrderId field (traditionally used by Trading and other legacy APIS) and this field are always returned. Note: In June 2019, Order IDs in REST APIs transitioned to a new format. For the Trading and other legacy APIs, by using version control/compatibility level, users have the option of using the older legacy order ID format, or they can migrate to the new order ID format, which is the same order ID format being used by REST APIs. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers are automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support.  # noqa: E501
+        The unique identifier of the order. Both the <b>legacyOrderId</b> field (traditionally used by Trading and other legacy APIS) and this field are always returned.  <br/><br/><span class=\"tablenote\"><strong>Note:</strong> In June 2019, Order IDs in REST APIs transitioned to a new format. For the Trading and other legacy APIs, by using version control/compatibility level, users have the option of using the older legacy order ID format, or they can migrate to the new order ID format, which is the same order ID format being used by REST APIs. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers are automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support.</span>  # noqa: E501
 
         :return: The order_id of this Order.  # noqa: E501
         :rtype: str
@@ -401,7 +401,7 @@ class Order(object):
     def order_id(self, order_id):
         """Sets the order_id of this Order.
 
-        The unique identifier of the order. Both the legacyOrderId field (traditionally used by Trading and other legacy APIS) and this field are always returned. Note: In June 2019, Order IDs in REST APIs transitioned to a new format. For the Trading and other legacy APIs, by using version control/compatibility level, users have the option of using the older legacy order ID format, or they can migrate to the new order ID format, which is the same order ID format being used by REST APIs. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers are automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support.  # noqa: E501
+        The unique identifier of the order. Both the <b>legacyOrderId</b> field (traditionally used by Trading and other legacy APIS) and this field are always returned.  <br/><br/><span class=\"tablenote\"><strong>Note:</strong> In June 2019, Order IDs in REST APIs transitioned to a new format. For the Trading and other legacy APIs, by using version control/compatibility level, users have the option of using the older legacy order ID format, or they can migrate to the new order ID format, which is the same order ID format being used by REST APIs. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers are automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support.</span>  # noqa: E501
 
         :param order_id: The order_id of this Order.  # noqa: E501
         :type: str
@@ -413,7 +413,7 @@ class Order(object):
     def order_payment_status(self):
         """Gets the order_payment_status of this Order.  # noqa: E501
 
-        The enumeration value returned in this field indicates the current payment status of an order, or in case of a refund request, the current status of the refund. See the OrderPaymentStatusEnum type definition for more information about each possible payment/refund state. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:OrderPaymentStatusEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value returned in this field indicates the current payment status of an order, or in case of a refund request, the current status of the refund. See the <strong>OrderPaymentStatusEnum</strong> type definition for more information about each possible payment/refund state. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:OrderPaymentStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The order_payment_status of this Order.  # noqa: E501
         :rtype: str
@@ -424,7 +424,7 @@ class Order(object):
     def order_payment_status(self, order_payment_status):
         """Sets the order_payment_status of this Order.
 
-        The enumeration value returned in this field indicates the current payment status of an order, or in case of a refund request, the current status of the refund. See the OrderPaymentStatusEnum type definition for more information about each possible payment/refund state. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:OrderPaymentStatusEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value returned in this field indicates the current payment status of an order, or in case of a refund request, the current status of the refund. See the <strong>OrderPaymentStatusEnum</strong> type definition for more information about each possible payment/refund state. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:OrderPaymentStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :param order_payment_status: The order_payment_status of this Order.  # noqa: E501
         :type: str
@@ -499,7 +499,7 @@ class Order(object):
     def sales_record_reference(self):
         """Gets the sales_record_reference of this Order.  # noqa: E501
 
-        An eBay-generated identifier that is used to identify and manage orders through the Selling Manager and Selling Manager Pro tools. This order identifier can also be found on the Orders grid page and in the Sales Record pages in Seller Hub. A salesRecordReference number is only generated and returned at the order level, and not at the order line item level. In cases where the seller does not have a Selling Manager or Selling Manager Pro subscription nor access to Seller Hub, this field may not be returned.  # noqa: E501
+        An eBay-generated identifier that is used to identify and manage orders through the Selling Manager and Selling Manager Pro tools. This order identifier can also be found on the Orders grid page and in the Sales Record pages in Seller Hub. A <strong>salesRecordReference</strong> number is only generated and returned at the order level, and not at the order line item level.<br><br> In cases where the seller does not have a Selling Manager or Selling Manager Pro subscription nor access to Seller Hub, this field may not be returned.  # noqa: E501
 
         :return: The sales_record_reference of this Order.  # noqa: E501
         :rtype: str
@@ -510,7 +510,7 @@ class Order(object):
     def sales_record_reference(self, sales_record_reference):
         """Sets the sales_record_reference of this Order.
 
-        An eBay-generated identifier that is used to identify and manage orders through the Selling Manager and Selling Manager Pro tools. This order identifier can also be found on the Orders grid page and in the Sales Record pages in Seller Hub. A salesRecordReference number is only generated and returned at the order level, and not at the order line item level. In cases where the seller does not have a Selling Manager or Selling Manager Pro subscription nor access to Seller Hub, this field may not be returned.  # noqa: E501
+        An eBay-generated identifier that is used to identify and manage orders through the Selling Manager and Selling Manager Pro tools. This order identifier can also be found on the Orders grid page and in the Sales Record pages in Seller Hub. A <strong>salesRecordReference</strong> number is only generated and returned at the order level, and not at the order line item level.<br><br> In cases where the seller does not have a Selling Manager or Selling Manager Pro subscription nor access to Seller Hub, this field may not be returned.  # noqa: E501
 
         :param sales_record_reference: The sales_record_reference of this Order.  # noqa: E501
         :type: str

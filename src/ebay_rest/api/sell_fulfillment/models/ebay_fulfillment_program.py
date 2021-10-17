@@ -46,7 +46,7 @@ class EbayFulfillmentProgram(object):
     def fulfilled_by(self):
         """Gets the fulfilled_by of this EbayFulfillmentProgram.  # noqa: E501
 
-        The value returned in this field indicates the party that is handling fulfillment of the order line item. Valid value: EBAY  # noqa: E501
+        The value returned in this field indicates the party that is handling fulfillment of the order line item. <br /><br />Valid value: <code>EBAY</code>  # noqa: E501
 
         :return: The fulfilled_by of this EbayFulfillmentProgram.  # noqa: E501
         :rtype: str
@@ -57,7 +57,7 @@ class EbayFulfillmentProgram(object):
     def fulfilled_by(self, fulfilled_by):
         """Sets the fulfilled_by of this EbayFulfillmentProgram.
 
-        The value returned in this field indicates the party that is handling fulfillment of the order line item. Valid value: EBAY  # noqa: E501
+        The value returned in this field indicates the party that is handling fulfillment of the order line item. <br /><br />Valid value: <code>EBAY</code>  # noqa: E501
 
         :param fulfilled_by: The fulfilled_by of this EbayFulfillmentProgram.  # noqa: E501
         :type: str

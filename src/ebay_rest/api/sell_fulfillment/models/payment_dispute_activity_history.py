@@ -46,7 +46,7 @@ class PaymentDisputeActivityHistory(object):
     def activity(self):
         """Gets the activity of this PaymentDisputeActivityHistory.  # noqa: E501
 
-        This array holds all activities of a payment dispute, from creation to resolution. For each activity, the activity type, the actor, and a timestamp is shown. The getActivities response is dynamic, and grows with each recorded activity.  # noqa: E501
+        This array holds all activities of a payment dispute, from creation to resolution. For each activity, the activity type, the actor, and a timestamp is shown. The <strong>getActivities</strong> response is dynamic, and grows with each recorded activity.  # noqa: E501
 
         :return: The activity of this PaymentDisputeActivityHistory.  # noqa: E501
         :rtype: list[PaymentDisputeActivity]
@@ -57,7 +57,7 @@ class PaymentDisputeActivityHistory(object):
     def activity(self, activity):
         """Sets the activity of this PaymentDisputeActivityHistory.
 
-        This array holds all activities of a payment dispute, from creation to resolution. For each activity, the activity type, the actor, and a timestamp is shown. The getActivities response is dynamic, and grows with each recorded activity.  # noqa: E501
+        This array holds all activities of a payment dispute, from creation to resolution. For each activity, the activity type, the actor, and a timestamp is shown. The <strong>getActivities</strong> response is dynamic, and grows with each recorded activity.  # noqa: E501
 
         :param activity: The activity of this PaymentDisputeActivityHistory.  # noqa: E501
         :type: list[PaymentDisputeActivity]

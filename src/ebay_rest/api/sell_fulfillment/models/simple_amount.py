@@ -51,7 +51,7 @@ class SimpleAmount(object):
     def currency(self):
         """Gets the currency of this SimpleAmount.  # noqa: E501
 
-        A three-letter ISO 4217 code (such as USD for US site) that indicates the currency of the amount in the value field. Both the value and currency fields are always returned with the amount container. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+        A three-letter ISO 4217 code (such as <code>USD</code> for US site) that indicates the currency of the amount in the <strong>value</strong> field. Both the <strong>value</strong> and <strong>currency</strong> fields are always returned with the <strong>amount</strong> container. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The currency of this SimpleAmount.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class SimpleAmount(object):
     def currency(self, currency):
         """Sets the currency of this SimpleAmount.
 
-        A three-letter ISO 4217 code (such as USD for US site) that indicates the currency of the amount in the value field. Both the value and currency fields are always returned with the amount container. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+        A three-letter ISO 4217 code (such as <code>USD</code> for US site) that indicates the currency of the amount in the <strong>value</strong> field. Both the <strong>value</strong> and <strong>currency</strong> fields are always returned with the <strong>amount</strong> container. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param currency: The currency of this SimpleAmount.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class SimpleAmount(object):
     def value(self):
         """Gets the value of this SimpleAmount.  # noqa: E501
 
-        The monetary amount of the payment dispute. Both the value and currency fields are always returned with the amount container.  # noqa: E501
+        The monetary amount of the payment dispute. Both the <strong>value</strong> and <strong>currency</strong> fields are always returned with the <strong>amount</strong> container.  # noqa: E501
 
         :return: The value of this SimpleAmount.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class SimpleAmount(object):
     def value(self, value):
         """Sets the value of this SimpleAmount.
 
-        The monetary amount of the payment dispute. Both the value and currency fields are always returned with the amount container.  # noqa: E501
+        The monetary amount of the payment dispute. Both the <strong>value</strong> and <strong>currency</strong> fields are always returned with the <strong>amount</strong> container.  # noqa: E501
 
         :param value: The value of this SimpleAmount.  # noqa: E501
         :type: str

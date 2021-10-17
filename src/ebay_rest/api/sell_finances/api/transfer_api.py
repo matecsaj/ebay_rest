@@ -35,14 +35,14 @@ class TransferApi(object):
     def get_transfer(self, transfer_id, **kwargs):  # noqa: E501
         """get_transfer  # noqa: E501
 
-        This method retrieves detailed information regarding a TRANSFER transaction type. A TRANSFER is a monetary transaction type that involves a seller transferring money to eBay for reimbursement of one or more charges. For example, when a seller reimburses eBay for a buyer refund. If an ID is passed into the URI that is an identifier for another transaction type, this call will return an http status code of 404 Not found.  # noqa: E501
+        This method retrieves detailed information regarding a <code>TRANSFER</code> transaction type. A <code>TRANSFER</code> is a  monetary transaction type that involves a seller transferring money to eBay for reimbursement of one or more charges. For example, when a seller reimburses eBay for a buyer refund.<br><br>If an ID is passed into the URI that is an identifier for another transaction type, this call will return an http status code of <code>404 Not found</code>.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_transfer(transfer_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str transfer_id: The unique identifier of the TRANSFER transaction type you wish to retrieve. (required)
+        :param str transfer_id: The unique identifier of the <code>TRANSFER</code> transaction type you wish to retrieve. (required)
         :return: Transfer
                  If the method is called asynchronously,
                  returns the request thread.
@@ -57,14 +57,14 @@ class TransferApi(object):
     def get_transfer_with_http_info(self, transfer_id, **kwargs):  # noqa: E501
         """get_transfer  # noqa: E501
 
-        This method retrieves detailed information regarding a TRANSFER transaction type. A TRANSFER is a monetary transaction type that involves a seller transferring money to eBay for reimbursement of one or more charges. For example, when a seller reimburses eBay for a buyer refund. If an ID is passed into the URI that is an identifier for another transaction type, this call will return an http status code of 404 Not found.  # noqa: E501
+        This method retrieves detailed information regarding a <code>TRANSFER</code> transaction type. A <code>TRANSFER</code> is a  monetary transaction type that involves a seller transferring money to eBay for reimbursement of one or more charges. For example, when a seller reimburses eBay for a buyer refund.<br><br>If an ID is passed into the URI that is an identifier for another transaction type, this call will return an http status code of <code>404 Not found</code>.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_transfer_with_http_info(transfer_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str transfer_id: The unique identifier of the TRANSFER transaction type you wish to retrieve. (required)
+        :param str transfer_id: The unique identifier of the <code>TRANSFER</code> transaction type you wish to retrieve. (required)
         :return: Transfer
                  If the method is called asynchronously,
                  returns the request thread.

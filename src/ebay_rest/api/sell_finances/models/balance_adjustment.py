@@ -72,7 +72,7 @@ class BalanceAdjustment(object):
     def adjustment_type(self):
         """Gets the adjustment_type of this BalanceAdjustment.  # noqa: E501
 
-        The enumeration value returned here indicates if the charge is a DEBIT or a CREDIT to the seller. Generally, all transfer transaction types are going to be DEBIT, since the money is being tranferred from the seller to eBay. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value returned here indicates if the charge is a <code>DEBIT</code> or a <code>CREDIT</code> to the seller. Generally, all transfer transaction types are going to be <code>DEBIT</code>, since the money is being tranferred from the seller to eBay. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The adjustment_type of this BalanceAdjustment.  # noqa: E501
         :rtype: str
@@ -83,7 +83,7 @@ class BalanceAdjustment(object):
     def adjustment_type(self, adjustment_type):
         """Sets the adjustment_type of this BalanceAdjustment.
 
-        The enumeration value returned here indicates if the charge is a DEBIT or a CREDIT to the seller. Generally, all transfer transaction types are going to be DEBIT, since the money is being tranferred from the seller to eBay. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value returned here indicates if the charge is a <code>DEBIT</code> or a <code>CREDIT</code> to the seller. Generally, all transfer transaction types are going to be <code>DEBIT</code>, since the money is being tranferred from the seller to eBay. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :param adjustment_type: The adjustment_type of this BalanceAdjustment.  # noqa: E501
         :type: str

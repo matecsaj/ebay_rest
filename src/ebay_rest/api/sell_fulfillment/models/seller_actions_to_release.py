@@ -46,7 +46,7 @@ class SellerActionsToRelease(object):
     def seller_action_to_release(self):
         """Gets the seller_action_to_release of this SellerActionsToRelease.  # noqa: E501
 
-        A possible action that the seller can take to expedite the release of a payment hold. A sellerActionToRelease field is returned for each possible action that a seller may take. Possible actions may include providing shipping/tracking information, issuing a refund, providing refund information, contacting customer support, etc.  # noqa: E501
+        A possible action that the seller can take to expedite the release of a payment hold. A <strong>sellerActionToRelease</strong> field is returned for each possible action that a seller may take. Possible actions may include providing shipping/tracking information, issuing a refund, providing refund information, contacting customer support, etc.  # noqa: E501
 
         :return: The seller_action_to_release of this SellerActionsToRelease.  # noqa: E501
         :rtype: str
@@ -57,7 +57,7 @@ class SellerActionsToRelease(object):
     def seller_action_to_release(self, seller_action_to_release):
         """Sets the seller_action_to_release of this SellerActionsToRelease.
 
-        A possible action that the seller can take to expedite the release of a payment hold. A sellerActionToRelease field is returned for each possible action that a seller may take. Possible actions may include providing shipping/tracking information, issuing a refund, providing refund information, contacting customer support, etc.  # noqa: E501
+        A possible action that the seller can take to expedite the release of a payment hold. A <strong>sellerActionToRelease</strong> field is returned for each possible action that a seller may take. Possible actions may include providing shipping/tracking information, issuing a refund, providing refund information, contacting customer support, etc.  # noqa: E501
 
         :param seller_action_to_release: The seller_action_to_release of this SellerActionsToRelease.  # noqa: E501
         :type: str

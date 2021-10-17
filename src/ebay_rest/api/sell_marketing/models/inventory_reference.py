@@ -51,7 +51,7 @@ class InventoryReference(object):
     def inventory_reference_id(self):
         """Gets the inventory_reference_id of this InventoryReference.  # noqa: E501
 
-        The seller's inventory reference ID for an item that is managed with the Inventory API. An inventory reference is either the ID of a single listing or the ID of the parent of an item group listing (a multi-variation listing, such as a shirt that is available in multiple sizes and colors). Required if if you supply an inventoryReferenceType.  # noqa: E501
+        The seller's inventory reference ID for an item that is managed with the Inventory API.  <br><br>An inventory reference is either the ID of a single listing or the ID of the parent of an item group listing (a multi-variation listing, such as a shirt that is available in multiple sizes and colors).  <br><br><i>Required if </i> if you supply an <b>inventoryReferenceType</b>.  # noqa: E501
 
         :return: The inventory_reference_id of this InventoryReference.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class InventoryReference(object):
     def inventory_reference_id(self, inventory_reference_id):
         """Sets the inventory_reference_id of this InventoryReference.
 
-        The seller's inventory reference ID for an item that is managed with the Inventory API. An inventory reference is either the ID of a single listing or the ID of the parent of an item group listing (a multi-variation listing, such as a shirt that is available in multiple sizes and colors). Required if if you supply an inventoryReferenceType.  # noqa: E501
+        The seller's inventory reference ID for an item that is managed with the Inventory API.  <br><br>An inventory reference is either the ID of a single listing or the ID of the parent of an item group listing (a multi-variation listing, such as a shirt that is available in multiple sizes and colors).  <br><br><i>Required if </i> if you supply an <b>inventoryReferenceType</b>.  # noqa: E501
 
         :param inventory_reference_id: The inventory_reference_id of this InventoryReference.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class InventoryReference(object):
     def inventory_reference_type(self):
         """Gets the inventory_reference_type of this InventoryReference.  # noqa: E501
 
-        Indicates the type of item indicated by the inventoryReferenceId. This value can be set to either INVENTORY_ITEM or INVENTORY_ITEM_GROUP (if the ID points to a multi-variation listing). Required if if you supply an inventoryReferenceId. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:InventoryReferenceTypeEnum'>eBay API documentation</a>  # noqa: E501
+        Indicates the type of item indicated by the <b>inventoryReferenceId</b>.  <br><br>This value can be set to either <code>INVENTORY_ITEM</code> or <code>INVENTORY_ITEM_GROUP</code> (if the ID points to a multi-variation listing). <br><br><i>Required if </i> if you supply an <b>inventoryReferenceId</b>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:InventoryReferenceTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The inventory_reference_type of this InventoryReference.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class InventoryReference(object):
     def inventory_reference_type(self, inventory_reference_type):
         """Sets the inventory_reference_type of this InventoryReference.
 
-        Indicates the type of item indicated by the inventoryReferenceId. This value can be set to either INVENTORY_ITEM or INVENTORY_ITEM_GROUP (if the ID points to a multi-variation listing). Required if if you supply an inventoryReferenceId. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:InventoryReferenceTypeEnum'>eBay API documentation</a>  # noqa: E501
+        Indicates the type of item indicated by the <b>inventoryReferenceId</b>.  <br><br>This value can be set to either <code>INVENTORY_ITEM</code> or <code>INVENTORY_ITEM_GROUP</code> (if the ID points to a multi-variation listing). <br><br><i>Required if </i> if you supply an <b>inventoryReferenceId</b>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:InventoryReferenceTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param inventory_reference_type: The inventory_reference_type of this InventoryReference.  # noqa: E501
         :type: str

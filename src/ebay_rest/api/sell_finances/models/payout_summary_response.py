@@ -77,7 +77,7 @@ class PayoutSummaryResponse(object):
     def payout_count(self):
         """Gets the payout_count of this PayoutSummaryResponse.  # noqa: E501
 
-        This integer value indicates the total count of payouts to the seller that match the input criteria. This field is always returned, even if there are no payouts that match the input criteria (its value will show 0).  # noqa: E501
+        This integer value indicates the total count of payouts to the seller that match the input criteria. This field is always returned, even if there are no payouts that match the input criteria (its value will show <code>0</code>).  # noqa: E501
 
         :return: The payout_count of this PayoutSummaryResponse.  # noqa: E501
         :rtype: int
@@ -88,7 +88,7 @@ class PayoutSummaryResponse(object):
     def payout_count(self, payout_count):
         """Sets the payout_count of this PayoutSummaryResponse.
 
-        This integer value indicates the total count of payouts to the seller that match the input criteria. This field is always returned, even if there are no payouts that match the input criteria (its value will show 0).  # noqa: E501
+        This integer value indicates the total count of payouts to the seller that match the input criteria. This field is always returned, even if there are no payouts that match the input criteria (its value will show <code>0</code>).  # noqa: E501
 
         :param payout_count: The payout_count of this PayoutSummaryResponse.  # noqa: E501
         :type: int
@@ -100,7 +100,7 @@ class PayoutSummaryResponse(object):
     def transaction_count(self):
         """Gets the transaction_count of this PayoutSummaryResponse.  # noqa: E501
 
-        This integer value indicates the total count of monetary transactions (order payments, buyer refunds, and seller credits) associated with the payouts that match the input criteria. This field is always returned, even if there are no payouts that match the input criteria (its value will show 0). If there is at least one payout that matches the input criteria, the value in this field will be at least 1.  # noqa: E501
+        This integer value indicates the total count of monetary transactions (order payments, buyer refunds, and seller credits) associated with the payouts that match the input criteria. This field is always returned, even if there are no payouts that match the input criteria (its value will show <code>0</code>). If there is at least one payout that matches the input criteria, the value in this field will be at least <code>1</code>.  # noqa: E501
 
         :return: The transaction_count of this PayoutSummaryResponse.  # noqa: E501
         :rtype: int
@@ -111,7 +111,7 @@ class PayoutSummaryResponse(object):
     def transaction_count(self, transaction_count):
         """Sets the transaction_count of this PayoutSummaryResponse.
 
-        This integer value indicates the total count of monetary transactions (order payments, buyer refunds, and seller credits) associated with the payouts that match the input criteria. This field is always returned, even if there are no payouts that match the input criteria (its value will show 0). If there is at least one payout that matches the input criteria, the value in this field will be at least 1.  # noqa: E501
+        This integer value indicates the total count of monetary transactions (order payments, buyer refunds, and seller credits) associated with the payouts that match the input criteria. This field is always returned, even if there are no payouts that match the input criteria (its value will show <code>0</code>). If there is at least one payout that matches the input criteria, the value in this field will be at least <code>1</code>.  # noqa: E501
 
         :param transaction_count: The transaction_count of this PayoutSummaryResponse.  # noqa: E501
         :type: int

@@ -74,7 +74,7 @@ class Dimension(object):
     def dimension_key(self):
         """Gets the dimension_key of this Dimension.  # noqa: E501
 
-        The name of the dimension on which the report is based. A dimension is an attribute to which the report data applies.  # noqa: E501
+        The name of the dimension on which the report is based. <p>A dimension is an attribute to which the report data applies.</p>  # noqa: E501
 
         :return: The dimension_key of this Dimension.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class Dimension(object):
     def dimension_key(self, dimension_key):
         """Sets the dimension_key of this Dimension.
 
-        The name of the dimension on which the report is based. A dimension is an attribute to which the report data applies.  # noqa: E501
+        The name of the dimension on which the report is based. <p>A dimension is an attribute to which the report data applies.</p>  # noqa: E501
 
         :param dimension_key: The dimension_key of this Dimension.  # noqa: E501
         :type: str

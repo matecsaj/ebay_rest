@@ -35,7 +35,7 @@ class AdApi(object):
     def bulk_create_ads_by_inventory_reference(self, body, campaign_id, **kwargs):  # noqa: E501
         """bulk_create_ads_by_inventory_reference  # noqa: E501
 
-        This method adds multiple listings that are managed with the Inventory API to an existing Promoted Listings campaign. For each listing specified in the request, this method: Creates an ad for the listing. Sets the bid percentage (also known as the ad rate) for the ad. Associates the ad with the specified campaign. To create an ad for a listing, specify its inventoryReferenceId and inventoryReferenceType, plus the bidPercentage for the ad in the payload of the request. Specify the campaign to associate the ads to with using the campaign_id path parameter. In the Inventory API, an inventory reference ID is either a seller-defined SKU value or an inventoryItemGroupKey (a seller-defined ID for a multiple-variation listing). You can specify a maximum of 500 items per call and each campaign can have ads for a maximum of 50,000 items. Be aware when using this call that each variation in a multiple-variation listing creates an individual ad. Use createCampaign to create a new campaign and use getCampaigns to get a list of existing campaigns.  # noqa: E501
+        This method adds multiple listings that are managed with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a> to an existing Promoted Listings campaign. <p>For each listing specified in the request, this method:</p>  <ul><li>Creates an ad for the listing.</li> <li>Sets the bid percentage (also known as the <i>ad rate</i>) for the ad.</li> <li>Associates the ad with the specified campaign.</li></ul>  <p>To create an ad for a listing, specify its <b>inventoryReferenceId</b> and <b>inventoryReferenceType</b>, plus the <b>bidPercentage</b> for the ad in the payload of the request. Specify the campaign to associate the ads to with using the <b>campaign_id</b> path parameter.</p>  <p>In the Inventory API, an <i>inventory reference ID</i> is either a seller-defined <b>SKU</b> value or an <b>inventoryItemGroupKey</b> (a seller-defined ID for a multiple-variation listing).</p>  <p>You can specify a maximum of <b>500 items per call</b> and each campaign can have ads for a maximum of 50,000 items. Be aware when using this call that each variation in a multiple-variation listing creates an individual ad.</p>  <p>Use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/createCampaign\">createCampaign</a> to create a new campaign and use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to get a list of existing campaigns.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.bulk_create_ads_by_inventory_reference(body, campaign_id, async_req=True)
@@ -43,7 +43,7 @@ class AdApi(object):
 
         :param async_req bool
         :param BulkCreateAdsByInventoryReferenceRequest body: The container for the bulk request to create ads for eBay inventory reference IDs. eBay inventory reference IDs are seller-defined IDs used by theInventory API. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: BulkCreateAdsByInventoryReferenceResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -58,7 +58,7 @@ class AdApi(object):
     def bulk_create_ads_by_inventory_reference_with_http_info(self, body, campaign_id, **kwargs):  # noqa: E501
         """bulk_create_ads_by_inventory_reference  # noqa: E501
 
-        This method adds multiple listings that are managed with the Inventory API to an existing Promoted Listings campaign. For each listing specified in the request, this method: Creates an ad for the listing. Sets the bid percentage (also known as the ad rate) for the ad. Associates the ad with the specified campaign. To create an ad for a listing, specify its inventoryReferenceId and inventoryReferenceType, plus the bidPercentage for the ad in the payload of the request. Specify the campaign to associate the ads to with using the campaign_id path parameter. In the Inventory API, an inventory reference ID is either a seller-defined SKU value or an inventoryItemGroupKey (a seller-defined ID for a multiple-variation listing). You can specify a maximum of 500 items per call and each campaign can have ads for a maximum of 50,000 items. Be aware when using this call that each variation in a multiple-variation listing creates an individual ad. Use createCampaign to create a new campaign and use getCampaigns to get a list of existing campaigns.  # noqa: E501
+        This method adds multiple listings that are managed with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a> to an existing Promoted Listings campaign. <p>For each listing specified in the request, this method:</p>  <ul><li>Creates an ad for the listing.</li> <li>Sets the bid percentage (also known as the <i>ad rate</i>) for the ad.</li> <li>Associates the ad with the specified campaign.</li></ul>  <p>To create an ad for a listing, specify its <b>inventoryReferenceId</b> and <b>inventoryReferenceType</b>, plus the <b>bidPercentage</b> for the ad in the payload of the request. Specify the campaign to associate the ads to with using the <b>campaign_id</b> path parameter.</p>  <p>In the Inventory API, an <i>inventory reference ID</i> is either a seller-defined <b>SKU</b> value or an <b>inventoryItemGroupKey</b> (a seller-defined ID for a multiple-variation listing).</p>  <p>You can specify a maximum of <b>500 items per call</b> and each campaign can have ads for a maximum of 50,000 items. Be aware when using this call that each variation in a multiple-variation listing creates an individual ad.</p>  <p>Use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/createCampaign\">createCampaign</a> to create a new campaign and use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to get a list of existing campaigns.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.bulk_create_ads_by_inventory_reference_with_http_info(body, campaign_id, async_req=True)
@@ -66,7 +66,7 @@ class AdApi(object):
 
         :param async_req bool
         :param BulkCreateAdsByInventoryReferenceRequest body: The container for the bulk request to create ads for eBay inventory reference IDs. eBay inventory reference IDs are seller-defined IDs used by theInventory API. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: BulkCreateAdsByInventoryReferenceResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -142,7 +142,7 @@ class AdApi(object):
     def bulk_create_ads_by_listing_id(self, body, campaign_id, **kwargs):  # noqa: E501
         """bulk_create_ads_by_listing_id  # noqa: E501
 
-        This method adds multiple listings to an existing Promoted Listings campaign using listingId values generated by either the Trading API or Inventory API. For each listing ID specified in the request, this method: Creates an ad for the listing. Sets the bid percentage (also known as the ad rate) for the ad. Associates the ad with the specified campaign. To create an ad for a listing, specify its listingId, plus the bidPercentage for the ad in the payload of the request. Specify the campaign to associate the ads with using the campaign_id path parameter. Listing IDs are generated by eBay when a seller creates listings with the Trading API. You can specify a maximum of 500 listings per call and each campaign can have ads for a maximum of 50,000 items. Be aware when using this call that each variation in a multiple-variation listing creates an individual ad. Use createCampaign to create a new campaign and use getCampaigns to get a list of existing campaigns.  # noqa: E501
+        This method adds multiple listings to an existing Promoted Listings campaign using <b>listingId</b> values generated by either the <a href=\"/Devzone/XML/docs/Reference/eBay/index.html\" title=\"Trading API Reference\">Trading API</a> or <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>.  <p>For each listing ID specified in the request, this method:</p>  <ul><li>Creates an ad for the listing.</li> <li>Sets the bid percentage (also known as the <i>ad rate</i>) for the ad.</li> <li>Associates the ad with the specified campaign.</li></ul>  <p>To create an ad for a listing, specify its <b>listingId</b>, plus the <b>bidPercentage</b> for the ad in the payload of the request. Specify the campaign to associate the ads with using the <b>campaign_id</b> path parameter. Listing IDs are generated by eBay when a seller creates listings with the Trading API.</p>  <p>You can specify a maximum of <b>500 listings per call</b> and each campaign can have ads for a maximum of 50,000 items. Be aware when using this call that each variation in a multiple-variation listing creates an individual ad.</p>  <p>Use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/createCampaign\">createCampaign</a> to create a new campaign and use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to get a list of existing campaigns.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.bulk_create_ads_by_listing_id(body, campaign_id, async_req=True)
@@ -150,7 +150,7 @@ class AdApi(object):
 
         :param async_req bool
         :param BulkCreateAdRequest body: The container for the bulk request to create ads for eBay listing IDs. eBay listing IDs are generated by the Trading API and Inventory API when the listing is created on eBay. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: BulkAdResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -165,7 +165,7 @@ class AdApi(object):
     def bulk_create_ads_by_listing_id_with_http_info(self, body, campaign_id, **kwargs):  # noqa: E501
         """bulk_create_ads_by_listing_id  # noqa: E501
 
-        This method adds multiple listings to an existing Promoted Listings campaign using listingId values generated by either the Trading API or Inventory API. For each listing ID specified in the request, this method: Creates an ad for the listing. Sets the bid percentage (also known as the ad rate) for the ad. Associates the ad with the specified campaign. To create an ad for a listing, specify its listingId, plus the bidPercentage for the ad in the payload of the request. Specify the campaign to associate the ads with using the campaign_id path parameter. Listing IDs are generated by eBay when a seller creates listings with the Trading API. You can specify a maximum of 500 listings per call and each campaign can have ads for a maximum of 50,000 items. Be aware when using this call that each variation in a multiple-variation listing creates an individual ad. Use createCampaign to create a new campaign and use getCampaigns to get a list of existing campaigns.  # noqa: E501
+        This method adds multiple listings to an existing Promoted Listings campaign using <b>listingId</b> values generated by either the <a href=\"/Devzone/XML/docs/Reference/eBay/index.html\" title=\"Trading API Reference\">Trading API</a> or <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>.  <p>For each listing ID specified in the request, this method:</p>  <ul><li>Creates an ad for the listing.</li> <li>Sets the bid percentage (also known as the <i>ad rate</i>) for the ad.</li> <li>Associates the ad with the specified campaign.</li></ul>  <p>To create an ad for a listing, specify its <b>listingId</b>, plus the <b>bidPercentage</b> for the ad in the payload of the request. Specify the campaign to associate the ads with using the <b>campaign_id</b> path parameter. Listing IDs are generated by eBay when a seller creates listings with the Trading API.</p>  <p>You can specify a maximum of <b>500 listings per call</b> and each campaign can have ads for a maximum of 50,000 items. Be aware when using this call that each variation in a multiple-variation listing creates an individual ad.</p>  <p>Use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/createCampaign\">createCampaign</a> to create a new campaign and use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to get a list of existing campaigns.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.bulk_create_ads_by_listing_id_with_http_info(body, campaign_id, async_req=True)
@@ -173,7 +173,7 @@ class AdApi(object):
 
         :param async_req bool
         :param BulkCreateAdRequest body: The container for the bulk request to create ads for eBay listing IDs. eBay listing IDs are generated by the Trading API and Inventory API when the listing is created on eBay. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: BulkAdResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -249,15 +249,15 @@ class AdApi(object):
     def bulk_delete_ads_by_inventory_reference(self, body, campaign_id, **kwargs):  # noqa: E501
         """bulk_delete_ads_by_inventory_reference  # noqa: E501
 
-        This method works with listings created with the Inventory API. The method deletes a set of ads, as specified by a list of inventory reference IDs, from the specified campaign. Inventory reference IDs are seller-defined IDs that are used with the Inventory API. Pass the campaign_id as a path parameter and populate the payload with a list of inventoryReferenceId and inventoryReferenceType pairs that you want to delete. Get the campaign IDs for a seller by calling getCampaigns and call getAds to get a list of the seller's inventory reference IDs.  # noqa: E501
+        This method works with listings created with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>.  <p>The method deletes a set of ads, as specified by a list of inventory reference IDs, from the specified campaign. <i>Inventory reference IDs</i> are seller-defined IDs that are used with the Inventory API</a>.</p>  <p>Pass the <b>campaign_id</b> as a path parameter and populate the payload with a list of <b>inventoryReferenceId</b> and <b>inventoryReferenceType</b> pairs that you want to delete.</p>  <p>Get the campaign IDs for a seller by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> and call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to get a list of the seller's inventory reference IDs.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.bulk_delete_ads_by_inventory_reference(body, campaign_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param BulkDeleteAdsByInventoryReferenceRequest body: This request object defines the fields for a bulkDeleteAdsByInventoryReference request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param BulkDeleteAdsByInventoryReferenceRequest body: This request object defines the fields for a <b>bulkDeleteAdsByInventoryReference</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: BulkDeleteAdsByInventoryReferenceResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -272,15 +272,15 @@ class AdApi(object):
     def bulk_delete_ads_by_inventory_reference_with_http_info(self, body, campaign_id, **kwargs):  # noqa: E501
         """bulk_delete_ads_by_inventory_reference  # noqa: E501
 
-        This method works with listings created with the Inventory API. The method deletes a set of ads, as specified by a list of inventory reference IDs, from the specified campaign. Inventory reference IDs are seller-defined IDs that are used with the Inventory API. Pass the campaign_id as a path parameter and populate the payload with a list of inventoryReferenceId and inventoryReferenceType pairs that you want to delete. Get the campaign IDs for a seller by calling getCampaigns and call getAds to get a list of the seller's inventory reference IDs.  # noqa: E501
+        This method works with listings created with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>.  <p>The method deletes a set of ads, as specified by a list of inventory reference IDs, from the specified campaign. <i>Inventory reference IDs</i> are seller-defined IDs that are used with the Inventory API</a>.</p>  <p>Pass the <b>campaign_id</b> as a path parameter and populate the payload with a list of <b>inventoryReferenceId</b> and <b>inventoryReferenceType</b> pairs that you want to delete.</p>  <p>Get the campaign IDs for a seller by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> and call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to get a list of the seller's inventory reference IDs.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.bulk_delete_ads_by_inventory_reference_with_http_info(body, campaign_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param BulkDeleteAdsByInventoryReferenceRequest body: This request object defines the fields for a bulkDeleteAdsByInventoryReference request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param BulkDeleteAdsByInventoryReferenceRequest body: This request object defines the fields for a <b>bulkDeleteAdsByInventoryReference</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: BulkDeleteAdsByInventoryReferenceResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -356,15 +356,15 @@ class AdApi(object):
     def bulk_delete_ads_by_listing_id(self, body, campaign_id, **kwargs):  # noqa: E501
         """bulk_delete_ads_by_listing_id  # noqa: E501
 
-        This method works with listing IDs created with either the Trading API or the Inventory API. The method deletes a set of ads, as specified by a list of listingID values from a Promoted Listings campaign. A listing ID value is generated by eBay when a seller creates a listing with either the Trading API and Inventory API. Pass the campaign_id as a path parameter and populate the payload with the set of listing IDs that you want to delete. Get the campaign IDs for a seller by calling getCampaigns and call getAds to get a list of the seller's inventory reference IDs.  # noqa: E501
+        This method works with listing IDs created with either the <a href=\"/Devzone/XML/docs/Reference/eBay/index.html\" title=\"Trading API Reference\">Trading API</a> or the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>.  <p>The method deletes a set of ads, as specified by a list of <b>listingID</b> values from a Promoted Listings campaign. A listing ID value is generated by eBay when a seller creates a listing with either the Trading API and Inventory API.</p>  <p>Pass the <b>campaign_id</b> as a path parameter and populate the payload with the set of listing IDs that you want to delete.</p>  <p>Get the campaign IDs for a seller by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> and call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to get a list of the seller's inventory reference IDs.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.bulk_delete_ads_by_listing_id(body, campaign_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param BulkDeleteAdRequest body: This request object defines the fields for the bulkDeleteAdsByListingId request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param BulkDeleteAdRequest body: This request object defines the fields for the <b>bulkDeleteAdsByListingId</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: BulkDeleteAdResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -379,15 +379,15 @@ class AdApi(object):
     def bulk_delete_ads_by_listing_id_with_http_info(self, body, campaign_id, **kwargs):  # noqa: E501
         """bulk_delete_ads_by_listing_id  # noqa: E501
 
-        This method works with listing IDs created with either the Trading API or the Inventory API. The method deletes a set of ads, as specified by a list of listingID values from a Promoted Listings campaign. A listing ID value is generated by eBay when a seller creates a listing with either the Trading API and Inventory API. Pass the campaign_id as a path parameter and populate the payload with the set of listing IDs that you want to delete. Get the campaign IDs for a seller by calling getCampaigns and call getAds to get a list of the seller's inventory reference IDs.  # noqa: E501
+        This method works with listing IDs created with either the <a href=\"/Devzone/XML/docs/Reference/eBay/index.html\" title=\"Trading API Reference\">Trading API</a> or the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>.  <p>The method deletes a set of ads, as specified by a list of <b>listingID</b> values from a Promoted Listings campaign. A listing ID value is generated by eBay when a seller creates a listing with either the Trading API and Inventory API.</p>  <p>Pass the <b>campaign_id</b> as a path parameter and populate the payload with the set of listing IDs that you want to delete.</p>  <p>Get the campaign IDs for a seller by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> and call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to get a list of the seller's inventory reference IDs.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.bulk_delete_ads_by_listing_id_with_http_info(body, campaign_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param BulkDeleteAdRequest body: This request object defines the fields for the bulkDeleteAdsByListingId request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param BulkDeleteAdRequest body: This request object defines the fields for the <b>bulkDeleteAdsByListingId</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: BulkDeleteAdResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -463,15 +463,15 @@ class AdApi(object):
     def bulk_update_ads_bid_by_inventory_reference(self, body, campaign_id, **kwargs):  # noqa: E501
         """bulk_update_ads_bid_by_inventory_reference  # noqa: E501
 
-        This method works with listings that are managed with the Inventory API. The method updates the bidPercentage values for a set of ads associated with the specified campaign. Specify the campaign_id as a path parameter and supply a list of inventoryReferenceId and inventoryReferenceType pairs with the updated bidPercentage values in the request body. In the Inventory API, an inventory reference ID is either a seller-defined SKU value or an inventoryItemGroupKey (a seller-defined ID for a multiple-variation listing). Get the campaign IDs for a seller by calling getCampaigns and call getAds to get a list of the seller's inventory reference IDs.  # noqa: E501
+        This method works with listings that are managed with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>. <p>The method updates the <b>bidPercentage</b> values for a set of ads associated with the specified campaign.</p>  <p>Specify the <b>campaign_id</b> as a path parameter and supply a list of <b>inventoryReferenceId</b> and <b>inventoryReferenceType</b> pairs with the updated <b>bidPercentage</b> values in the request body.</p>  <p>In the Inventory API, an <i>inventory reference ID</i> is either a seller-defined <b>SKU</b> value or an <b>inventoryItemGroupKey</b> (a seller-defined ID for a multiple-variation listing).</p>  <p>Get the campaign IDs for a seller by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> and call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to get a list of the seller's inventory reference IDs.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.bulk_update_ads_bid_by_inventory_reference(body, campaign_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param BulkCreateAdsByInventoryReferenceRequest body: This request object defines the fields for the BulkCreateAdsByInventoryReference request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param BulkCreateAdsByInventoryReferenceRequest body: This request object defines the fields for the <b>BulkCreateAdsByInventoryReference</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: BulkCreateAdsByInventoryReferenceResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -486,15 +486,15 @@ class AdApi(object):
     def bulk_update_ads_bid_by_inventory_reference_with_http_info(self, body, campaign_id, **kwargs):  # noqa: E501
         """bulk_update_ads_bid_by_inventory_reference  # noqa: E501
 
-        This method works with listings that are managed with the Inventory API. The method updates the bidPercentage values for a set of ads associated with the specified campaign. Specify the campaign_id as a path parameter and supply a list of inventoryReferenceId and inventoryReferenceType pairs with the updated bidPercentage values in the request body. In the Inventory API, an inventory reference ID is either a seller-defined SKU value or an inventoryItemGroupKey (a seller-defined ID for a multiple-variation listing). Get the campaign IDs for a seller by calling getCampaigns and call getAds to get a list of the seller's inventory reference IDs.  # noqa: E501
+        This method works with listings that are managed with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>. <p>The method updates the <b>bidPercentage</b> values for a set of ads associated with the specified campaign.</p>  <p>Specify the <b>campaign_id</b> as a path parameter and supply a list of <b>inventoryReferenceId</b> and <b>inventoryReferenceType</b> pairs with the updated <b>bidPercentage</b> values in the request body.</p>  <p>In the Inventory API, an <i>inventory reference ID</i> is either a seller-defined <b>SKU</b> value or an <b>inventoryItemGroupKey</b> (a seller-defined ID for a multiple-variation listing).</p>  <p>Get the campaign IDs for a seller by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> and call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to get a list of the seller's inventory reference IDs.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.bulk_update_ads_bid_by_inventory_reference_with_http_info(body, campaign_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param BulkCreateAdsByInventoryReferenceRequest body: This request object defines the fields for the BulkCreateAdsByInventoryReference request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param BulkCreateAdsByInventoryReferenceRequest body: This request object defines the fields for the <b>BulkCreateAdsByInventoryReference</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: BulkCreateAdsByInventoryReferenceResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -570,15 +570,15 @@ class AdApi(object):
     def bulk_update_ads_bid_by_listing_id(self, body, campaign_id, **kwargs):  # noqa: E501
         """bulk_update_ads_bid_by_listing_id  # noqa: E501
 
-        This method works with listings created with either the Trading API or the Inventory API. The method updates the bidPercentage values for a set of ads associated with the specified campaign. Specify the campaign_id as a path parameter and supply a set of listing IDs with their associated updated bidPercentage values in the request body. An eBay listing ID is generated when a listing is created with the Trading API. Get the campaign IDs for a seller by calling getCampaigns and call getAds to get a list of the seller's inventory reference IDs.  # noqa: E501
+        This method works with listings created with either the <a href=\"/Devzone/XML/docs/Reference/eBay/index.html\" title=\"Trading API Reference\">Trading API</a> or the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>.  <p>The method updates the <b>bidPercentage</b> values for a set of ads associated with the specified campaign.</p>  <p>Specify the <b>campaign_id</b> as a path parameter and supply a set of listing IDs with their associated updated <b>bidPercentage</b> values in the request body. An eBay listing ID is generated when a listing is created with the Trading API.</p>  <p>Get the campaign IDs for a seller by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> and call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to get a list of the seller's inventory reference IDs.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.bulk_update_ads_bid_by_listing_id(body, campaign_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param BulkCreateAdRequest body: This request object defines the fields for the BulkCreateAdsByListingId request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param BulkCreateAdRequest body: This request object defines the fields for the <b>BulkCreateAdsByListingId</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: BulkAdResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -593,15 +593,15 @@ class AdApi(object):
     def bulk_update_ads_bid_by_listing_id_with_http_info(self, body, campaign_id, **kwargs):  # noqa: E501
         """bulk_update_ads_bid_by_listing_id  # noqa: E501
 
-        This method works with listings created with either the Trading API or the Inventory API. The method updates the bidPercentage values for a set of ads associated with the specified campaign. Specify the campaign_id as a path parameter and supply a set of listing IDs with their associated updated bidPercentage values in the request body. An eBay listing ID is generated when a listing is created with the Trading API. Get the campaign IDs for a seller by calling getCampaigns and call getAds to get a list of the seller's inventory reference IDs.  # noqa: E501
+        This method works with listings created with either the <a href=\"/Devzone/XML/docs/Reference/eBay/index.html\" title=\"Trading API Reference\">Trading API</a> or the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>.  <p>The method updates the <b>bidPercentage</b> values for a set of ads associated with the specified campaign.</p>  <p>Specify the <b>campaign_id</b> as a path parameter and supply a set of listing IDs with their associated updated <b>bidPercentage</b> values in the request body. An eBay listing ID is generated when a listing is created with the Trading API.</p>  <p>Get the campaign IDs for a seller by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> and call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to get a list of the seller's inventory reference IDs.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.bulk_update_ads_bid_by_listing_id_with_http_info(body, campaign_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param BulkCreateAdRequest body: This request object defines the fields for the BulkCreateAdsByListingId request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param BulkCreateAdRequest body: This request object defines the fields for the <b>BulkCreateAdsByListingId</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: BulkAdResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -677,15 +677,15 @@ class AdApi(object):
     def create_ad_by_listing_id(self, body, campaign_id, **kwargs):  # noqa: E501
         """create_ad_by_listing_id  # noqa: E501
 
-        This method works with listings created with either the Trading API or the Inventory API. The method: Creates an ad for the specified listing ID. Sets the bid percentage (also known as the &quot;ad rate&quot;) for the ad. Associates the ad with the specified campaign. To create an ad for a listing, specify its listingId, plus the bidPercentage for the ad in the payload of the request. Specify the campaign to associate the ad with using the campaign_id path parameter. Listing IDs are generated by eBay when a seller creates listings with the Trading API or Inventory API. Each campaign can have ads for a maximum of 50,000 items, and each item in a multiple-variation listing is considered as an single item. Use createCampaign to create a new campaign and use getCampaigns to get a list of existing campaigns.  # noqa: E501
+        This method works with listings created with either the <a href=\"/Devzone/XML/docs/Reference/eBay/index.html\" title=\"Trading API Reference\">Trading API</a> or the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>. <p>The method:</p> <ul><li>Creates an ad for the specified listing ID.</li> <li>Sets the bid percentage (also known as the \"ad rate\") for the ad.</li> <li>Associates the ad with the specified campaign.</li></ul>  <p>To create an ad for a listing, specify its <b>listingId</b>, plus the <b>bidPercentage</b> for the ad in the payload of the request. Specify the campaign to associate the ad with using the <b>campaign_id</b> path parameter. Listing IDs are generated by eBay when a seller creates listings with the Trading API or Inventory API.</p>  <p>Each campaign can have ads for a maximum of 50,000 items, and each item in a multiple-variation listing is considered as an single item.</p>  <p>Use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/createCampaign\">createCampaign</a> to create a new campaign and use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to get a list of existing campaigns.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_ad_by_listing_id(body, campaign_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param CreateAdRequest body: This request object defines the fields used in the createAdByListingId request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param CreateAdRequest body: This request object defines the fields used in the <b>createAdByListingId</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -700,15 +700,15 @@ class AdApi(object):
     def create_ad_by_listing_id_with_http_info(self, body, campaign_id, **kwargs):  # noqa: E501
         """create_ad_by_listing_id  # noqa: E501
 
-        This method works with listings created with either the Trading API or the Inventory API. The method: Creates an ad for the specified listing ID. Sets the bid percentage (also known as the &quot;ad rate&quot;) for the ad. Associates the ad with the specified campaign. To create an ad for a listing, specify its listingId, plus the bidPercentage for the ad in the payload of the request. Specify the campaign to associate the ad with using the campaign_id path parameter. Listing IDs are generated by eBay when a seller creates listings with the Trading API or Inventory API. Each campaign can have ads for a maximum of 50,000 items, and each item in a multiple-variation listing is considered as an single item. Use createCampaign to create a new campaign and use getCampaigns to get a list of existing campaigns.  # noqa: E501
+        This method works with listings created with either the <a href=\"/Devzone/XML/docs/Reference/eBay/index.html\" title=\"Trading API Reference\">Trading API</a> or the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>. <p>The method:</p> <ul><li>Creates an ad for the specified listing ID.</li> <li>Sets the bid percentage (also known as the \"ad rate\") for the ad.</li> <li>Associates the ad with the specified campaign.</li></ul>  <p>To create an ad for a listing, specify its <b>listingId</b>, plus the <b>bidPercentage</b> for the ad in the payload of the request. Specify the campaign to associate the ad with using the <b>campaign_id</b> path parameter. Listing IDs are generated by eBay when a seller creates listings with the Trading API or Inventory API.</p>  <p>Each campaign can have ads for a maximum of 50,000 items, and each item in a multiple-variation listing is considered as an single item.</p>  <p>Use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/createCampaign\">createCampaign</a> to create a new campaign and use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to get a list of existing campaigns.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_ad_by_listing_id_with_http_info(body, campaign_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param CreateAdRequest body: This request object defines the fields used in the createAdByListingId request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param CreateAdRequest body: This request object defines the fields used in the <b>createAdByListingId</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -784,15 +784,15 @@ class AdApi(object):
     def create_ads_by_inventory_reference(self, body, campaign_id, **kwargs):  # noqa: E501
         """create_ads_by_inventory_reference  # noqa: E501
 
-        This method works with listings that are managed with the Inventory API. The method: Creates an ad for the specified listing. Sets the bid percentage (also known as the &quot;ad rate&quot;) for the ad. Associates the ad with the specified campaign. To create an ad for a listing, specify its inventoryReferenceId and inventoryReferenceType, plus the bidPercentage for the ad in the payload of the request. Specify the campaign to associate the ad with using the campaign_id path parameter. In the Inventory API, an inventory reference ID is either a seller-defined SKU value or an inventoryItemGroupKey (a seller-defined ID for a multiple-variation listing). Each campaign can have ads for a maximum of 50,000 items, and each item in a multiple-variation listing is considered as an individual item. Use createCampaign to create a new campaign and use getCampaigns to get a list of existing campaigns.  # noqa: E501
+        This method works with listings that are managed with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>.  <p>The method:</p> <ul><li>Creates an ad for the specified listing.</li> <li>Sets the bid percentage (also known as the \"ad rate\") for the ad.</li> <li>Associates the ad with the specified campaign.</li></ul>  <p>To create an ad for a listing, specify its <b>inventoryReferenceId</b> and <b>inventoryReferenceType</b>, plus the <b>bidPercentage</b> for the ad in the payload of the request. Specify the campaign to associate the ad with using the <b>campaign_id</b> path parameter.</p>  <p>In the Inventory API, an <i>inventory reference ID</i> is either a seller-defined <b>SKU</b> value or an <b>inventoryItemGroupKey</b> (a seller-defined ID for a multiple-variation listing).</p>  <p>Each campaign can have ads for a maximum of 50,000 items, and each item in a multiple-variation listing is considered as an individual item.</p>  <p>Use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/createCampaign\">createCampaign</a> to create a new campaign and use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to get a list of existing campaigns.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_ads_by_inventory_reference(body, campaign_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param CreateAdsByInventoryReferenceRequest body: This request object defines the fields used in the createAdsByInventoryReference request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param CreateAdsByInventoryReferenceRequest body: This request object defines the fields used in the <b>createAdsByInventoryReference</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: AdReferences
                  If the method is called asynchronously,
                  returns the request thread.
@@ -807,15 +807,15 @@ class AdApi(object):
     def create_ads_by_inventory_reference_with_http_info(self, body, campaign_id, **kwargs):  # noqa: E501
         """create_ads_by_inventory_reference  # noqa: E501
 
-        This method works with listings that are managed with the Inventory API. The method: Creates an ad for the specified listing. Sets the bid percentage (also known as the &quot;ad rate&quot;) for the ad. Associates the ad with the specified campaign. To create an ad for a listing, specify its inventoryReferenceId and inventoryReferenceType, plus the bidPercentage for the ad in the payload of the request. Specify the campaign to associate the ad with using the campaign_id path parameter. In the Inventory API, an inventory reference ID is either a seller-defined SKU value or an inventoryItemGroupKey (a seller-defined ID for a multiple-variation listing). Each campaign can have ads for a maximum of 50,000 items, and each item in a multiple-variation listing is considered as an individual item. Use createCampaign to create a new campaign and use getCampaigns to get a list of existing campaigns.  # noqa: E501
+        This method works with listings that are managed with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>.  <p>The method:</p> <ul><li>Creates an ad for the specified listing.</li> <li>Sets the bid percentage (also known as the \"ad rate\") for the ad.</li> <li>Associates the ad with the specified campaign.</li></ul>  <p>To create an ad for a listing, specify its <b>inventoryReferenceId</b> and <b>inventoryReferenceType</b>, plus the <b>bidPercentage</b> for the ad in the payload of the request. Specify the campaign to associate the ad with using the <b>campaign_id</b> path parameter.</p>  <p>In the Inventory API, an <i>inventory reference ID</i> is either a seller-defined <b>SKU</b> value or an <b>inventoryItemGroupKey</b> (a seller-defined ID for a multiple-variation listing).</p>  <p>Each campaign can have ads for a maximum of 50,000 items, and each item in a multiple-variation listing is considered as an individual item.</p>  <p>Use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/createCampaign\">createCampaign</a> to create a new campaign and use <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to get a list of existing campaigns.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_ads_by_inventory_reference_with_http_info(body, campaign_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param CreateAdsByInventoryReferenceRequest body: This request object defines the fields used in the createAdsByInventoryReference request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param CreateAdsByInventoryReferenceRequest body: This request object defines the fields used in the <b>createAdsByInventoryReference</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: AdReferences
                  If the method is called asynchronously,
                  returns the request thread.
@@ -891,7 +891,7 @@ class AdApi(object):
     def delete_ad(self, ad_id, campaign_id, **kwargs):  # noqa: E501
         """delete_ad  # noqa: E501
 
-        This method removes the specified ad from the specified campaign. Pass the ID of the ad to delete with the ID of the campaign associated with the ad as path parameters to the call. Call getCampaigns to get the current list of the seller's campaign IDs.  # noqa: E501
+        This method removes the specified ad from the specified campaign.  <p>Pass the ID of the ad to delete with the ID of the campaign associated with the ad as path parameters to the call.</p> <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to get the current list of the seller's campaign IDs.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_ad(ad_id, campaign_id, async_req=True)
@@ -899,7 +899,7 @@ class AdApi(object):
 
         :param async_req bool
         :param str ad_id: Identifier of an ad. This ID was generated when the ad was created. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -914,7 +914,7 @@ class AdApi(object):
     def delete_ad_with_http_info(self, ad_id, campaign_id, **kwargs):  # noqa: E501
         """delete_ad  # noqa: E501
 
-        This method removes the specified ad from the specified campaign. Pass the ID of the ad to delete with the ID of the campaign associated with the ad as path parameters to the call. Call getCampaigns to get the current list of the seller's campaign IDs.  # noqa: E501
+        This method removes the specified ad from the specified campaign.  <p>Pass the ID of the ad to delete with the ID of the campaign associated with the ad as path parameters to the call.</p> <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to get the current list of the seller's campaign IDs.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_ad_with_http_info(ad_id, campaign_id, async_req=True)
@@ -922,7 +922,7 @@ class AdApi(object):
 
         :param async_req bool
         :param str ad_id: Identifier of an ad. This ID was generated when the ad was created. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -990,15 +990,15 @@ class AdApi(object):
     def delete_ads_by_inventory_reference(self, body, campaign_id, **kwargs):  # noqa: E501
         """delete_ads_by_inventory_reference  # noqa: E501
 
-        This method works with listings that are managed with the Inventory API. The method deletes ads using a list of seller-defined inventory reference IDs, used with the Inventory API, that are associated with the specified campaign ID. Specify the campaign ID (as a path parameter) and a list of inventoryReferenceId and inventoryReferenceType pairs to be deleted. Call getCampaigns to get a list of the seller's current campaign IDs.  # noqa: E501
+        This method works with listings that are managed with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>.  <p>The method deletes ads using a list of seller-defined inventory reference IDs, used with the Inventory API, that are associated with the specified campaign ID.</p> <p>Specify the campaign ID (as a path parameter) and a list of <b>inventoryReferenceId</b> and <b>inventoryReferenceType</b> pairs to be deleted.</p>  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to get a list of the seller's current campaign IDs.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_ads_by_inventory_reference(body, campaign_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param DeleteAdsByInventoryReferenceRequest body: This request object defines the fields for the deleteAdsByInventoryReference request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param DeleteAdsByInventoryReferenceRequest body: This request object defines the fields for the <b>deleteAdsByInventoryReference</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: AdIds
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1013,15 +1013,15 @@ class AdApi(object):
     def delete_ads_by_inventory_reference_with_http_info(self, body, campaign_id, **kwargs):  # noqa: E501
         """delete_ads_by_inventory_reference  # noqa: E501
 
-        This method works with listings that are managed with the Inventory API. The method deletes ads using a list of seller-defined inventory reference IDs, used with the Inventory API, that are associated with the specified campaign ID. Specify the campaign ID (as a path parameter) and a list of inventoryReferenceId and inventoryReferenceType pairs to be deleted. Call getCampaigns to get a list of the seller's current campaign IDs.  # noqa: E501
+        This method works with listings that are managed with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>.  <p>The method deletes ads using a list of seller-defined inventory reference IDs, used with the Inventory API, that are associated with the specified campaign ID.</p> <p>Specify the campaign ID (as a path parameter) and a list of <b>inventoryReferenceId</b> and <b>inventoryReferenceType</b> pairs to be deleted.</p>  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to get a list of the seller's current campaign IDs.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_ads_by_inventory_reference_with_http_info(body, campaign_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param DeleteAdsByInventoryReferenceRequest body: This request object defines the fields for the deleteAdsByInventoryReference request. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param DeleteAdsByInventoryReferenceRequest body: This request object defines the fields for the <b>deleteAdsByInventoryReference</b> request. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: AdIds
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1097,7 +1097,7 @@ class AdApi(object):
     def get_ad(self, ad_id, campaign_id, **kwargs):  # noqa: E501
         """get_ad  # noqa: E501
 
-        This method retrieves the specified ad from the specified campaign. In the request, supply the campaign_id and ad_id as path parameters. Call getCampaigns to retrieve a list of the seller's current campaign IDs and call getAds to retrieve their current ad IDs.  # noqa: E501
+        This method retrieves the specified ad from the specified campaign.  <p>In the request, supply the <b>campaign_id</b> and <b>ad_id</b> as path parameters.</p> <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve a list of the seller's current campaign IDs and call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to retrieve their current ad IDs.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_ad(ad_id, campaign_id, async_req=True)
@@ -1105,7 +1105,7 @@ class AdApi(object):
 
         :param async_req bool
         :param str ad_id: Identifier of an ad. This ID was generated when the ad was created. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: Ad
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1120,7 +1120,7 @@ class AdApi(object):
     def get_ad_with_http_info(self, ad_id, campaign_id, **kwargs):  # noqa: E501
         """get_ad  # noqa: E501
 
-        This method retrieves the specified ad from the specified campaign. In the request, supply the campaign_id and ad_id as path parameters. Call getCampaigns to retrieve a list of the seller's current campaign IDs and call getAds to retrieve their current ad IDs.  # noqa: E501
+        This method retrieves the specified ad from the specified campaign.  <p>In the request, supply the <b>campaign_id</b> and <b>ad_id</b> as path parameters.</p> <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve a list of the seller's current campaign IDs and call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to retrieve their current ad IDs.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_ad_with_http_info(ad_id, campaign_id, async_req=True)
@@ -1128,7 +1128,7 @@ class AdApi(object):
 
         :param async_req bool
         :param str ad_id: Identifier of an ad. This ID was generated when the ad was created. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: Ad
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1200,17 +1200,17 @@ class AdApi(object):
     def get_ads(self, campaign_id, **kwargs):  # noqa: E501
         """get_ads  # noqa: E501
 
-        This method retrieves Promoted Listings ads that are associated with listings created with either the Trading API or the Inventory API. The method retrieves ads related to the specified campaign. Specify the Promoted Listings campaign to target with the campaign_id path parameter. Because of the large number of possible results, you can use query parameters to paginate the result set by specifying a limit, which dictates how many ads to return on each page of the response. You can also specify how many ads to skip in the result set before returning the first result using the offset path parameter. Call getCampaigns to retrieve the current campaign IDs for the seller.  # noqa: E501
+        This method retrieves Promoted Listings ads that are associated with listings created with either the <a href=\"/Devzone/XML/docs/Reference/eBay/index.html\" title=\"Trading API Reference\">Trading API</a> or the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>. <p>The method retrieves ads related to the specified campaign. Specify the Promoted Listings campaign to target with the <b>campaign_id</b> path parameter.</p>  <p>Because of the large number of possible results, you can use query parameters to paginate the result set by specifying a <b>limit</b>, which dictates how many ads to return on each page of the response. You can also specify how many ads to skip in the result set before returning the first result using the <b>offset</b> path parameter.</p>  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve the current campaign IDs for the seller.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_ads(campaign_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
-        :param str limit: Specifies the maximum number of ads to return on a page in the paginated response. Default: 10 Maximum: 500
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
+        :param str limit: Specifies the maximum number of ads to return on a page in the paginated response. <p><b>Default: </b>10 <br><b>Maximum:</b> 500</p>
         :param str listing_ids: A comma separated list of listing IDs. The response includes only active ads (ads associated with a RUNNING campaign). The results do not include listing IDs that are excluded by other conditions.
-        :param str offset: Specifies the number of ads to skip in the result set before returning the first ad in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
+        :param str offset: Specifies the number of ads to skip in the result set before returning the first ad in the paginated response.  <p>Combine <b>offset</b> with the <b>limit</b> query parameter to control the items returned in the response. For example, if you supply an <b>offset</b> of <code>0</code> and a <b>limit</b> of <code>10</code>, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If <b>offset</b> is <code>10</code> and <b>limit</b> is <code>20</code>, the first page of the response contains items 11-30 from the complete result set.</p> <p><b>Default:</b> 0</p>
         :return: AdPagedCollection
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1225,17 +1225,17 @@ class AdApi(object):
     def get_ads_with_http_info(self, campaign_id, **kwargs):  # noqa: E501
         """get_ads  # noqa: E501
 
-        This method retrieves Promoted Listings ads that are associated with listings created with either the Trading API or the Inventory API. The method retrieves ads related to the specified campaign. Specify the Promoted Listings campaign to target with the campaign_id path parameter. Because of the large number of possible results, you can use query parameters to paginate the result set by specifying a limit, which dictates how many ads to return on each page of the response. You can also specify how many ads to skip in the result set before returning the first result using the offset path parameter. Call getCampaigns to retrieve the current campaign IDs for the seller.  # noqa: E501
+        This method retrieves Promoted Listings ads that are associated with listings created with either the <a href=\"/Devzone/XML/docs/Reference/eBay/index.html\" title=\"Trading API Reference\">Trading API</a> or the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>. <p>The method retrieves ads related to the specified campaign. Specify the Promoted Listings campaign to target with the <b>campaign_id</b> path parameter.</p>  <p>Because of the large number of possible results, you can use query parameters to paginate the result set by specifying a <b>limit</b>, which dictates how many ads to return on each page of the response. You can also specify how many ads to skip in the result set before returning the first result using the <b>offset</b> path parameter.</p>  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve the current campaign IDs for the seller.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_ads_with_http_info(campaign_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
-        :param str limit: Specifies the maximum number of ads to return on a page in the paginated response. Default: 10 Maximum: 500
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
+        :param str limit: Specifies the maximum number of ads to return on a page in the paginated response. <p><b>Default: </b>10 <br><b>Maximum:</b> 500</p>
         :param str listing_ids: A comma separated list of listing IDs. The response includes only active ads (ads associated with a RUNNING campaign). The results do not include listing IDs that are excluded by other conditions.
-        :param str offset: Specifies the number of ads to skip in the result set before returning the first ad in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
+        :param str offset: Specifies the number of ads to skip in the result set before returning the first ad in the paginated response.  <p>Combine <b>offset</b> with the <b>limit</b> query parameter to control the items returned in the response. For example, if you supply an <b>offset</b> of <code>0</code> and a <b>limit</b> of <code>10</code>, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If <b>offset</b> is <code>10</code> and <b>limit</b> is <code>20</code>, the first page of the response contains items 11-30 from the complete result set.</p> <p><b>Default:</b> 0</p>
         :return: AdPagedCollection
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1307,16 +1307,16 @@ class AdApi(object):
     def get_ads_by_inventory_reference(self, campaign_id, inventory_reference_id, inventory_reference_type, **kwargs):  # noqa: E501
         """get_ads_by_inventory_reference  # noqa: E501
 
-        This method retrieves Promoted Listings ads associated with listings that are managed with the Inventory API from the specified campaign. Supply the campaign_id as a path parameter and use query parameters to specify the inventory_reference_id and inventory_reference_type pairs. In the Inventory API, an inventory reference ID is either a seller-defined SKU value or an inventoryItemGroupKey (a seller-defined ID for an inventory item group, which is an entity that's used in the Inventory API to create a multiple-variation listing). To indicate a listing managed by the Inventory API, you must always specify both an inventory_reference_id and the associated inventory_reference_type. Call getCampaigns to retrieve all of the seller's the current campaign IDs.  # noqa: E501
+        This method retrieves Promoted Listings ads associated with listings that are managed with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a> from the specified campaign.  <p>Supply the <b>campaign_id</b> as a path parameter and use query parameters to specify the <b>inventory_reference_id</b> and <b>inventory_reference_type</b> pairs.</p>  <p>In the Inventory API, an <i>inventory reference ID</i> is either a seller-defined <b>SKU</b> value or an <b>inventoryItemGroupKey</b> (a seller-defined ID for an inventory item group, which is an entity that's used in the Inventory API to create a multiple-variation listing). To indicate a listing managed by the Inventory API, you must always specify both an <b>inventory_reference_id</b> and the associated <b>inventory_reference_type</b>.</p>  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve all of the seller's the current campaign IDs.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_ads_by_inventory_reference(campaign_id, inventory_reference_id, inventory_reference_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
-        :param str inventory_reference_id: The inventory reference ID associated with the ad you want returned. A seller's inventory reference ID is the ID of either a listing or the ID of an inventory item group (the parent of a multi-variation listing, such as a shirt that is available in multiple sizes and colors). You must always supply in both an inventory_reference_id and an inventory_reference_type. (required)
-        :param str inventory_reference_type: The type of the inventory reference ID. Set this value to either INVENTORY_ITEM (a single listing) or INVENTORY_ITEM_GROUP (a multi-variation listing). You must always pass in both an inventory_reference_id and an inventory_reference_type. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
+        :param str inventory_reference_id: The inventory reference ID associated with the ad you want returned. A seller's inventory reference ID is the ID of either a listing or the ID of an inventory item group (the parent of a multi-variation listing, such as a shirt that is available in multiple sizes and colors). You must always supply in both an <b>inventory_reference_id</b> and an <b>inventory_reference_type</b>. (required)
+        :param str inventory_reference_type: The type of the inventory reference ID. Set this value to either <code>INVENTORY_ITEM</CODE> (a single listing) or <code>INVENTORY_ITEM_GROUP</CODE> (a multi-variation listing). You must always pass in both an <b>inventory_reference_id</b> and an <b>inventory_reference_type</b>.  (required)
         :return: Ads
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1331,16 +1331,16 @@ class AdApi(object):
     def get_ads_by_inventory_reference_with_http_info(self, campaign_id, inventory_reference_id, inventory_reference_type, **kwargs):  # noqa: E501
         """get_ads_by_inventory_reference  # noqa: E501
 
-        This method retrieves Promoted Listings ads associated with listings that are managed with the Inventory API from the specified campaign. Supply the campaign_id as a path parameter and use query parameters to specify the inventory_reference_id and inventory_reference_type pairs. In the Inventory API, an inventory reference ID is either a seller-defined SKU value or an inventoryItemGroupKey (a seller-defined ID for an inventory item group, which is an entity that's used in the Inventory API to create a multiple-variation listing). To indicate a listing managed by the Inventory API, you must always specify both an inventory_reference_id and the associated inventory_reference_type. Call getCampaigns to retrieve all of the seller's the current campaign IDs.  # noqa: E501
+        This method retrieves Promoted Listings ads associated with listings that are managed with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a> from the specified campaign.  <p>Supply the <b>campaign_id</b> as a path parameter and use query parameters to specify the <b>inventory_reference_id</b> and <b>inventory_reference_type</b> pairs.</p>  <p>In the Inventory API, an <i>inventory reference ID</i> is either a seller-defined <b>SKU</b> value or an <b>inventoryItemGroupKey</b> (a seller-defined ID for an inventory item group, which is an entity that's used in the Inventory API to create a multiple-variation listing). To indicate a listing managed by the Inventory API, you must always specify both an <b>inventory_reference_id</b> and the associated <b>inventory_reference_type</b>.</p>  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve all of the seller's the current campaign IDs.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_ads_by_inventory_reference_with_http_info(campaign_id, inventory_reference_id, inventory_reference_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
-        :param str inventory_reference_id: The inventory reference ID associated with the ad you want returned. A seller's inventory reference ID is the ID of either a listing or the ID of an inventory item group (the parent of a multi-variation listing, such as a shirt that is available in multiple sizes and colors). You must always supply in both an inventory_reference_id and an inventory_reference_type. (required)
-        :param str inventory_reference_type: The type of the inventory reference ID. Set this value to either INVENTORY_ITEM (a single listing) or INVENTORY_ITEM_GROUP (a multi-variation listing). You must always pass in both an inventory_reference_id and an inventory_reference_type. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
+        :param str inventory_reference_id: The inventory reference ID associated with the ad you want returned. A seller's inventory reference ID is the ID of either a listing or the ID of an inventory item group (the parent of a multi-variation listing, such as a shirt that is available in multiple sizes and colors). You must always supply in both an <b>inventory_reference_id</b> and an <b>inventory_reference_type</b>. (required)
+        :param str inventory_reference_type: The type of the inventory reference ID. Set this value to either <code>INVENTORY_ITEM</CODE> (a single listing) or <code>INVENTORY_ITEM_GROUP</CODE> (a multi-variation listing). You must always pass in both an <b>inventory_reference_id</b> and an <b>inventory_reference_type</b>.  (required)
         :return: Ads
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1418,16 +1418,16 @@ class AdApi(object):
     def update_bid(self, body, ad_id, campaign_id, **kwargs):  # noqa: E501
         """update_bid  # noqa: E501
 
-        This method updates the bid percentage (also known as the &quot;ad rate&quot;) for the specified ad in the specified campaign. In the request, supply the campaign_id and ad_id as path parameters, and supply the new bidPercentage value in the payload of the call. Call getCampaigns to retrieve a seller's current campaign IDs and call getAds to get their ad IDs.  # noqa: E501
+        This method updates the bid percentage (also known as the \"ad rate\") for the specified ad in the specified campaign. <p>In the request, supply the <b>campaign_id</b> and <b>ad_id</b> as path parameters, and supply the new <b>bidPercentage</b> value in the payload of the call.</p>  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve a seller's current campaign IDs and call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to get their ad IDs.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_bid(body, ad_id, campaign_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param UpdateBidPercentageRequest body: This type defines the fields for the updateBid request. (required)
+        :param UpdateBidPercentageRequest body: This type defines the fields for the <b>updateBid</b> request. (required)
         :param str ad_id: A unique eBay-assigned ID for an ad that's generated when an ad is created. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1442,16 +1442,16 @@ class AdApi(object):
     def update_bid_with_http_info(self, body, ad_id, campaign_id, **kwargs):  # noqa: E501
         """update_bid  # noqa: E501
 
-        This method updates the bid percentage (also known as the &quot;ad rate&quot;) for the specified ad in the specified campaign. In the request, supply the campaign_id and ad_id as path parameters, and supply the new bidPercentage value in the payload of the call. Call getCampaigns to retrieve a seller's current campaign IDs and call getAds to get their ad IDs.  # noqa: E501
+        This method updates the bid percentage (also known as the \"ad rate\") for the specified ad in the specified campaign. <p>In the request, supply the <b>campaign_id</b> and <b>ad_id</b> as path parameters, and supply the new <b>bidPercentage</b> value in the payload of the call.</p>  <p>Call <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a> to retrieve a seller's current campaign IDs and call <a href=\"/api-docs/sell/marketing/resources/ad/methods/getAds\">getAds</a> to get their ad IDs.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_bid_with_http_info(body, ad_id, campaign_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param UpdateBidPercentageRequest body: This type defines the fields for the updateBid request. (required)
+        :param UpdateBidPercentageRequest body: This type defines the fields for the <b>updateBid</b> request. (required)
         :param str ad_id: A unique eBay-assigned ID for an ad that's generated when an ad is created. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\">getCampaigns</a>. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.

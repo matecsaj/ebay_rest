@@ -130,7 +130,7 @@ class FileInfo(object):
     def uploaded_date(self):
         """Gets the uploaded_date of this FileInfo.  # noqa: E501
 
-        The timestamp in this field shows the date/time when the seller uploaded the evidential document to eBay. The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.  # noqa: E501
+        The timestamp in this field shows the date/time when the seller uploaded the evidential document to eBay. <br/><br/>The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: <em>yyyy-MM-ddThh:mm.ss.sssZ</em>. An example would be <code>2019-08-04T19:09:02.768Z</code>.  # noqa: E501
 
         :return: The uploaded_date of this FileInfo.  # noqa: E501
         :rtype: str
@@ -141,7 +141,7 @@ class FileInfo(object):
     def uploaded_date(self, uploaded_date):
         """Sets the uploaded_date of this FileInfo.
 
-        The timestamp in this field shows the date/time when the seller uploaded the evidential document to eBay. The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.  # noqa: E501
+        The timestamp in this field shows the date/time when the seller uploaded the evidential document to eBay. <br/><br/>The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: <em>yyyy-MM-ddThh:mm.ss.sssZ</em>. An example would be <code>2019-08-04T19:09:02.768Z</code>.  # noqa: E501
 
         :param uploaded_date: The uploaded_date of this FileInfo.  # noqa: E501
         :type: str

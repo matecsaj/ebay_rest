@@ -51,7 +51,7 @@ class SellingPrivileges(object):
     def seller_registration_completed(self):
         """Gets the seller_registration_completed of this SellingPrivileges.  # noqa: E501
 
-        If set to true, the seller's registration is completed.  # noqa: E501
+        If set to <code>true</code>, the seller's registration is completed.  # noqa: E501
 
         :return: The seller_registration_completed of this SellingPrivileges.  # noqa: E501
         :rtype: bool
@@ -62,7 +62,7 @@ class SellingPrivileges(object):
     def seller_registration_completed(self, seller_registration_completed):
         """Sets the seller_registration_completed of this SellingPrivileges.
 
-        If set to true, the seller's registration is completed.  # noqa: E501
+        If set to <code>true</code>, the seller's registration is completed.  # noqa: E501
 
         :param seller_registration_completed: The seller_registration_completed of this SellingPrivileges.  # noqa: E501
         :type: bool

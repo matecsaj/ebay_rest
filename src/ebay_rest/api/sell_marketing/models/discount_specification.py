@@ -87,7 +87,7 @@ class DiscountSpecification(object):
     def for_each_quantity(self):
         """Gets the for_each_quantity of this DiscountSpecification.  # noqa: E501
 
-        The number of items that must be purchased in order to qualify for the discount. Valid values: &nbsp; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, &nbsp; 12, 13, 14, 15, 16, 17, 18, 19 &nbsp; 20, 25, 50, 75, 100  # noqa: E501
+        The number of items that must be purchased in order to qualify for the discount.  <br><br><b>Valid values:</b> <br><code> &nbsp; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, <br> &nbsp; 12, 13, 14, 15, 16, 17, 18, 19 <br> &nbsp; 20, 25, 50, 75, 100</code>  # noqa: E501
 
         :return: The for_each_quantity of this DiscountSpecification.  # noqa: E501
         :rtype: int
@@ -98,7 +98,7 @@ class DiscountSpecification(object):
     def for_each_quantity(self, for_each_quantity):
         """Sets the for_each_quantity of this DiscountSpecification.
 
-        The number of items that must be purchased in order to qualify for the discount. Valid values: &nbsp; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, &nbsp; 12, 13, 14, 15, 16, 17, 18, 19 &nbsp; 20, 25, 50, 75, 100  # noqa: E501
+        The number of items that must be purchased in order to qualify for the discount.  <br><br><b>Valid values:</b> <br><code> &nbsp; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, <br> &nbsp; 12, 13, 14, 15, 16, 17, 18, 19 <br> &nbsp; 20, 25, 50, 75, 100</code>  # noqa: E501
 
         :param for_each_quantity: The for_each_quantity of this DiscountSpecification.  # noqa: E501
         :type: int
@@ -131,7 +131,7 @@ class DiscountSpecification(object):
     def min_quantity(self):
         """Gets the min_quantity of this DiscountSpecification.  # noqa: E501
 
-        The minimum quantity of promoted items that needs to be bought in order to qualify for the promotion's discount. Valid values: &nbsp; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, &nbsp; 12, 13, 14, 15, 16, 17, 18, 19 &nbsp; 20, 25, 50, 75, 100  # noqa: E501
+        The minimum quantity of promoted items that needs to be bought in order to qualify for the promotion's discount.  <br><br><b>Valid values:</b> <br><code> &nbsp; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, <br> &nbsp; 12, 13, 14, 15, 16, 17, 18, 19 <br> &nbsp; 20, 25, 50, 75, 100</code>  # noqa: E501
 
         :return: The min_quantity of this DiscountSpecification.  # noqa: E501
         :rtype: int
@@ -142,7 +142,7 @@ class DiscountSpecification(object):
     def min_quantity(self, min_quantity):
         """Sets the min_quantity of this DiscountSpecification.
 
-        The minimum quantity of promoted items that needs to be bought in order to qualify for the promotion's discount. Valid values: &nbsp; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, &nbsp; 12, 13, 14, 15, 16, 17, 18, 19 &nbsp; 20, 25, 50, 75, 100  # noqa: E501
+        The minimum quantity of promoted items that needs to be bought in order to qualify for the promotion's discount.  <br><br><b>Valid values:</b> <br><code> &nbsp; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, <br> &nbsp; 12, 13, 14, 15, 16, 17, 18, 19 <br> &nbsp; 20, 25, 50, 75, 100</code>  # noqa: E501
 
         :param min_quantity: The min_quantity of this DiscountSpecification.  # noqa: E501
         :type: int
@@ -154,7 +154,7 @@ class DiscountSpecification(object):
     def number_of_discounted_items(self):
         """Gets the number_of_discounted_items of this DiscountSpecification.  # noqa: E501
 
-        Use this field to configure &quot;Buy One Get One&quot; (or BOGO) promotions. You must couple this field with forEachQuantity and an amountOffItem or percentOffItem field to configure your BOGO promotion. This field is not valid with order-based promotions. The value of this field represents the number of items to be discounted when other promotion criteria is met. For example, when the buyer adds the number of items identified by the forEachQuantity value to their cart, they are then eligible to receive the stated discount from an additional number of like items (the number of which is identified by this field) when they add those items to their cart. To receive the discount, the buyer must purchase the number of items indicated by forEachQuantity plus the number indicated by this field. Valid values: &nbsp; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10  # noqa: E501
+        Use this field to configure \"Buy One Get One\" (or <b>BOGO</b>) promotions.  <br><br>You must couple this field with <b>forEachQuantity</b> and an <b>amountOffItem</b> or <b>percentOffItem</b> field to configure your BOGO promotion. This field is not valid with order-based promotions. <br><br>The value of this field represents the number of items to be discounted when other promotion criteria is met. For example, when the buyer adds the number of items identified by the <b>forEachQuantity</b> value to their cart, they are then eligible to receive the stated discount from an additional number of like items (the number of which is identified by this field) when they add those items to their cart. To receive the discount, the buyer must purchase the number of items indicated by  <b>forEachQuantity</b> <i>plus</i> the number indicated by this field.  <br><br><b>Valid values:</b> <br><code> &nbsp; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10</code>  # noqa: E501
 
         :return: The number_of_discounted_items of this DiscountSpecification.  # noqa: E501
         :rtype: int
@@ -165,7 +165,7 @@ class DiscountSpecification(object):
     def number_of_discounted_items(self, number_of_discounted_items):
         """Sets the number_of_discounted_items of this DiscountSpecification.
 
-        Use this field to configure &quot;Buy One Get One&quot; (or BOGO) promotions. You must couple this field with forEachQuantity and an amountOffItem or percentOffItem field to configure your BOGO promotion. This field is not valid with order-based promotions. The value of this field represents the number of items to be discounted when other promotion criteria is met. For example, when the buyer adds the number of items identified by the forEachQuantity value to their cart, they are then eligible to receive the stated discount from an additional number of like items (the number of which is identified by this field) when they add those items to their cart. To receive the discount, the buyer must purchase the number of items indicated by forEachQuantity plus the number indicated by this field. Valid values: &nbsp; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10  # noqa: E501
+        Use this field to configure \"Buy One Get One\" (or <b>BOGO</b>) promotions.  <br><br>You must couple this field with <b>forEachQuantity</b> and an <b>amountOffItem</b> or <b>percentOffItem</b> field to configure your BOGO promotion. This field is not valid with order-based promotions. <br><br>The value of this field represents the number of items to be discounted when other promotion criteria is met. For example, when the buyer adds the number of items identified by the <b>forEachQuantity</b> value to their cart, they are then eligible to receive the stated discount from an additional number of like items (the number of which is identified by this field) when they add those items to their cart. To receive the discount, the buyer must purchase the number of items indicated by  <b>forEachQuantity</b> <i>plus</i> the number indicated by this field.  <br><br><b>Valid values:</b> <br><code> &nbsp; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10</code>  # noqa: E501
 
         :param number_of_discounted_items: The number_of_discounted_items of this DiscountSpecification.  # noqa: E501
         :type: int

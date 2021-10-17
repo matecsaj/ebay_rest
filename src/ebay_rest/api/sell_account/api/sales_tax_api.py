@@ -35,7 +35,7 @@ class SalesTaxApi(object):
     def create_or_replace_sales_tax(self, body, country_code, jurisdiction_id, **kwargs):  # noqa: E501
         """create_or_replace_sales_tax  # noqa: E501
 
-        This method creates or updates a sales tax table entry for a jurisdiction. Specify the tax table entry you want to configure using the two path parameters: countryCode and jurisdictionId. A tax table entry for a jurisdiction is comprised of two fields: one for the jurisdiction's sales-tax rate and another that's a boolean value indicating whether or not shipping and handling are taxed in the jurisdiction. You can set up tax tables for countries that support different tax jurisdictions. Currently, only Canada, India, and the US support separate tax jurisdictions. If you sell into any of these countries, you can set up tax tables for any of the country's jurisdictions. Retrieve valid jurisdiction IDs using getSalesTaxJurisdictions in the Metadata API. For details on using this call, see Establishing sales-tax tables. Important! Starting in January 2019, eBay will begin to calculate, collect, and remit sales tax on behalf of sellers for items shipped to customers. This feature is rolling out on specific dates to specific US states as defined on the following page: eBay sales tax collection. Once eBay starts to collect sales tax for a state, no action is required on the seller's part and there will be no charges or fees for eBay automatically calculating, collecting and remitting sales tax. The sales-tax collection process will apply to all the sales in the states that support this feature, whether the seller is located in or outside of the United States. When a buyer purchases an item on eBay, and the ship-to address is one of the states where eBay collects the sales tax, eBay will calculate and add the applicable sales tax at checkout. The buyer will pay both the cost of the item along with the sales tax. eBay will collect and remit the tax.  # noqa: E501
+        This method creates or updates a sales tax table entry for a jurisdiction. Specify the tax table entry you want to configure using the two path parameters: <b>countryCode</b> and <b>jurisdictionId</b>.  <br><br>A tax table entry for a jurisdiction is comprised of two fields: one for the jurisdiction's sales-tax rate and another that's a boolean value indicating whether or not shipping and handling are taxed in the jurisdiction.  <br><br>You can set up <i>tax tables</i> for countries that support different <i>tax jurisdictions</i>. Currently, only Canada, India, and the US support separate tax jurisdictions. If you sell into any of these countries, you can set up tax tables for any of the country's jurisdictions. Retrieve valid jurisdiction IDs using <b>getSalesTaxJurisdictions</b> in the Metadata API.  <br><br>For details on using this call, see <a href=\"/api-docs/sell/static/seller-accounts/tax-tables.html\">Establishing sales-tax tables</a>. <br><br><span class=\"tablenote\"><b>Important!</b> Starting in January 2019, eBay will begin to calculate, collect, and remit sales tax on behalf of sellers for items shipped to customers. This feature is rolling out on specific dates to specific US states as defined on the following page: <a href=\"https://www.ebay.com/help/selling/fees-credits-invoices/taxes-import-charges?id=4121#section4\" target=\"_balnk\">eBay sales tax collection</a>. <br><br>Once eBay starts to collect sales tax for a state, no action is required on the seller's part and there will be no charges or fees for eBay automatically calculating, collecting and remitting sales tax. The sales-tax collection process will apply to all the sales in the states that support this feature, whether the seller is located in or outside of the United States.  <br><br>When a buyer purchases an item on eBay, and the ship-to address is one of the states where eBay collects the sales tax, eBay will calculate and add the applicable sales tax at checkout. The buyer will pay both the cost of the item along with the sales tax. eBay will collect and remit the tax.</span>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_or_replace_sales_tax(body, country_code, jurisdiction_id, async_req=True)
@@ -43,7 +43,7 @@ class SalesTaxApi(object):
 
         :param async_req bool
         :param SalesTaxBase body: A container that describes the how the sales tax is calculated. (required)
-        :param str country_code: This path parameter specifies the two-letter ISO 3166 code for the country for which you want to create tax table entry. (required)
+        :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> code for the country for which you want to create tax table entry. (required)
         :param str jurisdiction_id: This path parameter specifies the ID of the sales-tax jurisdiction for the table entry you want to create. (required)
         :return: None
                  If the method is called asynchronously,
@@ -59,7 +59,7 @@ class SalesTaxApi(object):
     def create_or_replace_sales_tax_with_http_info(self, body, country_code, jurisdiction_id, **kwargs):  # noqa: E501
         """create_or_replace_sales_tax  # noqa: E501
 
-        This method creates or updates a sales tax table entry for a jurisdiction. Specify the tax table entry you want to configure using the two path parameters: countryCode and jurisdictionId. A tax table entry for a jurisdiction is comprised of two fields: one for the jurisdiction's sales-tax rate and another that's a boolean value indicating whether or not shipping and handling are taxed in the jurisdiction. You can set up tax tables for countries that support different tax jurisdictions. Currently, only Canada, India, and the US support separate tax jurisdictions. If you sell into any of these countries, you can set up tax tables for any of the country's jurisdictions. Retrieve valid jurisdiction IDs using getSalesTaxJurisdictions in the Metadata API. For details on using this call, see Establishing sales-tax tables. Important! Starting in January 2019, eBay will begin to calculate, collect, and remit sales tax on behalf of sellers for items shipped to customers. This feature is rolling out on specific dates to specific US states as defined on the following page: eBay sales tax collection. Once eBay starts to collect sales tax for a state, no action is required on the seller's part and there will be no charges or fees for eBay automatically calculating, collecting and remitting sales tax. The sales-tax collection process will apply to all the sales in the states that support this feature, whether the seller is located in or outside of the United States. When a buyer purchases an item on eBay, and the ship-to address is one of the states where eBay collects the sales tax, eBay will calculate and add the applicable sales tax at checkout. The buyer will pay both the cost of the item along with the sales tax. eBay will collect and remit the tax.  # noqa: E501
+        This method creates or updates a sales tax table entry for a jurisdiction. Specify the tax table entry you want to configure using the two path parameters: <b>countryCode</b> and <b>jurisdictionId</b>.  <br><br>A tax table entry for a jurisdiction is comprised of two fields: one for the jurisdiction's sales-tax rate and another that's a boolean value indicating whether or not shipping and handling are taxed in the jurisdiction.  <br><br>You can set up <i>tax tables</i> for countries that support different <i>tax jurisdictions</i>. Currently, only Canada, India, and the US support separate tax jurisdictions. If you sell into any of these countries, you can set up tax tables for any of the country's jurisdictions. Retrieve valid jurisdiction IDs using <b>getSalesTaxJurisdictions</b> in the Metadata API.  <br><br>For details on using this call, see <a href=\"/api-docs/sell/static/seller-accounts/tax-tables.html\">Establishing sales-tax tables</a>. <br><br><span class=\"tablenote\"><b>Important!</b> Starting in January 2019, eBay will begin to calculate, collect, and remit sales tax on behalf of sellers for items shipped to customers. This feature is rolling out on specific dates to specific US states as defined on the following page: <a href=\"https://www.ebay.com/help/selling/fees-credits-invoices/taxes-import-charges?id=4121#section4\" target=\"_balnk\">eBay sales tax collection</a>. <br><br>Once eBay starts to collect sales tax for a state, no action is required on the seller's part and there will be no charges or fees for eBay automatically calculating, collecting and remitting sales tax. The sales-tax collection process will apply to all the sales in the states that support this feature, whether the seller is located in or outside of the United States.  <br><br>When a buyer purchases an item on eBay, and the ship-to address is one of the states where eBay collects the sales tax, eBay will calculate and add the applicable sales tax at checkout. The buyer will pay both the cost of the item along with the sales tax. eBay will collect and remit the tax.</span>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_or_replace_sales_tax_with_http_info(body, country_code, jurisdiction_id, async_req=True)
@@ -67,7 +67,7 @@ class SalesTaxApi(object):
 
         :param async_req bool
         :param SalesTaxBase body: A container that describes the how the sales tax is calculated. (required)
-        :param str country_code: This path parameter specifies the two-letter ISO 3166 code for the country for which you want to create tax table entry. (required)
+        :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> code for the country for which you want to create tax table entry. (required)
         :param str jurisdiction_id: This path parameter specifies the ID of the sales-tax jurisdiction for the table entry you want to create. (required)
         :return: None
                  If the method is called asynchronously,
@@ -146,14 +146,14 @@ class SalesTaxApi(object):
     def delete_sales_tax(self, country_code, jurisdiction_id, **kwargs):  # noqa: E501
         """delete_sales_tax  # noqa: E501
 
-        This call deletes a tax table entry for a jurisdiction. Specify the jurisdiction to delete using the countryCode and jurisdictionId path parameters.  # noqa: E501
+        This call deletes a tax table entry for a jurisdiction. Specify the jurisdiction to delete using the <b>countryCode</b> and <b>jurisdictionId</b> path parameters.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_sales_tax(country_code, jurisdiction_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str country_code: This path parameter specifies the two-letter ISO 3166 code for the country whose tax table entry you want to delete. (required)
+        :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> code for the country whose tax table entry you want to delete. (required)
         :param str jurisdiction_id: This path parameter specifies the ID of the sales tax jurisdiction whose table entry you want to delete. (required)
         :return: None
                  If the method is called asynchronously,
@@ -169,14 +169,14 @@ class SalesTaxApi(object):
     def delete_sales_tax_with_http_info(self, country_code, jurisdiction_id, **kwargs):  # noqa: E501
         """delete_sales_tax  # noqa: E501
 
-        This call deletes a tax table entry for a jurisdiction. Specify the jurisdiction to delete using the countryCode and jurisdictionId path parameters.  # noqa: E501
+        This call deletes a tax table entry for a jurisdiction. Specify the jurisdiction to delete using the <b>countryCode</b> and <b>jurisdictionId</b> path parameters.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_sales_tax_with_http_info(country_code, jurisdiction_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str country_code: This path parameter specifies the two-letter ISO 3166 code for the country whose tax table entry you want to delete. (required)
+        :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> code for the country whose tax table entry you want to delete. (required)
         :param str jurisdiction_id: This path parameter specifies the ID of the sales tax jurisdiction whose table entry you want to delete. (required)
         :return: None
                  If the method is called asynchronously,
@@ -245,14 +245,14 @@ class SalesTaxApi(object):
     def get_sales_tax(self, country_code, jurisdiction_id, **kwargs):  # noqa: E501
         """get_sales_tax  # noqa: E501
 
-        This call gets the current tax table entry for a specific tax jurisdiction. Specify the jurisdiction to retrieve using the countryCode and jurisdictionId path parameters.  # noqa: E501
+        This call gets the current tax table entry for a specific tax jurisdiction. Specify the jurisdiction to retrieve using the <b>countryCode</b> and <b>jurisdictionId</b> path parameters.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_sales_tax(country_code, jurisdiction_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str country_code: This path parameter specifies the two-letter ISO 3166 code for the country whose tax table you want to retrieve. (required)
+        :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> code for the country whose tax table you want to retrieve. (required)
         :param str jurisdiction_id: This path parameter specifies the ID of the sales tax jurisdiction for the tax table entry you want to retrieve. (required)
         :return: SalesTax
                  If the method is called asynchronously,
@@ -268,14 +268,14 @@ class SalesTaxApi(object):
     def get_sales_tax_with_http_info(self, country_code, jurisdiction_id, **kwargs):  # noqa: E501
         """get_sales_tax  # noqa: E501
 
-        This call gets the current tax table entry for a specific tax jurisdiction. Specify the jurisdiction to retrieve using the countryCode and jurisdictionId path parameters.  # noqa: E501
+        This call gets the current tax table entry for a specific tax jurisdiction. Specify the jurisdiction to retrieve using the <b>countryCode</b> and <b>jurisdictionId</b> path parameters.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_sales_tax_with_http_info(country_code, jurisdiction_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str country_code: This path parameter specifies the two-letter ISO 3166 code for the country whose tax table you want to retrieve. (required)
+        :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> code for the country whose tax table you want to retrieve. (required)
         :param str jurisdiction_id: This path parameter specifies the ID of the sales tax jurisdiction for the tax table entry you want to retrieve. (required)
         :return: SalesTax
                  If the method is called asynchronously,
@@ -348,14 +348,14 @@ class SalesTaxApi(object):
     def get_sales_taxes(self, country_code, **kwargs):  # noqa: E501
         """get_sales_taxes  # noqa: E501
 
-        Use this call to retrieve a sales tax table that the seller established for a specific country. Specify the tax table to retrieve using the country_code query parameter.  # noqa: E501
+        Use this call to retrieve a sales tax table that the seller established for a specific country. Specify the tax table to retrieve using the <code>country_code</code> query parameter.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_sales_taxes(country_code, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str country_code: This path parameter specifies the two-letter ISO 3166 code for the country whose tax table you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:CountryCodeEnum (required)
+        :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> code for the country whose tax table you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:CountryCodeEnum (required)
         :return: SalesTaxes
                  If the method is called asynchronously,
                  returns the request thread.
@@ -370,14 +370,14 @@ class SalesTaxApi(object):
     def get_sales_taxes_with_http_info(self, country_code, **kwargs):  # noqa: E501
         """get_sales_taxes  # noqa: E501
 
-        Use this call to retrieve a sales tax table that the seller established for a specific country. Specify the tax table to retrieve using the country_code query parameter.  # noqa: E501
+        Use this call to retrieve a sales tax table that the seller established for a specific country. Specify the tax table to retrieve using the <code>country_code</code> query parameter.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_sales_taxes_with_http_info(country_code, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str country_code: This path parameter specifies the two-letter ISO 3166 code for the country whose tax table you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:CountryCodeEnum (required)
+        :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> code for the country whose tax table you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:CountryCodeEnum (required)
         :return: SalesTaxes
                  If the method is called asynchronously,
                  returns the request thread.

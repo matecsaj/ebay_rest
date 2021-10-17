@@ -173,7 +173,7 @@ class DisputeEvidence(object):
     def provided_date(self):
         """Gets the provided_date of this DisputeEvidence.  # noqa: E501
 
-        The timestamp in this field shows the date/time when the seller provided a requested evidential document to eBay. The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.  # noqa: E501
+        The timestamp in this field shows the date/time when the seller provided a requested evidential document to eBay. <br/><br/>The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: <em>yyyy-MM-ddThh:mm.ss.sssZ</em>. An example would be <code>2019-08-04T19:09:02.768Z</code>.  # noqa: E501
 
         :return: The provided_date of this DisputeEvidence.  # noqa: E501
         :rtype: str
@@ -184,7 +184,7 @@ class DisputeEvidence(object):
     def provided_date(self, provided_date):
         """Sets the provided_date of this DisputeEvidence.
 
-        The timestamp in this field shows the date/time when the seller provided a requested evidential document to eBay. The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.  # noqa: E501
+        The timestamp in this field shows the date/time when the seller provided a requested evidential document to eBay. <br/><br/>The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: <em>yyyy-MM-ddThh:mm.ss.sssZ</em>. An example would be <code>2019-08-04T19:09:02.768Z</code>.  # noqa: E501
 
         :param provided_date: The provided_date of this DisputeEvidence.  # noqa: E501
         :type: str
@@ -196,7 +196,7 @@ class DisputeEvidence(object):
     def request_date(self):
         """Gets the request_date of this DisputeEvidence.  # noqa: E501
 
-        The timestamp in this field shows the date/time when eBay requested the evidential document from the seller in response to a payment dispute. The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.  # noqa: E501
+        The timestamp in this field shows the date/time when eBay requested the evidential document from the seller in response to a payment dispute. <br/><br/>The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: <em>yyyy-MM-ddThh:mm.ss.sssZ</em>. An example would be <code>2019-08-04T19:09:02.768Z</code>.  # noqa: E501
 
         :return: The request_date of this DisputeEvidence.  # noqa: E501
         :rtype: str
@@ -207,7 +207,7 @@ class DisputeEvidence(object):
     def request_date(self, request_date):
         """Sets the request_date of this DisputeEvidence.
 
-        The timestamp in this field shows the date/time when eBay requested the evidential document from the seller in response to a payment dispute. The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.  # noqa: E501
+        The timestamp in this field shows the date/time when eBay requested the evidential document from the seller in response to a payment dispute. <br/><br/>The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: <em>yyyy-MM-ddThh:mm.ss.sssZ</em>. An example would be <code>2019-08-04T19:09:02.768Z</code>.  # noqa: E501
 
         :param request_date: The request_date of this DisputeEvidence.  # noqa: E501
         :type: str
@@ -219,7 +219,7 @@ class DisputeEvidence(object):
     def respond_by_date(self):
         """Gets the respond_by_date of this DisputeEvidence.  # noqa: E501
 
-        The timestamp in this field shows the date/time when the seller was expected to provide a requested evidential document to eBay. The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.  # noqa: E501
+        The timestamp in this field shows the date/time when the seller was expected to provide a requested evidential document to eBay.  <br/><br/>The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: <em>yyyy-MM-ddThh:mm.ss.sssZ</em>. An example would be <code>2019-08-04T19:09:02.768Z</code>.  # noqa: E501
 
         :return: The respond_by_date of this DisputeEvidence.  # noqa: E501
         :rtype: str
@@ -230,7 +230,7 @@ class DisputeEvidence(object):
     def respond_by_date(self, respond_by_date):
         """Sets the respond_by_date of this DisputeEvidence.
 
-        The timestamp in this field shows the date/time when the seller was expected to provide a requested evidential document to eBay. The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.  # noqa: E501
+        The timestamp in this field shows the date/time when the seller was expected to provide a requested evidential document to eBay.  <br/><br/>The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: <em>yyyy-MM-ddThh:mm.ss.sssZ</em>. An example would be <code>2019-08-04T19:09:02.768Z</code>.  # noqa: E501
 
         :param respond_by_date: The respond_by_date of this DisputeEvidence.  # noqa: E501
         :type: str
@@ -242,7 +242,7 @@ class DisputeEvidence(object):
     def shipment_tracking(self):
         """Gets the shipment_tracking of this DisputeEvidence.  # noqa: E501
 
-        This array shows the shipping carrier and shipment tracking number associated with each shipment package of the order. This array is returned if the seller has provided shipment tracking information as evidence to support PROOF_OF_DELIVERY.  # noqa: E501
+        This array shows the shipping carrier and shipment tracking number associated with each shipment package of the order. This array is returned if the seller has provided shipment tracking information as evidence to support <code>PROOF_OF_DELIVERY</code>.  # noqa: E501
 
         :return: The shipment_tracking of this DisputeEvidence.  # noqa: E501
         :rtype: list[TrackingInfo]
@@ -253,7 +253,7 @@ class DisputeEvidence(object):
     def shipment_tracking(self, shipment_tracking):
         """Sets the shipment_tracking of this DisputeEvidence.
 
-        This array shows the shipping carrier and shipment tracking number associated with each shipment package of the order. This array is returned if the seller has provided shipment tracking information as evidence to support PROOF_OF_DELIVERY.  # noqa: E501
+        This array shows the shipping carrier and shipment tracking number associated with each shipment package of the order. This array is returned if the seller has provided shipment tracking information as evidence to support <code>PROOF_OF_DELIVERY</code>.  # noqa: E501
 
         :param shipment_tracking: The shipment_tracking of this DisputeEvidence.  # noqa: E501
         :type: list[TrackingInfo]

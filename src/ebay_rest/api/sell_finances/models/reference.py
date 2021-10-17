@@ -51,7 +51,7 @@ class Reference(object):
     def reference_id(self):
         """Gets the reference_id of this Reference.  # noqa: E501
 
-        The identifier of the transaction as specified by the referenceType. For example, with a referenceType of item_id, the referenceId refers to a unique item. This item may have several NON_SALE_CHARGE transactions.  # noqa: E501
+        The identifier of the transaction as specified by the <strong>referenceType</strong>. For example, with a <strong>referenceType</strong> of <strong>item_id</strong>, the <strong>referenceId</strong> refers to a unique item. This item may have several <code>NON_SALE_CHARGE</code> transactions.  # noqa: E501
 
         :return: The reference_id of this Reference.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class Reference(object):
     def reference_id(self, reference_id):
         """Sets the reference_id of this Reference.
 
-        The identifier of the transaction as specified by the referenceType. For example, with a referenceType of item_id, the referenceId refers to a unique item. This item may have several NON_SALE_CHARGE transactions.  # noqa: E501
+        The identifier of the transaction as specified by the <strong>referenceType</strong>. For example, with a <strong>referenceType</strong> of <strong>item_id</strong>, the <strong>referenceId</strong> refers to a unique item. This item may have several <code>NON_SALE_CHARGE</code> transactions.  # noqa: E501
 
         :param reference_id: The reference_id of this Reference.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class Reference(object):
     def reference_type(self):
         """Gets the reference_type of this Reference.  # noqa: E501
 
-        An enumeration value that identifies the reference type associated with the referenceId. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:ReferenceTypeEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value that identifies the reference type associated with the <strong>referenceId</strong>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:ReferenceTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The reference_type of this Reference.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class Reference(object):
     def reference_type(self, reference_type):
         """Sets the reference_type of this Reference.
 
-        An enumeration value that identifies the reference type associated with the referenceId. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:ReferenceTypeEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value that identifies the reference type associated with the <strong>referenceId</strong>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:ReferenceTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param reference_type: The reference_type of this Reference.  # noqa: E501
         :type: str

@@ -72,7 +72,7 @@ class AcceptPaymentDisputeRequest(object):
     def revision(self):
         """Gets the revision of this AcceptPaymentDisputeRequest.  # noqa: E501
 
-        This integer value indicates the revision number of the payment dispute. This field is required. The current revision number for a payment dispute can be retrieved with the getPaymentDispute method. Each time an action is taken against a payment dispute, this integer value increases by 1.  # noqa: E501
+        This integer value indicates the revision number of the payment dispute. This field is required. The current <strong>revision</strong> number for a payment dispute can be retrieved with the <strong>getPaymentDispute</strong> method. Each time an action is taken against a payment dispute, this integer value increases by 1.  # noqa: E501
 
         :return: The revision of this AcceptPaymentDisputeRequest.  # noqa: E501
         :rtype: int
@@ -83,7 +83,7 @@ class AcceptPaymentDisputeRequest(object):
     def revision(self, revision):
         """Sets the revision of this AcceptPaymentDisputeRequest.
 
-        This integer value indicates the revision number of the payment dispute. This field is required. The current revision number for a payment dispute can be retrieved with the getPaymentDispute method. Each time an action is taken against a payment dispute, this integer value increases by 1.  # noqa: E501
+        This integer value indicates the revision number of the payment dispute. This field is required. The current <strong>revision</strong> number for a payment dispute can be retrieved with the <strong>getPaymentDispute</strong> method. Each time an action is taken against a payment dispute, this integer value increases by 1.  # noqa: E501
 
         :param revision: The revision of this AcceptPaymentDisputeRequest.  # noqa: E501
         :type: int

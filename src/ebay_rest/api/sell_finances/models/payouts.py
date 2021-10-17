@@ -76,7 +76,7 @@ class Payouts(object):
     def href(self):
         """Gets the href of this Payouts.  # noqa: E501
 
-        The URI of the getPayouts call request that produced the current page of the result set.  # noqa: E501
+        The URI of the <b>getPayouts</b> call request that produced the current page of the result set.  # noqa: E501
 
         :return: The href of this Payouts.  # noqa: E501
         :rtype: str
@@ -87,7 +87,7 @@ class Payouts(object):
     def href(self, href):
         """Sets the href of this Payouts.
 
-        The URI of the getPayouts call request that produced the current page of the result set.  # noqa: E501
+        The URI of the <b>getPayouts</b> call request that produced the current page of the result set.  # noqa: E501
 
         :param href: The href of this Payouts.  # noqa: E501
         :type: str
@@ -99,7 +99,7 @@ class Payouts(object):
     def limit(self):
         """Gets the limit of this Payouts.  # noqa: E501
 
-        The maximum number of payouts that may be returned per page of the result set. The limit value can be passed in as a query parameter, or if omitted, its value defaults to 20. Note: If this is the last or only page of the result set, the page may contain fewer payouts than the limit value. To determine the number of pages in a result set, divide the total value (total number of payouts matching input criteria) by this limit value, and then round up to the next integer. For example, if the total value was 120 (120 total payouts) and the limit value was 50 (show 50 payouts per page), the total number of pages in the result set is three, so the seller would have to make three separate getPayouts calls to view all payouts matching the input criteria. Maximum: 200 Default: 20  # noqa: E501
+        The maximum number of payouts that may be returned per page of the result set. The <strong>limit</strong> value can be passed in as a query parameter, or if omitted, its value defaults to <code>20</code>. <br /><br /><span class=\"tablenote\"><strong>Note:</strong> If this is the last or only page of the result set, the page may contain fewer payouts than the <strong>limit</strong> value.  To determine the number of pages in a result set, divide the <b>total</b> value (total number of payouts matching input criteria) by this <strong>limit</strong> value, and then round up to the next integer. For example, if the <b>total</b> value was <code>120</code> (120 total payouts) and the <strong>limit</strong> value was <code>50</code> (show 50 payouts per page), the total number of pages in the result set is three, so the seller would have to make three separate <strong>getPayouts</strong> calls to view all payouts matching the input criteria. </span><br/><br/><b>Maximum:</b> <code>200</code> <br /> <b>Default:</b> <code>20</code>  # noqa: E501
 
         :return: The limit of this Payouts.  # noqa: E501
         :rtype: int
@@ -110,7 +110,7 @@ class Payouts(object):
     def limit(self, limit):
         """Sets the limit of this Payouts.
 
-        The maximum number of payouts that may be returned per page of the result set. The limit value can be passed in as a query parameter, or if omitted, its value defaults to 20. Note: If this is the last or only page of the result set, the page may contain fewer payouts than the limit value. To determine the number of pages in a result set, divide the total value (total number of payouts matching input criteria) by this limit value, and then round up to the next integer. For example, if the total value was 120 (120 total payouts) and the limit value was 50 (show 50 payouts per page), the total number of pages in the result set is three, so the seller would have to make three separate getPayouts calls to view all payouts matching the input criteria. Maximum: 200 Default: 20  # noqa: E501
+        The maximum number of payouts that may be returned per page of the result set. The <strong>limit</strong> value can be passed in as a query parameter, or if omitted, its value defaults to <code>20</code>. <br /><br /><span class=\"tablenote\"><strong>Note:</strong> If this is the last or only page of the result set, the page may contain fewer payouts than the <strong>limit</strong> value.  To determine the number of pages in a result set, divide the <b>total</b> value (total number of payouts matching input criteria) by this <strong>limit</strong> value, and then round up to the next integer. For example, if the <b>total</b> value was <code>120</code> (120 total payouts) and the <strong>limit</strong> value was <code>50</code> (show 50 payouts per page), the total number of pages in the result set is three, so the seller would have to make three separate <strong>getPayouts</strong> calls to view all payouts matching the input criteria. </span><br/><br/><b>Maximum:</b> <code>200</code> <br /> <b>Default:</b> <code>20</code>  # noqa: E501
 
         :param limit: The limit of this Payouts.  # noqa: E501
         :type: int
@@ -122,7 +122,7 @@ class Payouts(object):
     def next(self):
         """Gets the next of this Payouts.  # noqa: E501
 
-        The getPayouts call URI to use if you wish to view the next page of the result set. This field is only returned if there is a next page of results to view based on the current input criteria.  # noqa: E501
+        The <b>getPayouts</b> call URI to use if you wish to view the next page of the result set. <br/><br/>This field is only returned if there is a next page of results to view based on the current input criteria.  # noqa: E501
 
         :return: The next of this Payouts.  # noqa: E501
         :rtype: str
@@ -133,7 +133,7 @@ class Payouts(object):
     def next(self, next):
         """Sets the next of this Payouts.
 
-        The getPayouts call URI to use if you wish to view the next page of the result set. This field is only returned if there is a next page of results to view based on the current input criteria.  # noqa: E501
+        The <b>getPayouts</b> call URI to use if you wish to view the next page of the result set. <br/><br/>This field is only returned if there is a next page of results to view based on the current input criteria.  # noqa: E501
 
         :param next: The next of this Payouts.  # noqa: E501
         :type: str
@@ -145,7 +145,7 @@ class Payouts(object):
     def offset(self):
         """Gets the offset of this Payouts.  # noqa: E501
 
-        This integer value indicates the actual position that the first payout returned on the current page has in the results set. So, if you wanted to view the 11th payout of the result set, you would set the offset value in the request to 10. In the request, you can use the offset parameter in conjunction with the limit parameter to control the pagination of the output. For example, if offset is set to 30 and limit is set to 10, the call retrieves payouts 31 thru 40 from the resulting collection of payouts. Note: This feature employs a zero-based list, where the first item in the list has an offset of 0. Default: 0 (zero)  # noqa: E501
+        This integer value indicates the actual position that the first payout returned on the current page has in the results set. So, if you wanted to view the 11th payout of the result set, you would set the <strong>offset</strong> value in the request to <code>10</code>. <br><br>In the request, you can use the <b>offset</b> parameter in conjunction with the <b>limit</b> parameter to control the pagination of the output. For example, if <b>offset</b> is set to <code>30</code> and <b>limit</b> is set to <code>10</code>, the call retrieves payouts 31 thru 40 from the resulting collection of payouts. <br /><br /> <span class=\"tablenote\"><strong>Note:</strong> This feature employs a zero-based list, where the first item in the list has an offset of <code>0</code>.</span><br/><br/><b>Default:</b> <code>0</code> (zero)  # noqa: E501
 
         :return: The offset of this Payouts.  # noqa: E501
         :rtype: int
@@ -156,7 +156,7 @@ class Payouts(object):
     def offset(self, offset):
         """Sets the offset of this Payouts.
 
-        This integer value indicates the actual position that the first payout returned on the current page has in the results set. So, if you wanted to view the 11th payout of the result set, you would set the offset value in the request to 10. In the request, you can use the offset parameter in conjunction with the limit parameter to control the pagination of the output. For example, if offset is set to 30 and limit is set to 10, the call retrieves payouts 31 thru 40 from the resulting collection of payouts. Note: This feature employs a zero-based list, where the first item in the list has an offset of 0. Default: 0 (zero)  # noqa: E501
+        This integer value indicates the actual position that the first payout returned on the current page has in the results set. So, if you wanted to view the 11th payout of the result set, you would set the <strong>offset</strong> value in the request to <code>10</code>. <br><br>In the request, you can use the <b>offset</b> parameter in conjunction with the <b>limit</b> parameter to control the pagination of the output. For example, if <b>offset</b> is set to <code>30</code> and <b>limit</b> is set to <code>10</code>, the call retrieves payouts 31 thru 40 from the resulting collection of payouts. <br /><br /> <span class=\"tablenote\"><strong>Note:</strong> This feature employs a zero-based list, where the first item in the list has an offset of <code>0</code>.</span><br/><br/><b>Default:</b> <code>0</code> (zero)  # noqa: E501
 
         :param offset: The offset of this Payouts.  # noqa: E501
         :type: int
@@ -191,7 +191,7 @@ class Payouts(object):
     def prev(self):
         """Gets the prev of this Payouts.  # noqa: E501
 
-        The getPayouts call URI to use if you wish to view the previous page of the result set. This field is only returned if there is a previous page of results to view based on the current input criteria.  # noqa: E501
+        The <b>getPayouts</b> call URI to use if you wish to view the previous page of the result set. <br/><br/>This field is only returned if there is a previous page of results to view based on the current input criteria.  # noqa: E501
 
         :return: The prev of this Payouts.  # noqa: E501
         :rtype: str
@@ -202,7 +202,7 @@ class Payouts(object):
     def prev(self, prev):
         """Sets the prev of this Payouts.
 
-        The getPayouts call URI to use if you wish to view the previous page of the result set. This field is only returned if there is a previous page of results to view based on the current input criteria.  # noqa: E501
+        The <b>getPayouts</b> call URI to use if you wish to view the previous page of the result set. <br/><br/>This field is only returned if there is a previous page of results to view based on the current input criteria.  # noqa: E501
 
         :param prev: The prev of this Payouts.  # noqa: E501
         :type: str
@@ -214,7 +214,7 @@ class Payouts(object):
     def total(self):
         """Gets the total of this Payouts.  # noqa: E501
 
-        This integer value is the total number of payouts in the results set based on the current input criteria. Based on the total number of payouts that match the criteria, and on the limit and offset values, there may be additional pages in the results set.  # noqa: E501
+        This integer value is the total number of payouts in the results set based on the current input criteria. Based on the total number of payouts that match the criteria, and on the <strong>limit</strong> and <strong>offset</strong> values, there may be additional pages in the results set.  # noqa: E501
 
         :return: The total of this Payouts.  # noqa: E501
         :rtype: int
@@ -225,7 +225,7 @@ class Payouts(object):
     def total(self, total):
         """Sets the total of this Payouts.
 
-        This integer value is the total number of payouts in the results set based on the current input criteria. Based on the total number of payouts that match the criteria, and on the limit and offset values, there may be additional pages in the results set.  # noqa: E501
+        This integer value is the total number of payouts in the results set based on the current input criteria. Based on the total number of payouts that match the criteria, and on the <strong>limit</strong> and <strong>offset</strong> values, there may be additional pages in the results set.  # noqa: E501
 
         :param total: The total of this Payouts.  # noqa: E501
         :type: int

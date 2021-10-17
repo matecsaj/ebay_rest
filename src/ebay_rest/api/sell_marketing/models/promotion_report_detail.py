@@ -205,7 +205,7 @@ class PromotionReportDetail(object):
     def average_order_size(self):
         """Gets the average_order_size of this PromotionReportDetail.  # noqa: E501
 
-        The average order size is the average number of items that each order contained in a promotion. This value is calculated as follows: itemsSoldQuantity / numberOfOrdersSold = averageOrderSize  # noqa: E501
+        The <i>average order size</i> is the average number of items that each order contained in a promotion. This value is calculated as follows:  <br><br><b>itemsSoldQuantity</b> / <b>numberOfOrdersSold</b> = <b>averageOrderSize</b>   # noqa: E501
 
         :return: The average_order_size of this PromotionReportDetail.  # noqa: E501
         :rtype: str
@@ -216,7 +216,7 @@ class PromotionReportDetail(object):
     def average_order_size(self, average_order_size):
         """Sets the average_order_size of this PromotionReportDetail.
 
-        The average order size is the average number of items that each order contained in a promotion. This value is calculated as follows: itemsSoldQuantity / numberOfOrdersSold = averageOrderSize  # noqa: E501
+        The <i>average order size</i> is the average number of items that each order contained in a promotion. This value is calculated as follows:  <br><br><b>itemsSoldQuantity</b> / <b>numberOfOrdersSold</b> = <b>averageOrderSize</b>   # noqa: E501
 
         :param average_order_size: The average_order_size of this PromotionReportDetail.  # noqa: E501
         :type: str
@@ -249,7 +249,7 @@ class PromotionReportDetail(object):
     def items_sold_quantity(self):
         """Gets the items_sold_quantity of this PromotionReportDetail.  # noqa: E501
 
-        This is the quantity of items purchased in a threshold promotion where the threshold has been met and the discount was applied. For example, suppose you're running a &quot;Buy 1, get 1 at 50%&quot; promotion on $5 socks. One buyer purchases two pairs of socks, so they pay $7.50 for both pairs (rather than the full price of $10). Your number of items sold (itemsSoldQuantity) would be 2 and you number of orders sold (numberOfOrdersSold) would be 1.  # noqa: E501
+        This is the quantity of items purchased in a threshold promotion where the threshold <i>has been met</i> and the discount was applied. <br><br>For example, suppose you're running a \"Buy 1, get 1 at 50%\" promotion on $5 socks. One buyer purchases two pairs of socks, so they pay $7.50 for both pairs (rather than the full price of $10). Your number of items sold (<b>itemsSoldQuantity</b>) would be 2 and you number of orders sold (<b>numberOfOrdersSold</b>) would be 1.  # noqa: E501
 
         :return: The items_sold_quantity of this PromotionReportDetail.  # noqa: E501
         :rtype: int
@@ -260,7 +260,7 @@ class PromotionReportDetail(object):
     def items_sold_quantity(self, items_sold_quantity):
         """Sets the items_sold_quantity of this PromotionReportDetail.
 
-        This is the quantity of items purchased in a threshold promotion where the threshold has been met and the discount was applied. For example, suppose you're running a &quot;Buy 1, get 1 at 50%&quot; promotion on $5 socks. One buyer purchases two pairs of socks, so they pay $7.50 for both pairs (rather than the full price of $10). Your number of items sold (itemsSoldQuantity) would be 2 and you number of orders sold (numberOfOrdersSold) would be 1.  # noqa: E501
+        This is the quantity of items purchased in a threshold promotion where the threshold <i>has been met</i> and the discount was applied. <br><br>For example, suppose you're running a \"Buy 1, get 1 at 50%\" promotion on $5 socks. One buyer purchases two pairs of socks, so they pay $7.50 for both pairs (rather than the full price of $10). Your number of items sold (<b>itemsSoldQuantity</b>) would be 2 and you number of orders sold (<b>numberOfOrdersSold</b>) would be 1.  # noqa: E501
 
         :param items_sold_quantity: The items_sold_quantity of this PromotionReportDetail.  # noqa: E501
         :type: int
@@ -272,7 +272,7 @@ class PromotionReportDetail(object):
     def number_of_orders_sold(self):
         """Gets the number_of_orders_sold of this PromotionReportDetail.  # noqa: E501
 
-        This is the number of orders sold in a threshold promotion where the threshold has been met and the discount was applied. For example, suppose you're running a &quot;Buy 1, get 1 at 50%&quot; promotion on $5 socks. One buyer purchases two pairs of socks, so they pay $7.50 for both pairs (rather than the full price of $10). Your numberOfOrdersSold would be 1 and your itemsSoldQuantity would be 2.  # noqa: E501
+        This is the number of orders sold in a threshold promotion where the threshold <i>has been met</i> and the discount was applied. <br><br>For example, suppose you're running a \"Buy 1, get 1 at 50%\" promotion on $5 socks. One buyer purchases two pairs of socks, so they pay $7.50 for both pairs (rather than the full price of $10). Your <b>numberOfOrdersSold</b> would be 1 and your <b>itemsSoldQuantity</b> would be 2.  # noqa: E501
 
         :return: The number_of_orders_sold of this PromotionReportDetail.  # noqa: E501
         :rtype: int
@@ -283,7 +283,7 @@ class PromotionReportDetail(object):
     def number_of_orders_sold(self, number_of_orders_sold):
         """Sets the number_of_orders_sold of this PromotionReportDetail.
 
-        This is the number of orders sold in a threshold promotion where the threshold has been met and the discount was applied. For example, suppose you're running a &quot;Buy 1, get 1 at 50%&quot; promotion on $5 socks. One buyer purchases two pairs of socks, so they pay $7.50 for both pairs (rather than the full price of $10). Your numberOfOrdersSold would be 1 and your itemsSoldQuantity would be 2.  # noqa: E501
+        This is the number of orders sold in a threshold promotion where the threshold <i>has been met</i> and the discount was applied. <br><br>For example, suppose you're running a \"Buy 1, get 1 at 50%\" promotion on $5 socks. One buyer purchases two pairs of socks, so they pay $7.50 for both pairs (rather than the full price of $10). Your <b>numberOfOrdersSold</b> would be 1 and your <b>itemsSoldQuantity</b> would be 2.  # noqa: E501
 
         :param number_of_orders_sold: The number_of_orders_sold of this PromotionReportDetail.  # noqa: E501
         :type: int
@@ -295,7 +295,7 @@ class PromotionReportDetail(object):
     def percentage_sales_lift(self):
         """Gets the percentage_sales_lift of this PromotionReportDetail.  # noqa: E501
 
-        The percentage sales lift is the total dollar amount gained due to promotions. This value is calculated as follows: promotionSale / totalSale = percentageSalesLift  # noqa: E501
+        The <i>percentage sales lift</i> is the total dollar amount gained due to promotions. This value is calculated as follows:  <br><br> <b>promotionSale</b> / <b>totalSale</b> =  <b>percentageSalesLift</b>   # noqa: E501
 
         :return: The percentage_sales_lift of this PromotionReportDetail.  # noqa: E501
         :rtype: str
@@ -306,7 +306,7 @@ class PromotionReportDetail(object):
     def percentage_sales_lift(self, percentage_sales_lift):
         """Sets the percentage_sales_lift of this PromotionReportDetail.
 
-        The percentage sales lift is the total dollar amount gained due to promotions. This value is calculated as follows: promotionSale / totalSale = percentageSalesLift  # noqa: E501
+        The <i>percentage sales lift</i> is the total dollar amount gained due to promotions. This value is calculated as follows:  <br><br> <b>promotionSale</b> / <b>totalSale</b> =  <b>percentageSalesLift</b>   # noqa: E501
 
         :param percentage_sales_lift: The percentage_sales_lift of this PromotionReportDetail.  # noqa: E501
         :type: str
@@ -408,7 +408,7 @@ class PromotionReportDetail(object):
     def promotion_type(self):
         """Gets the promotion_type of this PromotionReportDetail.  # noqa: E501
 
-        Indicates the type of the promotion, either CODED_COUPON, MARKDOWN_SALE, ORDER_DISCOUNT, or VOLUME_DISCOUNT. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/sme:PromotionTypeEnum'>eBay API documentation</a>  # noqa: E501
+        Indicates the type of the promotion, either <code>CODED_COUPON</code>, <code>MARKDOWN_SALE</code>, <code>ORDER_DISCOUNT</code>, or <code>VOLUME_DISCOUNT</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/sme:PromotionTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The promotion_type of this PromotionReportDetail.  # noqa: E501
         :rtype: str
@@ -419,7 +419,7 @@ class PromotionReportDetail(object):
     def promotion_type(self, promotion_type):
         """Sets the promotion_type of this PromotionReportDetail.
 
-        Indicates the type of the promotion, either CODED_COUPON, MARKDOWN_SALE, ORDER_DISCOUNT, or VOLUME_DISCOUNT. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/sme:PromotionTypeEnum'>eBay API documentation</a>  # noqa: E501
+        Indicates the type of the promotion, either <code>CODED_COUPON</code>, <code>MARKDOWN_SALE</code>, <code>ORDER_DISCOUNT</code>, or <code>VOLUME_DISCOUNT</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/sme:PromotionTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param promotion_type: The promotion_type of this PromotionReportDetail.  # noqa: E501
         :type: str

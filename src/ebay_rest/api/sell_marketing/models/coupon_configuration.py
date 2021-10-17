@@ -56,7 +56,7 @@ class CouponConfiguration(object):
     def coupon_code(self):
         """Gets the coupon_code of this CouponConfiguration.  # noqa: E501
 
-        A unique code that buyers can use during checkout to receive a discount. The code must be unique across eBay. The code must be from 8-15 alphanumeric characters and can contain no more than two dashes ( - ). This is required when the promotion type is CODED_COUPON.  # noqa: E501
+        A unique code that buyers can use during checkout to receive a discount. The code must be unique across eBay. <br><br>The code must be from 8-15 alphanumeric characters and can contain no more than two dashes ( - ).<br><br>This is required when the promotion type is CODED_COUPON.  # noqa: E501
 
         :return: The coupon_code of this CouponConfiguration.  # noqa: E501
         :rtype: str
@@ -67,7 +67,7 @@ class CouponConfiguration(object):
     def coupon_code(self, coupon_code):
         """Sets the coupon_code of this CouponConfiguration.
 
-        A unique code that buyers can use during checkout to receive a discount. The code must be unique across eBay. The code must be from 8-15 alphanumeric characters and can contain no more than two dashes ( - ). This is required when the promotion type is CODED_COUPON.  # noqa: E501
+        A unique code that buyers can use during checkout to receive a discount. The code must be unique across eBay. <br><br>The code must be from 8-15 alphanumeric characters and can contain no more than two dashes ( - ).<br><br>This is required when the promotion type is CODED_COUPON.  # noqa: E501
 
         :param coupon_code: The coupon_code of this CouponConfiguration.  # noqa: E501
         :type: str
@@ -79,7 +79,7 @@ class CouponConfiguration(object):
     def coupon_type(self):
         """Gets the coupon_type of this CouponConfiguration.  # noqa: E501
 
-        This indicates the type of Coded Coupon promotion, and is required when the promotion type is CODED_COUPON. Supported types: PRIVATE_SINGLE_SELLER_COUPON: Anyone can use and share the coupon code, but it isn't posted on eBay. PUBLIC_SINGLE_SELLER_COUPON: Anyone can find the coupon code on eBay and use it. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/sme:CouponTypeEnum'>eBay API documentation</a>  # noqa: E501
+        This indicates the type of Coded Coupon promotion, and is required when the promotion type is <b>CODED_COUPON</b>.<br><br>Supported types:<ul><li><b>PRIVATE_SINGLE_SELLER_COUPON:</b> Anyone can use and share the coupon code, but it isn't posted on eBay.</li><li><b>PUBLIC_SINGLE_SELLER_COUPON:</b> Anyone can find the coupon code on eBay and use it.</li></ul> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/sme:CouponTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The coupon_type of this CouponConfiguration.  # noqa: E501
         :rtype: str
@@ -90,7 +90,7 @@ class CouponConfiguration(object):
     def coupon_type(self, coupon_type):
         """Sets the coupon_type of this CouponConfiguration.
 
-        This indicates the type of Coded Coupon promotion, and is required when the promotion type is CODED_COUPON. Supported types: PRIVATE_SINGLE_SELLER_COUPON: Anyone can use and share the coupon code, but it isn't posted on eBay. PUBLIC_SINGLE_SELLER_COUPON: Anyone can find the coupon code on eBay and use it. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/sme:CouponTypeEnum'>eBay API documentation</a>  # noqa: E501
+        This indicates the type of Coded Coupon promotion, and is required when the promotion type is <b>CODED_COUPON</b>.<br><br>Supported types:<ul><li><b>PRIVATE_SINGLE_SELLER_COUPON:</b> Anyone can use and share the coupon code, but it isn't posted on eBay.</li><li><b>PUBLIC_SINGLE_SELLER_COUPON:</b> Anyone can find the coupon code on eBay and use it.</li></ul> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/sme:CouponTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param coupon_type: The coupon_type of this CouponConfiguration.  # noqa: E501
         :type: str

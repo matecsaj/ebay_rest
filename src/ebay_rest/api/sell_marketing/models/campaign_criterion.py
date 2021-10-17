@@ -56,7 +56,7 @@ class CampaignCriterion(object):
     def auto_select_future_inventory(self):
         """Gets the auto_select_future_inventory of this CampaignCriterion.  # noqa: E501
 
-        Reserved for future use.  # noqa: E501
+        Reserved for future use.<!--If set to <code>true</code>, eBay adds all listings matching the campaign criterion to the campaign, including any new listings created from the items in your inventory.  <p>In other words, if you create a new listing, and it is is eligible for the Promoted Listings campaign (it is a multiple-quantity fixed-price listing that matches the selection rules of the campaign), it will be automatically added to the campaign.</p><b>Default: </b>false-->  # noqa: E501
 
         :return: The auto_select_future_inventory of this CampaignCriterion.  # noqa: E501
         :rtype: bool
@@ -67,7 +67,7 @@ class CampaignCriterion(object):
     def auto_select_future_inventory(self, auto_select_future_inventory):
         """Sets the auto_select_future_inventory of this CampaignCriterion.
 
-        Reserved for future use.  # noqa: E501
+        Reserved for future use.<!--If set to <code>true</code>, eBay adds all listings matching the campaign criterion to the campaign, including any new listings created from the items in your inventory.  <p>In other words, if you create a new listing, and it is is eligible for the Promoted Listings campaign (it is a multiple-quantity fixed-price listing that matches the selection rules of the campaign), it will be automatically added to the campaign.</p><b>Default: </b>false-->  # noqa: E501
 
         :param auto_select_future_inventory: The auto_select_future_inventory of this CampaignCriterion.  # noqa: E501
         :type: bool
@@ -79,7 +79,7 @@ class CampaignCriterion(object):
     def criterion_type(self):
         """Gets the criterion_type of this CampaignCriterion.  # noqa: E501
 
-        This enum defines the criterion (selection rule) types. Currently, the only criterion type supported is INVENTORY_PARTITION, and you must specify this value if you manage your items with the Inventory API and you want to include items based on their inventory reference IDs. Leave this field blank if you want to create campaign ads based on listing IDs. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:CriterionTypeEnum'>eBay API documentation</a>  # noqa: E501
+        This enum defines the criterion (selection rule) types. Currently, the only criterion type supported is <code>INVENTORY_PARTITION</code>, and you must specify this value if you manage your items with the Inventory API and you want to include items based on their inventory reference IDs.  <br><br>Leave this field blank if you want to create campaign ads based on listing IDs. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:CriterionTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The criterion_type of this CampaignCriterion.  # noqa: E501
         :rtype: str
@@ -90,7 +90,7 @@ class CampaignCriterion(object):
     def criterion_type(self, criterion_type):
         """Sets the criterion_type of this CampaignCriterion.
 
-        This enum defines the criterion (selection rule) types. Currently, the only criterion type supported is INVENTORY_PARTITION, and you must specify this value if you manage your items with the Inventory API and you want to include items based on their inventory reference IDs. Leave this field blank if you want to create campaign ads based on listing IDs. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:CriterionTypeEnum'>eBay API documentation</a>  # noqa: E501
+        This enum defines the criterion (selection rule) types. Currently, the only criterion type supported is <code>INVENTORY_PARTITION</code>, and you must specify this value if you manage your items with the Inventory API and you want to include items based on their inventory reference IDs.  <br><br>Leave this field blank if you want to create campaign ads based on listing IDs. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:CriterionTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param criterion_type: The criterion_type of this CampaignCriterion.  # noqa: E501
         :type: str
@@ -102,7 +102,7 @@ class CampaignCriterion(object):
     def selection_rules(self):
         """Gets the selection_rules of this CampaignCriterion.  # noqa: E501
 
-        Set of rules that selects the listings to include in the campaign. The following rules apply to the selection rules: Each set of selection rules are ORed with each other. Individual rules within a selection rule set are ANDed with each other. If a rule has a list of values (such a list of category IDs), the item need match only one of the values of the rule in order to be included in the campaign. Note: If an item matches multiple sets of rules or multiple rules within a selection rule set, the item is considered only once.Maximum number of rules: 10  # noqa: E501
+        Set of rules that selects the listings to include in the campaign.  <p>The following rules apply to the selection rules:</p> <ul><li>Each set of selection rules are <i>ORed</i> with each other. </li>  <li>Individual rules within a selection rule set are <i>ANDed</i> with each other. If a rule has a list of values (such a list of category IDs), the item need match only one of the values of the rule in order to be included in the campaign.</li>  <p><b>Note: </b>If an item matches multiple sets of rules or multiple rules within a selection rule set, the item is considered only once.</p></ul><b>Maximum number of rules: </b> 10  # noqa: E501
 
         :return: The selection_rules of this CampaignCriterion.  # noqa: E501
         :rtype: list[SelectionRule]
@@ -113,7 +113,7 @@ class CampaignCriterion(object):
     def selection_rules(self, selection_rules):
         """Sets the selection_rules of this CampaignCriterion.
 
-        Set of rules that selects the listings to include in the campaign. The following rules apply to the selection rules: Each set of selection rules are ORed with each other. Individual rules within a selection rule set are ANDed with each other. If a rule has a list of values (such a list of category IDs), the item need match only one of the values of the rule in order to be included in the campaign. Note: If an item matches multiple sets of rules or multiple rules within a selection rule set, the item is considered only once.Maximum number of rules: 10  # noqa: E501
+        Set of rules that selects the listings to include in the campaign.  <p>The following rules apply to the selection rules:</p> <ul><li>Each set of selection rules are <i>ORed</i> with each other. </li>  <li>Individual rules within a selection rule set are <i>ANDed</i> with each other. If a rule has a list of values (such a list of category IDs), the item need match only one of the values of the rule in order to be included in the campaign.</li>  <p><b>Note: </b>If an item matches multiple sets of rules or multiple rules within a selection rule set, the item is considered only once.</p></ul><b>Maximum number of rules: </b> 10  # noqa: E501
 
         :param selection_rules: The selection_rules of this CampaignCriterion.  # noqa: E501
         :type: list[SelectionRule]

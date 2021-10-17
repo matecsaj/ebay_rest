@@ -35,7 +35,7 @@ class AdReportMetadataApi(object):
     def get_report_metadata(self, **kwargs):  # noqa: E501
         """get_report_metadata  # noqa: E501
 
-        This call retrieves information that details the fields used in each of the Promoted Listings reports. Use the returned information to configure the different types of Promoted Listings reports. The request for this method does not use a payload or any URI parameters.  # noqa: E501
+        This call retrieves information that details the fields used in each of the Promoted Listings reports. Use the returned information to configure the different types of Promoted Listings reports.  <p> The request for this method does not use a payload or any URI parameters.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_report_metadata(async_req=True)
@@ -56,7 +56,7 @@ class AdReportMetadataApi(object):
     def get_report_metadata_with_http_info(self, **kwargs):  # noqa: E501
         """get_report_metadata  # noqa: E501
 
-        This call retrieves information that details the fields used in each of the Promoted Listings reports. Use the returned information to configure the different types of Promoted Listings reports. The request for this method does not use a payload or any URI parameters.  # noqa: E501
+        This call retrieves information that details the fields used in each of the Promoted Listings reports. Use the returned information to configure the different types of Promoted Listings reports.  <p> The request for this method does not use a payload or any URI parameters.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_report_metadata_with_http_info(async_req=True)
@@ -122,14 +122,14 @@ class AdReportMetadataApi(object):
     def get_report_metadata_for_report_type(self, report_type, **kwargs):  # noqa: E501
         """get_report_metadata_for_report_type  # noqa: E501
 
-        This call retrieves metadata that details the fields used by a specific Promoted Listings report type. Use the report_type path parameter to indicate metadata to retrieve. This method does not use a request payload.  # noqa: E501
+        This call retrieves metadata that details the fields used by a specific Promoted Listings report type. Use the <b>report_type</b> path parameter to indicate metadata to retrieve.  <p>This method does not use a request payload.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_report_metadata_for_report_type(report_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str report_type: The name of the report type whose metadata you want to get. For details about each report type, see ReportTypeEnum. Valid values: &nbsp;&nbsp;&nbsp;ACCOUNT_PERFORMANCE_REPORT &nbsp;&nbsp;&nbsp;CAMPAIGN_PERFORMANCE_REPORT &nbsp;&nbsp;&nbsp;CAMPAIGN_PERFORMANCE_SUMMARY_REPORT &nbsp;&nbsp;&nbsp;LISTING_PERFORMANCE_REPORT &nbsp;&nbsp;&nbsp;INVENTORY_PERFORMANCE_REPORT (required)
+        :param str report_type: The name of the report type whose metadata you want to get.  <br><br>For details about each report type, see <a href=\"/api-docs/sell/marketing/types/plr:ReportTypeEnum\">ReportTypeEnum</a>. <br><br><b>Valid values:</b> <br>&nbsp;&nbsp;&nbsp;<code>ACCOUNT_PERFORMANCE_REPORT</code> <br>&nbsp;&nbsp;&nbsp;<code>CAMPAIGN_PERFORMANCE_REPORT</code> <br>&nbsp;&nbsp;&nbsp;<code>CAMPAIGN_PERFORMANCE_SUMMARY_REPORT</code> <br>&nbsp;&nbsp;&nbsp;<code>LISTING_PERFORMANCE_REPORT</code> <br>&nbsp;&nbsp;&nbsp;<code>INVENTORY_PERFORMANCE_REPORT</code> (required)
         :return: ReportMetadata
                  If the method is called asynchronously,
                  returns the request thread.
@@ -144,14 +144,14 @@ class AdReportMetadataApi(object):
     def get_report_metadata_for_report_type_with_http_info(self, report_type, **kwargs):  # noqa: E501
         """get_report_metadata_for_report_type  # noqa: E501
 
-        This call retrieves metadata that details the fields used by a specific Promoted Listings report type. Use the report_type path parameter to indicate metadata to retrieve. This method does not use a request payload.  # noqa: E501
+        This call retrieves metadata that details the fields used by a specific Promoted Listings report type. Use the <b>report_type</b> path parameter to indicate metadata to retrieve.  <p>This method does not use a request payload.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_report_metadata_for_report_type_with_http_info(report_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str report_type: The name of the report type whose metadata you want to get. For details about each report type, see ReportTypeEnum. Valid values: &nbsp;&nbsp;&nbsp;ACCOUNT_PERFORMANCE_REPORT &nbsp;&nbsp;&nbsp;CAMPAIGN_PERFORMANCE_REPORT &nbsp;&nbsp;&nbsp;CAMPAIGN_PERFORMANCE_SUMMARY_REPORT &nbsp;&nbsp;&nbsp;LISTING_PERFORMANCE_REPORT &nbsp;&nbsp;&nbsp;INVENTORY_PERFORMANCE_REPORT (required)
+        :param str report_type: The name of the report type whose metadata you want to get.  <br><br>For details about each report type, see <a href=\"/api-docs/sell/marketing/types/plr:ReportTypeEnum\">ReportTypeEnum</a>. <br><br><b>Valid values:</b> <br>&nbsp;&nbsp;&nbsp;<code>ACCOUNT_PERFORMANCE_REPORT</code> <br>&nbsp;&nbsp;&nbsp;<code>CAMPAIGN_PERFORMANCE_REPORT</code> <br>&nbsp;&nbsp;&nbsp;<code>CAMPAIGN_PERFORMANCE_SUMMARY_REPORT</code> <br>&nbsp;&nbsp;&nbsp;<code>LISTING_PERFORMANCE_REPORT</code> <br>&nbsp;&nbsp;&nbsp;<code>INVENTORY_PERFORMANCE_REPORT</code> (required)
         :return: ReportMetadata
                  If the method is called asynchronously,
                  returns the request thread.

@@ -84,7 +84,7 @@ class PaymentsProgramResponse(object):
     def payments_program_type(self):
         """Gets the payments_program_type of this PaymentsProgramResponse.  # noqa: E501
 
-        This path parameter specifies the payment program whose status is returned by the call. Currently the only supported payments program is EBAY_PAYMENTS. For details on the program, see Payments Terms of Use. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:PaymentsProgramType'>eBay API documentation</a>  # noqa: E501
+        This path parameter specifies the payment program whose status is returned by the call.  <br><br>Currently the only supported payments program is <code>EBAY_PAYMENTS</code>. For details on the program, see <a href=\"https://pages.ebay.com/payment/2.0/terms.html\" target=\"_blank\">Payments Terms of Use</a>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:PaymentsProgramType'>eBay API documentation</a>  # noqa: E501
 
         :return: The payments_program_type of this PaymentsProgramResponse.  # noqa: E501
         :rtype: str
@@ -95,7 +95,7 @@ class PaymentsProgramResponse(object):
     def payments_program_type(self, payments_program_type):
         """Sets the payments_program_type of this PaymentsProgramResponse.
 
-        This path parameter specifies the payment program whose status is returned by the call. Currently the only supported payments program is EBAY_PAYMENTS. For details on the program, see Payments Terms of Use. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:PaymentsProgramType'>eBay API documentation</a>  # noqa: E501
+        This path parameter specifies the payment program whose status is returned by the call.  <br><br>Currently the only supported payments program is <code>EBAY_PAYMENTS</code>. For details on the program, see <a href=\"https://pages.ebay.com/payment/2.0/terms.html\" target=\"_blank\">Payments Terms of Use</a>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:PaymentsProgramType'>eBay API documentation</a>  # noqa: E501
 
         :param payments_program_type: The payments_program_type of this PaymentsProgramResponse.  # noqa: E501
         :type: str
@@ -130,7 +130,7 @@ class PaymentsProgramResponse(object):
     def was_previously_opted_in(self):
         """Gets the was_previously_opted_in of this PaymentsProgramResponse.  # noqa: E501
 
-        If set to true, the seller was at one point opted-in to the associated payment program, but they later opted out of the program. A value of false indicates the seller never opted-in to the program or if they did opt-in to the program, they never opted-out of it. It's important to note that the setting of this field does not indicate the seller's current status regarding the payment program. It is possible for this field to return true while the status field returns OPTED_IN.  # noqa: E501
+        If set to <code>true</code>, the seller was at one point opted-in to the associated payment program, but they later opted out of the program. A value of <code>false</code> indicates the seller never opted-in to the program or if they did opt-in to the program, they never opted-out of it.  <br><br>It's important to note that the setting of this field does not indicate the seller's current status regarding the payment program. It is possible for this field to return <code>true</code> while the <b>status</b> field returns <code>OPTED_IN</code>.  # noqa: E501
 
         :return: The was_previously_opted_in of this PaymentsProgramResponse.  # noqa: E501
         :rtype: bool
@@ -141,7 +141,7 @@ class PaymentsProgramResponse(object):
     def was_previously_opted_in(self, was_previously_opted_in):
         """Sets the was_previously_opted_in of this PaymentsProgramResponse.
 
-        If set to true, the seller was at one point opted-in to the associated payment program, but they later opted out of the program. A value of false indicates the seller never opted-in to the program or if they did opt-in to the program, they never opted-out of it. It's important to note that the setting of this field does not indicate the seller's current status regarding the payment program. It is possible for this field to return true while the status field returns OPTED_IN.  # noqa: E501
+        If set to <code>true</code>, the seller was at one point opted-in to the associated payment program, but they later opted out of the program. A value of <code>false</code> indicates the seller never opted-in to the program or if they did opt-in to the program, they never opted-out of it.  <br><br>It's important to note that the setting of this field does not indicate the seller's current status regarding the payment program. It is possible for this field to return <code>true</code> while the <b>status</b> field returns <code>OPTED_IN</code>.  # noqa: E501
 
         :param was_previously_opted_in: The was_previously_opted_in of this PaymentsProgramResponse.  # noqa: E501
         :type: bool

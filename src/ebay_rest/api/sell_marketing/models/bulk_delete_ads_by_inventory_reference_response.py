@@ -46,7 +46,7 @@ class BulkDeleteAdsByInventoryReferenceResponse(object):
     def responses(self):
         """Gets the responses of this BulkDeleteAdsByInventoryReferenceResponse.  # noqa: E501
 
-        An array of the ads that were deleted by the bulkDeleteAdsByInventoryReference request, including information associated with each individual delete request.  # noqa: E501
+        An array of the ads that were deleted by the <b>bulkDeleteAdsByInventoryReference</b> request, including information associated with each individual delete request.  # noqa: E501
 
         :return: The responses of this BulkDeleteAdsByInventoryReferenceResponse.  # noqa: E501
         :rtype: list[DeleteAdsByInventoryReferenceResponse]
@@ -57,7 +57,7 @@ class BulkDeleteAdsByInventoryReferenceResponse(object):
     def responses(self, responses):
         """Sets the responses of this BulkDeleteAdsByInventoryReferenceResponse.
 
-        An array of the ads that were deleted by the bulkDeleteAdsByInventoryReference request, including information associated with each individual delete request.  # noqa: E501
+        An array of the ads that were deleted by the <b>bulkDeleteAdsByInventoryReference</b> request, including information associated with each individual delete request.  # noqa: E501
 
         :param responses: The responses of this BulkDeleteAdsByInventoryReferenceResponse.  # noqa: E501
         :type: list[DeleteAdsByInventoryReferenceResponse]

@@ -56,7 +56,7 @@ class ItemLocation(object):
     def country_code(self):
         """Gets the country_code of this ItemLocation.  # noqa: E501
 
-        The two-letter ISO 3166 code representing the country of the address. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
+        The two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> code representing the country of the address. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The country_code of this ItemLocation.  # noqa: E501
         :rtype: str
@@ -67,7 +67,7 @@ class ItemLocation(object):
     def country_code(self, country_code):
         """Sets the country_code of this ItemLocation.
 
-        The two-letter ISO 3166 code representing the country of the address. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
+        The two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> code representing the country of the address. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param country_code: The country_code of this ItemLocation.  # noqa: E501
         :type: str
@@ -79,7 +79,7 @@ class ItemLocation(object):
     def location(self):
         """Gets the location of this ItemLocation.  # noqa: E501
 
-        Indicates the geographical location of the item (along with the value in the countryCode field). This field provides city, province, state, or similar information.  # noqa: E501
+        Indicates the geographical location of the item (along with the value in the <strong>countryCode</strong> field). This field provides city, province, state, or similar information.  # noqa: E501
 
         :return: The location of this ItemLocation.  # noqa: E501
         :rtype: str
@@ -90,7 +90,7 @@ class ItemLocation(object):
     def location(self, location):
         """Sets the location of this ItemLocation.
 
-        Indicates the geographical location of the item (along with the value in the countryCode field). This field provides city, province, state, or similar information.  # noqa: E501
+        Indicates the geographical location of the item (along with the value in the <strong>countryCode</strong> field). This field provides city, province, state, or similar information.  # noqa: E501
 
         :param location: The location of this ItemLocation.  # noqa: E501
         :type: str

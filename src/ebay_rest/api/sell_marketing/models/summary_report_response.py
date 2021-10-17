@@ -110,7 +110,7 @@ class SummaryReportResponse(object):
     def percentage_sales_lift(self):
         """Gets the percentage_sales_lift of this SummaryReportResponse.  # noqa: E501
 
-        The percentage of the total dollar amount gained due to promotions. This value is calculated as follows: precentageSalesLift = promotionSale / (baseSale + promotionSale)  # noqa: E501
+        The percentage of the total dollar amount gained due to promotions. This value is calculated as follows:  <br><br><b>precentageSalesLift</b> = <b>promotionSale</b> / (<b>baseSale</b> + <b>promotionSale</b>)  # noqa: E501
 
         :return: The percentage_sales_lift of this SummaryReportResponse.  # noqa: E501
         :rtype: str
@@ -121,7 +121,7 @@ class SummaryReportResponse(object):
     def percentage_sales_lift(self, percentage_sales_lift):
         """Sets the percentage_sales_lift of this SummaryReportResponse.
 
-        The percentage of the total dollar amount gained due to promotions. This value is calculated as follows: precentageSalesLift = promotionSale / (baseSale + promotionSale)  # noqa: E501
+        The percentage of the total dollar amount gained due to promotions. This value is calculated as follows:  <br><br><b>precentageSalesLift</b> = <b>promotionSale</b> / (<b>baseSale</b> + <b>promotionSale</b>)  # noqa: E501
 
         :param percentage_sales_lift: The percentage_sales_lift of this SummaryReportResponse.  # noqa: E501
         :type: str

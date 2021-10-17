@@ -51,7 +51,7 @@ class RecipientAccountReference(object):
     def reference_id(self):
         """Gets the reference_id of this RecipientAccountReference.  # noqa: E501
 
-        Contains the PayPal email address of the recipient (buyer) if referenceType is set to PAYPAL_EMAIL.  # noqa: E501
+        Contains the PayPal email address of the recipient (buyer) if <b>referenceType</b> is set to <code>PAYPAL_EMAIL</code>.  # noqa: E501
 
         :return: The reference_id of this RecipientAccountReference.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class RecipientAccountReference(object):
     def reference_id(self, reference_id):
         """Sets the reference_id of this RecipientAccountReference.
 
-        Contains the PayPal email address of the recipient (buyer) if referenceType is set to PAYPAL_EMAIL.  # noqa: E501
+        Contains the PayPal email address of the recipient (buyer) if <b>referenceType</b> is set to <code>PAYPAL_EMAIL</code>.  # noqa: E501
 
         :param reference_id: The reference_id of this RecipientAccountReference.  # noqa: E501
         :type: str

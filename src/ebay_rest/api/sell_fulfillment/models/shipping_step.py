@@ -82,7 +82,7 @@ class ShippingStep(object):
     def ship_to_reference_id(self):
         """Gets the ship_to_reference_id of this ShippingStep.  # noqa: E501
 
-        This is the unique identifer of the Global Shipping Program (GSP) shipment. This field is only returned if the line item is being shipped via GSP (the value of the fulfillmentStartInstructions.ebaySupportedFulfillment field will be true. The international shipping provider uses the shipToReferenceId value as the primary reference number to retrieve the relevant details about the buyer, the order, and the fulfillment, so the shipment can be completed. Sellers must include this value on the shipping label immediately above the street address of the international shipping provider. Example: &quot;Reference #1234567890123456&quot; Note: This value is the same as the ShipToAddress.ReferenceID value returned by the Trading API's GetOrders call.  # noqa: E501
+        This is the unique identifer of the Global Shipping Program (GSP) shipment. This field is only returned if the line item is being shipped via GSP (the value of the <b>fulfillmentStartInstructions.ebaySupportedFulfillment</b> field will be <code>true</code>. The international shipping provider uses the <b>shipToReferenceId</b> value as the primary reference number to retrieve the relevant details about the buyer, the order, and the fulfillment, so the shipment can be completed. <br /><br />Sellers must include this value on the shipping label immediately above the street address of the international shipping provider. <br /><br />Example: \"Reference #1234567890123456\" <br /><br /><span class=\"tablenote\"><strong>Note:</strong> This value is the same as the <b>ShipToAddress.ReferenceID</b> value returned by the Trading API's GetOrders call.</span>  # noqa: E501
 
         :return: The ship_to_reference_id of this ShippingStep.  # noqa: E501
         :rtype: str
@@ -93,7 +93,7 @@ class ShippingStep(object):
     def ship_to_reference_id(self, ship_to_reference_id):
         """Sets the ship_to_reference_id of this ShippingStep.
 
-        This is the unique identifer of the Global Shipping Program (GSP) shipment. This field is only returned if the line item is being shipped via GSP (the value of the fulfillmentStartInstructions.ebaySupportedFulfillment field will be true. The international shipping provider uses the shipToReferenceId value as the primary reference number to retrieve the relevant details about the buyer, the order, and the fulfillment, so the shipment can be completed. Sellers must include this value on the shipping label immediately above the street address of the international shipping provider. Example: &quot;Reference #1234567890123456&quot; Note: This value is the same as the ShipToAddress.ReferenceID value returned by the Trading API's GetOrders call.  # noqa: E501
+        This is the unique identifer of the Global Shipping Program (GSP) shipment. This field is only returned if the line item is being shipped via GSP (the value of the <b>fulfillmentStartInstructions.ebaySupportedFulfillment</b> field will be <code>true</code>. The international shipping provider uses the <b>shipToReferenceId</b> value as the primary reference number to retrieve the relevant details about the buyer, the order, and the fulfillment, so the shipment can be completed. <br /><br />Sellers must include this value on the shipping label immediately above the street address of the international shipping provider. <br /><br />Example: \"Reference #1234567890123456\" <br /><br /><span class=\"tablenote\"><strong>Note:</strong> This value is the same as the <b>ShipToAddress.ReferenceID</b> value returned by the Trading API's GetOrders call.</span>  # noqa: E501
 
         :param ship_to_reference_id: The ship_to_reference_id of this ShippingStep.  # noqa: E501
         :type: str
@@ -105,7 +105,7 @@ class ShippingStep(object):
     def shipping_carrier_code(self):
         """Gets the shipping_carrier_code of this ShippingStep.  # noqa: E501
 
-        The unique identifier of the shipping carrier being used to ship the line item. Note: The Trading API's GeteBayDetails call can be used to retrieve the latest shipping carrier and shipping service option enumeration values.  # noqa: E501
+        The unique identifier of the shipping carrier being used to ship the line item. <br /><br /><span class=\"tablenote\"><strong>Note:</strong> The Trading API's <a href=\"https://developer.ebay.com/devzone/XML/docs/Reference/eBay/GeteBayDetails.html\" target=\"_blank\">GeteBayDetails</a> call can be used to retrieve the latest shipping carrier and shipping service option enumeration values.</span>  # noqa: E501
 
         :return: The shipping_carrier_code of this ShippingStep.  # noqa: E501
         :rtype: str
@@ -116,7 +116,7 @@ class ShippingStep(object):
     def shipping_carrier_code(self, shipping_carrier_code):
         """Sets the shipping_carrier_code of this ShippingStep.
 
-        The unique identifier of the shipping carrier being used to ship the line item. Note: The Trading API's GeteBayDetails call can be used to retrieve the latest shipping carrier and shipping service option enumeration values.  # noqa: E501
+        The unique identifier of the shipping carrier being used to ship the line item. <br /><br /><span class=\"tablenote\"><strong>Note:</strong> The Trading API's <a href=\"https://developer.ebay.com/devzone/XML/docs/Reference/eBay/GeteBayDetails.html\" target=\"_blank\">GeteBayDetails</a> call can be used to retrieve the latest shipping carrier and shipping service option enumeration values.</span>  # noqa: E501
 
         :param shipping_carrier_code: The shipping_carrier_code of this ShippingStep.  # noqa: E501
         :type: str
@@ -128,7 +128,7 @@ class ShippingStep(object):
     def shipping_service_code(self):
         """Gets the shipping_service_code of this ShippingStep.  # noqa: E501
 
-        The unique identifier of the shipping service option being used to ship the line item. Note: Use the Trading API's GeteBayDetails call to retrieve the latest shipping carrier and shipping service option enumeration values. When making the GeteBayDetails call, include the DetailName field in the request payload and set its value to ShippingServiceDetails. Each valid shipping service option (returned in ShippingServiceDetails.ShippingService field) and corresponding shipping carrier (returned in ShippingServiceDetails.ShippingCarrier field) is returned in response payload.  # noqa: E501
+        The unique identifier of the shipping service option being used to ship the line item.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> Use the Trading API's <a href=\"https://developer.ebay.com/devzone/XML/docs/Reference/eBay/GeteBayDetails.html\" target=\"_blank\">GeteBayDetails</a> call to retrieve the latest shipping carrier and shipping service option enumeration values. When making the <a href=\"https://developer.ebay.com/devzone/XML/docs/Reference/eBay/GeteBayDetails.html\" target=\"_blank\">GeteBayDetails</a> call, include the <strong>DetailName</strong> field in the request payload and set its value to <code>ShippingServiceDetails</code>. Each valid shipping service option (returned in <strong>ShippingServiceDetails.ShippingService</strong> field) and corresponding shipping carrier (returned in <strong>ShippingServiceDetails.ShippingCarrier</strong> field) is returned in response payload.</span>  # noqa: E501
 
         :return: The shipping_service_code of this ShippingStep.  # noqa: E501
         :rtype: str
@@ -139,7 +139,7 @@ class ShippingStep(object):
     def shipping_service_code(self, shipping_service_code):
         """Sets the shipping_service_code of this ShippingStep.
 
-        The unique identifier of the shipping service option being used to ship the line item. Note: Use the Trading API's GeteBayDetails call to retrieve the latest shipping carrier and shipping service option enumeration values. When making the GeteBayDetails call, include the DetailName field in the request payload and set its value to ShippingServiceDetails. Each valid shipping service option (returned in ShippingServiceDetails.ShippingService field) and corresponding shipping carrier (returned in ShippingServiceDetails.ShippingCarrier field) is returned in response payload.  # noqa: E501
+        The unique identifier of the shipping service option being used to ship the line item.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> Use the Trading API's <a href=\"https://developer.ebay.com/devzone/XML/docs/Reference/eBay/GeteBayDetails.html\" target=\"_blank\">GeteBayDetails</a> call to retrieve the latest shipping carrier and shipping service option enumeration values. When making the <a href=\"https://developer.ebay.com/devzone/XML/docs/Reference/eBay/GeteBayDetails.html\" target=\"_blank\">GeteBayDetails</a> call, include the <strong>DetailName</strong> field in the request payload and set its value to <code>ShippingServiceDetails</code>. Each valid shipping service option (returned in <strong>ShippingServiceDetails.ShippingService</strong> field) and corresponding shipping carrier (returned in <strong>ShippingServiceDetails.ShippingCarrier</strong> field) is returned in response payload.</span>  # noqa: E501
 
         :param shipping_service_code: The shipping_service_code of this ShippingStep.  # noqa: E501
         :type: str

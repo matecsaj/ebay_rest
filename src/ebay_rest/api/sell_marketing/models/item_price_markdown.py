@@ -101,7 +101,7 @@ class ItemPriceMarkdown(object):
     def apply_free_shipping(self):
         """Gets the apply_free_shipping of this ItemPriceMarkdown.  # noqa: E501
 
-        If set to true, free shipping is applied to the first shipping service specified for the item. The first domestic shipping option is set to &quot;free shipping,&quot; regardless if the shipping optionType for that service is set to FLAT_RATE, CALCULATED, or NOT_SPECIFIED (freight). This flag essentially adds free shipping as a promotional bonus. Default: false  # noqa: E501
+        If set to <code>true</code>, free shipping is applied to the first shipping service specified for the item. The first domestic shipping option is set to \"free shipping,\" regardless if the shipping <b>optionType</b> for that service is set to <code>FLAT_RATE</code>, <code>CALCULATED</code>, or <code>NOT_SPECIFIED</code> (freight). This flag essentially adds free shipping as a promotional bonus. <br><br><b>Default:</b> <code>false</code>  # noqa: E501
 
         :return: The apply_free_shipping of this ItemPriceMarkdown.  # noqa: E501
         :rtype: bool
@@ -112,7 +112,7 @@ class ItemPriceMarkdown(object):
     def apply_free_shipping(self, apply_free_shipping):
         """Sets the apply_free_shipping of this ItemPriceMarkdown.
 
-        If set to true, free shipping is applied to the first shipping service specified for the item. The first domestic shipping option is set to &quot;free shipping,&quot; regardless if the shipping optionType for that service is set to FLAT_RATE, CALCULATED, or NOT_SPECIFIED (freight). This flag essentially adds free shipping as a promotional bonus. Default: false  # noqa: E501
+        If set to <code>true</code>, free shipping is applied to the first shipping service specified for the item. The first domestic shipping option is set to \"free shipping,\" regardless if the shipping <b>optionType</b> for that service is set to <code>FLAT_RATE</code>, <code>CALCULATED</code>, or <code>NOT_SPECIFIED</code> (freight). This flag essentially adds free shipping as a promotional bonus. <br><br><b>Default:</b> <code>false</code>  # noqa: E501
 
         :param apply_free_shipping: The apply_free_shipping of this ItemPriceMarkdown.  # noqa: E501
         :type: bool
@@ -124,7 +124,7 @@ class ItemPriceMarkdown(object):
     def auto_select_future_inventory(self):
         """Gets the auto_select_future_inventory of this ItemPriceMarkdown.  # noqa: E501
 
-        If set to true, eBay will automatically add inventory items to the markdown promotion if they meet the selectedInventoryDiscounts criteria specified for the markdown promotion. Default: false  # noqa: E501
+        If set to <code>true</code>, eBay will automatically add inventory items to the markdown promotion if they meet the <b>selectedInventoryDiscounts</b> criteria specified for the markdown promotion.  <br><br><b>Default:</b> <code>false</code>  # noqa: E501
 
         :return: The auto_select_future_inventory of this ItemPriceMarkdown.  # noqa: E501
         :rtype: bool
@@ -135,7 +135,7 @@ class ItemPriceMarkdown(object):
     def auto_select_future_inventory(self, auto_select_future_inventory):
         """Sets the auto_select_future_inventory of this ItemPriceMarkdown.
 
-        If set to true, eBay will automatically add inventory items to the markdown promotion if they meet the selectedInventoryDiscounts criteria specified for the markdown promotion. Default: false  # noqa: E501
+        If set to <code>true</code>, eBay will automatically add inventory items to the markdown promotion if they meet the <b>selectedInventoryDiscounts</b> criteria specified for the markdown promotion.  <br><br><b>Default:</b> <code>false</code>  # noqa: E501
 
         :param auto_select_future_inventory: The auto_select_future_inventory of this ItemPriceMarkdown.  # noqa: E501
         :type: bool
@@ -147,7 +147,7 @@ class ItemPriceMarkdown(object):
     def block_price_increase_in_item_revision(self):
         """Gets the block_price_increase_in_item_revision of this ItemPriceMarkdown.  # noqa: E501
 
-        If set to true, price increases (including removing the free shipping flag) are blocked and an error message is returned if a seller attempts to adjust the price of an item that's partaking in this markdown promotion. If set to false, an item is dropped from the markdown promotion if the seller adjusts the price. Default: false  # noqa: E501
+        If set to <code>true</code>, price increases (including removing the free shipping flag) are blocked and an error message is returned if a seller attempts to adjust the price of an item that's partaking in this markdown promotion. If set to <code>false</code>, an item is dropped from the markdown promotion if the seller adjusts the price.  <br><br><b>Default:</b> <code>false</code>  # noqa: E501
 
         :return: The block_price_increase_in_item_revision of this ItemPriceMarkdown.  # noqa: E501
         :rtype: bool
@@ -158,7 +158,7 @@ class ItemPriceMarkdown(object):
     def block_price_increase_in_item_revision(self, block_price_increase_in_item_revision):
         """Sets the block_price_increase_in_item_revision of this ItemPriceMarkdown.
 
-        If set to true, price increases (including removing the free shipping flag) are blocked and an error message is returned if a seller attempts to adjust the price of an item that's partaking in this markdown promotion. If set to false, an item is dropped from the markdown promotion if the seller adjusts the price. Default: false  # noqa: E501
+        If set to <code>true</code>, price increases (including removing the free shipping flag) are blocked and an error message is returned if a seller attempts to adjust the price of an item that's partaking in this markdown promotion. If set to <code>false</code>, an item is dropped from the markdown promotion if the seller adjusts the price.  <br><br><b>Default:</b> <code>false</code>  # noqa: E501
 
         :param block_price_increase_in_item_revision: The block_price_increase_in_item_revision of this ItemPriceMarkdown.  # noqa: E501
         :type: bool
@@ -170,7 +170,7 @@ class ItemPriceMarkdown(object):
     def description(self):
         """Gets the description of this ItemPriceMarkdown.  # noqa: E501
 
-        This field is required if you are configuring an MARKDOWN_SALE promotion. This is the seller-defined &quot;tag line&quot; for the offer, such as &quot;Save on designer shoes.&quot; A tag line appears under the &quot;offer-type text&quot; that is generated for the promotion. The text is displayed on the offer tile that is shown on the seller's All Offers page and on the event page for the promotion. Note: Offer-type text is a teaser that's presented throughout the buyer's journey through the sales flow and is generated by eBay. This text is not editable by the seller&mdash;it's derived from the settings in the discountRules and discountSpecification fields&mdash;and can be, for example, &quot;20% off&quot;. Maximum length: 50  # noqa: E501
+        This field is required if you are configuring an MARKDOWN_SALE promotion. <br><br>This is the seller-defined \"tag line\" for the offer, such as \"Save on designer shoes.\" A tag line appears under the \"offer-type text\" that is generated for the promotion. The text is displayed on the offer tile that is shown on the seller's <b>All Offers</b> page and on the event page for the promotion.  <p class=\"tablenote\"><b>Note:</b> Offer-type text is a teaser that's presented throughout the buyer's journey through the sales flow and is generated by eBay. This text is not editable by the seller&mdash;it's derived from the settings in the <b>discountRules</b> and <b>discountSpecification</b> fields&mdash;and can be, for example, \"20% off\".</p>  <br><b>Maximum length:</b> 50  # noqa: E501
 
         :return: The description of this ItemPriceMarkdown.  # noqa: E501
         :rtype: str
@@ -181,7 +181,7 @@ class ItemPriceMarkdown(object):
     def description(self, description):
         """Sets the description of this ItemPriceMarkdown.
 
-        This field is required if you are configuring an MARKDOWN_SALE promotion. This is the seller-defined &quot;tag line&quot; for the offer, such as &quot;Save on designer shoes.&quot; A tag line appears under the &quot;offer-type text&quot; that is generated for the promotion. The text is displayed on the offer tile that is shown on the seller's All Offers page and on the event page for the promotion. Note: Offer-type text is a teaser that's presented throughout the buyer's journey through the sales flow and is generated by eBay. This text is not editable by the seller&mdash;it's derived from the settings in the discountRules and discountSpecification fields&mdash;and can be, for example, &quot;20% off&quot;. Maximum length: 50  # noqa: E501
+        This field is required if you are configuring an MARKDOWN_SALE promotion. <br><br>This is the seller-defined \"tag line\" for the offer, such as \"Save on designer shoes.\" A tag line appears under the \"offer-type text\" that is generated for the promotion. The text is displayed on the offer tile that is shown on the seller's <b>All Offers</b> page and on the event page for the promotion.  <p class=\"tablenote\"><b>Note:</b> Offer-type text is a teaser that's presented throughout the buyer's journey through the sales flow and is generated by eBay. This text is not editable by the seller&mdash;it's derived from the settings in the <b>discountRules</b> and <b>discountSpecification</b> fields&mdash;and can be, for example, \"20% off\".</p>  <br><b>Maximum length:</b> 50  # noqa: E501
 
         :param description: The description of this ItemPriceMarkdown.  # noqa: E501
         :type: str
@@ -193,7 +193,7 @@ class ItemPriceMarkdown(object):
     def end_date(self):
         """Gets the end_date of this ItemPriceMarkdown.  # noqa: E501
 
-        The date and time the promotion ends, in UTC format (yyyy-MM-ddThh:mm:ssZ). The value supplied for endDate must be at least 24 hours after the value supplied for the startDate of the markdown promotion. If this field is blank (null), it indicates the promotion has no end date. For display purposes, convert this time into the local time of the seller. Max value: 14 days for the AT, CH, DE, ES, FR, IE, IT, and UK, marketplaces. 45 days for all other marketplaces.  # noqa: E501
+        The date and time the promotion ends, in UTC format (<code>yyyy-MM-ddThh:mm:ssZ</code>). The value supplied for <b>endDate</b> must be at least 24 hours after the value supplied for the <b>startDate</b> of the markdown promotion. If this field is blank (<code>null</code>), it indicates the promotion has no end date.  <br><br>For display purposes, convert this time into the local time of the seller.  <br><br><b>Max value:</b><ul><li><code>14</code> days for the AT, CH, DE, ES, FR, IE, IT, and UK, marketplaces.</li>  <li><code>45</code> days for all other marketplaces.</li></ul>  # noqa: E501
 
         :return: The end_date of this ItemPriceMarkdown.  # noqa: E501
         :rtype: str
@@ -204,7 +204,7 @@ class ItemPriceMarkdown(object):
     def end_date(self, end_date):
         """Sets the end_date of this ItemPriceMarkdown.
 
-        The date and time the promotion ends, in UTC format (yyyy-MM-ddThh:mm:ssZ). The value supplied for endDate must be at least 24 hours after the value supplied for the startDate of the markdown promotion. If this field is blank (null), it indicates the promotion has no end date. For display purposes, convert this time into the local time of the seller. Max value: 14 days for the AT, CH, DE, ES, FR, IE, IT, and UK, marketplaces. 45 days for all other marketplaces.  # noqa: E501
+        The date and time the promotion ends, in UTC format (<code>yyyy-MM-ddThh:mm:ssZ</code>). The value supplied for <b>endDate</b> must be at least 24 hours after the value supplied for the <b>startDate</b> of the markdown promotion. If this field is blank (<code>null</code>), it indicates the promotion has no end date.  <br><br>For display purposes, convert this time into the local time of the seller.  <br><br><b>Max value:</b><ul><li><code>14</code> days for the AT, CH, DE, ES, FR, IE, IT, and UK, marketplaces.</li>  <li><code>45</code> days for all other marketplaces.</li></ul>  # noqa: E501
 
         :param end_date: The end_date of this ItemPriceMarkdown.  # noqa: E501
         :type: str
@@ -239,7 +239,7 @@ class ItemPriceMarkdown(object):
     def name(self):
         """Gets the name of this ItemPriceMarkdown.  # noqa: E501
 
-        The seller-defined name or 'title' of the promotion that the seller can use to identify a promotion. This label is not displayed in end-user flows. Maximum length: 90  # noqa: E501
+        The seller-defined name or 'title' of the promotion that the seller can use to identify a promotion. This label is not displayed in end-user flows.  <br><br><b>Maximum length:</b> 90  # noqa: E501
 
         :return: The name of this ItemPriceMarkdown.  # noqa: E501
         :rtype: str
@@ -250,7 +250,7 @@ class ItemPriceMarkdown(object):
     def name(self, name):
         """Sets the name of this ItemPriceMarkdown.
 
-        The seller-defined name or 'title' of the promotion that the seller can use to identify a promotion. This label is not displayed in end-user flows. Maximum length: 90  # noqa: E501
+        The seller-defined name or 'title' of the promotion that the seller can use to identify a promotion. This label is not displayed in end-user flows.  <br><br><b>Maximum length:</b> 90  # noqa: E501
 
         :param name: The name of this ItemPriceMarkdown.  # noqa: E501
         :type: str
@@ -285,7 +285,7 @@ class ItemPriceMarkdown(object):
     def promotion_image_url(self):
         """Gets the promotion_image_url of this ItemPriceMarkdown.  # noqa: E501
 
-        Required for CODED_COUPON and MARKDOWN_SALE promotions, and optional for ORDER_DISCOUNT promotions, populate this field with a URL that points to an image to be used with the promotion. This image is displayed on the seller's All Offers page. The URL must point to either JPEG or PNG image and it must be a minimum of 500x500 pixels in dimension and cannot exceed 12Mb in size.  # noqa: E501
+        Required for CODED_COUPON and MARKDOWN_SALE promotions, and optional for ORDER_DISCOUNT promotions, populate this field with a URL that points to an image to be used with the promotion. This image is displayed on the seller's <b>All Offers</b> page. The URL must point to either JPEG or PNG image and it must be a minimum of 500x500 pixels in dimension and cannot exceed 12Mb in size.  # noqa: E501
 
         :return: The promotion_image_url of this ItemPriceMarkdown.  # noqa: E501
         :rtype: str
@@ -296,7 +296,7 @@ class ItemPriceMarkdown(object):
     def promotion_image_url(self, promotion_image_url):
         """Sets the promotion_image_url of this ItemPriceMarkdown.
 
-        Required for CODED_COUPON and MARKDOWN_SALE promotions, and optional for ORDER_DISCOUNT promotions, populate this field with a URL that points to an image to be used with the promotion. This image is displayed on the seller's All Offers page. The URL must point to either JPEG or PNG image and it must be a minimum of 500x500 pixels in dimension and cannot exceed 12Mb in size.  # noqa: E501
+        Required for CODED_COUPON and MARKDOWN_SALE promotions, and optional for ORDER_DISCOUNT promotions, populate this field with a URL that points to an image to be used with the promotion. This image is displayed on the seller's <b>All Offers</b> page. The URL must point to either JPEG or PNG image and it must be a minimum of 500x500 pixels in dimension and cannot exceed 12Mb in size.  # noqa: E501
 
         :param promotion_image_url: The promotion_image_url of this ItemPriceMarkdown.  # noqa: E501
         :type: str
@@ -308,7 +308,7 @@ class ItemPriceMarkdown(object):
     def promotion_status(self):
         """Gets the promotion_status of this ItemPriceMarkdown.  # noqa: E501
 
-        The current status of the promotion. When creating a new promotion, you must set this value to either DRAFT or SCHEDULED. Note that you must set this value to SCHEDULED when you update a RUNNING promotion. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/sme:PromotionStatusEnum'>eBay API documentation</a>  # noqa: E501
+        The current status of the promotion. When creating a new promotion, you must set this value to either <code>DRAFT</code> or <code>SCHEDULED</code>.  <br><br>Note that you must set this value to <code>SCHEDULED</code> when you update a <b>RUNNING</b> promotion. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/sme:PromotionStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The promotion_status of this ItemPriceMarkdown.  # noqa: E501
         :rtype: str
@@ -319,7 +319,7 @@ class ItemPriceMarkdown(object):
     def promotion_status(self, promotion_status):
         """Sets the promotion_status of this ItemPriceMarkdown.
 
-        The current status of the promotion. When creating a new promotion, you must set this value to either DRAFT or SCHEDULED. Note that you must set this value to SCHEDULED when you update a RUNNING promotion. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/sme:PromotionStatusEnum'>eBay API documentation</a>  # noqa: E501
+        The current status of the promotion. When creating a new promotion, you must set this value to either <code>DRAFT</code> or <code>SCHEDULED</code>.  <br><br>Note that you must set this value to <code>SCHEDULED</code> when you update a <b>RUNNING</b> promotion. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/sme:PromotionStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :param promotion_status: The promotion_status of this ItemPriceMarkdown.  # noqa: E501
         :type: str
@@ -354,7 +354,7 @@ class ItemPriceMarkdown(object):
     def start_date(self):
         """Gets the start_date of this ItemPriceMarkdown.  # noqa: E501
 
-        The date and time the promotion starts in UTC format (yyyy-MM-ddThh:mm:ssZ). For display purposes, convert this time into the local time of the seller.  # noqa: E501
+        The date and time the promotion starts in UTC format (<code>yyyy-MM-ddThh:mm:ssZ</code>). For display purposes, convert this time into the local time of the seller.  # noqa: E501
 
         :return: The start_date of this ItemPriceMarkdown.  # noqa: E501
         :rtype: str
@@ -365,7 +365,7 @@ class ItemPriceMarkdown(object):
     def start_date(self, start_date):
         """Sets the start_date of this ItemPriceMarkdown.
 
-        The date and time the promotion starts in UTC format (yyyy-MM-ddThh:mm:ssZ). For display purposes, convert this time into the local time of the seller.  # noqa: E501
+        The date and time the promotion starts in UTC format (<code>yyyy-MM-ddThh:mm:ssZ</code>). For display purposes, convert this time into the local time of the seller.  # noqa: E501
 
         :param start_date: The start_date of this ItemPriceMarkdown.  # noqa: E501
         :type: str

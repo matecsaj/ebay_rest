@@ -61,7 +61,7 @@ class RateTable(object):
     def country_code(self):
         """Gets the country_code of this RateTable.  # noqa: E501
 
-        A two-letter ISO 3166 country code representing the eBay marketplace where an item is listed. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
+        A two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> country code representing the eBay marketplace where an item is listed. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The country_code of this RateTable.  # noqa: E501
         :rtype: str
@@ -72,7 +72,7 @@ class RateTable(object):
     def country_code(self, country_code):
         """Sets the country_code of this RateTable.
 
-        A two-letter ISO 3166 country code representing the eBay marketplace where an item is listed. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
+        A two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> country code representing the eBay marketplace where an item is listed. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param country_code: The country_code of this RateTable.  # noqa: E501
         :type: str
@@ -84,7 +84,7 @@ class RateTable(object):
     def locality(self):
         """Gets the locality of this RateTable.  # noqa: E501
 
-        The region covered by the shipping rate table, either DOMESTIC or INTERNATIONAL. DOMESTIC indicates that the shipping rate table applies to regions within the country where an item is listed (the source country) while INTERNATIONAL indicates that the shipping rate table applies to regions outside of the country where an item is listed. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ShippingOptionTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The region covered by the shipping rate table, either DOMESTIC or INTERNATIONAL. <br><br>DOMESTIC indicates that the shipping rate table applies to regions within the country where an item is listed (the <i>source</i> country) while INTERNATIONAL indicates that the shipping rate table applies to regions outside of the country where an item is listed. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ShippingOptionTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The locality of this RateTable.  # noqa: E501
         :rtype: str
@@ -95,7 +95,7 @@ class RateTable(object):
     def locality(self, locality):
         """Sets the locality of this RateTable.
 
-        The region covered by the shipping rate table, either DOMESTIC or INTERNATIONAL. DOMESTIC indicates that the shipping rate table applies to regions within the country where an item is listed (the source country) while INTERNATIONAL indicates that the shipping rate table applies to regions outside of the country where an item is listed. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ShippingOptionTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The region covered by the shipping rate table, either DOMESTIC or INTERNATIONAL. <br><br>DOMESTIC indicates that the shipping rate table applies to regions within the country where an item is listed (the <i>source</i> country) while INTERNATIONAL indicates that the shipping rate table applies to regions outside of the country where an item is listed. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ShippingOptionTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param locality: The locality of this RateTable.  # noqa: E501
         :type: str
@@ -107,7 +107,7 @@ class RateTable(object):
     def name(self):
         """Gets the name of this RateTable.  # noqa: E501
 
-        The user-defined name for the shipping rate table. Sellers can access Seller Hub (or My eBay &gt; Account &gt; Site Preferences &gt; Shipping preferences) to create and assign names to their shipping rate tables.  # noqa: E501
+        The user-defined name for the shipping rate table. Sellers can access Seller Hub (or <b>My eBay > Account > Site Preferences > Shipping preferences</b>) to create and assign names to their shipping rate tables.  # noqa: E501
 
         :return: The name of this RateTable.  # noqa: E501
         :rtype: str
@@ -118,7 +118,7 @@ class RateTable(object):
     def name(self, name):
         """Sets the name of this RateTable.
 
-        The user-defined name for the shipping rate table. Sellers can access Seller Hub (or My eBay &gt; Account &gt; Site Preferences &gt; Shipping preferences) to create and assign names to their shipping rate tables.  # noqa: E501
+        The user-defined name for the shipping rate table. Sellers can access Seller Hub (or <b>My eBay > Account > Site Preferences > Shipping preferences</b>) to create and assign names to their shipping rate tables.  # noqa: E501
 
         :param name: The name of this RateTable.  # noqa: E501
         :type: str
@@ -130,7 +130,7 @@ class RateTable(object):
     def rate_table_id(self):
         """Gets the rate_table_id of this RateTable.  # noqa: E501
 
-        A unique eBay-assigned ID for a seller's shipping rate table. Call getRateTables to retrieve the seller's current rate table IDs.  # noqa: E501
+        A unique eBay-assigned ID for a seller's shipping rate table. Call <b>getRateTables</b> to retrieve the seller's current rate table IDs.  # noqa: E501
 
         :return: The rate_table_id of this RateTable.  # noqa: E501
         :rtype: str
@@ -141,7 +141,7 @@ class RateTable(object):
     def rate_table_id(self, rate_table_id):
         """Sets the rate_table_id of this RateTable.
 
-        A unique eBay-assigned ID for a seller's shipping rate table. Call getRateTables to retrieve the seller's current rate table IDs.  # noqa: E501
+        A unique eBay-assigned ID for a seller's shipping rate table. Call <b>getRateTables</b> to retrieve the seller's current rate table IDs.  # noqa: E501
 
         :param rate_table_id: The rate_table_id of this RateTable.  # noqa: E501
         :type: str

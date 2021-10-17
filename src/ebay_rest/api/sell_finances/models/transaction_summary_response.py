@@ -331,7 +331,7 @@ class TransactionSummaryResponse(object):
     def credit_booking_entry(self):
         """Gets the credit_booking_entry of this TransactionSummaryResponse.  # noqa: E501
 
-        The enumeration value indicates whether the dollar amount in the creditAmount field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be CREDIT. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value indicates whether the dollar amount in the <strong>creditAmount</strong> field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be <code>CREDIT</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The credit_booking_entry of this TransactionSummaryResponse.  # noqa: E501
         :rtype: str
@@ -342,7 +342,7 @@ class TransactionSummaryResponse(object):
     def credit_booking_entry(self, credit_booking_entry):
         """Sets the credit_booking_entry of this TransactionSummaryResponse.
 
-        The enumeration value indicates whether the dollar amount in the creditAmount field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be CREDIT. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value indicates whether the dollar amount in the <strong>creditAmount</strong> field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be <code>CREDIT</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :param credit_booking_entry: The credit_booking_entry of this TransactionSummaryResponse.  # noqa: E501
         :type: str
@@ -354,7 +354,7 @@ class TransactionSummaryResponse(object):
     def credit_count(self):
         """Gets the credit_count of this TransactionSummaryResponse.  # noqa: E501
 
-        This integer value indicates the total number of the seller's sales and/or credits that match the input criteria. Note: Unless the transactionType filter is used in the request to retrieve a specific type of monetary transaction (sale, buyer refund, or seller credit), the creditCount and creditAmount fields account for both order sales and seller credits (the count and value is not distinguished between the two monetary transaction types). This field is generally returned, even if 0, but it will not be returned if a transactionType filter is used, and its value is set to either REFUND, DISPUTE, or SHIPPING_LABEL.  # noqa: E501
+        This integer value indicates the total number of the seller's sales and/or credits that match the input criteria. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> Unless the <b>transactionType</b> filter is used in the request to retrieve a specific type of monetary transaction (sale, buyer refund, or seller credit), the <b>creditCount</b> and <b>creditAmount</b> fields account for both order sales and seller credits (the count and value is not distinguished between the two monetary transaction types).</span><br><br>This field is generally returned, even if <code>0</code>, but it will not be returned if a <strong>transactionType</strong> filter is used, and its value is set to either <code>REFUND</code>, <code>DISPUTE</code>, or <code>SHIPPING_LABEL</code>.  # noqa: E501
 
         :return: The credit_count of this TransactionSummaryResponse.  # noqa: E501
         :rtype: int
@@ -365,7 +365,7 @@ class TransactionSummaryResponse(object):
     def credit_count(self, credit_count):
         """Sets the credit_count of this TransactionSummaryResponse.
 
-        This integer value indicates the total number of the seller's sales and/or credits that match the input criteria. Note: Unless the transactionType filter is used in the request to retrieve a specific type of monetary transaction (sale, buyer refund, or seller credit), the creditCount and creditAmount fields account for both order sales and seller credits (the count and value is not distinguished between the two monetary transaction types). This field is generally returned, even if 0, but it will not be returned if a transactionType filter is used, and its value is set to either REFUND, DISPUTE, or SHIPPING_LABEL.  # noqa: E501
+        This integer value indicates the total number of the seller's sales and/or credits that match the input criteria. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> Unless the <b>transactionType</b> filter is used in the request to retrieve a specific type of monetary transaction (sale, buyer refund, or seller credit), the <b>creditCount</b> and <b>creditAmount</b> fields account for both order sales and seller credits (the count and value is not distinguished between the two monetary transaction types).</span><br><br>This field is generally returned, even if <code>0</code>, but it will not be returned if a <strong>transactionType</strong> filter is used, and its value is set to either <code>REFUND</code>, <code>DISPUTE</code>, or <code>SHIPPING_LABEL</code>.  # noqa: E501
 
         :param credit_count: The credit_count of this TransactionSummaryResponse.  # noqa: E501
         :type: int
@@ -398,7 +398,7 @@ class TransactionSummaryResponse(object):
     def dispute_booking_entry(self):
         """Gets the dispute_booking_entry of this TransactionSummaryResponse.  # noqa: E501
 
-        The enumeration value indicates whether the dollar amount in the disputeAmount field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be DEBIT, but its possible that CREDIT could be returned if the seller contested one or more payment disputes and won the dispute. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value indicates whether the dollar amount in the <strong>disputeAmount</strong> field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be <code>DEBIT</code>, but its possible that <code>CREDIT</code> could be returned if the seller contested one or more payment disputes and won the dispute. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The dispute_booking_entry of this TransactionSummaryResponse.  # noqa: E501
         :rtype: str
@@ -409,7 +409,7 @@ class TransactionSummaryResponse(object):
     def dispute_booking_entry(self, dispute_booking_entry):
         """Sets the dispute_booking_entry of this TransactionSummaryResponse.
 
-        The enumeration value indicates whether the dollar amount in the disputeAmount field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be DEBIT, but its possible that CREDIT could be returned if the seller contested one or more payment disputes and won the dispute. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value indicates whether the dollar amount in the <strong>disputeAmount</strong> field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be <code>DEBIT</code>, but its possible that <code>CREDIT</code> could be returned if the seller contested one or more payment disputes and won the dispute. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :param dispute_booking_entry: The dispute_booking_entry of this TransactionSummaryResponse.  # noqa: E501
         :type: str
@@ -421,7 +421,7 @@ class TransactionSummaryResponse(object):
     def dispute_count(self):
         """Gets the dispute_count of this TransactionSummaryResponse.  # noqa: E501
 
-        This integer value indicates the total number of payment disputes that have been initiated by one or more buyers. Only the orders that match the input criteria are considered. The Payment Disputes methods in the Fulfillment API can be used by the seller to retrieve more information about any payment disputes. This field is generally returned, even if 0, but it will not be returned if a transactionType filter is used, and its value is set to any value other than DISPUTE.  # noqa: E501
+        This integer value indicates the total number of payment disputes that have been initiated by one or more buyers. Only the orders that match the input criteria are considered. The Payment Disputes methods in the Fulfillment API can be used by the seller to retrieve more information about any payment disputes. <br><br>This field is generally returned, even if <code>0</code>, but it will not be returned if a <strong>transactionType</strong> filter is used, and its value is set to any value other than <code>DISPUTE</code>.  # noqa: E501
 
         :return: The dispute_count of this TransactionSummaryResponse.  # noqa: E501
         :rtype: int
@@ -432,7 +432,7 @@ class TransactionSummaryResponse(object):
     def dispute_count(self, dispute_count):
         """Sets the dispute_count of this TransactionSummaryResponse.
 
-        This integer value indicates the total number of payment disputes that have been initiated by one or more buyers. Only the orders that match the input criteria are considered. The Payment Disputes methods in the Fulfillment API can be used by the seller to retrieve more information about any payment disputes. This field is generally returned, even if 0, but it will not be returned if a transactionType filter is used, and its value is set to any value other than DISPUTE.  # noqa: E501
+        This integer value indicates the total number of payment disputes that have been initiated by one or more buyers. Only the orders that match the input criteria are considered. The Payment Disputes methods in the Fulfillment API can be used by the seller to retrieve more information about any payment disputes. <br><br>This field is generally returned, even if <code>0</code>, but it will not be returned if a <strong>transactionType</strong> filter is used, and its value is set to any value other than <code>DISPUTE</code>.  # noqa: E501
 
         :param dispute_count: The dispute_count of this TransactionSummaryResponse.  # noqa: E501
         :type: int
@@ -532,7 +532,7 @@ class TransactionSummaryResponse(object):
     def on_hold_booking_entry(self):
         """Gets the on_hold_booking_entry of this TransactionSummaryResponse.  # noqa: E501
 
-        The enumeration value indicates whether the dollar amount in the onHoldAmount field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be CREDIT, since on-hold funds should eventually be released as part of a payout to the seller once the hold is cleared. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value indicates whether the dollar amount in the <strong>onHoldAmount</strong> field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be <code>CREDIT</code>, since on-hold funds should eventually be released as part of a payout to the seller once the hold is cleared. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The on_hold_booking_entry of this TransactionSummaryResponse.  # noqa: E501
         :rtype: str
@@ -543,7 +543,7 @@ class TransactionSummaryResponse(object):
     def on_hold_booking_entry(self, on_hold_booking_entry):
         """Sets the on_hold_booking_entry of this TransactionSummaryResponse.
 
-        The enumeration value indicates whether the dollar amount in the onHoldAmount field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be CREDIT, since on-hold funds should eventually be released as part of a payout to the seller once the hold is cleared. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value indicates whether the dollar amount in the <strong>onHoldAmount</strong> field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be <code>CREDIT</code>, since on-hold funds should eventually be released as part of a payout to the seller once the hold is cleared. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :param on_hold_booking_entry: The on_hold_booking_entry of this TransactionSummaryResponse.  # noqa: E501
         :type: str
@@ -555,7 +555,7 @@ class TransactionSummaryResponse(object):
     def on_hold_count(self):
         """Gets the on_hold_count of this TransactionSummaryResponse.  # noqa: E501
 
-        This integer value indicates the total number of order sales where the associated funds are on hold. Only the orders that match the input criteria are considered. This field is generally returned, even if 0, but it will not be returned if a transactionStatus filter is used, and its value is set to any value other than FUNDS_ON_HOLD.  # noqa: E501
+        This integer value indicates the total number of order sales where the associated funds are on hold. Only the orders that match the input criteria are considered.<br><br>This field is generally returned, even if <code>0</code>, but it will not be returned if a <strong>transactionStatus</strong> filter is used, and its value is set to any value other than <code>FUNDS_ON_HOLD</code>.  # noqa: E501
 
         :return: The on_hold_count of this TransactionSummaryResponse.  # noqa: E501
         :rtype: int
@@ -566,7 +566,7 @@ class TransactionSummaryResponse(object):
     def on_hold_count(self, on_hold_count):
         """Sets the on_hold_count of this TransactionSummaryResponse.
 
-        This integer value indicates the total number of order sales where the associated funds are on hold. Only the orders that match the input criteria are considered. This field is generally returned, even if 0, but it will not be returned if a transactionStatus filter is used, and its value is set to any value other than FUNDS_ON_HOLD.  # noqa: E501
+        This integer value indicates the total number of order sales where the associated funds are on hold. Only the orders that match the input criteria are considered.<br><br>This field is generally returned, even if <code>0</code>, but it will not be returned if a <strong>transactionStatus</strong> filter is used, and its value is set to any value other than <code>FUNDS_ON_HOLD</code>.  # noqa: E501
 
         :param on_hold_count: The on_hold_count of this TransactionSummaryResponse.  # noqa: E501
         :type: int
@@ -599,7 +599,7 @@ class TransactionSummaryResponse(object):
     def refund_booking_entry(self):
         """Gets the refund_booking_entry of this TransactionSummaryResponse.  # noqa: E501
 
-        The enumeration value indicates whether the dollar amount in the refundAmount field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be DEBIT since this a refund from the seller to the buyer. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value indicates whether the dollar amount in the <strong>refundAmount</strong> field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be <code>DEBIT</code> since this a refund from the seller to the buyer. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The refund_booking_entry of this TransactionSummaryResponse.  # noqa: E501
         :rtype: str
@@ -610,7 +610,7 @@ class TransactionSummaryResponse(object):
     def refund_booking_entry(self, refund_booking_entry):
         """Sets the refund_booking_entry of this TransactionSummaryResponse.
 
-        The enumeration value indicates whether the dollar amount in the refundAmount field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be DEBIT since this a refund from the seller to the buyer. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value indicates whether the dollar amount in the <strong>refundAmount</strong> field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be <code>DEBIT</code> since this a refund from the seller to the buyer. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :param refund_booking_entry: The refund_booking_entry of this TransactionSummaryResponse.  # noqa: E501
         :type: str
@@ -622,7 +622,7 @@ class TransactionSummaryResponse(object):
     def refund_count(self):
         """Gets the refund_count of this TransactionSummaryResponse.  # noqa: E501
 
-        This integer value indicates the total number of buyer refunds that match the input criteria. This field is generally returned, even if 0, but it will not be returned if a transactionType filter is used, and its value is set to any value other than REFUND.  # noqa: E501
+        This integer value indicates the total number of buyer refunds that match the input criteria. <br><br>This field is generally returned, even if <code>0</code>, but it will not be returned if a <strong>transactionType</strong> filter is used, and its value is set to any value other than <code>REFUND</code>.  # noqa: E501
 
         :return: The refund_count of this TransactionSummaryResponse.  # noqa: E501
         :rtype: int
@@ -633,7 +633,7 @@ class TransactionSummaryResponse(object):
     def refund_count(self, refund_count):
         """Sets the refund_count of this TransactionSummaryResponse.
 
-        This integer value indicates the total number of buyer refunds that match the input criteria. This field is generally returned, even if 0, but it will not be returned if a transactionType filter is used, and its value is set to any value other than REFUND.  # noqa: E501
+        This integer value indicates the total number of buyer refunds that match the input criteria. <br><br>This field is generally returned, even if <code>0</code>, but it will not be returned if a <strong>transactionType</strong> filter is used, and its value is set to any value other than <code>REFUND</code>.  # noqa: E501
 
         :param refund_count: The refund_count of this TransactionSummaryResponse.  # noqa: E501
         :type: int
@@ -666,7 +666,7 @@ class TransactionSummaryResponse(object):
     def shipping_label_booking_entry(self):
         """Gets the shipping_label_booking_entry of this TransactionSummaryResponse.  # noqa: E501
 
-        The enumeration value indicates whether the dollar amount in the shippingLabelAmount field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be DEBIT, as eBay will charge the seller when eBay shipping labels are purchased, but it can be CREDIT if the seller was refunded for a shipping label or was possibly overcharged for a shipping label. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value indicates whether the dollar amount in the <strong>shippingLabelAmount</strong> field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be <code>DEBIT</code>, as eBay will charge the seller when eBay shipping labels are purchased, but it can be <code>CREDIT</code> if the seller was refunded for a shipping label or was possibly overcharged for a shipping label. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The shipping_label_booking_entry of this TransactionSummaryResponse.  # noqa: E501
         :rtype: str
@@ -677,7 +677,7 @@ class TransactionSummaryResponse(object):
     def shipping_label_booking_entry(self, shipping_label_booking_entry):
         """Sets the shipping_label_booking_entry of this TransactionSummaryResponse.
 
-        The enumeration value indicates whether the dollar amount in the shippingLabelAmount field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be DEBIT, as eBay will charge the seller when eBay shipping labels are purchased, but it can be CREDIT if the seller was refunded for a shipping label or was possibly overcharged for a shipping label. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value indicates whether the dollar amount in the <strong>shippingLabelAmount</strong> field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be <code>DEBIT</code>, as eBay will charge the seller when eBay shipping labels are purchased, but it can be <code>CREDIT</code> if the seller was refunded for a shipping label or was possibly overcharged for a shipping label. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :param shipping_label_booking_entry: The shipping_label_booking_entry of this TransactionSummaryResponse.  # noqa: E501
         :type: str
@@ -733,7 +733,7 @@ class TransactionSummaryResponse(object):
     def transfer_booking_entry(self):
         """Gets the transfer_booking_entry of this TransactionSummaryResponse.  # noqa: E501
 
-        The enumeration value indicates whether the dollar amount in the transferAmount field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be DEBIT since this a seller reimbursement to eBay for buyer refunds. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value indicates whether the dollar amount in the <strong>transferAmount</strong> field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be <code>DEBIT</code> since this a seller reimbursement to eBay for buyer refunds. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The transfer_booking_entry of this TransactionSummaryResponse.  # noqa: E501
         :rtype: str
@@ -744,7 +744,7 @@ class TransactionSummaryResponse(object):
     def transfer_booking_entry(self, transfer_booking_entry):
         """Sets the transfer_booking_entry of this TransactionSummaryResponse.
 
-        The enumeration value indicates whether the dollar amount in the transferAmount field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be DEBIT since this a seller reimbursement to eBay for buyer refunds. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value indicates whether the dollar amount in the <strong>transferAmount</strong> field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be <code>DEBIT</code> since this a seller reimbursement to eBay for buyer refunds. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :param transfer_booking_entry: The transfer_booking_entry of this TransactionSummaryResponse.  # noqa: E501
         :type: str
@@ -756,7 +756,7 @@ class TransactionSummaryResponse(object):
     def transfer_count(self):
         """Gets the transfer_count of this TransactionSummaryResponse.  # noqa: E501
 
-        This integer value indicates the total number of buyer refund transfers that match the input criteria. This field is generally returned, even if 0, but it will not be returned if a transactionType filter is used, and its value is set to any value other than TRANSFER.  # noqa: E501
+        This integer value indicates the total number of buyer refund transfers that match the input criteria. <br><br>This field is generally returned, even if <code>0</code>, but it will not be returned if a <strong>transactionType</strong> filter is used, and its value is set to any value other than <code>TRANSFER</code>.  # noqa: E501
 
         :return: The transfer_count of this TransactionSummaryResponse.  # noqa: E501
         :rtype: int
@@ -767,7 +767,7 @@ class TransactionSummaryResponse(object):
     def transfer_count(self, transfer_count):
         """Sets the transfer_count of this TransactionSummaryResponse.
 
-        This integer value indicates the total number of buyer refund transfers that match the input criteria. This field is generally returned, even if 0, but it will not be returned if a transactionType filter is used, and its value is set to any value other than TRANSFER.  # noqa: E501
+        This integer value indicates the total number of buyer refund transfers that match the input criteria. <br><br>This field is generally returned, even if <code>0</code>, but it will not be returned if a <strong>transactionType</strong> filter is used, and its value is set to any value other than <code>TRANSFER</code>.  # noqa: E501
 
         :param transfer_count: The transfer_count of this TransactionSummaryResponse.  # noqa: E501
         :type: int

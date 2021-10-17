@@ -124,7 +124,7 @@ class DiscountRule(object):
     def rule_order(self):
         """Gets the rule_order of this DiscountRule.  # noqa: E501
 
-        This field indicates the order in which the discountRules are presented. The value specified for this field must equal the associated minQuantity value. Required if you are creating a volume pricing promotion.  # noqa: E501
+        This field indicates the order in which the <b>discountRules</b> are presented. The value specified for this field must equal the associated <b>minQuantity</b> value. <br><br><i>Required if </i> you are creating a volume pricing promotion.  # noqa: E501
 
         :return: The rule_order of this DiscountRule.  # noqa: E501
         :rtype: int
@@ -135,7 +135,7 @@ class DiscountRule(object):
     def rule_order(self, rule_order):
         """Sets the rule_order of this DiscountRule.
 
-        This field indicates the order in which the discountRules are presented. The value specified for this field must equal the associated minQuantity value. Required if you are creating a volume pricing promotion.  # noqa: E501
+        This field indicates the order in which the <b>discountRules</b> are presented. The value specified for this field must equal the associated <b>minQuantity</b> value. <br><br><i>Required if </i> you are creating a volume pricing promotion.  # noqa: E501
 
         :param rule_order: The rule_order of this DiscountRule.  # noqa: E501
         :type: int

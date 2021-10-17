@@ -51,7 +51,7 @@ class CreateAdRequest(object):
     def bid_percentage(self):
         """Gets the bid_percentage of this CreateAdRequest.  # noqa: E501
 
-        The user-defined bid percentage (also known as the ad rate) sets the level that eBay increases the visibility in search results for the associated listing. The higher the bidPercentage value, the more eBay promotes the listing. The value specified here is also used to calculate the Promoted Listings fee. This percentage value is multiplied by the final sales price to determine the fee. The Promoted Listings fee is determined at the time the transaction completes and the seller is assessed the fee only when an item sells through a Promoted Listings ad campaign. bidPercentage is a single precision value that is guided by the following rules: These values are valid: &nbsp;&nbsp;&nbsp;1, &nbsp;&nbsp;&nbsp;1.0, &nbsp;&nbsp;&nbsp;4.1, &nbsp;&nbsp;&nbsp;5.0, &nbsp;&nbsp;&nbsp;5.5, ... These values are not valid: &nbsp;&nbsp;&nbsp;0.01, &nbsp;&nbsp;&nbsp;10.75, &nbsp;&nbsp;&nbsp;99.99, &nbsp;&nbsp;&nbsp;and so on. If a bid percentage is not provided for an ad, eBay uses the default bid percentage of the associated campaign.Minimum value: 1.0 Maximum value: 100.0  # noqa: E501
+        The user-defined <b>bid percentage</b> (also known as the <i>ad rate</i>) sets the level that eBay increases the visibility in search results for the associated listing. The higher the <b>bidPercentage</b> value, the more eBay promotes the listing.  <br><br>The value specified here is also used to calculate the Promoted Listings fee. This percentage value is multiplied by the final sales price to determine the fee. <br><br>The Promoted Listings fee is determined at the time the transaction completes and the seller is assessed the fee only when an item sells through a Promoted Listings ad campaign. <br><br><b>bidPercentage</b> is a single precision value that is guided by the following rules: <ul><li>These values are <b>valid</b>:<br>&nbsp;&nbsp;&nbsp;<code>1</code>, &nbsp;&nbsp;&nbsp;<code>1.0</code>, &nbsp;&nbsp;&nbsp;<code>4.1</code>,<br /> &nbsp;&nbsp;&nbsp;<code>5.0</code>, &nbsp;&nbsp;&nbsp;<code>5.5</code>, ...</li>  <li>These values are <b>not valid</b>:<br /> &nbsp;&nbsp;&nbsp;<code>0.01</code>, &nbsp;&nbsp;&nbsp;<code>10.75</code>, &nbsp;&nbsp;&nbsp;<code>99.99</code>,<br /> &nbsp;&nbsp;&nbsp;and so on.</li></ul>  <p>If a bid percentage is not provided for an ad, eBay uses the default bid percentage of the associated campaign.</p><b>Minimum value:</b> 1.0 <br><b>Maximum value:</b> 100.0  # noqa: E501
 
         :return: The bid_percentage of this CreateAdRequest.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class CreateAdRequest(object):
     def bid_percentage(self, bid_percentage):
         """Sets the bid_percentage of this CreateAdRequest.
 
-        The user-defined bid percentage (also known as the ad rate) sets the level that eBay increases the visibility in search results for the associated listing. The higher the bidPercentage value, the more eBay promotes the listing. The value specified here is also used to calculate the Promoted Listings fee. This percentage value is multiplied by the final sales price to determine the fee. The Promoted Listings fee is determined at the time the transaction completes and the seller is assessed the fee only when an item sells through a Promoted Listings ad campaign. bidPercentage is a single precision value that is guided by the following rules: These values are valid: &nbsp;&nbsp;&nbsp;1, &nbsp;&nbsp;&nbsp;1.0, &nbsp;&nbsp;&nbsp;4.1, &nbsp;&nbsp;&nbsp;5.0, &nbsp;&nbsp;&nbsp;5.5, ... These values are not valid: &nbsp;&nbsp;&nbsp;0.01, &nbsp;&nbsp;&nbsp;10.75, &nbsp;&nbsp;&nbsp;99.99, &nbsp;&nbsp;&nbsp;and so on. If a bid percentage is not provided for an ad, eBay uses the default bid percentage of the associated campaign.Minimum value: 1.0 Maximum value: 100.0  # noqa: E501
+        The user-defined <b>bid percentage</b> (also known as the <i>ad rate</i>) sets the level that eBay increases the visibility in search results for the associated listing. The higher the <b>bidPercentage</b> value, the more eBay promotes the listing.  <br><br>The value specified here is also used to calculate the Promoted Listings fee. This percentage value is multiplied by the final sales price to determine the fee. <br><br>The Promoted Listings fee is determined at the time the transaction completes and the seller is assessed the fee only when an item sells through a Promoted Listings ad campaign. <br><br><b>bidPercentage</b> is a single precision value that is guided by the following rules: <ul><li>These values are <b>valid</b>:<br>&nbsp;&nbsp;&nbsp;<code>1</code>, &nbsp;&nbsp;&nbsp;<code>1.0</code>, &nbsp;&nbsp;&nbsp;<code>4.1</code>,<br /> &nbsp;&nbsp;&nbsp;<code>5.0</code>, &nbsp;&nbsp;&nbsp;<code>5.5</code>, ...</li>  <li>These values are <b>not valid</b>:<br /> &nbsp;&nbsp;&nbsp;<code>0.01</code>, &nbsp;&nbsp;&nbsp;<code>10.75</code>, &nbsp;&nbsp;&nbsp;<code>99.99</code>,<br /> &nbsp;&nbsp;&nbsp;and so on.</li></ul>  <p>If a bid percentage is not provided for an ad, eBay uses the default bid percentage of the associated campaign.</p><b>Minimum value:</b> 1.0 <br><b>Maximum value:</b> 100.0  # noqa: E501
 
         :param bid_percentage: The bid_percentage of this CreateAdRequest.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class CreateAdRequest(object):
     def listing_id(self):
         """Gets the listing_id of this CreateAdRequest.  # noqa: E501
 
-        A unique eBay-assigned ID for a listing that is generated when the listing is created. Note: This field accepts both listing IDs, as generated by the Inventory API, and an item IDs, as used in the eBay Traditional API set (e.g., the Trading and Finding APIs).  # noqa: E501
+        A unique eBay-assigned ID for a listing that is generated when the listing is created.  <p class=\"tablenote\"><b>Note:</b> This field accepts both listing IDs, as generated by the Inventory API, and an item IDs, as used in the eBay Traditional API set (e.g., the Trading and Finding APIs).</p>  # noqa: E501
 
         :return: The listing_id of this CreateAdRequest.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class CreateAdRequest(object):
     def listing_id(self, listing_id):
         """Sets the listing_id of this CreateAdRequest.
 
-        A unique eBay-assigned ID for a listing that is generated when the listing is created. Note: This field accepts both listing IDs, as generated by the Inventory API, and an item IDs, as used in the eBay Traditional API set (e.g., the Trading and Finding APIs).  # noqa: E501
+        A unique eBay-assigned ID for a listing that is generated when the listing is created.  <p class=\"tablenote\"><b>Note:</b> This field accepts both listing IDs, as generated by the Inventory API, and an item IDs, as used in the eBay Traditional API set (e.g., the Trading and Finding APIs).</p>  # noqa: E501
 
         :param listing_id: The listing_id of this CreateAdRequest.  # noqa: E501
         :type: str

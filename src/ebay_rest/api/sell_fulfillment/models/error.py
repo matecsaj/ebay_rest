@@ -109,7 +109,7 @@ class Error(object):
     def domain(self):
         """Gets the domain of this Error.  # noqa: E501
 
-        The name of the domain containing the service or application. For example, sell is a domain.  # noqa: E501
+        The name of the domain containing the service or application. For example, <code>sell</code> is a domain.  # noqa: E501
 
         :return: The domain of this Error.  # noqa: E501
         :rtype: str
@@ -120,7 +120,7 @@ class Error(object):
     def domain(self, domain):
         """Sets the domain of this Error.
 
-        The name of the domain containing the service or application. For example, sell is a domain.  # noqa: E501
+        The name of the domain containing the service or application. For example, <code>sell</code> is a domain.  # noqa: E501
 
         :param domain: The domain of this Error.  # noqa: E501
         :type: str
@@ -178,7 +178,7 @@ class Error(object):
     def long_message(self):
         """Gets the long_message of this Error.  # noqa: E501
 
-        An expanded version of the message field. Maximum length: 200 characters  # noqa: E501
+        An expanded version of the <b>message</b> field. <br /><br /><b>Maximum length:</b> 200 characters  # noqa: E501
 
         :return: The long_message of this Error.  # noqa: E501
         :rtype: str
@@ -189,7 +189,7 @@ class Error(object):
     def long_message(self, long_message):
         """Sets the long_message of this Error.
 
-        An expanded version of the message field. Maximum length: 200 characters  # noqa: E501
+        An expanded version of the <b>message</b> field. <br /><br /><b>Maximum length:</b> 200 characters  # noqa: E501
 
         :param long_message: The long_message of this Error.  # noqa: E501
         :type: str
@@ -201,7 +201,7 @@ class Error(object):
     def message(self):
         """Gets the message of this Error.  # noqa: E501
 
-        A message about the error or warning which is device agnostic and readable by end users and application developers. It explains what the error or warning is, and how to fix it (in a general sense). If applicable, the value is localized to the end user's requested locale. Maximum length: 50 characters  # noqa: E501
+        A message about the error or warning which is device agnostic and readable by end users and application developers. It explains what the error or warning is, and how to fix it (in a general sense). If applicable, the value is localized to the end user's requested locale. <br /><br /><b>Maximum length:</b> 50 characters  # noqa: E501
 
         :return: The message of this Error.  # noqa: E501
         :rtype: str
@@ -212,7 +212,7 @@ class Error(object):
     def message(self, message):
         """Sets the message of this Error.
 
-        A message about the error or warning which is device agnostic and readable by end users and application developers. It explains what the error or warning is, and how to fix it (in a general sense). If applicable, the value is localized to the end user's requested locale. Maximum length: 50 characters  # noqa: E501
+        A message about the error or warning which is device agnostic and readable by end users and application developers. It explains what the error or warning is, and how to fix it (in a general sense). If applicable, the value is localized to the end user's requested locale. <br /><br /><b>Maximum length:</b> 50 characters  # noqa: E501
 
         :param message: The message of this Error.  # noqa: E501
         :type: str
@@ -270,7 +270,7 @@ class Error(object):
     def subdomain(self):
         """Gets the subdomain of this Error.  # noqa: E501
 
-        The name of the domain's subsystem or subdivision. For example, fulfillment is a subdomain in the sell domain.  # noqa: E501
+        The name of the domain's subsystem or subdivision. For example, <code>fulfillment</code> is a subdomain in the <code>sell</code> domain.  # noqa: E501
 
         :return: The subdomain of this Error.  # noqa: E501
         :rtype: str
@@ -281,7 +281,7 @@ class Error(object):
     def subdomain(self, subdomain):
         """Sets the subdomain of this Error.
 
-        The name of the domain's subsystem or subdivision. For example, fulfillment is a subdomain in the sell domain.  # noqa: E501
+        The name of the domain's subsystem or subdivision. For example, <code>fulfillment</code> is a subdomain in the <code>sell</code> domain.  # noqa: E501
 
         :param subdomain: The subdomain of this Error.  # noqa: E501
         :type: str

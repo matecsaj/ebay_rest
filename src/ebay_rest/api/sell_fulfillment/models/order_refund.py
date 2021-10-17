@@ -87,7 +87,7 @@ class OrderRefund(object):
     def refund_date(self):
         """Gets the refund_date of this OrderRefund.  # noqa: E501
 
-        The date and time that the refund was issued. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is not returned until the refund has been issued. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+        The date and time that the refund was issued. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is not returned until the refund has been issued. <br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :return: The refund_date of this OrderRefund.  # noqa: E501
         :rtype: str
@@ -98,7 +98,7 @@ class OrderRefund(object):
     def refund_date(self, refund_date):
         """Sets the refund_date of this OrderRefund.
 
-        The date and time that the refund was issued. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is not returned until the refund has been issued. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+        The date and time that the refund was issued. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is not returned until the refund has been issued. <br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :param refund_date: The refund_date of this OrderRefund.  # noqa: E501
         :type: str
@@ -110,7 +110,7 @@ class OrderRefund(object):
     def refund_id(self):
         """Gets the refund_id of this OrderRefund.  # noqa: E501
 
-        Unique identifier of a refund that was initiated for an order through the issueRefund method. If the issueRefund method was used to issue one or more refunds at the line item level, these refund identifiers are returned at the line item level instead (lineItems.refunds.refundId field). A refundId value is returned in the response of the issueRefund method, and this same value will be returned in the getOrders and getOrders responses for pending and completed refunds. The issueRefund method can only be used for eBay managed payment orders. For other refunds, see the refundReferenceId field.  # noqa: E501
+        Unique identifier of a refund that was initiated for an order through the <b>issueRefund</b> method. If the <b>issueRefund</b> method was used to issue one or more refunds at the line item level, these refund identifiers are returned at the line item level instead (<b>lineItems.refunds.refundId</b> field).<br/><br/> A <b>refundId</b> value is returned in the response of the <b>issueRefund</b> method, and this same value will be returned in the <b>getOrders</b> and <b>getOrders</b> responses for pending and completed refunds. The <b>issueRefund</b> method can only be used for eBay managed payment orders.  For other refunds, see the <b>refundReferenceId</b> field.  # noqa: E501
 
         :return: The refund_id of this OrderRefund.  # noqa: E501
         :rtype: str
@@ -121,7 +121,7 @@ class OrderRefund(object):
     def refund_id(self, refund_id):
         """Sets the refund_id of this OrderRefund.
 
-        Unique identifier of a refund that was initiated for an order through the issueRefund method. If the issueRefund method was used to issue one or more refunds at the line item level, these refund identifiers are returned at the line item level instead (lineItems.refunds.refundId field). A refundId value is returned in the response of the issueRefund method, and this same value will be returned in the getOrders and getOrders responses for pending and completed refunds. The issueRefund method can only be used for eBay managed payment orders. For other refunds, see the refundReferenceId field.  # noqa: E501
+        Unique identifier of a refund that was initiated for an order through the <b>issueRefund</b> method. If the <b>issueRefund</b> method was used to issue one or more refunds at the line item level, these refund identifiers are returned at the line item level instead (<b>lineItems.refunds.refundId</b> field).<br/><br/> A <b>refundId</b> value is returned in the response of the <b>issueRefund</b> method, and this same value will be returned in the <b>getOrders</b> and <b>getOrders</b> responses for pending and completed refunds. The <b>issueRefund</b> method can only be used for eBay managed payment orders.  For other refunds, see the <b>refundReferenceId</b> field.  # noqa: E501
 
         :param refund_id: The refund_id of this OrderRefund.  # noqa: E501
         :type: str

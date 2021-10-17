@@ -66,7 +66,7 @@ class KycCheck(object):
     def alert(self):
         """Gets the alert of this KycCheck.  # noqa: E501
 
-        This field gives a short summary of what is required from the seller. An example might be, 'Upload bank document now.'. The detailMessage field will often provide more details on what is required of the seller.  # noqa: E501
+        This field gives a short summary of what is required from the seller. An example might be, '<code>Upload bank document now.</code>'. The <b>detailMessage</b> field will often provide more details on what is required of the seller.  # noqa: E501
 
         :return: The alert of this KycCheck.  # noqa: E501
         :rtype: str
@@ -77,7 +77,7 @@ class KycCheck(object):
     def alert(self, alert):
         """Sets the alert of this KycCheck.
 
-        This field gives a short summary of what is required from the seller. An example might be, 'Upload bank document now.'. The detailMessage field will often provide more details on what is required of the seller.  # noqa: E501
+        This field gives a short summary of what is required from the seller. An example might be, '<code>Upload bank document now.</code>'. The <b>detailMessage</b> field will often provide more details on what is required of the seller.  # noqa: E501
 
         :param alert: The alert of this KycCheck.  # noqa: E501
         :type: str
@@ -89,7 +89,7 @@ class KycCheck(object):
     def data_required(self):
         """Gets the data_required of this KycCheck.  # noqa: E501
 
-        The enumeration value returned in this field categorizes the type of details needed for the KYC check. More information about the check is shown in the detailMessage and other applicable, corresponding fields. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/kyc:DetailsType'>eBay API documentation</a>  # noqa: E501
+        The enumeration value returned in this field categorizes the type of details needed for the KYC check. More information about the check is shown in the <b>detailMessage</b> and other applicable, corresponding fields. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/kyc:DetailsType'>eBay API documentation</a>  # noqa: E501
 
         :return: The data_required of this KycCheck.  # noqa: E501
         :rtype: str
@@ -100,7 +100,7 @@ class KycCheck(object):
     def data_required(self, data_required):
         """Sets the data_required of this KycCheck.
 
-        The enumeration value returned in this field categorizes the type of details needed for the KYC check. More information about the check is shown in the detailMessage and other applicable, corresponding fields. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/kyc:DetailsType'>eBay API documentation</a>  # noqa: E501
+        The enumeration value returned in this field categorizes the type of details needed for the KYC check. More information about the check is shown in the <b>detailMessage</b> and other applicable, corresponding fields. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/kyc:DetailsType'>eBay API documentation</a>  # noqa: E501
 
         :param data_required: The data_required of this KycCheck.  # noqa: E501
         :type: str
@@ -112,7 +112,7 @@ class KycCheck(object):
     def detail_message(self):
         """Gets the detail_message of this KycCheck.  # noqa: E501
 
-        This field gives a detailed message about what is required from the seller. An example might be, 'Please upload a bank document by 2020-08-01 to get your account back in good standing.'.  # noqa: E501
+        This field gives a detailed message about what is required from the seller. An example might be, '<code>Please upload a bank document by 2020-08-01 to get your account back in good standing.</code>'.  # noqa: E501
 
         :return: The detail_message of this KycCheck.  # noqa: E501
         :rtype: str
@@ -123,7 +123,7 @@ class KycCheck(object):
     def detail_message(self, detail_message):
         """Sets the detail_message of this KycCheck.
 
-        This field gives a detailed message about what is required from the seller. An example might be, 'Please upload a bank document by 2020-08-01 to get your account back in good standing.'.  # noqa: E501
+        This field gives a detailed message about what is required from the seller. An example might be, '<code>Please upload a bank document by 2020-08-01 to get your account back in good standing.</code>'.  # noqa: E501
 
         :param detail_message: The detail_message of this KycCheck.  # noqa: E501
         :type: str
@@ -135,7 +135,7 @@ class KycCheck(object):
     def due_date(self):
         """Gets the due_date of this KycCheck.  # noqa: E501
 
-        The timestamp in this field indicates the date by which the seller should resolve the KYC requirement. The timestamp in this field uses the UTC date and time format described in the ISO 8601 Standard. See below for this format and an example: MM-DD-YYYY HH:MM:SS 06-05-2020 10:34:18  # noqa: E501
+        The timestamp in this field indicates the date by which the seller should resolve the KYC requirement.<br><br>The timestamp in this field uses the UTC date and time format described in the <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601 Standard</a>. See below for this format and an example: <br><br><i>MM-DD-YYYY HH:MM:SS</i><br/><code>06-05-2020 10:34:18</code>  # noqa: E501
 
         :return: The due_date of this KycCheck.  # noqa: E501
         :rtype: str
@@ -146,7 +146,7 @@ class KycCheck(object):
     def due_date(self, due_date):
         """Sets the due_date of this KycCheck.
 
-        The timestamp in this field indicates the date by which the seller should resolve the KYC requirement. The timestamp in this field uses the UTC date and time format described in the ISO 8601 Standard. See below for this format and an example: MM-DD-YYYY HH:MM:SS 06-05-2020 10:34:18  # noqa: E501
+        The timestamp in this field indicates the date by which the seller should resolve the KYC requirement.<br><br>The timestamp in this field uses the UTC date and time format described in the <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" target=\"_blank\">ISO 8601 Standard</a>. See below for this format and an example: <br><br><i>MM-DD-YYYY HH:MM:SS</i><br/><code>06-05-2020 10:34:18</code>  # noqa: E501
 
         :param due_date: The due_date of this KycCheck.  # noqa: E501
         :type: str

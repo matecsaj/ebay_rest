@@ -92,7 +92,7 @@ class CreateCampaignRequest(object):
     def campaign_name(self):
         """Gets the campaign_name of this CreateCampaignRequest.  # noqa: E501
 
-        A seller-defined name for the campaign. This value must be unique for the seller. You can use any alphanumeric characters in the name, except the less than (&lt;) or greater than (&gt;) characters.Max length: 80 characters  # noqa: E501
+        A seller-defined name for the campaign. This value must be unique for the seller. <p>You can use any alphanumeric characters in the name, except the less than (&lt;) or greater than (&gt;) characters.</p><b>Max length: </b>80 characters  # noqa: E501
 
         :return: The campaign_name of this CreateCampaignRequest.  # noqa: E501
         :rtype: str
@@ -103,7 +103,7 @@ class CreateCampaignRequest(object):
     def campaign_name(self, campaign_name):
         """Sets the campaign_name of this CreateCampaignRequest.
 
-        A seller-defined name for the campaign. This value must be unique for the seller. You can use any alphanumeric characters in the name, except the less than (&lt;) or greater than (&gt;) characters.Max length: 80 characters  # noqa: E501
+        A seller-defined name for the campaign. This value must be unique for the seller. <p>You can use any alphanumeric characters in the name, except the less than (&lt;) or greater than (&gt;) characters.</p><b>Max length: </b>80 characters  # noqa: E501
 
         :param campaign_name: The campaign_name of this CreateCampaignRequest.  # noqa: E501
         :type: str
@@ -115,7 +115,7 @@ class CreateCampaignRequest(object):
     def end_date(self):
         """Gets the end_date of this CreateCampaignRequest.  # noqa: E501
 
-        The date and time the campaign ends, in UTC format (yyyy-MM-ddThh:mm:ssZ). If this field is blank (code&gt;null), it indicates a campaign that has no end date. For display purposes, convert this time into the local time of the seller.  # noqa: E501
+        The date and time the campaign ends, in UTC format (<code>yyyy-MM-ddThh:mm:ssZ</code>). If this field is blank (code>null</code>), it indicates a campaign that has no end date. For display purposes, convert this time into the local time of the seller.  # noqa: E501
 
         :return: The end_date of this CreateCampaignRequest.  # noqa: E501
         :rtype: str
@@ -126,7 +126,7 @@ class CreateCampaignRequest(object):
     def end_date(self, end_date):
         """Sets the end_date of this CreateCampaignRequest.
 
-        The date and time the campaign ends, in UTC format (yyyy-MM-ddThh:mm:ssZ). If this field is blank (code&gt;null), it indicates a campaign that has no end date. For display purposes, convert this time into the local time of the seller.  # noqa: E501
+        The date and time the campaign ends, in UTC format (<code>yyyy-MM-ddThh:mm:ssZ</code>). If this field is blank (code>null</code>), it indicates a campaign that has no end date. For display purposes, convert this time into the local time of the seller.  # noqa: E501
 
         :param end_date: The end_date of this CreateCampaignRequest.  # noqa: E501
         :type: str
@@ -159,7 +159,7 @@ class CreateCampaignRequest(object):
     def marketplace_id(self):
         """Gets the marketplace_id of this CreateCampaignRequest.  # noqa: E501
 
-        The ID of the eBay marketplace where the campaign is hosted. Note the X-EBAY-C-MARKETPLACE-Id header value is ignored for this purpose. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+        The ID of the eBay marketplace where the campaign is hosted. Note the <code>X-EBAY-C-MARKETPLACE-Id</code> header value is ignored for this purpose. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The marketplace_id of this CreateCampaignRequest.  # noqa: E501
         :rtype: str
@@ -170,7 +170,7 @@ class CreateCampaignRequest(object):
     def marketplace_id(self, marketplace_id):
         """Sets the marketplace_id of this CreateCampaignRequest.
 
-        The ID of the eBay marketplace where the campaign is hosted. Note the X-EBAY-C-MARKETPLACE-Id header value is ignored for this purpose. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+        The ID of the eBay marketplace where the campaign is hosted. Note the <code>X-EBAY-C-MARKETPLACE-Id</code> header value is ignored for this purpose. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :param marketplace_id: The marketplace_id of this CreateCampaignRequest.  # noqa: E501
         :type: str
@@ -182,7 +182,7 @@ class CreateCampaignRequest(object):
     def start_date(self):
         """Gets the start_date of this CreateCampaignRequest.  # noqa: E501
 
-        The date and time the campaign starts, in UTC format (yyyy-MM-ddThh:mm:ssZ). For display purposes, convert this time into the local time of the seller. On the date specified, the service derives the keywords for each listing in the campaign, creates an ad for each listing, and associates each new ad with the campaign. The campaign starts after this process is completed. The amount of time it takes the service to start the campaign depends on the number of listings in the campaign. Call getCampaign to check the status of the campaign.  # noqa: E501
+        The date and time the campaign starts, in UTC format (<code>yyyy-MM-ddThh:mm:ssZ</code>). For display purposes, convert this time into the local time of the seller.  <p>On the date specified, the service derives the keywords for each listing in the campaign, creates an ad for each listing, and associates each new ad with the campaign. The campaign starts after this process is completed. The amount of time it takes the service to start the campaign depends on the number of listings in the campaign. Call <b>getCampaign</b> to check the status of the campaign.</p>  # noqa: E501
 
         :return: The start_date of this CreateCampaignRequest.  # noqa: E501
         :rtype: str
@@ -193,7 +193,7 @@ class CreateCampaignRequest(object):
     def start_date(self, start_date):
         """Sets the start_date of this CreateCampaignRequest.
 
-        The date and time the campaign starts, in UTC format (yyyy-MM-ddThh:mm:ssZ). For display purposes, convert this time into the local time of the seller. On the date specified, the service derives the keywords for each listing in the campaign, creates an ad for each listing, and associates each new ad with the campaign. The campaign starts after this process is completed. The amount of time it takes the service to start the campaign depends on the number of listings in the campaign. Call getCampaign to check the status of the campaign.  # noqa: E501
+        The date and time the campaign starts, in UTC format (<code>yyyy-MM-ddThh:mm:ssZ</code>). For display purposes, convert this time into the local time of the seller.  <p>On the date specified, the service derives the keywords for each listing in the campaign, creates an ad for each listing, and associates each new ad with the campaign. The campaign starts after this process is completed. The amount of time it takes the service to start the campaign depends on the number of listings in the campaign. Call <b>getCampaign</b> to check the status of the campaign.</p>  # noqa: E501
 
         :param start_date: The start_date of this CreateCampaignRequest.  # noqa: E501
         :type: str

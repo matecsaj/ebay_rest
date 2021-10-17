@@ -76,7 +76,7 @@ class FulfillmentStartInstruction(object):
     def ebay_supported_fulfillment(self):
         """Gets the ebay_supported_fulfillment of this FulfillmentStartInstruction.  # noqa: E501
 
-        This field is only returned if its value is true and indicates that the fulfillment will be shipped via eBay's Global Shipping Program. For more information, see the Global Shipping Program help topic.  # noqa: E501
+        This field is only returned if its value is <code>true</code> and indicates that the fulfillment will be shipped via eBay's Global Shipping Program. <br /><br />For more information, see the <a href=\"https://www.ebay.com/help/selling/shipping-items/setting-shipping-options/global-shipping-program?id=4646\" target=\"_blank\">Global Shipping Program</a> help topic.  # noqa: E501
 
         :return: The ebay_supported_fulfillment of this FulfillmentStartInstruction.  # noqa: E501
         :rtype: bool
@@ -87,7 +87,7 @@ class FulfillmentStartInstruction(object):
     def ebay_supported_fulfillment(self, ebay_supported_fulfillment):
         """Sets the ebay_supported_fulfillment of this FulfillmentStartInstruction.
 
-        This field is only returned if its value is true and indicates that the fulfillment will be shipped via eBay's Global Shipping Program. For more information, see the Global Shipping Program help topic.  # noqa: E501
+        This field is only returned if its value is <code>true</code> and indicates that the fulfillment will be shipped via eBay's Global Shipping Program. <br /><br />For more information, see the <a href=\"https://www.ebay.com/help/selling/shipping-items/setting-shipping-options/global-shipping-program?id=4646\" target=\"_blank\">Global Shipping Program</a> help topic.  # noqa: E501
 
         :param ebay_supported_fulfillment: The ebay_supported_fulfillment of this FulfillmentStartInstruction.  # noqa: E501
         :type: bool
@@ -120,7 +120,7 @@ class FulfillmentStartInstruction(object):
     def fulfillment_instructions_type(self):
         """Gets the fulfillment_instructions_type of this FulfillmentStartInstruction.  # noqa: E501
 
-        The enumeration value returned in this field indicates the method of fulfillment that will be used to deliver this set of line items (this package) to the buyer. This field will have a value of SHIP_TO if the ebaySupportedFulfillment field is returned with a value of true. See the FulfillmentInstructionsType definition for more information about different fulfillment types. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:FulfillmentInstructionsType'>eBay API documentation</a>  # noqa: E501
+        The enumeration value returned in this field indicates the method of fulfillment that will be used to deliver this set of line items (this package) to the buyer. This field will have a value of <code>SHIP_TO</code> if the <b>ebaySupportedFulfillment</b> field is returned with a value of <code>true</code>. See the <strong>FulfillmentInstructionsType</strong> definition for more information about different fulfillment types. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:FulfillmentInstructionsType'>eBay API documentation</a>  # noqa: E501
 
         :return: The fulfillment_instructions_type of this FulfillmentStartInstruction.  # noqa: E501
         :rtype: str
@@ -131,7 +131,7 @@ class FulfillmentStartInstruction(object):
     def fulfillment_instructions_type(self, fulfillment_instructions_type):
         """Sets the fulfillment_instructions_type of this FulfillmentStartInstruction.
 
-        The enumeration value returned in this field indicates the method of fulfillment that will be used to deliver this set of line items (this package) to the buyer. This field will have a value of SHIP_TO if the ebaySupportedFulfillment field is returned with a value of true. See the FulfillmentInstructionsType definition for more information about different fulfillment types. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:FulfillmentInstructionsType'>eBay API documentation</a>  # noqa: E501
+        The enumeration value returned in this field indicates the method of fulfillment that will be used to deliver this set of line items (this package) to the buyer. This field will have a value of <code>SHIP_TO</code> if the <b>ebaySupportedFulfillment</b> field is returned with a value of <code>true</code>. See the <strong>FulfillmentInstructionsType</strong> definition for more information about different fulfillment types. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:FulfillmentInstructionsType'>eBay API documentation</a>  # noqa: E501
 
         :param fulfillment_instructions_type: The fulfillment_instructions_type of this FulfillmentStartInstruction.  # noqa: E501
         :type: str
@@ -143,7 +143,7 @@ class FulfillmentStartInstruction(object):
     def max_estimated_delivery_date(self):
         """Gets the max_estimated_delivery_date of this FulfillmentStartInstruction.  # noqa: E501
 
-        This is the estimated latest date that the fulfillment will be completed. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is not returned ifthe value of the fulfillmentInstructionsType field is DIGITAL or PREPARE_FOR_PICKUP. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+        This is the estimated latest date that the fulfillment will be completed. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is not returned ifthe value of the <b>fulfillmentInstructionsType</b> field is <code>DIGITAL</code> or <code>PREPARE_FOR_PICKUP</code>.  <br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :return: The max_estimated_delivery_date of this FulfillmentStartInstruction.  # noqa: E501
         :rtype: str
@@ -154,7 +154,7 @@ class FulfillmentStartInstruction(object):
     def max_estimated_delivery_date(self, max_estimated_delivery_date):
         """Sets the max_estimated_delivery_date of this FulfillmentStartInstruction.
 
-        This is the estimated latest date that the fulfillment will be completed. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is not returned ifthe value of the fulfillmentInstructionsType field is DIGITAL or PREPARE_FOR_PICKUP. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+        This is the estimated latest date that the fulfillment will be completed. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is not returned ifthe value of the <b>fulfillmentInstructionsType</b> field is <code>DIGITAL</code> or <code>PREPARE_FOR_PICKUP</code>.  <br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :param max_estimated_delivery_date: The max_estimated_delivery_date of this FulfillmentStartInstruction.  # noqa: E501
         :type: str
@@ -166,7 +166,7 @@ class FulfillmentStartInstruction(object):
     def min_estimated_delivery_date(self):
         """Gets the min_estimated_delivery_date of this FulfillmentStartInstruction.  # noqa: E501
 
-        This is the estimated earliest date that the fulfillment will be completed. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is not returned if the value of the fulfillmentInstructionsType field is DIGITAL or PREPARE_FOR_PICKUP. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+        This is the estimated earliest date that the fulfillment will be completed. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is not returned if  the value of the <b>fulfillmentInstructionsType</b> field is <code>DIGITAL</code> or <code>PREPARE_FOR_PICKUP</code>.  <br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :return: The min_estimated_delivery_date of this FulfillmentStartInstruction.  # noqa: E501
         :rtype: str
@@ -177,7 +177,7 @@ class FulfillmentStartInstruction(object):
     def min_estimated_delivery_date(self, min_estimated_delivery_date):
         """Sets the min_estimated_delivery_date of this FulfillmentStartInstruction.
 
-        This is the estimated earliest date that the fulfillment will be completed. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is not returned if the value of the fulfillmentInstructionsType field is DIGITAL or PREPARE_FOR_PICKUP. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+        This is the estimated earliest date that the fulfillment will be completed. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is not returned if  the value of the <b>fulfillmentInstructionsType</b> field is <code>DIGITAL</code> or <code>PREPARE_FOR_PICKUP</code>.  <br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :param min_estimated_delivery_date: The min_estimated_delivery_date of this FulfillmentStartInstruction.  # noqa: E501
         :type: str

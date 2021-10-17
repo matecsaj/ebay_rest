@@ -71,7 +71,7 @@ class CancelRequest(object):
     def cancel_completed_date(self):
         """Gets the cancel_completed_date of this CancelRequest.  # noqa: E501
 
-        The date and time that the order cancellation was completed, if applicable. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is not returned until the cancellation request has actually been approved by the seller. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+        The date and time that the order cancellation was completed, if applicable. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is not returned until the cancellation request has actually been approved by the seller.<br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :return: The cancel_completed_date of this CancelRequest.  # noqa: E501
         :rtype: str
@@ -82,7 +82,7 @@ class CancelRequest(object):
     def cancel_completed_date(self, cancel_completed_date):
         """Sets the cancel_completed_date of this CancelRequest.
 
-        The date and time that the order cancellation was completed, if applicable. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is not returned until the cancellation request has actually been approved by the seller. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+        The date and time that the order cancellation was completed, if applicable. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is not returned until the cancellation request has actually been approved by the seller.<br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :param cancel_completed_date: The cancel_completed_date of this CancelRequest.  # noqa: E501
         :type: str
@@ -117,7 +117,7 @@ class CancelRequest(object):
     def cancel_reason(self):
         """Gets the cancel_reason of this CancelRequest.  # noqa: E501
 
-        The reason why the cancelInitiator initiated the cancellation request. Cancellation reasons for a buyer might include 'order placed by mistake' or 'order won't arrive in time'. For a seller, a typical cancellation reason is 'out of stock'. If a cancellation request has been made, this field should be returned.  # noqa: E501
+        The reason why the <b>cancelInitiator</b> initiated the cancellation request. Cancellation reasons for a buyer might include 'order placed by mistake' or 'order won't arrive in time'. For a seller, a typical cancellation reason is 'out of stock'. If a cancellation request has been made, this field should be returned.  # noqa: E501
 
         :return: The cancel_reason of this CancelRequest.  # noqa: E501
         :rtype: str
@@ -128,7 +128,7 @@ class CancelRequest(object):
     def cancel_reason(self, cancel_reason):
         """Sets the cancel_reason of this CancelRequest.
 
-        The reason why the cancelInitiator initiated the cancellation request. Cancellation reasons for a buyer might include 'order placed by mistake' or 'order won't arrive in time'. For a seller, a typical cancellation reason is 'out of stock'. If a cancellation request has been made, this field should be returned.  # noqa: E501
+        The reason why the <b>cancelInitiator</b> initiated the cancellation request. Cancellation reasons for a buyer might include 'order placed by mistake' or 'order won't arrive in time'. For a seller, a typical cancellation reason is 'out of stock'. If a cancellation request has been made, this field should be returned.  # noqa: E501
 
         :param cancel_reason: The cancel_reason of this CancelRequest.  # noqa: E501
         :type: str
@@ -186,7 +186,7 @@ class CancelRequest(object):
     def cancel_requested_date(self):
         """Gets the cancel_requested_date of this CancelRequest.  # noqa: E501
 
-        The date and time that the order cancellation was requested. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is returned for each cancellation request. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+        The date and time that the order cancellation was requested. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is returned for each cancellation request.<br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :return: The cancel_requested_date of this CancelRequest.  # noqa: E501
         :rtype: str
@@ -197,7 +197,7 @@ class CancelRequest(object):
     def cancel_requested_date(self, cancel_requested_date):
         """Sets the cancel_requested_date of this CancelRequest.
 
-        The date and time that the order cancellation was requested. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is returned for each cancellation request. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+        The date and time that the order cancellation was requested. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field is returned for each cancellation request.<br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :param cancel_requested_date: The cancel_requested_date of this CancelRequest.  # noqa: E501
         :type: str

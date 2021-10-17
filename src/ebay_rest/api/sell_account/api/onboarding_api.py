@@ -35,7 +35,7 @@ class OnboardingApi(object):
     def get_payments_program_onboarding(self, marketplace_id, payments_program_type, **kwargs):  # noqa: E501
         """get_payments_program_onboarding  # noqa: E501
 
-        This method retrieves a seller's onboarding status of eBay managed payments for a specified marketplace. The overall onboarding status of the seller and the status of each onboarding step is returned. Presently, the only supported payments program type is EBAY_PAYMENTS. See Managed Payments on eBay and Payments Terms of Use. Note: Managed payments availability: eBay managed payments is presently available in the US and Germany, and will roll out to Canada, UK, and Australia in July 2020.  # noqa: E501
+        This method retrieves a seller's onboarding status of eBay managed payments for a specified marketplace. The overall onboarding status of the seller and the status of each onboarding step is returned. <p>Presently, the only supported payments program type is <code>EBAY_PAYMENTS</code>. See <a href=\"https://pages.ebay.com/seller-center/service-and-payments/managed-payments-on-ebay.html\" target=\"_blank\">Managed Payments on eBay</a> and <a href=\"https://pages.ebay.com/payment/2.0/terms.html\" target=\"_blank\">Payments Terms of Use</a>.</p><p> <span class=\"tablenote\"><strong>Note:</strong> Managed payments availability: <a href=\"/managed-payments\">eBay managed payments</a> is presently available in the US and Germany, and will roll out to Canada, UK, and Australia in July 2020.</span></p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_payments_program_onboarding(marketplace_id, payments_program_type, async_req=True)
@@ -43,7 +43,7 @@ class OnboardingApi(object):
 
         :param async_req bool
         :param str marketplace_id: The eBay marketplace ID associated with the onboarding status to retrieve. Only enums for marketplaces that support or will soon support eBay managed payments are allowed. Error 20408 is returned for any other eBay marketplace. No response payload is returned with this error. (required)
-        :param str payments_program_type: The type of payments program whose status is returned by the call. Presently, the only supported payments program is EBAY_PAYMENTS. For details on the program, see Payments Terms of Use. (required)
+        :param str payments_program_type: The type of payments program whose status is returned by the call. Presently, the only supported payments program is <code>EBAY_PAYMENTS</code>. For details on the program, see <a href=\"https://pages.ebay.com/payment/2.0/terms.html\" target=\"_blank\">Payments Terms of Use</a>.  (required)
         :return: PaymentsProgramOnboardingResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -58,7 +58,7 @@ class OnboardingApi(object):
     def get_payments_program_onboarding_with_http_info(self, marketplace_id, payments_program_type, **kwargs):  # noqa: E501
         """get_payments_program_onboarding  # noqa: E501
 
-        This method retrieves a seller's onboarding status of eBay managed payments for a specified marketplace. The overall onboarding status of the seller and the status of each onboarding step is returned. Presently, the only supported payments program type is EBAY_PAYMENTS. See Managed Payments on eBay and Payments Terms of Use. Note: Managed payments availability: eBay managed payments is presently available in the US and Germany, and will roll out to Canada, UK, and Australia in July 2020.  # noqa: E501
+        This method retrieves a seller's onboarding status of eBay managed payments for a specified marketplace. The overall onboarding status of the seller and the status of each onboarding step is returned. <p>Presently, the only supported payments program type is <code>EBAY_PAYMENTS</code>. See <a href=\"https://pages.ebay.com/seller-center/service-and-payments/managed-payments-on-ebay.html\" target=\"_blank\">Managed Payments on eBay</a> and <a href=\"https://pages.ebay.com/payment/2.0/terms.html\" target=\"_blank\">Payments Terms of Use</a>.</p><p> <span class=\"tablenote\"><strong>Note:</strong> Managed payments availability: <a href=\"/managed-payments\">eBay managed payments</a> is presently available in the US and Germany, and will roll out to Canada, UK, and Australia in July 2020.</span></p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_payments_program_onboarding_with_http_info(marketplace_id, payments_program_type, async_req=True)
@@ -66,7 +66,7 @@ class OnboardingApi(object):
 
         :param async_req bool
         :param str marketplace_id: The eBay marketplace ID associated with the onboarding status to retrieve. Only enums for marketplaces that support or will soon support eBay managed payments are allowed. Error 20408 is returned for any other eBay marketplace. No response payload is returned with this error. (required)
-        :param str payments_program_type: The type of payments program whose status is returned by the call. Presently, the only supported payments program is EBAY_PAYMENTS. For details on the program, see Payments Terms of Use. (required)
+        :param str payments_program_type: The type of payments program whose status is returned by the call. Presently, the only supported payments program is <code>EBAY_PAYMENTS</code>. For details on the program, see <a href=\"https://pages.ebay.com/payment/2.0/terms.html\" target=\"_blank\">Payments Terms of Use</a>.  (required)
         :return: PaymentsProgramOnboardingResponse
                  If the method is called asynchronously,
                  returns the request thread.

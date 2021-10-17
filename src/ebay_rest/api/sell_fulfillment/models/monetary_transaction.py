@@ -82,7 +82,7 @@ class MonetaryTransaction(object):
     def _date(self):
         """Gets the _date of this MonetaryTransaction.  # noqa: E501
 
-        This timestamp indicates when the monetary transaction occurred. A date is returned for all monetary transactions. The following format is used: YYYY-MM-DDTHH:MM:SS.SSSZ. For example, 2015-08-04T19:09:02.768Z.  # noqa: E501
+        This timestamp indicates when the monetary transaction occurred. A date is returned for all monetary transactions.<br><br> The following format is used: <code>YYYY-MM-DDTHH:MM:SS.SSSZ</code>. For example, <code>2015-08-04T19:09:02.768Z</code>.  # noqa: E501
 
         :return: The _date of this MonetaryTransaction.  # noqa: E501
         :rtype: str
@@ -93,7 +93,7 @@ class MonetaryTransaction(object):
     def _date(self, _date):
         """Sets the _date of this MonetaryTransaction.
 
-        This timestamp indicates when the monetary transaction occurred. A date is returned for all monetary transactions. The following format is used: YYYY-MM-DDTHH:MM:SS.SSSZ. For example, 2015-08-04T19:09:02.768Z.  # noqa: E501
+        This timestamp indicates when the monetary transaction occurred. A date is returned for all monetary transactions.<br><br> The following format is used: <code>YYYY-MM-DDTHH:MM:SS.SSSZ</code>. For example, <code>2015-08-04T19:09:02.768Z</code>.  # noqa: E501
 
         :param _date: The _date of this MonetaryTransaction.  # noqa: E501
         :type: str

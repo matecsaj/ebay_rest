@@ -51,7 +51,7 @@ class EbayTaxReference(object):
     def name(self):
         """Gets the name of this EbayTaxReference.  # noqa: E501
 
-        This field value is returned to indicate the VAT tax type, which will vary by country/region. This string value will be one of the following: ABN: if this string is returned, the ID in the value field is an Australia tax ID IOSS: if this string is returned, the ID in the value field is an eBay EU or UK IOSS number IRD: if this string is returned, the ID in the value field is an eBay New Zealand tax ID OSS: if this string is returned, the ID in the value field is an eBay Germany VAT ID VOEC: if this string is returned, the ID in the value field is an eBay Norway tax ID  # noqa: E501
+        This field value is returned to indicate the VAT tax type, which will vary by country/region. This string value will be one of the following:<ul><li><code>ABN</code>: if this string is returned, the ID in the <strong>value</strong> field is an Australia tax ID</li><li><code>IOSS</code>: if this string is returned, the ID in the <strong>value</strong> field is an eBay EU or UK IOSS number</li><li><code>IRD</code>: if this string is returned, the ID in the <strong>value</strong> field is an eBay New Zealand tax ID</li><li><code>OSS</code>: if this string is returned, the ID in the <strong>value</strong> field is an  eBay Germany VAT ID</li><li><code>VOEC</code>: if this string is returned, the ID in the <strong>value</strong> field is an eBay Norway tax ID</li></ul>  # noqa: E501
 
         :return: The name of this EbayTaxReference.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class EbayTaxReference(object):
     def name(self, name):
         """Sets the name of this EbayTaxReference.
 
-        This field value is returned to indicate the VAT tax type, which will vary by country/region. This string value will be one of the following: ABN: if this string is returned, the ID in the value field is an Australia tax ID IOSS: if this string is returned, the ID in the value field is an eBay EU or UK IOSS number IRD: if this string is returned, the ID in the value field is an eBay New Zealand tax ID OSS: if this string is returned, the ID in the value field is an eBay Germany VAT ID VOEC: if this string is returned, the ID in the value field is an eBay Norway tax ID  # noqa: E501
+        This field value is returned to indicate the VAT tax type, which will vary by country/region. This string value will be one of the following:<ul><li><code>ABN</code>: if this string is returned, the ID in the <strong>value</strong> field is an Australia tax ID</li><li><code>IOSS</code>: if this string is returned, the ID in the <strong>value</strong> field is an eBay EU or UK IOSS number</li><li><code>IRD</code>: if this string is returned, the ID in the <strong>value</strong> field is an eBay New Zealand tax ID</li><li><code>OSS</code>: if this string is returned, the ID in the <strong>value</strong> field is an  eBay Germany VAT ID</li><li><code>VOEC</code>: if this string is returned, the ID in the <strong>value</strong> field is an eBay Norway tax ID</li></ul>  # noqa: E501
 
         :param name: The name of this EbayTaxReference.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class EbayTaxReference(object):
     def value(self):
         """Gets the value of this EbayTaxReference.  # noqa: E501
 
-        The value returned in this field is the VAT identifier number (VATIN), which will vary by country/region. This field will be returned if VAT tax is applicable for the order. The name field indicates the VAT tax type, which will vary by country/region: ABN: eBay AU tax ID IOSS: eBay EU IOSS number / eBay UK IOSS number IRD: eBay NZ tax ID OSS: eBay DE VAT ID VOEC: eBay NO number  # noqa: E501
+        The value returned in this field is the VAT identifier number (VATIN), which will vary by country/region. This field will be returned if VAT tax is applicable for the order. The <strong>name</strong> field indicates the VAT tax type, which will vary by country/region: <ul><li><strong>ABN</strong>: <em>eBay AU tax ID</em></li><li><strong>IOSS</strong>: <em>eBay EU IOSS number</em> / <em>eBay UK IOSS number</em></li><li><strong>IRD</strong>: <em>eBay NZ tax ID</em></li><li><strong>OSS</strong>: <em>eBay DE VAT ID</em></li><li><strong>VOEC</strong>: <em>eBay NO number</em></li></ul>  # noqa: E501
 
         :return: The value of this EbayTaxReference.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class EbayTaxReference(object):
     def value(self, value):
         """Sets the value of this EbayTaxReference.
 
-        The value returned in this field is the VAT identifier number (VATIN), which will vary by country/region. This field will be returned if VAT tax is applicable for the order. The name field indicates the VAT tax type, which will vary by country/region: ABN: eBay AU tax ID IOSS: eBay EU IOSS number / eBay UK IOSS number IRD: eBay NZ tax ID OSS: eBay DE VAT ID VOEC: eBay NO number  # noqa: E501
+        The value returned in this field is the VAT identifier number (VATIN), which will vary by country/region. This field will be returned if VAT tax is applicable for the order. The <strong>name</strong> field indicates the VAT tax type, which will vary by country/region: <ul><li><strong>ABN</strong>: <em>eBay AU tax ID</em></li><li><strong>IOSS</strong>: <em>eBay EU IOSS number</em> / <em>eBay UK IOSS number</em></li><li><strong>IRD</strong>: <em>eBay NZ tax ID</em></li><li><strong>OSS</strong>: <em>eBay DE VAT ID</em></li><li><strong>VOEC</strong>: <em>eBay NO number</em></li></ul>  # noqa: E501
 
         :param value: The value of this EbayTaxReference.  # noqa: E501
         :type: str

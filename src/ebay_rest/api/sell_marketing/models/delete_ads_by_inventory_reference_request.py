@@ -51,7 +51,7 @@ class DeleteAdsByInventoryReferenceRequest(object):
     def inventory_reference_id(self):
         """Gets the inventory_reference_id of this DeleteAdsByInventoryReferenceRequest.  # noqa: E501
 
-        An ID that identifies an a single-item listing or multiple-variation listing that is managed with the Inventory API. The inventory reference ID is a seller-defined value that can be either an SKU for a single-item listing or an inventoryItemGroupKey for a multiple-value listing.  # noqa: E501
+        An ID that identifies an a single-item listing or multiple-variation listing that is managed with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>. <p>The <i>inventory reference ID</i> is a seller-defined value that can be either an <b>SKU</b> for a single-item listing or an <b>inventoryItemGroupKey</b> for a multiple-value listing.</p>  # noqa: E501
 
         :return: The inventory_reference_id of this DeleteAdsByInventoryReferenceRequest.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class DeleteAdsByInventoryReferenceRequest(object):
     def inventory_reference_id(self, inventory_reference_id):
         """Sets the inventory_reference_id of this DeleteAdsByInventoryReferenceRequest.
 
-        An ID that identifies an a single-item listing or multiple-variation listing that is managed with the Inventory API. The inventory reference ID is a seller-defined value that can be either an SKU for a single-item listing or an inventoryItemGroupKey for a multiple-value listing.  # noqa: E501
+        An ID that identifies an a single-item listing or multiple-variation listing that is managed with the <a href=\"/api-docs/sell/inventory/resources/methods\" title=\"Inventory API Reference\">Inventory API</a>. <p>The <i>inventory reference ID</i> is a seller-defined value that can be either an <b>SKU</b> for a single-item listing or an <b>inventoryItemGroupKey</b> for a multiple-value listing.</p>  # noqa: E501
 
         :param inventory_reference_id: The inventory_reference_id of this DeleteAdsByInventoryReferenceRequest.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class DeleteAdsByInventoryReferenceRequest(object):
     def inventory_reference_type(self):
         """Gets the inventory_reference_type of this DeleteAdsByInventoryReferenceRequest.  # noqa: E501
 
-        Indicates the type of item the inventoryReferenceId references. The item can be either an INVENTORY_ITEM or INVENTORY_ITEM_GROUP. You must always pair an inventoryReferenceId with and inventoryReferenceType. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:InventoryReferenceTypeEnum'>eBay API documentation</a>  # noqa: E501
+        Indicates the type of item the <b>inventoryReferenceId</b> references. The item can be either an <code>INVENTORY_ITEM</code> or <code>INVENTORY_ITEM_GROUP</code>. <p>You must always pair an <b>inventoryReferenceId</b> with and <b>inventoryReferenceType</b>.</p> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:InventoryReferenceTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The inventory_reference_type of this DeleteAdsByInventoryReferenceRequest.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class DeleteAdsByInventoryReferenceRequest(object):
     def inventory_reference_type(self, inventory_reference_type):
         """Sets the inventory_reference_type of this DeleteAdsByInventoryReferenceRequest.
 
-        Indicates the type of item the inventoryReferenceId references. The item can be either an INVENTORY_ITEM or INVENTORY_ITEM_GROUP. You must always pair an inventoryReferenceId with and inventoryReferenceType. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:InventoryReferenceTypeEnum'>eBay API documentation</a>  # noqa: E501
+        Indicates the type of item the <b>inventoryReferenceId</b> references. The item can be either an <code>INVENTORY_ITEM</code> or <code>INVENTORY_ITEM_GROUP</code>. <p>You must always pair an <b>inventoryReferenceId</b> with and <b>inventoryReferenceType</b>.</p> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:InventoryReferenceTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param inventory_reference_type: The inventory_reference_type of this DeleteAdsByInventoryReferenceRequest.  # noqa: E501
         :type: str

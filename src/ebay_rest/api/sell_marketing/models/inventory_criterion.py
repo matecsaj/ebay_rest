@@ -61,7 +61,7 @@ class InventoryCriterion(object):
     def inventory_criterion_type(self):
         """Gets the inventory_criterion_type of this InventoryCriterion.  # noqa: E501
 
-        Indicates how the items to include in the promotion are selected. You can include inventory by ID, using rules, or globally include all your inventory. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/sme:InventoryCriterionEnum'>eBay API documentation</a>  # noqa: E501
+        Indicates how the items to include in the promotion are selected. You can include inventory by ID, using rules, or globally include all your inventory.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/sme:InventoryCriterionEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The inventory_criterion_type of this InventoryCriterion.  # noqa: E501
         :rtype: str
@@ -72,7 +72,7 @@ class InventoryCriterion(object):
     def inventory_criterion_type(self, inventory_criterion_type):
         """Sets the inventory_criterion_type of this InventoryCriterion.
 
-        Indicates how the items to include in the promotion are selected. You can include inventory by ID, using rules, or globally include all your inventory. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/sme:InventoryCriterionEnum'>eBay API documentation</a>  # noqa: E501
+        Indicates how the items to include in the promotion are selected. You can include inventory by ID, using rules, or globally include all your inventory.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/sme:InventoryCriterionEnum'>eBay API documentation</a>  # noqa: E501
 
         :param inventory_criterion_type: The inventory_criterion_type of this InventoryCriterion.  # noqa: E501
         :type: str
@@ -84,7 +84,7 @@ class InventoryCriterion(object):
     def inventory_items(self):
         """Gets the inventory_items of this InventoryCriterion.  # noqa: E501
 
-        An array of containers for the seller's inventory reference IDs (also known as an &quot;SKU&quot; or &quot;custom label&quot;) to be added to the promotion. Note: The request can have either inventoryItems or listingIds, but not both. Required: All listings in a promotion must offer an electronic payment method. Maximum: 500 parent items Maximum SKU or custom label length: 50 characters Required if InventoryCriterionType is set to INVENTORY_BY_VALUE, you must specify either inventoryItems or listingIds.  # noqa: E501
+        An array of containers for the seller's inventory reference IDs (also known as an \"SKU\" or \"custom label\") to be added to the promotion.  <p class=\"tablenote\"><b>Note:</b> The request can have either <b>inventoryItems</b> or <b>listingIds</b>, but not both.</p>  <br><br><b>Required:</b> All listings in a promotion must offer an electronic payment method.  <br><b>Maximum:</b> 500 parent items  <br><b>Maximum SKU or custom label length:</b> 50 characters <br><br><i>Required if </i> <b>InventoryCriterionType</b> is set to <code>INVENTORY_BY_VALUE</code>, you must specify either <b>inventoryItems</b> or <b>listingIds</b>.  # noqa: E501
 
         :return: The inventory_items of this InventoryCriterion.  # noqa: E501
         :rtype: list[InventoryItem]
@@ -95,7 +95,7 @@ class InventoryCriterion(object):
     def inventory_items(self, inventory_items):
         """Sets the inventory_items of this InventoryCriterion.
 
-        An array of containers for the seller's inventory reference IDs (also known as an &quot;SKU&quot; or &quot;custom label&quot;) to be added to the promotion. Note: The request can have either inventoryItems or listingIds, but not both. Required: All listings in a promotion must offer an electronic payment method. Maximum: 500 parent items Maximum SKU or custom label length: 50 characters Required if InventoryCriterionType is set to INVENTORY_BY_VALUE, you must specify either inventoryItems or listingIds.  # noqa: E501
+        An array of containers for the seller's inventory reference IDs (also known as an \"SKU\" or \"custom label\") to be added to the promotion.  <p class=\"tablenote\"><b>Note:</b> The request can have either <b>inventoryItems</b> or <b>listingIds</b>, but not both.</p>  <br><br><b>Required:</b> All listings in a promotion must offer an electronic payment method.  <br><b>Maximum:</b> 500 parent items  <br><b>Maximum SKU or custom label length:</b> 50 characters <br><br><i>Required if </i> <b>InventoryCriterionType</b> is set to <code>INVENTORY_BY_VALUE</code>, you must specify either <b>inventoryItems</b> or <b>listingIds</b>.  # noqa: E501
 
         :param inventory_items: The inventory_items of this InventoryCriterion.  # noqa: E501
         :type: list[InventoryItem]
@@ -107,7 +107,7 @@ class InventoryCriterion(object):
     def listing_ids(self):
         """Gets the listing_ids of this InventoryCriterion.  # noqa: E501
 
-        An array of eBay listing IDs to be added to the promotion. Note: The request can have either inventoryItems or listingIds, but not both. Required: All listings in a promotion must offer an electronic payment method. Maximum: 500 parent items Maximum SKU or custom label length: 50 characters Required if InventoryCriterionType is set to INVENTORY_BY_VALUE, you must specify either inventoryItems or listingIds.  # noqa: E501
+        An array of eBay listing IDs to be added to the promotion.  <p class=\"tablenote\"><b>Note:</b> The request can have either <b>inventoryItems</b> or <b>listingIds</b>, but not both.</p>  <br><br><b>Required:</b> All listings in a promotion must offer an electronic payment method.  <br><b>Maximum:</b> 500 parent items  <br><b>Maximum SKU or custom label length:</b> 50 characters <br><br><i>Required if </i> <b>InventoryCriterionType</b> is set to <code>INVENTORY_BY_VALUE</code>, you must specify either <b>inventoryItems</b> or <b>listingIds</b>.  # noqa: E501
 
         :return: The listing_ids of this InventoryCriterion.  # noqa: E501
         :rtype: list[str]
@@ -118,7 +118,7 @@ class InventoryCriterion(object):
     def listing_ids(self, listing_ids):
         """Sets the listing_ids of this InventoryCriterion.
 
-        An array of eBay listing IDs to be added to the promotion. Note: The request can have either inventoryItems or listingIds, but not both. Required: All listings in a promotion must offer an electronic payment method. Maximum: 500 parent items Maximum SKU or custom label length: 50 characters Required if InventoryCriterionType is set to INVENTORY_BY_VALUE, you must specify either inventoryItems or listingIds.  # noqa: E501
+        An array of eBay listing IDs to be added to the promotion.  <p class=\"tablenote\"><b>Note:</b> The request can have either <b>inventoryItems</b> or <b>listingIds</b>, but not both.</p>  <br><br><b>Required:</b> All listings in a promotion must offer an electronic payment method.  <br><b>Maximum:</b> 500 parent items  <br><b>Maximum SKU or custom label length:</b> 50 characters <br><br><i>Required if </i> <b>InventoryCriterionType</b> is set to <code>INVENTORY_BY_VALUE</code>, you must specify either <b>inventoryItems</b> or <b>listingIds</b>.  # noqa: E501
 
         :param listing_ids: The listing_ids of this InventoryCriterion.  # noqa: E501
         :type: list[str]

@@ -74,7 +74,7 @@ class SalesTaxBase(object):
     def shipping_and_handling_taxed(self):
         """Gets the shipping_and_handling_taxed of this SalesTaxBase.  # noqa: E501
 
-        If set to true, shipping and handling charges are taxed.  # noqa: E501
+        If set to <code>true</code>, shipping and handling charges are taxed.  # noqa: E501
 
         :return: The shipping_and_handling_taxed of this SalesTaxBase.  # noqa: E501
         :rtype: bool
@@ -85,7 +85,7 @@ class SalesTaxBase(object):
     def shipping_and_handling_taxed(self, shipping_and_handling_taxed):
         """Sets the shipping_and_handling_taxed of this SalesTaxBase.
 
-        If set to true, shipping and handling charges are taxed.  # noqa: E501
+        If set to <code>true</code>, shipping and handling charges are taxed.  # noqa: E501
 
         :param shipping_and_handling_taxed: The shipping_and_handling_taxed of this SalesTaxBase.  # noqa: E501
         :type: bool

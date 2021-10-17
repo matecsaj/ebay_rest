@@ -87,7 +87,7 @@ class Transfer(object):
     def transaction_date(self):
         """Gets the transaction_date of this Transfer.  # noqa: E501
 
-        This timestamp indicates the date/time of the transfer. The following (UTC) format is used: YYYY-MM-DDTHH:MM:SS.SSSZ. For example, 2020-08-04T19:09:02.768Z  # noqa: E501
+        This timestamp indicates the date/time of the transfer. The following (UTC) format is used: <code>YYYY-MM-DDTHH:MM:SS.SSSZ</code>. For example, <code>2020-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :return: The transaction_date of this Transfer.  # noqa: E501
         :rtype: str
@@ -98,7 +98,7 @@ class Transfer(object):
     def transaction_date(self, transaction_date):
         """Sets the transaction_date of this Transfer.
 
-        This timestamp indicates the date/time of the transfer. The following (UTC) format is used: YYYY-MM-DDTHH:MM:SS.SSSZ. For example, 2020-08-04T19:09:02.768Z  # noqa: E501
+        This timestamp indicates the date/time of the transfer. The following (UTC) format is used: <code>YYYY-MM-DDTHH:MM:SS.SSSZ</code>. For example, <code>2020-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :param transaction_date: The transaction_date of this Transfer.  # noqa: E501
         :type: str
@@ -152,7 +152,7 @@ class Transfer(object):
     def transfer_id(self):
         """Gets the transfer_id of this Transfer.  # noqa: E501
 
-        The unique identifier of the TRANSFER transaction type. This is the same value that was passed into the end of the call URI.  # noqa: E501
+        The unique identifier of the <code>TRANSFER</code> transaction type. This is the same value that was passed into the end of the call URI.  # noqa: E501
 
         :return: The transfer_id of this Transfer.  # noqa: E501
         :rtype: str
@@ -163,7 +163,7 @@ class Transfer(object):
     def transfer_id(self, transfer_id):
         """Sets the transfer_id of this Transfer.
 
-        The unique identifier of the TRANSFER transaction type. This is the same value that was passed into the end of the call URI.  # noqa: E501
+        The unique identifier of the <code>TRANSFER</code> transaction type. This is the same value that was passed into the end of the call URI.  # noqa: E501
 
         :param transfer_id: The transfer_id of this Transfer.  # noqa: E501
         :type: str

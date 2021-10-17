@@ -74,7 +74,7 @@ class PaymentsProgramOnboardingResponse(object):
     def steps(self):
         """Gets the steps of this PaymentsProgramOnboardingResponse.  # noqa: E501
 
-        An array of the active process steps for payment onboarding and the status of each step. This array includes the step name, step status, and a webUrl to the IN_PROGRESS step. The step names are returned in sequential order.  # noqa: E501
+        An array of the active process steps for payment onboarding and the status of each step. This array includes the step <strong>name</strong>, step <strong>status</strong>, and a <strong>webUrl</strong> to the <code>IN_PROGRESS</code> step. The step names are returned in sequential order.   # noqa: E501
 
         :return: The steps of this PaymentsProgramOnboardingResponse.  # noqa: E501
         :rtype: list[PaymentsProgramOnboardingSteps]
@@ -85,7 +85,7 @@ class PaymentsProgramOnboardingResponse(object):
     def steps(self, steps):
         """Sets the steps of this PaymentsProgramOnboardingResponse.
 
-        An array of the active process steps for payment onboarding and the status of each step. This array includes the step name, step status, and a webUrl to the IN_PROGRESS step. The step names are returned in sequential order.  # noqa: E501
+        An array of the active process steps for payment onboarding and the status of each step. This array includes the step <strong>name</strong>, step <strong>status</strong>, and a <strong>webUrl</strong> to the <code>IN_PROGRESS</code> step. The step names are returned in sequential order.   # noqa: E501
 
         :param steps: The steps of this PaymentsProgramOnboardingResponse.  # noqa: E501
         :type: list[PaymentsProgramOnboardingSteps]

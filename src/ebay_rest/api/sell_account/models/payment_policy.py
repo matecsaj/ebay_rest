@@ -91,7 +91,7 @@ class PaymentPolicy(object):
     def category_types(self):
         """Gets the category_types of this PaymentPolicy.  # noqa: E501
 
-        The CategoryTypeEnum value to which this policy applies. Used to discern accounts that sell motor vehicles from those that don't. (Currently, each policy can be set to only one categoryTypes value at a time.)  # noqa: E501
+        The <b>CategoryTypeEnum</b> value to which this policy applies. Used to discern accounts that sell motor vehicles from those that don't. (Currently, each policy can be set to only one <b>categoryTypes</b> value at a time.)  # noqa: E501
 
         :return: The category_types of this PaymentPolicy.  # noqa: E501
         :rtype: list[CategoryType]
@@ -102,7 +102,7 @@ class PaymentPolicy(object):
     def category_types(self, category_types):
         """Sets the category_types of this PaymentPolicy.
 
-        The CategoryTypeEnum value to which this policy applies. Used to discern accounts that sell motor vehicles from those that don't. (Currently, each policy can be set to only one categoryTypes value at a time.)  # noqa: E501
+        The <b>CategoryTypeEnum</b> value to which this policy applies. Used to discern accounts that sell motor vehicles from those that don't. (Currently, each policy can be set to only one <b>categoryTypes</b> value at a time.)  # noqa: E501
 
         :param category_types: The category_types of this PaymentPolicy.  # noqa: E501
         :type: list[CategoryType]
@@ -135,7 +135,7 @@ class PaymentPolicy(object):
     def description(self):
         """Gets the description of this PaymentPolicy.  # noqa: E501
 
-        An optional seller-defined description of the payment policy for internal use (this value is not displayed to end users). Max length: 250  # noqa: E501
+        An optional seller-defined description of the payment policy for internal use (this value is not displayed to end users).  <br><br><b>Max length</b>: 250  # noqa: E501
 
         :return: The description of this PaymentPolicy.  # noqa: E501
         :rtype: str
@@ -146,7 +146,7 @@ class PaymentPolicy(object):
     def description(self, description):
         """Sets the description of this PaymentPolicy.
 
-        An optional seller-defined description of the payment policy for internal use (this value is not displayed to end users). Max length: 250  # noqa: E501
+        An optional seller-defined description of the payment policy for internal use (this value is not displayed to end users).  <br><br><b>Max length</b>: 250  # noqa: E501
 
         :param description: The description of this PaymentPolicy.  # noqa: E501
         :type: str
@@ -179,7 +179,7 @@ class PaymentPolicy(object):
     def immediate_pay(self):
         """Gets the immediate_pay of this PaymentPolicy.  # noqa: E501
 
-        If set to true, payment is due upon receipt (eBay generates a receipt when the buyer agrees to purchase an item). This boolean must be set in the payment policy if the seller wants to create a listing that has an &quot;immediate payment&quot; requirement. The seller can change the immediate payment requirement at any time during the life cycle of a listing. The following must be true before a seller can apply an immediate payment requirement to an item: The seller must have a PayPal Business account. The Buy It Now price cannot be higher than $60,000 USD. The eBay marketplace on which the item is listed must support PayPal payments. The listing type must be fixed-price, or an auction with a Buy It Now option.To enable the immediate payment requirement, the seller must also perform the following actions via API calls: Provide a valid paymentMethods.recipientAccountReference.referenceId value. Offer PayPal as the only payment method for the item(s). Specify all related costs to the buyer (because the buyer is not be able to use the Buyer Request Total feature in an immediate payment listing); these costs include flat-rate shipping costs for each domestic and international shipping service offered, package handling costs, and any shipping surcharges. Include and set the shippingProfileDiscountInfo container values if you are going to use promotional shipping discounts.For more information, see the Understanding immediate payment Help page. Note: Listings created with the Inventory API must reference a payment policy that has immediatePay is set to true. Items listed with the Inventory API must also be fixed-price good-till-canceled (GTC) listings where PayPal is the only supported payment method (paymentMethod must be set to PAYPAL). Default: false  # noqa: E501
+        If set to <code>true</code>, payment is due upon receipt (eBay generates a receipt when the buyer agrees to purchase an item). <br><br>This boolean must be set in the payment policy if the seller wants to create a listing that has an \"immediate payment\" requirement. The seller can change the immediate payment requirement at any time during the life cycle of a listing. <br><br>The following must be true before a seller can apply an immediate payment requirement to an item:<ul><li>The seller must have a PayPal Business account.</li><li>The Buy It Now price cannot be higher than $60,000 USD.</li><li>The eBay marketplace on which the item is listed must support PayPal payments.</li><li>The listing type must be fixed-price, or an auction with a Buy It Now option.</li></ul>To enable the immediate payment requirement, the seller must also perform the following actions via API calls:<ul><li>Provide a valid <b>paymentMethods.recipientAccountReference.referenceId</b> value.</li><li>Offer PayPal as the only payment method for the item(s).</li><li>Specify all related costs to the buyer (because the buyer is not be able to use the Buyer Request Total feature in an immediate payment listing); these costs include flat-rate shipping costs for each domestic and international shipping service offered, package handling costs, and any shipping surcharges.</li><li>Include and set the <b>shippingProfileDiscountInfo</b> container values if you are going to use promotional shipping discounts.</li></ul>For more information, see the <a href=\"http://pages.ebay.com/help/pay/require-immediate-payment.html\">Understanding immediate payment</a> Help page. <br><br><span class=\"tablenote\"><b>Note:</b> Listings created with the Inventory API must reference a payment policy that has <b>immediatePay</b> is set to <code>true</code>. Items listed with the Inventory API must also be fixed-price good-till-canceled (GTC) listings where PayPal is the only supported payment method (<b>paymentMethod</b> must be set to <code>PAYPAL</code>).</span> <br><br><b>Default</b>: false  # noqa: E501
 
         :return: The immediate_pay of this PaymentPolicy.  # noqa: E501
         :rtype: bool
@@ -190,7 +190,7 @@ class PaymentPolicy(object):
     def immediate_pay(self, immediate_pay):
         """Sets the immediate_pay of this PaymentPolicy.
 
-        If set to true, payment is due upon receipt (eBay generates a receipt when the buyer agrees to purchase an item). This boolean must be set in the payment policy if the seller wants to create a listing that has an &quot;immediate payment&quot; requirement. The seller can change the immediate payment requirement at any time during the life cycle of a listing. The following must be true before a seller can apply an immediate payment requirement to an item: The seller must have a PayPal Business account. The Buy It Now price cannot be higher than $60,000 USD. The eBay marketplace on which the item is listed must support PayPal payments. The listing type must be fixed-price, or an auction with a Buy It Now option.To enable the immediate payment requirement, the seller must also perform the following actions via API calls: Provide a valid paymentMethods.recipientAccountReference.referenceId value. Offer PayPal as the only payment method for the item(s). Specify all related costs to the buyer (because the buyer is not be able to use the Buyer Request Total feature in an immediate payment listing); these costs include flat-rate shipping costs for each domestic and international shipping service offered, package handling costs, and any shipping surcharges. Include and set the shippingProfileDiscountInfo container values if you are going to use promotional shipping discounts.For more information, see the Understanding immediate payment Help page. Note: Listings created with the Inventory API must reference a payment policy that has immediatePay is set to true. Items listed with the Inventory API must also be fixed-price good-till-canceled (GTC) listings where PayPal is the only supported payment method (paymentMethod must be set to PAYPAL). Default: false  # noqa: E501
+        If set to <code>true</code>, payment is due upon receipt (eBay generates a receipt when the buyer agrees to purchase an item). <br><br>This boolean must be set in the payment policy if the seller wants to create a listing that has an \"immediate payment\" requirement. The seller can change the immediate payment requirement at any time during the life cycle of a listing. <br><br>The following must be true before a seller can apply an immediate payment requirement to an item:<ul><li>The seller must have a PayPal Business account.</li><li>The Buy It Now price cannot be higher than $60,000 USD.</li><li>The eBay marketplace on which the item is listed must support PayPal payments.</li><li>The listing type must be fixed-price, or an auction with a Buy It Now option.</li></ul>To enable the immediate payment requirement, the seller must also perform the following actions via API calls:<ul><li>Provide a valid <b>paymentMethods.recipientAccountReference.referenceId</b> value.</li><li>Offer PayPal as the only payment method for the item(s).</li><li>Specify all related costs to the buyer (because the buyer is not be able to use the Buyer Request Total feature in an immediate payment listing); these costs include flat-rate shipping costs for each domestic and international shipping service offered, package handling costs, and any shipping surcharges.</li><li>Include and set the <b>shippingProfileDiscountInfo</b> container values if you are going to use promotional shipping discounts.</li></ul>For more information, see the <a href=\"http://pages.ebay.com/help/pay/require-immediate-payment.html\">Understanding immediate payment</a> Help page. <br><br><span class=\"tablenote\"><b>Note:</b> Listings created with the Inventory API must reference a payment policy that has <b>immediatePay</b> is set to <code>true</code>. Items listed with the Inventory API must also be fixed-price good-till-canceled (GTC) listings where PayPal is the only supported payment method (<b>paymentMethod</b> must be set to <code>PAYPAL</code>).</span> <br><br><b>Default</b>: false  # noqa: E501
 
         :param immediate_pay: The immediate_pay of this PaymentPolicy.  # noqa: E501
         :type: bool
@@ -225,7 +225,7 @@ class PaymentPolicy(object):
     def name(self):
         """Gets the name of this PaymentPolicy.  # noqa: E501
 
-        A user-defined name for this payment policy. Names must be unique for policies assigned to the same marketplace. Max length: 64  # noqa: E501
+        A user-defined name for this payment policy. Names must be unique for policies assigned to the same marketplace. <br><br><b>Max length</b>: 64  # noqa: E501
 
         :return: The name of this PaymentPolicy.  # noqa: E501
         :rtype: str
@@ -236,7 +236,7 @@ class PaymentPolicy(object):
     def name(self, name):
         """Sets the name of this PaymentPolicy.
 
-        A user-defined name for this payment policy. Names must be unique for policies assigned to the same marketplace. Max length: 64  # noqa: E501
+        A user-defined name for this payment policy. Names must be unique for policies assigned to the same marketplace. <br><br><b>Max length</b>: 64  # noqa: E501
 
         :param name: The name of this PaymentPolicy.  # noqa: E501
         :type: str
@@ -248,7 +248,7 @@ class PaymentPolicy(object):
     def payment_instructions(self):
         """Gets the payment_instructions of this PaymentPolicy.  # noqa: E501
 
-        This free-form string field gives sellers the ability add detailed payment instructions to their listings. The payment instructions appear on eBay's View Item and Checkout pages. eBay recommends sellers use this field to clarify payment policies for motor vehicle listings on eBay Motors. For example, sellers can include the specifics on the deposit (if required), pickup/delivery arrangements, and full payment details on the vehicle. The field allows only 500 characters as input, but due to the way the eBay web site UI treats characters, this field can return more than 500 characters in the response. For example, characters like &amp; and ' (ampersand and single quote) count as 5 characters each. Max length: 1000.  # noqa: E501
+        This free-form string field gives sellers the ability add detailed payment instructions to their listings. The payment instructions appear on eBay's View Item and Checkout pages.  <br><br>eBay recommends sellers use this field to clarify payment policies for motor vehicle listings on eBay Motors. For example, sellers can include the specifics on the deposit (if required), pickup/delivery arrangements, and full payment details on the vehicle. <br><br>The field allows only 500 characters as input, but due to the way the eBay web site UI treats characters, this field can return more than 500 characters in the response. For example, characters like & and ' (ampersand and single quote) count as 5 characters each.  <br><br><b>Max length:</b> 1000.  # noqa: E501
 
         :return: The payment_instructions of this PaymentPolicy.  # noqa: E501
         :rtype: str
@@ -259,7 +259,7 @@ class PaymentPolicy(object):
     def payment_instructions(self, payment_instructions):
         """Sets the payment_instructions of this PaymentPolicy.
 
-        This free-form string field gives sellers the ability add detailed payment instructions to their listings. The payment instructions appear on eBay's View Item and Checkout pages. eBay recommends sellers use this field to clarify payment policies for motor vehicle listings on eBay Motors. For example, sellers can include the specifics on the deposit (if required), pickup/delivery arrangements, and full payment details on the vehicle. The field allows only 500 characters as input, but due to the way the eBay web site UI treats characters, this field can return more than 500 characters in the response. For example, characters like &amp; and ' (ampersand and single quote) count as 5 characters each. Max length: 1000.  # noqa: E501
+        This free-form string field gives sellers the ability add detailed payment instructions to their listings. The payment instructions appear on eBay's View Item and Checkout pages.  <br><br>eBay recommends sellers use this field to clarify payment policies for motor vehicle listings on eBay Motors. For example, sellers can include the specifics on the deposit (if required), pickup/delivery arrangements, and full payment details on the vehicle. <br><br>The field allows only 500 characters as input, but due to the way the eBay web site UI treats characters, this field can return more than 500 characters in the response. For example, characters like & and ' (ampersand and single quote) count as 5 characters each.  <br><br><b>Max length:</b> 1000.  # noqa: E501
 
         :param payment_instructions: The payment_instructions of this PaymentPolicy.  # noqa: E501
         :type: str
@@ -271,7 +271,7 @@ class PaymentPolicy(object):
     def payment_methods(self):
         """Gets the payment_methods of this PaymentPolicy.  # noqa: E501
 
-        If the seller is not opted-in to managed payments, this container returns a list of the payment methods accepted by the seller. When not opted-in to managed payments, each payment policy must specify at least one payment method. Note: The paymentMethods container is not returned if the seller is opted-in to the managed payments program.  # noqa: E501
+        If the seller is not opted-in to managed payments, this container returns a list of the payment methods accepted by the seller.  <br><br>When not opted-in to managed payments, each payment policy must specify at least one payment method. <p class=\"tablenote\"><b>Note:</b> The <b>paymentMethods</b> container is not returned if the seller is opted-in to the <a href=\"https://pages.ebay.com/seller-center/service-and-payments/managed-payments-on-ebay.html\" title=\"eBay Seller Center page\" target=\"_blank\">managed payments</a> program.</p>  # noqa: E501
 
         :return: The payment_methods of this PaymentPolicy.  # noqa: E501
         :rtype: list[PaymentMethod]
@@ -282,7 +282,7 @@ class PaymentPolicy(object):
     def payment_methods(self, payment_methods):
         """Sets the payment_methods of this PaymentPolicy.
 
-        If the seller is not opted-in to managed payments, this container returns a list of the payment methods accepted by the seller. When not opted-in to managed payments, each payment policy must specify at least one payment method. Note: The paymentMethods container is not returned if the seller is opted-in to the managed payments program.  # noqa: E501
+        If the seller is not opted-in to managed payments, this container returns a list of the payment methods accepted by the seller.  <br><br>When not opted-in to managed payments, each payment policy must specify at least one payment method. <p class=\"tablenote\"><b>Note:</b> The <b>paymentMethods</b> container is not returned if the seller is opted-in to the <a href=\"https://pages.ebay.com/seller-center/service-and-payments/managed-payments-on-ebay.html\" title=\"eBay Seller Center page\" target=\"_blank\">managed payments</a> program.</p>  # noqa: E501
 
         :param payment_methods: The payment_methods of this PaymentPolicy.  # noqa: E501
         :type: list[PaymentMethod]

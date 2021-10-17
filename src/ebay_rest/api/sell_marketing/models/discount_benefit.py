@@ -103,7 +103,7 @@ class DiscountBenefit(object):
     def percentage_off_item(self):
         """Gets the percentage_off_item of this DiscountBenefit.  # noqa: E501
 
-        The percentage applied to the sales price that is discounted off the promoted item (or items) when the promotion criteria is met. Valid integer values for percentage off: &nbsp;&nbsp;Min: 5 &nbsp;&nbsp;Max: 80  # noqa: E501
+        The percentage applied to the sales price that is discounted off the promoted item (or items) when the promotion criteria is met.  <br><br>Valid integer values for percentage off: &nbsp;&nbsp;<b>Min:</b> <code>5</code> &nbsp;&nbsp;<b>Max:</b> <code>80</code>  # noqa: E501
 
         :return: The percentage_off_item of this DiscountBenefit.  # noqa: E501
         :rtype: str
@@ -114,7 +114,7 @@ class DiscountBenefit(object):
     def percentage_off_item(self, percentage_off_item):
         """Sets the percentage_off_item of this DiscountBenefit.
 
-        The percentage applied to the sales price that is discounted off the promoted item (or items) when the promotion criteria is met. Valid integer values for percentage off: &nbsp;&nbsp;Min: 5 &nbsp;&nbsp;Max: 80  # noqa: E501
+        The percentage applied to the sales price that is discounted off the promoted item (or items) when the promotion criteria is met.  <br><br>Valid integer values for percentage off: &nbsp;&nbsp;<b>Min:</b> <code>5</code> &nbsp;&nbsp;<b>Max:</b> <code>80</code>  # noqa: E501
 
         :param percentage_off_item: The percentage_off_item of this DiscountBenefit.  # noqa: E501
         :type: str
@@ -126,7 +126,7 @@ class DiscountBenefit(object):
     def percentage_off_order(self):
         """Gets the percentage_off_order of this DiscountBenefit.  # noqa: E501
 
-        Used for threshold promotions, this is the percentage of the order price that is discounted off the order when the promotion criteria is met. This field is not value for markdown promotions. Valid integer values for ORDER_DISCOUNT promotions: &nbsp;&nbsp;Min: 5 &nbsp;&nbsp;Max: 80 For VOLUME_DISCOUNT promotions: Must be set to 0 for the first discount rule.  # noqa: E501
+        Used for threshold promotions, this is the percentage of the order price that is discounted off the order when the promotion criteria is met. This field is not value for markdown promotions.  <br><br>Valid integer values for ORDER_DISCOUNT promotions: &nbsp;&nbsp;<b>Min:</b> <code>5</code> &nbsp;&nbsp;<b>Max:</b> <code>80</code>  <br><br>For VOLUME_DISCOUNT promotions: Must be set to <code>0</code> for the first discount rule.  # noqa: E501
 
         :return: The percentage_off_order of this DiscountBenefit.  # noqa: E501
         :rtype: str
@@ -137,7 +137,7 @@ class DiscountBenefit(object):
     def percentage_off_order(self, percentage_off_order):
         """Sets the percentage_off_order of this DiscountBenefit.
 
-        Used for threshold promotions, this is the percentage of the order price that is discounted off the order when the promotion criteria is met. This field is not value for markdown promotions. Valid integer values for ORDER_DISCOUNT promotions: &nbsp;&nbsp;Min: 5 &nbsp;&nbsp;Max: 80 For VOLUME_DISCOUNT promotions: Must be set to 0 for the first discount rule.  # noqa: E501
+        Used for threshold promotions, this is the percentage of the order price that is discounted off the order when the promotion criteria is met. This field is not value for markdown promotions.  <br><br>Valid integer values for ORDER_DISCOUNT promotions: &nbsp;&nbsp;<b>Min:</b> <code>5</code> &nbsp;&nbsp;<b>Max:</b> <code>80</code>  <br><br>For VOLUME_DISCOUNT promotions: Must be set to <code>0</code> for the first discount rule.  # noqa: E501
 
         :param percentage_off_order: The percentage_off_order of this DiscountBenefit.  # noqa: E501
         :type: str

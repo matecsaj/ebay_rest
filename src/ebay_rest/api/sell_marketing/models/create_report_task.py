@@ -91,7 +91,7 @@ class CreateReportTask(object):
     def campaign_ids(self):
         """Gets the campaign_ids of this CreateReportTask.  # noqa: E501
 
-        A list of campaign IDs to be included in the report task. Call getCampaigns to get a list of the current campaign IDs for a seller. Note: The API currently supports only a single campaign ID per report task. Maximum: 1 Required if reportType is set to CAMPAIGN_PERFORMANCE_REPORT or CAMPAIGN_PERFORMANCE_SUMMARY_REPORT.  # noqa: E501
+        A list of campaign IDs to be included in the report task. Call <b>getCampaigns</b> to get a list of the current campaign IDs for a seller. <p class=\"tablenote\"><b>Note: </b> The API currently supports only a single campaign ID per report task.</p>  <br><br><b>Maximum: </b>1  <br><br><i>Required if </i> <b>reportType</b> is set to <code>CAMPAIGN_PERFORMANCE_REPORT</code> or <code>CAMPAIGN_PERFORMANCE_SUMMARY_REPORT</code>.  # noqa: E501
 
         :return: The campaign_ids of this CreateReportTask.  # noqa: E501
         :rtype: list[str]
@@ -102,7 +102,7 @@ class CreateReportTask(object):
     def campaign_ids(self, campaign_ids):
         """Sets the campaign_ids of this CreateReportTask.
 
-        A list of campaign IDs to be included in the report task. Call getCampaigns to get a list of the current campaign IDs for a seller. Note: The API currently supports only a single campaign ID per report task. Maximum: 1 Required if reportType is set to CAMPAIGN_PERFORMANCE_REPORT or CAMPAIGN_PERFORMANCE_SUMMARY_REPORT.  # noqa: E501
+        A list of campaign IDs to be included in the report task. Call <b>getCampaigns</b> to get a list of the current campaign IDs for a seller. <p class=\"tablenote\"><b>Note: </b> The API currently supports only a single campaign ID per report task.</p>  <br><br><b>Maximum: </b>1  <br><br><i>Required if </i> <b>reportType</b> is set to <code>CAMPAIGN_PERFORMANCE_REPORT</code> or <code>CAMPAIGN_PERFORMANCE_SUMMARY_REPORT</code>.  # noqa: E501
 
         :param campaign_ids: The campaign_ids of this CreateReportTask.  # noqa: E501
         :type: list[str]
@@ -114,7 +114,7 @@ class CreateReportTask(object):
     def date_from(self):
         """Gets the date_from of this CreateReportTask.  # noqa: E501
 
-        The date defining the start of the timespan covered by the report. Format the timestamp as an ISO 8601 string, which is based on the 24-hour Coordinated Universal Time (UTC) clock with local offset. Note: The date specified cannot be a future date. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2021-03-15T13:00:00-07:00  # noqa: E501
+        The date defining the start of the timespan covered by the report.<br /><br />Format the timestamp as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> string, which is based on the 24-hour Coordinated Universal Time (UTC) clock with local offset.<br /><br /><span class=\"tablenote\"><b>Note:</b> The date specified cannot be a future date.</span><br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code><br /><br /><b>Example:</b> <code>2021-03-15T13:00:00-07:00</code>  # noqa: E501
 
         :return: The date_from of this CreateReportTask.  # noqa: E501
         :rtype: str
@@ -125,7 +125,7 @@ class CreateReportTask(object):
     def date_from(self, date_from):
         """Sets the date_from of this CreateReportTask.
 
-        The date defining the start of the timespan covered by the report. Format the timestamp as an ISO 8601 string, which is based on the 24-hour Coordinated Universal Time (UTC) clock with local offset. Note: The date specified cannot be a future date. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2021-03-15T13:00:00-07:00  # noqa: E501
+        The date defining the start of the timespan covered by the report.<br /><br />Format the timestamp as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> string, which is based on the 24-hour Coordinated Universal Time (UTC) clock with local offset.<br /><br /><span class=\"tablenote\"><b>Note:</b> The date specified cannot be a future date.</span><br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code><br /><br /><b>Example:</b> <code>2021-03-15T13:00:00-07:00</code>  # noqa: E501
 
         :param date_from: The date_from of this CreateReportTask.  # noqa: E501
         :type: str
@@ -137,7 +137,7 @@ class CreateReportTask(object):
     def date_to(self):
         """Gets the date_to of this CreateReportTask.  # noqa: E501
 
-        The date defining the end of the timespan covered by the report. As with the dateFrom field, format the timestamp as an ISO 8601 string. Note: The date specified cannot be a future date. Additionally, the time specified must be a later time than that specified in the dateFrom field. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2021-03-17T13:00:00-07:00  # noqa: E501
+        The date defining the end of the timespan covered by the report.<br /><br />As with the <b>dateFrom</b> field, format the timestamp as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> string.<br /><br /><span class=\"tablenote\"><b>Note:</b> The date specified cannot be a future date. Additionally, the time specified must be a later time than that specified in the <b>dateFrom</b> field.</span><br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code><br /><br /><b>Example:</b> <code>2021-03-17T13:00:00-07:00</code>  # noqa: E501
 
         :return: The date_to of this CreateReportTask.  # noqa: E501
         :rtype: str
@@ -148,7 +148,7 @@ class CreateReportTask(object):
     def date_to(self, date_to):
         """Sets the date_to of this CreateReportTask.
 
-        The date defining the end of the timespan covered by the report. As with the dateFrom field, format the timestamp as an ISO 8601 string. Note: The date specified cannot be a future date. Additionally, the time specified must be a later time than that specified in the dateFrom field. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2021-03-17T13:00:00-07:00  # noqa: E501
+        The date defining the end of the timespan covered by the report.<br /><br />As with the <b>dateFrom</b> field, format the timestamp as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> string.<br /><br /><span class=\"tablenote\"><b>Note:</b> The date specified cannot be a future date. Additionally, the time specified must be a later time than that specified in the <b>dateFrom</b> field.</span><br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code><br /><br /><b>Example:</b> <code>2021-03-17T13:00:00-07:00</code>  # noqa: E501
 
         :param date_to: The date_to of this CreateReportTask.  # noqa: E501
         :type: str
@@ -160,7 +160,7 @@ class CreateReportTask(object):
     def dimensions(self):
         """Gets the dimensions of this CreateReportTask.  # noqa: E501
 
-        The list of the dimensions applied to the report. A dimension is an attribute to which the report data applies. For example, if you set dimensionKey to campaign_id in a Campaign Performance Report, the data will apply to the entire ad campaign. For information on the dimensions and how to specify them, see Reading Promoted Listings reports.  # noqa: E501
+        The list of the dimensions applied to the report.  <p>A dimension is an attribute to which the report data applies. For example, if you set <b>dimensionKey</b> to <code>campaign_id</code> in a Campaign Performance Report, the data will apply to the entire ad campaign. For information on the dimensions and how to specify them, see <a href=\"/api-docs/sell/static/marketing/pl-reports.html\">Reading Promoted Listings reports</a>.</p>  # noqa: E501
 
         :return: The dimensions of this CreateReportTask.  # noqa: E501
         :rtype: list[Dimension]
@@ -171,7 +171,7 @@ class CreateReportTask(object):
     def dimensions(self, dimensions):
         """Sets the dimensions of this CreateReportTask.
 
-        The list of the dimensions applied to the report. A dimension is an attribute to which the report data applies. For example, if you set dimensionKey to campaign_id in a Campaign Performance Report, the data will apply to the entire ad campaign. For information on the dimensions and how to specify them, see Reading Promoted Listings reports.  # noqa: E501
+        The list of the dimensions applied to the report.  <p>A dimension is an attribute to which the report data applies. For example, if you set <b>dimensionKey</b> to <code>campaign_id</code> in a Campaign Performance Report, the data will apply to the entire ad campaign. For information on the dimensions and how to specify them, see <a href=\"/api-docs/sell/static/marketing/pl-reports.html\">Reading Promoted Listings reports</a>.</p>  # noqa: E501
 
         :param dimensions: The dimensions of this CreateReportTask.  # noqa: E501
         :type: list[Dimension]
@@ -183,7 +183,7 @@ class CreateReportTask(object):
     def inventory_references(self):
         """Gets the inventory_references of this CreateReportTask.  # noqa: E501
 
-        You can use this field to supply an array of items to include in the report if you manage your inventory with the Inventory API. This field is mutually exclusive with the listingIds field; if you populate this field, do not populate the listingIds field. An inventory reference identifies an item in your inventory using a pair of values, where the inventoryReferenceId can be either a seller-defined SKU value or an inventoryItemGroupKey, where an inventoryItemGroupKey is seller-defined ID for an inventory item group (a multiple-variation listing). Couple the inventoryReferenceId with an inventoryReferenceType identifier to fully identify an item in your inventory. Maximum: 500 items Required if you do not supply an array of listingId values or if you set reportType to INVENTORY_PERFORMANCE_REPORT.  # noqa: E501
+        You can use this field to supply an array of items to include in the report if you manage your inventory with the <a href=\"/api-docs/sell/inventory/resources/methods\">Inventory API</a>.  <br><br>This field is mutually exclusive with the <b>listingIds</b> field; if you populate this field, <i>do not</i> populate the <b>listingIds</b> field.  <br><br>An inventory reference identifies an item in your inventory using a pair of values, where the <b>inventoryReferenceId</b> can be either a seller-defined <b>SKU</b> value or an <b>inventoryItemGroupKey</b>, where an <b>inventoryItemGroupKey</b> is seller-defined ID for an inventory item group (a multiple-variation listing). <br><br>Couple the <b>inventoryReferenceId</b> with an <b>inventoryReferenceType</b> identifier to fully identify an item in your inventory.  <br><br><b>Maximum: </b> 500 items <br><br><i>Required if </i> you do not supply an array of <b>listingId</b> values or if you set <b>reportType</b> to <code>INVENTORY_PERFORMANCE_REPORT</code>.  # noqa: E501
 
         :return: The inventory_references of this CreateReportTask.  # noqa: E501
         :rtype: list[InventoryReference]
@@ -194,7 +194,7 @@ class CreateReportTask(object):
     def inventory_references(self, inventory_references):
         """Sets the inventory_references of this CreateReportTask.
 
-        You can use this field to supply an array of items to include in the report if you manage your inventory with the Inventory API. This field is mutually exclusive with the listingIds field; if you populate this field, do not populate the listingIds field. An inventory reference identifies an item in your inventory using a pair of values, where the inventoryReferenceId can be either a seller-defined SKU value or an inventoryItemGroupKey, where an inventoryItemGroupKey is seller-defined ID for an inventory item group (a multiple-variation listing). Couple the inventoryReferenceId with an inventoryReferenceType identifier to fully identify an item in your inventory. Maximum: 500 items Required if you do not supply an array of listingId values or if you set reportType to INVENTORY_PERFORMANCE_REPORT.  # noqa: E501
+        You can use this field to supply an array of items to include in the report if you manage your inventory with the <a href=\"/api-docs/sell/inventory/resources/methods\">Inventory API</a>.  <br><br>This field is mutually exclusive with the <b>listingIds</b> field; if you populate this field, <i>do not</i> populate the <b>listingIds</b> field.  <br><br>An inventory reference identifies an item in your inventory using a pair of values, where the <b>inventoryReferenceId</b> can be either a seller-defined <b>SKU</b> value or an <b>inventoryItemGroupKey</b>, where an <b>inventoryItemGroupKey</b> is seller-defined ID for an inventory item group (a multiple-variation listing). <br><br>Couple the <b>inventoryReferenceId</b> with an <b>inventoryReferenceType</b> identifier to fully identify an item in your inventory.  <br><br><b>Maximum: </b> 500 items <br><br><i>Required if </i> you do not supply an array of <b>listingId</b> values or if you set <b>reportType</b> to <code>INVENTORY_PERFORMANCE_REPORT</code>.  # noqa: E501
 
         :param inventory_references: The inventory_references of this CreateReportTask.  # noqa: E501
         :type: list[InventoryReference]
@@ -206,7 +206,7 @@ class CreateReportTask(object):
     def listing_ids(self):
         """Gets the listing_ids of this CreateReportTask.  # noqa: E501
 
-        Use this field to supply a array of the listing ID you want to include in the report. This field is mutually exclusive with the inventoryReferences field; if you populate this field, do not populate the inventoryReferences field. A listing ID is the eBay listing identifier that's generated when the listing is created. Note: This field accepts listingId values generated with both the Inventory API and the eBay Traditional APIs, such as the Trading and Finding APIs. Maximum: 500 listings Required if you do not supply an array of inventoryReferences values or if you set reportType to LISTING_PERFORMANCE_REPORT.  # noqa: E501
+        Use this field to supply a array of the listing ID you want to include in the report.  <br><br>This field is mutually exclusive with the <b>inventoryReferences</b> field; if you populate this field, <i>do not</i> populate the <b>inventoryReferences</b> field.  <br><br> A listing ID is the eBay listing identifier that's generated when the listing is created.  <p class=\"tablenote\"><b>Note:</b> This field accepts <b>listingId</b> values generated with both the Inventory API and the eBay Traditional APIs, such as the Trading and Finding APIs.</p> <p><b>Maximum:</b> 500 listings</p> <p><i>Required if </i>  you do not supply an array of <b>inventoryReferences</b> values or if you set <b>reportType</b> to <code>LISTING_PERFORMANCE_REPORT</code>.</p>  # noqa: E501
 
         :return: The listing_ids of this CreateReportTask.  # noqa: E501
         :rtype: list[str]
@@ -217,7 +217,7 @@ class CreateReportTask(object):
     def listing_ids(self, listing_ids):
         """Sets the listing_ids of this CreateReportTask.
 
-        Use this field to supply a array of the listing ID you want to include in the report. This field is mutually exclusive with the inventoryReferences field; if you populate this field, do not populate the inventoryReferences field. A listing ID is the eBay listing identifier that's generated when the listing is created. Note: This field accepts listingId values generated with both the Inventory API and the eBay Traditional APIs, such as the Trading and Finding APIs. Maximum: 500 listings Required if you do not supply an array of inventoryReferences values or if you set reportType to LISTING_PERFORMANCE_REPORT.  # noqa: E501
+        Use this field to supply a array of the listing ID you want to include in the report.  <br><br>This field is mutually exclusive with the <b>inventoryReferences</b> field; if you populate this field, <i>do not</i> populate the <b>inventoryReferences</b> field.  <br><br> A listing ID is the eBay listing identifier that's generated when the listing is created.  <p class=\"tablenote\"><b>Note:</b> This field accepts <b>listingId</b> values generated with both the Inventory API and the eBay Traditional APIs, such as the Trading and Finding APIs.</p> <p><b>Maximum:</b> 500 listings</p> <p><i>Required if </i>  you do not supply an array of <b>inventoryReferences</b> values or if you set <b>reportType</b> to <code>LISTING_PERFORMANCE_REPORT</code>.</p>  # noqa: E501
 
         :param listing_ids: The listing_ids of this CreateReportTask.  # noqa: E501
         :type: list[str]
@@ -229,7 +229,7 @@ class CreateReportTask(object):
     def marketplace_id(self):
         """Gets the marketplace_id of this CreateReportTask.  # noqa: E501
 
-        The ID for the eBay marketplace on which the report is based. Maximum: 1 Required if reportType is set to ACCOUNT_PERFORMANCE_REPORT or INVENTORY_PERFORMANCE_REPORT. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+        The ID for the eBay marketplace on which the report is based.</p> <p><b>Maximum: </b> 1</p>  <p><i>Required if </i> <b>reportType</b> is set to <code>ACCOUNT_PERFORMANCE_REPORT</code> or <code>INVENTORY_PERFORMANCE_REPORT</code>.</p> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The marketplace_id of this CreateReportTask.  # noqa: E501
         :rtype: str
@@ -240,7 +240,7 @@ class CreateReportTask(object):
     def marketplace_id(self, marketplace_id):
         """Sets the marketplace_id of this CreateReportTask.
 
-        The ID for the eBay marketplace on which the report is based. Maximum: 1 Required if reportType is set to ACCOUNT_PERFORMANCE_REPORT or INVENTORY_PERFORMANCE_REPORT. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+        The ID for the eBay marketplace on which the report is based.</p> <p><b>Maximum: </b> 1</p>  <p><i>Required if </i> <b>reportType</b> is set to <code>ACCOUNT_PERFORMANCE_REPORT</code> or <code>INVENTORY_PERFORMANCE_REPORT</code>.</p> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :param marketplace_id: The marketplace_id of this CreateReportTask.  # noqa: E501
         :type: str
@@ -252,7 +252,7 @@ class CreateReportTask(object):
     def metric_keys(self):
         """Gets the metric_keys of this CreateReportTask.  # noqa: E501
 
-        The list of metrics to be included in the report. Metrics are the quantitative measurements compiled into the report and the data returned is based on the specified dimension of the report. For example, if the dimension is campaign, the metrics for number of sales would be the number of sales in the campaign. However, if the dimension is listing, the number of sales represents the number of items sold in that listing. For information on metric keys and how to set them, see Reading Promoted Listings reports.Minimum: 1  # noqa: E501
+        The list of metrics to be included in the report.  <p>Metrics are the quantitative measurements compiled into the report and the data returned is based on the specified dimension of the report. For example, if the dimension is <code>campaign</code>, the metrics for <b>number of sales</b> would be the number of sales in the campaign. However, if the dimension is <code>listing</code>, the <b>number of sales</b> represents the number of items sold in that listing.</p>  <p>For information on metric keys and how to set them, see <a href=\"/api-docs/sell/static/marketing/pl-reports.html\">Reading Promoted Listings reports</a>.</p><b>Minimum: </b> 1  # noqa: E501
 
         :return: The metric_keys of this CreateReportTask.  # noqa: E501
         :rtype: list[str]
@@ -263,7 +263,7 @@ class CreateReportTask(object):
     def metric_keys(self, metric_keys):
         """Sets the metric_keys of this CreateReportTask.
 
-        The list of metrics to be included in the report. Metrics are the quantitative measurements compiled into the report and the data returned is based on the specified dimension of the report. For example, if the dimension is campaign, the metrics for number of sales would be the number of sales in the campaign. However, if the dimension is listing, the number of sales represents the number of items sold in that listing. For information on metric keys and how to set them, see Reading Promoted Listings reports.Minimum: 1  # noqa: E501
+        The list of metrics to be included in the report.  <p>Metrics are the quantitative measurements compiled into the report and the data returned is based on the specified dimension of the report. For example, if the dimension is <code>campaign</code>, the metrics for <b>number of sales</b> would be the number of sales in the campaign. However, if the dimension is <code>listing</code>, the <b>number of sales</b> represents the number of items sold in that listing.</p>  <p>For information on metric keys and how to set them, see <a href=\"/api-docs/sell/static/marketing/pl-reports.html\">Reading Promoted Listings reports</a>.</p><b>Minimum: </b> 1  # noqa: E501
 
         :param metric_keys: The metric_keys of this CreateReportTask.  # noqa: E501
         :type: list[str]
@@ -275,7 +275,7 @@ class CreateReportTask(object):
     def report_format(self):
         """Gets the report_format of this CreateReportTask.  # noqa: E501
 
-        The file format of the report. Currently, the only supported format is TSV_GZIP, which is a gzip file with tab separated values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportFormatEnum'>eBay API documentation</a>  # noqa: E501
+        The file format of the report. Currently, the only supported format is <code>TSV_GZIP</code>, which is a gzip file with tab separated values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportFormatEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The report_format of this CreateReportTask.  # noqa: E501
         :rtype: str
@@ -286,7 +286,7 @@ class CreateReportTask(object):
     def report_format(self, report_format):
         """Sets the report_format of this CreateReportTask.
 
-        The file format of the report. Currently, the only supported format is TSV_GZIP, which is a gzip file with tab separated values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportFormatEnum'>eBay API documentation</a>  # noqa: E501
+        The file format of the report. Currently, the only supported format is <code>TSV_GZIP</code>, which is a gzip file with tab separated values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportFormatEnum'>eBay API documentation</a>  # noqa: E501
 
         :param report_format: The report_format of this CreateReportTask.  # noqa: E501
         :type: str
@@ -298,7 +298,7 @@ class CreateReportTask(object):
     def report_type(self):
         """Gets the report_type of this CreateReportTask.  # noqa: E501
 
-        The type of report to be generated, such as ACCOUNT_PERFORMANCE_REPORT, CAMPAIGN_PERFORMANCE_REPORT, and so on. Maximum: 1 For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The type of report to be generated, such as <code>ACCOUNT_PERFORMANCE_REPORT</code>, <code>CAMPAIGN_PERFORMANCE_REPORT</code>, and so on.  <p><b>Maximum: </b> 1</p> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The report_type of this CreateReportTask.  # noqa: E501
         :rtype: str
@@ -309,7 +309,7 @@ class CreateReportTask(object):
     def report_type(self, report_type):
         """Sets the report_type of this CreateReportTask.
 
-        The type of report to be generated, such as ACCOUNT_PERFORMANCE_REPORT, CAMPAIGN_PERFORMANCE_REPORT, and so on. Maximum: 1 For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The type of report to be generated, such as <code>ACCOUNT_PERFORMANCE_REPORT</code>, <code>CAMPAIGN_PERFORMANCE_REPORT</code>, and so on.  <p><b>Maximum: </b> 1</p> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param report_type: The report_type of this CreateReportTask.  # noqa: E501
         :type: str

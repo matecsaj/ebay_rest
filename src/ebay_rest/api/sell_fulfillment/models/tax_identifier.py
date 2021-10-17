@@ -56,7 +56,7 @@ class TaxIdentifier(object):
     def issuing_country(self):
         """Gets the issuing_country of this TaxIdentifier.  # noqa: E501
 
-        This two-letter code indicates the country that issued the buyer's tax ID. The country that the two-letter code represents can be found in the CountryCodeEnum type, or in the ISO 3166 standard. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
+        This two-letter code indicates the country that issued the buyer's tax ID. The country that the two-letter code represents can be found in the <strong>CountryCodeEnum</strong> type, or in the  <a href=\"https://www.iso.org/iso-3166-country-codes.html\">ISO 3166</a> standard. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The issuing_country of this TaxIdentifier.  # noqa: E501
         :rtype: str
@@ -67,7 +67,7 @@ class TaxIdentifier(object):
     def issuing_country(self, issuing_country):
         """Sets the issuing_country of this TaxIdentifier.
 
-        This two-letter code indicates the country that issued the buyer's tax ID. The country that the two-letter code represents can be found in the CountryCodeEnum type, or in the ISO 3166 standard. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
+        This two-letter code indicates the country that issued the buyer's tax ID. The country that the two-letter code represents can be found in the <strong>CountryCodeEnum</strong> type, or in the  <a href=\"https://www.iso.org/iso-3166-country-codes.html\">ISO 3166</a> standard. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param issuing_country: The issuing_country of this TaxIdentifier.  # noqa: E501
         :type: str
@@ -79,7 +79,7 @@ class TaxIdentifier(object):
     def tax_identifier_type(self):
         """Gets the tax_identifier_type of this TaxIdentifier.  # noqa: E501
 
-        This enumeration value indicates the type of tax identification being used for the buyer. The different tax types are defined in the TaxIdentifierTypeEnum type. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:TaxIdentifierTypeEnum'>eBay API documentation</a>  # noqa: E501
+        This enumeration value indicates the type of tax identification being used for the buyer. The different tax types are defined in the <strong>TaxIdentifierTypeEnum</strong> type. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:TaxIdentifierTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The tax_identifier_type of this TaxIdentifier.  # noqa: E501
         :rtype: str
@@ -90,7 +90,7 @@ class TaxIdentifier(object):
     def tax_identifier_type(self, tax_identifier_type):
         """Sets the tax_identifier_type of this TaxIdentifier.
 
-        This enumeration value indicates the type of tax identification being used for the buyer. The different tax types are defined in the TaxIdentifierTypeEnum type. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:TaxIdentifierTypeEnum'>eBay API documentation</a>  # noqa: E501
+        This enumeration value indicates the type of tax identification being used for the buyer. The different tax types are defined in the <strong>TaxIdentifierTypeEnum</strong> type. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:TaxIdentifierTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param tax_identifier_type: The tax_identifier_type of this TaxIdentifier.  # noqa: E501
         :type: str
@@ -102,7 +102,7 @@ class TaxIdentifier(object):
     def taxpayer_id(self):
         """Gets the taxpayer_id of this TaxIdentifier.  # noqa: E501
 
-        This value is the unique tax ID associated with the buyer. The type of tax identification is shown in the taxIdentifierType field.  # noqa: E501
+        This value is the unique tax ID associated with the buyer. The type of tax identification is shown in the <strong>taxIdentifierType</strong> field.  # noqa: E501
 
         :return: The taxpayer_id of this TaxIdentifier.  # noqa: E501
         :rtype: str
@@ -113,7 +113,7 @@ class TaxIdentifier(object):
     def taxpayer_id(self, taxpayer_id):
         """Sets the taxpayer_id of this TaxIdentifier.
 
-        This value is the unique tax ID associated with the buyer. The type of tax identification is shown in the taxIdentifierType field.  # noqa: E501
+        This value is the unique tax ID associated with the buyer. The type of tax identification is shown in the <strong>taxIdentifierType</strong> field.  # noqa: E501
 
         :param taxpayer_id: The taxpayer_id of this TaxIdentifier.  # noqa: E501
         :type: str

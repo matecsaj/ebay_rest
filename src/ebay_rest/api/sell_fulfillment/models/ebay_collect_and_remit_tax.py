@@ -82,7 +82,7 @@ class EbayCollectAndRemitTax(object):
     def collection_method(self):
         """Gets the collection_method of this EbayCollectAndRemitTax.  # noqa: E501
 
-        This field indicates the collection method used to collect the 'Collect and Remit' tax for the order. This field is always returned for orders subject to 'Collect and Remit' tax, and its value is always NET. Note: Although the collectionMethod field is returned for all orders subject to 'Collect and Remit' tax, the collectionMethod field and the CollectionMethodEnum type are not currently of any practical use, although this field may have use in the future. If and when the logic of this field is changed, this note will be updated and a note will also be added to the Release Notes. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:CollectionMethodEnum'>eBay API documentation</a>  # noqa: E501
+        This field indicates the collection method used to collect the 'Collect and Remit' tax for the order. This field is always returned for orders subject to 'Collect and Remit' tax, and its value is always <code>NET</code>.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> Although the <strong>collectionMethod</strong> field is returned for all orders subject to 'Collect and Remit' tax, the <strong>collectionMethod</strong> field and the <strong>CollectionMethodEnum</strong> type are not currently of any practical use, although this field may have use in the future. If and when the logic of this field is changed, this note will be updated and a note will also be added to the Release Notes.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:CollectionMethodEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The collection_method of this EbayCollectAndRemitTax.  # noqa: E501
         :rtype: str
@@ -93,7 +93,7 @@ class EbayCollectAndRemitTax(object):
     def collection_method(self, collection_method):
         """Sets the collection_method of this EbayCollectAndRemitTax.
 
-        This field indicates the collection method used to collect the 'Collect and Remit' tax for the order. This field is always returned for orders subject to 'Collect and Remit' tax, and its value is always NET. Note: Although the collectionMethod field is returned for all orders subject to 'Collect and Remit' tax, the collectionMethod field and the CollectionMethodEnum type are not currently of any practical use, although this field may have use in the future. If and when the logic of this field is changed, this note will be updated and a note will also be added to the Release Notes. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:CollectionMethodEnum'>eBay API documentation</a>  # noqa: E501
+        This field indicates the collection method used to collect the 'Collect and Remit' tax for the order. This field is always returned for orders subject to 'Collect and Remit' tax, and its value is always <code>NET</code>.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> Although the <strong>collectionMethod</strong> field is returned for all orders subject to 'Collect and Remit' tax, the <strong>collectionMethod</strong> field and the <strong>CollectionMethodEnum</strong> type are not currently of any practical use, although this field may have use in the future. If and when the logic of this field is changed, this note will be updated and a note will also be added to the Release Notes.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:CollectionMethodEnum'>eBay API documentation</a>  # noqa: E501
 
         :param collection_method: The collection_method of this EbayCollectAndRemitTax.  # noqa: E501
         :type: str
@@ -126,7 +126,7 @@ class EbayCollectAndRemitTax(object):
     def tax_type(self):
         """Gets the tax_type of this EbayCollectAndRemitTax.  # noqa: E501
 
-        The type of tax and fees that eBay will collect and remit to the taxing or fee authority. See the TaxTypeEnum type definition for more information about each tax or fee type. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:TaxTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The type of tax and fees that eBay will collect and remit to the taxing or fee authority. See the <strong>TaxTypeEnum</strong> type definition for more information about each tax or fee type. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:TaxTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The tax_type of this EbayCollectAndRemitTax.  # noqa: E501
         :rtype: str
@@ -137,7 +137,7 @@ class EbayCollectAndRemitTax(object):
     def tax_type(self, tax_type):
         """Sets the tax_type of this EbayCollectAndRemitTax.
 
-        The type of tax and fees that eBay will collect and remit to the taxing or fee authority. See the TaxTypeEnum type definition for more information about each tax or fee type. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:TaxTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The type of tax and fees that eBay will collect and remit to the taxing or fee authority. See the <strong>TaxTypeEnum</strong> type definition for more information about each tax or fee type. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:TaxTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param tax_type: The tax_type of this EbayCollectAndRemitTax.  # noqa: E501
         :type: str

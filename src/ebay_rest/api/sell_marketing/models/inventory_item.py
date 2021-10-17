@@ -46,7 +46,7 @@ class InventoryItem(object):
     def inventory_reference_id(self):
         """Gets the inventory_reference_id of this InventoryItem.  # noqa: E501
 
-        The seller's inventory reference ID for a listing. Also known as the &quot;SKU&quot; or &quot;custom label,&quot; an inventory reference ID is either the ID of the listing or, if the listing has variations (such as a shirt that's available in multiple sizes and colors), the ID of the parent listing.  # noqa: E501
+        The seller's inventory reference ID for a listing. Also known as the \"SKU\" or \"custom label,\" an inventory reference ID is either the ID of the listing or, if the listing has variations (such as a shirt that's available in multiple sizes and colors), the ID of the parent listing.  # noqa: E501
 
         :return: The inventory_reference_id of this InventoryItem.  # noqa: E501
         :rtype: str
@@ -57,7 +57,7 @@ class InventoryItem(object):
     def inventory_reference_id(self, inventory_reference_id):
         """Sets the inventory_reference_id of this InventoryItem.
 
-        The seller's inventory reference ID for a listing. Also known as the &quot;SKU&quot; or &quot;custom label,&quot; an inventory reference ID is either the ID of the listing or, if the listing has variations (such as a shirt that's available in multiple sizes and colors), the ID of the parent listing.  # noqa: E501
+        The seller's inventory reference ID for a listing. Also known as the \"SKU\" or \"custom label,\" an inventory reference ID is either the ID of the listing or, if the listing has variations (such as a shirt that's available in multiple sizes and colors), the ID of the parent listing.  # noqa: E501
 
         :param inventory_reference_id: The inventory_reference_id of this InventoryItem.  # noqa: E501
         :type: str

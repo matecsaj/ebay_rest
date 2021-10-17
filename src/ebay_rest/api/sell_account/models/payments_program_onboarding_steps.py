@@ -56,7 +56,7 @@ class PaymentsProgramOnboardingSteps(object):
     def name(self):
         """Gets the name of this PaymentsProgramOnboardingSteps.  # noqa: E501
 
-        The name of the step in the steps array. Over time, these names are subject to change as processes change. The output sample contains example step names. Review an actual call response for updated step names.  # noqa: E501
+        The name of the step in the steps array. Over time, these names are subject to change as processes change. The output sample contains example step names. Review an actual call response for updated step names.   # noqa: E501
 
         :return: The name of this PaymentsProgramOnboardingSteps.  # noqa: E501
         :rtype: str
@@ -67,7 +67,7 @@ class PaymentsProgramOnboardingSteps(object):
     def name(self, name):
         """Sets the name of this PaymentsProgramOnboardingSteps.
 
-        The name of the step in the steps array. Over time, these names are subject to change as processes change. The output sample contains example step names. Review an actual call response for updated step names.  # noqa: E501
+        The name of the step in the steps array. Over time, these names are subject to change as processes change. The output sample contains example step names. Review an actual call response for updated step names.   # noqa: E501
 
         :param name: The name of this PaymentsProgramOnboardingSteps.  # noqa: E501
         :type: str
@@ -79,7 +79,7 @@ class PaymentsProgramOnboardingSteps(object):
     def status(self):
         """Gets the status of this PaymentsProgramOnboardingSteps.  # noqa: E501
 
-        This enumeration value indicates the status of the associated step. Note: Only one step can be IN_PROGRESS at a time. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:PaymentsProgramOnboardingStepStatus'>eBay API documentation</a>  # noqa: E501
+        This enumeration value indicates the status of the associated step. <p> <span class=\"tablenote\"><strong>Note:</strong> Only one step can be <code>IN_PROGRESS</code> at a time.</span></p> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:PaymentsProgramOnboardingStepStatus'>eBay API documentation</a>  # noqa: E501
 
         :return: The status of this PaymentsProgramOnboardingSteps.  # noqa: E501
         :rtype: str
@@ -90,7 +90,7 @@ class PaymentsProgramOnboardingSteps(object):
     def status(self, status):
         """Sets the status of this PaymentsProgramOnboardingSteps.
 
-        This enumeration value indicates the status of the associated step. Note: Only one step can be IN_PROGRESS at a time. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:PaymentsProgramOnboardingStepStatus'>eBay API documentation</a>  # noqa: E501
+        This enumeration value indicates the status of the associated step. <p> <span class=\"tablenote\"><strong>Note:</strong> Only one step can be <code>IN_PROGRESS</code> at a time.</span></p> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:PaymentsProgramOnboardingStepStatus'>eBay API documentation</a>  # noqa: E501
 
         :param status: The status of this PaymentsProgramOnboardingSteps.  # noqa: E501
         :type: str
@@ -102,7 +102,7 @@ class PaymentsProgramOnboardingSteps(object):
     def web_url(self):
         """Gets the web_url of this PaymentsProgramOnboardingSteps.  # noqa: E501
 
-        This URL provides access to the IN_PROGRESS step.  # noqa: E501
+        This URL provides access to the <code>IN_PROGRESS</code> step.  # noqa: E501
 
         :return: The web_url of this PaymentsProgramOnboardingSteps.  # noqa: E501
         :rtype: str
@@ -113,7 +113,7 @@ class PaymentsProgramOnboardingSteps(object):
     def web_url(self, web_url):
         """Sets the web_url of this PaymentsProgramOnboardingSteps.
 
-        This URL provides access to the IN_PROGRESS step.  # noqa: E501
+        This URL provides access to the <code>IN_PROGRESS</code> step.  # noqa: E501
 
         :param web_url: The web_url of this PaymentsProgramOnboardingSteps.  # noqa: E501
         :type: str

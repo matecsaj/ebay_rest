@@ -66,7 +66,7 @@ class Amount(object):
     def converted_from_currency(self):
         """Gets the converted_from_currency of this Amount.  # noqa: E501
 
-        The three-letter ISO 4217 code representing the currency of the amount in the convertedFromValue field. This value is the pre-conversion currency. This field is only returned if/when currency conversion was applied by eBay. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+        The three-letter <a href=\"https://www.iso.org/iso-4217-currency-codes.html\" target=\"_blank\">ISO 4217</a> code representing the currency of the amount in the <b> convertedFromValue</b> field. This value is the pre-conversion currency.<br><br>This field is only returned if/when currency conversion was applied by eBay. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The converted_from_currency of this Amount.  # noqa: E501
         :rtype: str
@@ -77,7 +77,7 @@ class Amount(object):
     def converted_from_currency(self, converted_from_currency):
         """Sets the converted_from_currency of this Amount.
 
-        The three-letter ISO 4217 code representing the currency of the amount in the convertedFromValue field. This value is the pre-conversion currency. This field is only returned if/when currency conversion was applied by eBay. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+        The three-letter <a href=\"https://www.iso.org/iso-4217-currency-codes.html\" target=\"_blank\">ISO 4217</a> code representing the currency of the amount in the <b> convertedFromValue</b> field. This value is the pre-conversion currency.<br><br>This field is only returned if/when currency conversion was applied by eBay. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param converted_from_currency: The converted_from_currency of this Amount.  # noqa: E501
         :type: str
@@ -89,7 +89,7 @@ class Amount(object):
     def converted_from_value(self):
         """Gets the converted_from_value of this Amount.  # noqa: E501
 
-        The monetary amount before any conversion is performed, in the currency specified by the convertedFromCurrency field. This value is the pre-conversion amount. The value field contains the converted amount of this value, in the currency specified by the currency field. This field is only returned if/when currency conversion was applied by eBay.  # noqa: E501
+        The monetary amount before any conversion is performed, in the currency specified by the <b> convertedFromCurrency</b> field. This value is the pre-conversion amount. The <b> value</b> field contains the converted amount of this value, in the currency specified by the <b> currency</b> field.<br><br>This field is only returned if/when currency conversion was applied by eBay.  # noqa: E501
 
         :return: The converted_from_value of this Amount.  # noqa: E501
         :rtype: str
@@ -100,7 +100,7 @@ class Amount(object):
     def converted_from_value(self, converted_from_value):
         """Sets the converted_from_value of this Amount.
 
-        The monetary amount before any conversion is performed, in the currency specified by the convertedFromCurrency field. This value is the pre-conversion amount. The value field contains the converted amount of this value, in the currency specified by the currency field. This field is only returned if/when currency conversion was applied by eBay.  # noqa: E501
+        The monetary amount before any conversion is performed, in the currency specified by the <b> convertedFromCurrency</b> field. This value is the pre-conversion amount. The <b> value</b> field contains the converted amount of this value, in the currency specified by the <b> currency</b> field.<br><br>This field is only returned if/when currency conversion was applied by eBay.  # noqa: E501
 
         :param converted_from_value: The converted_from_value of this Amount.  # noqa: E501
         :type: str
@@ -112,7 +112,7 @@ class Amount(object):
     def currency(self):
         """Gets the currency of this Amount.  # noqa: E501
 
-        A three-letter ISO 4217 code that indicates the currency of the amount in the value field. This field is always returned with any container using Amount type. Default: The currency of the authenticated user's country. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+        A three-letter ISO 4217 code that indicates the currency of the amount in the <b>value</b> field. This field is always returned with any container using <b>Amount</b> type. <br /><br /><b>Default</b>: The currency of the authenticated user's country. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The currency of this Amount.  # noqa: E501
         :rtype: str
@@ -123,7 +123,7 @@ class Amount(object):
     def currency(self, currency):
         """Sets the currency of this Amount.
 
-        A three-letter ISO 4217 code that indicates the currency of the amount in the value field. This field is always returned with any container using Amount type. Default: The currency of the authenticated user's country. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+        A three-letter ISO 4217 code that indicates the currency of the amount in the <b>value</b> field. This field is always returned with any container using <b>Amount</b> type. <br /><br /><b>Default</b>: The currency of the authenticated user's country. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param currency: The currency of this Amount.  # noqa: E501
         :type: str
@@ -135,7 +135,7 @@ class Amount(object):
     def exchange_rate(self):
         """Gets the exchange_rate of this Amount.  # noqa: E501
 
-        The exchange rate used for the monetary conversion. This field shows the exchange rate used to convert the dollar value in the value field from the dollar value in the convertedFromValue field. This field is only returned when eBay does a currency version, and a currency conversion is generally needed if the buyer is viewing, or has purchased an item on an international site. This field is only returned if/when currency conversion was applied by eBay.  # noqa: E501
+        The exchange rate used for the monetary conversion. This field shows the exchange rate used to convert the dollar value in the <b>value</b> field from the dollar value in the <b>convertedFromValue</b> field.<br><br>This field is only returned when eBay does a currency version, and a currency conversion is generally needed if the buyer is viewing, or has purchased an item on an international site. <br><br>This field is only returned if/when currency conversion was applied by eBay.  # noqa: E501
 
         :return: The exchange_rate of this Amount.  # noqa: E501
         :rtype: str
@@ -146,7 +146,7 @@ class Amount(object):
     def exchange_rate(self, exchange_rate):
         """Sets the exchange_rate of this Amount.
 
-        The exchange rate used for the monetary conversion. This field shows the exchange rate used to convert the dollar value in the value field from the dollar value in the convertedFromValue field. This field is only returned when eBay does a currency version, and a currency conversion is generally needed if the buyer is viewing, or has purchased an item on an international site. This field is only returned if/when currency conversion was applied by eBay.  # noqa: E501
+        The exchange rate used for the monetary conversion. This field shows the exchange rate used to convert the dollar value in the <b>value</b> field from the dollar value in the <b>convertedFromValue</b> field.<br><br>This field is only returned when eBay does a currency version, and a currency conversion is generally needed if the buyer is viewing, or has purchased an item on an international site. <br><br>This field is only returned if/when currency conversion was applied by eBay.  # noqa: E501
 
         :param exchange_rate: The exchange_rate of this Amount.  # noqa: E501
         :type: str
@@ -158,7 +158,7 @@ class Amount(object):
     def value(self):
         """Gets the value of this Amount.  # noqa: E501
 
-        The monetary amount, in the currency specified by the currency field. This field is always returned with any container using Amount type.  # noqa: E501
+        The monetary amount, in the currency specified by the <b>currency</b> field. This field is always returned with any container using <b>Amount</b> type.  # noqa: E501
 
         :return: The value of this Amount.  # noqa: E501
         :rtype: str
@@ -169,7 +169,7 @@ class Amount(object):
     def value(self, value):
         """Sets the value of this Amount.
 
-        The monetary amount, in the currency specified by the currency field. This field is always returned with any container using Amount type.  # noqa: E501
+        The monetary amount, in the currency specified by the <b>currency</b> field. This field is always returned with any container using <b>Amount</b> type.  # noqa: E501
 
         :param value: The value of this Amount.  # noqa: E501
         :type: str

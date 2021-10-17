@@ -72,7 +72,7 @@ class Tax(object):
     def tax_type(self):
         """Gets the tax_type of this Tax.  # noqa: E501
 
-        Tax type. This field is only available when fieldGroups is set to TAX_BREAKDOWN. If the order has fees, a breakdown of the fees is also provided. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:TaxTypeEnum'>eBay API documentation</a>  # noqa: E501
+        Tax type. This field is only available when <strong>fieldGroups</strong> is set to <code>TAX_BREAKDOWN</code>. If the order has fees, a breakdown of the fees is also provided. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:TaxTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The tax_type of this Tax.  # noqa: E501
         :rtype: str
@@ -83,7 +83,7 @@ class Tax(object):
     def tax_type(self, tax_type):
         """Sets the tax_type of this Tax.
 
-        Tax type. This field is only available when fieldGroups is set to TAX_BREAKDOWN. If the order has fees, a breakdown of the fees is also provided. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:TaxTypeEnum'>eBay API documentation</a>  # noqa: E501
+        Tax type. This field is only available when <strong>fieldGroups</strong> is set to <code>TAX_BREAKDOWN</code>. If the order has fees, a breakdown of the fees is also provided. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:TaxTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param tax_type: The tax_type of this Tax.  # noqa: E501
         :type: str

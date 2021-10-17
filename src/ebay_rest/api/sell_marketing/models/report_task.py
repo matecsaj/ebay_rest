@@ -141,7 +141,7 @@ class ReportTask(object):
     def campaign_ids(self):
         """Gets the campaign_ids of this ReportTask.  # noqa: E501
 
-        A list of campaign IDs to be included in the report. A campaign ID is a unique eBay-assigned identifier of the campaign that's generated when the campaign is created. Call getCampaigns to return the current campaign IDs for a seller. Note: Currently, you can specify only one campaign ID.  # noqa: E501
+        A list of campaign IDs to be included in the report. A campaign ID is a unique eBay-assigned identifier of the campaign that's generated when the campaign is created. Call <b>getCampaigns</b> to return the current campaign IDs for a seller.  <br><br><p class=\"tablenote\"><b>Note: </b> Currently, you can specify only one campaign ID.  # noqa: E501
 
         :return: The campaign_ids of this ReportTask.  # noqa: E501
         :rtype: list[str]
@@ -152,7 +152,7 @@ class ReportTask(object):
     def campaign_ids(self, campaign_ids):
         """Sets the campaign_ids of this ReportTask.
 
-        A list of campaign IDs to be included in the report. A campaign ID is a unique eBay-assigned identifier of the campaign that's generated when the campaign is created. Call getCampaigns to return the current campaign IDs for a seller. Note: Currently, you can specify only one campaign ID.  # noqa: E501
+        A list of campaign IDs to be included in the report. A campaign ID is a unique eBay-assigned identifier of the campaign that's generated when the campaign is created. Call <b>getCampaigns</b> to return the current campaign IDs for a seller.  <br><br><p class=\"tablenote\"><b>Note: </b> Currently, you can specify only one campaign ID.  # noqa: E501
 
         :param campaign_ids: The campaign_ids of this ReportTask.  # noqa: E501
         :type: list[str]
@@ -164,7 +164,7 @@ class ReportTask(object):
     def date_from(self):
         """Gets the date_from of this ReportTask.  # noqa: E501
 
-        The date defining the start of the timespan covered by the report, formatted as an ISO 8601 timestamp.  # noqa: E501
+        The date defining the start of the timespan covered by the report, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> timestamp.  # noqa: E501
 
         :return: The date_from of this ReportTask.  # noqa: E501
         :rtype: str
@@ -175,7 +175,7 @@ class ReportTask(object):
     def date_from(self, date_from):
         """Sets the date_from of this ReportTask.
 
-        The date defining the start of the timespan covered by the report, formatted as an ISO 8601 timestamp.  # noqa: E501
+        The date defining the start of the timespan covered by the report, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> timestamp.  # noqa: E501
 
         :param date_from: The date_from of this ReportTask.  # noqa: E501
         :type: str
@@ -187,7 +187,7 @@ class ReportTask(object):
     def date_to(self):
         """Gets the date_to of this ReportTask.  # noqa: E501
 
-        The date defining the end of the timespan covered by the report, formatted as an ISO 8601 timestamp.  # noqa: E501
+        The date defining the end of the timespan covered by the report, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> timestamp.  # noqa: E501
 
         :return: The date_to of this ReportTask.  # noqa: E501
         :rtype: str
@@ -198,7 +198,7 @@ class ReportTask(object):
     def date_to(self, date_to):
         """Sets the date_to of this ReportTask.
 
-        The date defining the end of the timespan covered by the report, formatted as an ISO 8601 timestamp.  # noqa: E501
+        The date defining the end of the timespan covered by the report, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> timestamp.  # noqa: E501
 
         :param date_to: The date_to of this ReportTask.  # noqa: E501
         :type: str
@@ -233,7 +233,7 @@ class ReportTask(object):
     def inventory_references(self):
         """Gets the inventory_references of this ReportTask.  # noqa: E501
 
-        If supplied in the request, this field returns a list of the seller's inventory reference IDs included in the report. Each item is referenced by a pair of and inventoryReferenceType values, where an inventory reference ID can be either a seller-defined SKU value or an inventoryItemGroupKey. An inventoryItemGroupKey is seller-defined ID for an inventory item group (a multiple-variation listing), and is created and used by the Inventory API.  # noqa: E501
+        If supplied in the request, this field returns a list of the seller's inventory reference IDs included in the report.  <p>Each item is referenced by a pair of <inventoryRefernceID</b> and <b>inventoryReferenceType</b> values, where an inventory reference ID can be either a seller-defined <b>SKU</b> value or an <b>inventoryItemGroupKey</b>. An <b>inventoryItemGroupKey</b> is seller-defined ID for an inventory item group (a multiple-variation listing), and is created and used by the <a href=\"/api-docs/sell/inventory/resources/methods\">Inventory API</a>.</p>  # noqa: E501
 
         :return: The inventory_references of this ReportTask.  # noqa: E501
         :rtype: list[InventoryReference]
@@ -244,7 +244,7 @@ class ReportTask(object):
     def inventory_references(self, inventory_references):
         """Sets the inventory_references of this ReportTask.
 
-        If supplied in the request, this field returns a list of the seller's inventory reference IDs included in the report. Each item is referenced by a pair of and inventoryReferenceType values, where an inventory reference ID can be either a seller-defined SKU value or an inventoryItemGroupKey. An inventoryItemGroupKey is seller-defined ID for an inventory item group (a multiple-variation listing), and is created and used by the Inventory API.  # noqa: E501
+        If supplied in the request, this field returns a list of the seller's inventory reference IDs included in the report.  <p>Each item is referenced by a pair of <inventoryRefernceID</b> and <b>inventoryReferenceType</b> values, where an inventory reference ID can be either a seller-defined <b>SKU</b> value or an <b>inventoryItemGroupKey</b>. An <b>inventoryItemGroupKey</b> is seller-defined ID for an inventory item group (a multiple-variation listing), and is created and used by the <a href=\"/api-docs/sell/inventory/resources/methods\">Inventory API</a>.</p>  # noqa: E501
 
         :param inventory_references: The inventory_references of this ReportTask.  # noqa: E501
         :type: list[InventoryReference]
@@ -325,7 +325,7 @@ class ReportTask(object):
     def report_expiration_date(self):
         """Gets the report_expiration_date of this ReportTask.  # noqa: E501
 
-        The date after which the report is no longer be available. Reports are available for 30 days and you cannot download a report after it has expired. Format (UTC): yyyy-MM-ddThh:mm:ss.sssZ  # noqa: E501
+        The date after which the report is no longer be available. Reports are available for 30 days and you cannot download a report after it has expired.  <br><br><b>Format (UTC): </b> yyyy-MM-ddThh:mm:ss.sssZ  # noqa: E501
 
         :return: The report_expiration_date of this ReportTask.  # noqa: E501
         :rtype: str
@@ -336,7 +336,7 @@ class ReportTask(object):
     def report_expiration_date(self, report_expiration_date):
         """Sets the report_expiration_date of this ReportTask.
 
-        The date after which the report is no longer be available. Reports are available for 30 days and you cannot download a report after it has expired. Format (UTC): yyyy-MM-ddThh:mm:ss.sssZ  # noqa: E501
+        The date after which the report is no longer be available. Reports are available for 30 days and you cannot download a report after it has expired.  <br><br><b>Format (UTC): </b> yyyy-MM-ddThh:mm:ss.sssZ  # noqa: E501
 
         :param report_expiration_date: The report_expiration_date of this ReportTask.  # noqa: E501
         :type: str
@@ -348,7 +348,7 @@ class ReportTask(object):
     def report_format(self):
         """Gets the report_format of this ReportTask.  # noqa: E501
 
-        Indicates the format of the report. Currently, only TSV_GZIP is supported. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportFormatEnum'>eBay API documentation</a>  # noqa: E501
+        Indicates the format of the report. Currently, only <code>TSV_GZIP</code> is supported. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportFormatEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The report_format of this ReportTask.  # noqa: E501
         :rtype: str
@@ -359,7 +359,7 @@ class ReportTask(object):
     def report_format(self, report_format):
         """Sets the report_format of this ReportTask.
 
-        Indicates the format of the report. Currently, only TSV_GZIP is supported. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportFormatEnum'>eBay API documentation</a>  # noqa: E501
+        Indicates the format of the report. Currently, only <code>TSV_GZIP</code> is supported. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportFormatEnum'>eBay API documentation</a>  # noqa: E501
 
         :param report_format: The report_format of this ReportTask.  # noqa: E501
         :type: str
@@ -417,7 +417,7 @@ class ReportTask(object):
     def report_name(self):
         """Gets the report_name of this ReportTask.  # noqa: E501
 
-        An eBay-assigned name for the report that's created by the createReportTask call. This name is unique for the seller.  # noqa: E501
+        An eBay-assigned name for the report that's created by the <b>createReportTask</b> call. This name is unique for the seller.  # noqa: E501
 
         :return: The report_name of this ReportTask.  # noqa: E501
         :rtype: str
@@ -428,7 +428,7 @@ class ReportTask(object):
     def report_name(self, report_name):
         """Sets the report_name of this ReportTask.
 
-        An eBay-assigned name for the report that's created by the createReportTask call. This name is unique for the seller.  # noqa: E501
+        An eBay-assigned name for the report that's created by the <b>createReportTask</b> call. This name is unique for the seller.  # noqa: E501
 
         :param report_name: The report_name of this ReportTask.  # noqa: E501
         :type: str
@@ -440,7 +440,7 @@ class ReportTask(object):
     def report_task_completion_date(self):
         """Gets the report_task_completion_date of this ReportTask.  # noqa: E501
 
-        The date the report task completed the report generation. Format (UTC): yyyy-MM-ddThh:mm:ss.sssZ  # noqa: E501
+        The date the report task completed the report generation.  <br><br><b>Format (UTC): </b> yyyy-MM-ddThh:mm:ss.sssZ  # noqa: E501
 
         :return: The report_task_completion_date of this ReportTask.  # noqa: E501
         :rtype: str
@@ -451,7 +451,7 @@ class ReportTask(object):
     def report_task_completion_date(self, report_task_completion_date):
         """Sets the report_task_completion_date of this ReportTask.
 
-        The date the report task completed the report generation. Format (UTC): yyyy-MM-ddThh:mm:ss.sssZ  # noqa: E501
+        The date the report task completed the report generation.  <br><br><b>Format (UTC): </b> yyyy-MM-ddThh:mm:ss.sssZ  # noqa: E501
 
         :param report_task_completion_date: The report_task_completion_date of this ReportTask.  # noqa: E501
         :type: str
@@ -463,7 +463,7 @@ class ReportTask(object):
     def report_task_creation_date(self):
         """Gets the report_task_creation_date of this ReportTask.  # noqa: E501
 
-        The date the report task was created. Format (UTC): yyyy-MM-ddThh:mm:ss.sssZ  # noqa: E501
+        The date the report task was created.  <br><br><b>Format (UTC): </b> yyyy-MM-ddThh:mm:ss.sssZ  # noqa: E501
 
         :return: The report_task_creation_date of this ReportTask.  # noqa: E501
         :rtype: str
@@ -474,7 +474,7 @@ class ReportTask(object):
     def report_task_creation_date(self, report_task_creation_date):
         """Sets the report_task_creation_date of this ReportTask.
 
-        The date the report task was created. Format (UTC): yyyy-MM-ddThh:mm:ss.sssZ  # noqa: E501
+        The date the report task was created.  <br><br><b>Format (UTC): </b> yyyy-MM-ddThh:mm:ss.sssZ  # noqa: E501
 
         :param report_task_creation_date: The report_task_creation_date of this ReportTask.  # noqa: E501
         :type: str
@@ -486,7 +486,7 @@ class ReportTask(object):
     def report_task_expected_completion_date(self):
         """Gets the report_task_expected_completion_date of this ReportTask.  # noqa: E501
 
-        The date the report task is expected to complete the report generation. Format (UTC): yyyy-MM-ddThh:mm:ss.sssZ  # noqa: E501
+        The date the report task is expected to complete the report generation.  <br><br><b>Format (UTC): </b> yyyy-MM-ddThh:mm:ss.sssZ  # noqa: E501
 
         :return: The report_task_expected_completion_date of this ReportTask.  # noqa: E501
         :rtype: str
@@ -497,7 +497,7 @@ class ReportTask(object):
     def report_task_expected_completion_date(self, report_task_expected_completion_date):
         """Sets the report_task_expected_completion_date of this ReportTask.
 
-        The date the report task is expected to complete the report generation. Format (UTC): yyyy-MM-ddThh:mm:ss.sssZ  # noqa: E501
+        The date the report task is expected to complete the report generation.  <br><br><b>Format (UTC): </b> yyyy-MM-ddThh:mm:ss.sssZ  # noqa: E501
 
         :param report_task_expected_completion_date: The report_task_expected_completion_date of this ReportTask.  # noqa: E501
         :type: str
@@ -509,7 +509,7 @@ class ReportTask(object):
     def report_task_id(self):
         """Gets the report_task_id of this ReportTask.  # noqa: E501
 
-        The unique eBay-assigned ID of the report task. This value is generated when the report task is created with a call to createReportTask.  # noqa: E501
+        The unique eBay-assigned ID of the report task. This value is generated when the report task is created with a call to <b>createReportTask</b>.  # noqa: E501
 
         :return: The report_task_id of this ReportTask.  # noqa: E501
         :rtype: str
@@ -520,7 +520,7 @@ class ReportTask(object):
     def report_task_id(self, report_task_id):
         """Sets the report_task_id of this ReportTask.
 
-        The unique eBay-assigned ID of the report task. This value is generated when the report task is created with a call to createReportTask.  # noqa: E501
+        The unique eBay-assigned ID of the report task. This value is generated when the report task is created with a call to <b>createReportTask</b>.  # noqa: E501
 
         :param report_task_id: The report_task_id of this ReportTask.  # noqa: E501
         :type: str

@@ -99,7 +99,7 @@ class PromotionsPagedCollection(object):
     def limit(self):
         """Gets the limit of this PromotionsPagedCollection.  # noqa: E501
 
-        The number of items returned on a single page from the result set. This value can be set in the request with the limit query parameter.  # noqa: E501
+        The number of items returned on a single page from the result set. This value can be set in the request with the <b>limit</b> query parameter.  # noqa: E501
 
         :return: The limit of this PromotionsPagedCollection.  # noqa: E501
         :rtype: int
@@ -110,7 +110,7 @@ class PromotionsPagedCollection(object):
     def limit(self, limit):
         """Sets the limit of this PromotionsPagedCollection.
 
-        The number of items returned on a single page from the result set. This value can be set in the request with the limit query parameter.  # noqa: E501
+        The number of items returned on a single page from the result set. This value can be set in the request with the <b>limit</b> query parameter.  # noqa: E501
 
         :param limit: The limit of this PromotionsPagedCollection.  # noqa: E501
         :type: int
@@ -122,7 +122,7 @@ class PromotionsPagedCollection(object):
     def next(self):
         """Gets the next of this PromotionsPagedCollection.  # noqa: E501
 
-        The URI for the following page of results. This value is returned only if there is an additional page of results to display from the result set. Max length: 2048  # noqa: E501
+        The URI for the following page of results. This value is returned only if there is an additional page of results to display from the result set. <br><br><b>Max length</b>: 2048  # noqa: E501
 
         :return: The next of this PromotionsPagedCollection.  # noqa: E501
         :rtype: str
@@ -133,7 +133,7 @@ class PromotionsPagedCollection(object):
     def next(self, next):
         """Sets the next of this PromotionsPagedCollection.
 
-        The URI for the following page of results. This value is returned only if there is an additional page of results to display from the result set. Max length: 2048  # noqa: E501
+        The URI for the following page of results. This value is returned only if there is an additional page of results to display from the result set. <br><br><b>Max length</b>: 2048  # noqa: E501
 
         :param next: The next of this PromotionsPagedCollection.  # noqa: E501
         :type: str
@@ -145,7 +145,7 @@ class PromotionsPagedCollection(object):
     def offset(self):
         """Gets the offset of this PromotionsPagedCollection.  # noqa: E501
 
-        The number of results skipped in the result set before listing the first returned result. This value can be set in the request with the offset query parameter. Note: The items in a paginated result set use a zero-based list where the first item in the list has an offset of 0.  # noqa: E501
+        The number of results skipped in the result set before listing the first returned result. This value can be set in the request with the <b>offset</b> query parameter. <p class=\"tablenote\"><strong>Note: </strong>The items in a paginated result set use a zero-based list where the first item in the list has an offset of <code>0</code>.</p>  # noqa: E501
 
         :return: The offset of this PromotionsPagedCollection.  # noqa: E501
         :rtype: int
@@ -156,7 +156,7 @@ class PromotionsPagedCollection(object):
     def offset(self, offset):
         """Sets the offset of this PromotionsPagedCollection.
 
-        The number of results skipped in the result set before listing the first returned result. This value can be set in the request with the offset query parameter. Note: The items in a paginated result set use a zero-based list where the first item in the list has an offset of 0.  # noqa: E501
+        The number of results skipped in the result set before listing the first returned result. This value can be set in the request with the <b>offset</b> query parameter. <p class=\"tablenote\"><strong>Note: </strong>The items in a paginated result set use a zero-based list where the first item in the list has an offset of <code>0</code>.</p>  # noqa: E501
 
         :param offset: The offset of this PromotionsPagedCollection.  # noqa: E501
         :type: int
@@ -168,7 +168,7 @@ class PromotionsPagedCollection(object):
     def prev(self):
         """Gets the prev of this PromotionsPagedCollection.  # noqa: E501
 
-        The URI for the preceding page of results. This value is returned only if there is a previous page of results to display from the result set. Max length: 2048  # noqa: E501
+        The URI for the preceding page of results. This value is returned only if there is a previous page of results to display from the result set. <br><br><b>Max length</b>: 2048  # noqa: E501
 
         :return: The prev of this PromotionsPagedCollection.  # noqa: E501
         :rtype: str
@@ -179,7 +179,7 @@ class PromotionsPagedCollection(object):
     def prev(self, prev):
         """Sets the prev of this PromotionsPagedCollection.
 
-        The URI for the preceding page of results. This value is returned only if there is a previous page of results to display from the result set. Max length: 2048  # noqa: E501
+        The URI for the preceding page of results. This value is returned only if there is a previous page of results to display from the result set. <br><br><b>Max length</b>: 2048  # noqa: E501
 
         :param prev: The prev of this PromotionsPagedCollection.  # noqa: E501
         :type: str
@@ -214,7 +214,7 @@ class PromotionsPagedCollection(object):
     def total(self):
         """Gets the total of this PromotionsPagedCollection.  # noqa: E501
 
-        The total number of items retrieved in the result set. If no items are found, this field is returned with a value of 0.  # noqa: E501
+        The total number of items retrieved in the result set.  <br><br>If no items are found, this field is returned with a value of <code>0</code>.  # noqa: E501
 
         :return: The total of this PromotionsPagedCollection.  # noqa: E501
         :rtype: int
@@ -225,7 +225,7 @@ class PromotionsPagedCollection(object):
     def total(self, total):
         """Sets the total of this PromotionsPagedCollection.
 
-        The total number of items retrieved in the result set. If no items are found, this field is returned with a value of 0.  # noqa: E501
+        The total number of items retrieved in the result set.  <br><br>If no items are found, this field is returned with a value of <code>0</code>.  # noqa: E501
 
         :param total: The total of this PromotionsPagedCollection.  # noqa: E501
         :type: int

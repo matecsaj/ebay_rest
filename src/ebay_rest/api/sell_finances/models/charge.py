@@ -81,7 +81,7 @@ class Charge(object):
     def cancellation_id(self):
         """Gets the cancellation_id of this Charge.  # noqa: E501
 
-        The unique identifier of an order cancellation. This field is only applicable and returned if the charge is related to an order cancellation.  # noqa: E501
+        The unique identifier of an order cancellation. This field is only applicable and returned if the charge is related to an order  cancellation.  # noqa: E501
 
         :return: The cancellation_id of this Charge.  # noqa: E501
         :rtype: str
@@ -92,7 +92,7 @@ class Charge(object):
     def cancellation_id(self, cancellation_id):
         """Sets the cancellation_id of this Charge.
 
-        The unique identifier of an order cancellation. This field is only applicable and returned if the charge is related to an order cancellation.  # noqa: E501
+        The unique identifier of an order cancellation. This field is only applicable and returned if the charge is related to an order  cancellation.  # noqa: E501
 
         :param cancellation_id: The cancellation_id of this Charge.  # noqa: E501
         :type: str

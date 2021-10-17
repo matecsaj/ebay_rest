@@ -158,7 +158,7 @@ class ReportMetadata(object):
     def report_type(self):
         """Gets the report_type of this ReportMetadata.  # noqa: E501
 
-        The report_type, as specified in the request to create the report task. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The <b>report_type</b>, as specified in the request to create the report task. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The report_type of this ReportMetadata.  # noqa: E501
         :rtype: str
@@ -169,7 +169,7 @@ class ReportMetadata(object):
     def report_type(self, report_type):
         """Sets the report_type of this ReportMetadata.
 
-        The report_type, as specified in the request to create the report task. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The <b>report_type</b>, as specified in the request to create the report task. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param report_type: The report_type of this ReportMetadata.  # noqa: E501
         :type: str

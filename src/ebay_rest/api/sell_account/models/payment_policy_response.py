@@ -214,7 +214,7 @@ class PaymentPolicyResponse(object):
     def total(self):
         """Gets the total of this PaymentPolicyResponse.  # noqa: E501
 
-        The total number of items retrieved in the result set. If no items are found, this field is returned with a value of 0.  # noqa: E501
+        The total number of items retrieved in the result set.  <br><br>If no items are found, this field is returned with a value of <code>0</code>.  # noqa: E501
 
         :return: The total of this PaymentPolicyResponse.  # noqa: E501
         :rtype: int
@@ -225,7 +225,7 @@ class PaymentPolicyResponse(object):
     def total(self, total):
         """Sets the total of this PaymentPolicyResponse.
 
-        The total number of items retrieved in the result set. If no items are found, this field is returned with a value of 0.  # noqa: E501
+        The total number of items retrieved in the result set.  <br><br>If no items are found, this field is returned with a value of <code>0</code>.  # noqa: E501
 
         :param total: The total of this PaymentPolicyResponse.  # noqa: E501
         :type: int

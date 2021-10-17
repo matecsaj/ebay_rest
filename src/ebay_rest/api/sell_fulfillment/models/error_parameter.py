@@ -74,7 +74,7 @@ class ErrorParameter(object):
     def value(self):
         """Gets the value of this ErrorParameter.  # noqa: E501
 
-        This is the actual value that was passed in for the element specified in the name field.  # noqa: E501
+        This is the actual value that was passed in for the element specified in the <strong>name</strong> field.  # noqa: E501
 
         :return: The value of this ErrorParameter.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class ErrorParameter(object):
     def value(self, value):
         """Sets the value of this ErrorParameter.
 
-        This is the actual value that was passed in for the element specified in the name field.  # noqa: E501
+        This is the actual value that was passed in for the element specified in the <strong>name</strong> field.  # noqa: E501
 
         :param value: The value of this ErrorParameter.  # noqa: E501
         :type: str

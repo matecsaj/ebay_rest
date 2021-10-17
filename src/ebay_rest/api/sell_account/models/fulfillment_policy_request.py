@@ -96,7 +96,7 @@ class FulfillmentPolicyRequest(object):
     def category_types(self):
         """Gets the category_types of this FulfillmentPolicyRequest.  # noqa: E501
 
-        The CategoryTypeEnum value to which this policy applies. Used to discern accounts that sell motor vehicles from those that don't. (Currently, each policy can be set to only one categoryTypes value at a time.)  # noqa: E501
+        The <b>CategoryTypeEnum</b> value to which this policy applies. Used to discern accounts that sell motor vehicles from those that don't. (Currently, each policy can be set to only one <b>categoryTypes</b> value at a time.)  # noqa: E501
 
         :return: The category_types of this FulfillmentPolicyRequest.  # noqa: E501
         :rtype: list[CategoryType]
@@ -107,7 +107,7 @@ class FulfillmentPolicyRequest(object):
     def category_types(self, category_types):
         """Sets the category_types of this FulfillmentPolicyRequest.
 
-        The CategoryTypeEnum value to which this policy applies. Used to discern accounts that sell motor vehicles from those that don't. (Currently, each policy can be set to only one categoryTypes value at a time.)  # noqa: E501
+        The <b>CategoryTypeEnum</b> value to which this policy applies. Used to discern accounts that sell motor vehicles from those that don't. (Currently, each policy can be set to only one <b>categoryTypes</b> value at a time.)  # noqa: E501
 
         :param category_types: The category_types of this FulfillmentPolicyRequest.  # noqa: E501
         :type: list[CategoryType]
@@ -119,7 +119,7 @@ class FulfillmentPolicyRequest(object):
     def description(self):
         """Gets the description of this FulfillmentPolicyRequest.  # noqa: E501
 
-        An optional seller-defined description of the fulfillment policy for internal use (this value is not displayed to end users). Max length: 250  # noqa: E501
+        An optional seller-defined description of the fulfillment policy for internal use (this value is not displayed to end users).  <br><br><b>Max length</b>: 250  # noqa: E501
 
         :return: The description of this FulfillmentPolicyRequest.  # noqa: E501
         :rtype: str
@@ -130,7 +130,7 @@ class FulfillmentPolicyRequest(object):
     def description(self, description):
         """Sets the description of this FulfillmentPolicyRequest.
 
-        An optional seller-defined description of the fulfillment policy for internal use (this value is not displayed to end users). Max length: 250  # noqa: E501
+        An optional seller-defined description of the fulfillment policy for internal use (this value is not displayed to end users).  <br><br><b>Max length</b>: 250  # noqa: E501
 
         :param description: The description of this FulfillmentPolicyRequest.  # noqa: E501
         :type: str
@@ -142,7 +142,7 @@ class FulfillmentPolicyRequest(object):
     def freight_shipping(self):
         """Gets the freight_shipping of this FulfillmentPolicyRequest.  # noqa: E501
 
-        If set to true, the seller offers freight shipping. Freight shipping can be used for large items over 150 lbs. Default: false  # noqa: E501
+        If set to <code>true</code>, the seller offers freight shipping.  Freight shipping can be used for large items over 150 lbs.<br><br><b>Default</b>: false  # noqa: E501
 
         :return: The freight_shipping of this FulfillmentPolicyRequest.  # noqa: E501
         :rtype: bool
@@ -153,7 +153,7 @@ class FulfillmentPolicyRequest(object):
     def freight_shipping(self, freight_shipping):
         """Sets the freight_shipping of this FulfillmentPolicyRequest.
 
-        If set to true, the seller offers freight shipping. Freight shipping can be used for large items over 150 lbs. Default: false  # noqa: E501
+        If set to <code>true</code>, the seller offers freight shipping.  Freight shipping can be used for large items over 150 lbs.<br><br><b>Default</b>: false  # noqa: E501
 
         :param freight_shipping: The freight_shipping of this FulfillmentPolicyRequest.  # noqa: E501
         :type: bool
@@ -165,7 +165,7 @@ class FulfillmentPolicyRequest(object):
     def global_shipping(self):
         """Gets the global_shipping of this FulfillmentPolicyRequest.  # noqa: E501
 
-        If set to true, the seller has opted-in to the eBay Global Shipping Program and that they use that service for their international shipments. Setting this value automatically sets the international shipping service for the policy to International Priority Shipping and the buyer does not need to set any other shipping services for their INTERNATIONAL shipping options (unless they sell items not covered by the Global Shipping Program). If this value is set to false, the seller is responsible for manually specifying the international shipping services, as described in Setting up worldwide shipping. To opt-in to the Global Shipping Program, log in to eBay and navigate to My Account &gt; Site Preferences &gt; Shipping preferences. Default: false  # noqa: E501
+        If set to <code>true</code>, the seller has opted-in to the eBay <a href=\"http://pages.ebay.com/help/sell/shipping-globally.html\">Global Shipping Program</a> and that they use that service for their international shipments. Setting this value automatically sets the international shipping service for the policy to <code>International Priority Shipping</code> and the buyer does not need to set any other shipping services for their INTERNATIONAL shipping options (unless they sell items not covered by the Global Shipping Program). <br><br>If this value is set to <code>false</code>, the seller is responsible for manually specifying the international shipping services, as described in <a href=\"https://developer.ebay.com/api-docs/sell/static/seller-accounts/ht_shipping-worldwide.html\">Setting up worldwide shipping</a>. <br><br>To opt-in to the Global Shipping Program, log in to eBay and navigate to <b>My Account > Site Preferences > Shipping preferences</b>.  <p><b>Default</b>: false</p>  # noqa: E501
 
         :return: The global_shipping of this FulfillmentPolicyRequest.  # noqa: E501
         :rtype: bool
@@ -176,7 +176,7 @@ class FulfillmentPolicyRequest(object):
     def global_shipping(self, global_shipping):
         """Sets the global_shipping of this FulfillmentPolicyRequest.
 
-        If set to true, the seller has opted-in to the eBay Global Shipping Program and that they use that service for their international shipments. Setting this value automatically sets the international shipping service for the policy to International Priority Shipping and the buyer does not need to set any other shipping services for their INTERNATIONAL shipping options (unless they sell items not covered by the Global Shipping Program). If this value is set to false, the seller is responsible for manually specifying the international shipping services, as described in Setting up worldwide shipping. To opt-in to the Global Shipping Program, log in to eBay and navigate to My Account &gt; Site Preferences &gt; Shipping preferences. Default: false  # noqa: E501
+        If set to <code>true</code>, the seller has opted-in to the eBay <a href=\"http://pages.ebay.com/help/sell/shipping-globally.html\">Global Shipping Program</a> and that they use that service for their international shipments. Setting this value automatically sets the international shipping service for the policy to <code>International Priority Shipping</code> and the buyer does not need to set any other shipping services for their INTERNATIONAL shipping options (unless they sell items not covered by the Global Shipping Program). <br><br>If this value is set to <code>false</code>, the seller is responsible for manually specifying the international shipping services, as described in <a href=\"https://developer.ebay.com/api-docs/sell/static/seller-accounts/ht_shipping-worldwide.html\">Setting up worldwide shipping</a>. <br><br>To opt-in to the Global Shipping Program, log in to eBay and navigate to <b>My Account > Site Preferences > Shipping preferences</b>.  <p><b>Default</b>: false</p>  # noqa: E501
 
         :param global_shipping: The global_shipping of this FulfillmentPolicyRequest.  # noqa: E501
         :type: bool
@@ -209,7 +209,7 @@ class FulfillmentPolicyRequest(object):
     def local_pickup(self):
         """Gets the local_pickup of this FulfillmentPolicyRequest.  # noqa: E501
 
-        If set to true, no shipping is offered by this policy and the seller offers only local pickup of the item (normally from a non-business location). This option is most often used for customer-to-customer sales and if set, costType should be set to NOT_SPECIFIED. Default: false  # noqa: E501
+        If set to <code>true</code>, no shipping is offered by this policy and the seller offers only local pickup of the item (normally from a non-business location). This option is most often used for customer-to-customer sales and if set, <b>costType</b> should be set to <code>NOT_SPECIFIED</code>.  <br><br><b>Default</b>: <code>false</code>  # noqa: E501
 
         :return: The local_pickup of this FulfillmentPolicyRequest.  # noqa: E501
         :rtype: bool
@@ -220,7 +220,7 @@ class FulfillmentPolicyRequest(object):
     def local_pickup(self, local_pickup):
         """Sets the local_pickup of this FulfillmentPolicyRequest.
 
-        If set to true, no shipping is offered by this policy and the seller offers only local pickup of the item (normally from a non-business location). This option is most often used for customer-to-customer sales and if set, costType should be set to NOT_SPECIFIED. Default: false  # noqa: E501
+        If set to <code>true</code>, no shipping is offered by this policy and the seller offers only local pickup of the item (normally from a non-business location). This option is most often used for customer-to-customer sales and if set, <b>costType</b> should be set to <code>NOT_SPECIFIED</code>.  <br><br><b>Default</b>: <code>false</code>  # noqa: E501
 
         :param local_pickup: The local_pickup of this FulfillmentPolicyRequest.  # noqa: E501
         :type: bool
@@ -255,7 +255,7 @@ class FulfillmentPolicyRequest(object):
     def name(self):
         """Gets the name of this FulfillmentPolicyRequest.  # noqa: E501
 
-        A user-defined name for this fulfillment policy. Names must be unique for policies assigned to the same marketplace. Max length: 64  # noqa: E501
+        A user-defined name for this fulfillment policy. Names must be unique for policies assigned to the same marketplace. <br><br><b>Max length</b>: 64  # noqa: E501
 
         :return: The name of this FulfillmentPolicyRequest.  # noqa: E501
         :rtype: str
@@ -266,7 +266,7 @@ class FulfillmentPolicyRequest(object):
     def name(self, name):
         """Sets the name of this FulfillmentPolicyRequest.
 
-        A user-defined name for this fulfillment policy. Names must be unique for policies assigned to the same marketplace. Max length: 64  # noqa: E501
+        A user-defined name for this fulfillment policy. Names must be unique for policies assigned to the same marketplace. <br><br><b>Max length</b>: 64  # noqa: E501
 
         :param name: The name of this FulfillmentPolicyRequest.  # noqa: E501
         :type: str
@@ -278,7 +278,7 @@ class FulfillmentPolicyRequest(object):
     def pickup_drop_off(self):
         """Gets the pickup_drop_off of this FulfillmentPolicyRequest.  # noqa: E501
 
-        If set to true, the seller offers the &quot;Click and Collect&quot; feature. Click and Collect is supported by the Inventory API, and it can be used with Add/Revise/Relist calls. To enable &quot;Click and Collect&quot;, a seller (1) must be eligible for Click and Collect and (2) must set this boolean field to 'true'. Currently, Click and Collect is available to only large retail merchants selling in the eBay AU and UK marketplaces. In addition to setting this field, the merchant must also do the following to enable the &quot;Click and Collect&quot; option on a listing: Have inventory for the product at one or more physical stores tied to the merchant's account. Sellers can use the createInventoryLocaion method in the Inventory API to associate physical stores to their account and they can then can add inventory to specific store locations. Set an immediate payment requirement on the item. The immediate payment feature requires the seller to: Set the immediatePay flag in the payment policy to 'true'. Include only one paymentMethods field in the payment policy and set its value to PAYPAL. Include a valid PayPal contact in the recipientAccountReference.referenceId field of the payment policy. Have a valid store location with a complete street address. When a UK merchant successfully lists an item with Click and Collect, prospective buyers within a reasonable distance from one of the merchant's stores (that has stock available) will see the &quot;Available for Click and Collect&quot; option on the listing, along with information on the closest store that has the item.Default: false  # noqa: E501
+        If set to <code>true</code>, the seller offers the \"Click and Collect\" feature. Click and Collect is supported by the Inventory API, and it can be used with Add/Revise/Relist calls.  <p>To enable \"Click and Collect\", a seller (1) must be eligible for Click and Collect and (2) must set this boolean field to 'true'. Currently, Click and Collect is available to only large retail merchants selling in the eBay AU and UK marketplaces.</p>  <p>In addition to setting this field, the merchant must also do the following to enable the \"Click and Collect\" option on a listing: <ul><li>Have inventory for the product at one or more physical stores tied to the merchant's account. <p>Sellers can use the <b>createInventoryLocaion</b> method in the Inventory API to associate physical stores to their account and they can then can add inventory to specific store locations.</p></li><li>Set an immediate payment requirement on the item. The immediate payment feature requires the seller to: <ul><li>Set the <b>immediatePay</b> flag in the payment policy to 'true'.</li><li>Include only one <b>paymentMethods</b> field in the payment policy and set its value to <code>PAYPAL</code>.</li> <li>Include a valid PayPal contact in the <b>recipientAccountReference.referenceId</b> field of the payment policy.</li><li>Have a valid store location with a complete street address.</li></ul></li></ul><p>When a UK merchant successfully lists an item with Click and Collect, prospective buyers within a reasonable distance from one of the merchant's stores (that has stock available) will see the \"Available for Click and Collect\" option on the listing, along with information on the closest store that has the item.</p><b>Default</b>: false  # noqa: E501
 
         :return: The pickup_drop_off of this FulfillmentPolicyRequest.  # noqa: E501
         :rtype: bool
@@ -289,7 +289,7 @@ class FulfillmentPolicyRequest(object):
     def pickup_drop_off(self, pickup_drop_off):
         """Sets the pickup_drop_off of this FulfillmentPolicyRequest.
 
-        If set to true, the seller offers the &quot;Click and Collect&quot; feature. Click and Collect is supported by the Inventory API, and it can be used with Add/Revise/Relist calls. To enable &quot;Click and Collect&quot;, a seller (1) must be eligible for Click and Collect and (2) must set this boolean field to 'true'. Currently, Click and Collect is available to only large retail merchants selling in the eBay AU and UK marketplaces. In addition to setting this field, the merchant must also do the following to enable the &quot;Click and Collect&quot; option on a listing: Have inventory for the product at one or more physical stores tied to the merchant's account. Sellers can use the createInventoryLocaion method in the Inventory API to associate physical stores to their account and they can then can add inventory to specific store locations. Set an immediate payment requirement on the item. The immediate payment feature requires the seller to: Set the immediatePay flag in the payment policy to 'true'. Include only one paymentMethods field in the payment policy and set its value to PAYPAL. Include a valid PayPal contact in the recipientAccountReference.referenceId field of the payment policy. Have a valid store location with a complete street address. When a UK merchant successfully lists an item with Click and Collect, prospective buyers within a reasonable distance from one of the merchant's stores (that has stock available) will see the &quot;Available for Click and Collect&quot; option on the listing, along with information on the closest store that has the item.Default: false  # noqa: E501
+        If set to <code>true</code>, the seller offers the \"Click and Collect\" feature. Click and Collect is supported by the Inventory API, and it can be used with Add/Revise/Relist calls.  <p>To enable \"Click and Collect\", a seller (1) must be eligible for Click and Collect and (2) must set this boolean field to 'true'. Currently, Click and Collect is available to only large retail merchants selling in the eBay AU and UK marketplaces.</p>  <p>In addition to setting this field, the merchant must also do the following to enable the \"Click and Collect\" option on a listing: <ul><li>Have inventory for the product at one or more physical stores tied to the merchant's account. <p>Sellers can use the <b>createInventoryLocaion</b> method in the Inventory API to associate physical stores to their account and they can then can add inventory to specific store locations.</p></li><li>Set an immediate payment requirement on the item. The immediate payment feature requires the seller to: <ul><li>Set the <b>immediatePay</b> flag in the payment policy to 'true'.</li><li>Include only one <b>paymentMethods</b> field in the payment policy and set its value to <code>PAYPAL</code>.</li> <li>Include a valid PayPal contact in the <b>recipientAccountReference.referenceId</b> field of the payment policy.</li><li>Have a valid store location with a complete street address.</li></ul></li></ul><p>When a UK merchant successfully lists an item with Click and Collect, prospective buyers within a reasonable distance from one of the merchant's stores (that has stock available) will see the \"Available for Click and Collect\" option on the listing, along with information on the closest store that has the item.</p><b>Default</b>: false  # noqa: E501
 
         :param pickup_drop_off: The pickup_drop_off of this FulfillmentPolicyRequest.  # noqa: E501
         :type: bool
@@ -322,7 +322,7 @@ class FulfillmentPolicyRequest(object):
     def shipping_options(self):
         """Gets the shipping_options of this FulfillmentPolicyRequest.  # noqa: E501
 
-        A list that defines the seller's shipping configurations for DOMESTIC and INTERNATIONAL order shipments. shippingOptions is a list with a single element if the seller ships to only domestic locations. If the seller also ships internationally, the list contains a second element that defines their international shipping options. Shipping options configure the high-level shipping settings that apply to orders, such as flat-rate or calculated shipping, any rate tables the seller wants to associate with the shipping services, plus other details (such as the shippingServices offered for domestic or international shipments).  # noqa: E501
+        A list that defines the seller's shipping configurations for DOMESTIC and INTERNATIONAL order shipments. <p><b>shippingOptions</b> is a list with a single element if the seller ships to only domestic locations. If the seller also ships internationally, the list contains a second element that defines their international shipping options.</p> <p>Shipping options configure the high-level shipping settings that apply to orders, such as flat-rate or calculated shipping, any rate tables the seller wants to associate with the shipping services, plus other details (such as the <b>shippingServices</b> offered for domestic or international shipments).</p>  # noqa: E501
 
         :return: The shipping_options of this FulfillmentPolicyRequest.  # noqa: E501
         :rtype: list[ShippingOption]
@@ -333,7 +333,7 @@ class FulfillmentPolicyRequest(object):
     def shipping_options(self, shipping_options):
         """Sets the shipping_options of this FulfillmentPolicyRequest.
 
-        A list that defines the seller's shipping configurations for DOMESTIC and INTERNATIONAL order shipments. shippingOptions is a list with a single element if the seller ships to only domestic locations. If the seller also ships internationally, the list contains a second element that defines their international shipping options. Shipping options configure the high-level shipping settings that apply to orders, such as flat-rate or calculated shipping, any rate tables the seller wants to associate with the shipping services, plus other details (such as the shippingServices offered for domestic or international shipments).  # noqa: E501
+        A list that defines the seller's shipping configurations for DOMESTIC and INTERNATIONAL order shipments. <p><b>shippingOptions</b> is a list with a single element if the seller ships to only domestic locations. If the seller also ships internationally, the list contains a second element that defines their international shipping options.</p> <p>Shipping options configure the high-level shipping settings that apply to orders, such as flat-rate or calculated shipping, any rate tables the seller wants to associate with the shipping services, plus other details (such as the <b>shippingServices</b> offered for domestic or international shipments).</p>  # noqa: E501
 
         :param shipping_options: The shipping_options of this FulfillmentPolicyRequest.  # noqa: E501
         :type: list[ShippingOption]

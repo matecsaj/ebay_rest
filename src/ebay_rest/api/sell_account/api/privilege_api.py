@@ -35,7 +35,7 @@ class PrivilegeApi(object):
     def get_privileges(self, **kwargs):  # noqa: E501
         """get_privileges  # noqa: E501
 
-        This method retrieves the seller's current set of privileges. The call returns whether or not the seller's eBay registration has been completed, as well as the details of their site-wide sellingLimt (the amount and quantity they can sell on a given day).  # noqa: E501
+        This method retrieves the seller's current set of privileges. The call returns whether or not the seller's eBay registration has been completed, as well as the details of their site-wide <b>sellingLimt</b> (the amount and quantity they can sell on a given day).  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_privileges(async_req=True)
@@ -56,7 +56,7 @@ class PrivilegeApi(object):
     def get_privileges_with_http_info(self, **kwargs):  # noqa: E501
         """get_privileges  # noqa: E501
 
-        This method retrieves the seller's current set of privileges. The call returns whether or not the seller's eBay registration has been completed, as well as the details of their site-wide sellingLimt (the amount and quantity they can sell on a given day).  # noqa: E501
+        This method retrieves the seller's current set of privileges. The call returns whether or not the seller's eBay registration has been completed, as well as the details of their site-wide <b>sellingLimt</b> (the amount and quantity they can sell on a given day).  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_privileges_with_http_info(async_req=True)

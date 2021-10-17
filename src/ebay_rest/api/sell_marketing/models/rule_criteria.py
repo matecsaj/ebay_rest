@@ -66,7 +66,7 @@ class RuleCriteria(object):
     def exclude_inventory_items(self):
         """Gets the exclude_inventory_items of this RuleCriteria.  # noqa: E501
 
-        A list of seller inventory reference IDs to exclude from the promotion. Note: The request can have either excludeInventoryItems or excludeListingIds but not both. Maximum: 100 parent items Maximum SKU or custom label length: 50 characters  # noqa: E501
+        A list of seller inventory reference IDs to exclude from the promotion.  <br><br><p class=\"tablenote\"><b>Note:</b> The request can have either <b>excludeInventoryItems</b> or <b>excludeListingIds</b> but not both.</p> <b>Maximum:</b> 100 parent items <br><b>Maximum SKU or custom label length:</b> 50 characters  # noqa: E501
 
         :return: The exclude_inventory_items of this RuleCriteria.  # noqa: E501
         :rtype: list[InventoryItem]
@@ -77,7 +77,7 @@ class RuleCriteria(object):
     def exclude_inventory_items(self, exclude_inventory_items):
         """Sets the exclude_inventory_items of this RuleCriteria.
 
-        A list of seller inventory reference IDs to exclude from the promotion. Note: The request can have either excludeInventoryItems or excludeListingIds but not both. Maximum: 100 parent items Maximum SKU or custom label length: 50 characters  # noqa: E501
+        A list of seller inventory reference IDs to exclude from the promotion.  <br><br><p class=\"tablenote\"><b>Note:</b> The request can have either <b>excludeInventoryItems</b> or <b>excludeListingIds</b> but not both.</p> <b>Maximum:</b> 100 parent items <br><b>Maximum SKU or custom label length:</b> 50 characters  # noqa: E501
 
         :param exclude_inventory_items: The exclude_inventory_items of this RuleCriteria.  # noqa: E501
         :type: list[InventoryItem]
@@ -89,7 +89,7 @@ class RuleCriteria(object):
     def exclude_listing_ids(self):
         """Gets the exclude_listing_ids of this RuleCriteria.  # noqa: E501
 
-        A list of eBay listing IDs to exclude from the promotion. Note: The request can have either excludeInventoryItems or excludeListingIds but not both. Maximum: 100 parent items Maximum SKU or custom label length: 50 characters  # noqa: E501
+        A list of eBay listing IDs to exclude from the promotion.  <br><br><p class=\"tablenote\"><b>Note:</b> The request can have either <b>excludeInventoryItems</b> or <b>excludeListingIds</b> but not both.</p> <b>Maximum:</b> 100 parent items <br><b>Maximum SKU or custom label length:</b> 50 characters  # noqa: E501
 
         :return: The exclude_listing_ids of this RuleCriteria.  # noqa: E501
         :rtype: list[str]
@@ -100,7 +100,7 @@ class RuleCriteria(object):
     def exclude_listing_ids(self, exclude_listing_ids):
         """Sets the exclude_listing_ids of this RuleCriteria.
 
-        A list of eBay listing IDs to exclude from the promotion. Note: The request can have either excludeInventoryItems or excludeListingIds but not both. Maximum: 100 parent items Maximum SKU or custom label length: 50 characters  # noqa: E501
+        A list of eBay listing IDs to exclude from the promotion.  <br><br><p class=\"tablenote\"><b>Note:</b> The request can have either <b>excludeInventoryItems</b> or <b>excludeListingIds</b> but not both.</p> <b>Maximum:</b> 100 parent items <br><b>Maximum SKU or custom label length:</b> 50 characters  # noqa: E501
 
         :param exclude_listing_ids: The exclude_listing_ids of this RuleCriteria.  # noqa: E501
         :type: list[str]
@@ -158,7 +158,7 @@ class RuleCriteria(object):
     def selection_rules(self):
         """Gets the selection_rules of this RuleCriteria.  # noqa: E501
 
-        The container for the rules that select the items to include in a promotion. Required if inventoryCriterionType is set to INVENTORY_BY_RULE.  # noqa: E501
+        The container for the rules that select the items to include in a promotion.  <br><br><i>Required if </i> <b>inventoryCriterionType</b> is set to <code>INVENTORY_BY_RULE</code>.  # noqa: E501
 
         :return: The selection_rules of this RuleCriteria.  # noqa: E501
         :rtype: list[SelectionRule]
@@ -169,7 +169,7 @@ class RuleCriteria(object):
     def selection_rules(self, selection_rules):
         """Sets the selection_rules of this RuleCriteria.
 
-        The container for the rules that select the items to include in a promotion. Required if inventoryCriterionType is set to INVENTORY_BY_RULE.  # noqa: E501
+        The container for the rules that select the items to include in a promotion.  <br><br><i>Required if </i> <b>inventoryCriterionType</b> is set to <code>INVENTORY_BY_RULE</code>.  # noqa: E501
 
         :param selection_rules: The selection_rules of this RuleCriteria.  # noqa: E501
         :type: list[SelectionRule]

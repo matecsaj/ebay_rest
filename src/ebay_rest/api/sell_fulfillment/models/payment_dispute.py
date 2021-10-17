@@ -157,7 +157,7 @@ class PaymentDispute(object):
     def available_choices(self):
         """Gets the available_choices of this PaymentDispute.  # noqa: E501
 
-        The value(s) returned in this array indicate the choices that the seller has when responding to the payment dispute. Once the seller has responded to the payment dispute, this field will no longer be shown, and instead, the sellerResponse field will show the decision that the seller made.  # noqa: E501
+        The value(s) returned in this array indicate the choices that the seller has when responding to the payment dispute. Once the seller has responded to the payment dispute, this field will no longer be shown, and instead, the <strong>sellerResponse</strong> field will show the decision that the seller made.  # noqa: E501
 
         :return: The available_choices of this PaymentDispute.  # noqa: E501
         :rtype: list[str]
@@ -168,7 +168,7 @@ class PaymentDispute(object):
     def available_choices(self, available_choices):
         """Sets the available_choices of this PaymentDispute.
 
-        The value(s) returned in this array indicate the choices that the seller has when responding to the payment dispute. Once the seller has responded to the payment dispute, this field will no longer be shown, and instead, the sellerResponse field will show the decision that the seller made.  # noqa: E501
+        The value(s) returned in this array indicate the choices that the seller has when responding to the payment dispute. Once the seller has responded to the payment dispute, this field will no longer be shown, and instead, the <strong>sellerResponse</strong> field will show the decision that the seller made.  # noqa: E501
 
         :param available_choices: The available_choices of this PaymentDispute.  # noqa: E501
         :type: list[str]
@@ -224,7 +224,7 @@ class PaymentDispute(object):
     def closed_date(self):
         """Gets the closed_date of this PaymentDispute.  # noqa: E501
 
-        The timestamp in this field shows the date/time when the payment dispute was closed, so this field is only returned for payment disputes in the CLOSED state. The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.  # noqa: E501
+        The timestamp in this field shows the date/time when the payment dispute was closed, so this field is only returned for payment disputes in the <code>CLOSED</code> state.<br/><br/>The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: <em>yyyy-MM-ddThh:mm.ss.sssZ</em>. An example would be <code>2019-08-04T19:09:02.768Z</code>.  # noqa: E501
 
         :return: The closed_date of this PaymentDispute.  # noqa: E501
         :rtype: str
@@ -235,7 +235,7 @@ class PaymentDispute(object):
     def closed_date(self, closed_date):
         """Sets the closed_date of this PaymentDispute.
 
-        The timestamp in this field shows the date/time when the payment dispute was closed, so this field is only returned for payment disputes in the CLOSED state. The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.  # noqa: E501
+        The timestamp in this field shows the date/time when the payment dispute was closed, so this field is only returned for payment disputes in the <code>CLOSED</code> state.<br/><br/>The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: <em>yyyy-MM-ddThh:mm.ss.sssZ</em>. An example would be <code>2019-08-04T19:09:02.768Z</code>.  # noqa: E501
 
         :param closed_date: The closed_date of this PaymentDispute.  # noqa: E501
         :type: str
@@ -247,7 +247,7 @@ class PaymentDispute(object):
     def evidence(self):
         """Gets the evidence of this PaymentDispute.  # noqa: E501
 
-        This container shows any evidence that has been provided by the seller to contest the payment dispute. Evidence may include shipment tracking information, proof of authentication documentation, image(s) to proof that an item is as described, or financial documentation/invoice. This container is only returned if the seller has provided at least one document used as evidence against the payment dispute.  # noqa: E501
+        This container shows any evidence that has been provided by the seller to contest the payment dispute. Evidence may include shipment tracking information, proof of authentication documentation, image(s) to proof that an item is as described, or financial documentation/invoice.<br><br>This container is only returned if the seller has provided at least one document used as evidence against the payment dispute.  # noqa: E501
 
         :return: The evidence of this PaymentDispute.  # noqa: E501
         :rtype: list[DisputeEvidence]
@@ -258,7 +258,7 @@ class PaymentDispute(object):
     def evidence(self, evidence):
         """Sets the evidence of this PaymentDispute.
 
-        This container shows any evidence that has been provided by the seller to contest the payment dispute. Evidence may include shipment tracking information, proof of authentication documentation, image(s) to proof that an item is as described, or financial documentation/invoice. This container is only returned if the seller has provided at least one document used as evidence against the payment dispute.  # noqa: E501
+        This container shows any evidence that has been provided by the seller to contest the payment dispute. Evidence may include shipment tracking information, proof of authentication documentation, image(s) to proof that an item is as described, or financial documentation/invoice.<br><br>This container is only returned if the seller has provided at least one document used as evidence against the payment dispute.  # noqa: E501
 
         :param evidence: The evidence of this PaymentDispute.  # noqa: E501
         :type: list[DisputeEvidence]
@@ -293,7 +293,7 @@ class PaymentDispute(object):
     def line_items(self):
         """Gets the line_items of this PaymentDispute.  # noqa: E501
 
-        This array is used to identify one or more order line items associated with the payment dispute. There will always be at least one itemId/lineItemId pair returned in this array.  # noqa: E501
+        This array is used to identify one or more order line items associated with the payment dispute. There will always be at least one <b>itemId</b>/<b>lineItemId</b> pair returned in this array.  # noqa: E501
 
         :return: The line_items of this PaymentDispute.  # noqa: E501
         :rtype: list[OrderLineItems]
@@ -304,7 +304,7 @@ class PaymentDispute(object):
     def line_items(self, line_items):
         """Sets the line_items of this PaymentDispute.
 
-        This array is used to identify one or more order line items associated with the payment dispute. There will always be at least one itemId/lineItemId pair returned in this array.  # noqa: E501
+        This array is used to identify one or more order line items associated with the payment dispute. There will always be at least one <b>itemId</b>/<b>lineItemId</b> pair returned in this array.  # noqa: E501
 
         :param line_items: The line_items of this PaymentDispute.  # noqa: E501
         :type: list[OrderLineItems]
@@ -339,7 +339,7 @@ class PaymentDispute(object):
     def open_date(self):
         """Gets the open_date of this PaymentDispute.  # noqa: E501
 
-        The timestamp in this field shows the date/time when the payment dispute was opened. This field is returned for payment disputes in all states. The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.  # noqa: E501
+        The timestamp in this field shows the date/time when the payment dispute was opened. This field is returned for payment disputes in all states.<br/><br/>The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: <em>yyyy-MM-ddThh:mm.ss.sssZ</em>. An example would be <code>2019-08-04T19:09:02.768Z</code>.  # noqa: E501
 
         :return: The open_date of this PaymentDispute.  # noqa: E501
         :rtype: str
@@ -350,7 +350,7 @@ class PaymentDispute(object):
     def open_date(self, open_date):
         """Sets the open_date of this PaymentDispute.
 
-        The timestamp in this field shows the date/time when the payment dispute was opened. This field is returned for payment disputes in all states. The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.  # noqa: E501
+        The timestamp in this field shows the date/time when the payment dispute was opened. This field is returned for payment disputes in all states.<br/><br/>The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: <em>yyyy-MM-ddThh:mm.ss.sssZ</em>. An example would be <code>2019-08-04T19:09:02.768Z</code>.  # noqa: E501
 
         :param open_date: The open_date of this PaymentDispute.  # noqa: E501
         :type: str
@@ -362,7 +362,7 @@ class PaymentDispute(object):
     def order_id(self):
         """Gets the order_id of this PaymentDispute.  # noqa: E501
 
-        This is the unique identifier of the order involved in the payment dispute. Note: eBay rolled out a new Order ID format in June 2019. The legacy APIs still support the old and new order ID format to identify orders, but only the new order ID format is returned in REST-based API responses.  # noqa: E501
+        This is the unique identifier of the order involved in the payment dispute. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> eBay rolled out a new Order ID format in June 2019. The legacy APIs still support the old and new order ID format to identify orders, but only the new order ID format is returned in REST-based API responses. </span>  # noqa: E501
 
         :return: The order_id of this PaymentDispute.  # noqa: E501
         :rtype: str
@@ -373,7 +373,7 @@ class PaymentDispute(object):
     def order_id(self, order_id):
         """Sets the order_id of this PaymentDispute.
 
-        This is the unique identifier of the order involved in the payment dispute. Note: eBay rolled out a new Order ID format in June 2019. The legacy APIs still support the old and new order ID format to identify orders, but only the new order ID format is returned in REST-based API responses.  # noqa: E501
+        This is the unique identifier of the order involved in the payment dispute. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> eBay rolled out a new Order ID format in June 2019. The legacy APIs still support the old and new order ID format to identify orders, but only the new order ID format is returned in REST-based API responses. </span>  # noqa: E501
 
         :param order_id: The order_id of this PaymentDispute.  # noqa: E501
         :type: str
@@ -431,7 +431,7 @@ class PaymentDispute(object):
     def reason(self):
         """Gets the reason of this PaymentDispute.  # noqa: E501
 
-        The enumeration value in this field gives the reason why the buyer initiated the payment dispute. See DisputeReasonEnum type for a description of the supported reasons that buyers can give for initiating a payment dispute. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/api:DisputeReasonEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value in this field gives the reason why the buyer initiated the payment dispute. See <strong>DisputeReasonEnum</strong> type for a description of the supported reasons that buyers can give for initiating a payment dispute. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/api:DisputeReasonEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The reason of this PaymentDispute.  # noqa: E501
         :rtype: str
@@ -442,7 +442,7 @@ class PaymentDispute(object):
     def reason(self, reason):
         """Sets the reason of this PaymentDispute.
 
-        The enumeration value in this field gives the reason why the buyer initiated the payment dispute. See DisputeReasonEnum type for a description of the supported reasons that buyers can give for initiating a payment dispute. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/api:DisputeReasonEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value in this field gives the reason why the buyer initiated the payment dispute. See <strong>DisputeReasonEnum</strong> type for a description of the supported reasons that buyers can give for initiating a payment dispute. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/api:DisputeReasonEnum'>eBay API documentation</a>  # noqa: E501
 
         :param reason: The reason of this PaymentDispute.  # noqa: E501
         :type: str
@@ -475,7 +475,7 @@ class PaymentDispute(object):
     def respond_by_date(self):
         """Gets the respond_by_date of this PaymentDispute.  # noqa: E501
 
-        The timestamp in this field shows the date/time when the seller must response to a payment dispute, so this field is only returned for payment disputes in the ACTION_NEEDED state. For payment disputes that currently require action by the seller, that same seller should look at the availableChoices array to see the available actions. The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.  # noqa: E501
+        The timestamp in this field shows the date/time when the seller must response to a payment dispute, so this field is only returned for payment disputes in the <code>ACTION_NEEDED</code> state. For payment disputes that currently require action by the seller, that same seller should look at the <strong>availableChoices</strong> array to see the available actions.<br/><br/>The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: <em>yyyy-MM-ddThh:mm.ss.sssZ</em>. An example would be <code>2019-08-04T19:09:02.768Z</code>.  # noqa: E501
 
         :return: The respond_by_date of this PaymentDispute.  # noqa: E501
         :rtype: str
@@ -486,7 +486,7 @@ class PaymentDispute(object):
     def respond_by_date(self, respond_by_date):
         """Sets the respond_by_date of this PaymentDispute.
 
-        The timestamp in this field shows the date/time when the seller must response to a payment dispute, so this field is only returned for payment disputes in the ACTION_NEEDED state. For payment disputes that currently require action by the seller, that same seller should look at the availableChoices array to see the available actions. The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.  # noqa: E501
+        The timestamp in this field shows the date/time when the seller must response to a payment dispute, so this field is only returned for payment disputes in the <code>ACTION_NEEDED</code> state. For payment disputes that currently require action by the seller, that same seller should look at the <strong>availableChoices</strong> array to see the available actions.<br/><br/>The timestamps returned here use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu. The ISO-8601 format looks like this: <em>yyyy-MM-ddThh:mm.ss.sssZ</em>. An example would be <code>2019-08-04T19:09:02.768Z</code>.  # noqa: E501
 
         :param respond_by_date: The respond_by_date of this PaymentDispute.  # noqa: E501
         :type: str

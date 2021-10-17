@@ -84,7 +84,7 @@ class ShippingFulfillmentDetails(object):
     def shipped_date(self):
         """Gets the shipped_date of this ShippingFulfillmentDetails.  # noqa: E501
 
-        This is the actual date and time that the fulfillment package was shipped. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. The seller should use the actual date/time that the package was shipped, but if this field is omitted, it will default to the current date/time. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z Default: The current date and time.  # noqa: E501
+        This is the actual date and time that the fulfillment package was shipped. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. The seller should use the actual date/time that the package was shipped, but if this field is omitted, it will default to the current date/time.<br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code><br /><br /><b>Default:</b> The current date and time.  # noqa: E501
 
         :return: The shipped_date of this ShippingFulfillmentDetails.  # noqa: E501
         :rtype: str
@@ -95,7 +95,7 @@ class ShippingFulfillmentDetails(object):
     def shipped_date(self, shipped_date):
         """Sets the shipped_date of this ShippingFulfillmentDetails.
 
-        This is the actual date and time that the fulfillment package was shipped. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. The seller should use the actual date/time that the package was shipped, but if this field is omitted, it will default to the current date/time. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z Default: The current date and time.  # noqa: E501
+        This is the actual date and time that the fulfillment package was shipped. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. The seller should use the actual date/time that the package was shipped, but if this field is omitted, it will default to the current date/time.<br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code><br /><br /><b>Default:</b> The current date and time.  # noqa: E501
 
         :param shipped_date: The shipped_date of this ShippingFulfillmentDetails.  # noqa: E501
         :type: str
@@ -107,7 +107,7 @@ class ShippingFulfillmentDetails(object):
     def shipping_carrier_code(self):
         """Gets the shipping_carrier_code of this ShippingFulfillmentDetails.  # noqa: E501
 
-        The unique identifier of the shipping carrier being used to ship the line item(s). Technically, the shippingCarrierCode and trackingNumber fields are optional, but generally these fields will be provided if the shipping carrier and tracking number are known. Note: Use the Trading API's GeteBayDetails call to retrieve the latest shipping carrier enumeration values. When making the GeteBayDetails call, include the DetailName field in the request payload and set its value to ShippingCarrierDetails. Each valid shipping carrier enumeration value is returned in a ShippingCarrierDetails.ShippingCarrier field in the response payload.  # noqa: E501
+        The unique identifier of the shipping carrier being used to ship the line item(s). Technically, the <strong>shippingCarrierCode</strong> and <strong>trackingNumber</strong> fields are optional, but generally these fields will be provided if the shipping carrier and tracking number are known. <br /><br /><span class=\"tablenote\"><strong>Note:</strong> Use the Trading API's <a href=\"https://developer.ebay.com/devzone/XML/docs/Reference/eBay/GeteBayDetails.html\" target=\"_blank\">GeteBayDetails</a> call to retrieve the latest shipping carrier enumeration values. When making the <a href=\"https://developer.ebay.com/devzone/XML/docs/Reference/eBay/GeteBayDetails.html\" target=\"_blank\">GeteBayDetails</a> call, include the <strong>DetailName</strong> field in the request payload and set its value to <code>ShippingCarrierDetails</code>. Each valid shipping carrier enumeration value is returned in a <strong>ShippingCarrierDetails.ShippingCarrier</strong> field in the response payload.</span>  # noqa: E501
 
         :return: The shipping_carrier_code of this ShippingFulfillmentDetails.  # noqa: E501
         :rtype: str
@@ -118,7 +118,7 @@ class ShippingFulfillmentDetails(object):
     def shipping_carrier_code(self, shipping_carrier_code):
         """Sets the shipping_carrier_code of this ShippingFulfillmentDetails.
 
-        The unique identifier of the shipping carrier being used to ship the line item(s). Technically, the shippingCarrierCode and trackingNumber fields are optional, but generally these fields will be provided if the shipping carrier and tracking number are known. Note: Use the Trading API's GeteBayDetails call to retrieve the latest shipping carrier enumeration values. When making the GeteBayDetails call, include the DetailName field in the request payload and set its value to ShippingCarrierDetails. Each valid shipping carrier enumeration value is returned in a ShippingCarrierDetails.ShippingCarrier field in the response payload.  # noqa: E501
+        The unique identifier of the shipping carrier being used to ship the line item(s). Technically, the <strong>shippingCarrierCode</strong> and <strong>trackingNumber</strong> fields are optional, but generally these fields will be provided if the shipping carrier and tracking number are known. <br /><br /><span class=\"tablenote\"><strong>Note:</strong> Use the Trading API's <a href=\"https://developer.ebay.com/devzone/XML/docs/Reference/eBay/GeteBayDetails.html\" target=\"_blank\">GeteBayDetails</a> call to retrieve the latest shipping carrier enumeration values. When making the <a href=\"https://developer.ebay.com/devzone/XML/docs/Reference/eBay/GeteBayDetails.html\" target=\"_blank\">GeteBayDetails</a> call, include the <strong>DetailName</strong> field in the request payload and set its value to <code>ShippingCarrierDetails</code>. Each valid shipping carrier enumeration value is returned in a <strong>ShippingCarrierDetails.ShippingCarrier</strong> field in the response payload.</span>  # noqa: E501
 
         :param shipping_carrier_code: The shipping_carrier_code of this ShippingFulfillmentDetails.  # noqa: E501
         :type: str
@@ -130,7 +130,7 @@ class ShippingFulfillmentDetails(object):
     def tracking_number(self):
         """Gets the tracking_number of this ShippingFulfillmentDetails.  # noqa: E501
 
-        The tracking number provided by the shipping carrier for this fulfillment. The seller should be careful that this tracking number is accurate since the buyer will use this tracking number to track shipment, and eBay has no way to verify the accuracy of this number. This field and the shippingCarrierCode field are mutually dependent. If you include one, you must also include the other. Note: If you include trackingNumber (and shippingCarrierCode) in the request, the resulting fulfillment's ID (returned in the HTTP location code) is the tracking number. If you do not include shipment tracking information, the resulting fulfillment ID will default to an arbitrary number such as 999.  # noqa: E501
+        The tracking number provided by the shipping carrier for this fulfillment. The seller should be careful that this tracking number is accurate since the buyer will use this tracking number to track shipment, and eBay has no way to verify the accuracy of this number.<br /><br />This field and the <b>shippingCarrierCode</b> field are mutually dependent. If you include one, you must also include the other.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> If you include <b>trackingNumber</b> (and <b>shippingCarrierCode</b>) in the request, the resulting fulfillment's ID (returned in the HTTP location code) is the tracking number. If you do not include shipment tracking information, the resulting fulfillment ID will default to an arbitrary number such as <code>999</code>.</span>  # noqa: E501
 
         :return: The tracking_number of this ShippingFulfillmentDetails.  # noqa: E501
         :rtype: str
@@ -141,7 +141,7 @@ class ShippingFulfillmentDetails(object):
     def tracking_number(self, tracking_number):
         """Sets the tracking_number of this ShippingFulfillmentDetails.
 
-        The tracking number provided by the shipping carrier for this fulfillment. The seller should be careful that this tracking number is accurate since the buyer will use this tracking number to track shipment, and eBay has no way to verify the accuracy of this number. This field and the shippingCarrierCode field are mutually dependent. If you include one, you must also include the other. Note: If you include trackingNumber (and shippingCarrierCode) in the request, the resulting fulfillment's ID (returned in the HTTP location code) is the tracking number. If you do not include shipment tracking information, the resulting fulfillment ID will default to an arbitrary number such as 999.  # noqa: E501
+        The tracking number provided by the shipping carrier for this fulfillment. The seller should be careful that this tracking number is accurate since the buyer will use this tracking number to track shipment, and eBay has no way to verify the accuracy of this number.<br /><br />This field and the <b>shippingCarrierCode</b> field are mutually dependent. If you include one, you must also include the other.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> If you include <b>trackingNumber</b> (and <b>shippingCarrierCode</b>) in the request, the resulting fulfillment's ID (returned in the HTTP location code) is the tracking number. If you do not include shipment tracking information, the resulting fulfillment ID will default to an arbitrary number such as <code>999</code>.</span>  # noqa: E501
 
         :param tracking_number: The tracking_number of this ShippingFulfillmentDetails.  # noqa: E501
         :type: str

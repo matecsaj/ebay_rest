@@ -147,7 +147,7 @@ class Transaction(object):
     def booking_entry(self):
         """Gets the booking_entry of this Transaction.  # noqa: E501
 
-        The enumeration value returned in this field indicates if the monetary transaction amount is a (CREDIT) or a (DEBIT) to the seller's account. Typically, the SALE and CREDIT transaction types are credits to the seller's account, and the REFUND, DISPUTE, SHIPPING_LABEL, and TRANSFER transaction types are debits to the seller's account. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value returned in this field indicates if the monetary transaction amount is a (<code>CREDIT</code>) or a (<code>DEBIT</code>) to the seller's account. Typically, the <code>SALE</code> and <code>CREDIT</code> transaction types are credits to the seller's account, and the <code>REFUND</code>, <code>DISPUTE</code>, <code>SHIPPING_LABEL</code>, and <code>TRANSFER</code> transaction types are debits to the seller's account. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The booking_entry of this Transaction.  # noqa: E501
         :rtype: str
@@ -158,7 +158,7 @@ class Transaction(object):
     def booking_entry(self, booking_entry):
         """Sets the booking_entry of this Transaction.
 
-        The enumeration value returned in this field indicates if the monetary transaction amount is a (CREDIT) or a (DEBIT) to the seller's account. Typically, the SALE and CREDIT transaction types are credits to the seller's account, and the REFUND, DISPUTE, SHIPPING_LABEL, and TRANSFER transaction types are debits to the seller's account. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value returned in this field indicates if the monetary transaction amount is a (<code>CREDIT</code>) or a (<code>DEBIT</code>) to the seller's account. Typically, the <code>SALE</code> and <code>CREDIT</code> transaction types are credits to the seller's account, and the <code>REFUND</code>, <code>DISPUTE</code>, <code>SHIPPING_LABEL</code>, and <code>TRANSFER</code> transaction types are debits to the seller's account. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :param booking_entry: The booking_entry of this Transaction.  # noqa: E501
         :type: str
@@ -260,7 +260,7 @@ class Transaction(object):
     def payments_entity(self):
         """Gets the payments_entity of this Transaction.  # noqa: E501
 
-        This string value indicates the entity that is processing the payment.  # noqa: E501
+        This string value indicates the entity that is processing  the payment.  # noqa: E501
 
         :return: The payments_entity of this Transaction.  # noqa: E501
         :rtype: str
@@ -271,7 +271,7 @@ class Transaction(object):
     def payments_entity(self, payments_entity):
         """Sets the payments_entity of this Transaction.
 
-        This string value indicates the entity that is processing the payment.  # noqa: E501
+        This string value indicates the entity that is processing  the payment.  # noqa: E501
 
         :param payments_entity: The payments_entity of this Transaction.  # noqa: E501
         :type: str
@@ -329,7 +329,7 @@ class Transaction(object):
     def sales_record_reference(self):
         """Gets the sales_record_reference of this Transaction.  # noqa: E501
 
-        The Sales Record Number associated with a sales order. Sales Record Numbers are Selling Manager/Selling Manager Pro identifiers that are created at order checkout. Note: For all orders originating after February 1, 2020, a value of 0 will be returned in this field. The Sales Record Number field has also been removed from Seller Hub. Instead of salesRecordReference, depend on orderId instead as the identifier of the order. The salesRecordReference field has been scheduled for deprecation, and a date for when this field will no longer be returned at all will be announced soon.  # noqa: E501
+        The Sales Record Number associated with a sales order. Sales Record Numbers are Selling Manager/Selling Manager Pro identifiers that are created at order checkout.<br/><br/><span class=\"tablenote\"><strong>Note:</strong> For all orders originating after February 1, 2020, a value of <code>0</code> will be returned in this field. The Sales Record Number field has also been removed from Seller Hub. Instead of <strong>salesRecordReference</strong>, depend on <strong>orderId</strong> instead as the identifier of the order. The <strong>salesRecordReference</strong> field has been scheduled for deprecation, and a date for when this field will no longer be returned at all will be announced soon.</span>  # noqa: E501
 
         :return: The sales_record_reference of this Transaction.  # noqa: E501
         :rtype: str
@@ -340,7 +340,7 @@ class Transaction(object):
     def sales_record_reference(self, sales_record_reference):
         """Sets the sales_record_reference of this Transaction.
 
-        The Sales Record Number associated with a sales order. Sales Record Numbers are Selling Manager/Selling Manager Pro identifiers that are created at order checkout. Note: For all orders originating after February 1, 2020, a value of 0 will be returned in this field. The Sales Record Number field has also been removed from Seller Hub. Instead of salesRecordReference, depend on orderId instead as the identifier of the order. The salesRecordReference field has been scheduled for deprecation, and a date for when this field will no longer be returned at all will be announced soon.  # noqa: E501
+        The Sales Record Number associated with a sales order. Sales Record Numbers are Selling Manager/Selling Manager Pro identifiers that are created at order checkout.<br/><br/><span class=\"tablenote\"><strong>Note:</strong> For all orders originating after February 1, 2020, a value of <code>0</code> will be returned in this field. The Sales Record Number field has also been removed from Seller Hub. Instead of <strong>salesRecordReference</strong>, depend on <strong>orderId</strong> instead as the identifier of the order. The <strong>salesRecordReference</strong> field has been scheduled for deprecation, and a date for when this field will no longer be returned at all will be announced soon.</span>  # noqa: E501
 
         :param sales_record_reference: The sales_record_reference of this Transaction.  # noqa: E501
         :type: str
@@ -394,7 +394,7 @@ class Transaction(object):
     def transaction_date(self):
         """Gets the transaction_date of this Transaction.  # noqa: E501
 
-        This timestamp indicates when the monetary transaction (order purchase, buyer refund, seller credit) occurred. The following (UTC) format is used: YYYY-MM-DDTHH:MM:SS.SSSZ. For example, 2015-08-04T19:09:02.768Z.  # noqa: E501
+        This timestamp indicates when the monetary transaction (order purchase, buyer refund, seller credit) occurred. The following (UTC) format is used: <code>YYYY-MM-DDTHH:MM:SS.SSSZ</code>. For example, <code>2015-08-04T19:09:02.768Z</code>.  # noqa: E501
 
         :return: The transaction_date of this Transaction.  # noqa: E501
         :rtype: str
@@ -405,7 +405,7 @@ class Transaction(object):
     def transaction_date(self, transaction_date):
         """Sets the transaction_date of this Transaction.
 
-        This timestamp indicates when the monetary transaction (order purchase, buyer refund, seller credit) occurred. The following (UTC) format is used: YYYY-MM-DDTHH:MM:SS.SSSZ. For example, 2015-08-04T19:09:02.768Z.  # noqa: E501
+        This timestamp indicates when the monetary transaction (order purchase, buyer refund, seller credit) occurred. The following (UTC) format is used: <code>YYYY-MM-DDTHH:MM:SS.SSSZ</code>. For example, <code>2015-08-04T19:09:02.768Z</code>.  # noqa: E501
 
         :param transaction_date: The transaction_date of this Transaction.  # noqa: E501
         :type: str
@@ -440,7 +440,7 @@ class Transaction(object):
     def transaction_memo(self):
         """Gets the transaction_memo of this Transaction.  # noqa: E501
 
-        This field provides more details on shipping label transactions and transactions where the funds are being held by eBay. For shipping label transactions, the transactionMemo gives details about a purchase, a refund, or a price adjustment to the cost of the shipping label. For on-hold transactions, the transactionMemo provides information on the reason for the hold or when the hold will be released (e.g., &quot;Funds on hold. Estimated release on Jun 1&quot;). This field is only returned if applicable/available.  # noqa: E501
+        This field provides more details on shipping label transactions and transactions where the funds are being held by eBay. For shipping label transactions, the <b>transactionMemo</b> gives details about a purchase, a refund, or a price adjustment to the cost of the shipping label. For on-hold transactions, the <b>transactionMemo</b> provides information on the reason for the hold or when the hold will be released (e.g., \"Funds on hold. Estimated release on Jun 1\").<br/><br/>This field is only returned if applicable/available.  # noqa: E501
 
         :return: The transaction_memo of this Transaction.  # noqa: E501
         :rtype: str
@@ -451,7 +451,7 @@ class Transaction(object):
     def transaction_memo(self, transaction_memo):
         """Sets the transaction_memo of this Transaction.
 
-        This field provides more details on shipping label transactions and transactions where the funds are being held by eBay. For shipping label transactions, the transactionMemo gives details about a purchase, a refund, or a price adjustment to the cost of the shipping label. For on-hold transactions, the transactionMemo provides information on the reason for the hold or when the hold will be released (e.g., &quot;Funds on hold. Estimated release on Jun 1&quot;). This field is only returned if applicable/available.  # noqa: E501
+        This field provides more details on shipping label transactions and transactions where the funds are being held by eBay. For shipping label transactions, the <b>transactionMemo</b> gives details about a purchase, a refund, or a price adjustment to the cost of the shipping label. For on-hold transactions, the <b>transactionMemo</b> provides information on the reason for the hold or when the hold will be released (e.g., \"Funds on hold. Estimated release on Jun 1\").<br/><br/>This field is only returned if applicable/available.  # noqa: E501
 
         :param transaction_memo: The transaction_memo of this Transaction.  # noqa: E501
         :type: str
@@ -463,7 +463,7 @@ class Transaction(object):
     def transaction_status(self):
         """Gets the transaction_status of this Transaction.  # noqa: E501
 
-        This enumeration value indicates the current status of the seller payout associated with the monetary transaction. See the TransactionStatusEnum type for more information on the different states. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:TransactionStatusEnum'>eBay API documentation</a>  # noqa: E501
+        This enumeration value indicates the current status of the seller payout associated with the monetary transaction. See the <code>TransactionStatusEnum</code> type for more information on the different states. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:TransactionStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The transaction_status of this Transaction.  # noqa: E501
         :rtype: str
@@ -474,7 +474,7 @@ class Transaction(object):
     def transaction_status(self, transaction_status):
         """Sets the transaction_status of this Transaction.
 
-        This enumeration value indicates the current status of the seller payout associated with the monetary transaction. See the TransactionStatusEnum type for more information on the different states. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:TransactionStatusEnum'>eBay API documentation</a>  # noqa: E501
+        This enumeration value indicates the current status of the seller payout associated with the monetary transaction. See the <code>TransactionStatusEnum</code> type for more information on the different states. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:TransactionStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :param transaction_status: The transaction_status of this Transaction.  # noqa: E501
         :type: str

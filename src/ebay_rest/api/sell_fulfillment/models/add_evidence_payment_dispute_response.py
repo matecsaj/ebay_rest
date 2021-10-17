@@ -46,7 +46,7 @@ class AddEvidencePaymentDisputeResponse(object):
     def evidence_id(self):
         """Gets the evidence_id of this AddEvidencePaymentDisputeResponse.  # noqa: E501
 
-        The value returned in this field is the unique identifier of the newly-created evidence set. Upon a successful call, this value is automatically genererated. This new evidence set for the payment dispute includes the evidence file(s) that were passed in to the fileId array in the request payload. The evidenceId value will be needed if the seller wishes to add to the evidence set by using the updateEvidence method, or if they want to retrieve a specific evidence file within the evidence set by using the fetchEvidenceContent method.  # noqa: E501
+        The value returned in this field is the unique identifier of the newly-created evidence set. Upon a successful call, this value is automatically genererated. This new evidence set for the payment dispute includes the evidence file(s) that were passed in to the <strong>fileId</strong> array in the request payload. The <strong>evidenceId</strong> value will be needed if the seller wishes to add to the evidence set by using the <strong>updateEvidence</strong> method, or if they want to retrieve a specific evidence file within the evidence set by using the <strong>fetchEvidenceContent</strong> method.  # noqa: E501
 
         :return: The evidence_id of this AddEvidencePaymentDisputeResponse.  # noqa: E501
         :rtype: str
@@ -57,7 +57,7 @@ class AddEvidencePaymentDisputeResponse(object):
     def evidence_id(self, evidence_id):
         """Sets the evidence_id of this AddEvidencePaymentDisputeResponse.
 
-        The value returned in this field is the unique identifier of the newly-created evidence set. Upon a successful call, this value is automatically genererated. This new evidence set for the payment dispute includes the evidence file(s) that were passed in to the fileId array in the request payload. The evidenceId value will be needed if the seller wishes to add to the evidence set by using the updateEvidence method, or if they want to retrieve a specific evidence file within the evidence set by using the fetchEvidenceContent method.  # noqa: E501
+        The value returned in this field is the unique identifier of the newly-created evidence set. Upon a successful call, this value is automatically genererated. This new evidence set for the payment dispute includes the evidence file(s) that were passed in to the <strong>fileId</strong> array in the request payload. The <strong>evidenceId</strong> value will be needed if the seller wishes to add to the evidence set by using the <strong>updateEvidence</strong> method, or if they want to retrieve a specific evidence file within the evidence set by using the <strong>fetchEvidenceContent</strong> method.  # noqa: E501
 
         :param evidence_id: The evidence_id of this AddEvidencePaymentDisputeResponse.  # noqa: E501
         :type: str

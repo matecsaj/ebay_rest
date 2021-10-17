@@ -250,7 +250,7 @@ class Process:
         else:
             flows = {self.flows[name][scope] for scope in scopes}
         if len(flows) != 1:
-            if operation_id == 'getitemconditionpolicies':
+            if operation_id in ('getitemconditionpolicies',) or module in ('subscription_api',):
                 # This usually uses the client credentials method
                 flows = {'clientCredentials'}
             else:

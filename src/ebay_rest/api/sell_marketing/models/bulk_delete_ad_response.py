@@ -46,7 +46,7 @@ class BulkDeleteAdResponse(object):
     def responses(self):
         """Gets the responses of this BulkDeleteAdResponse.  # noqa: E501
 
-        An array of the ads that were deleted by the bulkDeleteAdsByListingId request, including information associated with each individual delete request.  # noqa: E501
+        An array of the ads that were deleted by the <b>bulkDeleteAdsByListingId</b> request, including information associated with each individual delete request.  # noqa: E501
 
         :return: The responses of this BulkDeleteAdResponse.  # noqa: E501
         :rtype: list[DeleteAdResponse]
@@ -57,7 +57,7 @@ class BulkDeleteAdResponse(object):
     def responses(self, responses):
         """Sets the responses of this BulkDeleteAdResponse.
 
-        An array of the ads that were deleted by the bulkDeleteAdsByListingId request, including information associated with each individual delete request.  # noqa: E501
+        An array of the ads that were deleted by the <b>bulkDeleteAdsByListingId</b> request, including information associated with each individual delete request.  # noqa: E501
 
         :param responses: The responses of this BulkDeleteAdResponse.  # noqa: E501
         :type: list[DeleteAdResponse]

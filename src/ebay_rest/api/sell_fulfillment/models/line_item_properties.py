@@ -56,7 +56,7 @@ class LineItemProperties(object):
     def buyer_protection(self):
         """Gets the buyer_protection of this LineItemProperties.  # noqa: E501
 
-        A value of true indicates that the line item is covered by eBay's Buyer Protection program.  # noqa: E501
+        A value of <code>true</code> indicates that the line item is covered by eBay's Buyer Protection program.  # noqa: E501
 
         :return: The buyer_protection of this LineItemProperties.  # noqa: E501
         :rtype: bool
@@ -67,7 +67,7 @@ class LineItemProperties(object):
     def buyer_protection(self, buyer_protection):
         """Sets the buyer_protection of this LineItemProperties.
 
-        A value of true indicates that the line item is covered by eBay's Buyer Protection program.  # noqa: E501
+        A value of <code>true</code> indicates that the line item is covered by eBay's Buyer Protection program.  # noqa: E501
 
         :param buyer_protection: The buyer_protection of this LineItemProperties.  # noqa: E501
         :type: bool
@@ -79,7 +79,7 @@ class LineItemProperties(object):
     def from_best_offer(self):
         """Gets the from_best_offer of this LineItemProperties.  # noqa: E501
 
-        This field is only returned if true and indicates that the purchase occurred by the buyer and seller mutually agreeing on a Best Offer amount. The Best Offer feature can be set up for any listing type, but if this feature is set up for an auction listing, it will no longer be available once a bid has been placed on the listing.  # noqa: E501
+        This field is only returned if <code>true</code> and indicates that the purchase occurred by the buyer and seller mutually agreeing on a Best Offer amount. The Best Offer feature can be set up for any listing type, but if this feature is set up for an auction listing, it will no longer be available once a bid has been placed on the listing.  # noqa: E501
 
         :return: The from_best_offer of this LineItemProperties.  # noqa: E501
         :rtype: bool
@@ -90,7 +90,7 @@ class LineItemProperties(object):
     def from_best_offer(self, from_best_offer):
         """Sets the from_best_offer of this LineItemProperties.
 
-        This field is only returned if true and indicates that the purchase occurred by the buyer and seller mutually agreeing on a Best Offer amount. The Best Offer feature can be set up for any listing type, but if this feature is set up for an auction listing, it will no longer be available once a bid has been placed on the listing.  # noqa: E501
+        This field is only returned if <code>true</code> and indicates that the purchase occurred by the buyer and seller mutually agreeing on a Best Offer amount. The Best Offer feature can be set up for any listing type, but if this feature is set up for an auction listing, it will no longer be available once a bid has been placed on the listing.  # noqa: E501
 
         :param from_best_offer: The from_best_offer of this LineItemProperties.  # noqa: E501
         :type: bool
@@ -102,7 +102,7 @@ class LineItemProperties(object):
     def sold_via_ad_campaign(self):
         """Gets the sold_via_ad_campaign of this LineItemProperties.  # noqa: E501
 
-        This field is only returned if true and indicates that the line item was sold as a result of a seller's ad campaign.  # noqa: E501
+        This field is only returned if <code>true</code> and indicates that the line item was sold as a result of a seller's ad campaign.  # noqa: E501
 
         :return: The sold_via_ad_campaign of this LineItemProperties.  # noqa: E501
         :rtype: bool
@@ -113,7 +113,7 @@ class LineItemProperties(object):
     def sold_via_ad_campaign(self, sold_via_ad_campaign):
         """Sets the sold_via_ad_campaign of this LineItemProperties.
 
-        This field is only returned if true and indicates that the line item was sold as a result of a seller's ad campaign.  # noqa: E501
+        This field is only returned if <code>true</code> and indicates that the line item was sold as a result of a seller's ad campaign.  # noqa: E501
 
         :param sold_via_ad_campaign: The sold_via_ad_campaign of this LineItemProperties.  # noqa: E501
         :type: bool

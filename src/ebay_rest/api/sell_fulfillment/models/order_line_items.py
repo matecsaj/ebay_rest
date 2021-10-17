@@ -74,7 +74,7 @@ class OrderLineItems(object):
     def line_item_id(self):
         """Gets the line_item_id of this OrderLineItems.  # noqa: E501
 
-        The unique identifier of the line item within the order. The lineItemId value is created once the buyer actually purchases the item, or if there is a commitment to buy (such as an auction that is won by the buyer, an accepted Best Offer, or other situation that does not require immediate payment from the buyer).  # noqa: E501
+        The unique identifier of the line item within the order. The <strong>lineItemId</strong> value is created once the buyer actually purchases the item, or if there is a commitment to buy (such as an auction that is won by the buyer, an accepted Best Offer, or other situation that does not require immediate payment from the buyer).  # noqa: E501
 
         :return: The line_item_id of this OrderLineItems.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class OrderLineItems(object):
     def line_item_id(self, line_item_id):
         """Sets the line_item_id of this OrderLineItems.
 
-        The unique identifier of the line item within the order. The lineItemId value is created once the buyer actually purchases the item, or if there is a commitment to buy (such as an auction that is won by the buyer, an accepted Best Offer, or other situation that does not require immediate payment from the buyer).  # noqa: E501
+        The unique identifier of the line item within the order. The <strong>lineItemId</strong> value is created once the buyer actually purchases the item, or if there is a commitment to buy (such as an auction that is won by the buyer, an accepted Best Offer, or other situation that does not require immediate payment from the buyer).  # noqa: E501
 
         :param line_item_id: The line_item_id of this OrderLineItems.  # noqa: E501
         :type: str

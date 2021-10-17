@@ -66,7 +66,7 @@ class ShippingFulfillment(object):
     def fulfillment_id(self):
         """Gets the fulfillment_id of this ShippingFulfillment.  # noqa: E501
 
-        The unique identifier of the fulfillment; for example, 9405509699937003457459. This eBay-generated value is created with a successful createShippingFulfillment call.  # noqa: E501
+        The unique identifier of the fulfillment; for example, <code>9405509699937003457459</code>. This eBay-generated value is created with a successful <b>createShippingFulfillment</b> call.  # noqa: E501
 
         :return: The fulfillment_id of this ShippingFulfillment.  # noqa: E501
         :rtype: str
@@ -77,7 +77,7 @@ class ShippingFulfillment(object):
     def fulfillment_id(self, fulfillment_id):
         """Sets the fulfillment_id of this ShippingFulfillment.
 
-        The unique identifier of the fulfillment; for example, 9405509699937003457459. This eBay-generated value is created with a successful createShippingFulfillment call.  # noqa: E501
+        The unique identifier of the fulfillment; for example, <code>9405509699937003457459</code>. This eBay-generated value is created with a successful <b>createShippingFulfillment</b> call.  # noqa: E501
 
         :param fulfillment_id: The fulfillment_id of this ShippingFulfillment.  # noqa: E501
         :type: str
@@ -135,7 +135,7 @@ class ShippingFulfillment(object):
     def shipped_date(self):
         """Gets the shipped_date of this ShippingFulfillment.  # noqa: E501
 
-        The date and time that the fulfillment package was shipped. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field should only be returned if the package has been shipped. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+        The date and time that the fulfillment package was shipped. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field should only be returned if the package has been shipped.<br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :return: The shipped_date of this ShippingFulfillment.  # noqa: E501
         :rtype: str
@@ -146,7 +146,7 @@ class ShippingFulfillment(object):
     def shipped_date(self, shipped_date):
         """Sets the shipped_date of this ShippingFulfillment.
 
-        The date and time that the fulfillment package was shipped. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field should only be returned if the package has been shipped. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+        The date and time that the fulfillment package was shipped. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. This field should only be returned if the package has been shipped.<br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :param shipped_date: The shipped_date of this ShippingFulfillment.  # noqa: E501
         :type: str
@@ -158,7 +158,7 @@ class ShippingFulfillment(object):
     def shipping_carrier_code(self):
         """Gets the shipping_carrier_code of this ShippingFulfillment.  # noqa: E501
 
-        The eBay code identifying the shipping carrier for this fulfillment. This field is returned if available. Note: The Trading API's ShippingCarrierCodeType enumeration type contains the most current list of eBay shipping carrier codes and the countries served by each carrier. See ShippingCarrierCodeType.  # noqa: E501
+        The eBay code identifying the shipping carrier for this fulfillment. This field is returned if available. <br /><br /><span class=\"tablenote\"><strong>Note:</strong> The Trading API's <b>ShippingCarrierCodeType</b> enumeration type contains the most current list of eBay shipping carrier codes and the countries served by each carrier. See <a href=\"https://developer.ebay.com/Devzone/XML/docs/Reference/eBay/types/ShippingCarrierCodeType.html\" target=\"_blank\">ShippingCarrierCodeType</a>.</span>  # noqa: E501
 
         :return: The shipping_carrier_code of this ShippingFulfillment.  # noqa: E501
         :rtype: str
@@ -169,7 +169,7 @@ class ShippingFulfillment(object):
     def shipping_carrier_code(self, shipping_carrier_code):
         """Sets the shipping_carrier_code of this ShippingFulfillment.
 
-        The eBay code identifying the shipping carrier for this fulfillment. This field is returned if available. Note: The Trading API's ShippingCarrierCodeType enumeration type contains the most current list of eBay shipping carrier codes and the countries served by each carrier. See ShippingCarrierCodeType.  # noqa: E501
+        The eBay code identifying the shipping carrier for this fulfillment. This field is returned if available. <br /><br /><span class=\"tablenote\"><strong>Note:</strong> The Trading API's <b>ShippingCarrierCodeType</b> enumeration type contains the most current list of eBay shipping carrier codes and the countries served by each carrier. See <a href=\"https://developer.ebay.com/Devzone/XML/docs/Reference/eBay/types/ShippingCarrierCodeType.html\" target=\"_blank\">ShippingCarrierCodeType</a>.</span>  # noqa: E501
 
         :param shipping_carrier_code: The shipping_carrier_code of this ShippingFulfillment.  # noqa: E501
         :type: str

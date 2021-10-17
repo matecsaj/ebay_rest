@@ -126,7 +126,7 @@ class SelectedInventoryDiscount(object):
     def rule_order(self):
         """Gets the rule_order of this SelectedInventoryDiscount.  # noqa: E501
 
-        For markdown promotions, this field is reserved for future use.  # noqa: E501
+        For markdown promotions, this field is reserved for future use. <!--This field specifies the precedence of this set of inventory criteria, which is taken into account if an item is selected for multiple discounts by different sets of criteria. The criteria with the highest priority (lowest ruleOrder value) takes precedence over criteria with a lower precedence.-->  # noqa: E501
 
         :return: The rule_order of this SelectedInventoryDiscount.  # noqa: E501
         :rtype: int
@@ -137,7 +137,7 @@ class SelectedInventoryDiscount(object):
     def rule_order(self, rule_order):
         """Sets the rule_order of this SelectedInventoryDiscount.
 
-        For markdown promotions, this field is reserved for future use.  # noqa: E501
+        For markdown promotions, this field is reserved for future use. <!--This field specifies the precedence of this set of inventory criteria, which is taken into account if an item is selected for multiple discounts by different sets of criteria. The criteria with the highest priority (lowest ruleOrder value) takes precedence over criteria with a lower precedence.-->  # noqa: E501
 
         :param rule_order: The rule_order of this SelectedInventoryDiscount.  # noqa: E501
         :type: int

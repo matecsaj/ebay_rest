@@ -216,7 +216,7 @@ class LineItem(object):
     def ebay_collect_and_remit_taxes(self):
         """Gets the ebay_collect_and_remit_taxes of this LineItem.  # noqa: E501
 
-        This container will be returned if the order line item is subject to a 'Collect and Remit' tax that eBay will collect and remit to the proper taxing authority on the buyer's behalf. 'Collect and Remit' tax includes US state-mandated sales tax, 'Goods and Services' tax in Australia or New Zealand, and VAT collected for UK and EU countries. The amount of this tax is shown in the amount field, and the type of tax is shown in the taxType field. eBay will display the tax type and amount during checkout in accordance with the buyer's address, and handle collection and remittance of the tax without requiring the seller to take any action.  # noqa: E501
+        This container will be returned if the order line item is subject to a 'Collect and Remit' tax that eBay will collect and remit to the proper taxing authority on the buyer's behalf. 'Collect and Remit' tax includes US state-mandated sales tax, 'Goods and Services' tax in Australia or New Zealand, and VAT collected for UK and EU countries. The amount of this tax is shown in the <strong>amount</strong> field, and the type of tax is shown in the <strong>taxType</strong> field.<br/><br/> eBay will display the tax type and amount during checkout in accordance with the buyer's address, and handle collection and remittance of the tax without requiring the seller to take any action.  # noqa: E501
 
         :return: The ebay_collect_and_remit_taxes of this LineItem.  # noqa: E501
         :rtype: list[EbayCollectAndRemitTax]
@@ -227,7 +227,7 @@ class LineItem(object):
     def ebay_collect_and_remit_taxes(self, ebay_collect_and_remit_taxes):
         """Sets the ebay_collect_and_remit_taxes of this LineItem.
 
-        This container will be returned if the order line item is subject to a 'Collect and Remit' tax that eBay will collect and remit to the proper taxing authority on the buyer's behalf. 'Collect and Remit' tax includes US state-mandated sales tax, 'Goods and Services' tax in Australia or New Zealand, and VAT collected for UK and EU countries. The amount of this tax is shown in the amount field, and the type of tax is shown in the taxType field. eBay will display the tax type and amount during checkout in accordance with the buyer's address, and handle collection and remittance of the tax without requiring the seller to take any action.  # noqa: E501
+        This container will be returned if the order line item is subject to a 'Collect and Remit' tax that eBay will collect and remit to the proper taxing authority on the buyer's behalf. 'Collect and Remit' tax includes US state-mandated sales tax, 'Goods and Services' tax in Australia or New Zealand, and VAT collected for UK and EU countries. The amount of this tax is shown in the <strong>amount</strong> field, and the type of tax is shown in the <strong>taxType</strong> field.<br/><br/> eBay will display the tax type and amount during checkout in accordance with the buyer's address, and handle collection and remittance of the tax without requiring the seller to take any action.  # noqa: E501
 
         :param ebay_collect_and_remit_taxes: The ebay_collect_and_remit_taxes of this LineItem.  # noqa: E501
         :type: list[EbayCollectAndRemitTax]
@@ -281,7 +281,7 @@ class LineItem(object):
     def legacy_item_id(self):
         """Gets the legacy_item_id of this LineItem.  # noqa: E501
 
-        The eBay-generated legacy listing item ID of the listing. Note that the unique identifier of a listing in REST-based APIs is called the listingId instead.  # noqa: E501
+        The eBay-generated legacy listing item ID of the listing. Note that the unique identifier of a listing in REST-based APIs is called the <strong>listingId</strong> instead.  # noqa: E501
 
         :return: The legacy_item_id of this LineItem.  # noqa: E501
         :rtype: str
@@ -292,7 +292,7 @@ class LineItem(object):
     def legacy_item_id(self, legacy_item_id):
         """Sets the legacy_item_id of this LineItem.
 
-        The eBay-generated legacy listing item ID of the listing. Note that the unique identifier of a listing in REST-based APIs is called the listingId instead.  # noqa: E501
+        The eBay-generated legacy listing item ID of the listing. Note that the unique identifier of a listing in REST-based APIs is called the <strong>listingId</strong> instead.  # noqa: E501
 
         :param legacy_item_id: The legacy_item_id of this LineItem.  # noqa: E501
         :type: str
@@ -459,7 +459,7 @@ class LineItem(object):
     def purchase_marketplace_id(self):
         """Gets the purchase_marketplace_id of this LineItem.  # noqa: E501
 
-        The unique identifier of the eBay marketplace where the line item was listed. Often, the listingMarketplaceId and the purchaseMarketplaceId identifier are the same, but there are occasions when an item will surface on multiple eBay marketplaces. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+        The unique identifier of the eBay marketplace where the line item was listed. Often, the <strong>listingMarketplaceId</strong> and the <strong>purchaseMarketplaceId</strong> identifier are the same, but there are occasions when an item will surface on multiple eBay marketplaces. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The purchase_marketplace_id of this LineItem.  # noqa: E501
         :rtype: str
@@ -470,7 +470,7 @@ class LineItem(object):
     def purchase_marketplace_id(self, purchase_marketplace_id):
         """Sets the purchase_marketplace_id of this LineItem.
 
-        The unique identifier of the eBay marketplace where the line item was listed. Often, the listingMarketplaceId and the purchaseMarketplaceId identifier are the same, but there are occasions when an item will surface on multiple eBay marketplaces. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+        The unique identifier of the eBay marketplace where the line item was listed. Often, the <strong>listingMarketplaceId</strong> and the <strong>purchaseMarketplaceId</strong> identifier are the same, but there are occasions when an item will surface on multiple eBay marketplaces. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :param purchase_marketplace_id: The purchase_marketplace_id of this LineItem.  # noqa: E501
         :type: str
@@ -482,7 +482,7 @@ class LineItem(object):
     def quantity(self):
         """Gets the quantity of this LineItem.  # noqa: E501
 
-        The number of units of the line item in the order. These are represented as a group by a single lineItemId.  # noqa: E501
+        The number of units of the line item in the order. These are represented as a group by a single <b>lineItemId</b>.  # noqa: E501
 
         :return: The quantity of this LineItem.  # noqa: E501
         :rtype: int
@@ -493,7 +493,7 @@ class LineItem(object):
     def quantity(self, quantity):
         """Sets the quantity of this LineItem.
 
-        The number of units of the line item in the order. These are represented as a group by a single lineItemId.  # noqa: E501
+        The number of units of the line item in the order. These are represented as a group by a single <b>lineItemId</b>.  # noqa: E501
 
         :param quantity: The quantity of this LineItem.  # noqa: E501
         :type: int
@@ -551,7 +551,7 @@ class LineItem(object):
     def sold_format(self):
         """Gets the sold_format of this LineItem.  # noqa: E501
 
-        The eBay listing type of the line item. The most common listing types are AUCTION and FIXED_PRICE. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:SoldFormatEnum'>eBay API documentation</a>  # noqa: E501
+        The eBay listing type of the line item. The most common listing types are <code>AUCTION</code> and <code>FIXED_PRICE</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:SoldFormatEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The sold_format of this LineItem.  # noqa: E501
         :rtype: str
@@ -562,7 +562,7 @@ class LineItem(object):
     def sold_format(self, sold_format):
         """Sets the sold_format of this LineItem.
 
-        The eBay listing type of the line item. The most common listing types are AUCTION and FIXED_PRICE. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:SoldFormatEnum'>eBay API documentation</a>  # noqa: E501
+        The eBay listing type of the line item. The most common listing types are <code>AUCTION</code> and <code>FIXED_PRICE</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:SoldFormatEnum'>eBay API documentation</a>  # noqa: E501
 
         :param sold_format: The sold_format of this LineItem.  # noqa: E501
         :type: str

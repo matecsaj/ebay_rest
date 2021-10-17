@@ -79,7 +79,7 @@ class ShippingFulfillmentPagedCollection(object):
     def total(self):
         """Gets the total of this ShippingFulfillmentPagedCollection.  # noqa: E501
 
-        The total number of fulfillments in the specified order. Note: If no fulfillments are found for the order, this field is returned with a value of 0.  # noqa: E501
+        The total number of fulfillments in the specified order.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> If no fulfillments are found for the order, this field is returned with a value of <code>0</code>.</span>  # noqa: E501
 
         :return: The total of this ShippingFulfillmentPagedCollection.  # noqa: E501
         :rtype: int
@@ -90,7 +90,7 @@ class ShippingFulfillmentPagedCollection(object):
     def total(self, total):
         """Sets the total of this ShippingFulfillmentPagedCollection.
 
-        The total number of fulfillments in the specified order. Note: If no fulfillments are found for the order, this field is returned with a value of 0.  # noqa: E501
+        The total number of fulfillments in the specified order.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> If no fulfillments are found for the order, this field is returned with a value of <code>0</code>.</span>  # noqa: E501
 
         :param total: The total of this ShippingFulfillmentPagedCollection.  # noqa: E501
         :type: int

@@ -86,7 +86,7 @@ class Error(object):
     def category(self):
         """Gets the category of this Error.  # noqa: E501
 
-        The category type for this error or warning. This field can have one of three values: Application: Indicates an exception or error occurred in the application code or at runtime. Examples include catching an exception in a service's business logic, system failures, or request errors from a dependency. Business: Used when your service or a dependent service refused to continue processing on the resource because of a business rule violation such as &quot;Seller does not ship items to Antarctica&quot; or &quot;Buyer ineligible to purchase an alcoholic item&quot;. Business errors are not syntactical input errors. Request: Used when there is anything wrong with the request, such as authentication, syntactical errors, rate limiting or missing headers, bad HTTP header values, and so on.  # noqa: E501
+        The category type for this error or warning. This field can have one of three values:<ul><li><code>Application</code>: Indicates an exception or error occurred in the application code or at runtime. Examples include catching an exception in a service's business logic, system failures, or request errors from a dependency.</li><li><code>Business</code>: Used when your service or a dependent service refused to continue processing on the resource because of a business rule violation such as \"Seller does not ship items to Antarctica\" or \"Buyer ineligible to purchase an alcoholic item\". Business errors are not syntactical input errors.</li><li><code>Request</code>: Used when there is anything wrong with the request, such as authentication, syntactical errors, rate limiting or missing headers, bad HTTP header values, and so on.</li></ul>  # noqa: E501
 
         :return: The category of this Error.  # noqa: E501
         :rtype: str
@@ -97,7 +97,7 @@ class Error(object):
     def category(self, category):
         """Sets the category of this Error.
 
-        The category type for this error or warning. This field can have one of three values: Application: Indicates an exception or error occurred in the application code or at runtime. Examples include catching an exception in a service's business logic, system failures, or request errors from a dependency. Business: Used when your service or a dependent service refused to continue processing on the resource because of a business rule violation such as &quot;Seller does not ship items to Antarctica&quot; or &quot;Buyer ineligible to purchase an alcoholic item&quot;. Business errors are not syntactical input errors. Request: Used when there is anything wrong with the request, such as authentication, syntactical errors, rate limiting or missing headers, bad HTTP header values, and so on.  # noqa: E501
+        The category type for this error or warning. This field can have one of three values:<ul><li><code>Application</code>: Indicates an exception or error occurred in the application code or at runtime. Examples include catching an exception in a service's business logic, system failures, or request errors from a dependency.</li><li><code>Business</code>: Used when your service or a dependent service refused to continue processing on the resource because of a business rule violation such as \"Seller does not ship items to Antarctica\" or \"Buyer ineligible to purchase an alcoholic item\". Business errors are not syntactical input errors.</li><li><code>Request</code>: Used when there is anything wrong with the request, such as authentication, syntactical errors, rate limiting or missing headers, bad HTTP header values, and so on.</li></ul>  # noqa: E501
 
         :param category: The category of this Error.  # noqa: E501
         :type: str
@@ -155,7 +155,7 @@ class Error(object):
     def input_ref_ids(self):
         """Gets the input_ref_ids of this Error.  # noqa: E501
 
-        An array of reference IDs that identify the specific request elements most closely associated to the error or warning, if any. For JSON, use JSONPath notation.  # noqa: E501
+        An array of reference IDs that identify the specific request elements most closely associated to the error or warning, if any. For JSON, use <i>JSONPath</i> notation.  # noqa: E501
 
         :return: The input_ref_ids of this Error.  # noqa: E501
         :rtype: list[str]
@@ -166,7 +166,7 @@ class Error(object):
     def input_ref_ids(self, input_ref_ids):
         """Sets the input_ref_ids of this Error.
 
-        An array of reference IDs that identify the specific request elements most closely associated to the error or warning, if any. For JSON, use JSONPath notation.  # noqa: E501
+        An array of reference IDs that identify the specific request elements most closely associated to the error or warning, if any. For JSON, use <i>JSONPath</i> notation.  # noqa: E501
 
         :param input_ref_ids: The input_ref_ids of this Error.  # noqa: E501
         :type: list[str]
@@ -224,7 +224,7 @@ class Error(object):
     def output_ref_ids(self):
         """Gets the output_ref_ids of this Error.  # noqa: E501
 
-        An array of reference IDs that identify the specific response elements most closely associated to the error or warning, if any. The path format is the same as inputRefId.  # noqa: E501
+        An array of reference IDs that identify the specific response elements most closely associated to the error or warning, if any. The path format is the same as <code>inputRefId</code>.  # noqa: E501
 
         :return: The output_ref_ids of this Error.  # noqa: E501
         :rtype: list[str]
@@ -235,7 +235,7 @@ class Error(object):
     def output_ref_ids(self, output_ref_ids):
         """Sets the output_ref_ids of this Error.
 
-        An array of reference IDs that identify the specific response elements most closely associated to the error or warning, if any. The path format is the same as inputRefId.  # noqa: E501
+        An array of reference IDs that identify the specific response elements most closely associated to the error or warning, if any. The path format is the same as <code>inputRefId</code>.  # noqa: E501
 
         :param output_ref_ids: The output_ref_ids of this Error.  # noqa: E501
         :type: list[str]

@@ -98,7 +98,7 @@ class Deposit(object):
     def payment_methods(self):
         """Gets the payment_methods of this Deposit.  # noqa: E501
 
-        For deposits (which are applicable to only motor listings), the paymentMethodType must be set to 'PAYPAL' and you must also populate the fields in the recipientAccountReference object. Required if your motor vehicles listing requires a deposit.  # noqa: E501
+        For deposits (which are applicable to only motor listings), the <b>paymentMethodType</b> must be set to '<code>PAYPAL</code>' and you must also populate the fields in the <b>recipientAccountReference</b> object.  <br><br><i>Required if</i> your motor vehicles listing requires a deposit.  # noqa: E501
 
         :return: The payment_methods of this Deposit.  # noqa: E501
         :rtype: list[PaymentMethod]
@@ -109,7 +109,7 @@ class Deposit(object):
     def payment_methods(self, payment_methods):
         """Sets the payment_methods of this Deposit.
 
-        For deposits (which are applicable to only motor listings), the paymentMethodType must be set to 'PAYPAL' and you must also populate the fields in the recipientAccountReference object. Required if your motor vehicles listing requires a deposit.  # noqa: E501
+        For deposits (which are applicable to only motor listings), the <b>paymentMethodType</b> must be set to '<code>PAYPAL</code>' and you must also populate the fields in the <b>recipientAccountReference</b> object.  <br><br><i>Required if</i> your motor vehicles listing requires a deposit.  # noqa: E501
 
         :param payment_methods: The payment_methods of this Deposit.  # noqa: E501
         :type: list[PaymentMethod]

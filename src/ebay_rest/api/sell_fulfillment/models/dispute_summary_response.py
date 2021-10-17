@@ -76,7 +76,7 @@ class DisputeSummaryResponse(object):
     def href(self):
         """Gets the href of this DisputeSummaryResponse.  # noqa: E501
 
-        The URI of the getPaymentDisputeSummaries call request that produced the current page of the result set.  # noqa: E501
+        The URI of the <strong>getPaymentDisputeSummaries</strong> call request that produced the current page of the result set.  # noqa: E501
 
         :return: The href of this DisputeSummaryResponse.  # noqa: E501
         :rtype: str
@@ -87,7 +87,7 @@ class DisputeSummaryResponse(object):
     def href(self, href):
         """Sets the href of this DisputeSummaryResponse.
 
-        The URI of the getPaymentDisputeSummaries call request that produced the current page of the result set.  # noqa: E501
+        The URI of the <strong>getPaymentDisputeSummaries</strong> call request that produced the current page of the result set.  # noqa: E501
 
         :param href: The href of this DisputeSummaryResponse.  # noqa: E501
         :type: str
@@ -99,7 +99,7 @@ class DisputeSummaryResponse(object):
     def limit(self):
         """Gets the limit of this DisputeSummaryResponse.  # noqa: E501
 
-        This value shows the maximum number of payment disputes that will appear on one page of the result set. The limit value can be passed in as a query parameter in the request, or if it is not used, it defaults to 200. If the value in the total field exceeds this limit value, there are multiple pages in the current result set. Min: 1; Max: 200; Default: 200  # noqa: E501
+        This value shows the maximum number of payment disputes that will appear on one page of the result set. The <strong>limit</strong> value can be passed in as a query parameter in the request, or if it is not used, it defaults to <code>200</code>. If the value in the <strong>total</strong> field exceeds this <strong>limit</strong> value, there are multiple pages in the current result set.<br><br><b>Min</b>: 1; <b>Max</b>: 200; <b>Default</b>: 200  # noqa: E501
 
         :return: The limit of this DisputeSummaryResponse.  # noqa: E501
         :rtype: int
@@ -110,7 +110,7 @@ class DisputeSummaryResponse(object):
     def limit(self, limit):
         """Sets the limit of this DisputeSummaryResponse.
 
-        This value shows the maximum number of payment disputes that will appear on one page of the result set. The limit value can be passed in as a query parameter in the request, or if it is not used, it defaults to 200. If the value in the total field exceeds this limit value, there are multiple pages in the current result set. Min: 1; Max: 200; Default: 200  # noqa: E501
+        This value shows the maximum number of payment disputes that will appear on one page of the result set. The <strong>limit</strong> value can be passed in as a query parameter in the request, or if it is not used, it defaults to <code>200</code>. If the value in the <strong>total</strong> field exceeds this <strong>limit</strong> value, there are multiple pages in the current result set.<br><br><b>Min</b>: 1; <b>Max</b>: 200; <b>Default</b>: 200  # noqa: E501
 
         :param limit: The limit of this DisputeSummaryResponse.  # noqa: E501
         :type: int
@@ -122,7 +122,7 @@ class DisputeSummaryResponse(object):
     def next(self):
         """Gets the next of this DisputeSummaryResponse.  # noqa: E501
 
-        The getPaymentDisputeSummaries call URI to use if you wish to view the next page of the result set. For example, the following URI returns records 11 thru 20 from the collection of payment disputes: path/payment_dispute_summary?limit=10&amp;offset=10 This field is only returned if there is a next page of results to view based on the current input criteria.  # noqa: E501
+        The <strong>getPaymentDisputeSummaries</strong> call URI to use if you wish to view the next page of the result set. For example, the following URI returns records 11 thru 20 from the collection of payment disputes:<br/><br/><code>path/payment_dispute_summary?limit=10&offset=10</code><br/><br/>This field is only returned if there is a next page of results to view based on the current input criteria.  # noqa: E501
 
         :return: The next of this DisputeSummaryResponse.  # noqa: E501
         :rtype: str
@@ -133,7 +133,7 @@ class DisputeSummaryResponse(object):
     def next(self, next):
         """Sets the next of this DisputeSummaryResponse.
 
-        The getPaymentDisputeSummaries call URI to use if you wish to view the next page of the result set. For example, the following URI returns records 11 thru 20 from the collection of payment disputes: path/payment_dispute_summary?limit=10&amp;offset=10 This field is only returned if there is a next page of results to view based on the current input criteria.  # noqa: E501
+        The <strong>getPaymentDisputeSummaries</strong> call URI to use if you wish to view the next page of the result set. For example, the following URI returns records 11 thru 20 from the collection of payment disputes:<br/><br/><code>path/payment_dispute_summary?limit=10&offset=10</code><br/><br/>This field is only returned if there is a next page of results to view based on the current input criteria.  # noqa: E501
 
         :param next: The next of this DisputeSummaryResponse.  # noqa: E501
         :type: str
@@ -145,7 +145,7 @@ class DisputeSummaryResponse(object):
     def offset(self):
         """Gets the offset of this DisputeSummaryResponse.  # noqa: E501
 
-        This integer value indicates the number of payment disputes skipped before listing the first payment dispute from the result set. The offset value can be passed in as a query parameter in the request, or if it is not used, it defaults to 0 and the first payment dispute of the result set is shown at the top of the response.  # noqa: E501
+        This integer value indicates the number of payment disputes skipped before listing the first payment dispute from the result set. The <strong>offset</strong> value can be passed in as a query parameter in the request, or if it is not used, it defaults to <code>0</code> and the first payment dispute of the result set is shown at the top of the response.  # noqa: E501
 
         :return: The offset of this DisputeSummaryResponse.  # noqa: E501
         :rtype: int
@@ -156,7 +156,7 @@ class DisputeSummaryResponse(object):
     def offset(self, offset):
         """Sets the offset of this DisputeSummaryResponse.
 
-        This integer value indicates the number of payment disputes skipped before listing the first payment dispute from the result set. The offset value can be passed in as a query parameter in the request, or if it is not used, it defaults to 0 and the first payment dispute of the result set is shown at the top of the response.  # noqa: E501
+        This integer value indicates the number of payment disputes skipped before listing the first payment dispute from the result set. The <strong>offset</strong> value can be passed in as a query parameter in the request, or if it is not used, it defaults to <code>0</code> and the first payment dispute of the result set is shown at the top of the response.  # noqa: E501
 
         :param offset: The offset of this DisputeSummaryResponse.  # noqa: E501
         :type: int
@@ -191,7 +191,7 @@ class DisputeSummaryResponse(object):
     def prev(self):
         """Gets the prev of this DisputeSummaryResponse.  # noqa: E501
 
-        The getPaymentDisputeSummaries call URI to use if you wish to view the previous page of the result set. For example, the following URI returns records 1 thru 10 from the collection of payment disputes: path/payment_dispute_summary?limit=10&amp;offset=0 This field is only returned if there is a previous page of results to view based on the current input criteria.  # noqa: E501
+        The <strong>getPaymentDisputeSummaries</strong> call URI to use if you wish to view the previous page of the result set. For example, the following URI returns records 1 thru 10 from the collection of payment disputes:<br/><br/><code>path/payment_dispute_summary?limit=10&offset=0</code><br/><br/>This field is only returned if there is a previous page of results to view based on the current input criteria.  # noqa: E501
 
         :return: The prev of this DisputeSummaryResponse.  # noqa: E501
         :rtype: str
@@ -202,7 +202,7 @@ class DisputeSummaryResponse(object):
     def prev(self, prev):
         """Sets the prev of this DisputeSummaryResponse.
 
-        The getPaymentDisputeSummaries call URI to use if you wish to view the previous page of the result set. For example, the following URI returns records 1 thru 10 from the collection of payment disputes: path/payment_dispute_summary?limit=10&amp;offset=0 This field is only returned if there is a previous page of results to view based on the current input criteria.  # noqa: E501
+        The <strong>getPaymentDisputeSummaries</strong> call URI to use if you wish to view the previous page of the result set. For example, the following URI returns records 1 thru 10 from the collection of payment disputes:<br/><br/><code>path/payment_dispute_summary?limit=10&offset=0</code><br/><br/>This field is only returned if there is a previous page of results to view based on the current input criteria.  # noqa: E501
 
         :param prev: The prev of this DisputeSummaryResponse.  # noqa: E501
         :type: str
@@ -214,7 +214,7 @@ class DisputeSummaryResponse(object):
     def total(self):
         """Gets the total of this DisputeSummaryResponse.  # noqa: E501
 
-        This integer value is the total number of payment disputes that matched the input criteria. If the total number of entries exceeds the value that was set for limit in the request payload, you will have to make multiple API calls to see all pages of the results set. This field is returned even if it is 0.  # noqa: E501
+        This integer value is the total number of payment disputes that matched the input criteria. If the total number of entries exceeds the value that was set for <strong>limit</strong> in the request payload, you will have to make multiple API calls to see all pages of the results set. This field is returned even if it is <code>0</code>.  # noqa: E501
 
         :return: The total of this DisputeSummaryResponse.  # noqa: E501
         :rtype: int
@@ -225,7 +225,7 @@ class DisputeSummaryResponse(object):
     def total(self, total):
         """Sets the total of this DisputeSummaryResponse.
 
-        This integer value is the total number of payment disputes that matched the input criteria. If the total number of entries exceeds the value that was set for limit in the request payload, you will have to make multiple API calls to see all pages of the results set. This field is returned even if it is 0.  # noqa: E501
+        This integer value is the total number of payment disputes that matched the input criteria. If the total number of entries exceeds the value that was set for <strong>limit</strong> in the request payload, you will have to make multiple API calls to see all pages of the results set. This field is returned even if it is <code>0</code>.  # noqa: E501
 
         :param total: The total of this DisputeSummaryResponse.  # noqa: E501
         :type: int

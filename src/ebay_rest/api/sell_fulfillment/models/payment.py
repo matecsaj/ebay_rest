@@ -92,7 +92,7 @@ class Payment(object):
     def payment_date(self):
         """Gets the payment_date of this Payment.  # noqa: E501
 
-        The date and time that the payment was received by the seller. This field will not be returned if buyer has yet to pay for the order. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+        The date and time that the payment was received by the seller. This field will not be returned if buyer has yet to pay for the order. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. <br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :return: The payment_date of this Payment.  # noqa: E501
         :rtype: str
@@ -103,7 +103,7 @@ class Payment(object):
     def payment_date(self, payment_date):
         """Sets the payment_date of this Payment.
 
-        The date and time that the payment was received by the seller. This field will not be returned if buyer has yet to pay for the order. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2015-08-04T19:09:02.768Z  # noqa: E501
+        The date and time that the payment was received by the seller. This field will not be returned if buyer has yet to pay for the order. This timestamp is in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock. <br /><br /><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br /><b>Example:</b> <code>2015-08-04T19:09:02.768Z</code>  # noqa: E501
 
         :param payment_date: The payment_date of this Payment.  # noqa: E501
         :type: str
@@ -138,7 +138,7 @@ class Payment(object):
     def payment_method(self):
         """Gets the payment_method of this Payment.  # noqa: E501
 
-        The payment method used to pay for the order. See the PaymentMethodTypeEnum type for more information on the payment methods. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:PaymentMethodTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The payment method used to pay for the order. See the <strong>PaymentMethodTypeEnum</strong> type for more information on the payment methods. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:PaymentMethodTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The payment_method of this Payment.  # noqa: E501
         :rtype: str
@@ -149,7 +149,7 @@ class Payment(object):
     def payment_method(self, payment_method):
         """Sets the payment_method of this Payment.
 
-        The payment method used to pay for the order. See the PaymentMethodTypeEnum type for more information on the payment methods. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:PaymentMethodTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The payment method used to pay for the order. See the <strong>PaymentMethodTypeEnum</strong> type for more information on the payment methods. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:PaymentMethodTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param payment_method: The payment_method of this Payment.  # noqa: E501
         :type: str
@@ -161,7 +161,7 @@ class Payment(object):
     def payment_reference_id(self):
         """Gets the payment_reference_id of this Payment.  # noqa: E501
 
-        This field is only returned if payment has been made by the buyer, and the paymentMethod is PAYPAL or ESCROW. This field contains the PayPal-generated transaction identifier in case of payment made via PAYPAL.  # noqa: E501
+        This field is only returned if payment has been made by the buyer, and the <strong>paymentMethod</strong> is <code>PAYPAL</code> or <code>ESCROW</code>. This field contains the PayPal-generated transaction identifier in case of payment made via PAYPAL, or a special ID for ESCROW.  # noqa: E501
 
         :return: The payment_reference_id of this Payment.  # noqa: E501
         :rtype: str
@@ -172,7 +172,7 @@ class Payment(object):
     def payment_reference_id(self, payment_reference_id):
         """Sets the payment_reference_id of this Payment.
 
-        This field is only returned if payment has been made by the buyer, and the paymentMethod is PAYPAL or ESCROW. This field contains the PayPal-generated transaction identifier in case of payment made via PAYPAL.  # noqa: E501
+        This field is only returned if payment has been made by the buyer, and the <strong>paymentMethod</strong> is <code>PAYPAL</code> or <code>ESCROW</code>. This field contains the PayPal-generated transaction identifier in case of payment made via PAYPAL, or a special ID for ESCROW.  # noqa: E501
 
         :param payment_reference_id: The payment_reference_id of this Payment.  # noqa: E501
         :type: str
@@ -184,7 +184,7 @@ class Payment(object):
     def payment_status(self):
         """Gets the payment_status of this Payment.  # noqa: E501
 
-        The enumeration value returned in this field indicates the status of the payment for the order. See the PaymentStatusEnum type definition for more information on the possible payment states. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:PaymentStatusEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value returned in this field indicates the status of the payment for the order. See the <strong>PaymentStatusEnum</strong> type definition for more information on the possible payment states. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:PaymentStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The payment_status of this Payment.  # noqa: E501
         :rtype: str
@@ -195,7 +195,7 @@ class Payment(object):
     def payment_status(self, payment_status):
         """Sets the payment_status of this Payment.
 
-        The enumeration value returned in this field indicates the status of the payment for the order. See the PaymentStatusEnum type definition for more information on the possible payment states. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:PaymentStatusEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value returned in this field indicates the status of the payment for the order. See the <strong>PaymentStatusEnum</strong> type definition for more information on the possible payment states. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/sel:PaymentStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :param payment_status: The payment_status of this Payment.  # noqa: E501
         :type: str

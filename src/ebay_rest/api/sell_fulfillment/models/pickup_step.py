@@ -46,7 +46,7 @@ class PickupStep(object):
     def merchant_location_key(self):
         """Gets the merchant_location_key of this PickupStep.  # noqa: E501
 
-        A merchant-defined unique identifier of the merchant's store where the buyer will pick up their In-Store Pickup order. This field is always returned with the pickupStep container.  # noqa: E501
+        A merchant-defined unique identifier of the merchant's store where the buyer will pick up their In-Store Pickup order.<br/><br/> This field is always returned with the <b>pickupStep</b> container.  # noqa: E501
 
         :return: The merchant_location_key of this PickupStep.  # noqa: E501
         :rtype: str
@@ -57,7 +57,7 @@ class PickupStep(object):
     def merchant_location_key(self, merchant_location_key):
         """Sets the merchant_location_key of this PickupStep.
 
-        A merchant-defined unique identifier of the merchant's store where the buyer will pick up their In-Store Pickup order. This field is always returned with the pickupStep container.  # noqa: E501
+        A merchant-defined unique identifier of the merchant's store where the buyer will pick up their In-Store Pickup order.<br/><br/> This field is always returned with the <b>pickupStep</b> container.  # noqa: E501
 
         :param merchant_location_key: The merchant_location_key of this PickupStep.  # noqa: E501
         :type: str

@@ -35,6 +35,7 @@ def cache_contracts(contracts):
             with open(destination, 'w') as outfile:
                 json.dump(data, outfile, sort_keys=True, indent=4)
 
+
 def get_soup_via_link(url):
     # Make a GET request to fetch the raw HTML content
     html_content = requests.get(url).text
@@ -81,15 +82,18 @@ def patch_contracts():
     # In the Sell Fulfillment API, the model 'Address' is returned with attribute 'countryCode'.
     # However, the JSON specifies 'country' instead, thus Swagger generates the wrong API.
     file_location = os.path.join(TARGET_PATH, 'sell_fulfillment_v1_oas3.json')
-    with open(file_location) as file_handle:
-        data = json.load(file_handle)
-        properties = data['components']['schemas']['Address']['properties']
-        if 'country' in properties:
-            properties['countryCode'] = properties.pop('country')   # Warning, spoils the alphabetical key order.
-            with open(file_location, 'w') as outfile:
-                json.dump(data, outfile, sort_keys=True, indent=4)
-        else:
-            print('Patching sell_fulfillment_v1_oas3.json is no longer needed.')
+    try:
+        with open(file_location) as file_handle:
+            data = json.load(file_handle)
+            properties = data['components']['schemas']['Address']['properties']
+            if 'country' in properties:
+                properties['countryCode'] = properties.pop('country')   # Warning, spoils the alphabetical key order.
+                with open(file_location, 'w') as outfile:
+                    json.dump(data, outfile, sort_keys=True, indent=4)
+            else:
+                print('Patching sell_fulfillment_v1_oas3.json is no longer needed.')
+    except FileNotFoundError:
+        print(f"Can't open {file_location}.")
 
 
 def get_base_paths_and_flows(contracts):
@@ -139,6 +143,9 @@ def get_base_paths_and_flows(contracts):
                     print(method, method_dict)
                     raise ValueError('nope')
                 operation_id_scopes[operation_id] = security
+
+        # TODO Get headers parameters
+        # look for this  "in": "header",
 
         name = category + '_' + call
         base_paths[name] = base_path

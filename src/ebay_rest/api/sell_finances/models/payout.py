@@ -135,7 +135,7 @@ class Payout(object):
     def last_attempted_payout_date(self):
         """Gets the last_attempted_payout_date of this Payout.  # noqa: E501
 
-        This timestamp indicates the date/time when eBay last attempted to process a seller payout but it failed. This field is only returned if a seller payout fails, and the payoutStatus value shows RETRYABLE_FAILED or TERMINAL_FAILED. A seller can filter on the lastAttemptedPayoutDate in a getPayouts request.  # noqa: E501
+        This timestamp indicates the date/time when eBay last attempted to process a seller payout but it failed. This field is only returned if a seller payout fails, and the <strong>payoutStatus</strong> value shows <code>RETRYABLE_FAILED</code> or <code>TERMINAL_FAILED</code>. A seller can filter on the <b>lastAttemptedPayoutDate</b> in a <b>getPayouts</b> request.  # noqa: E501
 
         :return: The last_attempted_payout_date of this Payout.  # noqa: E501
         :rtype: str
@@ -146,7 +146,7 @@ class Payout(object):
     def last_attempted_payout_date(self, last_attempted_payout_date):
         """Sets the last_attempted_payout_date of this Payout.
 
-        This timestamp indicates the date/time when eBay last attempted to process a seller payout but it failed. This field is only returned if a seller payout fails, and the payoutStatus value shows RETRYABLE_FAILED or TERMINAL_FAILED. A seller can filter on the lastAttemptedPayoutDate in a getPayouts request.  # noqa: E501
+        This timestamp indicates the date/time when eBay last attempted to process a seller payout but it failed. This field is only returned if a seller payout fails, and the <strong>payoutStatus</strong> value shows <code>RETRYABLE_FAILED</code> or <code>TERMINAL_FAILED</code>. A seller can filter on the <b>lastAttemptedPayoutDate</b> in a <b>getPayouts</b> request.  # noqa: E501
 
         :param last_attempted_payout_date: The last_attempted_payout_date of this Payout.  # noqa: E501
         :type: str
@@ -158,7 +158,7 @@ class Payout(object):
     def payout_date(self):
         """Gets the payout_date of this Payout.  # noqa: E501
 
-        This timestamp indicates when the seller payout began processing. The following format is used: YYYY-MM-DDTHH:MM:SS.SSSZ. For example, 2015-08-04T19:09:02.768Z. This field is still returned even if the payout was pending but failed (payoutStatus value shows RETRYABLE_FAILED or TERMINAL_FAILED).  # noqa: E501
+        This timestamp indicates when the seller payout began processing. The following format is used: <code>YYYY-MM-DDTHH:MM:SS.SSSZ</code>. For example, <code>2015-08-04T19:09:02.768Z</code>. This field is still returned even if the payout was pending but failed (<strong>payoutStatus</strong> value shows <code>RETRYABLE_FAILED</code> or <code>TERMINAL_FAILED</code>).  # noqa: E501
 
         :return: The payout_date of this Payout.  # noqa: E501
         :rtype: str
@@ -169,7 +169,7 @@ class Payout(object):
     def payout_date(self, payout_date):
         """Sets the payout_date of this Payout.
 
-        This timestamp indicates when the seller payout began processing. The following format is used: YYYY-MM-DDTHH:MM:SS.SSSZ. For example, 2015-08-04T19:09:02.768Z. This field is still returned even if the payout was pending but failed (payoutStatus value shows RETRYABLE_FAILED or TERMINAL_FAILED).  # noqa: E501
+        This timestamp indicates when the seller payout began processing. The following format is used: <code>YYYY-MM-DDTHH:MM:SS.SSSZ</code>. For example, <code>2015-08-04T19:09:02.768Z</code>. This field is still returned even if the payout was pending but failed (<strong>payoutStatus</strong> value shows <code>RETRYABLE_FAILED</code> or <code>TERMINAL_FAILED</code>).  # noqa: E501
 
         :param payout_date: The payout_date of this Payout.  # noqa: E501
         :type: str
@@ -248,7 +248,7 @@ class Payout(object):
     def payout_status(self):
         """Gets the payout_status of this Payout.  # noqa: E501
 
-        This enumeration value indicates the current status of the seller payout. For a successful payout, the value returned will be SUCCEEDED. See the PayoutStatusEnum type for more details on each payout status value. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:PayoutStatusEnum'>eBay API documentation</a>  # noqa: E501
+        This enumeration value indicates the current status of the seller payout. For a successful payout, the value returned will be <code>SUCCEEDED</code>. See the <strong>PayoutStatusEnum</strong> type for more details on each payout status value. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:PayoutStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The payout_status of this Payout.  # noqa: E501
         :rtype: str
@@ -259,7 +259,7 @@ class Payout(object):
     def payout_status(self, payout_status):
         """Sets the payout_status of this Payout.
 
-        This enumeration value indicates the current status of the seller payout. For a successful payout, the value returned will be SUCCEEDED. See the PayoutStatusEnum type for more details on each payout status value. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:PayoutStatusEnum'>eBay API documentation</a>  # noqa: E501
+        This enumeration value indicates the current status of the seller payout. For a successful payout, the value returned will be <code>SUCCEEDED</code>. See the <strong>PayoutStatusEnum</strong> type for more details on each payout status value. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:PayoutStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :param payout_status: The payout_status of this Payout.  # noqa: E501
         :type: str
@@ -271,7 +271,7 @@ class Payout(object):
     def payout_status_description(self):
         """Gets the payout_status_description of this Payout.  # noqa: E501
 
-        This field provides more details about the current status of payout. The description returned here will correspond with enumeration value returned in the payoutStatus field. The following shows what description text might appear based on the different payoutStatus values: INITIATED: Preparing to send SUCCEEDED: Funds sent REVERSED: Waiting to retry : Money rejected by seller's bank RETRYABLE_FAILED: Waiting to retry TERMINAL_FAILED: Payout failed  # noqa: E501
+        This field provides more details about the current status of payout. The description returned here will correspond with enumeration value returned in the <strong>payoutStatus</strong> field. The following shows what description text might appear based on the different <strong>payoutStatus</strong> values:<ul><li><code>INITIATED</code>: <em>Preparing to send</em></li><li><code>SUCCEEDED</code>: <em>Funds sent</em></li><li><code>REVERSED</code>: <em>Waiting to retry : Money rejected by seller's bank</em></li><li><code>RETRYABLE_FAILED</code>: <em>Waiting to retry</em></li><li><code>TERMINAL_FAILED</code>: <em>Payout failed</em></li></ul>  # noqa: E501
 
         :return: The payout_status_description of this Payout.  # noqa: E501
         :rtype: str
@@ -282,7 +282,7 @@ class Payout(object):
     def payout_status_description(self, payout_status_description):
         """Sets the payout_status_description of this Payout.
 
-        This field provides more details about the current status of payout. The description returned here will correspond with enumeration value returned in the payoutStatus field. The following shows what description text might appear based on the different payoutStatus values: INITIATED: Preparing to send SUCCEEDED: Funds sent REVERSED: Waiting to retry : Money rejected by seller's bank RETRYABLE_FAILED: Waiting to retry TERMINAL_FAILED: Payout failed  # noqa: E501
+        This field provides more details about the current status of payout. The description returned here will correspond with enumeration value returned in the <strong>payoutStatus</strong> field. The following shows what description text might appear based on the different <strong>payoutStatus</strong> values:<ul><li><code>INITIATED</code>: <em>Preparing to send</em></li><li><code>SUCCEEDED</code>: <em>Funds sent</em></li><li><code>REVERSED</code>: <em>Waiting to retry : Money rejected by seller's bank</em></li><li><code>RETRYABLE_FAILED</code>: <em>Waiting to retry</em></li><li><code>TERMINAL_FAILED</code>: <em>Payout failed</em></li></ul>  # noqa: E501
 
         :param payout_status_description: The payout_status_description of this Payout.  # noqa: E501
         :type: str
@@ -294,7 +294,7 @@ class Payout(object):
     def transaction_count(self):
         """Gets the transaction_count of this Payout.  # noqa: E501
 
-        This integer value indicates the number of monetary transactions (all orders, refunds, and credits, etc.) that have occurred with the corresponding payout. Its value should always be at least 1, since there is at least one order per seller payout.  # noqa: E501
+        This integer value indicates the number of monetary transactions (all orders, refunds, and credits, etc.) that have occurred with the corresponding payout. Its value should always be at least <code>1</code>, since there is at least one order per seller payout.  # noqa: E501
 
         :return: The transaction_count of this Payout.  # noqa: E501
         :rtype: int
@@ -305,7 +305,7 @@ class Payout(object):
     def transaction_count(self, transaction_count):
         """Sets the transaction_count of this Payout.
 
-        This integer value indicates the number of monetary transactions (all orders, refunds, and credits, etc.) that have occurred with the corresponding payout. Its value should always be at least 1, since there is at least one order per seller payout.  # noqa: E501
+        This integer value indicates the number of monetary transactions (all orders, refunds, and credits, etc.) that have occurred with the corresponding payout. Its value should always be at least <code>1</code>, since there is at least one order per seller payout.  # noqa: E501
 
         :param transaction_count: The transaction_count of this Payout.  # noqa: E501
         :type: int
