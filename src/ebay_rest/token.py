@@ -415,7 +415,8 @@ class _OAuth2Api:
         logging.debug("Trying to get a new user access token ... ")
 
         headers = self._generate_request_headers()
-        body = self._generate_refresh_request_body(scopes, refresh_token)
+        body = self._generate_refresh_request_body(
+            ' '.join(scopes), refresh_token)
         api_endpoint = self._get_endpoint()
         resp = requests.post(api_endpoint, data=body, headers=headers)
         content = json.loads(resp.content)
