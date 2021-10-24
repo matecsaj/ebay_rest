@@ -1,22 +1,245 @@
 #!/usr/bin/python3
 
 # Standard library imports
+from datetime import datetime, timedelta
 import hashlib
 import json
+import logging
 import os
+import sys
+from urllib.request import urlopen
+from urllib.parse import urljoin
 import shutil
+from sys import platform
 
 # Third party imports
+from bs4 import BeautifulSoup
+import requests
 
 # Local imports
 
 # Globals
-TARGET_DIRECTORY = 'api'
-TARGET_PATH = '../src/ebay_rest/' + TARGET_DIRECTORY
-SOURCE_PATH = './' + TARGET_DIRECTORY + '_cache'   # must match the TARGET_PATH in generate_api_cache.py
 
-# Run this script from the command line to relocate and generate python code.
-# Before you must run generate_api_cache.py.
+# Run this script from the command line to generate or update the api folder in src/ebay_rest.
+
+# For a complete directory of eBay's APIs visit https://developer.ebay.com/docs. Ignore the "Traditional" APIs.
+
+# For an introduction to OpenAPI and how to use eBay's REST-ful APIs
+# visit https://developer.ebay.com/api-docs/static/openapi-swagger-codegen.html.
+
+
+class Locations:
+    """ Where things are located in the locale file store. """
+
+    target_directory: str = 'api'
+    target_path: str = '../src/ebay_rest/' + target_directory
+    cache_path: str = './' + target_directory + '_cache'
+
+    state_file: str = 'state.json'
+    state_path_file: str = os.path.join(cache_path, state_file)
+
+
+class State:
+    """ Track the state of progress, even if the program is re-run. """
+
+    def __init__(self):
+        try:
+            with open(Locations.state_path_file) as file_handle:
+                self._states = json.load(file_handle)
+        except OSError:
+            self._states = dict()
+
+    def get(self, key: str) -> str or None:
+        if key in self._states:
+            return self._states[key]
+        else:
+            return None
+
+    def set(self, key: str, value: str) -> None:
+        self._states[key] = value
+        try:
+            with open(Locations.state_path_file, 'w') as file_handle:
+                json.dump(self._states, file_handle, sort_keys=True, indent=4)
+        except OSError:
+            message = f"Can't write to {Locations.state_path_file}."
+            logging.fatal(message)
+            sys.exit(message)
+
+
+class Contract:
+
+    def __init__(self, limit=100):
+        self.contracts = self.get_contracts(limit=limit)
+        self.cache_contracts()
+        self.patch_contracts()
+
+    def cache_contracts(self):
+        for contract in self.contracts:
+            [category, call, link_href, file_name] = contract
+            with urlopen(link_href) as url:
+                data = json.loads(url.read().decode())
+                destination = os.path.join(Locations.cache_path, file_name)
+                with open(destination, 'w') as outfile:
+                    json.dump(data, outfile, sort_keys=True, indent=4)
+
+    def get_contracts(self, limit=100):
+        contracts = []
+        overview_links = []
+        base = 'https://developer.ebay.com/'
+
+        logging.info('Find eBay OpenAPI 3 JSON contracts.')
+
+        soup = self.get_soup_via_link(urljoin(base, 'docs'))
+        for link in soup.find_all('a', href=lambda href: href and 'overview.html' in href):
+            overview_links.append(urljoin(base, link.get('href')))
+            if len(contracts) >= limit:
+                break
+        assert(len(overview_links) > 0), 'No contract overview pages found!'
+
+        for overview_link in overview_links:
+            soup = self.get_soup_via_link(overview_link)
+            for link in soup.find_all('a', href=lambda href: href and 'oas3.json' in href, limit=1):
+                link_href = urljoin(base, link.get('href'))
+                parts = link_href.split('/')
+                category = parts[5]
+                call = parts[6].replace('-', '_')
+                file_name = parts[-1]
+                record = [category, call, link_href, file_name]
+                if ('beta' not in call) and (record not in contracts):
+                    contracts.append(record)
+                    logging.info(record)
+            if len(contracts) >= limit:         # useful for expediting debugging with a reduced data set
+                break
+        assert(len(contracts) > 0), 'No contracts found on any overview pages!'
+
+        return contracts
+
+    @staticmethod
+    def patch_contracts():
+
+        # In the Sell Fulfillment API, the model 'Address' is returned with attribute 'countryCode'.
+        # However, the JSON specifies 'country' instead, thus Swagger generates the wrong API.
+        file_location = os.path.join(Locations.cache_path, 'sell_fulfillment_v1_oas3.json')
+        try:
+            with open(file_location) as file_handle:
+                data = json.load(file_handle)
+                properties = data['components']['schemas']['Address']['properties']
+                if 'country' in properties:
+                    properties['countryCode'] = properties.pop('country')   # Warning, alphabetical key order spoiled.
+                    with open(file_location, 'w') as outfile:
+                        json.dump(data, outfile, sort_keys=True, indent=4)
+                else:
+                    logging.warning('Patching sell_fulfillment_v1_oas3.json is no longer needed.')
+        except FileNotFoundError:
+            logging.error(f"Can't open {file_location}.")
+
+    @staticmethod
+    def get_soup_via_link(url):
+        # Make a GET request to fetch the raw HTML content
+        html_content = requests.get(url).text
+
+        # Parse the html content
+        return BeautifulSoup(html_content, "html.parser")
+
+    def get_base_paths_and_flows(self):
+        """Process the JSON contract and extract two things for later use.
+        1) the base_path for each category_call (e.g. buy_browse)
+        2) the security flow for each scope in each category_call
+        3) the scopes for each call in each category_call
+        """
+        base_paths = {}
+        flows = {}
+        scopes = {}
+
+        for [category, call, link_href, file_name] in self.contracts:
+            source = os.path.join(Locations.cache_path, file_name)
+            with open(source) as file_handle:
+                data = json.load(file_handle)
+            # Get base path
+            base_path = data['servers'][0]['variables']['basePath']['default']
+            # Get flows for this category_call
+            category_flows = (
+                data['components']['securitySchemes']['api_auth']['flows']
+            )
+            flow_by_scope = {}  # dict of scope: flow type
+            for flow, flow_details in category_flows.items():
+                for scope in flow_details['scopes']:
+                    flow_by_scope[scope] = flow
+
+            # Get scope for each individually path-ed call
+            operation_id_scopes = {}
+            for path, path_methods in data['paths'].items():
+                for method, method_dict in path_methods.items():
+                    if method not in ('get', 'post', 'put', 'delete'):
+                        # Consider only the HTTP request parts
+                        continue
+                    operation_id = method_dict['operationId'].lower()
+                    security_list = method_dict.get('security', [])
+                    if len(security_list) > 1:
+                        raise ValueError(
+                            'Expected zero/one security entry per path!')
+                    elif len(security_list) == 1:
+                        security = security_list[0]['api_auth']
+                    else:
+                        security = None
+                    if operation_id in operation_id_scopes:
+                        logging.warning('Duplicate operation!')
+                        logging.warning(path, path_methods)
+                        logging.warning(method, method_dict)
+                        raise ValueError('nope')
+                    operation_id_scopes[operation_id] = security
+
+            # TODO Get headers parameters
+            # look for this  "in": "header",
+
+            name = category + '_' + call
+            base_paths[name] = base_path
+            flows[name] = flow_by_scope
+            scopes[name] = operation_id_scopes
+
+        return base_paths, flows, scopes
+
+
+def install_tools():
+    if platform == 'darwin':    # OS X or MacOS
+        logging.info('Install or update the package manager named HomeBrew.')
+        os.system('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
+
+        if os.path.isfile('/usr/local/bin/swagger-codegen'):
+            logging.info('Upgrade the code generator from Swagger. https://swagger.io/')
+            os.system('brew upgrade swagger-codegen')
+        else:
+            logging.info('Install the code generator from Swagger. https://swagger.io/')
+            os.system('brew install swagger-codegen')
+
+        logging.info('Test the generator installation by invoking its help screen.')
+        os.system('/usr/local/bin/swagger-codegen -h')
+    elif platform == 'linux':  # Linux platform
+        # Don't install packages without user interaction.
+        if not os.path.isfile('swagger-codegen-cli.jar'):
+            os.system(
+                'wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/'
+                + 'swagger-codegen-cli/3.0.26/swagger-codegen-cli-3.0.26.jar '
+                + '-O swagger-codegen-cli.jar'
+            )
+        logging.info('Test the generator installation by invoking its help screen.')
+        os.system('java -jar swagger-codegen-cli.jar -h')
+    else:
+        message = f'Please extend install_tools() for your {platform} platform.'
+        logging.fatal(message)
+        sys.exit(message)
+
+
+def delete_folder_contents(path_to_folder):
+    list_dir = os.listdir(path_to_folder)
+    for filename in list_dir:
+        file_path = os.path.join(path_to_folder, filename)
+        if os.path.isfile(file_path) or os.path.islink(file_path):
+            logging.debug("deleting file:", file_path)
+            os.unlink(file_path)
+        elif os.path.isdir(file_path):
+            logging.debug("deleting folder:", file_path)
+            shutil.rmtree(file_path)
 
 
 class Process:
@@ -25,8 +248,8 @@ class Process:
         self.file_ebay_rest = os.path.abspath('../src/ebay_rest/a_p_i.py')
         self.file_setup = os.path.abspath('../setup.cfg')
 
-        self.path_cache = os.path.abspath(SOURCE_PATH)
-        self.path_final = os.path.abspath(TARGET_PATH)
+        self.path_cache = os.path.abspath(Locations.cache_path)
+        self.path_final = os.path.abspath(Locations.target_path)
         self.path_ebay_rest = os.path.abspath('../src/ebay_rest')
 
         assert os.path.isdir(self.path_cache),\
@@ -36,11 +259,11 @@ class Process:
             self.names = dirs
             break
 
-        with open(os.path.join(SOURCE_PATH, 'base_paths.json')) as file_handle:
+        with open(os.path.join(Locations.cache_path, 'base_paths.json')) as file_handle:
             self.base_paths = json.load(file_handle)
-        with open(os.path.join(SOURCE_PATH, 'flows.json')) as file_handle:
+        with open(os.path.join(Locations.cache_path, 'flows.json')) as file_handle:
             self.flows = json.load(file_handle)
-        with open(os.path.join(SOURCE_PATH, 'scopes.json')) as file_handle:
+        with open(os.path.join(Locations.cache_path, 'scopes.json')) as file_handle:
             self.scopes = json.load(file_handle)
 
     def copy_libraries(self):
@@ -126,8 +349,9 @@ class Process:
 
         lines = []
         for name in self.names:
-            lines.append(f'from .{TARGET_DIRECTORY} import {name}')
-            lines.append(f'from .{TARGET_DIRECTORY}.{name}.rest import ApiException as {self._camel(name)}Exception')
+            lines.append(f'from .{Locations.target_directory} import {name}')
+            line = f'from .{Locations.target_directory}.{name}.rest import ApiException as {self._camel(name)}Exception'
+            lines.append(line)
         insert_lines = '\n'.join(lines) + '\n'
         self._put_anchored_lines(target_file=self.file_ebay_rest, anchor='er_imports', insert_lines=insert_lines)
 
@@ -254,10 +478,12 @@ class Process:
                 # This usually uses the client credentials method
                 flows = {'clientCredentials'}
             else:
-                print('method: ', method)
-                print('scopes: ', scopes)
-                print('flows: ', flows)
-                raise ValueError('Could not identify authorization method!')
+                message = 'Could not identify authorization method!'
+                logging.warning(message)
+                logging.warning('method: ', method)
+                logging.warning('scopes: ', scopes)
+                logging.warning('flows: ', flows)
+                raise ValueError(message)
         auth_method, = flows  # note tuple unpacking of set
         user_access_token = auth_method == 'authorizationCode'
 
@@ -398,12 +624,60 @@ class Process:
                     file.write(new_lines)
 
             else:
-                print(f"Can't find proper start or end anchors for {anchor} in {target_file}.")
+                logging.error(f"Can't find proper start or end anchors for {anchor} in {target_file}.")
         else:
-            print(f"Can't find {target_file}")
+            logging.error(f"Can't find {target_file}")
 
 
 def main():
+
+    # while debugging it is handy to change the log level from INFO to DEBUG
+    logging.basicConfig(format='%(asctime)s %(levelname)s %(filename)s %(funcName)s: %(message)s', level=logging.DEBUG)
+
+    # ensure that we have a cache
+    if os.path.isdir(Locations.cache_path):
+        # delete_folder_contents(Locations.cache_path)  # TODO flush the cache when we want a fresh start
+        pass
+    else:
+        os.mkdir(Locations.cache_path)
+
+    s = State()     # Track the state of progress
+
+    # install tools if they are missing # TODO
+    # or, update tools if it has been more than a day
+    key = 'tool_date_time'
+    dt_format = "%Y-%m-%dT%H:%M:%S.%fZ"
+    if s.get(key) is None or datetime.strptime(s.get(key), dt_format) < datetime.now() - timedelta(days=1):
+        # install_tools()
+        s.set(key, datetime.now().strftime(dt_format))
+
+    c = Contract(limit=100)     # hint, save time by reducing the limit while debugging
+
+    base_paths, flows, scopes = c.get_base_paths_and_flows()
+
+    logging.info('For each contract generate and install a library.')
+    for contract in c.contracts:
+        [category, call, link_href, file_name] = contract
+        source = os.path.join(Locations.cache_path, file_name)
+        name = f'{category}_{call}'
+        command = f' generate -l python -o {Locations.cache_path}/{name} -DpackageName={name} -i {source}'
+        if platform == 'darwin':  # OS X or MacOS
+            command = '/usr/local/bin/swagger-codegen' + command
+        elif platform == 'linux':  # Linux
+            command = 'java -jar swagger-codegen-cli.jar' + command
+        else:
+            assert False, f'Please extend main() for your {platform} platform.'
+        os.system(command)
+
+    destination = os.path.join(Locations.cache_path, 'base_paths.json')
+    with open(destination, 'w') as outfile:
+        json.dump(base_paths, outfile, sort_keys=True, indent=4)
+    destination = os.path.join(Locations.cache_path, 'flows.json')
+    with open(destination, 'w') as outfile:
+        json.dump(flows, outfile, sort_keys=True, indent=4)
+    destination = os.path.join(Locations.cache_path, 'scopes.json')
+    with open(destination, 'w') as outfile:
+        json.dump(scopes, outfile, sort_keys=True, indent=4)
 
     # Refrain from altering the sequence of the method calls because there may be dependencies.
     p = Process()
@@ -413,6 +687,8 @@ def main():
     p.make_includes()
     # p.remove_duplicates()     # uncomment the method call when work on it resumes
     p.make_methods(p.get_methods())
+
+    return
 
 
 if __name__ == "__main__":

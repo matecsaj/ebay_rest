@@ -105,7 +105,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
                 self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
             else:
                 # Ignore the PyCharm linter bug 'Expected type 'Union[type, Tuple[type, ...]]', got 'Multiton' instead'
-                self.assertIsInstance(api, API, 'An API object was not returned.')
+                self.assertIsInstance(api, API, 'An API object was not returned.')  # type: ignore
 
     def test_object_reuse(self):
         """ Do the same parameters return the same API object? """
@@ -124,7 +124,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
             # Ignore the PyCharm linter bug 'Expected type 'Union[type, Tuple[type, ...]]', got 'Multiton' instead'
-            self.assertIsInstance(api, API, 'An API object was not returned.')
+            self.assertIsInstance(api, API, 'An API object was not returned.')  # type: ignore
 
     def test_shipping_accuracy(self):
         """ Is closer shipping cheaper? """
