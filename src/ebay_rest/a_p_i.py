@@ -317,7 +317,7 @@ class API:
                 detail = "The parameter " + param_name + " should not be None or the configuration file should exist."
 
         else:
-            detail = "Parameter " + param_name + " must be a Dict, String or None but it is a " + type(parameter) + "."
+            detail = "Parameter " + param_name + " must be a Dict, String or None but it is a " + str(type(parameter)) + "."
 
         if result is None:
             raise Error(number=1, reason="Get configuration for " + param_name + " problem.", detail=detail)
