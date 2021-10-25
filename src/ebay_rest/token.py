@@ -351,13 +351,12 @@ class _OAuth2Api:
         """
             scopes = list of strings
         """
-        scopes = ' '.join(scopes)
         param = {
             'client_id': self._client_id,
             'redirect_uri': self._ru_name,
             'response_type': 'code',
             'prompt': 'login',
-            'scope': scopes
+            'scope': ' '.join(scopes)
         }
 
         if state is not None:
@@ -378,7 +377,7 @@ class _OAuth2Api:
 
         logging.debug("Trying to get a new application access token ... ")
         headers = self._generate_request_headers()
-        body = self._generate_application_request_body(' '.join(scopes))
+        body = self._generate_application_request_body(scopes)
         api_endpoint = self._get_endpoint()
         resp = requests.post(api_endpoint, data=body, headers=headers)
         content = json.loads(resp.content)
@@ -446,7 +445,7 @@ class _OAuth2Api:
         body = {
                 'grant_type': 'client_credentials',
                 'redirect_uri': self._ru_name,
-                'scope': scopes
+                'scope': ' '.join(scopes)
         }
 
         return body
@@ -459,7 +458,7 @@ class _OAuth2Api:
         body = {
                 'grant_type': 'refresh_token',
                 'refresh_token': refresh_token,
-                'scope': scopes
+                'scope': ' '.join(scopes)
         }
         return body
 
