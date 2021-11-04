@@ -20,7 +20,7 @@ class DateTime:
         Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT),
         also known as Zulu because the time portion of the time stamp ends with a Z.
 
-        :return: datetime
+        :return: datetime (datetime)
         """
         # TODO Precisely synchronize with eBay's clock.
         # https://ofr.ebay.ca/ws/eBayISAPI.dll?EbayTime  (only accurate to the second)
@@ -35,10 +35,8 @@ class DateTime:
 
         string YYYY-MM-DDTHH:MM:SS.SSSZ (e.g., 2004-08-04T19:09:02.768Z)
 
-        :param
-        date_time (datetime) :
-
-        :return: str
+        :param d_t (datetime, required)
+        :return: datetime (str)
         """
         if not isinstance(d_t, datetime):
             reason = 'The to_string parameter should be a datetime, not a ' + str(type(d_t)) + '.'
@@ -56,10 +54,8 @@ class DateTime:
 
         string YYYY-MM-DDTHH:MM:SS.SSSZ (e.g., 2004-08-04T19:09:02.768Z)
 
-        :param
-        date_time_string (str) :
-
-        :return: datetime
+        :param d_t_string (str, required)
+        :return: datetime (datetime)
         """
         if not isinstance(d_t_string, str):
             reason = 'The from_string parameter should be a string, not a ' + str(type(d_t_string)) + '.'

@@ -11,10 +11,13 @@ from urllib.request import urlopen
 from urllib.parse import urljoin
 import shutil
 from sys import platform
+from typing import Any, Dict, List, Optional, Tuple
 
 # Third party imports
+import bs4
 from bs4 import BeautifulSoup
 import requests
+
 
 # Local imports
 
@@ -42,7 +45,7 @@ class Locations:
 class State:
     """ Track the state of progress, even if the program is re-run. """
 
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             with open(Locations.state_path_file) as file_handle:
                 self._states = json.load(file_handle)
@@ -68,12 +71,12 @@ class State:
 
 class Contract:
 
-    def __init__(self, limit=100):
+    def __init__(self, limit: int = 100) -> None:
         self.contracts = self.get_contracts(limit=limit)
         self.cache_contracts()
         self.patch_contracts()
 
-    def cache_contracts(self):
+    def cache_contracts(self) -> None:
         for contract in self.contracts:
             [category, call, link_href, file_name] = contract
             with urlopen(link_href) as url:
@@ -82,7 +85,7 @@ class Contract:
                 with open(destination, 'w') as outfile:
                     json.dump(data, outfile, sort_keys=True, indent=4)
 
-    def get_contracts(self, limit=100):
+    def get_contracts(self, limit: int = 100) -> List[List[str]]:
         contracts = []
         overview_links = []
         base = 'https://developer.ebay.com/'
@@ -94,7 +97,7 @@ class Contract:
             overview_links.append(urljoin(base, link.get('href')))
             if len(contracts) >= limit:
                 break
-        assert(len(overview_links) > 0), 'No contract overview pages found!'
+        assert (len(overview_links) > 0), 'No contract overview pages found!'
 
         for overview_link in overview_links:
             soup = self.get_soup_via_link(overview_link)
@@ -108,14 +111,14 @@ class Contract:
                 if ('beta' not in call) and (record not in contracts):
                     contracts.append(record)
                     logging.info(record)
-            if len(contracts) >= limit:         # useful for expediting debugging with a reduced data set
+            if len(contracts) >= limit:  # useful for expediting debugging with a reduced data set
                 break
-        assert(len(contracts) > 0), 'No contracts found on any overview pages!'
+        assert (len(contracts) > 0), 'No contracts found on any overview pages!'
 
         return contracts
 
     @staticmethod
-    def patch_contracts():
+    def patch_contracts() -> None:
 
         # In the Sell Fulfillment API, the model 'Address' is returned with attribute 'countryCode'.
         # However, the JSON specifies 'country' instead, thus Swagger generates the wrong API.
@@ -125,7 +128,7 @@ class Contract:
                 data = json.load(file_handle)
                 properties = data['components']['schemas']['Address']['properties']
                 if 'country' in properties:
-                    properties['countryCode'] = properties.pop('country')   # Warning, alphabetical key order spoiled.
+                    properties['countryCode'] = properties.pop('country')  # Warning, alphabetical key order spoiled.
                     with open(file_location, 'w') as outfile:
                         json.dump(data, outfile, sort_keys=True, indent=4)
                 else:
@@ -134,14 +137,14 @@ class Contract:
             logging.error(f"Can't open {file_location}.")
 
     @staticmethod
-    def get_soup_via_link(url):
+    def get_soup_via_link(url: str) -> bs4.BeautifulSoup:
         # Make a GET request to fetch the raw HTML content
         html_content = requests.get(url).text
 
         # Parse the html content
         return BeautifulSoup(html_content, "html.parser")
 
-    def get_base_paths_and_flows(self):
+    def get_base_paths_and_flows(self) -> Tuple[dict, Dict[Any, dict], Dict[Any, Dict[Any, Optional[Any]]]]:
         """Process the JSON contract and extract two things for later use.
         1) the base_path for each category_call (e.g. buy_browse)
         2) the security flow for each scope in each category_call
@@ -200,8 +203,8 @@ class Contract:
         return base_paths, flows, scopes
 
 
-def install_tools():
-    if platform == 'darwin':    # OS X or MacOS
+def install_tools() -> None:
+    if platform == 'darwin':  # OS X or MacOS
         logging.info('Install or update the package manager named HomeBrew.')
         os.system('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
 
@@ -230,7 +233,7 @@ def install_tools():
         sys.exit(message)
 
 
-def delete_folder_contents(path_to_folder):
+def delete_folder_contents(path_to_folder: str):
     list_dir = os.listdir(path_to_folder)
     for filename in list_dir:
         file_path = os.path.join(path_to_folder, filename)
@@ -244,7 +247,8 @@ def delete_folder_contents(path_to_folder):
 
 class Process:
     """ The processing steps are split into bite sized methods. """
-    def __init__(self):
+
+    def __init__(self) -> None:
         self.file_ebay_rest = os.path.abspath('../src/ebay_rest/a_p_i.py')
         self.file_setup = os.path.abspath('../setup.cfg')
 
@@ -252,7 +256,7 @@ class Process:
         self.path_final = os.path.abspath(Locations.target_path)
         self.path_ebay_rest = os.path.abspath('../src/ebay_rest')
 
-        assert os.path.isdir(self.path_cache),\
+        assert os.path.isdir(self.path_cache), \
             'Fatal error. Prior, you must run the script generate_api_cache.py.'
         for (_root, dirs, _files) in os.walk(self.path_cache):
             dirs.sort()
@@ -266,7 +270,7 @@ class Process:
         with open(os.path.join(Locations.cache_path, 'scopes.json')) as file_handle:
             self.scopes = json.load(file_handle)
 
-    def copy_libraries(self):
+    def copy_libraries(self) -> None:
         """ Copy essential parts of the generated eBay libraries to within the src folder. """
         # purge what might already be there
         for filename in os.listdir(self.path_final):
@@ -280,17 +284,17 @@ class Process:
             dst = os.path.join(self.path_final, name)
             _destination = shutil.copytree(src, dst)
 
-    def fix_imports(self):
+    def fix_imports(self) -> None:
         """ The deeper the directory, the more dots are needed to make the correct relative path. """
         for name in self.names:
             self._fix_imports_recursive(name, '..', os.path.join(self.path_final, name))
 
-    def _fix_imports_recursive(self, name, dots, path):
+    def _fix_imports_recursive(self, name: str, dots: str, path: str) -> None:
         """ This does the recursive part of fix_imports. """
 
         for (_root, dirs, files) in os.walk(path):
 
-            swaps = [   # order is crucial, put more specific swaps before less
+            swaps = [  # order is crucial, put more specific swaps before less
                 (f'import {name}.models', f'from {dots}{name} import models'),
                 (f'from models', f'from {dots}{name}.models'),
                 (f'import {name}', f'import {dots}{name}'),
@@ -305,7 +309,7 @@ class Process:
                         for (original, replacement) in swaps:
                             if original in old_line:
                                 old_line = old_line.replace(original, replacement)
-                                break   # only the first matching swap should happen
+                                break  # only the first matching swap should happen
                         new_lines += old_line
                 with open(target_file, 'w') as file_handle:
                     file_handle.write(new_lines)
@@ -316,7 +320,7 @@ class Process:
 
             break
 
-    def merge_setup(self):
+    def merge_setup(self) -> None:
         """ Merge the essential bits of the generated setup files into the master. """
 
         # compile a list of all unique requirements from the generated libraries
@@ -344,7 +348,7 @@ class Process:
         # TODO This was commented out because it caused an error. Is something like it truly needed?
         # self._put_anchored_lines(target_file=self.file_setup, anchor='setup.cfg', insert_lines=insert_lines)
 
-    def make_includes(self):
+    def make_includes(self) -> None:
         """ Make includes for all the libraries. """
 
         lines = []
@@ -355,7 +359,7 @@ class Process:
         insert_lines = '\n'.join(lines) + '\n'
         self._put_anchored_lines(target_file=self.file_ebay_rest, anchor='er_imports', insert_lines=insert_lines)
 
-    def get_methods(self):
+    def get_methods(self) -> List[Tuple[str, str, str, str, str, str]]:
         """ For all modules, get all methods. """
 
         # catalog the module files that contain all method implementations
@@ -378,24 +382,24 @@ class Process:
             'async_req',
             'request thread',
         )
-        typo_remedy = (             # pairs of typos found in docstrings and their remedy
-            ('cerate', 'create'),               # noqa: - suppress flake8 compatible linters, misspelling is intended
-            ('distibuted', 'distributed'),      # noqa:
-            ('http:', 'https:'),                # noqa:
-            ('identfier', 'identifier'),        # noqa:
-            ('Limt', 'Limit'),                  # noqa:
-            ('lisitng', 'listing'),             # noqa:
-            ('maketplace', 'marketplace'),      # noqa:
-            ('motorcyles', 'motorcycles'),      # noqa:
-            ('parmeter', 'parameter'),          # noqa:
-            ('publlish', 'publish'),            # noqa:
+        typo_remedy = (  # pairs of typos found in docstrings and their remedy
+            ('cerate', 'create'),  # noqa: - suppress flake8 compatible linters, misspelling is intended
+            ('distibuted', 'distributed'),  # noqa:
+            ('http:', 'https:'),  # noqa:
+            ('identfier', 'identifier'),  # noqa:
+            ('Limt', 'Limit'),  # noqa:
+            ('lisitng', 'listing'),  # noqa:
+            ('maketplace', 'marketplace'),  # noqa:
+            ('motorcyles', 'motorcycles'),  # noqa:
+            ('parmeter', 'parameter'),  # noqa:
+            ('publlish', 'publish'),  # noqa:
         )
         for (name, module, path) in modules:
             step = 0
             with open(path) as file_handle:
                 for line in file_handle:
 
-                    if step == 0:   # looking for the next method
+                    if step == 0:  # looking for the next method
                         if method_marker_whole in line:
                             (method_and_params, _junk) = line.split(')')
                             (method, params) = method_and_params.split('(')
@@ -429,7 +433,7 @@ class Process:
 
         return methods
 
-    def make_methods(self, methods):
+    def make_methods(self, methods: List[Tuple[str, str, str, str, str, str]]) -> None:
         """ Make all the python methods and insert them where needed. """
 
         code = "\n"
@@ -437,7 +441,7 @@ class Process:
             code += self._make_method(method)
         self._put_anchored_lines(target_file=self.file_ebay_rest, anchor='er_methods', insert_lines=code)
 
-    def _make_method(self, method):
+    def _make_method(self, method: Tuple[str, str, str, str, str, str]) -> str:
         """ Return the code for one python method. """
 
         (name, module, path, method, params, docstring) = method
@@ -460,7 +464,7 @@ class Process:
                 break
         # if we found an optional parameter, then add a provision for 'optionals' aka *args in the right spot
         if has_docstring_problem:
-            pass    # TODO Do something to make the comments aka docstring handle optional parameters properly
+            pass  # TODO Do something to make the comments aka docstring handle optional parameters properly
 
         # prepare the method type by testing for 'offset' parameter
         method_type = 'paged' if (':param str offset' in docstring) else 'single'
@@ -540,7 +544,7 @@ class Process:
 
         return code
 
-    def remove_duplicates(self):
+    def remove_duplicates(self) -> None:
         """ Deduplicate identical .py files found in all APIs.
         for example when comments are ignored the rest.py files appear identical. """
 
@@ -566,7 +570,7 @@ class Process:
 
         # TODO apply the DRY principle to the repeaters
 
-    def _remove_duplicates_recursive_catalog(self, name, path):
+    def _remove_duplicates_recursive_catalog(self, name: str, path: str) -> list:
         """ This does the recursive part of cataloging for remove_duplicates. """
 
         catalog = []
@@ -587,7 +591,7 @@ class Process:
             return catalog
 
     @staticmethod
-    def _camel(name):
+    def _camel(name: str) -> str:
         """ Convert a name with underscore separators to upper camel case. """
         camel = ''
         for part in name.split('_'):
@@ -595,7 +599,7 @@ class Process:
         return camel
 
     @staticmethod
-    def _put_anchored_lines(target_file, anchor, insert_lines):
+    def _put_anchored_lines(target_file: str, anchor: str, insert_lines: str) -> None:
         """ In the file replace what is between anchors with new lines of code. """
 
         if os.path.isfile(target_file):
@@ -629,8 +633,7 @@ class Process:
             logging.error(f"Can't find {target_file}")
 
 
-def main():
-
+def main() -> None:
     # while debugging it is handy to change the log level from INFO to DEBUG
     logging.basicConfig(format='%(asctime)s %(levelname)s %(filename)s %(funcName)s: %(message)s', level=logging.DEBUG)
 
@@ -641,7 +644,7 @@ def main():
     else:
         os.mkdir(Locations.cache_path)
 
-    s = State()     # Track the state of progress
+    s = State()  # Track the state of progress
 
     # install tools if they are missing # TODO
     # or, update tools if it has been more than a day
@@ -651,7 +654,7 @@ def main():
         # install_tools()
         s.set(key, datetime.now().strftime(dt_format))
 
-    c = Contract(limit=100)     # hint, save time by reducing the limit while debugging
+    c = Contract(limit=100)  # hint, save time by reducing the limit while debugging
 
     base_paths, flows, scopes = c.get_base_paths_and_flows()
 

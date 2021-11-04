@@ -1,11 +1,12 @@
 # Standard library imports
-import base64
-from datetime import datetime, timezone, timedelta
-import json
+from base64 import b64encode
+from datetime import datetime, timedelta, timezone
+from json import loads
 import logging
-import requests
-import time
-import threading
+from requests import codes, post, Response
+from time import sleep
+from threading import Lock
+from typing import List
 from urllib.parse import parse_qs, urlencode
 
 # Local imports
@@ -23,17 +24,23 @@ class ApplicationToken:
     This is a facade for the oath module.
     """
 
-    def __init__(self, sandbox, client_id=None, client_secret=None, ru_name=None, application_scopes=None):
+    def __init__(self,
+                 sandbox: bool,
+                 client_id: str or None = None,
+                 client_secret: str or None = None,
+                 ru_name: str or None = None,
+                 application_scopes: List[str] or None = None) -> None:
         """
         :param sandbox (bool, required): The system to use, True for Sandbox/Testing and False for Production.
 
-        # application/client credentials, optional if you don't make API calls that need an application/client token
+        # application/client credentials are optional if you don't make API calls that need an application/client token
         :param client_id (str, optional):
         :param client_secret (str, optional):
         :param ru_name (str, optional):
-        :param application_scopes (str, optional):
+        :param application_scopes (list, optional):
+        :return: None (None)
         """
-        self._lock = threading.Lock()
+        self._lock = Lock()
         # The Multiton decorator wraps this initializer with a thread lock; it is safe to skip using self._lock.
 
         self._sandbox = sandbox
@@ -47,8 +54,12 @@ class ApplicationToken:
         # instantiate low-level oauth api utilities
         self._oauth2api_inst = _OAuth2Api(sandbox, client_id, client_secret, ru_name)
 
-    def get(self):
-        """ Get an eBay Application Token. """
+    def get(self) -> str:
+        """
+        Get an eBay Application Token.
+
+        :return: token (str)
+        """
         with self._lock:
             if self._application_scopes is None:
                 self._determine_application_scopes()
@@ -62,8 +73,12 @@ class ApplicationToken:
 
         return token
 
-    def _determine_application_scopes(self):
-        """ Determine the application scopes that are currently allowed. """
+    def _determine_application_scopes(self) -> None:
+        """
+        Determine the application scopes that are currently allowed.
+
+        return: None (None)
+        """
         if self._sandbox:
             # permission is always granted for all
             scopes = list(Reference.get_application_scopes().keys())
@@ -78,8 +93,12 @@ class ApplicationToken:
 
         self._application_scopes = scopes
 
-    def _refresh_application(self):
-        """ Refresh the eBay Application Token and update all that comes with it."""
+    def _refresh_application(self) -> None:
+        """
+        Refresh the eBay Application Token and update all that comes with it.
+
+        :return None (None)
+        """
         token_application = self._oauth2api_inst.get_application_token(self._application_scopes)
         if token_application.error is not None:
             reason = 'token_application.error ' + token_application.error
@@ -94,14 +113,19 @@ class ApplicationToken:
 class UserToken:
     """
     Initialize, refresh and supply an eBay OAuth ***user*** token.
-
     This is a facade for the oath module.
     """
 
-    def __init__(self, sandbox,
-                 client_id=None, client_secret=None, ru_name=None,
-                 user_id=None, user_password=None, user_scopes=None,
-                 user_refresh_token=None, user_refresh_token_expiry=None):
+    def __init__(self,
+                 sandbox: bool,
+                 client_id: str or None = None,
+                 client_secret: str or None = None,
+                 ru_name: str or None = None,
+                 user_id: str or None = None,
+                 user_password: str or None = None,
+                 user_scopes: List[str] or None = None,
+                 user_refresh_token: str or None = None,
+                 user_refresh_token_expiry: str or None = None) -> None:
         """
         :param sandbox (bool, required): The system to use, True for Sandbox/Testing and False for Production.
 
@@ -118,9 +142,11 @@ class UserToken:
         # user token supply, optional if don't mind a Chrome browser opening when getting a user token
         :param user_refresh_token (str, optional):
         :param user_refresh_token_expiry (str, optional):
+
+        :return None (None)
         """
 
-        self._lock = threading.Lock()
+        self._lock = Lock()
         # The Multiton decorator wraps this initializer with a thread lock; it is safe to skip using self._lock.
 
         self._sandbox = sandbox
@@ -158,8 +184,11 @@ class UserToken:
             else:
                 raise Error(number=1, reason='Must supply refresh token expiry with refresh token!')
 
-    def get(self):
-        """ Get an eBay User Access Token. """
+    def get(self) -> str:
+        """ Get an eBay User Access Token.
+
+        : return token (str)
+        """
         with self._lock:
             if self._user_scopes is None:
                 self._determine_user_scopes()
@@ -172,8 +201,11 @@ class UserToken:
             token = self._user_token.access_token
         return token
 
-    def _determine_user_scopes(self):
-        """ Determine the user access scopes that are currently allowed. """
+    def _determine_user_scopes(self) -> None:
+        """
+        Determine the user access scopes that are currently allowed.
+        :return None (None)
+        """
         if self._sandbox:
             # permission is always granted for all
             scopes = list(Reference.get_user_scopes().keys())
@@ -186,10 +218,12 @@ class UserToken:
                       "https://api.ebay.com/oauth/api_scope/sell.fulfillment"]
         self._user_scopes = scopes
 
-    def _refresh_user(self):
+    def _refresh_user(self) -> None:
         """
         Refresh the eBay User Access Token and update all that comes with it.
         If we don't have a current refresh token, run the authorization flow.
+
+        :return None (None)
         """
         if self._user_refresh_token is None:
             # We don't have a refresh token; run authorization flow
@@ -203,11 +237,13 @@ class UserToken:
             # Exchange our still current refresh token for a new user access token
             self._refresh_user_token()
 
-    def _authorization_flow(self):
+    def _authorization_flow(self) -> None:
         """
         Get an authorization code by running the authorization_flow, and
         then exchange that for a refresh token (which also contains a
         user token).
+
+        :return None (None)
         """
         if not self._allow_get_user_consent:
             raise Error(number=1, reason='Getting user consent via browser disabled')
@@ -216,7 +252,10 @@ class UserToken:
         if sign_in_url is None:
             raise Error(number=1, reason='sign_in_url is None.')
 
-        code = self._get_authorization_code(sign_in_url)
+        try:
+            code = self._get_authorization_code(sign_in_url)
+        except Error:
+            raise
 
         refresh_token = self._oauth2api_inst.exchange_code_for_access_token(code)
 
@@ -233,14 +272,13 @@ class UserToken:
             access_token=refresh_token.access_token,
             token_expiry=refresh_token.token_expiry)
 
-    def _get_authorization_code(self, sign_in_url: str):
+    def _get_authorization_code(self, sign_in_url: str) -> str:
         """Run the authorization flow in order to get an authorization code,
         which can subsequently be exchanged for a refresh (and user) token.
 
-        :param
-        sign_in_url (str): The redirect URL for gaining user consent
+        :param sign_in_url (str): The redirect URL for gaining user consent.
+        :return code (str): Authorization code.
         """
-
         delay = 5  # delay seconds to give the page an opportunity to render and the user to act on a possible captcha
 
         # Don't move the import to the top of the file because not everyone uses this method.
@@ -250,19 +288,19 @@ class UserToken:
         # open browser and load the initial page
         browser = webdriver.Chrome()
         browser.get(sign_in_url)
-        time.sleep(delay)
+        sleep(delay)
 
         # fill in the username then click continue
         form_userid = browser.find_element_by_name('userid')
         form_userid.send_keys(self._user_id)
         browser.find_element_by_id('signin-continue-btn').click()
-        time.sleep(delay)
+        sleep(delay)
 
         # fill in the password then submit
         form_pw = browser.find_element_by_name('pass')
         form_pw.send_keys(self._user_password)
         browser.find_element_by_id('sgnBt').submit()
-        time.sleep(delay)
+        sleep(delay)
 
         # get the result url and then close browser
         qs = browser.current_url.partition('?')[2]
@@ -284,9 +322,11 @@ class UserToken:
             reason = f"Authorization unsuccessful, check userid & password:{self._user_id} {self._user_password}"
             raise Error(number=1, reason=reason)
 
-    def _refresh_user_token(self):
-        """Exchange a refresh token for a current user token."""
-
+    def _refresh_user_token(self) -> None:
+        """
+        Exchange a refresh token for a current user token.
+        :return: None (None)
+        """
         user_token = self._oauth2api_inst.get_access_token(self._user_refresh_token.refresh_token,
                                                            self._user_scopes)
 
@@ -300,10 +340,19 @@ class UserToken:
 
 class _OAuthToken(object):
 
-    def __init__(self, error=None, access_token=None, refresh_token=None, refresh_token_expiry=None, token_expiry=None):
+    def __init__(self,
+                 error: str or None = None,
+                 access_token: str or None = None,
+                 refresh_token: str or None = None,
+                 refresh_token_expiry: datetime or None = None,
+                 token_expiry: datetime or None = None):
         """
-            token_expiry: datetime in UTC
-            refresh_token_expiry: datetime in UTC
+        :param error (str, optional):
+        :param access_token (str, optional):
+        :param refresh_token (str, optional):
+        :param refresh_token_expiry (datetime, optional): datetime in UTC
+        :param token_expiry (datetime, optional): datetime in UTC
+        :return None (None)
         """
         self.access_token = access_token
         self.token_expiry = token_expiry
@@ -311,7 +360,10 @@ class _OAuthToken(object):
         self.refresh_token_expiry = refresh_token_expiry
         self.error = error
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        :return token_str: (str)
+        """
         token_str = '{'
         if self.error is not None:
             token_str += '"error": "' + self.error + '"'
@@ -332,7 +384,7 @@ class _OAuthToken(object):
 
 
 class _OAuth2Api:
-    def __init__(self, sandbox, client_id, client_secret, ru_name):
+    def __init__(self, sandbox: bool, client_id: str, client_secret: str, ru_name: str):
         """Initialize OAuth2Api instance
 
         :param sandbox (bool, required):
@@ -347,9 +399,10 @@ class _OAuth2Api:
         self._client_secret = client_secret
         self._ru_name = ru_name
 
-    def generate_user_authorization_url(self, scopes, state=None):
+    def generate_user_authorization_url(self, scopes: List[str], state: str or None = None) -> str:
         """
-            scopes = list of strings
+        :param scopes (list(str)), required)
+        :param state (str, optional)
         """
         param = {
             'client_id': self._client_id,
@@ -369,34 +422,38 @@ class _OAuth2Api:
             web_endpoint = "https://auth.ebay.com/oauth2/authorize"
         return web_endpoint + '?' + query
 
-    def get_application_token(self, scopes):
+    def get_application_token(self, scopes: List[str]) -> _OAuthToken:
         """
-            makes call for application token and stores result in credential object
-            returns credential object
+        Makes call for application token and stores result in credential object.
+        :param scopes (list(str)), required)
+        :return credential_object (_OAuthToken)
         """
-
         logging.debug("Trying to get a new application access token ... ")
         headers = self._generate_request_headers()
         body = self._generate_application_request_body(scopes)
         api_endpoint = self._get_endpoint()
-        resp = requests.post(api_endpoint, data=body, headers=headers)
-        content = json.loads(resp.content)
+        resp = post(api_endpoint, data=body, headers=headers)
+        content = loads(resp.content)
         token = _OAuthToken()
 
         return self._finish(resp, token, content)
 
-    def exchange_code_for_access_token(self, code):
+    def exchange_code_for_access_token(self, code: str) -> _OAuthToken:
+        """
+        :param code (str, required)
+        :return credential_object (_OAuthToken)
+        """
         logging.debug("Trying to get a new user access token ... ")
 
         headers = self._generate_request_headers()
         body = self._generate_oauth_request_body(code)
         api_endpoint = self._get_endpoint()
-        resp = requests.post(api_endpoint, data=body, headers=headers)
+        resp = post(api_endpoint, data=body, headers=headers)
 
-        content = json.loads(resp.content)
+        content = loads(resp.content)
         token = _OAuthToken()
 
-        if resp.status_code == requests.codes.ok:
+        if resp.status_code == codes.ok:
             token.refresh_token = content['refresh_token']
             token.refresh_token_expiry = (
                 datetime.utcnow()
@@ -406,55 +463,67 @@ class _OAuth2Api:
 
         return self._finish(resp, token, content)
 
-    def get_access_token(self, refresh_token, scopes):
+    def get_access_token(self, refresh_token: str, scopes: List[str]) -> _OAuthToken:
         """
         refresh token call
+        :param refresh_token (str, required)
+        :param scopes (list(str)), required)
+        :return credential_object (_OAuthToken)
         """
-
         logging.debug("Trying to get a new user access token ... ")
 
         headers = self._generate_request_headers()
         body = self._generate_refresh_request_body(scopes, refresh_token)
         api_endpoint = self._get_endpoint()
-        resp = requests.post(api_endpoint, data=body, headers=headers)
-        content = json.loads(resp.content)
+        resp = post(api_endpoint, data=body, headers=headers)
+        content = loads(resp.content)
         token = _OAuthToken()
         token.token_response = content
 
         return self._finish(resp, token, content)
 
-    def _get_endpoint(self):
+    def _get_endpoint(self) -> str:
+        """
+        :return url (str)
+        :return:
+        """
         if self._sandbox:
             return "https://api.sandbox.ebay.com/identity/v1/oauth2/token"
         else:
             return "https://api.ebay.com/identity/v1/oauth2/token"
 
-    def _generate_request_headers(self):
-
-        b64_encoded_credential = base64.b64encode((self._client_id + ':'
-                                                   + self._client_secret).encode())
+    def _generate_request_headers(self) -> dict:
+        """
+        :return headers (dict)
+        """
+        b64_encoded_credential = b64encode((self._client_id + ':' + self._client_secret).encode())
         headers = {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': 'Basic ' + b64_encoded_credential.decode()
         }
-
         return headers
 
-    def _generate_application_request_body(self, scopes):
-
+    def _generate_application_request_body(self, scopes: List[str]) -> dict:
+        """
+        :param scopes list(str)
+        :return body (dict)
+        """
         body = {
                 'grant_type': 'client_credentials',
                 'redirect_uri': self._ru_name,
                 'scope': ' '.join(scopes)
         }
-
         return body
 
     @staticmethod
-    def _generate_refresh_request_body(scopes, refresh_token):
+    def _generate_refresh_request_body(scopes: List[str], refresh_token: str) -> dict:
+        """
+        :param scopes (list(str), required):
+        :param refresh_token (str, required):
+        :return body (dict):
+        """
         if refresh_token is None:
             raise Error(number=1, reason="credential object does not contain refresh_token and/or scopes")
-
         body = {
                 'grant_type': 'refresh_token',
                 'refresh_token': refresh_token,
@@ -462,7 +531,11 @@ class _OAuth2Api:
         }
         return body
 
-    def _generate_oauth_request_body(self, code):
+    def _generate_oauth_request_body(self, code: str) -> dict:
+        """
+        :param code (str):
+        :return body (dict):
+        """
         body = {
                 'grant_type': 'authorization_code',
                 'redirect_uri': self._ru_name,
@@ -471,9 +544,14 @@ class _OAuth2Api:
         return body
 
     @staticmethod
-    def _finish(resp, token, content):
-
-        if resp.status_code == requests.codes.ok:
+    def _finish(resp: Response, token: _OAuthToken, content: dict) -> _OAuthToken:
+        """
+        :param resp (Response, required):
+        :param token (_OAuthToken:, required):
+        :param content (dict, required):
+        :return:
+        """
+        if resp.status_code == codes.ok:
             token.access_token = content['access_token']
             token.token_expiry = (
                 datetime.utcnow()

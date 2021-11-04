@@ -15,20 +15,23 @@ class Error(Exception):
     Refrain from altering the error number or text descriptions when re-raising.
     """
 
-    def __init__(self, number: int, reason: str, detail: str = None):
+    def __init__(self, number: int, reason: str, detail: str = None) -> None:
         """ Instantiate a new Error object.
 
-        :param int number: A unique natural number code.
-        :param str reason: A short description of the reason.
-        :param str detail: The details about the failure, optional.
-        :rtype: object
+        :param number (int, required) A unique natural number code.
+        :param reason (str, required) A short description of the reason.
+        :param detail (str, optional) The details about the failure, optional.
+        :return None (None)
         """
         super().__init__()
         self.number = number
         self.reason = reason
         self.detail = detail
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        :return message (str)
+        """
         message = 'Error number' + str(self.number) + '.'
         if self.reason:
             message = message + ' ' + self.reason

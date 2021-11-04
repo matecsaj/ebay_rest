@@ -1,8 +1,10 @@
 # Standard library imports
+import collections
 import datetime
-import json
+from json import loads
 import logging
 import os
+from typing import Dict, List, Tuple, Union
 
 # Local imports
 from .error import Error
@@ -77,8 +79,13 @@ class API:
     For an overview of the APIs and more see https://developer.ebay.com/docs.
     """
 
-    def __init__(self, path=None, application=None, user=None, header=None,
-                 throttle: bool = False, timeout: float = -1.0):
+    def __init__(self,
+                 path: str or None = None,
+                 application: str or dict or None = None,
+                 user: str or dict or None = None,
+                 header: str or dict or None = None,
+                 throttle: bool or None = False,
+                 timeout: float or None = -1.0) -> None:
         """
         Instantiate an API object, then use it to call hundreds of eBay APIs.
 
@@ -111,9 +118,7 @@ class API:
         argument of -1 specifies an unbounded wait. It is forbidden to specify a timeout when the throttle is False.
         Defaults to -1.
 
-        :return An API object.
-
-        :rtype: object
+        :return (object) : An API object.
         """
         # if present, load the configuration file
         config_contents = None
@@ -123,7 +128,7 @@ class API:
         if os.path.isfile(self._config_location):
             try:
                 with open(self._config_location, 'r') as f:
-                    config_contents = json.loads(f.read())
+                    config_contents = loads(f.read())
             except IOError:
                 raise Error(number=1, reason='Unable to open ' + self._config_location)
 
@@ -276,9 +281,18 @@ class API:
         return
 
     @staticmethod
-    def _process_config_section(config_contents, section, parameter):
-        """ Get a configuration section from the parameter or the loaded config file. """
+    def _process_config_section(config_contents: dict,
+                                section: str,
+                                parameter: str or dict or None
+                                ) -> dict or None:
+        """
+        Get a configuration section from the parameter or the loaded config file.
 
+        :param config_contents (dict, required)
+        :param section (str, required)
+        :param parameter (str or dict or None, required)
+        :return result (dict or None)
+        """
         result = None
         detail = None
         param_name = section[:-1]
@@ -317,7 +331,8 @@ class API:
                 detail = "The parameter " + param_name + " should not be None or the configuration file should exist."
 
         else:
-            detail = "Parameter " + param_name + " must be a Dict, String or None but it is a " + str(type(parameter)) + "."
+            detail = "Parameter " + param_name + " must be a Dict, String or None but it is a "\
+                     + str(type(parameter)) + "."
 
         if result is None:
             raise Error(number=1, reason="Get configuration for " + param_name + " problem.", detail=detail)
@@ -334,9 +349,17 @@ class API:
             return result
 
     @staticmethod
-    def _check_keys(dict_, keys, name):
-        """ True if the dictionary key is required and False when optional. """
-
+    def _check_keys(dict_: dict,
+                    keys: List[Tuple[str, bool]],
+                    name: str
+                    ) -> None:
+        """
+        True if the dictionary key is required and False when optional.
+        :param dict_ (dict, required)
+        :param keys (List[Tuple[str, bool]], required)
+        :param name (str, required)
+        :return None (None)
+        """
         valid_keys = []
         for (key, required) in keys:
             valid_keys.append(key)
@@ -362,8 +385,11 @@ class API:
             if key not in valid_keys:
                 raise Error(number=1, reason="Found an unexpected key.", detail=key + " in " + name)
 
-    def _check_header(self, keys_values):
-        """ Check header keys and values. """
+    def _check_header(self, keys_values: List[Union[Tuple[str, list], Tuple[str, None]]]) -> None:
+        """
+        Check header keys and values.
+        :param keys_values (List[Union[Tuple[str, list], Tuple[str, None]]], required)
+        """
         header = self._header
         valid_keys = []
         for (key, values) in keys_values:
@@ -384,21 +410,31 @@ class API:
             if key not in valid_keys:
                 raise Error(number=1, reason="Unexpected header key.", detail=key)
 
-    def _method_single(self, function_configuration, base_path, function_instance, function_client,
-                       method, object_error, user_access_token, rate_keys, params, **kwargs):
+    def _method_single(self,
+                       function_configuration: callable,
+                       base_path: str,
+                       function_instance: type,
+                       function_client: classmethod or type,
+                       method: str,
+                       object_error: object,
+                       user_access_token: bool,
+                       rate_keys: List[str],
+                       params: Tuple[str] or str or None,
+                       **kwargs: Dict[str, int]
+                       ) -> collections:
         """ Do the work for method that returns a single object.
 
-        :param function_configuration:
-        :param base_path:
-        :param function_instance:
-        :param function_client:
-        :param method:
-        :param object_error:
-        :param user_access_token:
-        :param rate_keys:
-        :param params:
-        :param kwargs:
-        :return:
+        :param function_configuration (callable, required):
+        :param base_path (str, required):
+        :param function_instance (type, required):
+        :param function_client (class or type, required):
+        :param method (str, required):
+        :param object_error (object, required):
+        :param user_access_token (bool, required):
+        :param rate_keys (List[str]: required:
+        :param params: (Tuple[str] or str or None, required)
+        :param kwargs: (Dict[str, int], required)
+        :return object: (collections)
         """
         try:
             swagger_method = self._get_swagger_method(function_configuration, base_path, function_instance,
@@ -418,22 +454,32 @@ class API:
         else:
             return result
 
-    def _method_paged(self, function_configuration, base_path, function_instance, function_client,
-                      method, object_error, user_access_token, rate_keys, params, **kwargs):
+    def _method_paged(self,
+                      function_configuration: callable,
+                      base_path: str,
+                      function_instance: type,
+                      function_client: classmethod or type,
+                      method: str,
+                      object_error: object,
+                      user_access_token: bool,
+                      rate_keys: List[str],
+                      params: Tuple[str] or str or None,
+                      **kwargs,     # TODO Is it wrong to put Dict[str, int] or is PyCharm's warning system buggy?
+                      ) -> collections:
         """ Do the work for method that yields objects from repeated calls which is termed Paging by eBay.
 
         Across all pages, eBay has a hard limit on how many records it will return. This is subject to change
         and can vary by call. The swagger call will raise an exception at the limit. 10,000 is a common hard limit.
 
-        :param function_configuration:
-        :param base_path:
-        :param function_instance:
-        :param function_client:
-        :param method:
-        :param object_error:
-        :param params:
-        :param kwargs:
-        :return:
+        :param function_configuration (callable, required):
+        :param base_path (str, required):
+        :param function_instance (type, required):
+        :param function_client (classmethod or type, required):
+        :param method (str, required):
+        :param object_error (object, required):
+        :param params (Tuple[str] or str or None, required):
+        :param kwargs (Dict[str, int], required):
+        :return collection (collections):
         """
         page_controls = ['href', 'limit', 'next', 'offset', 'prev', 'total', 'warnings']
         page_limit = 200  # the maximum number of records per page, as dictated by eBay
@@ -446,7 +492,7 @@ class API:
 
         if 'limit' in kwargs:
             if not isinstance(kwargs['limit'], int):
-                reason = "The limit must be an integer, you supplied a " + type(kwargs['limit']) + '.'
+                reason = "The limit must be an integer, you supplied a " + str(type(kwargs['limit'])) + '.'
                 raise Error(number=99002, reason=reason)
             records_desired = kwargs['limit']
             if records_desired <= 0:
@@ -533,9 +579,27 @@ class API:
             yield_max = result['total']
         yield {'total': {'records_yielded': yield_record_count, 'records_available': yield_max}}
 
-    def _get_swagger_method(self, function_configuration, base_path, function_instance, function_client,
-                            method, user_access_token, params):
-        """ Get a callable Swagger method that is ready to use. """
+    def _get_swagger_method(self,
+                            function_configuration: callable,
+                            base_path: str,
+                            function_instance: type,
+                            function_client: classmethod or type,
+                            method: str,
+                            user_access_token: bool,
+                            params: Tuple[str] or str or None
+                            ) -> callable:
+        """
+        Get a callable Swagger method that is ready to use.
+
+        :param function_configuration (callable, required):
+        :param base_path (str, required):
+        :param function_instance (type, required):
+        :param function_client (classmethod or type, required):
+        :param method (str, required):
+        :param user_access_token (bool, required):
+        :param params (Tuple[str] or str or None, required):
+        :return function (callable)
+        """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = function_configuration()
         try:
@@ -580,7 +644,7 @@ class API:
         marketplace_id = self._header['marketplace_id']
         # some calls have a positional parameter for this, and the header must use the same value
         if user_access_token:  # all such calls happen to require a user access token
-            # TODO instead it would be safter to check if 'method' is in a list of belongers
+            # TODO instead it would be safer to check if 'method' is in a list of belongers
             for param in (params or []):
                 if param in self._marketplace_ids:
                     marketplace_id = param
@@ -597,16 +661,13 @@ class API:
         # return the callable function
         return getattr(api_instance, method)
 
-    def _swagger_throttle(self, base_path: str, rate_keys: list):
+    def _swagger_throttle(self, base_path: str, rate_keys: list) -> None:
         """ Block when the swagger method is below it's prorated call limit.
 
         Call this just before calling a swagger method. Only do for the first paging call.
 
-        :param
-        base_path (str):
-
-        :param
-        rate (list) : Strings, keys used to lookup a rate
+        :param base_path (str, required):
+        :param rate (list, required) : Strings, keys used to lookup a rate
         """
         if not self._sandbox:  # eBay does not limit calls to the sandbox
 
@@ -631,8 +692,21 @@ class API:
                 except Error:
                     raise
 
-    def _call_swagger(self, swagger_method, params, kwargs, object_error):
-        """ Call the API method generated by Swagger and tidy the result. """
+    def _call_swagger(self,
+                      swagger_method: classmethod,
+                      params: Tuple[str] or str or None,
+                      kwargs: Dict[str, Dict[str, int]],
+                      object_error: object
+                      ) -> collections:
+        """
+        Call the API method generated by Swagger and tidy the result.
+
+        :param swagger_method (classmethod, required)
+        :param params (Tuple[str] or str or None, required)
+        :param kwargs (Dict[str, Dict[str, int]], required)
+        :param object_error (object, required)
+        :return collection (collections)
+        """
         try:
             if params:
                 if isinstance(params, tuple):
@@ -657,7 +731,7 @@ class API:
         else:
             return self._de_swagger(api_response)
 
-    def _de_swagger(self, obj):
+    def _de_swagger(self, obj: collections):
         """ Take a Swagger data object and return the Python styled equivalent.
 
         There is a Java vibe to objects returned from Swagger generated code and other issues:
@@ -669,6 +743,9 @@ class API:
         Do a "deep copy" and fix problems along the way.
 
         To learn more about Swagger, visit https://swagger.io.
+
+        :param obj (collections, required): The object returned by a Swagger call.
+        :return obj (collections)
         """
         basic_types = (bool, bytes, datetime.date, datetime.datetime,
                        float, int, type(None), str)  # omitted ones that are unlikely to ever be used

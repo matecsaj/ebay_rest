@@ -1,6 +1,6 @@
 # Standard library imports
 import datetime
-import threading
+from threading import Lock
 
 
 # Local imports
@@ -31,7 +31,7 @@ class Multiton(object):
     To learn about the Multiton Creation (Anti)Pattern, visit https://en.wikipedia.org/wiki/Multiton_pattern.
     """
     def __init__(self, cls):
-        self.__dict__.update({'instances': list(), 'lock': threading.Lock(), 'cls': cls})
+        self.__dict__.update({'instances': list(), 'lock': Lock(), 'cls': cls})
         # The above accomplishes the following, without triggering a Pycharm warning and endless recursion.
         # self.instances = list()
         # self.lock = threading.Lock()

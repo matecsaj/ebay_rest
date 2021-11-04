@@ -4,6 +4,8 @@ import threading
 import logging
 import math
 import time
+from typing import List
+
 
 # Local imports
 from .date_time import DateTime
@@ -18,11 +20,12 @@ class Rates:
     https://developer.ebay.com/api-docs/developer/analytics/resources/rate_limit/methods/getRateLimits
     """
 
-    def __init__(self, app_id):
+    def __init__(self, app_id) -> None:
         """
         Maintain a set of daily limits for each app_id. Be lazy about it when throttling is not used.
 
-        :param app_id: eBay keeps a set of daily limits for each app_id.
+        :param app_id (str, required): eBay keeps a set of daily limits for each app_id.
+        :return None (None)
         """
         self._app_id = app_id    # save because it eases debugging
 
@@ -36,12 +39,8 @@ class Rates:
 
         Warning, avoid endless recursion, don't merge this with the throttled version of the method.
 
-        :param
-        base_path (str) :
-
-        :param
-        rate_keys (list) : Strings, keys used to lookup a rate
-
+        :param base_path (str, required)
+        :param rate_keys (list(str), required) keys used to lookup a rate
         :return: None
         """
         with self._lock:
@@ -54,18 +53,12 @@ class Rates:
         """
         Decrement the remaining count of calls associated with a name.
 
-        :param
-        base_path (str) :
-
-        :param
-        rate_keys (list) : Strings, keys used to lookup a rate
-
-        :param
-        timeout (float) : When invoked with the floating-point timeout argument set to a positive value,
+        :param base_path (str, required)
+        :param rate_keys (list(str), required) Strings, keys used to lookup a rate
+        :param timeout (float, required) When invoked with the floating-point timeout argument set to a positive val,
         throttle for at most the number of seconds specified by timeout and as below the prorated call limit. A timeout
         argument of -1 specifies an unbounded wait.
-
-        :return: None
+        :return: None (none)
         """
         # The algorithm relies upon the geometrical properties of right-angled triangles.
         # Threshold is a line that extends from the height of the limit at the period start to zero at the end.
@@ -120,7 +113,11 @@ class Rates:
                     timeout_used += wait_seconds
 
     def need_refresh(self) -> bool:
-        """ Return True if the rates need refreshing. """
+        """
+        Return True if the rates need refreshing.
+
+        :return need_refresh (bool)
+        """
         with self._lock:
             if self._refresh_date_time:
                 if self._refresh_date_time > DateTime.now():
@@ -131,9 +128,13 @@ class Rates:
                 result = True
         return result
 
-    def refresh_developer_analytics(self, rate_limits) -> None:
-        """ Refresh the local Developer Analytics values and when the next refresh is recommended. """
+    def refresh_developer_analytics(self, rate_limits: List[dict]) -> None:
+        """
+        Refresh the local Developer Analytics values and when the next refresh is recommended.
 
+        :param rate_limits (list(dict), required)
+        :result None (None)
+        """
         if not rate_limits:
             cache = None
             refresh_date_time = None
@@ -179,7 +180,7 @@ class Rates:
             self._cache = cache
             self._refresh_date_time = refresh_date_time
 
-    def _find_rate_dict(self, base_path: str, rate_keys: list) -> dict or None:
+    def _find_rate_dict(self, base_path: str, rate_keys: List[str]) -> dict or None:
         """
         Get the index so the rate object associated with a name.
 
@@ -187,13 +188,9 @@ class Rates:
 
         https://developer.ebay.com/api-docs/developer/analytics/resources/rate_limit/methods/getRateLimits
 
-        :param
-        base_path (str) :
-
-        :param
-        rate_keys (list) : Strings, keys used to lookup a rate
-
-        :return: a rates dict or None
+        :param base_path (str)
+        :param rate_keys (list(str() keys used to lookup a rate
+        :return rates (dict or None)
         """
         cache = self._cache
         if not cache:

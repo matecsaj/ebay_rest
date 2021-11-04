@@ -9,8 +9,8 @@
 
 # Standard library imports
 import datetime
-import json
-import os
+from json import loads
+from os import getcwd
 import unittest
 import warnings
 
@@ -76,7 +76,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
         """ set credentials via dicts """
         try:
             with open('ebay_rest.json', 'r') as f:
-                contents = json.loads(f.read())
+                contents = loads(f.read())
         except IOError:
             raise Error(number=1, reason="Unable to open the file ebay_rest.json from the test directory.")
         else:
@@ -117,7 +117,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
 
     def test_credential_path(self):
         """ supply a path to ebay_rest.json """
-        path = os.getcwd()
+        path = getcwd()
         try:
             api = API(path=path, application='sandbox_1', user='sandbox_1', header='US')
         except Error as error:
@@ -195,7 +195,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
 
         self.assertTrue(tally > 0, "Domestic shipping should cost less than foreign.")
 
-    def _get_lowest_shipping(self, item, country, currency):
+    def _get_lowest_shipping(self, item: dict, country: str, currency: str):
 
         costs = []
 
@@ -231,7 +231,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
         else:
             self.fail('Shipping options without any options, should not be possible.')
 
-    def _in_region(self, regions, country):
+    def _in_region(self, regions: dict, country: str):
 
         if country in ('CA', 'US'):
             region_ids = ('AMERICAS', 'NORTH_AMERICA')

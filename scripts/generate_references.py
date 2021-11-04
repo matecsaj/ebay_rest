@@ -8,13 +8,15 @@ Run this whenever the Response Fields in the following link change.
 """
 
 # Standard library imports
+import collections
 import os.path
 import pickle
-import re
-import requests
-import string
-import sys
-import json
+from re import findall
+from requests import get
+from string import ascii_uppercase
+from sys import getrecursionlimit, setrecursionlimit
+from json import dump
+from typing import Dict, List, Tuple, Union
 
 # Third party imports
 from bs4 import BeautifulSoup
@@ -25,36 +27,39 @@ from bs4 import BeautifulSoup
 class Cache:
     """ Provide short-term persistence. """
 
-    def __init__(self, file_name):
+    def __init__(self, file_name: str) -> None:
         self.__file_name = file_name + '.pkl'
 
-    def exists(self):
+    def exists(self) -> bool:
         return os.path.isfile(self.__file_name)
 
-    def get(self):
+    def get(self) -> collections:
         with open(self.__file_name, 'rb') as f:
             return pickle.load(f)
 
-    def put(self, python_object):
+    def put(self, python_object: collections):
         with open(self.__file_name, 'wb') as f:
             pickle.dump(python_object, f, pickle.HIGHEST_PROTOCOL)
 
 
-def add_enum(enums, new_enum):
+def add_enum(enums: Dict[str, list], new_enum: str) -> None:
     enums[new_enum] = []
 
 
-def camel_to_snake_case(name):
+def camel_to_snake_case(name: str) -> str:
     result = name[0].lower()  # play it safe and cover the "upper Camel case" aka "Pascal case" variant too
     for c in name[1:]:
-        if c in string.ascii_uppercase:
+        if c in ascii_uppercase:
             result += '_'
             c = c.lower()
         result += c
     return result
 
 
-def change_type_per_full_field(containers, full_field, new_type):
+def change_type_per_full_field(containers: Dict[str, Dict[str, Union[bool, str, List[Dict[str, Union[str, None, bool]]], List[str]]]],  # noqa: E501
+                               full_field: str,
+                               new_type: str
+                               ) -> None:
     """ In a container change sql types when a partial field name matches. """
 
     found = False
@@ -68,7 +73,10 @@ def change_type_per_full_field(containers, full_field, new_type):
         print(f'change_type_per_full_field failed on full_field {full_field} and new_type {new_type}.')
 
 
-def change_type_per_partial_field(containers, partial_field, new_type):
+def change_type_per_partial_field(containers: Dict[str, Dict[str, Union[bool, str, List[Dict[str, Union[str, None, bool]]], List[str]]]],   # noqa: E501
+                                  partial_field: str,
+                                  new_type: str
+                                  ) -> None:
     """ In a container change sql types when a partial field name matches. """
 
     found = False
@@ -82,14 +90,14 @@ def change_type_per_partial_field(containers, partial_field, new_type):
         print(f'change_type_per_partial_field failed on partial_field {partial_field} and new_type {new_type}.')
 
 
-def enum_name_converter(kind):
+def enum_name_converter(kind: str) -> str:
     if kind[-4:] in ('Enum', 'Type'):
         return camel_to_snake_case(kind[:-4])
     else:
         print(f'{kind} does not end in Enum or Type.')
 
 
-def get_enumerations(response_fields):
+def get_enumerations(response_fields: List[Tuple[str, str, str, str]]) -> Dict[str, list]:
     enums_dict = {}
     variants = ['ba', 'gct']
 
@@ -124,7 +132,7 @@ def get_enumerations(response_fields):
     return enums_dict
 
 
-def get_response_fields():
+def get_response_fields() -> List[Tuple[str, str, str, str]]:
     print('Find the Response Fields for the eBay Get Item call.')
 
     # load the target webpage
@@ -183,7 +191,7 @@ def get_response_fields():
     return data
 
 
-def get_country_codes():
+def get_country_codes() -> dict:
     print("Find the eBay's Country Codes.")
 
     # load the target webpage
@@ -214,7 +222,7 @@ def get_country_codes():
     return dict_
 
 
-def get_currency_codes():
+def get_currency_codes() -> dict:
     print("Find the eBay's Currency Codes.")
 
     # load the target webpage
@@ -248,7 +256,7 @@ def get_currency_codes():
     return dict_
 
 
-def get_global_id_values():
+def get_global_id_values() -> List[Dict[str, str]]:
     print("Find the eBay's Global ID Values.")
 
     # load the target webpage
@@ -280,7 +288,7 @@ def get_global_id_values():
     return dicts
 
 
-def get_marketplace_id_values():
+def get_marketplace_id_values() -> Dict[str, List[Dict[str, list]]]:
     print("Find the eBay's Marketplace ID Values.")
 
     # load the target webpage
@@ -288,7 +296,7 @@ def get_marketplace_id_values():
     soup = get_soup_via_link(url)
 
     # find the rows regarding Response Fields.
-    table = soup.findAll('table')[1]        # the second table is index 1
+    table = soup.findAll('table')[1]  # the second table is index 1
     rows = table.find_all('tr')
 
     # put the rows into a table of data
@@ -306,10 +314,10 @@ def get_marketplace_id_values():
     for datum in data[1:]:
         [marketplace_id, country, marketplace_site, locale_support] = datum
         locale_support = locale_support.replace(' ', '')
-        locales = locale_support.split(',')     # convert comma separated locales to a list of strings
-        sites = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
+        locales = locale_support.split(',')  # convert comma separated locales to a list of strings
+        sites = findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
                            marketplace_site)
-        comments = re.findall('\(([^)]*)\)', marketplace_site)
+        comments = findall('\(([^)]*)\)', marketplace_site)
         comment_shortage = len(locales) - len(comments)
         for _ in range(comment_shortage):
             comments.append('')
@@ -321,17 +329,21 @@ def get_marketplace_id_values():
     return my_dict
 
 
-def get_soup_via_link(url):
+def get_soup_via_link(url: str) -> BeautifulSoup:
     # Make a GET request to fetch the raw HTML content
-    html_content = requests.get(url).text
+    html_content = get(url).text
 
     # Parse the html content
     return BeautifulSoup(html_content, "html.parser")
 
 
-def make_containers(parent_is_array, parent_container_kind,
-                    table_part, table_parent, dot_level, response_fields):
-
+def make_containers(parent_is_array: bool,
+                    parent_container_kind: str,
+                    table_part: str,
+                    table_parent: str,
+                    dot_level: int,
+                    response_fields: List[Tuple[str, str, str, str]]
+                    ) -> Dict[str, Dict[str, Union[bool, str, List[Dict[str, Union[str, None, bool]]], List[str]]]]:
     containers = {}
     fields = []
     children = []
@@ -344,18 +356,18 @@ def make_containers(parent_is_array, parent_container_kind,
     if parent_is_array:
 
         if parent_container_kind in ebay_to_sql_types:
-            shape = 'array_of_type'    # array of a single native SQL type
+            shape = 'array_of_type'  # array of a single native SQL type
             array_type_sql = ebay_to_sql_types[parent_container_kind]
 
         elif parent_container_kind[-4:] in ('Enum', 'Type'):
-            shape = 'array_of_enum'    # array of a single SQL enum type
+            shape = 'array_of_enum'  # array of a single SQL enum type
             array_type_sql = enum_name_converter(parent_container_kind)
         else:
-            shape = 'array_of_container'    # array of an eBay container
+            shape = 'array_of_container'  # array of an eBay container
             array_type_sql = parent_container_kind
     else:
         array_type_sql = None
-        shape = 'container'          # not an array
+        shape = 'container'  # not an array
 
     i = 0
     while i < len(response_fields):
@@ -426,7 +438,7 @@ def make_containers(parent_is_array, parent_container_kind,
                 # eBay's docs link fails! https://developer.ebay.com/api-docs/buy/browse/types/gct:CouponConstraint
 
                 type_sql = 'varchar'
-                name_python = name_parts[dot_level] + 's'   # make this plural to avoid SQL reserved word problems
+                name_python = name_parts[dot_level] + 's'  # make this plural to avoid SQL reserved word problems
                 name_sql = name_python
                 field_success = True
 
@@ -458,7 +470,7 @@ def make_containers(parent_is_array, parent_container_kind,
     return containers
 
 
-def most_values_not_none(name, dictionary):
+def most_values_not_none(name: str, dictionary: Dict[str, str]) -> bool:
     for key, value in dictionary.items():
         if key != 'array_type_sql':
             if value is None:
@@ -467,7 +479,7 @@ def most_values_not_none(name, dictionary):
     return True
 
 
-def subfield_next(dot_level, i, response_fields):
+def subfield_next(dot_level: int, i: int, response_fields: List[Tuple[str, str, str, str]]) -> bool:
     i += 1
     result = False
     if i < len(response_fields):
@@ -476,10 +488,14 @@ def subfield_next(dot_level, i, response_fields):
     return result
 
 
-def use_cache(should_use, object_name, get_function, get_param):
+def use_cache(should_use: bool,
+              object_name: str,
+              get_function: callable,
+              get_param: None or collections
+              ) -> collections:
     # increase the safety limit because our object has too many elements for pickle
-    default = sys.getrecursionlimit()
-    sys.setrecursionlimit(default * 10)
+    default = getrecursionlimit()
+    setrecursionlimit(default * 10)
 
     # initialize a cache
     cache = Cache(object_name)
@@ -496,7 +512,7 @@ def use_cache(should_use, object_name, get_function, get_param):
             obj = get_function()
         cache.put(obj)
 
-    sys.setrecursionlimit(default)  # restore the default limit
+    setrecursionlimit(default)  # restore the default limit
 
     return obj
 
@@ -536,7 +552,7 @@ def main():
 
     # change that are possible by a simple partial field name match
     change_type_per_partial_field(containers, 'rating', 'numeric(1)')
-    change_type_per_partial_field(containers, 'average_rating', 'numeric(2,1)')     # this must be after 'rating'
+    change_type_per_partial_field(containers, 'average_rating', 'numeric(2,1)')  # this must be after 'rating'
     change_type_per_partial_field(containers, '_date', 'timestamp with time zone')
     change_type_per_partial_field(containers, 'gtin', 'numeric(14,0)')
     change_type_per_partial_field(containers, 'percentage', 'numeric(4,1)')
@@ -573,9 +589,9 @@ def main():
 
     # handle generic sounding field names, that would make good enums
     for (container_name, field_name, new_type) in (
-                        ('ebay_item_authenticity_verification', 'description', 'authenticity_verification_description'),
-                        ('ebay_item_shipping_options', 'type', 'shipping_option_type'),
-                        ('ebay_item_warnings', 'category', 'warning_category')):
+            ('ebay_item_authenticity_verification', 'description', 'authenticity_verification_description'),
+            ('ebay_item_shipping_options', 'type', 'shipping_option_type'),
+            ('ebay_item_warnings', 'category', 'warning_category')):
         found = False
         container = containers[container_name]
         for field in container['fields']:
@@ -605,16 +621,16 @@ def main():
     # dump all the .json files
     path = '../src/ebay_rest/references/'
     sources_names = [
-                     (country_codes, 'country_codes'),
-                     (currency_codes, 'currency_codes'),
-                     (global_id_values, 'global_id_values'),
-                     (containers, 'item_fields_modified'),
-                     (enums, 'item_enums_modified'),
-                     (marketplace_id_values, 'marketplace_id_values'),
-                     ]
+        (country_codes, 'country_codes'),
+        (currency_codes, 'currency_codes'),
+        (global_id_values, 'global_id_values'),
+        (containers, 'item_fields_modified'),
+        (enums, 'item_enums_modified'),
+        (marketplace_id_values, 'marketplace_id_values'),
+    ]
     for (source, name) in sources_names:
         with open(path + name + '.json', 'w') as outfile:
-            json.dump(source, outfile, sort_keys=True, indent=4)
+            dump(source, outfile, sort_keys=True, indent=4)
 
     return
 
