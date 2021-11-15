@@ -104,7 +104,7 @@ class Rates:
                     if timeout != -1.0:
                         timeout_remaining = timeout - timeout_used
                         if timeout_remaining <= 0:
-                            raise Error(number=2, reason="Throttle timeout.")
+                            raise Error(number=97001, reason="Throttle timeout.")
                         if wait_seconds > timeout_remaining:      # don't wait any longer than the caller wants
                             wait_seconds = timeout_remaining
 

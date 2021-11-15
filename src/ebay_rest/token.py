@@ -102,9 +102,9 @@ class ApplicationToken:
         token_application = self._oauth2api_inst.get_application_token(self._application_scopes)
         if token_application.error is not None:
             reason = 'token_application.error ' + token_application.error
-            raise Error(number=1, reason=reason)
+            raise Error(number=96001, reason=reason)
         if (token_application.access_token is None) or (len(token_application.access_token) == 0):
-            raise Error(number=1, reason='token_application.access_token is missing.')
+            raise Error(number=96002, reason='token_application.access_token is missing.')
 
         self._application_token = token_application
 
@@ -173,7 +173,7 @@ class UserToken:
                 try:
                     self._user_refresh_token_expiry = DateTime.from_string(user_refresh_token_expiry)
                 except Error as error:
-                    raise Error(number=1, reason='user_refresh_token_expiry value error', detail=error.reason)
+                    raise Error(number=96003, reason='user_refresh_token_expiry value error', detail=error.reason)
                 try:
                     self._user_refresh_token = _OAuthToken(
                         refresh_token=self._user_refresh_token,
@@ -182,7 +182,7 @@ class UserToken:
                 except Error:
                     raise
             else:
-                raise Error(number=1, reason='Must supply refresh token expiry with refresh token!')
+                raise Error(number=96004, reason='Must supply refresh token expiry with refresh token!')
 
     def get(self) -> str:
         """ Get an eBay User Access Token.
@@ -246,11 +246,11 @@ class UserToken:
         :return None (None)
         """
         if not self._allow_get_user_consent:
-            raise Error(number=1, reason='Getting user consent via browser disabled')
+            raise Error(number=96005, reason='Getting user consent via browser disabled')
 
         sign_in_url = self._oauth2api_inst.generate_user_authorization_url(self._user_scopes)
         if sign_in_url is None:
-            raise Error(number=1, reason='sign_in_url is None.')
+            raise Error(number=96006, reason='sign_in_url is None.')
 
         try:
             code = self._get_authorization_code(sign_in_url)
@@ -260,9 +260,9 @@ class UserToken:
         refresh_token = self._oauth2api_inst.exchange_code_for_access_token(code)
 
         if refresh_token.access_token is None:
-            raise Error(number=1, reason='refresh_token.access_token is None.')
+            raise Error(number=96007, reason='refresh_token.access_token is None.')
         if len(refresh_token.access_token) == 0:
-            raise Error(number=1, reason='refresh_token.access_token is of length zero.')
+            raise Error(number=96008, reason='refresh_token.access_token is of length zero.')
 
         # Split token into refresh token and user token parts
         self._user_refresh_token = _OAuthToken(
@@ -317,10 +317,10 @@ class UserToken:
             if 'code' in parsed:
                 return parsed['code'][0]        # recently added [0]
             else:
-                raise Error(number=1, reason="Unable to obtain code.")
+                raise Error(number=96009, reason="Unable to obtain code.")
         else:
             reason = f"Authorization unsuccessful, check userid & password:{self._user_id} {self._user_password}"
-            raise Error(number=1, reason=reason)
+            raise Error(number=96010, reason=reason)
 
     def _refresh_user_token(self) -> None:
         """
@@ -331,9 +331,9 @@ class UserToken:
                                                            self._user_scopes)
 
         if user_token.access_token is None:
-            raise Error(number=1, reason='user_token.access_token is None.')
+            raise Error(number=96011, reason='user_token.access_token is None.')
         if len(user_token.access_token) == 0:
-            raise Error(number=1, reason='user_token.access_token is of length zero.')
+            raise Error(number=96012, reason='user_token.access_token is of length zero.')
 
         self._user_token = user_token
 
@@ -523,7 +523,7 @@ class _OAuth2Api:
         :return body (dict):
         """
         if refresh_token is None:
-            raise Error(number=1, reason="credential object does not contain refresh_token and/or scopes")
+            raise Error(number=96013, reason="credential object does not contain refresh_token and/or scopes")
         body = {
                 'grant_type': 'refresh_token',
                 'refresh_token': refresh_token,

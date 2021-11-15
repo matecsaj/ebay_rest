@@ -130,7 +130,7 @@ class API:
                 with open(self._config_location, 'r') as f:
                     config_contents = loads(f.read())
             except IOError:
-                raise Error(number=1, reason='Unable to open ' + self._config_location)
+                raise Error(number=99001, reason='Unable to open ' + self._config_location)
 
         # get configuration sections from parameters or the loaded file
         try:
@@ -209,7 +209,7 @@ class API:
         else:
             self._timeout = timeout
         if detail:
-            raise Error(number=1, reason="Bad throttling parameters.", detail=detail)
+            raise Error(number=99002, reason="Bad throttling parameters.", detail=detail)
 
         if self._sandbox:  # The sandbox will not return rates so there is no point to doing throttling.
             self._throttle = False
@@ -335,7 +335,7 @@ class API:
                      + str(type(parameter)) + "."
 
         if result is None:
-            raise Error(number=1, reason="Get configuration for " + param_name + " problem.", detail=detail)
+            raise Error(number=99003, reason="Get configuration for " + param_name + " problem.", detail=detail)
         else:
             # delete blank lines, to eliminate subsequent blank line checks
             to_delete = []
@@ -367,23 +367,23 @@ class API:
             if key in dict_:
                 if key == "scopes":
                     if not isinstance(dict_[key], list):
-                        raise Error(number=1, reason="The key's value must be a list.",
+                        raise Error(number=99004, reason="The key's value must be a list.",
                                     detail=key + " in " + name)
                 else:
                     if not isinstance(dict_[key], str):
-                        raise Error(number=1, reason="The key's value must be a string.",
+                        raise Error(number=99005, reason="The key's value must be a string.",
                                     detail=key + " in " + name)
             if required:
                 if key in dict_:
                     if len(dict_[key]) == 0:
-                        raise Error(number=1, reason="The key's value can not be of zero length.",
+                        raise Error(number=99006, reason="The key's value can not be of zero length.",
                                     detail=key + " in " + name)
                 else:
-                    raise Error(number=1, reason="A required key missing", detail=key + " in " + name)
+                    raise Error(number=99007, reason="A required key missing", detail=key + " in " + name)
 
         for key in dict_:
             if key not in valid_keys:
-                raise Error(number=1, reason="Found an unexpected key.", detail=key + " in " + name)
+                raise Error(number=99008, reason="Found an unexpected key.", detail=key + " in " + name)
 
     def _check_header(self, keys_values: List[Union[Tuple[str, list], Tuple[str, None]]]) -> None:
         """
@@ -401,14 +401,14 @@ class API:
                             values.sort()
                             detail = "Header key " + key + " has value " + header[key] + \
                                      ". Choose from " + ', '.join(values) + '.'
-                            raise Error(number=1, reason='Invalid header value.', detail=detail)
+                            raise Error(number=99009, reason='Invalid header value.', detail=detail)
                 else:
-                    raise Error(number=1, reason="Header values must be strings.",
+                    raise Error(number=99010, reason="Header values must be strings.",
                                 detail="Check key " + key + ".")
 
         for key in header:
             if key not in valid_keys:
-                raise Error(number=1, reason="Unexpected header key.", detail=key)
+                raise Error(number=99011, reason="Unexpected header key.", detail=key)
 
     def _method_single(self,
                        function_configuration: callable,
@@ -488,16 +488,16 @@ class API:
 
         # co-opt some parameters
         if 'offset' in kwargs:
-            raise Error(number=99001, reason="Don't supply an offset parameter. It is automatically handled.")
+            raise Error(number=99012, reason="Don't supply an offset parameter. It is automatically handled.")
 
         if 'limit' in kwargs:
             if not isinstance(kwargs['limit'], int):
                 reason = "The limit must be an integer, you supplied a " + str(type(kwargs['limit'])) + '.'
-                raise Error(number=99002, reason=reason)
+                raise Error(number=99013, reason=reason)
             records_desired = kwargs['limit']
             if records_desired <= 0:
                 reason = "The limit must be greater that zero, you supplied " + str(records_desired) + '.'
-                raise Error(number=99003, reason=reason)
+                raise Error(number=99014, reason=reason)
             if records_desired < page_limit:
                 kwargs['limit'] = records_desired  # just get enough records to satisfy what is desired
             else:
