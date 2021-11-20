@@ -28,34 +28,80 @@ class PayloadDetail(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'delivery_protocol': 'str',
-        'deprecated': 'bool',
+        'schema_version': 'str',
         'format': 'list[str]',
-        'schema_version': 'str'
+        'delivery_protocol': 'str',
+        'deprecated': 'bool'
     }
 
     attribute_map = {
-        'delivery_protocol': 'deliveryProtocol',
-        'deprecated': 'deprecated',
+        'schema_version': 'schemaVersion',
         'format': 'format',
-        'schema_version': 'schemaVersion'
+        'delivery_protocol': 'deliveryProtocol',
+        'deprecated': 'deprecated'
     }
 
-    def __init__(self, delivery_protocol=None, deprecated=None, format=None, schema_version=None):  # noqa: E501
+    def __init__(self, schema_version=None, format=None, delivery_protocol=None, deprecated=None):  # noqa: E501
         """PayloadDetail - a model defined in Swagger"""  # noqa: E501
+        self._schema_version = None
+        self._format = None
         self._delivery_protocol = None
         self._deprecated = None
-        self._format = None
-        self._schema_version = None
         self.discriminator = None
+        if schema_version is not None:
+            self.schema_version = schema_version
+        if format is not None:
+            self.format = format
         if delivery_protocol is not None:
             self.delivery_protocol = delivery_protocol
         if deprecated is not None:
             self.deprecated = deprecated
-        if format is not None:
-            self.format = format
-        if schema_version is not None:
-            self.schema_version = schema_version
+
+    @property
+    def schema_version(self):
+        """Gets the schema_version of this PayloadDetail.  # noqa: E501
+
+        The supported schema version.  # noqa: E501
+
+        :return: The schema_version of this PayloadDetail.  # noqa: E501
+        :rtype: str
+        """
+        return self._schema_version
+
+    @schema_version.setter
+    def schema_version(self, schema_version):
+        """Sets the schema_version of this PayloadDetail.
+
+        The supported schema version.  # noqa: E501
+
+        :param schema_version: The schema_version of this PayloadDetail.  # noqa: E501
+        :type: str
+        """
+
+        self._schema_version = schema_version
+
+    @property
+    def format(self):
+        """Gets the format of this PayloadDetail.  # noqa: E501
+
+        The supported format. Presently, <code>JSON</code> is the only supported format.  # noqa: E501
+
+        :return: The format of this PayloadDetail.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._format
+
+    @format.setter
+    def format(self, format):
+        """Sets the format of this PayloadDetail.
+
+        The supported format. Presently, <code>JSON</code> is the only supported format.  # noqa: E501
+
+        :param format: The format of this PayloadDetail.  # noqa: E501
+        :type: list[str]
+        """
+
+        self._format = format
 
     @property
     def delivery_protocol(self):
@@ -102,52 +148,6 @@ class PayloadDetail(object):
         """
 
         self._deprecated = deprecated
-
-    @property
-    def format(self):
-        """Gets the format of this PayloadDetail.  # noqa: E501
-
-        The supported format. Presently, <code>JSON</code> is the only supported format.  # noqa: E501
-
-        :return: The format of this PayloadDetail.  # noqa: E501
-        :rtype: list[str]
-        """
-        return self._format
-
-    @format.setter
-    def format(self, format):
-        """Sets the format of this PayloadDetail.
-
-        The supported format. Presently, <code>JSON</code> is the only supported format.  # noqa: E501
-
-        :param format: The format of this PayloadDetail.  # noqa: E501
-        :type: list[str]
-        """
-
-        self._format = format
-
-    @property
-    def schema_version(self):
-        """Gets the schema_version of this PayloadDetail.  # noqa: E501
-
-        The supported schema version.  # noqa: E501
-
-        :return: The schema_version of this PayloadDetail.  # noqa: E501
-        :rtype: str
-        """
-        return self._schema_version
-
-    @schema_version.setter
-    def schema_version(self, schema_version):
-        """Sets the schema_version of this PayloadDetail.
-
-        The supported schema version.  # noqa: E501
-
-        :param schema_version: The schema_version of this PayloadDetail.  # noqa: E501
-        :type: str
-        """
-
-        self._schema_version = schema_version
 
     def to_dict(self):
         """Returns the model properties as a dict"""

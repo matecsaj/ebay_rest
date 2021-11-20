@@ -28,41 +28,35 @@ class ItemGroup(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'additional_image_urls': 'str',
-        'image_altering_prohibited': 'bool',
-        'image_url': 'str',
         'item_group_id': 'str',
         'item_group_type': 'str',
         'title': 'str',
-        'varies_by_localized_aspects': 'str'
+        'varies_by_localized_aspects': 'str',
+        'image_url': 'str',
+        'additional_image_urls': 'str',
+        'image_altering_prohibited': 'bool'
     }
 
     attribute_map = {
-        'additional_image_urls': 'additionalImageUrls',
-        'image_altering_prohibited': 'imageAlteringProhibited',
-        'image_url': 'imageUrl',
         'item_group_id': 'itemGroupId',
         'item_group_type': 'itemGroupType',
         'title': 'title',
-        'varies_by_localized_aspects': 'variesByLocalizedAspects'
+        'varies_by_localized_aspects': 'variesByLocalizedAspects',
+        'image_url': 'imageUrl',
+        'additional_image_urls': 'additionalImageUrls',
+        'image_altering_prohibited': 'imageAlteringProhibited'
     }
 
-    def __init__(self, additional_image_urls=None, image_altering_prohibited=None, image_url=None, item_group_id=None, item_group_type=None, title=None, varies_by_localized_aspects=None):  # noqa: E501
+    def __init__(self, item_group_id=None, item_group_type=None, title=None, varies_by_localized_aspects=None, image_url=None, additional_image_urls=None, image_altering_prohibited=None):  # noqa: E501
         """ItemGroup - a model defined in Swagger"""  # noqa: E501
-        self._additional_image_urls = None
-        self._image_altering_prohibited = None
-        self._image_url = None
         self._item_group_id = None
         self._item_group_type = None
         self._title = None
         self._varies_by_localized_aspects = None
+        self._image_url = None
+        self._additional_image_urls = None
+        self._image_altering_prohibited = None
         self.discriminator = None
-        if additional_image_urls is not None:
-            self.additional_image_urls = additional_image_urls
-        if image_altering_prohibited is not None:
-            self.image_altering_prohibited = image_altering_prohibited
-        if image_url is not None:
-            self.image_url = image_url
         if item_group_id is not None:
             self.item_group_id = item_group_id
         if item_group_type is not None:
@@ -71,81 +65,18 @@ class ItemGroup(object):
             self.title = title
         if varies_by_localized_aspects is not None:
             self.varies_by_localized_aspects = varies_by_localized_aspects
-
-    @property
-    def additional_image_urls(self):
-        """Gets the additional_image_urls of this ItemGroup.  # noqa: E501
-
-        A pipe separated (|) list of URLs for the additional images for the item group. These images are in addition to the primary image, which is returned in the imageUrl column. Note: This column can contain multiple values.  # noqa: E501
-
-        :return: The additional_image_urls of this ItemGroup.  # noqa: E501
-        :rtype: str
-        """
-        return self._additional_image_urls
-
-    @additional_image_urls.setter
-    def additional_image_urls(self, additional_image_urls):
-        """Sets the additional_image_urls of this ItemGroup.
-
-        A pipe separated (|) list of URLs for the additional images for the item group. These images are in addition to the primary image, which is returned in the imageUrl column. Note: This column can contain multiple values.  # noqa: E501
-
-        :param additional_image_urls: The additional_image_urls of this ItemGroup.  # noqa: E501
-        :type: str
-        """
-
-        self._additional_image_urls = additional_image_urls
-
-    @property
-    def image_altering_prohibited(self):
-        """Gets the image_altering_prohibited of this ItemGroup.  # noqa: E501
-
-        A boolean that indicates whether the images can be altered. If the value is true, you cannot modify the image. Note: Due to image licensing agreements and other legal concerns, modification (including resizing) of some images is strictly prohibited. These images are for display as-is only.  # noqa: E501
-
-        :return: The image_altering_prohibited of this ItemGroup.  # noqa: E501
-        :rtype: bool
-        """
-        return self._image_altering_prohibited
-
-    @image_altering_prohibited.setter
-    def image_altering_prohibited(self, image_altering_prohibited):
-        """Sets the image_altering_prohibited of this ItemGroup.
-
-        A boolean that indicates whether the images can be altered. If the value is true, you cannot modify the image. Note: Due to image licensing agreements and other legal concerns, modification (including resizing) of some images is strictly prohibited. These images are for display as-is only.  # noqa: E501
-
-        :param image_altering_prohibited: The image_altering_prohibited of this ItemGroup.  # noqa: E501
-        :type: bool
-        """
-
-        self._image_altering_prohibited = image_altering_prohibited
-
-    @property
-    def image_url(self):
-        """Gets the image_url of this ItemGroup.  # noqa: E501
-
-        The URL to the primary image of the item. The other images of the item group are returned in the additionalImageUrls column.  # noqa: E501
-
-        :return: The image_url of this ItemGroup.  # noqa: E501
-        :rtype: str
-        """
-        return self._image_url
-
-    @image_url.setter
-    def image_url(self, image_url):
-        """Sets the image_url of this ItemGroup.
-
-        The URL to the primary image of the item. The other images of the item group are returned in the additionalImageUrls column.  # noqa: E501
-
-        :param image_url: The image_url of this ItemGroup.  # noqa: E501
-        :type: str
-        """
-
-        self._image_url = image_url
+        if image_url is not None:
+            self.image_url = image_url
+        if additional_image_urls is not None:
+            self.additional_image_urls = additional_image_urls
+        if image_altering_prohibited is not None:
+            self.image_altering_prohibited = image_altering_prohibited
 
     @property
     def item_group_id(self):
         """Gets the item_group_id of this ItemGroup.  # noqa: E501
 
-        The unique identifier for the item group. This ID is returned in the primaryItemGroupId column of the Item Feed file.  # noqa: E501
+        The unique identifier for the item group. This ID is returned in the <b> primaryItemGroupId</b> column of the <a href=\"/api-docs/buy/feed/resources/item/methods/getItemFeed\">Item Feed</a> file.  # noqa: E501
 
         :return: The item_group_id of this ItemGroup.  # noqa: E501
         :rtype: str
@@ -156,7 +87,7 @@ class ItemGroup(object):
     def item_group_id(self, item_group_id):
         """Sets the item_group_id of this ItemGroup.
 
-        The unique identifier for the item group. This ID is returned in the primaryItemGroupId column of the Item Feed file.  # noqa: E501
+        The unique identifier for the item group. This ID is returned in the <b> primaryItemGroupId</b> column of the <a href=\"/api-docs/buy/feed/resources/item/methods/getItemFeed\">Item Feed</a> file.  # noqa: E501
 
         :param item_group_id: The item_group_id of this ItemGroup.  # noqa: E501
         :type: str
@@ -168,7 +99,7 @@ class ItemGroup(object):
     def item_group_type(self):
         """Gets the item_group_type of this ItemGroup.  # noqa: E501
 
-        The item group type. For example: SELLER_DEFINED_VARIATIONS, indicates that the item group was created by the seller. Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        The item group type. For example:<code> SELLER_DEFINED_VARIATIONS</code>, indicates that the item group was created by the seller. <br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :return: The item_group_type of this ItemGroup.  # noqa: E501
         :rtype: str
@@ -179,7 +110,7 @@ class ItemGroup(object):
     def item_group_type(self, item_group_type):
         """Sets the item_group_type of this ItemGroup.
 
-        The item group type. For example: SELLER_DEFINED_VARIATIONS, indicates that the item group was created by the seller. Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        The item group type. For example:<code> SELLER_DEFINED_VARIATIONS</code>, indicates that the item group was created by the seller. <br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :param item_group_type: The item_group_type of this ItemGroup.  # noqa: E501
         :type: str
@@ -191,7 +122,7 @@ class ItemGroup(object):
     def title(self):
         """Gets the title of this ItemGroup.  # noqa: E501
 
-        The seller created title of the item group. This text is an escaped string when special characters are present, using the following rules: Double quotes (&quot;) and backslashes (\\) in the Title are escaped with a backslash (\\) character If there are any tabs (\\t), double quotes (&quot;), or backslashes (\\) in the Title, the entire Title will be wrapped in double quotes. For example Before: Misty Rainforest Modern Masters 2017 MTG Magic Fetch Land Free Ship W\\Tracking Marvel Legends HULK 8&quot; Figure Avengers Age of Ultron Studios 6&quot; Series After: &quot;Misty Rainforest Modern Masters 2017 MTG Magic Fetch Land Free Ship W\\\\ Tracking&quot; &quot;Marvel Legends HULK 8\\&quot; Figure Avengers Age of Ultron Studios 6\\&quot; Series&quot;  # noqa: E501
+        The seller created title of the item group. This text is an escaped string when special characters are present, using the following rules:</p>   <ul>     <li>Double quotes (&#34;) and backslashes (&#92;) in the Title are escaped with a backslash (&#92;) character</li>      <li>If there are any tabs (&#92;t), double quotes (&#34;), or backslashes (&#92;) in the Title, the entire Title will be wrapped in double quotes.</li>   </ul>   <p><b>For example</b></p>   <p>Before:</p>   <p><code>Misty Rainforest Modern Masters 2017 MTG Magic Fetch Land Free Ship W<b>&#92;</b>Tracking</code>   </p>   <p><code>Marvel Legends HULK 8<b>&#34;</b> Figure Avengers Age of Ultron Studios 6<b>&#34;</b> Series</code>   </p>   <p>After:</p>   <p><code>&#34;Misty Rainforest Modern Masters 2017 MTG Magic Fetch Land Free Ship W<b>&#92;&#92;</b> Tracking&#34;</code>   </p>   <p><code>&#34;Marvel Legends HULK 8<b>&#92;&#34;</b> Figure Avengers Age of Ultron Studios 6<b>&#92;&#34;</b> Series<b>&#34;</b> </code>   </p>  # noqa: E501
 
         :return: The title of this ItemGroup.  # noqa: E501
         :rtype: str
@@ -202,7 +133,7 @@ class ItemGroup(object):
     def title(self, title):
         """Sets the title of this ItemGroup.
 
-        The seller created title of the item group. This text is an escaped string when special characters are present, using the following rules: Double quotes (&quot;) and backslashes (\\) in the Title are escaped with a backslash (\\) character If there are any tabs (\\t), double quotes (&quot;), or backslashes (\\) in the Title, the entire Title will be wrapped in double quotes. For example Before: Misty Rainforest Modern Masters 2017 MTG Magic Fetch Land Free Ship W\\Tracking Marvel Legends HULK 8&quot; Figure Avengers Age of Ultron Studios 6&quot; Series After: &quot;Misty Rainforest Modern Masters 2017 MTG Magic Fetch Land Free Ship W\\\\ Tracking&quot; &quot;Marvel Legends HULK 8\\&quot; Figure Avengers Age of Ultron Studios 6\\&quot; Series&quot;  # noqa: E501
+        The seller created title of the item group. This text is an escaped string when special characters are present, using the following rules:</p>   <ul>     <li>Double quotes (&#34;) and backslashes (&#92;) in the Title are escaped with a backslash (&#92;) character</li>      <li>If there are any tabs (&#92;t), double quotes (&#34;), or backslashes (&#92;) in the Title, the entire Title will be wrapped in double quotes.</li>   </ul>   <p><b>For example</b></p>   <p>Before:</p>   <p><code>Misty Rainforest Modern Masters 2017 MTG Magic Fetch Land Free Ship W<b>&#92;</b>Tracking</code>   </p>   <p><code>Marvel Legends HULK 8<b>&#34;</b> Figure Avengers Age of Ultron Studios 6<b>&#34;</b> Series</code>   </p>   <p>After:</p>   <p><code>&#34;Misty Rainforest Modern Masters 2017 MTG Magic Fetch Land Free Ship W<b>&#92;&#92;</b> Tracking&#34;</code>   </p>   <p><code>&#34;Marvel Legends HULK 8<b>&#92;&#34;</b> Figure Avengers Age of Ultron Studios 6<b>&#92;&#34;</b> Series<b>&#34;</b> </code>   </p>  # noqa: E501
 
         :param title: The title of this ItemGroup.  # noqa: E501
         :type: str
@@ -214,7 +145,7 @@ class ItemGroup(object):
     def varies_by_localized_aspects(self):
         """Gets the varies_by_localized_aspects of this ItemGroup.  # noqa: E501
 
-        A pipe separated (|) list of the aspect (variation) names for this item group. The aspect name is BASE64 encoded. Note: This column can contain multiple values. &nbsp;&nbsp; Encoded Format: &nbsp;&nbsp;&nbsp;aspectName|aspectName &nbsp;&nbsp; Encoded Example (The delimiters are emphasized): &nbsp;&nbsp;&nbsp;Q29sb3I=|U2l6ZQ== &nbsp;&nbsp; Decoded: &nbsp;&nbsp;&nbsp;Color|Size  # noqa: E501
+        A pipe separated (<code>|</code>) list of the aspect (variation) names for this item group. The aspect name is BASE64 encoded. <b>Note: </b> This column can contain multiple values.  <p>&nbsp;&nbsp;<b> Encoded Format:</b> <br />&nbsp;&nbsp;&nbsp;<code><em>aspectName</em>|<em>aspectName</em></code> </p>   <p>&nbsp;&nbsp;<b> Encoded Example</b> (The delimiters are <b style=\"font-family: 'Arial Black';\">emphasized</b>): <br />&nbsp;&nbsp;&nbsp;<code>Q29sb3I=<b style=\"font-family: 'Arial Black';\">|</b>U2l6ZQ==</code> </p>      <p>&nbsp;&nbsp;<b> Decoded: </b> <br />&nbsp;&nbsp;&nbsp;Color|Size </p>  # noqa: E501
 
         :return: The varies_by_localized_aspects of this ItemGroup.  # noqa: E501
         :rtype: str
@@ -225,13 +156,82 @@ class ItemGroup(object):
     def varies_by_localized_aspects(self, varies_by_localized_aspects):
         """Sets the varies_by_localized_aspects of this ItemGroup.
 
-        A pipe separated (|) list of the aspect (variation) names for this item group. The aspect name is BASE64 encoded. Note: This column can contain multiple values. &nbsp;&nbsp; Encoded Format: &nbsp;&nbsp;&nbsp;aspectName|aspectName &nbsp;&nbsp; Encoded Example (The delimiters are emphasized): &nbsp;&nbsp;&nbsp;Q29sb3I=|U2l6ZQ== &nbsp;&nbsp; Decoded: &nbsp;&nbsp;&nbsp;Color|Size  # noqa: E501
+        A pipe separated (<code>|</code>) list of the aspect (variation) names for this item group. The aspect name is BASE64 encoded. <b>Note: </b> This column can contain multiple values.  <p>&nbsp;&nbsp;<b> Encoded Format:</b> <br />&nbsp;&nbsp;&nbsp;<code><em>aspectName</em>|<em>aspectName</em></code> </p>   <p>&nbsp;&nbsp;<b> Encoded Example</b> (The delimiters are <b style=\"font-family: 'Arial Black';\">emphasized</b>): <br />&nbsp;&nbsp;&nbsp;<code>Q29sb3I=<b style=\"font-family: 'Arial Black';\">|</b>U2l6ZQ==</code> </p>      <p>&nbsp;&nbsp;<b> Decoded: </b> <br />&nbsp;&nbsp;&nbsp;Color|Size </p>  # noqa: E501
 
         :param varies_by_localized_aspects: The varies_by_localized_aspects of this ItemGroup.  # noqa: E501
         :type: str
         """
 
         self._varies_by_localized_aspects = varies_by_localized_aspects
+
+    @property
+    def image_url(self):
+        """Gets the image_url of this ItemGroup.  # noqa: E501
+
+        The URL to the primary image of the item. The other images of the item group are returned in the <b> additionalImageUrls</b> column.  # noqa: E501
+
+        :return: The image_url of this ItemGroup.  # noqa: E501
+        :rtype: str
+        """
+        return self._image_url
+
+    @image_url.setter
+    def image_url(self, image_url):
+        """Sets the image_url of this ItemGroup.
+
+        The URL to the primary image of the item. The other images of the item group are returned in the <b> additionalImageUrls</b> column.  # noqa: E501
+
+        :param image_url: The image_url of this ItemGroup.  # noqa: E501
+        :type: str
+        """
+
+        self._image_url = image_url
+
+    @property
+    def additional_image_urls(self):
+        """Gets the additional_image_urls of this ItemGroup.  # noqa: E501
+
+        A pipe separated (<code>|</code>) list of URLs for the additional images for the item group. These images are in addition to the primary image, which is returned in the <b>imageUrl</b> column. <b>Note: </b> This column can contain multiple values.  # noqa: E501
+
+        :return: The additional_image_urls of this ItemGroup.  # noqa: E501
+        :rtype: str
+        """
+        return self._additional_image_urls
+
+    @additional_image_urls.setter
+    def additional_image_urls(self, additional_image_urls):
+        """Sets the additional_image_urls of this ItemGroup.
+
+        A pipe separated (<code>|</code>) list of URLs for the additional images for the item group. These images are in addition to the primary image, which is returned in the <b>imageUrl</b> column. <b>Note: </b> This column can contain multiple values.  # noqa: E501
+
+        :param additional_image_urls: The additional_image_urls of this ItemGroup.  # noqa: E501
+        :type: str
+        """
+
+        self._additional_image_urls = additional_image_urls
+
+    @property
+    def image_altering_prohibited(self):
+        """Gets the image_altering_prohibited of this ItemGroup.  # noqa: E501
+
+        A boolean that indicates whether the images can be altered. If the value is <code>true</code>, you cannot modify the image. <p><span class=\"tablenote\"><b>Note: </b> Due to image licensing agreements and other legal concerns, modification (including resizing) of some images is strictly prohibited. These images are for display as-is only. </span></p>  # noqa: E501
+
+        :return: The image_altering_prohibited of this ItemGroup.  # noqa: E501
+        :rtype: bool
+        """
+        return self._image_altering_prohibited
+
+    @image_altering_prohibited.setter
+    def image_altering_prohibited(self, image_altering_prohibited):
+        """Sets the image_altering_prohibited of this ItemGroup.
+
+        A boolean that indicates whether the images can be altered. If the value is <code>true</code>, you cannot modify the image. <p><span class=\"tablenote\"><b>Note: </b> Due to image licensing agreements and other legal concerns, modification (including resizing) of some images is strictly prohibited. These images are for display as-is only. </span></p>  # noqa: E501
+
+        :param image_altering_prohibited: The image_altering_prohibited of this ItemGroup.  # noqa: E501
+        :type: bool
+        """
+
+        self._image_altering_prohibited = image_altering_prohibited
 
     def to_dict(self):
         """Returns the model properties as a dict"""

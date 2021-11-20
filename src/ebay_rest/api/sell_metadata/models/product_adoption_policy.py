@@ -84,7 +84,7 @@ class ProductAdoptionPolicy(object):
     def category_tree_id(self):
         """Gets the category_tree_id of this ProductAdoptionPolicy.  # noqa: E501
 
-        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree. A category tree is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique categoryId value. Within a category tree, the root node has no parent node and leaf nodes are nodes that have no child nodes.  # noqa: E501
+        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree.    <br><br>A <i>category tree</i> is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique <b>categoryId</b> value. Within a category tree, the root node has no parent node and <i>leaf nodes</i> are nodes that have no child nodes.  # noqa: E501
 
         :return: The category_tree_id of this ProductAdoptionPolicy.  # noqa: E501
         :rtype: str
@@ -95,7 +95,7 @@ class ProductAdoptionPolicy(object):
     def category_tree_id(self, category_tree_id):
         """Sets the category_tree_id of this ProductAdoptionPolicy.
 
-        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree. A category tree is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique categoryId value. Within a category tree, the root node has no parent node and leaf nodes are nodes that have no child nodes.  # noqa: E501
+        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree.    <br><br>A <i>category tree</i> is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique <b>categoryId</b> value. Within a category tree, the root node has no parent node and <i>leaf nodes</i> are nodes that have no child nodes.  # noqa: E501
 
         :param category_tree_id: The category_tree_id of this ProductAdoptionPolicy.  # noqa: E501
         :type: str
@@ -128,7 +128,7 @@ class ProductAdoptionPolicy(object):
     def product_required(self):
         """Gets the product_required of this ProductAdoptionPolicy.  # noqa: E501
 
-        If set to true, items must include an ePID value in their item description before they can be listed in the category identified by the associated categoryId. In contrast, a value of false indicates that items listed in the associated category do not require ePID values. Important! It is possible for a productAdoptionPolicies container to not contain this productRequired field. This occurs if the eBay category is not part of the PBSE Phase 1 or Phase 2 mandate. In these scenarios, please treat the response the same as if this field were present and contained a value of false.  # noqa: E501
+        If set to <code>true</code>, items must include an ePID value in their item description before they can be listed in the category identified by the associated <b>categoryId</b>. In contrast, a value of <code>false</code> indicates that items listed in the associated category do not require ePID values.  <br><br><span class=\"tablenote\"><b>Important!</b> It is possible for a <b>productAdoptionPolicies</b> container to not contain this <b>productRequired</b> field. This occurs if the eBay category is not part of the PBSE Phase 1 or Phase 2 mandate. In these scenarios, please treat the response the same as if this field were present and contained a value of <code>false</code>.</span>  # noqa: E501
 
         :return: The product_required of this ProductAdoptionPolicy.  # noqa: E501
         :rtype: bool
@@ -139,7 +139,7 @@ class ProductAdoptionPolicy(object):
     def product_required(self, product_required):
         """Sets the product_required of this ProductAdoptionPolicy.
 
-        If set to true, items must include an ePID value in their item description before they can be listed in the category identified by the associated categoryId. In contrast, a value of false indicates that items listed in the associated category do not require ePID values. Important! It is possible for a productAdoptionPolicies container to not contain this productRequired field. This occurs if the eBay category is not part of the PBSE Phase 1 or Phase 2 mandate. In these scenarios, please treat the response the same as if this field were present and contained a value of false.  # noqa: E501
+        If set to <code>true</code>, items must include an ePID value in their item description before they can be listed in the category identified by the associated <b>categoryId</b>. In contrast, a value of <code>false</code> indicates that items listed in the associated category do not require ePID values.  <br><br><span class=\"tablenote\"><b>Important!</b> It is possible for a <b>productAdoptionPolicies</b> container to not contain this <b>productRequired</b> field. This occurs if the eBay category is not part of the PBSE Phase 1 or Phase 2 mandate. In these scenarios, please treat the response the same as if this field were present and contained a value of <code>false</code>.</span>  # noqa: E501
 
         :param product_required: The product_required of this ProductAdoptionPolicy.  # noqa: E501
         :type: bool

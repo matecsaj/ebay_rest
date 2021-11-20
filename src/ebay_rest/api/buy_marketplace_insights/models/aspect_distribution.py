@@ -3,7 +3,7 @@
 """
     Marketplace Insights API
 
-    <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#Limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.  # noqa: E501
+    <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.  # noqa: E501
 
     OpenAPI spec version: v1_beta.2.2
     
@@ -51,7 +51,7 @@ class AspectDistribution(object):
     def aspect_value_distributions(self):
         """Gets the aspect_value_distributions of this AspectDistribution.  # noqa: E501
 
-        An array of containers for the various values of the aspect and the match count and a HATEOAS reference ( refinementHref) for this aspect.  # noqa: E501
+        An array of containers for the various values of the aspect and the match count and a HATEOAS reference (<b> refinementHref</b>) for this aspect.  # noqa: E501
 
         :return: The aspect_value_distributions of this AspectDistribution.  # noqa: E501
         :rtype: list[AspectValueDistribution]
@@ -62,7 +62,7 @@ class AspectDistribution(object):
     def aspect_value_distributions(self, aspect_value_distributions):
         """Sets the aspect_value_distributions of this AspectDistribution.
 
-        An array of containers for the various values of the aspect and the match count and a HATEOAS reference ( refinementHref) for this aspect.  # noqa: E501
+        An array of containers for the various values of the aspect and the match count and a HATEOAS reference (<b> refinementHref</b>) for this aspect.  # noqa: E501
 
         :param aspect_value_distributions: The aspect_value_distributions of this AspectDistribution.  # noqa: E501
         :type: list[AspectValueDistribution]

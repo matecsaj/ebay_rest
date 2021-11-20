@@ -7,8 +7,8 @@ import json
 import logging
 import os
 import sys
-from urllib.request import urlopen
 from urllib.parse import urljoin
+from urllib.request import urlretrieve
 import shutil
 from sys import platform
 from typing import Any, Dict, List, Optional, Tuple
@@ -79,11 +79,8 @@ class Contract:
     def cache_contracts(self) -> None:
         for contract in self.contracts:
             [category, call, link_href, file_name] = contract
-            with urlopen(link_href) as url:
-                data = json.loads(url.read().decode())
-                destination = os.path.join(Locations.cache_path, file_name)
-                with open(destination, 'w') as outfile:
-                    json.dump(data, outfile, sort_keys=True, indent=4)
+            destination = os.path.join(Locations.cache_path, file_name)
+            urlretrieve(link_href, destination)     # if a destination file exists, it will be replaced
 
     def get_contracts(self, limit: int = 100) -> List[List[str]]:
         contracts = []
@@ -136,6 +133,25 @@ class Contract:
         except FileNotFoundError:
             logging.error(f"Can't open {file_location}.")
 
+        # A description in buy_browse_v1_oas3.json contains invalid escapes.
+        file_location = os.path.join(Locations.cache_path, 'buy_browse_v1_oas3.json')
+        bad = '\\\n          \\'
+        problem_fixed = True
+        content = ''
+        try:
+            with open(file_location) as file_handle:
+                content = file_handle.read()
+                if bad in content:
+                    problem_fixed = False
+                    content = content.replace(bad, '')
+        except FileNotFoundError:
+            logging.error(f"Can't open {file_location}.")
+        if problem_fixed:
+            logging.warning('Patching buy_browse_v1_oas3.json is no longer needed.')
+        else:
+            with open(file_location, 'w') as file_handle:
+                file_handle.write(content)
+
     @staticmethod
     def get_soup_via_link(url: str) -> bs4.BeautifulSoup:
         # Make a GET request to fetch the raw HTML content
@@ -157,7 +173,12 @@ class Contract:
         for [category, call, link_href, file_name] in self.contracts:
             source = os.path.join(Locations.cache_path, file_name)
             with open(source) as file_handle:
-                data = json.load(file_handle)
+                try:
+                    data = json.load(file_handle)
+                except ValueError:
+                    message = "Invalid JSON in " + source
+                    logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
+                    sys.exit(message)
             # Get base path
             base_path = data['servers'][0]['variables']['basePath']['default']
             # Get flows for this category_call

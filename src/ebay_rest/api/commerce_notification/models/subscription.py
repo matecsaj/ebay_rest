@@ -28,134 +28,44 @@ class Subscription(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'creation_date': 'str',
-        'destination_id': 'str',
-        'payload': 'SubscriptionPayloadDetail',
-        'status': 'str',
         'subscription_id': 'str',
-        'topic_id': 'str'
+        'topic_id': 'str',
+        'status': 'str',
+        'creation_date': 'str',
+        'payload': 'SubscriptionPayloadDetail',
+        'destination_id': 'str'
     }
 
     attribute_map = {
-        'creation_date': 'creationDate',
-        'destination_id': 'destinationId',
-        'payload': 'payload',
-        'status': 'status',
         'subscription_id': 'subscriptionId',
-        'topic_id': 'topicId'
+        'topic_id': 'topicId',
+        'status': 'status',
+        'creation_date': 'creationDate',
+        'payload': 'payload',
+        'destination_id': 'destinationId'
     }
 
-    def __init__(self, creation_date=None, destination_id=None, payload=None, status=None, subscription_id=None, topic_id=None):  # noqa: E501
+    def __init__(self, subscription_id=None, topic_id=None, status=None, creation_date=None, payload=None, destination_id=None):  # noqa: E501
         """Subscription - a model defined in Swagger"""  # noqa: E501
-        self._creation_date = None
-        self._destination_id = None
-        self._payload = None
-        self._status = None
         self._subscription_id = None
         self._topic_id = None
+        self._status = None
+        self._creation_date = None
+        self._payload = None
+        self._destination_id = None
         self.discriminator = None
-        if creation_date is not None:
-            self.creation_date = creation_date
-        if destination_id is not None:
-            self.destination_id = destination_id
-        if payload is not None:
-            self.payload = payload
-        if status is not None:
-            self.status = status
         if subscription_id is not None:
             self.subscription_id = subscription_id
         if topic_id is not None:
             self.topic_id = topic_id
-
-    @property
-    def creation_date(self):
-        """Gets the creation_date of this Subscription.  # noqa: E501
-
-        The creation date for this subscription.  # noqa: E501
-
-        :return: The creation_date of this Subscription.  # noqa: E501
-        :rtype: str
-        """
-        return self._creation_date
-
-    @creation_date.setter
-    def creation_date(self, creation_date):
-        """Sets the creation_date of this Subscription.
-
-        The creation date for this subscription.  # noqa: E501
-
-        :param creation_date: The creation_date of this Subscription.  # noqa: E501
-        :type: str
-        """
-
-        self._creation_date = creation_date
-
-    @property
-    def destination_id(self):
-        """Gets the destination_id of this Subscription.  # noqa: E501
-
-        The unique identifier for the destination associated with this subscription.  # noqa: E501
-
-        :return: The destination_id of this Subscription.  # noqa: E501
-        :rtype: str
-        """
-        return self._destination_id
-
-    @destination_id.setter
-    def destination_id(self, destination_id):
-        """Sets the destination_id of this Subscription.
-
-        The unique identifier for the destination associated with this subscription.  # noqa: E501
-
-        :param destination_id: The destination_id of this Subscription.  # noqa: E501
-        :type: str
-        """
-
-        self._destination_id = destination_id
-
-    @property
-    def payload(self):
-        """Gets the payload of this Subscription.  # noqa: E501
-
-
-        :return: The payload of this Subscription.  # noqa: E501
-        :rtype: SubscriptionPayloadDetail
-        """
-        return self._payload
-
-    @payload.setter
-    def payload(self, payload):
-        """Sets the payload of this Subscription.
-
-
-        :param payload: The payload of this Subscription.  # noqa: E501
-        :type: SubscriptionPayloadDetail
-        """
-
-        self._payload = payload
-
-    @property
-    def status(self):
-        """Gets the status of this Subscription.  # noqa: E501
-
-        The status of this subscription. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/api:SubscriptionStatusEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The status of this Subscription.  # noqa: E501
-        :rtype: str
-        """
-        return self._status
-
-    @status.setter
-    def status(self, status):
-        """Sets the status of this Subscription.
-
-        The status of this subscription. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/api:SubscriptionStatusEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param status: The status of this Subscription.  # noqa: E501
-        :type: str
-        """
-
-        self._status = status
+        if status is not None:
+            self.status = status
+        if creation_date is not None:
+            self.creation_date = creation_date
+        if payload is not None:
+            self.payload = payload
+        if destination_id is not None:
+            self.destination_id = destination_id
 
     @property
     def subscription_id(self):
@@ -202,6 +112,96 @@ class Subscription(object):
         """
 
         self._topic_id = topic_id
+
+    @property
+    def status(self):
+        """Gets the status of this Subscription.  # noqa: E501
+
+        The status of this subscription. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/api:SubscriptionStatusEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The status of this Subscription.  # noqa: E501
+        :rtype: str
+        """
+        return self._status
+
+    @status.setter
+    def status(self, status):
+        """Sets the status of this Subscription.
+
+        The status of this subscription. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/api:SubscriptionStatusEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param status: The status of this Subscription.  # noqa: E501
+        :type: str
+        """
+
+        self._status = status
+
+    @property
+    def creation_date(self):
+        """Gets the creation_date of this Subscription.  # noqa: E501
+
+        The creation date for this subscription.  # noqa: E501
+
+        :return: The creation_date of this Subscription.  # noqa: E501
+        :rtype: str
+        """
+        return self._creation_date
+
+    @creation_date.setter
+    def creation_date(self, creation_date):
+        """Sets the creation_date of this Subscription.
+
+        The creation date for this subscription.  # noqa: E501
+
+        :param creation_date: The creation_date of this Subscription.  # noqa: E501
+        :type: str
+        """
+
+        self._creation_date = creation_date
+
+    @property
+    def payload(self):
+        """Gets the payload of this Subscription.  # noqa: E501
+
+
+        :return: The payload of this Subscription.  # noqa: E501
+        :rtype: SubscriptionPayloadDetail
+        """
+        return self._payload
+
+    @payload.setter
+    def payload(self, payload):
+        """Sets the payload of this Subscription.
+
+
+        :param payload: The payload of this Subscription.  # noqa: E501
+        :type: SubscriptionPayloadDetail
+        """
+
+        self._payload = payload
+
+    @property
+    def destination_id(self):
+        """Gets the destination_id of this Subscription.  # noqa: E501
+
+        The unique identifier for the destination associated with this subscription.  # noqa: E501
+
+        :return: The destination_id of this Subscription.  # noqa: E501
+        :rtype: str
+        """
+        return self._destination_id
+
+    @destination_id.setter
+    def destination_id(self, destination_id):
+        """Sets the destination_id of this Subscription.
+
+        The unique identifier for the destination associated with this subscription.  # noqa: E501
+
+        :param destination_id: The destination_id of this Subscription.  # noqa: E501
+        :type: str
+        """
+
+        self._destination_id = destination_id
 
     def to_dict(self):
         """Returns the model properties as a dict"""

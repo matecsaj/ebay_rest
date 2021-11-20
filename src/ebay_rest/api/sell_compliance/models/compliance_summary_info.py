@@ -29,28 +29,28 @@ class ComplianceSummaryInfo(object):
     """
     swagger_types = {
         'compliance_type': 'str',
-        'listing_count': 'int',
-        'marketplace_id': 'str'
+        'marketplace_id': 'str',
+        'listing_count': 'int'
     }
 
     attribute_map = {
         'compliance_type': 'complianceType',
-        'listing_count': 'listingCount',
-        'marketplace_id': 'marketplaceId'
+        'marketplace_id': 'marketplaceId',
+        'listing_count': 'listingCount'
     }
 
-    def __init__(self, compliance_type=None, listing_count=None, marketplace_id=None):  # noqa: E501
+    def __init__(self, compliance_type=None, marketplace_id=None, listing_count=None):  # noqa: E501
         """ComplianceSummaryInfo - a model defined in Swagger"""  # noqa: E501
         self._compliance_type = None
-        self._listing_count = None
         self._marketplace_id = None
+        self._listing_count = None
         self.discriminator = None
         if compliance_type is not None:
             self.compliance_type = compliance_type
-        if listing_count is not None:
-            self.listing_count = listing_count
         if marketplace_id is not None:
             self.marketplace_id = marketplace_id
+        if listing_count is not None:
+            self.listing_count = listing_count
 
     @property
     def compliance_type(self):
@@ -76,29 +76,6 @@ class ComplianceSummaryInfo(object):
         self._compliance_type = compliance_type
 
     @property
-    def listing_count(self):
-        """Gets the listing_count of this ComplianceSummaryInfo.  # noqa: E501
-
-        This integer value indicates the number of eBay listings that are currently violating the compliance type indicated in the complianceType field, for the eBay marketplace indicated in the marketplaceId field.  # noqa: E501
-
-        :return: The listing_count of this ComplianceSummaryInfo.  # noqa: E501
-        :rtype: int
-        """
-        return self._listing_count
-
-    @listing_count.setter
-    def listing_count(self, listing_count):
-        """Sets the listing_count of this ComplianceSummaryInfo.
-
-        This integer value indicates the number of eBay listings that are currently violating the compliance type indicated in the complianceType field, for the eBay marketplace indicated in the marketplaceId field.  # noqa: E501
-
-        :param listing_count: The listing_count of this ComplianceSummaryInfo.  # noqa: E501
-        :type: int
-        """
-
-        self._listing_count = listing_count
-
-    @property
     def marketplace_id(self):
         """Gets the marketplace_id of this ComplianceSummaryInfo.  # noqa: E501
 
@@ -120,6 +97,29 @@ class ComplianceSummaryInfo(object):
         """
 
         self._marketplace_id = marketplace_id
+
+    @property
+    def listing_count(self):
+        """Gets the listing_count of this ComplianceSummaryInfo.  # noqa: E501
+
+        This integer value indicates the number of eBay listings that are currently violating the compliance type indicated in the complianceType field, for the eBay marketplace indicated in the marketplaceId field.  # noqa: E501
+
+        :return: The listing_count of this ComplianceSummaryInfo.  # noqa: E501
+        :rtype: int
+        """
+        return self._listing_count
+
+    @listing_count.setter
+    def listing_count(self, listing_count):
+        """Sets the listing_count of this ComplianceSummaryInfo.
+
+        This integer value indicates the number of eBay listings that are currently violating the compliance type indicated in the complianceType field, for the eBay marketplace indicated in the marketplaceId field.  # noqa: E501
+
+        :param listing_count: The listing_count of this ComplianceSummaryInfo.  # noqa: E501
+        :type: int
+        """
+
+        self._listing_count = listing_count
 
     def to_dict(self):
         """Returns the model properties as a dict"""

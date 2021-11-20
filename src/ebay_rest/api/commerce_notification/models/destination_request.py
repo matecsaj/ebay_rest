@@ -28,50 +28,29 @@ class DestinationRequest(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'delivery_config': 'DeliveryConfig',
         'name': 'str',
-        'status': 'str'
+        'status': 'str',
+        'delivery_config': 'DeliveryConfig'
     }
 
     attribute_map = {
-        'delivery_config': 'deliveryConfig',
         'name': 'name',
-        'status': 'status'
+        'status': 'status',
+        'delivery_config': 'deliveryConfig'
     }
 
-    def __init__(self, delivery_config=None, name=None, status=None):  # noqa: E501
+    def __init__(self, name=None, status=None, delivery_config=None):  # noqa: E501
         """DestinationRequest - a model defined in Swagger"""  # noqa: E501
-        self._delivery_config = None
         self._name = None
         self._status = None
+        self._delivery_config = None
         self.discriminator = None
-        if delivery_config is not None:
-            self.delivery_config = delivery_config
         if name is not None:
             self.name = name
         if status is not None:
             self.status = status
-
-    @property
-    def delivery_config(self):
-        """Gets the delivery_config of this DestinationRequest.  # noqa: E501
-
-
-        :return: The delivery_config of this DestinationRequest.  # noqa: E501
-        :rtype: DeliveryConfig
-        """
-        return self._delivery_config
-
-    @delivery_config.setter
-    def delivery_config(self, delivery_config):
-        """Sets the delivery_config of this DestinationRequest.
-
-
-        :param delivery_config: The delivery_config of this DestinationRequest.  # noqa: E501
-        :type: DeliveryConfig
-        """
-
-        self._delivery_config = delivery_config
+        if delivery_config is not None:
+            self.delivery_config = delivery_config
 
     @property
     def name(self):
@@ -118,6 +97,27 @@ class DestinationRequest(object):
         """
 
         self._status = status
+
+    @property
+    def delivery_config(self):
+        """Gets the delivery_config of this DestinationRequest.  # noqa: E501
+
+
+        :return: The delivery_config of this DestinationRequest.  # noqa: E501
+        :rtype: DeliveryConfig
+        """
+        return self._delivery_config
+
+    @delivery_config.setter
+    def delivery_config(self, delivery_config):
+        """Sets the delivery_config of this DestinationRequest.
+
+
+        :param delivery_config: The delivery_config of this DestinationRequest.  # noqa: E501
+        :type: DeliveryConfig
+        """
+
+        self._delivery_config = delivery_config
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -33,10 +33,10 @@ class ShippingService(object):
         'buyer_responsible_for_shipping': 'bool',
         'cash_on_delivery_fee': 'Amount',
         'free_shipping': 'bool',
-        'ship_to_locations': 'RegionSet',
         'shipping_carrier_code': 'str',
         'shipping_cost': 'Amount',
         'shipping_service_code': 'str',
+        'ship_to_locations': 'RegionSet',
         'sort_order': 'int',
         'surcharge': 'Amount'
     }
@@ -47,25 +47,25 @@ class ShippingService(object):
         'buyer_responsible_for_shipping': 'buyerResponsibleForShipping',
         'cash_on_delivery_fee': 'cashOnDeliveryFee',
         'free_shipping': 'freeShipping',
-        'ship_to_locations': 'shipToLocations',
         'shipping_carrier_code': 'shippingCarrierCode',
         'shipping_cost': 'shippingCost',
         'shipping_service_code': 'shippingServiceCode',
+        'ship_to_locations': 'shipToLocations',
         'sort_order': 'sortOrder',
         'surcharge': 'surcharge'
     }
 
-    def __init__(self, additional_shipping_cost=None, buyer_responsible_for_pickup=None, buyer_responsible_for_shipping=None, cash_on_delivery_fee=None, free_shipping=None, ship_to_locations=None, shipping_carrier_code=None, shipping_cost=None, shipping_service_code=None, sort_order=None, surcharge=None):  # noqa: E501
+    def __init__(self, additional_shipping_cost=None, buyer_responsible_for_pickup=None, buyer_responsible_for_shipping=None, cash_on_delivery_fee=None, free_shipping=None, shipping_carrier_code=None, shipping_cost=None, shipping_service_code=None, ship_to_locations=None, sort_order=None, surcharge=None):  # noqa: E501
         """ShippingService - a model defined in Swagger"""  # noqa: E501
         self._additional_shipping_cost = None
         self._buyer_responsible_for_pickup = None
         self._buyer_responsible_for_shipping = None
         self._cash_on_delivery_fee = None
         self._free_shipping = None
-        self._ship_to_locations = None
         self._shipping_carrier_code = None
         self._shipping_cost = None
         self._shipping_service_code = None
+        self._ship_to_locations = None
         self._sort_order = None
         self._surcharge = None
         self.discriminator = None
@@ -79,14 +79,14 @@ class ShippingService(object):
             self.cash_on_delivery_fee = cash_on_delivery_fee
         if free_shipping is not None:
             self.free_shipping = free_shipping
-        if ship_to_locations is not None:
-            self.ship_to_locations = ship_to_locations
         if shipping_carrier_code is not None:
             self.shipping_carrier_code = shipping_carrier_code
         if shipping_cost is not None:
             self.shipping_cost = shipping_cost
         if shipping_service_code is not None:
             self.shipping_service_code = shipping_service_code
+        if ship_to_locations is not None:
+            self.ship_to_locations = ship_to_locations
         if sort_order is not None:
             self.sort_order = sort_order
         if surcharge is not None:
@@ -204,27 +204,6 @@ class ShippingService(object):
         self._free_shipping = free_shipping
 
     @property
-    def ship_to_locations(self):
-        """Gets the ship_to_locations of this ShippingService.  # noqa: E501
-
-
-        :return: The ship_to_locations of this ShippingService.  # noqa: E501
-        :rtype: RegionSet
-        """
-        return self._ship_to_locations
-
-    @ship_to_locations.setter
-    def ship_to_locations(self, ship_to_locations):
-        """Sets the ship_to_locations of this ShippingService.
-
-
-        :param ship_to_locations: The ship_to_locations of this ShippingService.  # noqa: E501
-        :type: RegionSet
-        """
-
-        self._ship_to_locations = ship_to_locations
-
-    @property
     def shipping_carrier_code(self):
         """Gets the shipping_carrier_code of this ShippingService.  # noqa: E501
 
@@ -290,6 +269,27 @@ class ShippingService(object):
         """
 
         self._shipping_service_code = shipping_service_code
+
+    @property
+    def ship_to_locations(self):
+        """Gets the ship_to_locations of this ShippingService.  # noqa: E501
+
+
+        :return: The ship_to_locations of this ShippingService.  # noqa: E501
+        :rtype: RegionSet
+        """
+        return self._ship_to_locations
+
+    @ship_to_locations.setter
+    def ship_to_locations(self, ship_to_locations):
+        """Sets the ship_to_locations of this ShippingService.
+
+
+        :param ship_to_locations: The ship_to_locations of this ShippingService.  # noqa: E501
+        :type: RegionSet
+        """
+
+        self._ship_to_locations = ship_to_locations
 
     @property
     def sort_order(self):

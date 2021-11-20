@@ -28,47 +28,24 @@ class CompatibilityProperty(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'localized_name': 'str',
-        'name': 'str'
+        'name': 'str',
+        'localized_name': 'str'
     }
 
     attribute_map = {
-        'localized_name': 'localizedName',
-        'name': 'name'
+        'name': 'name',
+        'localized_name': 'localizedName'
     }
 
-    def __init__(self, localized_name=None, name=None):  # noqa: E501
+    def __init__(self, name=None, localized_name=None):  # noqa: E501
         """CompatibilityProperty - a model defined in Swagger"""  # noqa: E501
-        self._localized_name = None
         self._name = None
+        self._localized_name = None
         self.discriminator = None
-        if localized_name is not None:
-            self.localized_name = localized_name
         if name is not None:
             self.name = name
-
-    @property
-    def localized_name(self):
-        """Gets the localized_name of this CompatibilityProperty.  # noqa: E501
-
-        This is the localized name of the compatible vehicle property. The language that is used will depend on the user making the call, or based on the language specified if the Content-Language HTTP header is used. In some instances, the string value in this field may be the same as the string in the corresponding name field.  # noqa: E501
-
-        :return: The localized_name of this CompatibilityProperty.  # noqa: E501
-        :rtype: str
-        """
-        return self._localized_name
-
-    @localized_name.setter
-    def localized_name(self, localized_name):
-        """Sets the localized_name of this CompatibilityProperty.
-
-        This is the localized name of the compatible vehicle property. The language that is used will depend on the user making the call, or based on the language specified if the Content-Language HTTP header is used. In some instances, the string value in this field may be the same as the string in the corresponding name field.  # noqa: E501
-
-        :param localized_name: The localized_name of this CompatibilityProperty.  # noqa: E501
-        :type: str
-        """
-
-        self._localized_name = localized_name
+        if localized_name is not None:
+            self.localized_name = localized_name
 
     @property
     def name(self):
@@ -92,6 +69,29 @@ class CompatibilityProperty(object):
         """
 
         self._name = name
+
+    @property
+    def localized_name(self):
+        """Gets the localized_name of this CompatibilityProperty.  # noqa: E501
+
+        This is the localized name of the compatible vehicle property. The language that is used will depend on the user making the call, or based on the language specified if the Content-Language HTTP header is used. In some instances, the string value in this field may be the same as the string in the corresponding name field.  # noqa: E501
+
+        :return: The localized_name of this CompatibilityProperty.  # noqa: E501
+        :rtype: str
+        """
+        return self._localized_name
+
+    @localized_name.setter
+    def localized_name(self, localized_name):
+        """Sets the localized_name of this CompatibilityProperty.
+
+        This is the localized name of the compatible vehicle property. The language that is used will depend on the user making the call, or based on the language specified if the Content-Language HTTP header is used. In some instances, the string value in this field may be the same as the string in the corresponding name field.  # noqa: E501
+
+        :param localized_name: The localized_name of this CompatibilityProperty.  # noqa: E501
+        :type: str
+        """
+
+        self._localized_name = localized_name
 
     def to_dict(self):
         """Returns the model properties as a dict"""

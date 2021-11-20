@@ -3,7 +3,7 @@
 """
     Order API
 
-    <span class=\"tablenote\"><b>Note:</b> This version of the Order API (v2) currently only supports the guest payment flow for eBay managed payments. To view the v1_beta version of the Order API, which includes both member and guest checkout payment flows, refer to the <a href=\"/api-docs/buy/order_v1/resources/methods\">Order_v1 API</a> documentation.</span><br /><br /><span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#Limited\" target=\"_blank\"><img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\"  alt=\"Limited Release\" title=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />The Order API provides interfaces that let shoppers pay for items. It also returns payment and shipping status of the order.  # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> This version of the Order API (v2) currently only supports the guest payment flow for eBay managed payments. To view the v1_beta version of the Order API, which includes both member and guest checkout payment flows, refer to the <a href=\"/api-docs/buy/order_v1/resources/methods\">Order_v1 API</a> documentation.</span><br /><br /><span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"><img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\"  alt=\"Limited Release\" title=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />The Order API provides interfaces that let shoppers pay for items. It also returns payment and shipping status of the order.  # noqa: E501
 
     OpenAPI spec version: v2.0.0
     
@@ -79,7 +79,7 @@ class CreateGuestCheckoutSessionRequestV2(object):
     def line_item_inputs(self):
         """Gets the line_item_inputs of this CreateGuestCheckoutSessionRequestV2.  # noqa: E501
 
-        An array used to define the line item(s) and desired quantity for an eBay guest checkout session. Maximum: 10 line items  # noqa: E501
+        An array used to define the line item(s) and desired quantity for an eBay guest checkout session.<br /><br /><b>Maximum:</b> 10 line items  # noqa: E501
 
         :return: The line_item_inputs of this CreateGuestCheckoutSessionRequestV2.  # noqa: E501
         :rtype: list[LineItemInput]
@@ -90,7 +90,7 @@ class CreateGuestCheckoutSessionRequestV2(object):
     def line_item_inputs(self, line_item_inputs):
         """Sets the line_item_inputs of this CreateGuestCheckoutSessionRequestV2.
 
-        An array used to define the line item(s) and desired quantity for an eBay guest checkout session. Maximum: 10 line items  # noqa: E501
+        An array used to define the line item(s) and desired quantity for an eBay guest checkout session.<br /><br /><b>Maximum:</b> 10 line items  # noqa: E501
 
         :param line_item_inputs: The line_item_inputs of this CreateGuestCheckoutSessionRequestV2.  # noqa: E501
         :type: list[LineItemInput]

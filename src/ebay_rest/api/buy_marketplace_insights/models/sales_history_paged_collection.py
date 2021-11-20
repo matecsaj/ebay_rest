@@ -3,7 +3,7 @@
 """
     Marketplace Insights API
 
-    <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#Limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.  # noqa: E501
+    <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.  # noqa: E501
 
     OpenAPI spec version: v1_beta.2.2
     
@@ -81,7 +81,7 @@ class SalesHistoryPagedCollection(object):
     def href(self):
         """Gets the href of this SalesHistoryPagedCollection.  # noqa: E501
 
-        The URI of the current page of results from the result set. The following example returns items 1 thru 5 from the list of items found. https://api.ebay.com/buy/marketplace_insights/v1_beta/item_sales/search?q=shirt&amp;&amp;limit=5&amp;offset=0  # noqa: E501
+        The URI of the current page of results from the result set.  <br /><br /><b> The following example returns items 1 thru 5 from the list of items found. </b><br /><code>https://api.ebay.com/buy/marketplace_insights/v1_beta/item_sales/search?q=shirt&&limit=5&offset=0</code>  # noqa: E501
 
         :return: The href of this SalesHistoryPagedCollection.  # noqa: E501
         :rtype: str
@@ -92,7 +92,7 @@ class SalesHistoryPagedCollection(object):
     def href(self, href):
         """Sets the href of this SalesHistoryPagedCollection.
 
-        The URI of the current page of results from the result set. The following example returns items 1 thru 5 from the list of items found. https://api.ebay.com/buy/marketplace_insights/v1_beta/item_sales/search?q=shirt&amp;&amp;limit=5&amp;offset=0  # noqa: E501
+        The URI of the current page of results from the result set.  <br /><br /><b> The following example returns items 1 thru 5 from the list of items found. </b><br /><code>https://api.ebay.com/buy/marketplace_insights/v1_beta/item_sales/search?q=shirt&&limit=5&offset=0</code>  # noqa: E501
 
         :param href: The href of this SalesHistoryPagedCollection.  # noqa: E501
         :type: str
@@ -104,7 +104,7 @@ class SalesHistoryPagedCollection(object):
     def item_sales(self):
         """Gets the item_sales of this SalesHistoryPagedCollection.  # noqa: E501
 
-        The type that defines the fields for a paginated result set of the sold items. The response consists of 0 or more sequenced result sets where each result sets has 0 or more items. Note: For items with multiple quantities that might result in multiple transactions, and items with the SELLER_DEFINED_VARIATIONS group type that might result in multiple transactions, only one deduped transaction is returned in the search results.  # noqa: E501
+        The type that defines the fields for a paginated result set of the sold items. The response consists of 0 or more sequenced <em> result sets</em> where each result sets has 0 or more items.<br /><br /><span class=\"tablenote\"><b> Note:</b> For items with multiple quantities that might result in multiple transactions, and items with the <code>SELLER_DEFINED_VARIATIONS</code> group type that might result in multiple transactions, only one deduped transaction is returned in the search results.</span>  # noqa: E501
 
         :return: The item_sales of this SalesHistoryPagedCollection.  # noqa: E501
         :rtype: list[ItemSales]
@@ -115,7 +115,7 @@ class SalesHistoryPagedCollection(object):
     def item_sales(self, item_sales):
         """Sets the item_sales of this SalesHistoryPagedCollection.
 
-        The type that defines the fields for a paginated result set of the sold items. The response consists of 0 or more sequenced result sets where each result sets has 0 or more items. Note: For items with multiple quantities that might result in multiple transactions, and items with the SELLER_DEFINED_VARIATIONS group type that might result in multiple transactions, only one deduped transaction is returned in the search results.  # noqa: E501
+        The type that defines the fields for a paginated result set of the sold items. The response consists of 0 or more sequenced <em> result sets</em> where each result sets has 0 or more items.<br /><br /><span class=\"tablenote\"><b> Note:</b> For items with multiple quantities that might result in multiple transactions, and items with the <code>SELLER_DEFINED_VARIATIONS</code> group type that might result in multiple transactions, only one deduped transaction is returned in the search results.</span>  # noqa: E501
 
         :param item_sales: The item_sales of this SalesHistoryPagedCollection.  # noqa: E501
         :type: list[ItemSales]
@@ -127,7 +127,7 @@ class SalesHistoryPagedCollection(object):
     def limit(self):
         """Gets the limit of this SalesHistoryPagedCollection.  # noqa: E501
 
-        The number of items returned on a single page from the result set. This value can be set in the request with the limit query parameter.  # noqa: E501
+        The number of items returned on a single page from the result set. This value can be set in the request with the <b>limit</b> query parameter.  # noqa: E501
 
         :return: The limit of this SalesHistoryPagedCollection.  # noqa: E501
         :rtype: int
@@ -138,7 +138,7 @@ class SalesHistoryPagedCollection(object):
     def limit(self, limit):
         """Sets the limit of this SalesHistoryPagedCollection.
 
-        The number of items returned on a single page from the result set. This value can be set in the request with the limit query parameter.  # noqa: E501
+        The number of items returned on a single page from the result set. This value can be set in the request with the <b>limit</b> query parameter.  # noqa: E501
 
         :param limit: The limit of this SalesHistoryPagedCollection.  # noqa: E501
         :type: int
@@ -150,7 +150,7 @@ class SalesHistoryPagedCollection(object):
     def next(self):
         """Gets the next of this SalesHistoryPagedCollection.  # noqa: E501
 
-        The URI for the following page of results. This value is returned only if there is an additional page of results to display from the result set. Max length: 2048  # noqa: E501
+        The URI for the following page of results. This value is returned only if there is an additional page of results to display from the result set. <br><br><b>Max length</b>: 2048  # noqa: E501
 
         :return: The next of this SalesHistoryPagedCollection.  # noqa: E501
         :rtype: str
@@ -161,7 +161,7 @@ class SalesHistoryPagedCollection(object):
     def next(self, next):
         """Sets the next of this SalesHistoryPagedCollection.
 
-        The URI for the following page of results. This value is returned only if there is an additional page of results to display from the result set. Max length: 2048  # noqa: E501
+        The URI for the following page of results. This value is returned only if there is an additional page of results to display from the result set. <br><br><b>Max length</b>: 2048  # noqa: E501
 
         :param next: The next of this SalesHistoryPagedCollection.  # noqa: E501
         :type: str
@@ -173,7 +173,7 @@ class SalesHistoryPagedCollection(object):
     def offset(self):
         """Gets the offset of this SalesHistoryPagedCollection.  # noqa: E501
 
-        The number of results skipped in the result set before listing the first returned result. This value can be set in the request with the offset query parameter.  # noqa: E501
+        The number of results skipped in the result set before listing the first returned result. This value can be set in the request with the <b>offset</b> query parameter.  # noqa: E501
 
         :return: The offset of this SalesHistoryPagedCollection.  # noqa: E501
         :rtype: int
@@ -184,7 +184,7 @@ class SalesHistoryPagedCollection(object):
     def offset(self, offset):
         """Sets the offset of this SalesHistoryPagedCollection.
 
-        The number of results skipped in the result set before listing the first returned result. This value can be set in the request with the offset query parameter.  # noqa: E501
+        The number of results skipped in the result set before listing the first returned result. This value can be set in the request with the <b>offset</b> query parameter.  # noqa: E501
 
         :param offset: The offset of this SalesHistoryPagedCollection.  # noqa: E501
         :type: int
@@ -196,7 +196,7 @@ class SalesHistoryPagedCollection(object):
     def prev(self):
         """Gets the prev of this SalesHistoryPagedCollection.  # noqa: E501
 
-        The URI for the preceding page of results. This value is returned only if there is a previous page of results to display from the result set. Max length: 2048  # noqa: E501
+        The URI for the preceding page of results. This value is returned only if there is a previous page of results to display from the result set. <br><br><b>Max length</b>: 2048  # noqa: E501
 
         :return: The prev of this SalesHistoryPagedCollection.  # noqa: E501
         :rtype: str
@@ -207,7 +207,7 @@ class SalesHistoryPagedCollection(object):
     def prev(self, prev):
         """Sets the prev of this SalesHistoryPagedCollection.
 
-        The URI for the preceding page of results. This value is returned only if there is a previous page of results to display from the result set. Max length: 2048  # noqa: E501
+        The URI for the preceding page of results. This value is returned only if there is a previous page of results to display from the result set. <br><br><b>Max length</b>: 2048  # noqa: E501
 
         :param prev: The prev of this SalesHistoryPagedCollection.  # noqa: E501
         :type: str
@@ -240,7 +240,7 @@ class SalesHistoryPagedCollection(object):
     def total(self):
         """Gets the total of this SalesHistoryPagedCollection.  # noqa: E501
 
-        The total number of items retrieved in the result set. If no items are found, this field is returned with a value of 0.  # noqa: E501
+        The total number of items retrieved in the result set.  <br><br>If no items are found, this field is returned with a value of <code>0</code>.  # noqa: E501
 
         :return: The total of this SalesHistoryPagedCollection.  # noqa: E501
         :rtype: int
@@ -251,7 +251,7 @@ class SalesHistoryPagedCollection(object):
     def total(self, total):
         """Sets the total of this SalesHistoryPagedCollection.
 
-        The total number of items retrieved in the result set. If no items are found, this field is returned with a value of 0.  # noqa: E501
+        The total number of items retrieved in the result set.  <br><br>If no items are found, this field is returned with a value of <code>0</code>.  # noqa: E501
 
         :param total: The total of this SalesHistoryPagedCollection.  # noqa: E501
         :type: int

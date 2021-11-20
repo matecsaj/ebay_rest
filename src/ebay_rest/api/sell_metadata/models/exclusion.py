@@ -46,7 +46,7 @@ class Exclusion(object):
     def brands(self):
         """Gets the brands of this Exclusion.  # noqa: E501
 
-        A list of brands that are excluded from requiring a link to the eBay Catalog for the associated categoryId. If productRequired is set to true, items that are of a brand returned in this field are excluded from the need to specify a value for the ePID field in their item description in order to be listed in the associated category.  # noqa: E501
+        A list of brands that are excluded from requiring a link to the eBay Catalog for the associated <b>categoryId</b>.  <br><br>If <b>productRequired</b> is set to <code>true</code>, items that are of a brand returned in this field are excluded from the need to specify a value for the ePID field in their item description in order to be listed in the associated category.  # noqa: E501
 
         :return: The brands of this Exclusion.  # noqa: E501
         :rtype: list[str]
@@ -57,7 +57,7 @@ class Exclusion(object):
     def brands(self, brands):
         """Sets the brands of this Exclusion.
 
-        A list of brands that are excluded from requiring a link to the eBay Catalog for the associated categoryId. If productRequired is set to true, items that are of a brand returned in this field are excluded from the need to specify a value for the ePID field in their item description in order to be listed in the associated category.  # noqa: E501
+        A list of brands that are excluded from requiring a link to the eBay Catalog for the associated <b>categoryId</b>.  <br><br>If <b>productRequired</b> is set to <code>true</code>, items that are of a brand returned in this field are excluded from the need to specify a value for the ePID field in their item description in order to be listed in the associated category.  # noqa: E501
 
         :param brands: The brands of this Exclusion.  # noqa: E501
         :type: list[str]

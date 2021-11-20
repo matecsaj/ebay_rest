@@ -28,57 +28,34 @@ class Destination(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'delivery_config': 'str',
         'destination_id': 'str',
         'name': 'str',
-        'status': 'str'
+        'status': 'str',
+        'delivery_config': 'str'
     }
 
     attribute_map = {
-        'delivery_config': 'deliveryConfig',
         'destination_id': 'destinationId',
         'name': 'name',
-        'status': 'status'
+        'status': 'status',
+        'delivery_config': 'deliveryConfig'
     }
 
-    def __init__(self, delivery_config=None, destination_id=None, name=None, status=None):  # noqa: E501
+    def __init__(self, destination_id=None, name=None, status=None, delivery_config=None):  # noqa: E501
         """Destination - a model defined in Swagger"""  # noqa: E501
-        self._delivery_config = None
         self._destination_id = None
         self._name = None
         self._status = None
+        self._delivery_config = None
         self.discriminator = None
-        if delivery_config is not None:
-            self.delivery_config = delivery_config
         if destination_id is not None:
             self.destination_id = destination_id
         if name is not None:
             self.name = name
         if status is not None:
             self.status = status
-
-    @property
-    def delivery_config(self):
-        """Gets the delivery_config of this Destination.  # noqa: E501
-
-        The configuration associated with this destination. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/desination'>eBay API documentation</a>  # noqa: E501
-
-        :return: The delivery_config of this Destination.  # noqa: E501
-        :rtype: str
-        """
-        return self._delivery_config
-
-    @delivery_config.setter
-    def delivery_config(self, delivery_config):
-        """Sets the delivery_config of this Destination.
-
-        The configuration associated with this destination. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/desination'>eBay API documentation</a>  # noqa: E501
-
-        :param delivery_config: The delivery_config of this Destination.  # noqa: E501
-        :type: str
-        """
-
-        self._delivery_config = delivery_config
+        if delivery_config is not None:
+            self.delivery_config = delivery_config
 
     @property
     def destination_id(self):
@@ -148,6 +125,29 @@ class Destination(object):
         """
 
         self._status = status
+
+    @property
+    def delivery_config(self):
+        """Gets the delivery_config of this Destination.  # noqa: E501
+
+        The configuration associated with this destination. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/desination'>eBay API documentation</a>  # noqa: E501
+
+        :return: The delivery_config of this Destination.  # noqa: E501
+        :rtype: str
+        """
+        return self._delivery_config
+
+    @delivery_config.setter
+    def delivery_config(self, delivery_config):
+        """Sets the delivery_config of this Destination.
+
+        The configuration associated with this destination. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/desination'>eBay API documentation</a>  # noqa: E501
+
+        :param delivery_config: The delivery_config of this Destination.  # noqa: E501
+        :type: str
+        """
+
+        self._delivery_config = delivery_config
 
     def to_dict(self):
         """Returns the model properties as a dict"""

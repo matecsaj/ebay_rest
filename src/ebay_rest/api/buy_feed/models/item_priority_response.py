@@ -46,7 +46,7 @@ class ItemPriorityResponse(object):
     def item_delta(self):
         """Gets the item_delta of this ItemPriorityResponse.  # noqa: E501
 
-        The container for the array of items returned by the getItemPriorityFeed method. The data in the file is tab separated and the first row is the header, which labels the columns and indicates the order of the values on each line. The header labels match the fields that are described in the Response fields section.  # noqa: E501
+        The container for the array of items returned by the <b>getItemPriorityFeed</b> method. The data in the file is tab separated and the first row is the header, which labels the columns and indicates the order of the values on each line. The header labels match the fields that are described in the <a href=\"/api-docs/buy/feed/resources/item/methods/getItemPriorityFeed#h3-response-fields\">Response fields</a> section.  # noqa: E501
 
         :return: The item_delta of this ItemPriorityResponse.  # noqa: E501
         :rtype: list[ItemPriority]
@@ -57,7 +57,7 @@ class ItemPriorityResponse(object):
     def item_delta(self, item_delta):
         """Sets the item_delta of this ItemPriorityResponse.
 
-        The container for the array of items returned by the getItemPriorityFeed method. The data in the file is tab separated and the first row is the header, which labels the columns and indicates the order of the values on each line. The header labels match the fields that are described in the Response fields section.  # noqa: E501
+        The container for the array of items returned by the <b>getItemPriorityFeed</b> method. The data in the file is tab separated and the first row is the header, which labels the columns and indicates the order of the values on each line. The header labels match the fields that are described in the <a href=\"/api-docs/buy/feed/resources/item/methods/getItemPriorityFeed#h3-response-fields\">Response fields</a> section.  # noqa: E501
 
         :param item_delta: The item_delta of this ItemPriorityResponse.  # noqa: E501
         :type: list[ItemPriority]

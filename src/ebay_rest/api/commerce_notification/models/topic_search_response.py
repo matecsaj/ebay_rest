@@ -28,39 +28,62 @@ class TopicSearchResponse(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'total': 'int',
         'href': 'str',
-        'limit': 'int',
         'next': 'str',
-        'topics': 'list[Topic]',
-        'total': 'int'
+        'limit': 'int',
+        'topics': 'list[Topic]'
     }
 
     attribute_map = {
+        'total': 'total',
         'href': 'href',
-        'limit': 'limit',
         'next': 'next',
-        'topics': 'topics',
-        'total': 'total'
+        'limit': 'limit',
+        'topics': 'topics'
     }
 
-    def __init__(self, href=None, limit=None, next=None, topics=None, total=None):  # noqa: E501
+    def __init__(self, total=None, href=None, next=None, limit=None, topics=None):  # noqa: E501
         """TopicSearchResponse - a model defined in Swagger"""  # noqa: E501
-        self._href = None
-        self._limit = None
-        self._next = None
-        self._topics = None
         self._total = None
+        self._href = None
+        self._next = None
+        self._limit = None
+        self._topics = None
         self.discriminator = None
-        if href is not None:
-            self.href = href
-        if limit is not None:
-            self.limit = limit
-        if next is not None:
-            self.next = next
-        if topics is not None:
-            self.topics = topics
         if total is not None:
             self.total = total
+        if href is not None:
+            self.href = href
+        if next is not None:
+            self.next = next
+        if limit is not None:
+            self.limit = limit
+        if topics is not None:
+            self.topics = topics
+
+    @property
+    def total(self):
+        """Gets the total of this TopicSearchResponse.  # noqa: E501
+
+        The total number of matches for the search criteria.  # noqa: E501
+
+        :return: The total of this TopicSearchResponse.  # noqa: E501
+        :rtype: int
+        """
+        return self._total
+
+    @total.setter
+    def total(self, total):
+        """Sets the total of this TopicSearchResponse.
+
+        The total number of matches for the search criteria.  # noqa: E501
+
+        :param total: The total of this TopicSearchResponse.  # noqa: E501
+        :type: int
+        """
+
+        self._total = total
 
     @property
     def href(self):
@@ -86,29 +109,6 @@ class TopicSearchResponse(object):
         self._href = href
 
     @property
-    def limit(self):
-        """Gets the limit of this TopicSearchResponse.  # noqa: E501
-
-        The value of the limit parameter submitted in the request, which is the maximum number of items to return per page, from the result set. A result set is the complete set of results returned by the method.<br /><br /><span class=\"tablenote\"><b>Note:</b> Though this parameter is not required to be submitted in the request, the parameter defaults to <code>20</code> if omitted.</span>  # noqa: E501
-
-        :return: The limit of this TopicSearchResponse.  # noqa: E501
-        :rtype: int
-        """
-        return self._limit
-
-    @limit.setter
-    def limit(self, limit):
-        """Sets the limit of this TopicSearchResponse.
-
-        The value of the limit parameter submitted in the request, which is the maximum number of items to return per page, from the result set. A result set is the complete set of results returned by the method.<br /><br /><span class=\"tablenote\"><b>Note:</b> Though this parameter is not required to be submitted in the request, the parameter defaults to <code>20</code> if omitted.</span>  # noqa: E501
-
-        :param limit: The limit of this TopicSearchResponse.  # noqa: E501
-        :type: int
-        """
-
-        self._limit = limit
-
-    @property
     def next(self):
         """Gets the next of this TopicSearchResponse.  # noqa: E501
 
@@ -132,6 +132,29 @@ class TopicSearchResponse(object):
         self._next = next
 
     @property
+    def limit(self):
+        """Gets the limit of this TopicSearchResponse.  # noqa: E501
+
+        The value of the limit parameter submitted in the request, which is the maximum number of items to return per page, from the result set. A result set is the complete set of results returned by the method.<br /><br /><span class=\"tablenote\"><b>Note:</b> Though this parameter is not required to be submitted in the request, the parameter defaults to <code>20</code> if omitted.</span>  # noqa: E501
+
+        :return: The limit of this TopicSearchResponse.  # noqa: E501
+        :rtype: int
+        """
+        return self._limit
+
+    @limit.setter
+    def limit(self, limit):
+        """Sets the limit of this TopicSearchResponse.
+
+        The value of the limit parameter submitted in the request, which is the maximum number of items to return per page, from the result set. A result set is the complete set of results returned by the method.<br /><br /><span class=\"tablenote\"><b>Note:</b> Though this parameter is not required to be submitted in the request, the parameter defaults to <code>20</code> if omitted.</span>  # noqa: E501
+
+        :param limit: The limit of this TopicSearchResponse.  # noqa: E501
+        :type: int
+        """
+
+        self._limit = limit
+
+    @property
     def topics(self):
         """Gets the topics of this TopicSearchResponse.  # noqa: E501
 
@@ -153,29 +176,6 @@ class TopicSearchResponse(object):
         """
 
         self._topics = topics
-
-    @property
-    def total(self):
-        """Gets the total of this TopicSearchResponse.  # noqa: E501
-
-        The total number of matches for the search criteria.  # noqa: E501
-
-        :return: The total of this TopicSearchResponse.  # noqa: E501
-        :rtype: int
-        """
-        return self._total
-
-    @total.setter
-    def total(self, total):
-        """Sets the total of this TopicSearchResponse.
-
-        The total number of matches for the search criteria.  # noqa: E501
-
-        :param total: The total of this TopicSearchResponse.  # noqa: E501
-        :type: int
-        """
-
-        self._total = total
 
     def to_dict(self):
         """Returns the model properties as a dict"""

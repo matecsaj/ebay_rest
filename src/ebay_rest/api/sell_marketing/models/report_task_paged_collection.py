@@ -33,8 +33,8 @@ class ReportTaskPagedCollection(object):
         'next': 'str',
         'offset': 'int',
         'prev': 'str',
-        'report_tasks': 'list[ReportTask]',
-        'total': 'int'
+        'total': 'int',
+        'report_tasks': 'list[ReportTask]'
     }
 
     attribute_map = {
@@ -43,19 +43,19 @@ class ReportTaskPagedCollection(object):
         'next': 'next',
         'offset': 'offset',
         'prev': 'prev',
-        'report_tasks': 'reportTasks',
-        'total': 'total'
+        'total': 'total',
+        'report_tasks': 'reportTasks'
     }
 
-    def __init__(self, href=None, limit=None, next=None, offset=None, prev=None, report_tasks=None, total=None):  # noqa: E501
+    def __init__(self, href=None, limit=None, next=None, offset=None, prev=None, total=None, report_tasks=None):  # noqa: E501
         """ReportTaskPagedCollection - a model defined in Swagger"""  # noqa: E501
         self._href = None
         self._limit = None
         self._next = None
         self._offset = None
         self._prev = None
-        self._report_tasks = None
         self._total = None
+        self._report_tasks = None
         self.discriminator = None
         if href is not None:
             self.href = href
@@ -67,10 +67,10 @@ class ReportTaskPagedCollection(object):
             self.offset = offset
         if prev is not None:
             self.prev = prev
-        if report_tasks is not None:
-            self.report_tasks = report_tasks
         if total is not None:
             self.total = total
+        if report_tasks is not None:
+            self.report_tasks = report_tasks
 
     @property
     def href(self):
@@ -188,29 +188,6 @@ class ReportTaskPagedCollection(object):
         self._prev = prev
 
     @property
-    def report_tasks(self):
-        """Gets the report_tasks of this ReportTaskPagedCollection.  # noqa: E501
-
-        A list of report tasks contained on this page from the paginated response.  # noqa: E501
-
-        :return: The report_tasks of this ReportTaskPagedCollection.  # noqa: E501
-        :rtype: list[ReportTask]
-        """
-        return self._report_tasks
-
-    @report_tasks.setter
-    def report_tasks(self, report_tasks):
-        """Sets the report_tasks of this ReportTaskPagedCollection.
-
-        A list of report tasks contained on this page from the paginated response.  # noqa: E501
-
-        :param report_tasks: The report_tasks of this ReportTaskPagedCollection.  # noqa: E501
-        :type: list[ReportTask]
-        """
-
-        self._report_tasks = report_tasks
-
-    @property
     def total(self):
         """Gets the total of this ReportTaskPagedCollection.  # noqa: E501
 
@@ -232,6 +209,29 @@ class ReportTaskPagedCollection(object):
         """
 
         self._total = total
+
+    @property
+    def report_tasks(self):
+        """Gets the report_tasks of this ReportTaskPagedCollection.  # noqa: E501
+
+        A list of report tasks contained on this page from the paginated response.  # noqa: E501
+
+        :return: The report_tasks of this ReportTaskPagedCollection.  # noqa: E501
+        :rtype: list[ReportTask]
+        """
+        return self._report_tasks
+
+    @report_tasks.setter
+    def report_tasks(self, report_tasks):
+        """Sets the report_tasks of this ReportTaskPagedCollection.
+
+        A list of report tasks contained on this page from the paginated response.  # noqa: E501
+
+        :param report_tasks: The report_tasks of this ReportTaskPagedCollection.  # noqa: E501
+        :type: list[ReportTask]
+        """
+
+        self._report_tasks = report_tasks
 
     def to_dict(self):
         """Returns the model properties as a dict"""

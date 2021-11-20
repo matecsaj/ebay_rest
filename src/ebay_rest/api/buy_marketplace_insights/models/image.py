@@ -3,7 +3,7 @@
 """
     Marketplace Insights API
 
-    <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#Limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.  # noqa: E501
+    <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.  # noqa: E501
 
     OpenAPI spec version: v1_beta.2.2
     
@@ -56,7 +56,7 @@ class Image(object):
     def height(self):
         """Gets the height of this Image.  # noqa: E501
 
-        Reserved for future use.  # noqa: E501
+        <b> Reserved for future use. </b>   # noqa: E501
 
         :return: The height of this Image.  # noqa: E501
         :rtype: int
@@ -67,7 +67,7 @@ class Image(object):
     def height(self, height):
         """Sets the height of this Image.
 
-        Reserved for future use.  # noqa: E501
+        <b> Reserved for future use. </b>   # noqa: E501
 
         :param height: The height of this Image.  # noqa: E501
         :type: int
@@ -102,7 +102,7 @@ class Image(object):
     def width(self):
         """Gets the width of this Image.  # noqa: E501
 
-        Reserved for future use.  # noqa: E501
+        <b> Reserved for future use. </b>   # noqa: E501
 
         :return: The width of this Image.  # noqa: E501
         :rtype: int
@@ -113,7 +113,7 @@ class Image(object):
     def width(self, width):
         """Sets the width of this Image.
 
-        Reserved for future use.  # noqa: E501
+        <b> Reserved for future use. </b>   # noqa: E501
 
         :param width: The width of this Image.  # noqa: E501
         :type: int

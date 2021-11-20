@@ -122,7 +122,7 @@ class CharitySearchResponse(object):
     def limit(self):
         """Gets the limit of this CharitySearchResponse.  # noqa: E501
 
-        The number of items, from the result set, returned in a single page. Valid Values: 1-100 Default: 20  # noqa: E501
+        The number of items, from the result set, returned in a single page.<br /><br /><b>Valid Values:</b> <code>1-100</code><br /><br /><b>Default:</b> <code>20</code>  # noqa: E501
 
         :return: The limit of this CharitySearchResponse.  # noqa: E501
         :rtype: int
@@ -133,7 +133,7 @@ class CharitySearchResponse(object):
     def limit(self, limit):
         """Sets the limit of this CharitySearchResponse.
 
-        The number of items, from the result set, returned in a single page. Valid Values: 1-100 Default: 20  # noqa: E501
+        The number of items, from the result set, returned in a single page.<br /><br /><b>Valid Values:</b> <code>1-100</code><br /><br /><b>Default:</b> <code>20</code>  # noqa: E501
 
         :param limit: The limit of this CharitySearchResponse.  # noqa: E501
         :type: int
@@ -168,7 +168,7 @@ class CharitySearchResponse(object):
     def offset(self):
         """Gets the offset of this CharitySearchResponse.  # noqa: E501
 
-        The number of items that will be skipped in the result set. This is used with the limit field to control the pagination of the output. For example, if the offset is set to 0 and the limit is set to 10, the method will retrieve items 1 through 10 from the list of items returned. If the offset is set to 10 and the limit is set to 10, the method will retrieve items 11 through 20 from the list of items returned. Valid Values: 0-10,000 Default: 0  # noqa: E501
+        The number of items that will be skipped in the result set. This is used with the <b>limit</b> field to control the pagination of the output.<br /><br />For example, if the <b>offset</b> is set to <code>0</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 1 through 10 from the list of items returned. If the <b>offset</b> is set to <code>10</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 11 through 20 from the list of items returned.<br /><br /><b>Valid Values:</b> <code>0-10,000</code><br /><br /><b>Default:</b> <code>0</code>  # noqa: E501
 
         :return: The offset of this CharitySearchResponse.  # noqa: E501
         :rtype: int
@@ -179,7 +179,7 @@ class CharitySearchResponse(object):
     def offset(self, offset):
         """Sets the offset of this CharitySearchResponse.
 
-        The number of items that will be skipped in the result set. This is used with the limit field to control the pagination of the output. For example, if the offset is set to 0 and the limit is set to 10, the method will retrieve items 1 through 10 from the list of items returned. If the offset is set to 10 and the limit is set to 10, the method will retrieve items 11 through 20 from the list of items returned. Valid Values: 0-10,000 Default: 0  # noqa: E501
+        The number of items that will be skipped in the result set. This is used with the <b>limit</b> field to control the pagination of the output.<br /><br />For example, if the <b>offset</b> is set to <code>0</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 1 through 10 from the list of items returned. If the <b>offset</b> is set to <code>10</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 11 through 20 from the list of items returned.<br /><br /><b>Valid Values:</b> <code>0-10,000</code><br /><br /><b>Default:</b> <code>0</code>  # noqa: E501
 
         :param offset: The offset of this CharitySearchResponse.  # noqa: E501
         :type: int

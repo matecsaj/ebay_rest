@@ -28,111 +28,44 @@ class ComplianceDetail(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'compliance_state': 'str',
-        'corrective_recommendations': 'CorrectiveRecommendations',
-        'message': 'str',
         'reason_code': 'str',
+        'message': 'str',
         'variation': 'VariationDetails',
-        'violation_data': 'list[NameValueList]'
+        'violation_data': 'list[NameValueList]',
+        'corrective_recommendations': 'CorrectiveRecommendations',
+        'compliance_state': 'str'
     }
 
     attribute_map = {
-        'compliance_state': 'complianceState',
-        'corrective_recommendations': 'correctiveRecommendations',
-        'message': 'message',
         'reason_code': 'reasonCode',
+        'message': 'message',
         'variation': 'variation',
-        'violation_data': 'violationData'
+        'violation_data': 'violationData',
+        'corrective_recommendations': 'correctiveRecommendations',
+        'compliance_state': 'complianceState'
     }
 
-    def __init__(self, compliance_state=None, corrective_recommendations=None, message=None, reason_code=None, variation=None, violation_data=None):  # noqa: E501
+    def __init__(self, reason_code=None, message=None, variation=None, violation_data=None, corrective_recommendations=None, compliance_state=None):  # noqa: E501
         """ComplianceDetail - a model defined in Swagger"""  # noqa: E501
-        self._compliance_state = None
-        self._corrective_recommendations = None
-        self._message = None
         self._reason_code = None
+        self._message = None
         self._variation = None
         self._violation_data = None
+        self._corrective_recommendations = None
+        self._compliance_state = None
         self.discriminator = None
-        if compliance_state is not None:
-            self.compliance_state = compliance_state
-        if corrective_recommendations is not None:
-            self.corrective_recommendations = corrective_recommendations
-        if message is not None:
-            self.message = message
         if reason_code is not None:
             self.reason_code = reason_code
+        if message is not None:
+            self.message = message
         if variation is not None:
             self.variation = variation
         if violation_data is not None:
             self.violation_data = violation_data
-
-    @property
-    def compliance_state(self):
-        """Gets the compliance_state of this ComplianceDetail.  # noqa: E501
-
-        The enumeration value returned in this field indicates if the listing violation is considered to be OUT_OF_COMPLIANCE with an eBay listing policy, or the listing is considered to be AT_RISK of becoming non-compliant against an eBay listing policy. Generally, OUT_OF_COMPLIANCE policy violations can prevent the seller from revising a listing until the underlying violation(s) can be remedied. When the compliance state is AT_RISK, the seller is not blocked from revising the listing, but the seller should correct the violation to prevent the listing from being blocked for revisions in the future. Note: This field is returned for most violations, but not all. In the case that this field is not returned, it can be assumed that the state of the listing violation is OUT_OF_COMPLIANCE. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/compliance/types/com:ComplianceStateEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The compliance_state of this ComplianceDetail.  # noqa: E501
-        :rtype: str
-        """
-        return self._compliance_state
-
-    @compliance_state.setter
-    def compliance_state(self, compliance_state):
-        """Sets the compliance_state of this ComplianceDetail.
-
-        The enumeration value returned in this field indicates if the listing violation is considered to be OUT_OF_COMPLIANCE with an eBay listing policy, or the listing is considered to be AT_RISK of becoming non-compliant against an eBay listing policy. Generally, OUT_OF_COMPLIANCE policy violations can prevent the seller from revising a listing until the underlying violation(s) can be remedied. When the compliance state is AT_RISK, the seller is not blocked from revising the listing, but the seller should correct the violation to prevent the listing from being blocked for revisions in the future. Note: This field is returned for most violations, but not all. In the case that this field is not returned, it can be assumed that the state of the listing violation is OUT_OF_COMPLIANCE. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/compliance/types/com:ComplianceStateEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param compliance_state: The compliance_state of this ComplianceDetail.  # noqa: E501
-        :type: str
-        """
-
-        self._compliance_state = compliance_state
-
-    @property
-    def corrective_recommendations(self):
-        """Gets the corrective_recommendations of this ComplianceDetail.  # noqa: E501
-
-
-        :return: The corrective_recommendations of this ComplianceDetail.  # noqa: E501
-        :rtype: CorrectiveRecommendations
-        """
-        return self._corrective_recommendations
-
-    @corrective_recommendations.setter
-    def corrective_recommendations(self, corrective_recommendations):
-        """Sets the corrective_recommendations of this ComplianceDetail.
-
-
-        :param corrective_recommendations: The corrective_recommendations of this ComplianceDetail.  # noqa: E501
-        :type: CorrectiveRecommendations
-        """
-
-        self._corrective_recommendations = corrective_recommendations
-
-    @property
-    def message(self):
-        """Gets the message of this ComplianceDetail.  # noqa: E501
-
-        This field provides a textual summary of the listing violation. A message field is returned for each listing violation. This message will vary widely based on the compliance type and corresponding reason code.  # noqa: E501
-
-        :return: The message of this ComplianceDetail.  # noqa: E501
-        :rtype: str
-        """
-        return self._message
-
-    @message.setter
-    def message(self, message):
-        """Sets the message of this ComplianceDetail.
-
-        This field provides a textual summary of the listing violation. A message field is returned for each listing violation. This message will vary widely based on the compliance type and corresponding reason code.  # noqa: E501
-
-        :param message: The message of this ComplianceDetail.  # noqa: E501
-        :type: str
-        """
-
-        self._message = message
+        if corrective_recommendations is not None:
+            self.corrective_recommendations = corrective_recommendations
+        if compliance_state is not None:
+            self.compliance_state = compliance_state
 
     @property
     def reason_code(self):
@@ -156,6 +89,29 @@ class ComplianceDetail(object):
         """
 
         self._reason_code = reason_code
+
+    @property
+    def message(self):
+        """Gets the message of this ComplianceDetail.  # noqa: E501
+
+        This field provides a textual summary of the listing violation. A message field is returned for each listing violation. This message will vary widely based on the compliance type and corresponding reason code.  # noqa: E501
+
+        :return: The message of this ComplianceDetail.  # noqa: E501
+        :rtype: str
+        """
+        return self._message
+
+    @message.setter
+    def message(self, message):
+        """Sets the message of this ComplianceDetail.
+
+        This field provides a textual summary of the listing violation. A message field is returned for each listing violation. This message will vary widely based on the compliance type and corresponding reason code.  # noqa: E501
+
+        :param message: The message of this ComplianceDetail.  # noqa: E501
+        :type: str
+        """
+
+        self._message = message
 
     @property
     def variation(self):
@@ -200,6 +156,50 @@ class ComplianceDetail(object):
         """
 
         self._violation_data = violation_data
+
+    @property
+    def corrective_recommendations(self):
+        """Gets the corrective_recommendations of this ComplianceDetail.  # noqa: E501
+
+
+        :return: The corrective_recommendations of this ComplianceDetail.  # noqa: E501
+        :rtype: CorrectiveRecommendations
+        """
+        return self._corrective_recommendations
+
+    @corrective_recommendations.setter
+    def corrective_recommendations(self, corrective_recommendations):
+        """Sets the corrective_recommendations of this ComplianceDetail.
+
+
+        :param corrective_recommendations: The corrective_recommendations of this ComplianceDetail.  # noqa: E501
+        :type: CorrectiveRecommendations
+        """
+
+        self._corrective_recommendations = corrective_recommendations
+
+    @property
+    def compliance_state(self):
+        """Gets the compliance_state of this ComplianceDetail.  # noqa: E501
+
+        The enumeration value returned in this field indicates if the listing violation is considered to be OUT_OF_COMPLIANCE with an eBay listing policy, or the listing is considered to be AT_RISK of becoming non-compliant against an eBay listing policy. Generally, OUT_OF_COMPLIANCE policy violations can prevent the seller from revising a listing until the underlying violation(s) can be remedied. When the compliance state is AT_RISK, the seller is not blocked from revising the listing, but the seller should correct the violation to prevent the listing from being blocked for revisions in the future. Note: This field is returned for most violations, but not all. In the case that this field is not returned, it can be assumed that the state of the listing violation is OUT_OF_COMPLIANCE. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/compliance/types/com:ComplianceStateEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The compliance_state of this ComplianceDetail.  # noqa: E501
+        :rtype: str
+        """
+        return self._compliance_state
+
+    @compliance_state.setter
+    def compliance_state(self, compliance_state):
+        """Sets the compliance_state of this ComplianceDetail.
+
+        The enumeration value returned in this field indicates if the listing violation is considered to be OUT_OF_COMPLIANCE with an eBay listing policy, or the listing is considered to be AT_RISK of becoming non-compliant against an eBay listing policy. Generally, OUT_OF_COMPLIANCE policy violations can prevent the seller from revising a listing until the underlying violation(s) can be remedied. When the compliance state is AT_RISK, the seller is not blocked from revising the listing, but the seller should correct the violation to prevent the listing from being blocked for revisions in the future. Note: This field is returned for most violations, but not all. In the case that this field is not returned, it can be assumed that the state of the listing violation is OUT_OF_COMPLIANCE. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/compliance/types/com:ComplianceStateEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param compliance_state: The compliance_state of this ComplianceDetail.  # noqa: E501
+        :type: str
+        """
+
+        self._compliance_state = compliance_state
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -3,7 +3,7 @@
 """
     Marketplace Insights API
 
-    <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#Limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.  # noqa: E501
+    <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.  # noqa: E501
 
     OpenAPI spec version: v1_beta.2.2
     
@@ -84,7 +84,7 @@ class CategoryDistribution(object):
     def category_name(self):
         """Gets the category_name of this CategoryDistribution.  # noqa: E501
 
-        The name of the category, such as Baby &amp; Toddler Clothing.  # noqa: E501
+        The name of the category, such as Baby & Toddler Clothing.  # noqa: E501
 
         :return: The category_name of this CategoryDistribution.  # noqa: E501
         :rtype: str
@@ -95,7 +95,7 @@ class CategoryDistribution(object):
     def category_name(self, category_name):
         """Sets the category_name of this CategoryDistribution.
 
-        The name of the category, such as Baby &amp; Toddler Clothing.  # noqa: E501
+        The name of the category, such as Baby & Toddler Clothing.  # noqa: E501
 
         :param category_name: The category_name of this CategoryDistribution.  # noqa: E501
         :type: str

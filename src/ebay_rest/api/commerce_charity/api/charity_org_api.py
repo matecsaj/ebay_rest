@@ -35,7 +35,7 @@ class CharityOrgApi(object):
     def get_charity_org(self, charity_org_id, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """get_charity_org  # noqa: E501
 
-        This call is used to retrieve detailed information about supported charitable organizations. It allows users to retrieve the details for a specific charitable organization using its charity organization ID. The call returns the full details for the charitable organization that matches the specified ID.  # noqa: E501
+        This call is used to retrieve detailed information about supported charitable organizations. It allows users to retrieve the details for a specific charitable organization using its charity organization ID.<br /><br />The call returns the full details for the charitable organization that matches the specified ID.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_charity_org(charity_org_id, x_ebay_c_marketplace_id, async_req=True)
@@ -43,7 +43,7 @@ class CharityOrgApi(object):
 
         :param async_req bool
         :param str charity_org_id: The unique ID of the charitable organization. (required)
-        :param str x_ebay_c_marketplace_id: A header used to specify the eBay marketplace ID. Valid Values: EBAY_GB and EBAY_US (required)
+        :param str x_ebay_c_marketplace_id: A header used to specify the eBay marketplace ID.<br /><br /><b>Valid Values:</b> <code>EBAY_GB</code> and <code>EBAY_US</code> (required)
         :return: CharityOrg
                  If the method is called asynchronously,
                  returns the request thread.
@@ -58,7 +58,7 @@ class CharityOrgApi(object):
     def get_charity_org_with_http_info(self, charity_org_id, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """get_charity_org  # noqa: E501
 
-        This call is used to retrieve detailed information about supported charitable organizations. It allows users to retrieve the details for a specific charitable organization using its charity organization ID. The call returns the full details for the charitable organization that matches the specified ID.  # noqa: E501
+        This call is used to retrieve detailed information about supported charitable organizations. It allows users to retrieve the details for a specific charitable organization using its charity organization ID.<br /><br />The call returns the full details for the charitable organization that matches the specified ID.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_charity_org_with_http_info(charity_org_id, x_ebay_c_marketplace_id, async_req=True)
@@ -66,7 +66,7 @@ class CharityOrgApi(object):
 
         :param async_req bool
         :param str charity_org_id: The unique ID of the charitable organization. (required)
-        :param str x_ebay_c_marketplace_id: A header used to specify the eBay marketplace ID. Valid Values: EBAY_GB and EBAY_US (required)
+        :param str x_ebay_c_marketplace_id: A header used to specify the eBay marketplace ID.<br /><br /><b>Valid Values:</b> <code>EBAY_GB</code> and <code>EBAY_US</code> (required)
         :return: CharityOrg
                  If the method is called asynchronously,
                  returns the request thread.
@@ -138,15 +138,15 @@ class CharityOrgApi(object):
     def get_charity_org_by_legacy_id(self, x_ebay_c_marketplace_id, legacy_charity_org_id, **kwargs):  # noqa: E501
         """get_charity_org_by_legacy_id  # noqa: E501
 
-        This call allows users to retrieve the details for a specific charitable organization using its legacy charity ID, which has also been referred to as the charity number, external ID, and PayPal Giving Fund ID. The legacy charity ID&nbsp;is separate from eBay&rsquo;s generic charity ID.  # noqa: E501
+        This call allows users to retrieve the details for a specific charitable organization using its legacy charity ID, which has also been referred to as the charity number, external ID, and PayPal Giving Fund ID. The legacy charity ID is separate from eBay’s generic charity ID.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_charity_org_by_legacy_id(x_ebay_c_marketplace_id, legacy_charity_org_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str x_ebay_c_marketplace_id: A header used to specify the eBay marketplace ID. Valid Values: EBAY_GB and EBAY_US (required)
-        :param str legacy_charity_org_id: The legacy ID of the charitable organization. Note: The legacy charity ID is the identifier assigned to an organization upon registration with the PayPal Giving Fund (PPGF). It has also been referred to as the external ID/charity number. (required)
+        :param str x_ebay_c_marketplace_id: A header used to specify the eBay marketplace ID.<br /><br /><b>Valid Values:</b> <code>EBAY_GB</code> and <code>EBAY_US</code> (required)
+        :param str legacy_charity_org_id: The legacy ID of the charitable organization.<br /><br /><span class=\"tablenote\"><b>Note: </b>The legacy charity ID is the identifier assigned to an organization upon registration with the PayPal Giving Fund (PPGF). It has also been referred to as the external ID/charity number.</span> (required)
         :return: CharityOrg
                  If the method is called asynchronously,
                  returns the request thread.
@@ -161,15 +161,15 @@ class CharityOrgApi(object):
     def get_charity_org_by_legacy_id_with_http_info(self, x_ebay_c_marketplace_id, legacy_charity_org_id, **kwargs):  # noqa: E501
         """get_charity_org_by_legacy_id  # noqa: E501
 
-        This call allows users to retrieve the details for a specific charitable organization using its legacy charity ID, which has also been referred to as the charity number, external ID, and PayPal Giving Fund ID. The legacy charity ID&nbsp;is separate from eBay&rsquo;s generic charity ID.  # noqa: E501
+        This call allows users to retrieve the details for a specific charitable organization using its legacy charity ID, which has also been referred to as the charity number, external ID, and PayPal Giving Fund ID. The legacy charity ID is separate from eBay’s generic charity ID.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_charity_org_by_legacy_id_with_http_info(x_ebay_c_marketplace_id, legacy_charity_org_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str x_ebay_c_marketplace_id: A header used to specify the eBay marketplace ID. Valid Values: EBAY_GB and EBAY_US (required)
-        :param str legacy_charity_org_id: The legacy ID of the charitable organization. Note: The legacy charity ID is the identifier assigned to an organization upon registration with the PayPal Giving Fund (PPGF). It has also been referred to as the external ID/charity number. (required)
+        :param str x_ebay_c_marketplace_id: A header used to specify the eBay marketplace ID.<br /><br /><b>Valid Values:</b> <code>EBAY_GB</code> and <code>EBAY_US</code> (required)
+        :param str legacy_charity_org_id: The legacy ID of the charitable organization.<br /><br /><span class=\"tablenote\"><b>Note: </b>The legacy charity ID is the identifier assigned to an organization upon registration with the PayPal Giving Fund (PPGF). It has also been referred to as the external ID/charity number.</span> (required)
         :return: CharityOrg
                  If the method is called asynchronously,
                  returns the request thread.
@@ -241,18 +241,18 @@ class CharityOrgApi(object):
     def get_charity_orgs(self, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """get_charity_orgs  # noqa: E501
 
-        This call is used to search for supported charitable organizations. It allows users to search for a specific charitable organization, or for multiple charitable organizations, from a particular charitable domain and/or geographical region, or by using search criteria. The call returns paginated search results containing the charitable organizations that match the specified criteria.  # noqa: E501
+        This call is used to search for supported charitable organizations. It allows users to search for a specific charitable organization, or for multiple charitable organizations, from a particular charitable domain and/or geographical region, or by using search criteria.<br /><br />The call returns paginated search results containing the charitable organizations that match the specified criteria.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_charity_orgs(x_ebay_c_marketplace_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str x_ebay_c_marketplace_id: A header used to specify the eBay marketplace ID. Valid Values: EBAY_GB and EBAY_US (required)
-        :param str limit: The number of items, from the result set, returned in a single page. Valid Values: 1-100 Default: 20
-        :param str offset: The number of items that will be skipped in the result set. This is used with the limit field to control the pagination of the output. For example, if the offset is set to 0 and the limit is set to 10, the method will retrieve items 1 through 10 from the list of items returned. If the offset is set to 10 and the limit is set to 10, the method will retrieve items 11 through 20 from the list of items returned. Valid Values: 0-10,000 Default: 0
+        :param str x_ebay_c_marketplace_id: A header used to specify the eBay marketplace ID.<br /><br /><b>Valid Values:</b> <code>EBAY_GB</code> and <code>EBAY_US</code> (required)
+        :param str limit: The number of items, from the result set, returned in a single page.<br /><br /><b>Valid Values:</b> <code>1-100</code><br /><br /><b>Default:</b> <code>20</code>
+        :param str offset: The number of items that will be skipped in the result set. This is used with the <b>limit</b> field to control the pagination of the output.<br /><br />For example, if the <b>offset</b> is set to <code>0</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 1 through 10 from the list of items returned. If the <b>offset</b> is set to <code>10</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 11 through 20 from the list of items returned.<br /><br /><b>Valid Values:</b> <code>0-10,000</code><br /><br /><b>Default:</b> <code>0</code>
         :param str q: A query string that matches the keywords in name, mission statement, or description.
-        :param str registration_ids: A comma-separated list of charitable organization registration IDs. Note: Do not specify this parameter for query-based searches. Specify either the q or registration_ids parameter, but not both. Maximum Limit: 20
+        :param str registration_ids: A comma-separated list of charitable organization registration IDs.<br /><br /><span class=\"tablenote\"><b>Note: </b>Do not specify this parameter for query-based searches. Specify either the <b>q</b> or <b>registration_ids</b> parameter, but not both.</span><br /><br /><b>Maximum Limit:</b> <code>20</code>
         :return: CharitySearchResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -267,18 +267,18 @@ class CharityOrgApi(object):
     def get_charity_orgs_with_http_info(self, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """get_charity_orgs  # noqa: E501
 
-        This call is used to search for supported charitable organizations. It allows users to search for a specific charitable organization, or for multiple charitable organizations, from a particular charitable domain and/or geographical region, or by using search criteria. The call returns paginated search results containing the charitable organizations that match the specified criteria.  # noqa: E501
+        This call is used to search for supported charitable organizations. It allows users to search for a specific charitable organization, or for multiple charitable organizations, from a particular charitable domain and/or geographical region, or by using search criteria.<br /><br />The call returns paginated search results containing the charitable organizations that match the specified criteria.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_charity_orgs_with_http_info(x_ebay_c_marketplace_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str x_ebay_c_marketplace_id: A header used to specify the eBay marketplace ID. Valid Values: EBAY_GB and EBAY_US (required)
-        :param str limit: The number of items, from the result set, returned in a single page. Valid Values: 1-100 Default: 20
-        :param str offset: The number of items that will be skipped in the result set. This is used with the limit field to control the pagination of the output. For example, if the offset is set to 0 and the limit is set to 10, the method will retrieve items 1 through 10 from the list of items returned. If the offset is set to 10 and the limit is set to 10, the method will retrieve items 11 through 20 from the list of items returned. Valid Values: 0-10,000 Default: 0
+        :param str x_ebay_c_marketplace_id: A header used to specify the eBay marketplace ID.<br /><br /><b>Valid Values:</b> <code>EBAY_GB</code> and <code>EBAY_US</code> (required)
+        :param str limit: The number of items, from the result set, returned in a single page.<br /><br /><b>Valid Values:</b> <code>1-100</code><br /><br /><b>Default:</b> <code>20</code>
+        :param str offset: The number of items that will be skipped in the result set. This is used with the <b>limit</b> field to control the pagination of the output.<br /><br />For example, if the <b>offset</b> is set to <code>0</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 1 through 10 from the list of items returned. If the <b>offset</b> is set to <code>10</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 11 through 20 from the list of items returned.<br /><br /><b>Valid Values:</b> <code>0-10,000</code><br /><br /><b>Default:</b> <code>0</code>
         :param str q: A query string that matches the keywords in name, mission statement, or description.
-        :param str registration_ids: A comma-separated list of charitable organization registration IDs. Note: Do not specify this parameter for query-based searches. Specify either the q or registration_ids parameter, but not both. Maximum Limit: 20
+        :param str registration_ids: A comma-separated list of charitable organization registration IDs.<br /><br /><span class=\"tablenote\"><b>Note: </b>Do not specify this parameter for query-based searches. Specify either the <b>q</b> or <b>registration_ids</b> parameter, but not both.</span><br /><br /><b>Maximum Limit:</b> <code>20</code>
         :return: CharitySearchResponse
                  If the method is called asynchronously,
                  returns the request thread.

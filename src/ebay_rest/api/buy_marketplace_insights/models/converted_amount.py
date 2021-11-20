@@ -3,7 +3,7 @@
 """
     Marketplace Insights API
 
-    <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#Limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.  # noqa: E501
+    <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.  # noqa: E501
 
     OpenAPI spec version: v1_beta.2.2
     
@@ -61,7 +61,7 @@ class ConvertedAmount(object):
     def converted_from_currency(self):
         """Gets the converted_from_currency of this ConvertedAmount.  # noqa: E501
 
-        A three-letter ISO 4217 code that indicates the currency of the amount in the convertedFromValue field. This value represents the pre-conversion currency. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/marketplace_insights/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+        A three-letter <a href=\"https://en.wikipedia.org/wiki/ISO_4217\">ISO 4217</a> code that indicates the currency of the amount in the <b> convertedFromValue</b> field. This value represents the pre-conversion currency. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/marketplace_insights/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The converted_from_currency of this ConvertedAmount.  # noqa: E501
         :rtype: str
@@ -72,7 +72,7 @@ class ConvertedAmount(object):
     def converted_from_currency(self, converted_from_currency):
         """Sets the converted_from_currency of this ConvertedAmount.
 
-        A three-letter ISO 4217 code that indicates the currency of the amount in the convertedFromValue field. This value represents the pre-conversion currency. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/marketplace_insights/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+        A three-letter <a href=\"https://en.wikipedia.org/wiki/ISO_4217\">ISO 4217</a> code that indicates the currency of the amount in the <b> convertedFromValue</b> field. This value represents the pre-conversion currency. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/marketplace_insights/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param converted_from_currency: The converted_from_currency of this ConvertedAmount.  # noqa: E501
         :type: str
@@ -84,7 +84,7 @@ class ConvertedAmount(object):
     def converted_from_value(self):
         """Gets the converted_from_value of this ConvertedAmount.  # noqa: E501
 
-        The monetary amount before any conversion is performed, in the currency specified by the convertedFromCurrency field. The value field contains the converted amount of this value, in the currency specified by the currency field.  # noqa: E501
+        The monetary amount before any conversion is performed, in the currency specified by the <b> convertedFromCurrency</b> field. The <b> value</b> field contains the converted amount of this value, in the currency specified by the <b> currency</b> field.  # noqa: E501
 
         :return: The converted_from_value of this ConvertedAmount.  # noqa: E501
         :rtype: str
@@ -95,7 +95,7 @@ class ConvertedAmount(object):
     def converted_from_value(self, converted_from_value):
         """Sets the converted_from_value of this ConvertedAmount.
 
-        The monetary amount before any conversion is performed, in the currency specified by the convertedFromCurrency field. The value field contains the converted amount of this value, in the currency specified by the currency field.  # noqa: E501
+        The monetary amount before any conversion is performed, in the currency specified by the <b> convertedFromCurrency</b> field. The <b> value</b> field contains the converted amount of this value, in the currency specified by the <b> currency</b> field.  # noqa: E501
 
         :param converted_from_value: The converted_from_value of this ConvertedAmount.  # noqa: E501
         :type: str
@@ -107,7 +107,7 @@ class ConvertedAmount(object):
     def currency(self):
         """Gets the currency of this ConvertedAmount.  # noqa: E501
 
-        A three-letter ISO 4217 code that indicates the currency of the amount in the value field. This value represents the post-conversion currency of the amount in the value field. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/marketplace_insights/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+        A three-letter <a href=\"https://en.wikipedia.org/wiki/ISO_4217 \">ISO 4217</a> code that indicates the currency of the amount in the <b> value</b> field. This value represents the post-conversion currency of the amount in the <b> value</b> field. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/marketplace_insights/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The currency of this ConvertedAmount.  # noqa: E501
         :rtype: str
@@ -118,7 +118,7 @@ class ConvertedAmount(object):
     def currency(self, currency):
         """Sets the currency of this ConvertedAmount.
 
-        A three-letter ISO 4217 code that indicates the currency of the amount in the value field. This value represents the post-conversion currency of the amount in the value field. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/marketplace_insights/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+        A three-letter <a href=\"https://en.wikipedia.org/wiki/ISO_4217 \">ISO 4217</a> code that indicates the currency of the amount in the <b> value</b> field. This value represents the post-conversion currency of the amount in the <b> value</b> field. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/marketplace_insights/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param currency: The currency of this ConvertedAmount.  # noqa: E501
         :type: str
@@ -130,7 +130,7 @@ class ConvertedAmount(object):
     def value(self):
         """Gets the value of this ConvertedAmount.  # noqa: E501
 
-        The monetary value in the currency specified in the currency field.  # noqa: E501
+        The monetary value in the currency specified in the <b> currency</b> field.  # noqa: E501
 
         :return: The value of this ConvertedAmount.  # noqa: E501
         :rtype: str
@@ -141,7 +141,7 @@ class ConvertedAmount(object):
     def value(self, value):
         """Sets the value of this ConvertedAmount.
 
-        The monetary value in the currency specified in the currency field.  # noqa: E501
+        The monetary value in the currency specified in the <b> currency</b> field.  # noqa: E501
 
         :param value: The value of this ConvertedAmount.  # noqa: E501
         :type: str

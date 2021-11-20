@@ -66,7 +66,7 @@ class NegotiatedPricePolicy(object):
     def best_offer_auto_accept_enabled(self):
         """Gets the best_offer_auto_accept_enabled of this NegotiatedPricePolicy.  # noqa: E501
 
-        This flag denotes whether or not the category supports the setting of a price at which best offers are automatically accepted. If set to true, the category does support the setting of an automatic price for best-offers.  # noqa: E501
+        This flag denotes whether or not the category supports the setting of a price at which best offers are automatically accepted. If set to <code>true</code>, the category does support the setting of an automatic price for best-offers.  # noqa: E501
 
         :return: The best_offer_auto_accept_enabled of this NegotiatedPricePolicy.  # noqa: E501
         :rtype: bool
@@ -77,7 +77,7 @@ class NegotiatedPricePolicy(object):
     def best_offer_auto_accept_enabled(self, best_offer_auto_accept_enabled):
         """Sets the best_offer_auto_accept_enabled of this NegotiatedPricePolicy.
 
-        This flag denotes whether or not the category supports the setting of a price at which best offers are automatically accepted. If set to true, the category does support the setting of an automatic price for best-offers.  # noqa: E501
+        This flag denotes whether or not the category supports the setting of a price at which best offers are automatically accepted. If set to <code>true</code>, the category does support the setting of an automatic price for best-offers.  # noqa: E501
 
         :param best_offer_auto_accept_enabled: The best_offer_auto_accept_enabled of this NegotiatedPricePolicy.  # noqa: E501
         :type: bool
@@ -89,7 +89,7 @@ class NegotiatedPricePolicy(object):
     def best_offer_auto_decline_enabled(self):
         """Gets the best_offer_auto_decline_enabled of this NegotiatedPricePolicy.  # noqa: E501
 
-        This flag denotes whether or not the category supports the setting of an auto-decline price for best offers. If set to true, the category does support the setting of an automatic-decline price for best-offers.  # noqa: E501
+        This flag denotes whether or not the category supports the setting of an auto-decline price for best offers. If set to <code>true</code>, the category does support the setting of an automatic-decline price for best-offers.  # noqa: E501
 
         :return: The best_offer_auto_decline_enabled of this NegotiatedPricePolicy.  # noqa: E501
         :rtype: bool
@@ -100,7 +100,7 @@ class NegotiatedPricePolicy(object):
     def best_offer_auto_decline_enabled(self, best_offer_auto_decline_enabled):
         """Sets the best_offer_auto_decline_enabled of this NegotiatedPricePolicy.
 
-        This flag denotes whether or not the category supports the setting of an auto-decline price for best offers. If set to true, the category does support the setting of an automatic-decline price for best-offers.  # noqa: E501
+        This flag denotes whether or not the category supports the setting of an auto-decline price for best offers. If set to <code>true</code>, the category does support the setting of an automatic-decline price for best-offers.  # noqa: E501
 
         :param best_offer_auto_decline_enabled: The best_offer_auto_decline_enabled of this NegotiatedPricePolicy.  # noqa: E501
         :type: bool
@@ -112,7 +112,7 @@ class NegotiatedPricePolicy(object):
     def best_offer_counter_enabled(self):
         """Gets the best_offer_counter_enabled of this NegotiatedPricePolicy.  # noqa: E501
 
-        This flag denotes whether or not the category supports the setting for an automatic counter-offer on best offers. If set to true, the category does support the setting of an automatic counter-offer price for best-offers.  # noqa: E501
+        This flag denotes whether or not the category supports the setting for an automatic counter-offer on best offers. If set to <code>true</code>, the category does support the setting of an automatic counter-offer price for best-offers.  # noqa: E501
 
         :return: The best_offer_counter_enabled of this NegotiatedPricePolicy.  # noqa: E501
         :rtype: bool
@@ -123,7 +123,7 @@ class NegotiatedPricePolicy(object):
     def best_offer_counter_enabled(self, best_offer_counter_enabled):
         """Sets the best_offer_counter_enabled of this NegotiatedPricePolicy.
 
-        This flag denotes whether or not the category supports the setting for an automatic counter-offer on best offers. If set to true, the category does support the setting of an automatic counter-offer price for best-offers.  # noqa: E501
+        This flag denotes whether or not the category supports the setting for an automatic counter-offer on best offers. If set to <code>true</code>, the category does support the setting of an automatic counter-offer price for best-offers.  # noqa: E501
 
         :param best_offer_counter_enabled: The best_offer_counter_enabled of this NegotiatedPricePolicy.  # noqa: E501
         :type: bool
@@ -158,7 +158,7 @@ class NegotiatedPricePolicy(object):
     def category_tree_id(self):
         """Gets the category_tree_id of this NegotiatedPricePolicy.  # noqa: E501
 
-        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree. A category tree is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique categoryId value. Within a category tree, the root node has no parent node and leaf nodes are nodes that have no child nodes.  # noqa: E501
+        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree.    <br><br>A <i>category tree</i> is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique <b>categoryId</b> value. Within a category tree, the root node has no parent node and <i>leaf nodes</i> are nodes that have no child nodes.  # noqa: E501
 
         :return: The category_tree_id of this NegotiatedPricePolicy.  # noqa: E501
         :rtype: str
@@ -169,7 +169,7 @@ class NegotiatedPricePolicy(object):
     def category_tree_id(self, category_tree_id):
         """Sets the category_tree_id of this NegotiatedPricePolicy.
 
-        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree. A category tree is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique categoryId value. Within a category tree, the root node has no parent node and leaf nodes are nodes that have no child nodes.  # noqa: E501
+        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree.    <br><br>A <i>category tree</i> is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique <b>categoryId</b> value. Within a category tree, the root node has no parent node and <i>leaf nodes</i> are nodes that have no child nodes.  # noqa: E501
 
         :param category_tree_id: The category_tree_id of this NegotiatedPricePolicy.  # noqa: E501
         :type: str

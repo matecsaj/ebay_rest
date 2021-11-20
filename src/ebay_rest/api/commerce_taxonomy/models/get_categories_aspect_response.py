@@ -28,52 +28,29 @@ class GetCategoriesAspectResponse(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'category_aspects': 'list[CategoryAspect]',
         'category_tree_id': 'str',
-        'category_tree_version': 'str'
+        'category_tree_version': 'str',
+        'category_aspects': 'list[CategoryAspect]'
     }
 
     attribute_map = {
-        'category_aspects': 'categoryAspects',
         'category_tree_id': 'categoryTreeId',
-        'category_tree_version': 'categoryTreeVersion'
+        'category_tree_version': 'categoryTreeVersion',
+        'category_aspects': 'categoryAspects'
     }
 
-    def __init__(self, category_aspects=None, category_tree_id=None, category_tree_version=None):  # noqa: E501
+    def __init__(self, category_tree_id=None, category_tree_version=None, category_aspects=None):  # noqa: E501
         """GetCategoriesAspectResponse - a model defined in Swagger"""  # noqa: E501
-        self._category_aspects = None
         self._category_tree_id = None
         self._category_tree_version = None
+        self._category_aspects = None
         self.discriminator = None
-        if category_aspects is not None:
-            self.category_aspects = category_aspects
         if category_tree_id is not None:
             self.category_tree_id = category_tree_id
         if category_tree_version is not None:
             self.category_tree_version = category_tree_version
-
-    @property
-    def category_aspects(self):
-        """Gets the category_aspects of this GetCategoriesAspectResponse.  # noqa: E501
-
-        An array of aspects that are appropriate or necessary for accurately describing items in a particular leaf category.  # noqa: E501
-
-        :return: The category_aspects of this GetCategoriesAspectResponse.  # noqa: E501
-        :rtype: list[CategoryAspect]
-        """
-        return self._category_aspects
-
-    @category_aspects.setter
-    def category_aspects(self, category_aspects):
-        """Sets the category_aspects of this GetCategoriesAspectResponse.
-
-        An array of aspects that are appropriate or necessary for accurately describing items in a particular leaf category.  # noqa: E501
-
-        :param category_aspects: The category_aspects of this GetCategoriesAspectResponse.  # noqa: E501
-        :type: list[CategoryAspect]
-        """
-
-        self._category_aspects = category_aspects
+        if category_aspects is not None:
+            self.category_aspects = category_aspects
 
     @property
     def category_tree_id(self):
@@ -120,6 +97,29 @@ class GetCategoriesAspectResponse(object):
         """
 
         self._category_tree_version = category_tree_version
+
+    @property
+    def category_aspects(self):
+        """Gets the category_aspects of this GetCategoriesAspectResponse.  # noqa: E501
+
+        An array of aspects that are appropriate or necessary for accurately describing items in a particular leaf category.  # noqa: E501
+
+        :return: The category_aspects of this GetCategoriesAspectResponse.  # noqa: E501
+        :rtype: list[CategoryAspect]
+        """
+        return self._category_aspects
+
+    @category_aspects.setter
+    def category_aspects(self, category_aspects):
+        """Sets the category_aspects of this GetCategoriesAspectResponse.
+
+        An array of aspects that are appropriate or necessary for accurately describing items in a particular leaf category.  # noqa: E501
+
+        :param category_aspects: The category_aspects of this GetCategoriesAspectResponse.  # noqa: E501
+        :type: list[CategoryAspect]
+        """
+
+        self._category_aspects = category_aspects
 
     def to_dict(self):
         """Returns the model properties as a dict"""

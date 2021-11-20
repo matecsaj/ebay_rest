@@ -38,8 +38,8 @@ class SetFulfillmentPolicyResponse(object):
         'marketplace_id': 'str',
         'name': 'str',
         'pickup_drop_off': 'bool',
-        'ship_to_locations': 'RegionSet',
         'shipping_options': 'list[ShippingOption]',
+        'ship_to_locations': 'RegionSet',
         'warnings': 'list[Error]'
     }
 
@@ -54,12 +54,12 @@ class SetFulfillmentPolicyResponse(object):
         'marketplace_id': 'marketplaceId',
         'name': 'name',
         'pickup_drop_off': 'pickupDropOff',
-        'ship_to_locations': 'shipToLocations',
         'shipping_options': 'shippingOptions',
+        'ship_to_locations': 'shipToLocations',
         'warnings': 'warnings'
     }
 
-    def __init__(self, category_types=None, description=None, freight_shipping=None, fulfillment_policy_id=None, global_shipping=None, handling_time=None, local_pickup=None, marketplace_id=None, name=None, pickup_drop_off=None, ship_to_locations=None, shipping_options=None, warnings=None):  # noqa: E501
+    def __init__(self, category_types=None, description=None, freight_shipping=None, fulfillment_policy_id=None, global_shipping=None, handling_time=None, local_pickup=None, marketplace_id=None, name=None, pickup_drop_off=None, shipping_options=None, ship_to_locations=None, warnings=None):  # noqa: E501
         """SetFulfillmentPolicyResponse - a model defined in Swagger"""  # noqa: E501
         self._category_types = None
         self._description = None
@@ -71,8 +71,8 @@ class SetFulfillmentPolicyResponse(object):
         self._marketplace_id = None
         self._name = None
         self._pickup_drop_off = None
-        self._ship_to_locations = None
         self._shipping_options = None
+        self._ship_to_locations = None
         self._warnings = None
         self.discriminator = None
         if category_types is not None:
@@ -95,10 +95,10 @@ class SetFulfillmentPolicyResponse(object):
             self.name = name
         if pickup_drop_off is not None:
             self.pickup_drop_off = pickup_drop_off
-        if ship_to_locations is not None:
-            self.ship_to_locations = ship_to_locations
         if shipping_options is not None:
             self.shipping_options = shipping_options
+        if ship_to_locations is not None:
+            self.ship_to_locations = ship_to_locations
         if warnings is not None:
             self.warnings = warnings
 
@@ -331,27 +331,6 @@ class SetFulfillmentPolicyResponse(object):
         self._pickup_drop_off = pickup_drop_off
 
     @property
-    def ship_to_locations(self):
-        """Gets the ship_to_locations of this SetFulfillmentPolicyResponse.  # noqa: E501
-
-
-        :return: The ship_to_locations of this SetFulfillmentPolicyResponse.  # noqa: E501
-        :rtype: RegionSet
-        """
-        return self._ship_to_locations
-
-    @ship_to_locations.setter
-    def ship_to_locations(self, ship_to_locations):
-        """Sets the ship_to_locations of this SetFulfillmentPolicyResponse.
-
-
-        :param ship_to_locations: The ship_to_locations of this SetFulfillmentPolicyResponse.  # noqa: E501
-        :type: RegionSet
-        """
-
-        self._ship_to_locations = ship_to_locations
-
-    @property
     def shipping_options(self):
         """Gets the shipping_options of this SetFulfillmentPolicyResponse.  # noqa: E501
 
@@ -373,6 +352,27 @@ class SetFulfillmentPolicyResponse(object):
         """
 
         self._shipping_options = shipping_options
+
+    @property
+    def ship_to_locations(self):
+        """Gets the ship_to_locations of this SetFulfillmentPolicyResponse.  # noqa: E501
+
+
+        :return: The ship_to_locations of this SetFulfillmentPolicyResponse.  # noqa: E501
+        :rtype: RegionSet
+        """
+        return self._ship_to_locations
+
+    @ship_to_locations.setter
+    def ship_to_locations(self, ship_to_locations):
+        """Sets the ship_to_locations of this SetFulfillmentPolicyResponse.
+
+
+        :param ship_to_locations: The ship_to_locations of this SetFulfillmentPolicyResponse.  # noqa: E501
+        :type: RegionSet
+        """
+
+        self._ship_to_locations = ship_to_locations
 
     @property
     def warnings(self):

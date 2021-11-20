@@ -46,7 +46,7 @@ class ItemResponse(object):
     def items(self):
         """Gets the items of this ItemResponse.  # noqa: E501
 
-        The container for the array of items returned by the getItemFeed method. The data in the file is tab separated and the first row is the header, which labels the columns and indicates the order of the values on each line. The header labels match the fields that are described in the Response fields section.  # noqa: E501
+        The container for the array of items returned by the <b> getItemFeed</b> method. The data in the file is tab separated and the first row is the header, which labels the columns and indicates the order of the values on each line. The header labels match the fields that are described in the <a href=\"/api-docs/buy/feed/resources/item/methods/getItemFeed#h3-response-fields\">Response fields</a> section.  # noqa: E501
 
         :return: The items of this ItemResponse.  # noqa: E501
         :rtype: list[Item]
@@ -57,7 +57,7 @@ class ItemResponse(object):
     def items(self, items):
         """Sets the items of this ItemResponse.
 
-        The container for the array of items returned by the getItemFeed method. The data in the file is tab separated and the first row is the header, which labels the columns and indicates the order of the values on each line. The header labels match the fields that are described in the Response fields section.  # noqa: E501
+        The container for the array of items returned by the <b> getItemFeed</b> method. The data in the file is tab separated and the first row is the header, which labels the columns and indicates the order of the values on each line. The header labels match the fields that are described in the <a href=\"/api-docs/buy/feed/resources/item/methods/getItemFeed#h3-response-fields\">Response fields</a> section.  # noqa: E501
 
         :param items: The items of this ItemResponse.  # noqa: E501
         :type: list[Item]

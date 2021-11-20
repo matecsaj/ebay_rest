@@ -28,87 +28,133 @@ class InventoryTask(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'completion_date': 'str',
-        'creation_date': 'str',
-        'detail_href': 'str',
-        'feed_type': 'str',
-        'filter_criteria': 'InventoryFilterCriteria',
-        'inventory_file_template': 'str',
-        'schema_version': 'str',
-        'status': 'str',
         'task_id': 'str',
-        'upload_summary': 'UploadSummary'
+        'status': 'str',
+        'feed_type': 'str',
+        'creation_date': 'str',
+        'completion_date': 'str',
+        'schema_version': 'str',
+        'detail_href': 'str',
+        'upload_summary': 'UploadSummary',
+        'filter_criteria': 'InventoryFilterCriteria',
+        'inventory_file_template': 'str'
     }
 
     attribute_map = {
-        'completion_date': 'completionDate',
-        'creation_date': 'creationDate',
-        'detail_href': 'detailHref',
-        'feed_type': 'feedType',
-        'filter_criteria': 'filterCriteria',
-        'inventory_file_template': 'inventoryFileTemplate',
-        'schema_version': 'schemaVersion',
-        'status': 'status',
         'task_id': 'taskId',
-        'upload_summary': 'uploadSummary'
+        'status': 'status',
+        'feed_type': 'feedType',
+        'creation_date': 'creationDate',
+        'completion_date': 'completionDate',
+        'schema_version': 'schemaVersion',
+        'detail_href': 'detailHref',
+        'upload_summary': 'uploadSummary',
+        'filter_criteria': 'filterCriteria',
+        'inventory_file_template': 'inventoryFileTemplate'
     }
 
-    def __init__(self, completion_date=None, creation_date=None, detail_href=None, feed_type=None, filter_criteria=None, inventory_file_template=None, schema_version=None, status=None, task_id=None, upload_summary=None):  # noqa: E501
+    def __init__(self, task_id=None, status=None, feed_type=None, creation_date=None, completion_date=None, schema_version=None, detail_href=None, upload_summary=None, filter_criteria=None, inventory_file_template=None):  # noqa: E501
         """InventoryTask - a model defined in Swagger"""  # noqa: E501
-        self._completion_date = None
-        self._creation_date = None
-        self._detail_href = None
+        self._task_id = None
+        self._status = None
         self._feed_type = None
+        self._creation_date = None
+        self._completion_date = None
+        self._schema_version = None
+        self._detail_href = None
+        self._upload_summary = None
         self._filter_criteria = None
         self._inventory_file_template = None
-        self._schema_version = None
-        self._status = None
-        self._task_id = None
-        self._upload_summary = None
         self.discriminator = None
-        if completion_date is not None:
-            self.completion_date = completion_date
-        if creation_date is not None:
-            self.creation_date = creation_date
-        if detail_href is not None:
-            self.detail_href = detail_href
+        if task_id is not None:
+            self.task_id = task_id
+        if status is not None:
+            self.status = status
         if feed_type is not None:
             self.feed_type = feed_type
+        if creation_date is not None:
+            self.creation_date = creation_date
+        if completion_date is not None:
+            self.completion_date = completion_date
+        if schema_version is not None:
+            self.schema_version = schema_version
+        if detail_href is not None:
+            self.detail_href = detail_href
+        if upload_summary is not None:
+            self.upload_summary = upload_summary
         if filter_criteria is not None:
             self.filter_criteria = filter_criteria
         if inventory_file_template is not None:
             self.inventory_file_template = inventory_file_template
-        if schema_version is not None:
-            self.schema_version = schema_version
-        if status is not None:
-            self.status = status
-        if task_id is not None:
-            self.task_id = task_id
-        if upload_summary is not None:
-            self.upload_summary = upload_summary
 
     @property
-    def completion_date(self):
-        """Gets the completion_date of this InventoryTask.  # noqa: E501
+    def task_id(self):
+        """Gets the task_id of this InventoryTask.  # noqa: E501
 
-        The timestamp when the task status went into the COMPLETED, COMPLETED_WITH_ERROR, or PARTIALLY_PROCESSED state. This field is only returned if the status is one of the three completed values.  # noqa: E501
+        The ID of the task. This ID is generated when the task was created by the createInventoryTask method.  # noqa: E501
 
-        :return: The completion_date of this InventoryTask.  # noqa: E501
+        :return: The task_id of this InventoryTask.  # noqa: E501
         :rtype: str
         """
-        return self._completion_date
+        return self._task_id
 
-    @completion_date.setter
-    def completion_date(self, completion_date):
-        """Sets the completion_date of this InventoryTask.
+    @task_id.setter
+    def task_id(self, task_id):
+        """Sets the task_id of this InventoryTask.
 
-        The timestamp when the task status went into the COMPLETED, COMPLETED_WITH_ERROR, or PARTIALLY_PROCESSED state. This field is only returned if the status is one of the three completed values.  # noqa: E501
+        The ID of the task. This ID is generated when the task was created by the createInventoryTask method.  # noqa: E501
 
-        :param completion_date: The completion_date of this InventoryTask.  # noqa: E501
+        :param task_id: The task_id of this InventoryTask.  # noqa: E501
         :type: str
         """
 
-        self._completion_date = completion_date
+        self._task_id = task_id
+
+    @property
+    def status(self):
+        """Gets the status of this InventoryTask.  # noqa: E501
+
+        The status of the task. Users must wait until status is complete before moving on to the next step (such as uploading/downloading a file). For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FeedStatusEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The status of this InventoryTask.  # noqa: E501
+        :rtype: str
+        """
+        return self._status
+
+    @status.setter
+    def status(self, status):
+        """Sets the status of this InventoryTask.
+
+        The status of the task. Users must wait until status is complete before moving on to the next step (such as uploading/downloading a file). For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FeedStatusEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param status: The status of this InventoryTask.  # noqa: E501
+        :type: str
+        """
+
+        self._status = status
+
+    @property
+    def feed_type(self):
+        """Gets the feed_type of this InventoryTask.  # noqa: E501
+
+        The feed type associated with the inventory task.  # noqa: E501
+
+        :return: The feed_type of this InventoryTask.  # noqa: E501
+        :rtype: str
+        """
+        return self._feed_type
+
+    @feed_type.setter
+    def feed_type(self, feed_type):
+        """Sets the feed_type of this InventoryTask.
+
+        The feed type associated with the inventory task.  # noqa: E501
+
+        :param feed_type: The feed_type of this InventoryTask.  # noqa: E501
+        :type: str
+        """
+
+        self._feed_type = feed_type
 
     @property
     def creation_date(self):
@@ -134,6 +180,52 @@ class InventoryTask(object):
         self._creation_date = creation_date
 
     @property
+    def completion_date(self):
+        """Gets the completion_date of this InventoryTask.  # noqa: E501
+
+        The timestamp when the task status went into the COMPLETED, COMPLETED_WITH_ERROR, or PARTIALLY_PROCESSED state. This field is only returned if the status is one of the three completed values.  # noqa: E501
+
+        :return: The completion_date of this InventoryTask.  # noqa: E501
+        :rtype: str
+        """
+        return self._completion_date
+
+    @completion_date.setter
+    def completion_date(self, completion_date):
+        """Sets the completion_date of this InventoryTask.
+
+        The timestamp when the task status went into the COMPLETED, COMPLETED_WITH_ERROR, or PARTIALLY_PROCESSED state. This field is only returned if the status is one of the three completed values.  # noqa: E501
+
+        :param completion_date: The completion_date of this InventoryTask.  # noqa: E501
+        :type: str
+        """
+
+        self._completion_date = completion_date
+
+    @property
+    def schema_version(self):
+        """Gets the schema_version of this InventoryTask.  # noqa: E501
+
+        The schema version number associated with the task.  # noqa: E501
+
+        :return: The schema_version of this InventoryTask.  # noqa: E501
+        :rtype: str
+        """
+        return self._schema_version
+
+    @schema_version.setter
+    def schema_version(self, schema_version):
+        """Sets the schema_version of this InventoryTask.
+
+        The schema version number associated with the task.  # noqa: E501
+
+        :param schema_version: The schema_version of this InventoryTask.  # noqa: E501
+        :type: str
+        """
+
+        self._schema_version = schema_version
+
+    @property
     def detail_href(self):
         """Gets the detail_href of this InventoryTask.  # noqa: E501
 
@@ -157,27 +249,25 @@ class InventoryTask(object):
         self._detail_href = detail_href
 
     @property
-    def feed_type(self):
-        """Gets the feed_type of this InventoryTask.  # noqa: E501
+    def upload_summary(self):
+        """Gets the upload_summary of this InventoryTask.  # noqa: E501
 
-        The feed type associated with the inventory task.  # noqa: E501
 
-        :return: The feed_type of this InventoryTask.  # noqa: E501
-        :rtype: str
+        :return: The upload_summary of this InventoryTask.  # noqa: E501
+        :rtype: UploadSummary
         """
-        return self._feed_type
+        return self._upload_summary
 
-    @feed_type.setter
-    def feed_type(self, feed_type):
-        """Sets the feed_type of this InventoryTask.
+    @upload_summary.setter
+    def upload_summary(self, upload_summary):
+        """Sets the upload_summary of this InventoryTask.
 
-        The feed type associated with the inventory task.  # noqa: E501
 
-        :param feed_type: The feed_type of this InventoryTask.  # noqa: E501
-        :type: str
+        :param upload_summary: The upload_summary of this InventoryTask.  # noqa: E501
+        :type: UploadSummary
         """
 
-        self._feed_type = feed_type
+        self._upload_summary = upload_summary
 
     @property
     def filter_criteria(self):
@@ -222,96 +312,6 @@ class InventoryTask(object):
         """
 
         self._inventory_file_template = inventory_file_template
-
-    @property
-    def schema_version(self):
-        """Gets the schema_version of this InventoryTask.  # noqa: E501
-
-        The schema version number associated with the task.  # noqa: E501
-
-        :return: The schema_version of this InventoryTask.  # noqa: E501
-        :rtype: str
-        """
-        return self._schema_version
-
-    @schema_version.setter
-    def schema_version(self, schema_version):
-        """Sets the schema_version of this InventoryTask.
-
-        The schema version number associated with the task.  # noqa: E501
-
-        :param schema_version: The schema_version of this InventoryTask.  # noqa: E501
-        :type: str
-        """
-
-        self._schema_version = schema_version
-
-    @property
-    def status(self):
-        """Gets the status of this InventoryTask.  # noqa: E501
-
-        The status of the task. Users must wait until status is complete before moving on to the next step (such as uploading/downloading a file). For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FeedStatusEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The status of this InventoryTask.  # noqa: E501
-        :rtype: str
-        """
-        return self._status
-
-    @status.setter
-    def status(self, status):
-        """Sets the status of this InventoryTask.
-
-        The status of the task. Users must wait until status is complete before moving on to the next step (such as uploading/downloading a file). For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FeedStatusEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param status: The status of this InventoryTask.  # noqa: E501
-        :type: str
-        """
-
-        self._status = status
-
-    @property
-    def task_id(self):
-        """Gets the task_id of this InventoryTask.  # noqa: E501
-
-        The ID of the task. This ID is generated when the task was created by the createInventoryTask method.  # noqa: E501
-
-        :return: The task_id of this InventoryTask.  # noqa: E501
-        :rtype: str
-        """
-        return self._task_id
-
-    @task_id.setter
-    def task_id(self, task_id):
-        """Sets the task_id of this InventoryTask.
-
-        The ID of the task. This ID is generated when the task was created by the createInventoryTask method.  # noqa: E501
-
-        :param task_id: The task_id of this InventoryTask.  # noqa: E501
-        :type: str
-        """
-
-        self._task_id = task_id
-
-    @property
-    def upload_summary(self):
-        """Gets the upload_summary of this InventoryTask.  # noqa: E501
-
-
-        :return: The upload_summary of this InventoryTask.  # noqa: E501
-        :rtype: UploadSummary
-        """
-        return self._upload_summary
-
-    @upload_summary.setter
-    def upload_summary(self, upload_summary):
-        """Sets the upload_summary of this InventoryTask.
-
-
-        :param upload_summary: The upload_summary of this InventoryTask.  # noqa: E501
-        :type: UploadSummary
-        """
-
-        self._upload_summary = upload_summary
 
     def to_dict(self):
         """Returns the model properties as a dict"""

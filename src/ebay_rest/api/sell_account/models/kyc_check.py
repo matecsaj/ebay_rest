@@ -28,62 +28,39 @@ class KycCheck(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'alert': 'str',
         'data_required': 'str',
-        'detail_message': 'str',
         'due_date': 'str',
-        'remedy_url': 'str'
+        'remedy_url': 'str',
+        'alert': 'str',
+        'detail_message': 'str'
     }
 
     attribute_map = {
-        'alert': 'alert',
         'data_required': 'dataRequired',
-        'detail_message': 'detailMessage',
         'due_date': 'dueDate',
-        'remedy_url': 'remedyUrl'
+        'remedy_url': 'remedyUrl',
+        'alert': 'alert',
+        'detail_message': 'detailMessage'
     }
 
-    def __init__(self, alert=None, data_required=None, detail_message=None, due_date=None, remedy_url=None):  # noqa: E501
+    def __init__(self, data_required=None, due_date=None, remedy_url=None, alert=None, detail_message=None):  # noqa: E501
         """KycCheck - a model defined in Swagger"""  # noqa: E501
-        self._alert = None
         self._data_required = None
-        self._detail_message = None
         self._due_date = None
         self._remedy_url = None
+        self._alert = None
+        self._detail_message = None
         self.discriminator = None
-        if alert is not None:
-            self.alert = alert
         if data_required is not None:
             self.data_required = data_required
-        if detail_message is not None:
-            self.detail_message = detail_message
         if due_date is not None:
             self.due_date = due_date
         if remedy_url is not None:
             self.remedy_url = remedy_url
-
-    @property
-    def alert(self):
-        """Gets the alert of this KycCheck.  # noqa: E501
-
-        This field gives a short summary of what is required from the seller. An example might be, '<code>Upload bank document now.</code>'. The <b>detailMessage</b> field will often provide more details on what is required of the seller.  # noqa: E501
-
-        :return: The alert of this KycCheck.  # noqa: E501
-        :rtype: str
-        """
-        return self._alert
-
-    @alert.setter
-    def alert(self, alert):
-        """Sets the alert of this KycCheck.
-
-        This field gives a short summary of what is required from the seller. An example might be, '<code>Upload bank document now.</code>'. The <b>detailMessage</b> field will often provide more details on what is required of the seller.  # noqa: E501
-
-        :param alert: The alert of this KycCheck.  # noqa: E501
-        :type: str
-        """
-
-        self._alert = alert
+        if alert is not None:
+            self.alert = alert
+        if detail_message is not None:
+            self.detail_message = detail_message
 
     @property
     def data_required(self):
@@ -107,29 +84,6 @@ class KycCheck(object):
         """
 
         self._data_required = data_required
-
-    @property
-    def detail_message(self):
-        """Gets the detail_message of this KycCheck.  # noqa: E501
-
-        This field gives a detailed message about what is required from the seller. An example might be, '<code>Please upload a bank document by 2020-08-01 to get your account back in good standing.</code>'.  # noqa: E501
-
-        :return: The detail_message of this KycCheck.  # noqa: E501
-        :rtype: str
-        """
-        return self._detail_message
-
-    @detail_message.setter
-    def detail_message(self, detail_message):
-        """Sets the detail_message of this KycCheck.
-
-        This field gives a detailed message about what is required from the seller. An example might be, '<code>Please upload a bank document by 2020-08-01 to get your account back in good standing.</code>'.  # noqa: E501
-
-        :param detail_message: The detail_message of this KycCheck.  # noqa: E501
-        :type: str
-        """
-
-        self._detail_message = detail_message
 
     @property
     def due_date(self):
@@ -176,6 +130,52 @@ class KycCheck(object):
         """
 
         self._remedy_url = remedy_url
+
+    @property
+    def alert(self):
+        """Gets the alert of this KycCheck.  # noqa: E501
+
+        This field gives a short summary of what is required from the seller. An example might be, '<code>Upload bank document now.</code>'. The <b>detailMessage</b> field will often provide more details on what is required of the seller.  # noqa: E501
+
+        :return: The alert of this KycCheck.  # noqa: E501
+        :rtype: str
+        """
+        return self._alert
+
+    @alert.setter
+    def alert(self, alert):
+        """Sets the alert of this KycCheck.
+
+        This field gives a short summary of what is required from the seller. An example might be, '<code>Upload bank document now.</code>'. The <b>detailMessage</b> field will often provide more details on what is required of the seller.  # noqa: E501
+
+        :param alert: The alert of this KycCheck.  # noqa: E501
+        :type: str
+        """
+
+        self._alert = alert
+
+    @property
+    def detail_message(self):
+        """Gets the detail_message of this KycCheck.  # noqa: E501
+
+        This field gives a detailed message about what is required from the seller. An example might be, '<code>Please upload a bank document by 2020-08-01 to get your account back in good standing.</code>'.  # noqa: E501
+
+        :return: The detail_message of this KycCheck.  # noqa: E501
+        :rtype: str
+        """
+        return self._detail_message
+
+    @detail_message.setter
+    def detail_message(self, detail_message):
+        """Sets the detail_message of this KycCheck.
+
+        This field gives a detailed message about what is required from the seller. An example might be, '<code>Please upload a bank document by 2020-08-01 to get your account back in good standing.</code>'.  # noqa: E501
+
+        :param detail_message: The detail_message of this KycCheck.  # noqa: E501
+        :type: str
+        """
+
+        self._detail_message = detail_message
 
     def to_dict(self):
         """Returns the model properties as a dict"""

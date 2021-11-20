@@ -30,32 +30,32 @@ class InternationalReturnOverrideType(object):
     swagger_types = {
         'return_method': 'str',
         'return_period': 'TimeDuration',
-        'return_shipping_cost_payer': 'str',
-        'returns_accepted': 'bool'
+        'returns_accepted': 'bool',
+        'return_shipping_cost_payer': 'str'
     }
 
     attribute_map = {
         'return_method': 'returnMethod',
         'return_period': 'returnPeriod',
-        'return_shipping_cost_payer': 'returnShippingCostPayer',
-        'returns_accepted': 'returnsAccepted'
+        'returns_accepted': 'returnsAccepted',
+        'return_shipping_cost_payer': 'returnShippingCostPayer'
     }
 
-    def __init__(self, return_method=None, return_period=None, return_shipping_cost_payer=None, returns_accepted=None):  # noqa: E501
+    def __init__(self, return_method=None, return_period=None, returns_accepted=None, return_shipping_cost_payer=None):  # noqa: E501
         """InternationalReturnOverrideType - a model defined in Swagger"""  # noqa: E501
         self._return_method = None
         self._return_period = None
-        self._return_shipping_cost_payer = None
         self._returns_accepted = None
+        self._return_shipping_cost_payer = None
         self.discriminator = None
         if return_method is not None:
             self.return_method = return_method
         if return_period is not None:
             self.return_period = return_period
-        if return_shipping_cost_payer is not None:
-            self.return_shipping_cost_payer = return_shipping_cost_payer
         if returns_accepted is not None:
             self.returns_accepted = returns_accepted
+        if return_shipping_cost_payer is not None:
+            self.return_shipping_cost_payer = return_shipping_cost_payer
 
     @property
     def return_method(self):
@@ -102,29 +102,6 @@ class InternationalReturnOverrideType(object):
         self._return_period = return_period
 
     @property
-    def return_shipping_cost_payer(self):
-        """Gets the return_shipping_cost_payer of this InternationalReturnOverrideType.  # noqa: E501
-
-        This field indicates who is responsible for paying for the shipping charges for returned items. The field can be set to either <code>BUYER</code> or <code>SELLER</code>.  <br><br>Depending on the return policy and specifics of the return, either the buyer or the seller can be responsible for the return shipping costs. Note that the seller is always responsible for return shipping costs for SNAD-related issues.  <br><br><i>Required if </i> the <b>internationalOverride.returnsAccepted</b> field is set to <code>true</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ReturnShippingCostPayerEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The return_shipping_cost_payer of this InternationalReturnOverrideType.  # noqa: E501
-        :rtype: str
-        """
-        return self._return_shipping_cost_payer
-
-    @return_shipping_cost_payer.setter
-    def return_shipping_cost_payer(self, return_shipping_cost_payer):
-        """Sets the return_shipping_cost_payer of this InternationalReturnOverrideType.
-
-        This field indicates who is responsible for paying for the shipping charges for returned items. The field can be set to either <code>BUYER</code> or <code>SELLER</code>.  <br><br>Depending on the return policy and specifics of the return, either the buyer or the seller can be responsible for the return shipping costs. Note that the seller is always responsible for return shipping costs for SNAD-related issues.  <br><br><i>Required if </i> the <b>internationalOverride.returnsAccepted</b> field is set to <code>true</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ReturnShippingCostPayerEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param return_shipping_cost_payer: The return_shipping_cost_payer of this InternationalReturnOverrideType.  # noqa: E501
-        :type: str
-        """
-
-        self._return_shipping_cost_payer = return_shipping_cost_payer
-
-    @property
     def returns_accepted(self):
         """Gets the returns_accepted of this InternationalReturnOverrideType.  # noqa: E501
 
@@ -146,6 +123,29 @@ class InternationalReturnOverrideType(object):
         """
 
         self._returns_accepted = returns_accepted
+
+    @property
+    def return_shipping_cost_payer(self):
+        """Gets the return_shipping_cost_payer of this InternationalReturnOverrideType.  # noqa: E501
+
+        This field indicates who is responsible for paying for the shipping charges for returned items. The field can be set to either <code>BUYER</code> or <code>SELLER</code>.  <br><br>Depending on the return policy and specifics of the return, either the buyer or the seller can be responsible for the return shipping costs. Note that the seller is always responsible for return shipping costs for SNAD-related issues.  <br><br><i>Required if </i> the <b>internationalOverride.returnsAccepted</b> field is set to <code>true</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ReturnShippingCostPayerEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The return_shipping_cost_payer of this InternationalReturnOverrideType.  # noqa: E501
+        :rtype: str
+        """
+        return self._return_shipping_cost_payer
+
+    @return_shipping_cost_payer.setter
+    def return_shipping_cost_payer(self, return_shipping_cost_payer):
+        """Sets the return_shipping_cost_payer of this InternationalReturnOverrideType.
+
+        This field indicates who is responsible for paying for the shipping charges for returned items. The field can be set to either <code>BUYER</code> or <code>SELLER</code>.  <br><br>Depending on the return policy and specifics of the return, either the buyer or the seller can be responsible for the return shipping costs. Note that the seller is always responsible for return shipping costs for SNAD-related issues.  <br><br><i>Required if </i> the <b>internationalOverride.returnsAccepted</b> field is set to <code>true</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ReturnShippingCostPayerEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param return_shipping_cost_payer: The return_shipping_cost_payer of this InternationalReturnOverrideType.  # noqa: E501
+        :type: str
+        """
+
+        self._return_shipping_cost_payer = return_shipping_cost_payer
 
     def to_dict(self):
         """Returns the model properties as a dict"""

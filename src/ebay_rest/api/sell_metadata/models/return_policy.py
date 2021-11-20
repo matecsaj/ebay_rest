@@ -89,7 +89,7 @@ class ReturnPolicy(object):
     def category_tree_id(self):
         """Gets the category_tree_id of this ReturnPolicy.  # noqa: E501
 
-        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree. A category tree is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique categoryId value. Within a category tree, the root node has no parent node and leaf nodes are nodes that have no child nodes.  # noqa: E501
+        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree.    <br><br>A <i>category tree</i> is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique <b>categoryId</b> value. Within a category tree, the root node has no parent node and <i>leaf nodes</i> are nodes that have no child nodes.  # noqa: E501
 
         :return: The category_tree_id of this ReturnPolicy.  # noqa: E501
         :rtype: str
@@ -100,7 +100,7 @@ class ReturnPolicy(object):
     def category_tree_id(self, category_tree_id):
         """Sets the category_tree_id of this ReturnPolicy.
 
-        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree. A category tree is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique categoryId value. Within a category tree, the root node has no parent node and leaf nodes are nodes that have no child nodes.  # noqa: E501
+        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree.    <br><br>A <i>category tree</i> is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique <b>categoryId</b> value. Within a category tree, the root node has no parent node and <i>leaf nodes</i> are nodes that have no child nodes.  # noqa: E501
 
         :param category_tree_id: The category_tree_id of this ReturnPolicy.  # noqa: E501
         :type: str
@@ -154,7 +154,7 @@ class ReturnPolicy(object):
     def required(self):
         """Gets the required of this ReturnPolicy.  # noqa: E501
 
-        If set to true, this flag indicates that you must specify a return policy for items listed in the associated category. Note that not accepting returns (setting returnsAcceptedEnabled to false) is a valid return policy.  # noqa: E501
+        If set to <code>true</code>, this flag indicates that you must specify a return policy for items listed in the associated category.  <br><br>Note that not accepting returns (setting <b>returnsAcceptedEnabled</b> to <code>false</code>) is a valid return policy.  # noqa: E501
 
         :return: The required of this ReturnPolicy.  # noqa: E501
         :rtype: bool
@@ -165,7 +165,7 @@ class ReturnPolicy(object):
     def required(self, required):
         """Sets the required of this ReturnPolicy.
 
-        If set to true, this flag indicates that you must specify a return policy for items listed in the associated category. Note that not accepting returns (setting returnsAcceptedEnabled to false) is a valid return policy.  # noqa: E501
+        If set to <code>true</code>, this flag indicates that you must specify a return policy for items listed in the associated category.  <br><br>Note that not accepting returns (setting <b>returnsAcceptedEnabled</b> to <code>false</code>) is a valid return policy.  # noqa: E501
 
         :param required: The required of this ReturnPolicy.  # noqa: E501
         :type: bool

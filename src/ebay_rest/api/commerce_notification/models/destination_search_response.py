@@ -28,62 +28,62 @@ class DestinationSearchResponse(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'destinations': 'list[Destination]',
+        'total': 'int',
         'href': 'str',
-        'limit': 'int',
         'next': 'str',
-        'total': 'int'
+        'limit': 'int',
+        'destinations': 'list[Destination]'
     }
 
     attribute_map = {
-        'destinations': 'destinations',
+        'total': 'total',
         'href': 'href',
-        'limit': 'limit',
         'next': 'next',
-        'total': 'total'
+        'limit': 'limit',
+        'destinations': 'destinations'
     }
 
-    def __init__(self, destinations=None, href=None, limit=None, next=None, total=None):  # noqa: E501
+    def __init__(self, total=None, href=None, next=None, limit=None, destinations=None):  # noqa: E501
         """DestinationSearchResponse - a model defined in Swagger"""  # noqa: E501
-        self._destinations = None
-        self._href = None
-        self._limit = None
-        self._next = None
         self._total = None
+        self._href = None
+        self._next = None
+        self._limit = None
+        self._destinations = None
         self.discriminator = None
-        if destinations is not None:
-            self.destinations = destinations
-        if href is not None:
-            self.href = href
-        if limit is not None:
-            self.limit = limit
-        if next is not None:
-            self.next = next
         if total is not None:
             self.total = total
+        if href is not None:
+            self.href = href
+        if next is not None:
+            self.next = next
+        if limit is not None:
+            self.limit = limit
+        if destinations is not None:
+            self.destinations = destinations
 
     @property
-    def destinations(self):
-        """Gets the destinations of this DestinationSearchResponse.  # noqa: E501
+    def total(self):
+        """Gets the total of this DestinationSearchResponse.  # noqa: E501
 
-        An array that contains the destination details.  # noqa: E501
+        The total number of matches for the search criteria.  # noqa: E501
 
-        :return: The destinations of this DestinationSearchResponse.  # noqa: E501
-        :rtype: list[Destination]
+        :return: The total of this DestinationSearchResponse.  # noqa: E501
+        :rtype: int
         """
-        return self._destinations
+        return self._total
 
-    @destinations.setter
-    def destinations(self, destinations):
-        """Sets the destinations of this DestinationSearchResponse.
+    @total.setter
+    def total(self, total):
+        """Sets the total of this DestinationSearchResponse.
 
-        An array that contains the destination details.  # noqa: E501
+        The total number of matches for the search criteria.  # noqa: E501
 
-        :param destinations: The destinations of this DestinationSearchResponse.  # noqa: E501
-        :type: list[Destination]
+        :param total: The total of this DestinationSearchResponse.  # noqa: E501
+        :type: int
         """
 
-        self._destinations = destinations
+        self._total = total
 
     @property
     def href(self):
@@ -109,29 +109,6 @@ class DestinationSearchResponse(object):
         self._href = href
 
     @property
-    def limit(self):
-        """Gets the limit of this DestinationSearchResponse.  # noqa: E501
-
-        The number of records to show in the current response.<br /><br /><b>Default:</b> 20  # noqa: E501
-
-        :return: The limit of this DestinationSearchResponse.  # noqa: E501
-        :rtype: int
-        """
-        return self._limit
-
-    @limit.setter
-    def limit(self, limit):
-        """Sets the limit of this DestinationSearchResponse.
-
-        The number of records to show in the current response.<br /><br /><b>Default:</b> 20  # noqa: E501
-
-        :param limit: The limit of this DestinationSearchResponse.  # noqa: E501
-        :type: int
-        """
-
-        self._limit = limit
-
-    @property
     def next(self):
         """Gets the next of this DestinationSearchResponse.  # noqa: E501
 
@@ -155,27 +132,50 @@ class DestinationSearchResponse(object):
         self._next = next
 
     @property
-    def total(self):
-        """Gets the total of this DestinationSearchResponse.  # noqa: E501
+    def limit(self):
+        """Gets the limit of this DestinationSearchResponse.  # noqa: E501
 
-        The total number of matches for the search criteria.  # noqa: E501
+        The number of records to show in the current response.<br /><br /><b>Default:</b> 20  # noqa: E501
 
-        :return: The total of this DestinationSearchResponse.  # noqa: E501
+        :return: The limit of this DestinationSearchResponse.  # noqa: E501
         :rtype: int
         """
-        return self._total
+        return self._limit
 
-    @total.setter
-    def total(self, total):
-        """Sets the total of this DestinationSearchResponse.
+    @limit.setter
+    def limit(self, limit):
+        """Sets the limit of this DestinationSearchResponse.
 
-        The total number of matches for the search criteria.  # noqa: E501
+        The number of records to show in the current response.<br /><br /><b>Default:</b> 20  # noqa: E501
 
-        :param total: The total of this DestinationSearchResponse.  # noqa: E501
+        :param limit: The limit of this DestinationSearchResponse.  # noqa: E501
         :type: int
         """
 
-        self._total = total
+        self._limit = limit
+
+    @property
+    def destinations(self):
+        """Gets the destinations of this DestinationSearchResponse.  # noqa: E501
+
+        An array that contains the destination details.  # noqa: E501
+
+        :return: The destinations of this DestinationSearchResponse.  # noqa: E501
+        :rtype: list[Destination]
+        """
+        return self._destinations
+
+    @destinations.setter
+    def destinations(self, destinations):
+        """Sets the destinations of this DestinationSearchResponse.
+
+        An array that contains the destination details.  # noqa: E501
+
+        :param destinations: The destinations of this DestinationSearchResponse.  # noqa: E501
+        :type: list[Destination]
+        """
+
+        self._destinations = destinations
 
     def to_dict(self):
         """Returns the model properties as a dict"""

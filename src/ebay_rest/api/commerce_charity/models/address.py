@@ -29,33 +29,33 @@ class Address(object):
     """
     swagger_types = {
         'city': 'str',
-        'country': 'str',
+        'state_or_province': 'str',
         'postal_code': 'str',
-        'state_or_province': 'str'
+        'country': 'str'
     }
 
     attribute_map = {
         'city': 'city',
-        'country': 'country',
+        'state_or_province': 'stateOrProvince',
         'postal_code': 'postalCode',
-        'state_or_province': 'stateOrProvince'
+        'country': 'country'
     }
 
-    def __init__(self, city=None, country=None, postal_code=None, state_or_province=None):  # noqa: E501
+    def __init__(self, city=None, state_or_province=None, postal_code=None, country=None):  # noqa: E501
         """Address - a model defined in Swagger"""  # noqa: E501
         self._city = None
-        self._country = None
-        self._postal_code = None
         self._state_or_province = None
+        self._postal_code = None
+        self._country = None
         self.discriminator = None
         if city is not None:
             self.city = city
-        if country is not None:
-            self.country = country
-        if postal_code is not None:
-            self.postal_code = postal_code
         if state_or_province is not None:
             self.state_or_province = state_or_province
+        if postal_code is not None:
+            self.postal_code = postal_code
+        if country is not None:
+            self.country = country
 
     @property
     def city(self):
@@ -81,27 +81,27 @@ class Address(object):
         self._city = city
 
     @property
-    def country(self):
-        """Gets the country of this Address.  # noqa: E501
+    def state_or_province(self):
+        """Gets the state_or_province of this Address.  # noqa: E501
 
-        The two-letter ISO 3166 standard of the country of the address. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/charity/types/bas:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
+        The state or province of the charitable organization.  # noqa: E501
 
-        :return: The country of this Address.  # noqa: E501
+        :return: The state_or_province of this Address.  # noqa: E501
         :rtype: str
         """
-        return self._country
+        return self._state_or_province
 
-    @country.setter
-    def country(self, country):
-        """Sets the country of this Address.
+    @state_or_province.setter
+    def state_or_province(self, state_or_province):
+        """Sets the state_or_province of this Address.
 
-        The two-letter ISO 3166 standard of the country of the address. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/charity/types/bas:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
+        The state or province of the charitable organization.  # noqa: E501
 
-        :param country: The country of this Address.  # noqa: E501
+        :param state_or_province: The state_or_province of this Address.  # noqa: E501
         :type: str
         """
 
-        self._country = country
+        self._state_or_province = state_or_province
 
     @property
     def postal_code(self):
@@ -127,27 +127,27 @@ class Address(object):
         self._postal_code = postal_code
 
     @property
-    def state_or_province(self):
-        """Gets the state_or_province of this Address.  # noqa: E501
+    def country(self):
+        """Gets the country of this Address.  # noqa: E501
 
-        The state or province of the charitable organization.  # noqa: E501
+        The two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\">ISO 3166</a> standard of the country of the address. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/charity/types/bas:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
-        :return: The state_or_province of this Address.  # noqa: E501
+        :return: The country of this Address.  # noqa: E501
         :rtype: str
         """
-        return self._state_or_province
+        return self._country
 
-    @state_or_province.setter
-    def state_or_province(self, state_or_province):
-        """Sets the state_or_province of this Address.
+    @country.setter
+    def country(self, country):
+        """Sets the country of this Address.
 
-        The state or province of the charitable organization.  # noqa: E501
+        The two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\">ISO 3166</a> standard of the country of the address. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/charity/types/bas:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
-        :param state_or_province: The state_or_province of this Address.  # noqa: E501
+        :param country: The country of this Address.  # noqa: E501
         :type: str
         """
 
-        self._state_or_province = state_or_province
+        self._country = country
 
     def to_dict(self):
         """Returns the model properties as a dict"""

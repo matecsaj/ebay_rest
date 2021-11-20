@@ -28,665 +28,504 @@ class Item(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'accepted_payment_methods': 'str',
-        'additional_image_urls': 'str',
-        'additional_shipping_cost_per_unit': 'str',
-        'age_group': 'str',
-        'alerts': 'str',
-        'availability': 'str',
-        'availability_threshold': 'int',
-        'availability_threshold_type': 'str',
-        'brand': 'str',
-        'buying_options': 'str',
+        'item_id': 'str',
+        'title': 'str',
+        'image_url': 'str',
         'category': 'str',
         'category_id': 'str',
-        'color': 'str',
-        'condition': 'str',
+        'buying_options': 'str',
+        'seller_username': 'str',
+        'seller_feedback_percentage': 'str',
+        'seller_feedback_score': 'str',
+        'gtin': 'str',
+        'brand': 'str',
+        'mpn': 'str',
+        'epid': 'str',
         'condition_id': 'str',
-        'default_image_url': 'str',
+        'condition': 'str',
+        'price_value': 'str',
+        'price_currency': 'str',
+        'primary_item_group_id': 'str',
+        'primary_item_group_type': 'str',
+        'item_end_date': 'str',
+        'seller_item_revision': 'str',
+        'item_location_country': 'str',
+        'localized_aspects': 'str',
+        'seller_trust_level': 'str',
+        'availability': 'str',
+        'image_altering_prohibited': 'bool',
+        'estimated_available_quantity': 'int',
+        'availability_threshold_type': 'str',
+        'availability_threshold': 'int',
+        'returns_accepted': 'bool',
+        'return_period_value': 'int',
+        'return_period_unit': 'str',
+        'refund_method': 'str',
+        'return_method': 'str',
+        'return_shipping_cost_payer': 'str',
+        'accepted_payment_methods': 'str',
         'delivery_options': 'str',
+        'ship_to_included_regions': 'str',
+        'ship_to_excluded_regions': 'str',
+        'inferred_epid': 'str',
+        'inferred_gtin': 'str',
+        'inferred_brand': 'str',
+        'inferred_mpn': 'str',
+        'inferred_localized_aspects': 'str',
+        'additional_image_urls': 'str',
+        'original_price_value': 'str',
+        'original_price_currency': 'str',
         'discount_amount': 'str',
         'discount_percentage': 'str',
         'energy_efficiency_class': 'str',
-        'epid': 'str',
-        'estimated_available_quantity': 'int',
-        'gender': 'str',
-        'gtin': 'str',
-        'image_altering_prohibited': 'bool',
-        'image_url': 'str',
-        'inferred_brand': 'str',
-        'inferred_epid': 'str',
-        'inferred_gtin': 'str',
-        'inferred_localized_aspects': 'str',
-        'inferred_mpn': 'str',
-        'item_affiliate_web_url': 'str',
-        'item_creation_date': 'str',
-        'item_end_date': 'str',
-        'item_id': 'str',
-        'item_location_country': 'str',
-        'item_web_url': 'str',
-        'legacy_item_id': 'str',
-        'length_unit_of_measure': 'str',
-        'localized_aspects': 'str',
+        'qualified_programs': 'str',
         'lot_size': 'int',
-        'material': 'str',
-        'mpn': 'str',
-        'original_price_currency': 'str',
-        'original_price_value': 'str',
+        'length_unit_of_measure': 'str',
+        'package_width': 'str',
         'package_height': 'str',
         'package_length': 'str',
+        'weight_unit_of_measure': 'str',
         'package_weight': 'str',
-        'package_width': 'str',
-        'pattern': 'str',
-        'price_currency': 'str',
-        'price_value': 'str',
-        'primary_item_group_id': 'str',
-        'primary_item_group_type': 'str',
-        'priority_listing_payload': 'str',
-        'qualified_programs': 'str',
-        'quantity_used_for_estimate': 'int',
-        'refund_method': 'str',
-        'return_method': 'str',
-        'return_period_unit': 'str',
-        'return_period_value': 'int',
-        'return_shipping_cost_payer': 'str',
-        'returns_accepted': 'bool',
-        'seller_account_type': 'str',
-        'seller_feedback_percentage': 'str',
-        'seller_feedback_score': 'str',
-        'seller_item_revision': 'str',
-        'seller_trust_level': 'str',
-        'seller_username': 'str',
-        'ship_to_excluded_regions': 'str',
-        'ship_to_included_regions': 'str',
         'shipping_carrier_code': 'str',
-        'shipping_cost': 'str',
-        'shipping_cost_type': 'str',
         'shipping_service_code': 'str',
         'shipping_type': 'str',
-        'size': 'str',
-        'title': 'str',
-        'total_units': 'str',
-        'tyre_label_image_url': 'str',
+        'shipping_cost': 'str',
+        'shipping_cost_type': 'str',
+        'additional_shipping_cost_per_unit': 'str',
+        'quantity_used_for_estimate': 'int',
         'unit_price': 'str',
         'unit_pricing_measure': 'str',
-        'weight_unit_of_measure': 'str'
+        'legacy_item_id': 'str',
+        'alerts': 'str',
+        'seller_account_type': 'str',
+        'tyre_label_image_url': 'str',
+        'priority_listing_payload': 'str',
+        'item_creation_date': 'str',
+        'item_web_url': 'str',
+        'default_image_url': 'str',
+        'item_affiliate_web_url': 'str',
+        'age_group': 'str',
+        'color': 'str',
+        'pattern': 'str',
+        'size': 'str',
+        'gender': 'str',
+        'material': 'str',
+        'total_units': 'str'
     }
 
     attribute_map = {
-        'accepted_payment_methods': 'acceptedPaymentMethods',
-        'additional_image_urls': 'additionalImageUrls',
-        'additional_shipping_cost_per_unit': 'additionalShippingCostPerUnit',
-        'age_group': 'ageGroup',
-        'alerts': 'alerts',
-        'availability': 'availability',
-        'availability_threshold': 'availabilityThreshold',
-        'availability_threshold_type': 'availabilityThresholdType',
-        'brand': 'brand',
-        'buying_options': 'buyingOptions',
+        'item_id': 'itemId',
+        'title': 'title',
+        'image_url': 'imageUrl',
         'category': 'category',
         'category_id': 'categoryId',
-        'color': 'color',
-        'condition': 'condition',
+        'buying_options': 'buyingOptions',
+        'seller_username': 'sellerUsername',
+        'seller_feedback_percentage': 'sellerFeedbackPercentage',
+        'seller_feedback_score': 'sellerFeedbackScore',
+        'gtin': 'gtin',
+        'brand': 'brand',
+        'mpn': 'mpn',
+        'epid': 'epid',
         'condition_id': 'conditionId',
-        'default_image_url': 'defaultImageUrl',
+        'condition': 'condition',
+        'price_value': 'priceValue',
+        'price_currency': 'priceCurrency',
+        'primary_item_group_id': 'primaryItemGroupId',
+        'primary_item_group_type': 'primaryItemGroupType',
+        'item_end_date': 'itemEndDate',
+        'seller_item_revision': 'sellerItemRevision',
+        'item_location_country': 'itemLocationCountry',
+        'localized_aspects': 'localizedAspects',
+        'seller_trust_level': 'sellerTrustLevel',
+        'availability': 'availability',
+        'image_altering_prohibited': 'imageAlteringProhibited',
+        'estimated_available_quantity': 'estimatedAvailableQuantity',
+        'availability_threshold_type': 'availabilityThresholdType',
+        'availability_threshold': 'availabilityThreshold',
+        'returns_accepted': 'returnsAccepted',
+        'return_period_value': 'returnPeriodValue',
+        'return_period_unit': 'returnPeriodUnit',
+        'refund_method': 'refundMethod',
+        'return_method': 'returnMethod',
+        'return_shipping_cost_payer': 'returnShippingCostPayer',
+        'accepted_payment_methods': 'acceptedPaymentMethods',
         'delivery_options': 'deliveryOptions',
+        'ship_to_included_regions': 'shipToIncludedRegions',
+        'ship_to_excluded_regions': 'shipToExcludedRegions',
+        'inferred_epid': 'inferredEpid',
+        'inferred_gtin': 'inferredGtin',
+        'inferred_brand': 'inferredBrand',
+        'inferred_mpn': 'inferredMpn',
+        'inferred_localized_aspects': 'inferredLocalizedAspects',
+        'additional_image_urls': 'additionalImageUrls',
+        'original_price_value': 'originalPriceValue',
+        'original_price_currency': 'originalPriceCurrency',
         'discount_amount': 'discountAmount',
         'discount_percentage': 'discountPercentage',
         'energy_efficiency_class': 'energyEfficiencyClass',
-        'epid': 'epid',
-        'estimated_available_quantity': 'estimatedAvailableQuantity',
-        'gender': 'gender',
-        'gtin': 'gtin',
-        'image_altering_prohibited': 'imageAlteringProhibited',
-        'image_url': 'imageUrl',
-        'inferred_brand': 'inferredBrand',
-        'inferred_epid': 'inferredEpid',
-        'inferred_gtin': 'inferredGtin',
-        'inferred_localized_aspects': 'inferredLocalizedAspects',
-        'inferred_mpn': 'inferredMpn',
-        'item_affiliate_web_url': 'itemAffiliateWebUrl',
-        'item_creation_date': 'itemCreationDate',
-        'item_end_date': 'itemEndDate',
-        'item_id': 'itemId',
-        'item_location_country': 'itemLocationCountry',
-        'item_web_url': 'itemWebUrl',
-        'legacy_item_id': 'legacyItemId',
-        'length_unit_of_measure': 'lengthUnitOfMeasure',
-        'localized_aspects': 'localizedAspects',
+        'qualified_programs': 'qualifiedPrograms',
         'lot_size': 'lotSize',
-        'material': 'material',
-        'mpn': 'mpn',
-        'original_price_currency': 'originalPriceCurrency',
-        'original_price_value': 'originalPriceValue',
+        'length_unit_of_measure': 'lengthUnitOfMeasure',
+        'package_width': 'packageWidth',
         'package_height': 'packageHeight',
         'package_length': 'packageLength',
+        'weight_unit_of_measure': 'weightUnitOfMeasure',
         'package_weight': 'packageWeight',
-        'package_width': 'packageWidth',
-        'pattern': 'pattern',
-        'price_currency': 'priceCurrency',
-        'price_value': 'priceValue',
-        'primary_item_group_id': 'primaryItemGroupId',
-        'primary_item_group_type': 'primaryItemGroupType',
-        'priority_listing_payload': 'priorityListingPayload',
-        'qualified_programs': 'qualifiedPrograms',
-        'quantity_used_for_estimate': 'quantityUsedForEstimate',
-        'refund_method': 'refundMethod',
-        'return_method': 'returnMethod',
-        'return_period_unit': 'returnPeriodUnit',
-        'return_period_value': 'returnPeriodValue',
-        'return_shipping_cost_payer': 'returnShippingCostPayer',
-        'returns_accepted': 'returnsAccepted',
-        'seller_account_type': 'sellerAccountType',
-        'seller_feedback_percentage': 'sellerFeedbackPercentage',
-        'seller_feedback_score': 'sellerFeedbackScore',
-        'seller_item_revision': 'sellerItemRevision',
-        'seller_trust_level': 'sellerTrustLevel',
-        'seller_username': 'sellerUsername',
-        'ship_to_excluded_regions': 'shipToExcludedRegions',
-        'ship_to_included_regions': 'shipToIncludedRegions',
         'shipping_carrier_code': 'shippingCarrierCode',
-        'shipping_cost': 'shippingCost',
-        'shipping_cost_type': 'shippingCostType',
         'shipping_service_code': 'shippingServiceCode',
         'shipping_type': 'shippingType',
-        'size': 'size',
-        'title': 'title',
-        'total_units': 'totalUnits',
-        'tyre_label_image_url': 'tyreLabelImageUrl',
+        'shipping_cost': 'shippingCost',
+        'shipping_cost_type': 'shippingCostType',
+        'additional_shipping_cost_per_unit': 'additionalShippingCostPerUnit',
+        'quantity_used_for_estimate': 'quantityUsedForEstimate',
         'unit_price': 'unitPrice',
         'unit_pricing_measure': 'unitPricingMeasure',
-        'weight_unit_of_measure': 'weightUnitOfMeasure'
+        'legacy_item_id': 'legacyItemId',
+        'alerts': 'alerts',
+        'seller_account_type': 'sellerAccountType',
+        'tyre_label_image_url': 'tyreLabelImageUrl',
+        'priority_listing_payload': 'priorityListingPayload',
+        'item_creation_date': 'itemCreationDate',
+        'item_web_url': 'itemWebUrl',
+        'default_image_url': 'defaultImageUrl',
+        'item_affiliate_web_url': 'itemAffiliateWebUrl',
+        'age_group': 'ageGroup',
+        'color': 'color',
+        'pattern': 'pattern',
+        'size': 'size',
+        'gender': 'gender',
+        'material': 'material',
+        'total_units': 'totalUnits'
     }
 
-    def __init__(self, accepted_payment_methods=None, additional_image_urls=None, additional_shipping_cost_per_unit=None, age_group=None, alerts=None, availability=None, availability_threshold=None, availability_threshold_type=None, brand=None, buying_options=None, category=None, category_id=None, color=None, condition=None, condition_id=None, default_image_url=None, delivery_options=None, discount_amount=None, discount_percentage=None, energy_efficiency_class=None, epid=None, estimated_available_quantity=None, gender=None, gtin=None, image_altering_prohibited=None, image_url=None, inferred_brand=None, inferred_epid=None, inferred_gtin=None, inferred_localized_aspects=None, inferred_mpn=None, item_affiliate_web_url=None, item_creation_date=None, item_end_date=None, item_id=None, item_location_country=None, item_web_url=None, legacy_item_id=None, length_unit_of_measure=None, localized_aspects=None, lot_size=None, material=None, mpn=None, original_price_currency=None, original_price_value=None, package_height=None, package_length=None, package_weight=None, package_width=None, pattern=None, price_currency=None, price_value=None, primary_item_group_id=None, primary_item_group_type=None, priority_listing_payload=None, qualified_programs=None, quantity_used_for_estimate=None, refund_method=None, return_method=None, return_period_unit=None, return_period_value=None, return_shipping_cost_payer=None, returns_accepted=None, seller_account_type=None, seller_feedback_percentage=None, seller_feedback_score=None, seller_item_revision=None, seller_trust_level=None, seller_username=None, ship_to_excluded_regions=None, ship_to_included_regions=None, shipping_carrier_code=None, shipping_cost=None, shipping_cost_type=None, shipping_service_code=None, shipping_type=None, size=None, title=None, total_units=None, tyre_label_image_url=None, unit_price=None, unit_pricing_measure=None, weight_unit_of_measure=None):  # noqa: E501
+    def __init__(self, item_id=None, title=None, image_url=None, category=None, category_id=None, buying_options=None, seller_username=None, seller_feedback_percentage=None, seller_feedback_score=None, gtin=None, brand=None, mpn=None, epid=None, condition_id=None, condition=None, price_value=None, price_currency=None, primary_item_group_id=None, primary_item_group_type=None, item_end_date=None, seller_item_revision=None, item_location_country=None, localized_aspects=None, seller_trust_level=None, availability=None, image_altering_prohibited=None, estimated_available_quantity=None, availability_threshold_type=None, availability_threshold=None, returns_accepted=None, return_period_value=None, return_period_unit=None, refund_method=None, return_method=None, return_shipping_cost_payer=None, accepted_payment_methods=None, delivery_options=None, ship_to_included_regions=None, ship_to_excluded_regions=None, inferred_epid=None, inferred_gtin=None, inferred_brand=None, inferred_mpn=None, inferred_localized_aspects=None, additional_image_urls=None, original_price_value=None, original_price_currency=None, discount_amount=None, discount_percentage=None, energy_efficiency_class=None, qualified_programs=None, lot_size=None, length_unit_of_measure=None, package_width=None, package_height=None, package_length=None, weight_unit_of_measure=None, package_weight=None, shipping_carrier_code=None, shipping_service_code=None, shipping_type=None, shipping_cost=None, shipping_cost_type=None, additional_shipping_cost_per_unit=None, quantity_used_for_estimate=None, unit_price=None, unit_pricing_measure=None, legacy_item_id=None, alerts=None, seller_account_type=None, tyre_label_image_url=None, priority_listing_payload=None, item_creation_date=None, item_web_url=None, default_image_url=None, item_affiliate_web_url=None, age_group=None, color=None, pattern=None, size=None, gender=None, material=None, total_units=None):  # noqa: E501
         """Item - a model defined in Swagger"""  # noqa: E501
-        self._accepted_payment_methods = None
-        self._additional_image_urls = None
-        self._additional_shipping_cost_per_unit = None
-        self._age_group = None
-        self._alerts = None
-        self._availability = None
-        self._availability_threshold = None
-        self._availability_threshold_type = None
-        self._brand = None
-        self._buying_options = None
+        self._item_id = None
+        self._title = None
+        self._image_url = None
         self._category = None
         self._category_id = None
-        self._color = None
-        self._condition = None
+        self._buying_options = None
+        self._seller_username = None
+        self._seller_feedback_percentage = None
+        self._seller_feedback_score = None
+        self._gtin = None
+        self._brand = None
+        self._mpn = None
+        self._epid = None
         self._condition_id = None
-        self._default_image_url = None
+        self._condition = None
+        self._price_value = None
+        self._price_currency = None
+        self._primary_item_group_id = None
+        self._primary_item_group_type = None
+        self._item_end_date = None
+        self._seller_item_revision = None
+        self._item_location_country = None
+        self._localized_aspects = None
+        self._seller_trust_level = None
+        self._availability = None
+        self._image_altering_prohibited = None
+        self._estimated_available_quantity = None
+        self._availability_threshold_type = None
+        self._availability_threshold = None
+        self._returns_accepted = None
+        self._return_period_value = None
+        self._return_period_unit = None
+        self._refund_method = None
+        self._return_method = None
+        self._return_shipping_cost_payer = None
+        self._accepted_payment_methods = None
         self._delivery_options = None
+        self._ship_to_included_regions = None
+        self._ship_to_excluded_regions = None
+        self._inferred_epid = None
+        self._inferred_gtin = None
+        self._inferred_brand = None
+        self._inferred_mpn = None
+        self._inferred_localized_aspects = None
+        self._additional_image_urls = None
+        self._original_price_value = None
+        self._original_price_currency = None
         self._discount_amount = None
         self._discount_percentage = None
         self._energy_efficiency_class = None
-        self._epid = None
-        self._estimated_available_quantity = None
-        self._gender = None
-        self._gtin = None
-        self._image_altering_prohibited = None
-        self._image_url = None
-        self._inferred_brand = None
-        self._inferred_epid = None
-        self._inferred_gtin = None
-        self._inferred_localized_aspects = None
-        self._inferred_mpn = None
-        self._item_affiliate_web_url = None
-        self._item_creation_date = None
-        self._item_end_date = None
-        self._item_id = None
-        self._item_location_country = None
-        self._item_web_url = None
-        self._legacy_item_id = None
-        self._length_unit_of_measure = None
-        self._localized_aspects = None
+        self._qualified_programs = None
         self._lot_size = None
-        self._material = None
-        self._mpn = None
-        self._original_price_currency = None
-        self._original_price_value = None
+        self._length_unit_of_measure = None
+        self._package_width = None
         self._package_height = None
         self._package_length = None
+        self._weight_unit_of_measure = None
         self._package_weight = None
-        self._package_width = None
-        self._pattern = None
-        self._price_currency = None
-        self._price_value = None
-        self._primary_item_group_id = None
-        self._primary_item_group_type = None
-        self._priority_listing_payload = None
-        self._qualified_programs = None
-        self._quantity_used_for_estimate = None
-        self._refund_method = None
-        self._return_method = None
-        self._return_period_unit = None
-        self._return_period_value = None
-        self._return_shipping_cost_payer = None
-        self._returns_accepted = None
-        self._seller_account_type = None
-        self._seller_feedback_percentage = None
-        self._seller_feedback_score = None
-        self._seller_item_revision = None
-        self._seller_trust_level = None
-        self._seller_username = None
-        self._ship_to_excluded_regions = None
-        self._ship_to_included_regions = None
         self._shipping_carrier_code = None
-        self._shipping_cost = None
-        self._shipping_cost_type = None
         self._shipping_service_code = None
         self._shipping_type = None
-        self._size = None
-        self._title = None
-        self._total_units = None
-        self._tyre_label_image_url = None
+        self._shipping_cost = None
+        self._shipping_cost_type = None
+        self._additional_shipping_cost_per_unit = None
+        self._quantity_used_for_estimate = None
         self._unit_price = None
         self._unit_pricing_measure = None
-        self._weight_unit_of_measure = None
+        self._legacy_item_id = None
+        self._alerts = None
+        self._seller_account_type = None
+        self._tyre_label_image_url = None
+        self._priority_listing_payload = None
+        self._item_creation_date = None
+        self._item_web_url = None
+        self._default_image_url = None
+        self._item_affiliate_web_url = None
+        self._age_group = None
+        self._color = None
+        self._pattern = None
+        self._size = None
+        self._gender = None
+        self._material = None
+        self._total_units = None
         self.discriminator = None
-        if accepted_payment_methods is not None:
-            self.accepted_payment_methods = accepted_payment_methods
-        if additional_image_urls is not None:
-            self.additional_image_urls = additional_image_urls
-        if additional_shipping_cost_per_unit is not None:
-            self.additional_shipping_cost_per_unit = additional_shipping_cost_per_unit
-        if age_group is not None:
-            self.age_group = age_group
-        if alerts is not None:
-            self.alerts = alerts
-        if availability is not None:
-            self.availability = availability
-        if availability_threshold is not None:
-            self.availability_threshold = availability_threshold
-        if availability_threshold_type is not None:
-            self.availability_threshold_type = availability_threshold_type
-        if brand is not None:
-            self.brand = brand
-        if buying_options is not None:
-            self.buying_options = buying_options
+        if item_id is not None:
+            self.item_id = item_id
+        if title is not None:
+            self.title = title
+        if image_url is not None:
+            self.image_url = image_url
         if category is not None:
             self.category = category
         if category_id is not None:
             self.category_id = category_id
-        if color is not None:
-            self.color = color
-        if condition is not None:
-            self.condition = condition
+        if buying_options is not None:
+            self.buying_options = buying_options
+        if seller_username is not None:
+            self.seller_username = seller_username
+        if seller_feedback_percentage is not None:
+            self.seller_feedback_percentage = seller_feedback_percentage
+        if seller_feedback_score is not None:
+            self.seller_feedback_score = seller_feedback_score
+        if gtin is not None:
+            self.gtin = gtin
+        if brand is not None:
+            self.brand = brand
+        if mpn is not None:
+            self.mpn = mpn
+        if epid is not None:
+            self.epid = epid
         if condition_id is not None:
             self.condition_id = condition_id
-        if default_image_url is not None:
-            self.default_image_url = default_image_url
+        if condition is not None:
+            self.condition = condition
+        if price_value is not None:
+            self.price_value = price_value
+        if price_currency is not None:
+            self.price_currency = price_currency
+        if primary_item_group_id is not None:
+            self.primary_item_group_id = primary_item_group_id
+        if primary_item_group_type is not None:
+            self.primary_item_group_type = primary_item_group_type
+        if item_end_date is not None:
+            self.item_end_date = item_end_date
+        if seller_item_revision is not None:
+            self.seller_item_revision = seller_item_revision
+        if item_location_country is not None:
+            self.item_location_country = item_location_country
+        if localized_aspects is not None:
+            self.localized_aspects = localized_aspects
+        if seller_trust_level is not None:
+            self.seller_trust_level = seller_trust_level
+        if availability is not None:
+            self.availability = availability
+        if image_altering_prohibited is not None:
+            self.image_altering_prohibited = image_altering_prohibited
+        if estimated_available_quantity is not None:
+            self.estimated_available_quantity = estimated_available_quantity
+        if availability_threshold_type is not None:
+            self.availability_threshold_type = availability_threshold_type
+        if availability_threshold is not None:
+            self.availability_threshold = availability_threshold
+        if returns_accepted is not None:
+            self.returns_accepted = returns_accepted
+        if return_period_value is not None:
+            self.return_period_value = return_period_value
+        if return_period_unit is not None:
+            self.return_period_unit = return_period_unit
+        if refund_method is not None:
+            self.refund_method = refund_method
+        if return_method is not None:
+            self.return_method = return_method
+        if return_shipping_cost_payer is not None:
+            self.return_shipping_cost_payer = return_shipping_cost_payer
+        if accepted_payment_methods is not None:
+            self.accepted_payment_methods = accepted_payment_methods
         if delivery_options is not None:
             self.delivery_options = delivery_options
+        if ship_to_included_regions is not None:
+            self.ship_to_included_regions = ship_to_included_regions
+        if ship_to_excluded_regions is not None:
+            self.ship_to_excluded_regions = ship_to_excluded_regions
+        if inferred_epid is not None:
+            self.inferred_epid = inferred_epid
+        if inferred_gtin is not None:
+            self.inferred_gtin = inferred_gtin
+        if inferred_brand is not None:
+            self.inferred_brand = inferred_brand
+        if inferred_mpn is not None:
+            self.inferred_mpn = inferred_mpn
+        if inferred_localized_aspects is not None:
+            self.inferred_localized_aspects = inferred_localized_aspects
+        if additional_image_urls is not None:
+            self.additional_image_urls = additional_image_urls
+        if original_price_value is not None:
+            self.original_price_value = original_price_value
+        if original_price_currency is not None:
+            self.original_price_currency = original_price_currency
         if discount_amount is not None:
             self.discount_amount = discount_amount
         if discount_percentage is not None:
             self.discount_percentage = discount_percentage
         if energy_efficiency_class is not None:
             self.energy_efficiency_class = energy_efficiency_class
-        if epid is not None:
-            self.epid = epid
-        if estimated_available_quantity is not None:
-            self.estimated_available_quantity = estimated_available_quantity
-        if gender is not None:
-            self.gender = gender
-        if gtin is not None:
-            self.gtin = gtin
-        if image_altering_prohibited is not None:
-            self.image_altering_prohibited = image_altering_prohibited
-        if image_url is not None:
-            self.image_url = image_url
-        if inferred_brand is not None:
-            self.inferred_brand = inferred_brand
-        if inferred_epid is not None:
-            self.inferred_epid = inferred_epid
-        if inferred_gtin is not None:
-            self.inferred_gtin = inferred_gtin
-        if inferred_localized_aspects is not None:
-            self.inferred_localized_aspects = inferred_localized_aspects
-        if inferred_mpn is not None:
-            self.inferred_mpn = inferred_mpn
-        if item_affiliate_web_url is not None:
-            self.item_affiliate_web_url = item_affiliate_web_url
-        if item_creation_date is not None:
-            self.item_creation_date = item_creation_date
-        if item_end_date is not None:
-            self.item_end_date = item_end_date
-        if item_id is not None:
-            self.item_id = item_id
-        if item_location_country is not None:
-            self.item_location_country = item_location_country
-        if item_web_url is not None:
-            self.item_web_url = item_web_url
-        if legacy_item_id is not None:
-            self.legacy_item_id = legacy_item_id
-        if length_unit_of_measure is not None:
-            self.length_unit_of_measure = length_unit_of_measure
-        if localized_aspects is not None:
-            self.localized_aspects = localized_aspects
+        if qualified_programs is not None:
+            self.qualified_programs = qualified_programs
         if lot_size is not None:
             self.lot_size = lot_size
-        if material is not None:
-            self.material = material
-        if mpn is not None:
-            self.mpn = mpn
-        if original_price_currency is not None:
-            self.original_price_currency = original_price_currency
-        if original_price_value is not None:
-            self.original_price_value = original_price_value
+        if length_unit_of_measure is not None:
+            self.length_unit_of_measure = length_unit_of_measure
+        if package_width is not None:
+            self.package_width = package_width
         if package_height is not None:
             self.package_height = package_height
         if package_length is not None:
             self.package_length = package_length
+        if weight_unit_of_measure is not None:
+            self.weight_unit_of_measure = weight_unit_of_measure
         if package_weight is not None:
             self.package_weight = package_weight
-        if package_width is not None:
-            self.package_width = package_width
-        if pattern is not None:
-            self.pattern = pattern
-        if price_currency is not None:
-            self.price_currency = price_currency
-        if price_value is not None:
-            self.price_value = price_value
-        if primary_item_group_id is not None:
-            self.primary_item_group_id = primary_item_group_id
-        if primary_item_group_type is not None:
-            self.primary_item_group_type = primary_item_group_type
-        if priority_listing_payload is not None:
-            self.priority_listing_payload = priority_listing_payload
-        if qualified_programs is not None:
-            self.qualified_programs = qualified_programs
-        if quantity_used_for_estimate is not None:
-            self.quantity_used_for_estimate = quantity_used_for_estimate
-        if refund_method is not None:
-            self.refund_method = refund_method
-        if return_method is not None:
-            self.return_method = return_method
-        if return_period_unit is not None:
-            self.return_period_unit = return_period_unit
-        if return_period_value is not None:
-            self.return_period_value = return_period_value
-        if return_shipping_cost_payer is not None:
-            self.return_shipping_cost_payer = return_shipping_cost_payer
-        if returns_accepted is not None:
-            self.returns_accepted = returns_accepted
-        if seller_account_type is not None:
-            self.seller_account_type = seller_account_type
-        if seller_feedback_percentage is not None:
-            self.seller_feedback_percentage = seller_feedback_percentage
-        if seller_feedback_score is not None:
-            self.seller_feedback_score = seller_feedback_score
-        if seller_item_revision is not None:
-            self.seller_item_revision = seller_item_revision
-        if seller_trust_level is not None:
-            self.seller_trust_level = seller_trust_level
-        if seller_username is not None:
-            self.seller_username = seller_username
-        if ship_to_excluded_regions is not None:
-            self.ship_to_excluded_regions = ship_to_excluded_regions
-        if ship_to_included_regions is not None:
-            self.ship_to_included_regions = ship_to_included_regions
         if shipping_carrier_code is not None:
             self.shipping_carrier_code = shipping_carrier_code
-        if shipping_cost is not None:
-            self.shipping_cost = shipping_cost
-        if shipping_cost_type is not None:
-            self.shipping_cost_type = shipping_cost_type
         if shipping_service_code is not None:
             self.shipping_service_code = shipping_service_code
         if shipping_type is not None:
             self.shipping_type = shipping_type
-        if size is not None:
-            self.size = size
-        if title is not None:
-            self.title = title
-        if total_units is not None:
-            self.total_units = total_units
-        if tyre_label_image_url is not None:
-            self.tyre_label_image_url = tyre_label_image_url
+        if shipping_cost is not None:
+            self.shipping_cost = shipping_cost
+        if shipping_cost_type is not None:
+            self.shipping_cost_type = shipping_cost_type
+        if additional_shipping_cost_per_unit is not None:
+            self.additional_shipping_cost_per_unit = additional_shipping_cost_per_unit
+        if quantity_used_for_estimate is not None:
+            self.quantity_used_for_estimate = quantity_used_for_estimate
         if unit_price is not None:
             self.unit_price = unit_price
         if unit_pricing_measure is not None:
             self.unit_pricing_measure = unit_pricing_measure
-        if weight_unit_of_measure is not None:
-            self.weight_unit_of_measure = weight_unit_of_measure
+        if legacy_item_id is not None:
+            self.legacy_item_id = legacy_item_id
+        if alerts is not None:
+            self.alerts = alerts
+        if seller_account_type is not None:
+            self.seller_account_type = seller_account_type
+        if tyre_label_image_url is not None:
+            self.tyre_label_image_url = tyre_label_image_url
+        if priority_listing_payload is not None:
+            self.priority_listing_payload = priority_listing_payload
+        if item_creation_date is not None:
+            self.item_creation_date = item_creation_date
+        if item_web_url is not None:
+            self.item_web_url = item_web_url
+        if default_image_url is not None:
+            self.default_image_url = default_image_url
+        if item_affiliate_web_url is not None:
+            self.item_affiliate_web_url = item_affiliate_web_url
+        if age_group is not None:
+            self.age_group = age_group
+        if color is not None:
+            self.color = color
+        if pattern is not None:
+            self.pattern = pattern
+        if size is not None:
+            self.size = size
+        if gender is not None:
+            self.gender = gender
+        if material is not None:
+            self.material = material
+        if total_units is not None:
+            self.total_units = total_units
 
     @property
-    def accepted_payment_methods(self):
-        """Gets the accepted_payment_methods of this Item.  # noqa: E501
+    def item_id(self):
+        """Gets the item_id of this Item.  # noqa: E501
 
-        Indicates the credit card service that will be used to process the transaction. If this column contains PAYPAL, you can use the Buy Order API to checkout and purchase the item. If this column is empty, you must use another method for checkout.  # noqa: E501
+        The unique identifier of an item in eBay RESTful format. An example would be <code>v1|1**********2|4**********2</code>.  # noqa: E501
 
-        :return: The accepted_payment_methods of this Item.  # noqa: E501
+        :return: The item_id of this Item.  # noqa: E501
         :rtype: str
         """
-        return self._accepted_payment_methods
+        return self._item_id
 
-    @accepted_payment_methods.setter
-    def accepted_payment_methods(self, accepted_payment_methods):
-        """Sets the accepted_payment_methods of this Item.
+    @item_id.setter
+    def item_id(self, item_id):
+        """Sets the item_id of this Item.
 
-        Indicates the credit card service that will be used to process the transaction. If this column contains PAYPAL, you can use the Buy Order API to checkout and purchase the item. If this column is empty, you must use another method for checkout.  # noqa: E501
+        The unique identifier of an item in eBay RESTful format. An example would be <code>v1|1**********2|4**********2</code>.  # noqa: E501
 
-        :param accepted_payment_methods: The accepted_payment_methods of this Item.  # noqa: E501
+        :param item_id: The item_id of this Item.  # noqa: E501
         :type: str
         """
 
-        self._accepted_payment_methods = accepted_payment_methods
+        self._item_id = item_id
 
     @property
-    def additional_image_urls(self):
-        """Gets the additional_image_urls of this Item.  # noqa: E501
+    def title(self):
+        """Gets the title of this Item.  # noqa: E501
 
-        A pipe separated (|) list of URLs for the additional images of the item. These images are in addition to the primary image, which is returned in the imageUrl column. Note: This column can contain multiple values.  # noqa: E501
+        The seller created title of the item. This text is an escaped string when special characters are present, using the following rules:</p>   <ul>      <li>Double quotes (&#34;) and backslashes (&#92;) in the Title are escaped with a backslash (&#92;) character</li>      <li>If there are any tabs (&#92;t), double quotes (&#34;), or backslashes (&#92;) in the Title, the entire Title will be wrapped in double quotes.</li>   </ul>   <p><b>For example</b></p>   <p>Before:</p>   <p><code>Misty Rainforest Modern Masters 2017 MTG Magic Fetch Land Free Ship W<b>&#92;</b>Tracking</code>   </p>   <p><code>Marvel Legends HULK 8<b>&#34;</b> Figure Avengers Age of Ultron Studios 6<b>&#34;</b> Series</code>   </p>   <p>After:</p>   <p><code>&#34;Misty Rainforest Modern Masters 2017 MTG Magic Fetch Land Free Ship W<b>&#92;&#92;</b> Tracking&#34;</code>   </p>   <p><code>&#34;Marvel Legends HULK 8<b>&#92;&#34;</b> Figure Avengers Age of Ultron Studios 6<b>&#92;&#34;</b> Series<b>&#34;</b> </code>   </p>  # noqa: E501
 
-        :return: The additional_image_urls of this Item.  # noqa: E501
+        :return: The title of this Item.  # noqa: E501
         :rtype: str
         """
-        return self._additional_image_urls
+        return self._title
 
-    @additional_image_urls.setter
-    def additional_image_urls(self, additional_image_urls):
-        """Sets the additional_image_urls of this Item.
+    @title.setter
+    def title(self, title):
+        """Sets the title of this Item.
 
-        A pipe separated (|) list of URLs for the additional images of the item. These images are in addition to the primary image, which is returned in the imageUrl column. Note: This column can contain multiple values.  # noqa: E501
+        The seller created title of the item. This text is an escaped string when special characters are present, using the following rules:</p>   <ul>      <li>Double quotes (&#34;) and backslashes (&#92;) in the Title are escaped with a backslash (&#92;) character</li>      <li>If there are any tabs (&#92;t), double quotes (&#34;), or backslashes (&#92;) in the Title, the entire Title will be wrapped in double quotes.</li>   </ul>   <p><b>For example</b></p>   <p>Before:</p>   <p><code>Misty Rainforest Modern Masters 2017 MTG Magic Fetch Land Free Ship W<b>&#92;</b>Tracking</code>   </p>   <p><code>Marvel Legends HULK 8<b>&#34;</b> Figure Avengers Age of Ultron Studios 6<b>&#34;</b> Series</code>   </p>   <p>After:</p>   <p><code>&#34;Misty Rainforest Modern Masters 2017 MTG Magic Fetch Land Free Ship W<b>&#92;&#92;</b> Tracking&#34;</code>   </p>   <p><code>&#34;Marvel Legends HULK 8<b>&#92;&#34;</b> Figure Avengers Age of Ultron Studios 6<b>&#92;&#34;</b> Series<b>&#34;</b> </code>   </p>  # noqa: E501
 
-        :param additional_image_urls: The additional_image_urls of this Item.  # noqa: E501
+        :param title: The title of this Item.  # noqa: E501
         :type: str
         """
 
-        self._additional_image_urls = additional_image_urls
+        self._title = title
 
     @property
-    def additional_shipping_cost_per_unit(self):
-        """Gets the additional_shipping_cost_per_unit of this Item.  # noqa: E501
+    def image_url(self):
+        """Gets the image_url of this Item.  # noqa: E501
 
-        Any per item additional shipping costs for a multi-item purchase. For example, let's say the shipping cost for a power cord is $3. But for an additional cord, the shipping cost is only $1. So if you bought 3 cords, the shippingCost would be $3 and this value would be $2 ($1 for each additional item).  # noqa: E501
+        The URL to the primary image of the item.  This is the URL of the largest image available based on what the seller submitted.  # noqa: E501
 
-        :return: The additional_shipping_cost_per_unit of this Item.  # noqa: E501
+        :return: The image_url of this Item.  # noqa: E501
         :rtype: str
         """
-        return self._additional_shipping_cost_per_unit
+        return self._image_url
 
-    @additional_shipping_cost_per_unit.setter
-    def additional_shipping_cost_per_unit(self, additional_shipping_cost_per_unit):
-        """Sets the additional_shipping_cost_per_unit of this Item.
+    @image_url.setter
+    def image_url(self, image_url):
+        """Sets the image_url of this Item.
 
-        Any per item additional shipping costs for a multi-item purchase. For example, let's say the shipping cost for a power cord is $3. But for an additional cord, the shipping cost is only $1. So if you bought 3 cords, the shippingCost would be $3 and this value would be $2 ($1 for each additional item).  # noqa: E501
+        The URL to the primary image of the item.  This is the URL of the largest image available based on what the seller submitted.  # noqa: E501
 
-        :param additional_shipping_cost_per_unit: The additional_shipping_cost_per_unit of this Item.  # noqa: E501
+        :param image_url: The image_url of this Item.  # noqa: E501
         :type: str
         """
 
-        self._additional_shipping_cost_per_unit = additional_shipping_cost_per_unit
-
-    @property
-    def age_group(self):
-        """Gets the age_group of this Item.  # noqa: E501
-
-        The age group that the product is recommended for. Valid values: newborn, infant, toddler, kids, adult.  # noqa: E501
-
-        :return: The age_group of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._age_group
-
-    @age_group.setter
-    def age_group(self, age_group):
-        """Sets the age_group of this Item.
-
-        The age group that the product is recommended for. Valid values: newborn, infant, toddler, kids, adult.  # noqa: E501
-
-        :param age_group: The age_group of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._age_group = age_group
-
-    @property
-    def alerts(self):
-        """Gets the alerts of this Item.  # noqa: E501
-
-        A pipe-separated list of alerts available for the item. For example, if the DELAYED_DELIVERY alert was returned for an item, it would indicate a delay in shipping by the seller.  # noqa: E501
-
-        :return: The alerts of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._alerts
-
-    @alerts.setter
-    def alerts(self, alerts):
-        """Sets the alerts of this Item.
-
-        A pipe-separated list of alerts available for the item. For example, if the DELAYED_DELIVERY alert was returned for an item, it would indicate a delay in shipping by the seller.  # noqa: E501
-
-        :param alerts: The alerts of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._alerts = alerts
-
-    @property
-    def availability(self):
-        """Gets the availability of this Item.  # noqa: E501
-
-        An enumeration value representing the item's availability (possibility of being purchased). Values: AVAILABLE TEMPORARILY_UNAVAILABLE UNAVAILABLE Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:AvailabilityEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The availability of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._availability
-
-    @availability.setter
-    def availability(self, availability):
-        """Sets the availability of this Item.
-
-        An enumeration value representing the item's availability (possibility of being purchased). Values: AVAILABLE TEMPORARILY_UNAVAILABLE UNAVAILABLE Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:AvailabilityEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param availability: The availability of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._availability = availability
-
-    @property
-    def availability_threshold(self):
-        """Gets the availability_threshold of this Item.  # noqa: E501
-
-        This column has a value only when the seller sets their 'display item quantity' preference to Display &quot;More than 10 available&quot; in your listing (if applicable). The value of this column will be &quot;10&quot;, which is the threshold value. Code so that your app gracefully handles any future changes to this value.  # noqa: E501
-
-        :return: The availability_threshold of this Item.  # noqa: E501
-        :rtype: int
-        """
-        return self._availability_threshold
-
-    @availability_threshold.setter
-    def availability_threshold(self, availability_threshold):
-        """Sets the availability_threshold of this Item.
-
-        This column has a value only when the seller sets their 'display item quantity' preference to Display &quot;More than 10 available&quot; in your listing (if applicable). The value of this column will be &quot;10&quot;, which is the threshold value. Code so that your app gracefully handles any future changes to this value.  # noqa: E501
-
-        :param availability_threshold: The availability_threshold of this Item.  # noqa: E501
-        :type: int
-        """
-
-        self._availability_threshold = availability_threshold
-
-    @property
-    def availability_threshold_type(self):
-        """Gets the availability_threshold_type of this Item.  # noqa: E501
-
-        This column has a value only when the seller sets their Display Item Quantity preference to Display &quot;More than 10 available&quot; in your listing (if applicable). The value of this column will be MORE_THAN. This indicates that the seller has more than the 'Display Item Quantity', which is 10, in stock for this item. The following are the Display Item Quantity preferences the seller can set. Display &quot;More than 10 available&quot; in your listing (if applicable) If the seller enables this preference, this column will have a value as long as there are more than 10 of this item in inventory. If the quantity is equal to 10 or drops below 10, this column will be null and the estimated quantity of the item is returned in the estimatedAvailableQuantity column. Display the exact quantity in your items If the seller enables this preference, the availabilityThresholdType and availabilityThreshold columns will be null and the estimated quantity of the item is returned in the estimatedAvailableQuantity column. Note: Because the quantity of an item can change several times within a second, it is impossible to return the exact quantity. Code so that your app gracefully handles any future changes to these preferences. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:AvailabilityThresholdEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The availability_threshold_type of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._availability_threshold_type
-
-    @availability_threshold_type.setter
-    def availability_threshold_type(self, availability_threshold_type):
-        """Sets the availability_threshold_type of this Item.
-
-        This column has a value only when the seller sets their Display Item Quantity preference to Display &quot;More than 10 available&quot; in your listing (if applicable). The value of this column will be MORE_THAN. This indicates that the seller has more than the 'Display Item Quantity', which is 10, in stock for this item. The following are the Display Item Quantity preferences the seller can set. Display &quot;More than 10 available&quot; in your listing (if applicable) If the seller enables this preference, this column will have a value as long as there are more than 10 of this item in inventory. If the quantity is equal to 10 or drops below 10, this column will be null and the estimated quantity of the item is returned in the estimatedAvailableQuantity column. Display the exact quantity in your items If the seller enables this preference, the availabilityThresholdType and availabilityThreshold columns will be null and the estimated quantity of the item is returned in the estimatedAvailableQuantity column. Note: Because the quantity of an item can change several times within a second, it is impossible to return the exact quantity. Code so that your app gracefully handles any future changes to these preferences. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:AvailabilityThresholdEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param availability_threshold_type: The availability_threshold_type of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._availability_threshold_type = availability_threshold_type
-
-    @property
-    def brand(self):
-        """Gets the brand of this Item.  # noqa: E501
-
-        The name brand of the item, such as Nike, Apple, etc.  # noqa: E501
-
-        :return: The brand of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._brand
-
-    @brand.setter
-    def brand(self, brand):
-        """Sets the brand of this Item.
-
-        The name brand of the item, such as Nike, Apple, etc.  # noqa: E501
-
-        :param brand: The brand of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._brand = brand
-
-    @property
-    def buying_options(self):
-        """Gets the buying_options of this Item.  # noqa: E501
-
-        A comma separated list of the purchase options available for the item. Currently the only supported option is FIXED_PRICE.  # noqa: E501
-
-        :return: The buying_options of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._buying_options
-
-    @buying_options.setter
-    def buying_options(self, buying_options):
-        """Sets the buying_options of this Item.
-
-        A comma separated list of the purchase options available for the item. Currently the only supported option is FIXED_PRICE.  # noqa: E501
-
-        :param buying_options: The buying_options of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._buying_options = buying_options
+        self._image_url = image_url
 
     @property
     def category(self):
         """Gets the category of this Item.  # noqa: E501
 
-        The label of the category. For example: Toys &amp; Hobbies|Action Figures|Comic Book Heroes  # noqa: E501
+        The label of the category. For example: <b> Toys & Hobbies|Action Figures|Comic Book Heroes </b>  # noqa: E501
 
         :return: The category of this Item.  # noqa: E501
         :rtype: str
@@ -697,7 +536,7 @@ class Item(object):
     def category(self, category):
         """Sets the category of this Item.
 
-        The label of the category. For example: Toys &amp; Hobbies|Action Figures|Comic Book Heroes  # noqa: E501
+        The label of the category. For example: <b> Toys & Hobbies|Action Figures|Comic Book Heroes </b>  # noqa: E501
 
         :param category: The category of this Item.  # noqa: E501
         :type: str
@@ -709,7 +548,7 @@ class Item(object):
     def category_id(self):
         """Gets the category_id of this Item.  # noqa: E501
 
-        The ID of the category of the item. For example: The ID for Toys &amp; Hobbies|Action Figures|Comic Book Heroes is 158671.  # noqa: E501
+        The ID of the category of the item. For example: The ID for Toys & Hobbies|Action Figures|Comic Book Heroes is <code>158671</code>.  # noqa: E501
 
         :return: The category_id of this Item.  # noqa: E501
         :rtype: str
@@ -720,7 +559,7 @@ class Item(object):
     def category_id(self, category_id):
         """Sets the category_id of this Item.
 
-        The ID of the category of the item. For example: The ID for Toys &amp; Hobbies|Action Figures|Comic Book Heroes is 158671.  # noqa: E501
+        The ID of the category of the item. For example: The ID for Toys & Hobbies|Action Figures|Comic Book Heroes is <code>158671</code>.  # noqa: E501
 
         :param category_id: The category_id of this Item.  # noqa: E501
         :type: str
@@ -729,1200 +568,50 @@ class Item(object):
         self._category_id = category_id
 
     @property
-    def color(self):
-        """Gets the color of this Item.  # noqa: E501
+    def buying_options(self):
+        """Gets the buying_options of this Item.  # noqa: E501
 
-        The color of the item.  # noqa: E501
+        A comma separated list of the purchase options available for the item. Currently the only supported option is <code>FIXED_PRICE</code>.  # noqa: E501
 
-        :return: The color of this Item.  # noqa: E501
+        :return: The buying_options of this Item.  # noqa: E501
         :rtype: str
         """
-        return self._color
+        return self._buying_options
 
-    @color.setter
-    def color(self, color):
-        """Sets the color of this Item.
+    @buying_options.setter
+    def buying_options(self, buying_options):
+        """Sets the buying_options of this Item.
 
-        The color of the item.  # noqa: E501
+        A comma separated list of the purchase options available for the item. Currently the only supported option is <code>FIXED_PRICE</code>.  # noqa: E501
 
-        :param color: The color of this Item.  # noqa: E501
+        :param buying_options: The buying_options of this Item.  # noqa: E501
         :type: str
         """
 
-        self._color = color
+        self._buying_options = buying_options
 
     @property
-    def condition(self):
-        """Gets the condition of this Item.  # noqa: E501
+    def seller_username(self):
+        """Gets the seller_username of this Item.  # noqa: E501
 
-        The text describing the condition of the item. For a list of condition names, see Item Condition IDs and Names. Note: As of September 1, 2021, condition ID 2500 ('Seller Refurbished') is no longer a valid item condition in the Cell Phones &amp; Smartphones category (category ID 9355) for the following marketplaces: US, Canada, UK, Germany, and Australia. This refurbished item condition has been replaced by three new refurbished values, which include 'Excellent - Refurbished' (condition ID 2010), 'Very Good - Refurbished' (condition ID 2020), and 'Good - Refurbished' (condition ID 2030).  # noqa: E501
+        The seller's eBay user name.  # noqa: E501
 
-        :return: The condition of this Item.  # noqa: E501
+        :return: The seller_username of this Item.  # noqa: E501
         :rtype: str
         """
-        return self._condition
+        return self._seller_username
 
-    @condition.setter
-    def condition(self, condition):
-        """Sets the condition of this Item.
+    @seller_username.setter
+    def seller_username(self, seller_username):
+        """Sets the seller_username of this Item.
 
-        The text describing the condition of the item. For a list of condition names, see Item Condition IDs and Names. Note: As of September 1, 2021, condition ID 2500 ('Seller Refurbished') is no longer a valid item condition in the Cell Phones &amp; Smartphones category (category ID 9355) for the following marketplaces: US, Canada, UK, Germany, and Australia. This refurbished item condition has been replaced by three new refurbished values, which include 'Excellent - Refurbished' (condition ID 2010), 'Very Good - Refurbished' (condition ID 2020), and 'Good - Refurbished' (condition ID 2030).  # noqa: E501
+        The seller's eBay user name.  # noqa: E501
 
-        :param condition: The condition of this Item.  # noqa: E501
+        :param seller_username: The seller_username of this Item.  # noqa: E501
         :type: str
         """
 
-        self._condition = condition
-
-    @property
-    def condition_id(self):
-        """Gets the condition_id of this Item.  # noqa: E501
-
-        The identifier of the condition of the item. For example, 1000 is the identifier for NEW. For a list of condition names and IDs, see Item Condition IDs and Names. Note: As of September 1, 2021, condition ID 2500 ('Seller Refurbished') is no longer a valid item condition in the Cell Phones &amp; Smartphones category (category ID 9355) for the following marketplaces: US, Canada, UK, Germany, and Australia. This refurbished item condition has been replaced by three new refurbished values, which include 'Excellent - Refurbished' (condition ID 2010), 'Very Good - Refurbished' (condition ID 2020), and 'Good - Refurbished' (condition ID 2030). Code so that your app gracefully handles any future changes to this list.  # noqa: E501
-
-        :return: The condition_id of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._condition_id
-
-    @condition_id.setter
-    def condition_id(self, condition_id):
-        """Sets the condition_id of this Item.
-
-        The identifier of the condition of the item. For example, 1000 is the identifier for NEW. For a list of condition names and IDs, see Item Condition IDs and Names. Note: As of September 1, 2021, condition ID 2500 ('Seller Refurbished') is no longer a valid item condition in the Cell Phones &amp; Smartphones category (category ID 9355) for the following marketplaces: US, Canada, UK, Germany, and Australia. This refurbished item condition has been replaced by three new refurbished values, which include 'Excellent - Refurbished' (condition ID 2010), 'Very Good - Refurbished' (condition ID 2020), and 'Good - Refurbished' (condition ID 2030). Code so that your app gracefully handles any future changes to this list.  # noqa: E501
-
-        :param condition_id: The condition_id of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._condition_id = condition_id
-
-    @property
-    def default_image_url(self):
-        """Gets the default_image_url of this Item.  # noqa: E501
-
-        URL to the gallery or default image of the item. The other images of the item are returned in the additionalImageUrls field. For example https://i.ebayimg.com/00/s/M********w/z/W********p/$_1.JPG?set_id=8********F  # noqa: E501
-
-        :return: The default_image_url of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._default_image_url
-
-    @default_image_url.setter
-    def default_image_url(self, default_image_url):
-        """Sets the default_image_url of this Item.
-
-        URL to the gallery or default image of the item. The other images of the item are returned in the additionalImageUrls field. For example https://i.ebayimg.com/00/s/M********w/z/W********p/$_1.JPG?set_id=8********F  # noqa: E501
-
-        :param default_image_url: The default_image_url of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._default_image_url = default_image_url
-
-    @property
-    def delivery_options(self):
-        """Gets the delivery_options of this Item.  # noqa: E501
-
-        A comma-separated list of available delivery options. This column lets you filter out items than cannot be shipped to the buyer. Valid Values: SHIP_TO_HOME, SELLER_ARRANGED_LOCAL_PICKUP, IN_STORE_PICKUP, and PICKUP_DROP_OFF. Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:DeliveryOptionsEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The delivery_options of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._delivery_options
-
-    @delivery_options.setter
-    def delivery_options(self, delivery_options):
-        """Sets the delivery_options of this Item.
-
-        A comma-separated list of available delivery options. This column lets you filter out items than cannot be shipped to the buyer. Valid Values: SHIP_TO_HOME, SELLER_ARRANGED_LOCAL_PICKUP, IN_STORE_PICKUP, and PICKUP_DROP_OFF. Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:DeliveryOptionsEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param delivery_options: The delivery_options of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._delivery_options = delivery_options
-
-    @property
-    def discount_amount(self):
-        """Gets the discount_amount of this Item.  # noqa: E501
-
-        The calculated amount of the discount (originalPriceValue - priceValue). For example, if originalPriceValue is 70 and priceValue is 56, this value would be 14. Note: The currency shown in originalPriceCurrency is used for both discountAmount and originalPriceCurrency.  # noqa: E501
-
-        :return: The discount_amount of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._discount_amount
-
-    @discount_amount.setter
-    def discount_amount(self, discount_amount):
-        """Sets the discount_amount of this Item.
-
-        The calculated amount of the discount (originalPriceValue - priceValue). For example, if originalPriceValue is 70 and priceValue is 56, this value would be 14. Note: The currency shown in originalPriceCurrency is used for both discountAmount and originalPriceCurrency.  # noqa: E501
-
-        :param discount_amount: The discount_amount of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._discount_amount = discount_amount
-
-    @property
-    def discount_percentage(self):
-        """Gets the discount_percentage of this Item.  # noqa: E501
-
-        The calculated discount percentage. For example, if originalPriceValue is 70 and discountAmount is 14, this value will be 20.  # noqa: E501
-
-        :return: The discount_percentage of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._discount_percentage
-
-    @discount_percentage.setter
-    def discount_percentage(self, discount_percentage):
-        """Sets the discount_percentage of this Item.
-
-        The calculated discount percentage. For example, if originalPriceValue is 70 and discountAmount is 14, this value will be 20.  # noqa: E501
-
-        :param discount_percentage: The discount_percentage of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._discount_percentage = discount_percentage
-
-    @property
-    def energy_efficiency_class(self):
-        """Gets the energy_efficiency_class of this Item.  # noqa: E501
-
-        Indicates the European energy efficiency rating (EEK) of the item. Data is returned in this column only if the seller specified the energy efficiency rating. The rating is a set of energy efficiency classes from A to G, where 'A' is the most energy efficient and 'G' is the least efficient. This rating helps buyers choose between various models. To retrieve the manufacturer's specifications for this item, when they are available, use the getItem method in the Browse API. The information is returned in the productFicheWebUrl field.  # noqa: E501
-
-        :return: The energy_efficiency_class of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._energy_efficiency_class
-
-    @energy_efficiency_class.setter
-    def energy_efficiency_class(self, energy_efficiency_class):
-        """Sets the energy_efficiency_class of this Item.
-
-        Indicates the European energy efficiency rating (EEK) of the item. Data is returned in this column only if the seller specified the energy efficiency rating. The rating is a set of energy efficiency classes from A to G, where 'A' is the most energy efficient and 'G' is the least efficient. This rating helps buyers choose between various models. To retrieve the manufacturer's specifications for this item, when they are available, use the getItem method in the Browse API. The information is returned in the productFicheWebUrl field.  # noqa: E501
-
-        :param energy_efficiency_class: The energy_efficiency_class of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._energy_efficiency_class = energy_efficiency_class
-
-    @property
-    def epid(self):
-        """Gets the epid of this Item.  # noqa: E501
-
-        The eBay product identifier of a product from the eBay product catalog. You can use this value in the Browse API search method to retrieve items for this product and in the Marketing API methods to retrieve 'also viewed' and 'also bought' products to encourage up-selling and cross-selling.  # noqa: E501
-
-        :return: The epid of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._epid
-
-    @epid.setter
-    def epid(self, epid):
-        """Sets the epid of this Item.
-
-        The eBay product identifier of a product from the eBay product catalog. You can use this value in the Browse API search method to retrieve items for this product and in the Marketing API methods to retrieve 'also viewed' and 'also bought' products to encourage up-selling and cross-selling.  # noqa: E501
-
-        :param epid: The epid of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._epid = epid
-
-    @property
-    def estimated_available_quantity(self):
-        """Gets the estimated_available_quantity of this Item.  # noqa: E501
-
-        The estimated number of this item that are available for purchase. Because the quantity of an item can change several times within a second, it is impossible to return the exact quantity. So instead of returning quantity, the estimated availability of the item is returned.  # noqa: E501
-
-        :return: The estimated_available_quantity of this Item.  # noqa: E501
-        :rtype: int
-        """
-        return self._estimated_available_quantity
-
-    @estimated_available_quantity.setter
-    def estimated_available_quantity(self, estimated_available_quantity):
-        """Sets the estimated_available_quantity of this Item.
-
-        The estimated number of this item that are available for purchase. Because the quantity of an item can change several times within a second, it is impossible to return the exact quantity. So instead of returning quantity, the estimated availability of the item is returned.  # noqa: E501
-
-        :param estimated_available_quantity: The estimated_available_quantity of this Item.  # noqa: E501
-        :type: int
-        """
-
-        self._estimated_available_quantity = estimated_available_quantity
-
-    @property
-    def gender(self):
-        """Gets the gender of this Item.  # noqa: E501
-
-        In cases where items could vary by gender, this specifies which gender the product is for. Valid values: male, female, unisex.  # noqa: E501
-
-        :return: The gender of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._gender
-
-    @gender.setter
-    def gender(self, gender):
-        """Sets the gender of this Item.
-
-        In cases where items could vary by gender, this specifies which gender the product is for. Valid values: male, female, unisex.  # noqa: E501
-
-        :param gender: The gender of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._gender = gender
-
-    @property
-    def gtin(self):
-        """Gets the gtin of this Item.  # noqa: E501
-
-        The unique Global Trade Item Number of the item as defined by https://www.gtin.info. This can be a UPC (Universal Product Code), EAN (European Article Number), or an ISBN (International Standard Book Number) value.  # noqa: E501
-
-        :return: The gtin of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._gtin
-
-    @gtin.setter
-    def gtin(self, gtin):
-        """Sets the gtin of this Item.
-
-        The unique Global Trade Item Number of the item as defined by https://www.gtin.info. This can be a UPC (Universal Product Code), EAN (European Article Number), or an ISBN (International Standard Book Number) value.  # noqa: E501
-
-        :param gtin: The gtin of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._gtin = gtin
-
-    @property
-    def image_altering_prohibited(self):
-        """Gets the image_altering_prohibited of this Item.  # noqa: E501
-
-        A boolean that indicates whether the images can be altered. If the value is true, you cannot modify the image. Note: Due to image licensing agreements and other legal concerns, modification (including resizing) of some images is strictly prohibited. These images are for display as-is only.  # noqa: E501
-
-        :return: The image_altering_prohibited of this Item.  # noqa: E501
-        :rtype: bool
-        """
-        return self._image_altering_prohibited
-
-    @image_altering_prohibited.setter
-    def image_altering_prohibited(self, image_altering_prohibited):
-        """Sets the image_altering_prohibited of this Item.
-
-        A boolean that indicates whether the images can be altered. If the value is true, you cannot modify the image. Note: Due to image licensing agreements and other legal concerns, modification (including resizing) of some images is strictly prohibited. These images are for display as-is only.  # noqa: E501
-
-        :param image_altering_prohibited: The image_altering_prohibited of this Item.  # noqa: E501
-        :type: bool
-        """
-
-        self._image_altering_prohibited = image_altering_prohibited
-
-    @property
-    def image_url(self):
-        """Gets the image_url of this Item.  # noqa: E501
-
-        The URL to the primary image of the item. This is the URL of the largest image available based on what the seller submitted.  # noqa: E501
-
-        :return: The image_url of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._image_url
-
-    @image_url.setter
-    def image_url(self, image_url):
-        """Sets the image_url of this Item.
-
-        The URL to the primary image of the item. This is the URL of the largest image available based on what the seller submitted.  # noqa: E501
-
-        :param image_url: The image_url of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._image_url = image_url
-
-    @property
-    def inferred_brand(self):
-        """Gets the inferred_brand of this Item.  # noqa: E501
-
-        The name brand for the item, such as Nike or Apple, which has been programmatically determined by eBay. To identify the product, this is always used along with MPN. If the seller provided a brand for the item, the seller's value is returned in the brand column.  # noqa: E501
-
-        :return: The inferred_brand of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._inferred_brand
-
-    @inferred_brand.setter
-    def inferred_brand(self, inferred_brand):
-        """Sets the inferred_brand of this Item.
-
-        The name brand for the item, such as Nike or Apple, which has been programmatically determined by eBay. To identify the product, this is always used along with MPN. If the seller provided a brand for the item, the seller's value is returned in the brand column.  # noqa: E501
-
-        :param inferred_brand: The inferred_brand of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._inferred_brand = inferred_brand
-
-    @property
-    def inferred_epid(self):
-        """Gets the inferred_epid of this Item.  # noqa: E501
-
-        The ePID (eBay Product ID of a product in the eBay product catalog) for the item, which has been programmatically determined by eBay using the item's title, aspects, and other data. If the seller actually provided an ePID at listing time for the item, the ePID value is returned in the epid column instead.  # noqa: E501
-
-        :return: The inferred_epid of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._inferred_epid
-
-    @inferred_epid.setter
-    def inferred_epid(self, inferred_epid):
-        """Sets the inferred_epid of this Item.
-
-        The ePID (eBay Product ID of a product in the eBay product catalog) for the item, which has been programmatically determined by eBay using the item's title, aspects, and other data. If the seller actually provided an ePID at listing time for the item, the ePID value is returned in the epid column instead.  # noqa: E501
-
-        :param inferred_epid: The inferred_epid of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._inferred_epid = inferred_epid
-
-    @property
-    def inferred_gtin(self):
-        """Gets the inferred_gtin of this Item.  # noqa: E501
-
-        The GTIN (Global Trade Item Number) of the product as defined by https://www.gtin.info, which as been programmatically determined by eBay. This can be a UPC (Universal Product Code), EAN (European Article Number), or an ISBN (International Standard Book Number) value. If the seller provided a GTIN for the item, the seller's value is returned in the gtin column.  # noqa: E501
-
-        :return: The inferred_gtin of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._inferred_gtin
-
-    @inferred_gtin.setter
-    def inferred_gtin(self, inferred_gtin):
-        """Sets the inferred_gtin of this Item.
-
-        The GTIN (Global Trade Item Number) of the product as defined by https://www.gtin.info, which as been programmatically determined by eBay. This can be a UPC (Universal Product Code), EAN (European Article Number), or an ISBN (International Standard Book Number) value. If the seller provided a GTIN for the item, the seller's value is returned in the gtin column.  # noqa: E501
-
-        :param inferred_gtin: The inferred_gtin of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._inferred_gtin = inferred_gtin
-
-    @property
-    def inferred_localized_aspects(self):
-        """Gets the inferred_localized_aspects of this Item.  # noqa: E501
-
-        A semicolon separated list of the name/value pairs for the aspects of the item, which are BASE64 encoded. These aspects have been programmatically determined by eBay. If the seller provided aspects for the item, the seller's values are returned in the localizedAspects column. The aspect label is separated by a pipe (|), the aspect name and value are separated by a colon (:) and the name/value pairs are separated by a semicolon (;). Example without Label &nbsp;&nbsp; Encoded Format: &nbsp;&nbsp;&nbsp;encodedName:encodedValue;encodedName:encodedValue;encodedName:encodedValue &nbsp;&nbsp; Encoded Example (The delimiters are emphasized): &nbsp;&nbsp;&nbsp;U2l6ZQ==:WEw=;Q29sb3I=:UmVk;U2xlZXZlcw==:TG9uZw== &nbsp;&nbsp; Decoded: &nbsp;&nbsp;&nbsp;Size:XL;Color:Red;Sleeves:Long Example with Label &nbsp;&nbsp; Encoded Format: &nbsp;&nbsp;&nbsp;encodedLabel|encodedName:encodedValue;encodedName:encodedValue;encodedLabel| &nbsp;&nbsp; Encoded Example (The delimiters are emphasized): &nbsp;&nbsp;&nbsp;UHJvZHVjdCBJZGVudGlmaWVycw==|R1RJTg==:MDE5MDE5ODA2NjYzMw==;QlJBTkQ=:QXBwbGU=;UHJvZHVjdCBLZXkgRmVhdHVyZXM=|TW9kZWw=:aVBob25lIDc= &nbsp;&nbsp; Decoded: &nbsp;&nbsp;&nbsp;Product Identifiers|GTIN:0190198066633;BRAND:Apple;Product Key Features|Model:iPhone 7 Note: The separators ( | : ; ) are not encoded. You must decode each label, name, and value separately. You cannot decode the entire string. For more information, see Encoded Aspects in the Buying Integration Guide.  # noqa: E501
-
-        :return: The inferred_localized_aspects of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._inferred_localized_aspects
-
-    @inferred_localized_aspects.setter
-    def inferred_localized_aspects(self, inferred_localized_aspects):
-        """Sets the inferred_localized_aspects of this Item.
-
-        A semicolon separated list of the name/value pairs for the aspects of the item, which are BASE64 encoded. These aspects have been programmatically determined by eBay. If the seller provided aspects for the item, the seller's values are returned in the localizedAspects column. The aspect label is separated by a pipe (|), the aspect name and value are separated by a colon (:) and the name/value pairs are separated by a semicolon (;). Example without Label &nbsp;&nbsp; Encoded Format: &nbsp;&nbsp;&nbsp;encodedName:encodedValue;encodedName:encodedValue;encodedName:encodedValue &nbsp;&nbsp; Encoded Example (The delimiters are emphasized): &nbsp;&nbsp;&nbsp;U2l6ZQ==:WEw=;Q29sb3I=:UmVk;U2xlZXZlcw==:TG9uZw== &nbsp;&nbsp; Decoded: &nbsp;&nbsp;&nbsp;Size:XL;Color:Red;Sleeves:Long Example with Label &nbsp;&nbsp; Encoded Format: &nbsp;&nbsp;&nbsp;encodedLabel|encodedName:encodedValue;encodedName:encodedValue;encodedLabel| &nbsp;&nbsp; Encoded Example (The delimiters are emphasized): &nbsp;&nbsp;&nbsp;UHJvZHVjdCBJZGVudGlmaWVycw==|R1RJTg==:MDE5MDE5ODA2NjYzMw==;QlJBTkQ=:QXBwbGU=;UHJvZHVjdCBLZXkgRmVhdHVyZXM=|TW9kZWw=:aVBob25lIDc= &nbsp;&nbsp; Decoded: &nbsp;&nbsp;&nbsp;Product Identifiers|GTIN:0190198066633;BRAND:Apple;Product Key Features|Model:iPhone 7 Note: The separators ( | : ; ) are not encoded. You must decode each label, name, and value separately. You cannot decode the entire string. For more information, see Encoded Aspects in the Buying Integration Guide.  # noqa: E501
-
-        :param inferred_localized_aspects: The inferred_localized_aspects of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._inferred_localized_aspects = inferred_localized_aspects
-
-    @property
-    def inferred_mpn(self):
-        """Gets the inferred_mpn of this Item.  # noqa: E501
-
-        The MPN (Manufacturer's Part Number) for the item, which has been programmatically determined by eBay. To identify the product, this is always used along with brand. If the seller provided a MPN for the item, the seller's value is returned in the mpn column.  # noqa: E501
-
-        :return: The inferred_mpn of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._inferred_mpn
-
-    @inferred_mpn.setter
-    def inferred_mpn(self, inferred_mpn):
-        """Sets the inferred_mpn of this Item.
-
-        The MPN (Manufacturer's Part Number) for the item, which has been programmatically determined by eBay. To identify the product, this is always used along with brand. If the seller provided a MPN for the item, the seller's value is returned in the mpn column.  # noqa: E501
-
-        :param inferred_mpn: The inferred_mpn of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._inferred_mpn = inferred_mpn
-
-    @property
-    def item_affiliate_web_url(self):
-        """Gets the item_affiliate_web_url of this Item.  # noqa: E501
-
-        The URL of the View Item page of the item, with the affiliate tracking ID appended to it. For example https://www.ebay.de/itm/2********0?mkevt=1&amp;mkcid=1&amp;mkrid=707-53477-19255-0&amp;campid=CAMPAIGNID&amp;toolid=2***6&amp;customid=CUSTOMID  # noqa: E501
-
-        :return: The item_affiliate_web_url of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._item_affiliate_web_url
-
-    @item_affiliate_web_url.setter
-    def item_affiliate_web_url(self, item_affiliate_web_url):
-        """Sets the item_affiliate_web_url of this Item.
-
-        The URL of the View Item page of the item, with the affiliate tracking ID appended to it. For example https://www.ebay.de/itm/2********0?mkevt=1&amp;mkcid=1&amp;mkrid=707-53477-19255-0&amp;campid=CAMPAIGNID&amp;toolid=2***6&amp;customid=CUSTOMID  # noqa: E501
-
-        :param item_affiliate_web_url: The item_affiliate_web_url of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._item_affiliate_web_url = item_affiliate_web_url
-
-    @property
-    def item_creation_date(self):
-        """Gets the item_creation_date of this Item.  # noqa: E501
-
-        A timestamp indicating when the item was created. The format is UTC (yyyy-MM-ddThh:mm:ss.sssZ).  # noqa: E501
-
-        :return: The item_creation_date of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._item_creation_date
-
-    @item_creation_date.setter
-    def item_creation_date(self, item_creation_date):
-        """Sets the item_creation_date of this Item.
-
-        A timestamp indicating when the item was created. The format is UTC (yyyy-MM-ddThh:mm:ss.sssZ).  # noqa: E501
-
-        :param item_creation_date: The item_creation_date of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._item_creation_date = item_creation_date
-
-    @property
-    def item_end_date(self):
-        """Gets the item_end_date of this Item.  # noqa: E501
-
-        A timestamp indicating when the item's sale period will end based on its start date and duration. For Good 'Til Cancelled items, no value is returned in this column. Format: UTC (yyyy-MM-ddThh:mm:ss.sssZ).  # noqa: E501
-
-        :return: The item_end_date of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._item_end_date
-
-    @item_end_date.setter
-    def item_end_date(self, item_end_date):
-        """Sets the item_end_date of this Item.
-
-        A timestamp indicating when the item's sale period will end based on its start date and duration. For Good 'Til Cancelled items, no value is returned in this column. Format: UTC (yyyy-MM-ddThh:mm:ss.sssZ).  # noqa: E501
-
-        :param item_end_date: The item_end_date of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._item_end_date = item_end_date
-
-    @property
-    def item_id(self):
-        """Gets the item_id of this Item.  # noqa: E501
-
-        The unique identifier of an item in eBay RESTful format. An example would be v1|1**********2|4**********2.  # noqa: E501
-
-        :return: The item_id of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._item_id
-
-    @item_id.setter
-    def item_id(self, item_id):
-        """Sets the item_id of this Item.
-
-        The unique identifier of an item in eBay RESTful format. An example would be v1|1**********2|4**********2.  # noqa: E501
-
-        :param item_id: The item_id of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._item_id = item_id
-
-    @property
-    def item_location_country(self):
-        """Gets the item_location_country of this Item.  # noqa: E501
-
-        The country where the item is physically located.  # noqa: E501
-
-        :return: The item_location_country of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._item_location_country
-
-    @item_location_country.setter
-    def item_location_country(self, item_location_country):
-        """Sets the item_location_country of this Item.
-
-        The country where the item is physically located.  # noqa: E501
-
-        :param item_location_country: The item_location_country of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._item_location_country = item_location_country
-
-    @property
-    def item_web_url(self):
-        """Gets the item_web_url of this Item.  # noqa: E501
-
-        The URL of the View Item page of the item. For example: Single SKU: https://www.ebay.de/itm/2********0 MSKU: https://www.ebay.com/itm/2********9?var=5********2  # noqa: E501
-
-        :return: The item_web_url of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._item_web_url
-
-    @item_web_url.setter
-    def item_web_url(self, item_web_url):
-        """Sets the item_web_url of this Item.
-
-        The URL of the View Item page of the item. For example: Single SKU: https://www.ebay.de/itm/2********0 MSKU: https://www.ebay.com/itm/2********9?var=5********2  # noqa: E501
-
-        :param item_web_url: The item_web_url of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._item_web_url = item_web_url
-
-    @property
-    def legacy_item_id(self):
-        """Gets the legacy_item_id of this Item.  # noqa: E501
-
-        The unique identifier of the eBay listing that contains the item. This is the traditional/legacy ID that is often seen in the URL of the listing View Item page.  # noqa: E501
-
-        :return: The legacy_item_id of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._legacy_item_id
-
-    @legacy_item_id.setter
-    def legacy_item_id(self, legacy_item_id):
-        """Sets the legacy_item_id of this Item.
-
-        The unique identifier of the eBay listing that contains the item. This is the traditional/legacy ID that is often seen in the URL of the listing View Item page.  # noqa: E501
-
-        :param legacy_item_id: The legacy_item_id of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._legacy_item_id = legacy_item_id
-
-    @property
-    def length_unit_of_measure(self):
-        """Gets the length_unit_of_measure of this Item.  # noqa: E501
-
-        The unit of measurement used for the package dimensions, such as INCH, FEET, CENTIMETER, or METER. Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:LengthUnitOfMeasureEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The length_unit_of_measure of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._length_unit_of_measure
-
-    @length_unit_of_measure.setter
-    def length_unit_of_measure(self, length_unit_of_measure):
-        """Sets the length_unit_of_measure of this Item.
-
-        The unit of measurement used for the package dimensions, such as INCH, FEET, CENTIMETER, or METER. Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:LengthUnitOfMeasureEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param length_unit_of_measure: The length_unit_of_measure of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._length_unit_of_measure = length_unit_of_measure
-
-    @property
-    def localized_aspects(self):
-        """Gets the localized_aspects of this Item.  # noqa: E501
-
-        A semicolon separated list of the name/value pairs for the aspects of the item, which are BASE64 encoded. The aspect label is separated by a pipe (|), the aspect name and value are separated by a colon (:) and the name/value pairs are separated by a semicolon (;). Example without Label &nbsp;&nbsp; Encoded Format: &nbsp;&nbsp;&nbsp;encodedName:encodedValue;encodedName:encodedValue;encodedName:encodedValue &nbsp;&nbsp; Encoded Example (The delimiters are emphasized): &nbsp;&nbsp;&nbsp;U2l6ZQ==:WEw=;Q29sb3I=:UmVk;U2xlZXZlcw==:TG9uZw== &nbsp;&nbsp; Decoded: &nbsp;&nbsp;&nbsp;Size:XL;Color:Red;Sleeves:Long Example with Label &nbsp;&nbsp; Encoded Format: &nbsp;&nbsp;&nbsp;encodedLabel|encodedName:encodedValue;encodedName:encodedValue;encodedLabel| &nbsp;&nbsp; Encoded Example (The delimiters are emphasized): &nbsp;&nbsp;&nbsp;UHJvZHVjdCBJZGVudGlmaWVycw==|R1RJTg==:MDE5MDE5ODA2NjYzMw==;QlJBTkQ=:QXBwbGU=;UHJvZHVjdCBLZXkgRmVhdHVyZXM=|TW9kZWw=:aVBob25lIDc= &nbsp;&nbsp; Decoded: &nbsp;&nbsp;&nbsp;Product Identifiers|GTIN:0190198066633;BRAND:Apple;Product Key Features|Model:iPhone 7 Note: The separators ( | : ; ) are not encoded. You must decode each label, name, and value separately. You cannot decode the entire string. For more information, see Encoded Aspects in the Buying Integration Guide.  # noqa: E501
-
-        :return: The localized_aspects of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._localized_aspects
-
-    @localized_aspects.setter
-    def localized_aspects(self, localized_aspects):
-        """Sets the localized_aspects of this Item.
-
-        A semicolon separated list of the name/value pairs for the aspects of the item, which are BASE64 encoded. The aspect label is separated by a pipe (|), the aspect name and value are separated by a colon (:) and the name/value pairs are separated by a semicolon (;). Example without Label &nbsp;&nbsp; Encoded Format: &nbsp;&nbsp;&nbsp;encodedName:encodedValue;encodedName:encodedValue;encodedName:encodedValue &nbsp;&nbsp; Encoded Example (The delimiters are emphasized): &nbsp;&nbsp;&nbsp;U2l6ZQ==:WEw=;Q29sb3I=:UmVk;U2xlZXZlcw==:TG9uZw== &nbsp;&nbsp; Decoded: &nbsp;&nbsp;&nbsp;Size:XL;Color:Red;Sleeves:Long Example with Label &nbsp;&nbsp; Encoded Format: &nbsp;&nbsp;&nbsp;encodedLabel|encodedName:encodedValue;encodedName:encodedValue;encodedLabel| &nbsp;&nbsp; Encoded Example (The delimiters are emphasized): &nbsp;&nbsp;&nbsp;UHJvZHVjdCBJZGVudGlmaWVycw==|R1RJTg==:MDE5MDE5ODA2NjYzMw==;QlJBTkQ=:QXBwbGU=;UHJvZHVjdCBLZXkgRmVhdHVyZXM=|TW9kZWw=:aVBob25lIDc= &nbsp;&nbsp; Decoded: &nbsp;&nbsp;&nbsp;Product Identifiers|GTIN:0190198066633;BRAND:Apple;Product Key Features|Model:iPhone 7 Note: The separators ( | : ; ) are not encoded. You must decode each label, name, and value separately. You cannot decode the entire string. For more information, see Encoded Aspects in the Buying Integration Guide.  # noqa: E501
-
-        :param localized_aspects: The localized_aspects of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._localized_aspects = localized_aspects
-
-    @property
-    def lot_size(self):
-        """Gets the lot_size of this Item.  # noqa: E501
-
-        The number of items in a lot. In other words, a lot size is the number of items that are being sold together. A lot is a set of two or more items included in a single listing that must be purchased together in a single order line item. All the items in the lot are the same but there can be multiple items in a single lot, such as the package of batteries shown in the example below. For example: Item Lot Definition Lot Size A package of 24 AA batteries A box of 10 packages 10 A P235/75-15 Goodyear tire 4 tires 4 Fashion Jewelry Rings Package of 100 assorted rings 100 Note: Lots are not supported in all categories.  # noqa: E501
-
-        :return: The lot_size of this Item.  # noqa: E501
-        :rtype: int
-        """
-        return self._lot_size
-
-    @lot_size.setter
-    def lot_size(self, lot_size):
-        """Sets the lot_size of this Item.
-
-        The number of items in a lot. In other words, a lot size is the number of items that are being sold together. A lot is a set of two or more items included in a single listing that must be purchased together in a single order line item. All the items in the lot are the same but there can be multiple items in a single lot, such as the package of batteries shown in the example below. For example: Item Lot Definition Lot Size A package of 24 AA batteries A box of 10 packages 10 A P235/75-15 Goodyear tire 4 tires 4 Fashion Jewelry Rings Package of 100 assorted rings 100 Note: Lots are not supported in all categories.  # noqa: E501
-
-        :param lot_size: The lot_size of this Item.  # noqa: E501
-        :type: int
-        """
-
-        self._lot_size = lot_size
-
-    @property
-    def material(self):
-        """Gets the material of this Item.  # noqa: E501
-
-        The material that the item is made of.  # noqa: E501
-
-        :return: The material of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._material
-
-    @material.setter
-    def material(self, material):
-        """Sets the material of this Item.
-
-        The material that the item is made of.  # noqa: E501
-
-        :param material: The material of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._material = material
-
-    @property
-    def mpn(self):
-        """Gets the mpn of this Item.  # noqa: E501
-
-        The manufacturer part number, which is a number that is used in combination with brand to identify a product.  # noqa: E501
-
-        :return: The mpn of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._mpn
-
-    @mpn.setter
-    def mpn(self, mpn):
-        """Sets the mpn of this Item.
-
-        The manufacturer part number, which is a number that is used in combination with brand to identify a product.  # noqa: E501
-
-        :param mpn: The mpn of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._mpn = mpn
-
-    @property
-    def original_price_currency(self):
-        """Gets the original_price_currency of this Item.  # noqa: E501
-
-        The currency of the originalPriceValue of the item and the discountAmount. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/bas:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The original_price_currency of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._original_price_currency
-
-    @original_price_currency.setter
-    def original_price_currency(self, original_price_currency):
-        """Sets the original_price_currency of this Item.
-
-        The currency of the originalPriceValue of the item and the discountAmount. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/bas:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param original_price_currency: The original_price_currency of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._original_price_currency = original_price_currency
-
-    @property
-    def original_price_value(self):
-        """Gets the original_price_value of this Item.  # noqa: E501
-
-        The original selling price of the item. This lets you surface a strikethrough price for the item.  # noqa: E501
-
-        :return: The original_price_value of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._original_price_value
-
-    @original_price_value.setter
-    def original_price_value(self, original_price_value):
-        """Sets the original_price_value of this Item.
-
-        The original selling price of the item. This lets you surface a strikethrough price for the item.  # noqa: E501
-
-        :param original_price_value: The original_price_value of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._original_price_value = original_price_value
-
-    @property
-    def package_height(self):
-        """Gets the package_height of this Item.  # noqa: E501
-
-        The height of the shipping package that contains the item.  # noqa: E501
-
-        :return: The package_height of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._package_height
-
-    @package_height.setter
-    def package_height(self, package_height):
-        """Sets the package_height of this Item.
-
-        The height of the shipping package that contains the item.  # noqa: E501
-
-        :param package_height: The package_height of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._package_height = package_height
-
-    @property
-    def package_length(self):
-        """Gets the package_length of this Item.  # noqa: E501
-
-        The length of the shipping package that contains the item.  # noqa: E501
-
-        :return: The package_length of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._package_length
-
-    @package_length.setter
-    def package_length(self, package_length):
-        """Sets the package_length of this Item.
-
-        The length of the shipping package that contains the item.  # noqa: E501
-
-        :param package_length: The package_length of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._package_length = package_length
-
-    @property
-    def package_weight(self):
-        """Gets the package_weight of this Item.  # noqa: E501
-
-        The weight of the package that contains the item.  # noqa: E501
-
-        :return: The package_weight of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._package_weight
-
-    @package_weight.setter
-    def package_weight(self, package_weight):
-        """Sets the package_weight of this Item.
-
-        The weight of the package that contains the item.  # noqa: E501
-
-        :param package_weight: The package_weight of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._package_weight = package_weight
-
-    @property
-    def package_width(self):
-        """Gets the package_width of this Item.  # noqa: E501
-
-        The width of the shipping package that contains the item.  # noqa: E501
-
-        :return: The package_width of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._package_width
-
-    @package_width.setter
-    def package_width(self, package_width):
-        """Sets the package_width of this Item.
-
-        The width of the shipping package that contains the item.  # noqa: E501
-
-        :param package_width: The package_width of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._package_width = package_width
-
-    @property
-    def pattern(self):
-        """Gets the pattern of this Item.  # noqa: E501
-
-        Text describing the pattern used on the item. For example, paisley. Note: All the item aspects, including this aspect, are returned in the localizedAspects container.  # noqa: E501
-
-        :return: The pattern of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._pattern
-
-    @pattern.setter
-    def pattern(self, pattern):
-        """Sets the pattern of this Item.
-
-        Text describing the pattern used on the item. For example, paisley. Note: All the item aspects, including this aspect, are returned in the localizedAspects container.  # noqa: E501
-
-        :param pattern: The pattern of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._pattern = pattern
-
-    @property
-    def price_currency(self):
-        """Gets the price_currency of this Item.  # noqa: E501
-
-        The currency used for the price of the item. Generally, this is the currency used by the country of the eBay site offering the item. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/bas:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The price_currency of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._price_currency
-
-    @price_currency.setter
-    def price_currency(self, price_currency):
-        """Sets the price_currency of this Item.
-
-        The currency used for the price of the item. Generally, this is the currency used by the country of the eBay site offering the item. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/bas:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param price_currency: The price_currency of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._price_currency = price_currency
-
-    @property
-    def price_value(self):
-        """Gets the price_value of this Item.  # noqa: E501
-
-        The price of the item, which can be a discounted price. If it is discounted, information about the discount is returned in the originalPriceValue, originalPriceCurrency, discountAmount, and discountPercentage columns. Note: The price includes the value-added tax (VAT) for applicable jurisdictions when requested from supported marketplaces. In this case, users must pass the X-EBAY-C-MARKETPLACE-ID request header specifying the supported marketplace (such as EBAY_GB) to see the VAT-inclusive pricing. For more information on VAT, refer to VAT Obligations in the EU.  # noqa: E501
-
-        :return: The price_value of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._price_value
-
-    @price_value.setter
-    def price_value(self, price_value):
-        """Sets the price_value of this Item.
-
-        The price of the item, which can be a discounted price. If it is discounted, information about the discount is returned in the originalPriceValue, originalPriceCurrency, discountAmount, and discountPercentage columns. Note: The price includes the value-added tax (VAT) for applicable jurisdictions when requested from supported marketplaces. In this case, users must pass the X-EBAY-C-MARKETPLACE-ID request header specifying the supported marketplace (such as EBAY_GB) to see the VAT-inclusive pricing. For more information on VAT, refer to VAT Obligations in the EU.  # noqa: E501
-
-        :param price_value: The price_value of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._price_value = price_value
-
-    @property
-    def primary_item_group_id(self):
-        """Gets the primary_item_group_id of this Item.  # noqa: E501
-
-        The unique identifier for the item group that contains this item. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc.  # noqa: E501
-
-        :return: The primary_item_group_id of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._primary_item_group_id
-
-    @primary_item_group_id.setter
-    def primary_item_group_id(self, primary_item_group_id):
-        """Sets the primary_item_group_id of this Item.
-
-        The unique identifier for the item group that contains this item. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc.  # noqa: E501
-
-        :param primary_item_group_id: The primary_item_group_id of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._primary_item_group_id = primary_item_group_id
-
-    @property
-    def primary_item_group_type(self):
-        """Gets the primary_item_group_type of this Item.  # noqa: E501
-
-        The item group type. Supported value: SELLER_DEFINED_VARIATIONS, indicates that the item group was created by the seller. Code so that your app gracefully handles any future changes to this list.  # noqa: E501
-
-        :return: The primary_item_group_type of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._primary_item_group_type
-
-    @primary_item_group_type.setter
-    def primary_item_group_type(self, primary_item_group_type):
-        """Sets the primary_item_group_type of this Item.
-
-        The item group type. Supported value: SELLER_DEFINED_VARIATIONS, indicates that the item group was created by the seller. Code so that your app gracefully handles any future changes to this list.  # noqa: E501
-
-        :param primary_item_group_type: The primary_item_group_type of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._primary_item_group_type = primary_item_group_type
-
-    @property
-    def priority_listing_payload(self):
-        """Gets the priority_listing_payload of this Item.  # noqa: E501
-
-        EPN (eBay Partner Network) publishers append this value to their affiliate tracking URL when using an EPN tracking link to track changes that occur to Priority Listing items. Example:amdata=enc%3AAQAFAAAAkB1DmsmXf%2BqZ%2BCEMGdebW6oR75GCMdBmc4MCQ%2FCEPqgKHbT0jdWhPwfY5LdUs6HTaP0eBlwKE7Smy2eDslewF7l3xjwWxjqwzNAnsYgxn2PiGkTKbiQSQytFUiymdtANpk1qOnBOoMGMK%2BWsji7jYlvySSs9o9s24TxD6RqWZpNrltzOU7mfnv3H40SZ3YESzg%3D%3D See Creating an EPN Tracking Link for information on EPN tracking links.  # noqa: E501
-
-        :return: The priority_listing_payload of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._priority_listing_payload
-
-    @priority_listing_payload.setter
-    def priority_listing_payload(self, priority_listing_payload):
-        """Sets the priority_listing_payload of this Item.
-
-        EPN (eBay Partner Network) publishers append this value to their affiliate tracking URL when using an EPN tracking link to track changes that occur to Priority Listing items. Example:amdata=enc%3AAQAFAAAAkB1DmsmXf%2BqZ%2BCEMGdebW6oR75GCMdBmc4MCQ%2FCEPqgKHbT0jdWhPwfY5LdUs6HTaP0eBlwKE7Smy2eDslewF7l3xjwWxjqwzNAnsYgxn2PiGkTKbiQSQytFUiymdtANpk1qOnBOoMGMK%2BWsji7jYlvySSs9o9s24TxD6RqWZpNrltzOU7mfnv3H40SZ3YESzg%3D%3D See Creating an EPN Tracking Link for information on EPN tracking links.  # noqa: E501
-
-        :param priority_listing_payload: The priority_listing_payload of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._priority_listing_payload = priority_listing_payload
-
-    @property
-    def qualified_programs(self):
-        """Gets the qualified_programs of this Item.  # noqa: E501
-
-        A pipe separated list of the qualified programs available for the item, such as EBAY_PLUS and AUTHENTICITY_GUARANTEE. eBay Plus is a premium account option for buyers, which provides benefits such as fast free domestic shipping and free returns on selected items. Top-Rated eBay sellers must opt in to eBay Plus to be able to offer the program on qualifying listings. Sellers must commit to next-day delivery of those items. Note: eBay Plus is available only to buyers in Germany, Austria, and Australia marketplaces. The eBay Authenticity Guarantee program enables third-party authenticators to perform authentication verification inspections on items such as watches and sneakers.  # noqa: E501
-
-        :return: The qualified_programs of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._qualified_programs
-
-    @qualified_programs.setter
-    def qualified_programs(self, qualified_programs):
-        """Sets the qualified_programs of this Item.
-
-        A pipe separated list of the qualified programs available for the item, such as EBAY_PLUS and AUTHENTICITY_GUARANTEE. eBay Plus is a premium account option for buyers, which provides benefits such as fast free domestic shipping and free returns on selected items. Top-Rated eBay sellers must opt in to eBay Plus to be able to offer the program on qualifying listings. Sellers must commit to next-day delivery of those items. Note: eBay Plus is available only to buyers in Germany, Austria, and Australia marketplaces. The eBay Authenticity Guarantee program enables third-party authenticators to perform authentication verification inspections on items such as watches and sneakers.  # noqa: E501
-
-        :param qualified_programs: The qualified_programs of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._qualified_programs = qualified_programs
-
-    @property
-    def quantity_used_for_estimate(self):
-        """Gets the quantity_used_for_estimate of this Item.  # noqa: E501
-
-        The number of items used when calculating the estimation information.  # noqa: E501
-
-        :return: The quantity_used_for_estimate of this Item.  # noqa: E501
-        :rtype: int
-        """
-        return self._quantity_used_for_estimate
-
-    @quantity_used_for_estimate.setter
-    def quantity_used_for_estimate(self, quantity_used_for_estimate):
-        """Sets the quantity_used_for_estimate of this Item.
-
-        The number of items used when calculating the estimation information.  # noqa: E501
-
-        :param quantity_used_for_estimate: The quantity_used_for_estimate of this Item.  # noqa: E501
-        :type: int
-        """
-
-        self._quantity_used_for_estimate = quantity_used_for_estimate
-
-    @property
-    def refund_method(self):
-        """Gets the refund_method of this Item.  # noqa: E501
-
-        An enumeration value that indicates how a buyer is refunded when an item is returned. Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:RefundMethodEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The refund_method of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._refund_method
-
-    @refund_method.setter
-    def refund_method(self, refund_method):
-        """Sets the refund_method of this Item.
-
-        An enumeration value that indicates how a buyer is refunded when an item is returned. Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:RefundMethodEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param refund_method: The refund_method of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._refund_method = refund_method
-
-    @property
-    def return_method(self):
-        """Gets the return_method of this Item.  # noqa: E501
-
-        An enumeration value that indicates the alternative methods for a full refund when an item is returned. This column will have data if the seller offers the buyer an item replacement or exchange instead of a monetary refund. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:ReturnMethodEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The return_method of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._return_method
-
-    @return_method.setter
-    def return_method(self, return_method):
-        """Sets the return_method of this Item.
-
-        An enumeration value that indicates the alternative methods for a full refund when an item is returned. This column will have data if the seller offers the buyer an item replacement or exchange instead of a monetary refund. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:ReturnMethodEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param return_method: The return_method of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._return_method = return_method
-
-    @property
-    def return_period_unit(self):
-        """Gets the return_period_unit of this Item.  # noqa: E501
-
-        An enumeration value that indicates the period of time being used to measure the duration, such as business days, months, or years. TimeDurationUnitEnum is a common type shared by multiple eBay APIs and fields to express the time unit, but for return period duration, this value will always be DAY. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/bas:TimeDurationUnitEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The return_period_unit of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._return_period_unit
-
-    @return_period_unit.setter
-    def return_period_unit(self, return_period_unit):
-        """Sets the return_period_unit of this Item.
-
-        An enumeration value that indicates the period of time being used to measure the duration, such as business days, months, or years. TimeDurationUnitEnum is a common type shared by multiple eBay APIs and fields to express the time unit, but for return period duration, this value will always be DAY. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/bas:TimeDurationUnitEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param return_period_unit: The return_period_unit of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._return_period_unit = return_period_unit
-
-    @property
-    def return_period_value(self):
-        """Gets the return_period_value of this Item.  # noqa: E501
-
-        The amount of days that the buyer has to return the item after the purchase date. For example, if this value is '30', the return period is 30 days.  # noqa: E501
-
-        :return: The return_period_value of this Item.  # noqa: E501
-        :rtype: int
-        """
-        return self._return_period_value
-
-    @return_period_value.setter
-    def return_period_value(self, return_period_value):
-        """Sets the return_period_value of this Item.
-
-        The amount of days that the buyer has to return the item after the purchase date. For example, if this value is '30', the return period is 30 days.  # noqa: E501
-
-        :param return_period_value: The return_period_value of this Item.  # noqa: E501
-        :type: int
-        """
-
-        self._return_period_value = return_period_value
-
-    @property
-    def return_shipping_cost_payer(self):
-        """Gets the return_shipping_cost_payer of this Item.  # noqa: E501
-
-        The party responsible for the return shipping costs when an item is returned. Valid Values: BUYER or SELLER Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:ReturnShippingCostPayerEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The return_shipping_cost_payer of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._return_shipping_cost_payer
-
-    @return_shipping_cost_payer.setter
-    def return_shipping_cost_payer(self, return_shipping_cost_payer):
-        """Sets the return_shipping_cost_payer of this Item.
-
-        The party responsible for the return shipping costs when an item is returned. Valid Values: BUYER or SELLER Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:ReturnShippingCostPayerEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param return_shipping_cost_payer: The return_shipping_cost_payer of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._return_shipping_cost_payer = return_shipping_cost_payer
-
-    @property
-    def returns_accepted(self):
-        """Gets the returns_accepted of this Item.  # noqa: E501
-
-        Indicates whether the seller accepts returns for the item.  # noqa: E501
-
-        :return: The returns_accepted of this Item.  # noqa: E501
-        :rtype: bool
-        """
-        return self._returns_accepted
-
-    @returns_accepted.setter
-    def returns_accepted(self, returns_accepted):
-        """Sets the returns_accepted of this Item.
-
-        Indicates whether the seller accepts returns for the item.  # noqa: E501
-
-        :param returns_accepted: The returns_accepted of this Item.  # noqa: E501
-        :type: bool
-        """
-
-        self._returns_accepted = returns_accepted
-
-    @property
-    def seller_account_type(self):
-        """Gets the seller_account_type of this Item.  # noqa: E501
-
-        A string value that specifies whether the seller is a business or an individual. This is determined when the seller registers with eBay. If the seller registers for a business account, the value returned in this field will be BUSINESS. If the seller registers for a private account, the value returned in this field will be INDIVIDUAL. Note: This designation is required by the tax laws in some countries. This field is returned only on the following sites: EBAY_AT, EBAY_BE, EBAY_CH, EBAY_DE, EBAY_ES, EBAY_FR, EBAY_GB, EBAY_IE, EBAY_IT, and EBAY_PL. Code so that your app gracefully handles any future changes to this list. Valid Values: BUSINESS or INDIVIDUAL  # noqa: E501
-
-        :return: The seller_account_type of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._seller_account_type
-
-    @seller_account_type.setter
-    def seller_account_type(self, seller_account_type):
-        """Sets the seller_account_type of this Item.
-
-        A string value that specifies whether the seller is a business or an individual. This is determined when the seller registers with eBay. If the seller registers for a business account, the value returned in this field will be BUSINESS. If the seller registers for a private account, the value returned in this field will be INDIVIDUAL. Note: This designation is required by the tax laws in some countries. This field is returned only on the following sites: EBAY_AT, EBAY_BE, EBAY_CH, EBAY_DE, EBAY_ES, EBAY_FR, EBAY_GB, EBAY_IE, EBAY_IT, and EBAY_PL. Code so that your app gracefully handles any future changes to this list. Valid Values: BUSINESS or INDIVIDUAL  # noqa: E501
-
-        :param seller_account_type: The seller_account_type of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._seller_account_type = seller_account_type
+        self._seller_username = seller_username
 
     @property
     def seller_feedback_percentage(self):
@@ -1971,10 +660,263 @@ class Item(object):
         self._seller_feedback_score = seller_feedback_score
 
     @property
+    def gtin(self):
+        """Gets the gtin of this Item.  # noqa: E501
+
+        The unique Global Trade Item Number of the item as defined by <a href=\"https://www.gtin.info\" target=\"_blank\">https://www.gtin.info</a>. This can be a UPC (Universal Product Code), EAN (European Article Number), or an ISBN (International Standard Book Number) value.  # noqa: E501
+
+        :return: The gtin of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._gtin
+
+    @gtin.setter
+    def gtin(self, gtin):
+        """Sets the gtin of this Item.
+
+        The unique Global Trade Item Number of the item as defined by <a href=\"https://www.gtin.info\" target=\"_blank\">https://www.gtin.info</a>. This can be a UPC (Universal Product Code), EAN (European Article Number), or an ISBN (International Standard Book Number) value.  # noqa: E501
+
+        :param gtin: The gtin of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._gtin = gtin
+
+    @property
+    def brand(self):
+        """Gets the brand of this Item.  # noqa: E501
+
+        The name brand of the item, such as Nike, Apple, etc.  # noqa: E501
+
+        :return: The brand of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._brand
+
+    @brand.setter
+    def brand(self, brand):
+        """Sets the brand of this Item.
+
+        The name brand of the item, such as Nike, Apple, etc.  # noqa: E501
+
+        :param brand: The brand of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._brand = brand
+
+    @property
+    def mpn(self):
+        """Gets the mpn of this Item.  # noqa: E501
+
+        The manufacturer part number, which is a number that is used in combination with <b> brand</b> to identify a product.  # noqa: E501
+
+        :return: The mpn of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._mpn
+
+    @mpn.setter
+    def mpn(self, mpn):
+        """Sets the mpn of this Item.
+
+        The manufacturer part number, which is a number that is used in combination with <b> brand</b> to identify a product.  # noqa: E501
+
+        :param mpn: The mpn of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._mpn = mpn
+
+    @property
+    def epid(self):
+        """Gets the epid of this Item.  # noqa: E501
+
+        The eBay product identifier of a product from the eBay product catalog. You can use this value in the Browse API <a href=\"/api-docs/buy/browse/resources/item_summary/methods/search\">search</a> method to retrieve items for this product and in the <a href=\"/api-docs/buy/marketing/resources/methods\">Marketing API</a> methods to retrieve 'also viewed' and 'also bought' products to encourage up-selling and cross-selling.  # noqa: E501
+
+        :return: The epid of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._epid
+
+    @epid.setter
+    def epid(self, epid):
+        """Sets the epid of this Item.
+
+        The eBay product identifier of a product from the eBay product catalog. You can use this value in the Browse API <a href=\"/api-docs/buy/browse/resources/item_summary/methods/search\">search</a> method to retrieve items for this product and in the <a href=\"/api-docs/buy/marketing/resources/methods\">Marketing API</a> methods to retrieve 'also viewed' and 'also bought' products to encourage up-selling and cross-selling.  # noqa: E501
+
+        :param epid: The epid of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._epid = epid
+
+    @property
+    def condition_id(self):
+        """Gets the condition_id of this Item.  # noqa: E501
+
+        The identifier of the condition of the item. For example, 1000 is the identifier for NEW. For a list of condition names and IDs, see <a href=\"https://developer.ebay.com/devzone/finding/callref/enums/conditionIdList.html\" target=\"_blank\">Item Condition IDs and Names</a>.<br /><br /><span class=\"tablenote\"><b> Note: </b>As of September 1, 2021, condition ID 2500 ('Seller Refurbished') is no longer a valid item condition in the <b>Cell Phones & Smartphones</b> category (category ID 9355) for the following marketplaces: US, Canada, UK, Germany, and Australia. This refurbished item condition has been replaced by three new refurbished values, which include 'Excellent - Refurbished' (condition ID 2010), 'Very Good - Refurbished' (condition ID 2020), and 'Good - Refurbished' (condition ID 2030).</span><br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+
+        :return: The condition_id of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._condition_id
+
+    @condition_id.setter
+    def condition_id(self, condition_id):
+        """Sets the condition_id of this Item.
+
+        The identifier of the condition of the item. For example, 1000 is the identifier for NEW. For a list of condition names and IDs, see <a href=\"https://developer.ebay.com/devzone/finding/callref/enums/conditionIdList.html\" target=\"_blank\">Item Condition IDs and Names</a>.<br /><br /><span class=\"tablenote\"><b> Note: </b>As of September 1, 2021, condition ID 2500 ('Seller Refurbished') is no longer a valid item condition in the <b>Cell Phones & Smartphones</b> category (category ID 9355) for the following marketplaces: US, Canada, UK, Germany, and Australia. This refurbished item condition has been replaced by three new refurbished values, which include 'Excellent - Refurbished' (condition ID 2010), 'Very Good - Refurbished' (condition ID 2020), and 'Good - Refurbished' (condition ID 2030).</span><br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+
+        :param condition_id: The condition_id of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._condition_id = condition_id
+
+    @property
+    def condition(self):
+        """Gets the condition of this Item.  # noqa: E501
+
+        The text describing the condition of the item. For a list of condition names, see <a href=\"https://developer.ebay.com/devzone/finding/callref/enums/conditionIdList.html\" target=\"_blank\">Item Condition IDs and Names</a>.<br /><br /><span class=\"tablenote\"><b> Note: </b>As of September 1, 2021, condition ID 2500 ('Seller Refurbished') is no longer a valid item condition in the <b>Cell Phones & Smartphones</b> category (category ID 9355) for the following marketplaces: US, Canada, UK, Germany, and Australia. This refurbished item condition has been replaced by three new refurbished values, which include 'Excellent - Refurbished' (condition ID 2010), 'Very Good - Refurbished' (condition ID 2020), and 'Good - Refurbished' (condition ID 2030).</span>  # noqa: E501
+
+        :return: The condition of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._condition
+
+    @condition.setter
+    def condition(self, condition):
+        """Sets the condition of this Item.
+
+        The text describing the condition of the item. For a list of condition names, see <a href=\"https://developer.ebay.com/devzone/finding/callref/enums/conditionIdList.html\" target=\"_blank\">Item Condition IDs and Names</a>.<br /><br /><span class=\"tablenote\"><b> Note: </b>As of September 1, 2021, condition ID 2500 ('Seller Refurbished') is no longer a valid item condition in the <b>Cell Phones & Smartphones</b> category (category ID 9355) for the following marketplaces: US, Canada, UK, Germany, and Australia. This refurbished item condition has been replaced by three new refurbished values, which include 'Excellent - Refurbished' (condition ID 2010), 'Very Good - Refurbished' (condition ID 2020), and 'Good - Refurbished' (condition ID 2030).</span>  # noqa: E501
+
+        :param condition: The condition of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._condition = condition
+
+    @property
+    def price_value(self):
+        """Gets the price_value of this Item.  # noqa: E501
+
+        The price of the item, which can be a discounted price. If it is discounted, information about the discount is returned in the <b>originalPriceValue</b>, <b>originalPriceCurrency</b>, <b>discountAmount</b>, and <b>discountPercentage</b> columns.<br /><br /><span class=\"tablenote\"><b> Note: </b>The price includes the value-added tax (VAT) for applicable jurisdictions when requested from supported marketplaces. In this case, users must pass the <a href=\"/api-docs/static/rest-request-components.html#HTTP\"><code>X-EBAY-C-MARKETPLACE-ID</code></a> request header specifying the supported marketplace (such as <code>EBAY_GB</code>) to see the VAT-inclusive pricing. For more information on VAT, refer to <a href=\"https://www.ebay.co.uk/help/listings/default/vat-obligations-eu?id=4650&st=12&pos=1&query=Your%20VAT%20obligations%20in%20the%20EU&intent=VAT\">VAT Obligations in the EU</a>.</span>  # noqa: E501
+
+        :return: The price_value of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._price_value
+
+    @price_value.setter
+    def price_value(self, price_value):
+        """Sets the price_value of this Item.
+
+        The price of the item, which can be a discounted price. If it is discounted, information about the discount is returned in the <b>originalPriceValue</b>, <b>originalPriceCurrency</b>, <b>discountAmount</b>, and <b>discountPercentage</b> columns.<br /><br /><span class=\"tablenote\"><b> Note: </b>The price includes the value-added tax (VAT) for applicable jurisdictions when requested from supported marketplaces. In this case, users must pass the <a href=\"/api-docs/static/rest-request-components.html#HTTP\"><code>X-EBAY-C-MARKETPLACE-ID</code></a> request header specifying the supported marketplace (such as <code>EBAY_GB</code>) to see the VAT-inclusive pricing. For more information on VAT, refer to <a href=\"https://www.ebay.co.uk/help/listings/default/vat-obligations-eu?id=4650&st=12&pos=1&query=Your%20VAT%20obligations%20in%20the%20EU&intent=VAT\">VAT Obligations in the EU</a>.</span>  # noqa: E501
+
+        :param price_value: The price_value of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._price_value = price_value
+
+    @property
+    def price_currency(self):
+        """Gets the price_currency of this Item.  # noqa: E501
+
+        The currency used for the price of the item. Generally, this is the currency used by the country of the eBay site offering the item. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/bas:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The price_currency of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._price_currency
+
+    @price_currency.setter
+    def price_currency(self, price_currency):
+        """Sets the price_currency of this Item.
+
+        The currency used for the price of the item. Generally, this is the currency used by the country of the eBay site offering the item. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/bas:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param price_currency: The price_currency of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._price_currency = price_currency
+
+    @property
+    def primary_item_group_id(self):
+        """Gets the primary_item_group_id of this Item.  # noqa: E501
+
+        The unique identifier for the item group that contains this item. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc.  # noqa: E501
+
+        :return: The primary_item_group_id of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._primary_item_group_id
+
+    @primary_item_group_id.setter
+    def primary_item_group_id(self, primary_item_group_id):
+        """Sets the primary_item_group_id of this Item.
+
+        The unique identifier for the item group that contains this item. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc.  # noqa: E501
+
+        :param primary_item_group_id: The primary_item_group_id of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._primary_item_group_id = primary_item_group_id
+
+    @property
+    def primary_item_group_type(self):
+        """Gets the primary_item_group_type of this Item.  # noqa: E501
+
+        The item group type. Supported value: <code>SELLER_DEFINED_VARIATIONS</code>, indicates that the item group was created by the seller. <br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+
+        :return: The primary_item_group_type of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._primary_item_group_type
+
+    @primary_item_group_type.setter
+    def primary_item_group_type(self, primary_item_group_type):
+        """Sets the primary_item_group_type of this Item.
+
+        The item group type. Supported value: <code>SELLER_DEFINED_VARIATIONS</code>, indicates that the item group was created by the seller. <br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+
+        :param primary_item_group_type: The primary_item_group_type of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._primary_item_group_type = primary_item_group_type
+
+    @property
+    def item_end_date(self):
+        """Gets the item_end_date of this Item.  # noqa: E501
+
+        A timestamp indicating when the item's sale period will end based on its start date and duration. For Good 'Til Cancelled items, no value is returned in this column. <br /><br /><b> Format: </b> UTC (yyyy-MM-ddThh:mm:ss.sssZ).  # noqa: E501
+
+        :return: The item_end_date of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._item_end_date
+
+    @item_end_date.setter
+    def item_end_date(self, item_end_date):
+        """Sets the item_end_date of this Item.
+
+        A timestamp indicating when the item's sale period will end based on its start date and duration. For Good 'Til Cancelled items, no value is returned in this column. <br /><br /><b> Format: </b> UTC (yyyy-MM-ddThh:mm:ss.sssZ).  # noqa: E501
+
+        :param item_end_date: The item_end_date of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._item_end_date = item_end_date
+
+    @property
     def seller_item_revision(self):
         """Gets the seller_item_revision of this Item.  # noqa: E501
 
-        An identifier generated/incremented when a seller revises the item. There are two types of item revisions: Seller changes, such as changing the title eBay system changes, such as changing the quantity when an item is purchased This ID is changed only when the seller makes a change to the item.  # noqa: E501
+        An identifier generated/incremented when a seller revises the item. There are two types of item revisions: <ul><li>Seller changes, such as changing the title</li>  <li>eBay system changes, such as changing the quantity when an item is purchased</li></ul> This ID is changed <i> only</i> when the seller makes a change to the item.  # noqa: E501
 
         :return: The seller_item_revision of this Item.  # noqa: E501
         :rtype: str
@@ -1985,7 +927,7 @@ class Item(object):
     def seller_item_revision(self, seller_item_revision):
         """Sets the seller_item_revision of this Item.
 
-        An identifier generated/incremented when a seller revises the item. There are two types of item revisions: Seller changes, such as changing the title eBay system changes, such as changing the quantity when an item is purchased This ID is changed only when the seller makes a change to the item.  # noqa: E501
+        An identifier generated/incremented when a seller revises the item. There are two types of item revisions: <ul><li>Seller changes, such as changing the title</li>  <li>eBay system changes, such as changing the quantity when an item is purchased</li></ul> This ID is changed <i> only</i> when the seller makes a change to the item.  # noqa: E501
 
         :param seller_item_revision: The seller_item_revision of this Item.  # noqa: E501
         :type: str
@@ -1994,10 +936,56 @@ class Item(object):
         self._seller_item_revision = seller_item_revision
 
     @property
+    def item_location_country(self):
+        """Gets the item_location_country of this Item.  # noqa: E501
+
+        The country where the item is physically located.  # noqa: E501
+
+        :return: The item_location_country of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._item_location_country
+
+    @item_location_country.setter
+    def item_location_country(self, item_location_country):
+        """Sets the item_location_country of this Item.
+
+        The country where the item is physically located.  # noqa: E501
+
+        :param item_location_country: The item_location_country of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._item_location_country = item_location_country
+
+    @property
+    def localized_aspects(self):
+        """Gets the localized_aspects of this Item.  # noqa: E501
+
+        A semicolon separated list of the name/value pairs for the aspects of the item, which are BASE64 encoded. The aspect label is separated by a pipe (|), the aspect name and value are separated by a colon (:) and the name/value pairs are separated by a semicolon (;). <p><b> Example without Label</b></p>    <p>&nbsp;&nbsp;<b> Encoded Format:</b> <br />&nbsp;&nbsp;&nbsp;<code><em>encodedName</em>:<em>encodedValue</em>;<em>encodedName</em>:<em>encodedValue</em>;<em>encodedName</em>:<em>encodedValue</em></code> </p>       <p>&nbsp;&nbsp;<b> Encoded Example</b> (The delimiters are <b style=\"font-family: 'Arial Black';\">emphasized</b>):    <br />&nbsp;&nbsp;&nbsp;<code>U2l6ZQ==<b style=\"font-family: 'Arial Black';\">:</b>WEw=<b style=\"font-family: 'Arial Black';\">;</b>Q29sb3I=<b style=\"font-family: 'Arial Black';\">:</b>UmVk<b style=\"font-family: 'Arial Black';\">;</b>U2xlZXZlcw==<b style=\"font-family: 'Arial Black';\">:</b>TG9uZw==</code> </p>    <p>&nbsp;&nbsp;<b> Decoded: </b> <br />&nbsp;&nbsp;&nbsp;Size:XL;Color:Red;Sleeves:Long </p>        <p><br /><b> Example with Label</b></p>    <p>&nbsp;&nbsp;<b> Encoded Format:</b>   <br />&nbsp;&nbsp;&nbsp;<code><em>encodedLabel</em>|<em>encodedName</em>:<em>encodedValue</em>;<em>encodedName</em>:<em>encodedValue</em>;<em>encodedLabel</em>|</code></p>       <p>&nbsp;&nbsp;<b> Encoded Example</b> (The delimiters are <b style=\"font-family: 'Arial Black';\">emphasized</b>):  <br />&nbsp;&nbsp;&nbsp;<code>UHJvZHVjdCBJZGVudGlmaWVycw==<b style=\"font-family: 'Arial Black';\">|</b>R1RJTg==<b style=\"font-family: 'Arial Black';\">:</b>MDE5MDE5ODA2NjYzMw==<b style=\"font-family: 'Arial Black';\">;</b>QlJBTkQ=<b style=\"font-family: 'Arial Black';\">:</b>QXBwbGU=<b style=\"font-family: 'Arial Black';\">;</b>UHJvZHVjdCBLZXkgRmVhdHVyZXM=<b style=\"font-family: 'Arial Black';\">|</b>TW9kZWw=<b style=\"font-family: 'Arial Black';\">:</b>aVBob25lIDc=</code> </p>        <p>&nbsp;&nbsp;<b> Decoded: </b> <br />&nbsp;&nbsp;&nbsp;Product Identifiers|GTIN:0190198066633;BRAND:Apple;Product Key Features|Model:iPhone 7</p>        <p><span class=\"tablenote\"><b>Note: </b> The separators (<code> |  :  ; </code>) are <i> not</i> encoded. You must decode each label, name, and value separately. You cannot decode the entire string.</b></p> <p>For more information, see <a href=\"/api-docs/buy/static/api-feed.html#encoded-aspects\">Encoded Aspects</a> in the Buying Integration Guide.</p>  # noqa: E501
+
+        :return: The localized_aspects of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._localized_aspects
+
+    @localized_aspects.setter
+    def localized_aspects(self, localized_aspects):
+        """Sets the localized_aspects of this Item.
+
+        A semicolon separated list of the name/value pairs for the aspects of the item, which are BASE64 encoded. The aspect label is separated by a pipe (|), the aspect name and value are separated by a colon (:) and the name/value pairs are separated by a semicolon (;). <p><b> Example without Label</b></p>    <p>&nbsp;&nbsp;<b> Encoded Format:</b> <br />&nbsp;&nbsp;&nbsp;<code><em>encodedName</em>:<em>encodedValue</em>;<em>encodedName</em>:<em>encodedValue</em>;<em>encodedName</em>:<em>encodedValue</em></code> </p>       <p>&nbsp;&nbsp;<b> Encoded Example</b> (The delimiters are <b style=\"font-family: 'Arial Black';\">emphasized</b>):    <br />&nbsp;&nbsp;&nbsp;<code>U2l6ZQ==<b style=\"font-family: 'Arial Black';\">:</b>WEw=<b style=\"font-family: 'Arial Black';\">;</b>Q29sb3I=<b style=\"font-family: 'Arial Black';\">:</b>UmVk<b style=\"font-family: 'Arial Black';\">;</b>U2xlZXZlcw==<b style=\"font-family: 'Arial Black';\">:</b>TG9uZw==</code> </p>    <p>&nbsp;&nbsp;<b> Decoded: </b> <br />&nbsp;&nbsp;&nbsp;Size:XL;Color:Red;Sleeves:Long </p>        <p><br /><b> Example with Label</b></p>    <p>&nbsp;&nbsp;<b> Encoded Format:</b>   <br />&nbsp;&nbsp;&nbsp;<code><em>encodedLabel</em>|<em>encodedName</em>:<em>encodedValue</em>;<em>encodedName</em>:<em>encodedValue</em>;<em>encodedLabel</em>|</code></p>       <p>&nbsp;&nbsp;<b> Encoded Example</b> (The delimiters are <b style=\"font-family: 'Arial Black';\">emphasized</b>):  <br />&nbsp;&nbsp;&nbsp;<code>UHJvZHVjdCBJZGVudGlmaWVycw==<b style=\"font-family: 'Arial Black';\">|</b>R1RJTg==<b style=\"font-family: 'Arial Black';\">:</b>MDE5MDE5ODA2NjYzMw==<b style=\"font-family: 'Arial Black';\">;</b>QlJBTkQ=<b style=\"font-family: 'Arial Black';\">:</b>QXBwbGU=<b style=\"font-family: 'Arial Black';\">;</b>UHJvZHVjdCBLZXkgRmVhdHVyZXM=<b style=\"font-family: 'Arial Black';\">|</b>TW9kZWw=<b style=\"font-family: 'Arial Black';\">:</b>aVBob25lIDc=</code> </p>        <p>&nbsp;&nbsp;<b> Decoded: </b> <br />&nbsp;&nbsp;&nbsp;Product Identifiers|GTIN:0190198066633;BRAND:Apple;Product Key Features|Model:iPhone 7</p>        <p><span class=\"tablenote\"><b>Note: </b> The separators (<code> |  :  ; </code>) are <i> not</i> encoded. You must decode each label, name, and value separately. You cannot decode the entire string.</b></p> <p>For more information, see <a href=\"/api-docs/buy/static/api-feed.html#encoded-aspects\">Encoded Aspects</a> in the Buying Integration Guide.</p>  # noqa: E501
+
+        :param localized_aspects: The localized_aspects of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._localized_aspects = localized_aspects
+
+    @property
     def seller_trust_level(self):
         """Gets the seller_trust_level of this Item.  # noqa: E501
 
-        An enumeration value representing the eBay status of the seller. Valid Values: TOP_RATED, ABOVE_STANDARD, or an empty value. An empty value indicates a return of anything other than TOP_RATED or ABOVE_STANDARD. Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:SellerTrustLevelEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value representing the eBay status of the seller. <br /><br /><b>Valid Values:</b> <code>TOP_RATED</code>, <code>ABOVE_STANDARD</code>, or an empty value. <br /><br />An empty value indicates a return of anything other than <code>TOP_RATED</code> or <code>ABOVE_STANDARD</code>.<br /><br />Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:SellerTrustLevelEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The seller_trust_level of this Item.  # noqa: E501
         :rtype: str
@@ -2008,7 +996,7 @@ class Item(object):
     def seller_trust_level(self, seller_trust_level):
         """Sets the seller_trust_level of this Item.
 
-        An enumeration value representing the eBay status of the seller. Valid Values: TOP_RATED, ABOVE_STANDARD, or an empty value. An empty value indicates a return of anything other than TOP_RATED or ABOVE_STANDARD. Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:SellerTrustLevelEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value representing the eBay status of the seller. <br /><br /><b>Valid Values:</b> <code>TOP_RATED</code>, <code>ABOVE_STANDARD</code>, or an empty value. <br /><br />An empty value indicates a return of anything other than <code>TOP_RATED</code> or <code>ABOVE_STANDARD</code>.<br /><br />Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:SellerTrustLevelEnum'>eBay API documentation</a>  # noqa: E501
 
         :param seller_trust_level: The seller_trust_level of this Item.  # noqa: E501
         :type: str
@@ -2017,56 +1005,309 @@ class Item(object):
         self._seller_trust_level = seller_trust_level
 
     @property
-    def seller_username(self):
-        """Gets the seller_username of this Item.  # noqa: E501
+    def availability(self):
+        """Gets the availability of this Item.  # noqa: E501
 
-        The seller's eBay user name.  # noqa: E501
+        An enumeration value representing the item's availability (possibility of being purchased). <br /><br /><b>Values: </b>    <ul>  <li>AVAILABLE</li>    <li>TEMPORARILY_UNAVAILABLE</li>     <li>UNAVAILABLE</li> </ul>  Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:AvailabilityEnum'>eBay API documentation</a>  # noqa: E501
 
-        :return: The seller_username of this Item.  # noqa: E501
+        :return: The availability of this Item.  # noqa: E501
         :rtype: str
         """
-        return self._seller_username
+        return self._availability
 
-    @seller_username.setter
-    def seller_username(self, seller_username):
-        """Sets the seller_username of this Item.
+    @availability.setter
+    def availability(self, availability):
+        """Sets the availability of this Item.
 
-        The seller's eBay user name.  # noqa: E501
+        An enumeration value representing the item's availability (possibility of being purchased). <br /><br /><b>Values: </b>    <ul>  <li>AVAILABLE</li>    <li>TEMPORARILY_UNAVAILABLE</li>     <li>UNAVAILABLE</li> </ul>  Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:AvailabilityEnum'>eBay API documentation</a>  # noqa: E501
 
-        :param seller_username: The seller_username of this Item.  # noqa: E501
+        :param availability: The availability of this Item.  # noqa: E501
         :type: str
         """
 
-        self._seller_username = seller_username
+        self._availability = availability
 
     @property
-    def ship_to_excluded_regions(self):
-        """Gets the ship_to_excluded_regions of this Item.  # noqa: E501
+    def image_altering_prohibited(self):
+        """Gets the image_altering_prohibited of this Item.  # noqa: E501
 
-        A pipe (|) separated alphabetical list of the geographic countries and regions where the item cannot be shipped. These countries and regions refine (restrict) the shipToIncludedRegions list. The COUNTRY: list is separated from the REGION: list with a semicolon (;). Format Example: COUNTRY:US|BM|GL|MX|PM;REGION:AFRICA|ASIA|CENTRAL_AMERICA_AND_CARIBBEAN|EUROPE|MIDDLE_EAST|OCEANIA|SOUTH_AMERICA|SOUTHEAST_ASIA; Country Values: The two-letter ISO 3166 standard code of the country. Region Values: AFRICA, AMERICAS, ANTARCTIC, ARCTIC, ASIA, AUSTRALIA, CENTRAL_AMERICA_AND_CARIBBEAN, EUROPE, EURO_UNION, GREATER_CHINA, MIDDLE_EAST, NORTH_AMERICA, OCEANIA, REST_OF_ASIA, SOUTHEAST_ASIA, SOUTH_AMERICA, WORLDWIDE Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        A boolean that indicates whether the images can be altered. If the value is <code>true</code>, you cannot modify the image. <p><span class=\"tablenote\"><b>Note: </b> Due to image licensing agreements and other legal concerns, modification (including resizing) of some images is strictly prohibited. These images are for display as-is only. </span></p>  # noqa: E501
 
-        :return: The ship_to_excluded_regions of this Item.  # noqa: E501
+        :return: The image_altering_prohibited of this Item.  # noqa: E501
+        :rtype: bool
+        """
+        return self._image_altering_prohibited
+
+    @image_altering_prohibited.setter
+    def image_altering_prohibited(self, image_altering_prohibited):
+        """Sets the image_altering_prohibited of this Item.
+
+        A boolean that indicates whether the images can be altered. If the value is <code>true</code>, you cannot modify the image. <p><span class=\"tablenote\"><b>Note: </b> Due to image licensing agreements and other legal concerns, modification (including resizing) of some images is strictly prohibited. These images are for display as-is only. </span></p>  # noqa: E501
+
+        :param image_altering_prohibited: The image_altering_prohibited of this Item.  # noqa: E501
+        :type: bool
+        """
+
+        self._image_altering_prohibited = image_altering_prohibited
+
+    @property
+    def estimated_available_quantity(self):
+        """Gets the estimated_available_quantity of this Item.  # noqa: E501
+
+        The estimated number of this item that are available for purchase. Because the quantity of an item can change several times within a second, it is impossible to return the exact quantity. So instead of returning quantity, the estimated availability of the item is returned.  # noqa: E501
+
+        :return: The estimated_available_quantity of this Item.  # noqa: E501
+        :rtype: int
+        """
+        return self._estimated_available_quantity
+
+    @estimated_available_quantity.setter
+    def estimated_available_quantity(self, estimated_available_quantity):
+        """Sets the estimated_available_quantity of this Item.
+
+        The estimated number of this item that are available for purchase. Because the quantity of an item can change several times within a second, it is impossible to return the exact quantity. So instead of returning quantity, the estimated availability of the item is returned.  # noqa: E501
+
+        :param estimated_available_quantity: The estimated_available_quantity of this Item.  # noqa: E501
+        :type: int
+        """
+
+        self._estimated_available_quantity = estimated_available_quantity
+
+    @property
+    def availability_threshold_type(self):
+        """Gets the availability_threshold_type of this Item.  # noqa: E501
+
+        <a name=\"display-item-quantity\"></a> This column has a value only when the seller sets their <b>Display Item Quantity</b> preference to <b> Display \"More than 10 available\" in your listing (if applicable)</b>. The value of this column will be <code> MORE_THAN</code>. This indicates that the seller has more than the 'Display Item Quantity', which is 10, in stock for this item.    <br /><br /> The following are the <b>Display Item Quantity</b> preferences the seller can set. <br /><ul><li> <b> Display \"More than 10 available\" in your listing (if applicable)</b> <br />If the seller enables this preference, this column will have a value as long as there are more than 10 of this item in inventory. If the quantity is equal to 10 or drops below 10, this column will be null and the estimated quantity of the item is returned in the <b> estimatedAvailableQuantity</b> column. </li> <li> <b> Display the exact quantity in your items</b> <br />If the seller enables this preference, the <b> availabilityThresholdType</b> and <b> availabilityThreshold</b> columns will be null  and the estimated quantity of the item is returned in the <b> estimatedAvailableQuantity</b> column.<br /><br /><b>Note: </b> Because the quantity of an item can change several times within a second, it is impossible to return the exact quantity. </li></ul>   <br />Code so that your app gracefully handles any future changes to these preferences. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:AvailabilityThresholdEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The availability_threshold_type of this Item.  # noqa: E501
         :rtype: str
         """
-        return self._ship_to_excluded_regions
+        return self._availability_threshold_type
 
-    @ship_to_excluded_regions.setter
-    def ship_to_excluded_regions(self, ship_to_excluded_regions):
-        """Sets the ship_to_excluded_regions of this Item.
+    @availability_threshold_type.setter
+    def availability_threshold_type(self, availability_threshold_type):
+        """Sets the availability_threshold_type of this Item.
 
-        A pipe (|) separated alphabetical list of the geographic countries and regions where the item cannot be shipped. These countries and regions refine (restrict) the shipToIncludedRegions list. The COUNTRY: list is separated from the REGION: list with a semicolon (;). Format Example: COUNTRY:US|BM|GL|MX|PM;REGION:AFRICA|ASIA|CENTRAL_AMERICA_AND_CARIBBEAN|EUROPE|MIDDLE_EAST|OCEANIA|SOUTH_AMERICA|SOUTHEAST_ASIA; Country Values: The two-letter ISO 3166 standard code of the country. Region Values: AFRICA, AMERICAS, ANTARCTIC, ARCTIC, ASIA, AUSTRALIA, CENTRAL_AMERICA_AND_CARIBBEAN, EUROPE, EURO_UNION, GREATER_CHINA, MIDDLE_EAST, NORTH_AMERICA, OCEANIA, REST_OF_ASIA, SOUTHEAST_ASIA, SOUTH_AMERICA, WORLDWIDE Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        <a name=\"display-item-quantity\"></a> This column has a value only when the seller sets their <b>Display Item Quantity</b> preference to <b> Display \"More than 10 available\" in your listing (if applicable)</b>. The value of this column will be <code> MORE_THAN</code>. This indicates that the seller has more than the 'Display Item Quantity', which is 10, in stock for this item.    <br /><br /> The following are the <b>Display Item Quantity</b> preferences the seller can set. <br /><ul><li> <b> Display \"More than 10 available\" in your listing (if applicable)</b> <br />If the seller enables this preference, this column will have a value as long as there are more than 10 of this item in inventory. If the quantity is equal to 10 or drops below 10, this column will be null and the estimated quantity of the item is returned in the <b> estimatedAvailableQuantity</b> column. </li> <li> <b> Display the exact quantity in your items</b> <br />If the seller enables this preference, the <b> availabilityThresholdType</b> and <b> availabilityThreshold</b> columns will be null  and the estimated quantity of the item is returned in the <b> estimatedAvailableQuantity</b> column.<br /><br /><b>Note: </b> Because the quantity of an item can change several times within a second, it is impossible to return the exact quantity. </li></ul>   <br />Code so that your app gracefully handles any future changes to these preferences. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:AvailabilityThresholdEnum'>eBay API documentation</a>  # noqa: E501
 
-        :param ship_to_excluded_regions: The ship_to_excluded_regions of this Item.  # noqa: E501
+        :param availability_threshold_type: The availability_threshold_type of this Item.  # noqa: E501
         :type: str
         """
 
-        self._ship_to_excluded_regions = ship_to_excluded_regions
+        self._availability_threshold_type = availability_threshold_type
+
+    @property
+    def availability_threshold(self):
+        """Gets the availability_threshold of this Item.  # noqa: E501
+
+        This column has a value only when the seller sets their '<a href=\"#display-item-quantity\">display item quantity</a>' preference to <b> Display \"More than 10 available\" in your listing (if applicable)</b>. The value of this column will be \"10\", which is the threshold value. <br /><br />Code so that your app gracefully handles any future changes to this value.  # noqa: E501
+
+        :return: The availability_threshold of this Item.  # noqa: E501
+        :rtype: int
+        """
+        return self._availability_threshold
+
+    @availability_threshold.setter
+    def availability_threshold(self, availability_threshold):
+        """Sets the availability_threshold of this Item.
+
+        This column has a value only when the seller sets their '<a href=\"#display-item-quantity\">display item quantity</a>' preference to <b> Display \"More than 10 available\" in your listing (if applicable)</b>. The value of this column will be \"10\", which is the threshold value. <br /><br />Code so that your app gracefully handles any future changes to this value.  # noqa: E501
+
+        :param availability_threshold: The availability_threshold of this Item.  # noqa: E501
+        :type: int
+        """
+
+        self._availability_threshold = availability_threshold
+
+    @property
+    def returns_accepted(self):
+        """Gets the returns_accepted of this Item.  # noqa: E501
+
+        Indicates whether the seller accepts returns for the item.  # noqa: E501
+
+        :return: The returns_accepted of this Item.  # noqa: E501
+        :rtype: bool
+        """
+        return self._returns_accepted
+
+    @returns_accepted.setter
+    def returns_accepted(self, returns_accepted):
+        """Sets the returns_accepted of this Item.
+
+        Indicates whether the seller accepts returns for the item.  # noqa: E501
+
+        :param returns_accepted: The returns_accepted of this Item.  # noqa: E501
+        :type: bool
+        """
+
+        self._returns_accepted = returns_accepted
+
+    @property
+    def return_period_value(self):
+        """Gets the return_period_value of this Item.  # noqa: E501
+
+        The amount of days that the buyer has to return the item after the purchase date. For example, if this value is '30', the return period is 30 days.  # noqa: E501
+
+        :return: The return_period_value of this Item.  # noqa: E501
+        :rtype: int
+        """
+        return self._return_period_value
+
+    @return_period_value.setter
+    def return_period_value(self, return_period_value):
+        """Sets the return_period_value of this Item.
+
+        The amount of days that the buyer has to return the item after the purchase date. For example, if this value is '30', the return period is 30 days.  # noqa: E501
+
+        :param return_period_value: The return_period_value of this Item.  # noqa: E501
+        :type: int
+        """
+
+        self._return_period_value = return_period_value
+
+    @property
+    def return_period_unit(self):
+        """Gets the return_period_unit of this Item.  # noqa: E501
+
+        An enumeration value that indicates the period of time being used to measure the duration, such as business days, months, or years. <br /><br /><b>TimeDurationUnitEnum</b> is a common type shared by multiple eBay APIs and fields to express the time unit, but for return period duration, this value will always be <code>DAY</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/bas:TimeDurationUnitEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The return_period_unit of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._return_period_unit
+
+    @return_period_unit.setter
+    def return_period_unit(self, return_period_unit):
+        """Sets the return_period_unit of this Item.
+
+        An enumeration value that indicates the period of time being used to measure the duration, such as business days, months, or years. <br /><br /><b>TimeDurationUnitEnum</b> is a common type shared by multiple eBay APIs and fields to express the time unit, but for return period duration, this value will always be <code>DAY</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/bas:TimeDurationUnitEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param return_period_unit: The return_period_unit of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._return_period_unit = return_period_unit
+
+    @property
+    def refund_method(self):
+        """Gets the refund_method of this Item.  # noqa: E501
+
+        An enumeration value that indicates how a buyer is refunded when an item is returned. <br /><br />Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:RefundMethodEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The refund_method of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._refund_method
+
+    @refund_method.setter
+    def refund_method(self, refund_method):
+        """Sets the refund_method of this Item.
+
+        An enumeration value that indicates how a buyer is refunded when an item is returned. <br /><br />Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:RefundMethodEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param refund_method: The refund_method of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._refund_method = refund_method
+
+    @property
+    def return_method(self):
+        """Gets the return_method of this Item.  # noqa: E501
+
+        An enumeration value that indicates the alternative methods for a full refund when an item is returned. This column will have data if the seller offers the buyer an item replacement or exchange instead of a monetary refund. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:ReturnMethodEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The return_method of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._return_method
+
+    @return_method.setter
+    def return_method(self, return_method):
+        """Sets the return_method of this Item.
+
+        An enumeration value that indicates the alternative methods for a full refund when an item is returned. This column will have data if the seller offers the buyer an item replacement or exchange instead of a monetary refund. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:ReturnMethodEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param return_method: The return_method of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._return_method = return_method
+
+    @property
+    def return_shipping_cost_payer(self):
+        """Gets the return_shipping_cost_payer of this Item.  # noqa: E501
+
+        The party responsible for the return shipping costs when an item is returned. <br /><br /><b>Valid Values: </b> <code>BUYER</code> or <code>SELLER</code>  <br /><br />Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:ReturnShippingCostPayerEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The return_shipping_cost_payer of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._return_shipping_cost_payer
+
+    @return_shipping_cost_payer.setter
+    def return_shipping_cost_payer(self, return_shipping_cost_payer):
+        """Sets the return_shipping_cost_payer of this Item.
+
+        The party responsible for the return shipping costs when an item is returned. <br /><br /><b>Valid Values: </b> <code>BUYER</code> or <code>SELLER</code>  <br /><br />Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:ReturnShippingCostPayerEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param return_shipping_cost_payer: The return_shipping_cost_payer of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._return_shipping_cost_payer = return_shipping_cost_payer
+
+    @property
+    def accepted_payment_methods(self):
+        """Gets the accepted_payment_methods of this Item.  # noqa: E501
+
+        Indicates the credit card service that will be used to process the transaction. <ul> <li>If this column contains <code>PAYPAL</code>, you can use the Buy <a href=\"/api-docs/buy/order/resources/methods\">Order API</a> to checkout and purchase the item.</li>  <li>If this column is empty, you must use another method for checkout.</li></ul>  # noqa: E501
+
+        :return: The accepted_payment_methods of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._accepted_payment_methods
+
+    @accepted_payment_methods.setter
+    def accepted_payment_methods(self, accepted_payment_methods):
+        """Sets the accepted_payment_methods of this Item.
+
+        Indicates the credit card service that will be used to process the transaction. <ul> <li>If this column contains <code>PAYPAL</code>, you can use the Buy <a href=\"/api-docs/buy/order/resources/methods\">Order API</a> to checkout and purchase the item.</li>  <li>If this column is empty, you must use another method for checkout.</li></ul>  # noqa: E501
+
+        :param accepted_payment_methods: The accepted_payment_methods of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._accepted_payment_methods = accepted_payment_methods
+
+    @property
+    def delivery_options(self):
+        """Gets the delivery_options of this Item.  # noqa: E501
+
+        A comma-separated list of available delivery options. This column lets you filter out items than cannot be shipped to the buyer. <br /><br /><b>Valid Values</b>: SHIP_TO_HOME, SELLER_ARRANGED_LOCAL_PICKUP, IN_STORE_PICKUP, and PICKUP_DROP_OFF. <br /><br />Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:DeliveryOptionsEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The delivery_options of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._delivery_options
+
+    @delivery_options.setter
+    def delivery_options(self, delivery_options):
+        """Sets the delivery_options of this Item.
+
+        A comma-separated list of available delivery options. This column lets you filter out items than cannot be shipped to the buyer. <br /><br /><b>Valid Values</b>: SHIP_TO_HOME, SELLER_ARRANGED_LOCAL_PICKUP, IN_STORE_PICKUP, and PICKUP_DROP_OFF. <br /><br />Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:DeliveryOptionsEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param delivery_options: The delivery_options of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._delivery_options = delivery_options
 
     @property
     def ship_to_included_regions(self):
         """Gets the ship_to_included_regions of this Item.  # noqa: E501
 
-        A pipe (|) separated alphabetical list of the geographic countries and regions where the seller will ship the item. If a region is specified, you will need to subtract any countries and regions returned in the shipToExcludedRegions column to fully understand where the seller will ship. The COUNTRY: list is separated from the REGION: list with a semicolon (;). Format Example: COUNTRY:US|BM|GL|MX|PM;REGION:AFRICA|ASIA|CENTRAL_AMERICA_AND_CARIBBEAN|EUROPE|MIDDLE_EAST|OCEANIA|SOUTH_AMERICA|SOUTHEAST_ASIA; Country Values: The two-letter ISO 3166 standard code of the country. Region Values: AFRICA, AMERICAS, ANTARCTIC, ARCTIC, ASIA, AUSTRALIA, CENTRAL_AMERICA_AND_CARIBBEAN, EUROPE, EURO_UNION, GREATER_CHINA, MIDDLE_EAST, NORTH_AMERICA, OCEANIA, REST_OF_ASIA, SOUTHEAST_ASIA, SOUTH_AMERICA, WORLDWIDE Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        A pipe (<code>|</code>) separated alphabetical list of the geographic countries and regions where the seller will ship the item. <br /><br />If a region is specified, you will need to subtract any countries and regions returned in the <b> shipToExcludedRegions</b> column to fully understand where the seller will ship. <br /><br />The COUNTRY: list is separated from the REGION: list with a semicolon (<code>;</code>).       <br /><br /><b> Format Example: </b> <br /> <code>COUNTRY:US|BM|GL|MX|PM;REGION:AFRICA|ASIA|CENTRAL_AMERICA_AND_CARIBBEAN|EUROPE|MIDDLE_EAST|OCEANIA|SOUTH_AMERICA|SOUTHEAST_ASIA;</code>  <br /><br /><b> Country Values: </b> The two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\">ISO 3166</a> standard code of the country.       <br /><br /><b> Region Values: </b> AFRICA, AMERICAS, ANTARCTIC, ARCTIC, ASIA, AUSTRALIA, CENTRAL_AMERICA_AND_CARIBBEAN, EUROPE, EURO_UNION, GREATER_CHINA, MIDDLE_EAST, NORTH_AMERICA, OCEANIA, REST_OF_ASIA, SOUTHEAST_ASIA, SOUTH_AMERICA, WORLDWIDE <br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :return: The ship_to_included_regions of this Item.  # noqa: E501
         :rtype: str
@@ -2077,13 +1318,473 @@ class Item(object):
     def ship_to_included_regions(self, ship_to_included_regions):
         """Sets the ship_to_included_regions of this Item.
 
-        A pipe (|) separated alphabetical list of the geographic countries and regions where the seller will ship the item. If a region is specified, you will need to subtract any countries and regions returned in the shipToExcludedRegions column to fully understand where the seller will ship. The COUNTRY: list is separated from the REGION: list with a semicolon (;). Format Example: COUNTRY:US|BM|GL|MX|PM;REGION:AFRICA|ASIA|CENTRAL_AMERICA_AND_CARIBBEAN|EUROPE|MIDDLE_EAST|OCEANIA|SOUTH_AMERICA|SOUTHEAST_ASIA; Country Values: The two-letter ISO 3166 standard code of the country. Region Values: AFRICA, AMERICAS, ANTARCTIC, ARCTIC, ASIA, AUSTRALIA, CENTRAL_AMERICA_AND_CARIBBEAN, EUROPE, EURO_UNION, GREATER_CHINA, MIDDLE_EAST, NORTH_AMERICA, OCEANIA, REST_OF_ASIA, SOUTHEAST_ASIA, SOUTH_AMERICA, WORLDWIDE Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        A pipe (<code>|</code>) separated alphabetical list of the geographic countries and regions where the seller will ship the item. <br /><br />If a region is specified, you will need to subtract any countries and regions returned in the <b> shipToExcludedRegions</b> column to fully understand where the seller will ship. <br /><br />The COUNTRY: list is separated from the REGION: list with a semicolon (<code>;</code>).       <br /><br /><b> Format Example: </b> <br /> <code>COUNTRY:US|BM|GL|MX|PM;REGION:AFRICA|ASIA|CENTRAL_AMERICA_AND_CARIBBEAN|EUROPE|MIDDLE_EAST|OCEANIA|SOUTH_AMERICA|SOUTHEAST_ASIA;</code>  <br /><br /><b> Country Values: </b> The two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\">ISO 3166</a> standard code of the country.       <br /><br /><b> Region Values: </b> AFRICA, AMERICAS, ANTARCTIC, ARCTIC, ASIA, AUSTRALIA, CENTRAL_AMERICA_AND_CARIBBEAN, EUROPE, EURO_UNION, GREATER_CHINA, MIDDLE_EAST, NORTH_AMERICA, OCEANIA, REST_OF_ASIA, SOUTHEAST_ASIA, SOUTH_AMERICA, WORLDWIDE <br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :param ship_to_included_regions: The ship_to_included_regions of this Item.  # noqa: E501
         :type: str
         """
 
         self._ship_to_included_regions = ship_to_included_regions
+
+    @property
+    def ship_to_excluded_regions(self):
+        """Gets the ship_to_excluded_regions of this Item.  # noqa: E501
+
+        A pipe (<code>|</code>) separated alphabetical list of the geographic countries and regions where the item cannot be shipped. <br /><br />These countries and regions refine (restrict) the <b> shipToIncludedRegions</b> list.  The COUNTRY: list is separated from the REGION: list with a semicolon (<code>;</code>).       <br /><br /><b> Format Example: </b> <br /> <code>COUNTRY:US|BM|GL|MX|PM;REGION:AFRICA|ASIA|CENTRAL_AMERICA_AND_CARIBBEAN|EUROPE|MIDDLE_EAST|OCEANIA|SOUTH_AMERICA|SOUTHEAST_ASIA;</code>  <br /><br /><b> Country Values: </b> The two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\">ISO 3166</a> standard code of the country.       <br /><br /><b> Region Values: </b> AFRICA, AMERICAS, ANTARCTIC, ARCTIC, ASIA, AUSTRALIA, CENTRAL_AMERICA_AND_CARIBBEAN, EUROPE, EURO_UNION, GREATER_CHINA, MIDDLE_EAST, NORTH_AMERICA, OCEANIA, REST_OF_ASIA, SOUTHEAST_ASIA, SOUTH_AMERICA, WORLDWIDE <br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+
+        :return: The ship_to_excluded_regions of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._ship_to_excluded_regions
+
+    @ship_to_excluded_regions.setter
+    def ship_to_excluded_regions(self, ship_to_excluded_regions):
+        """Sets the ship_to_excluded_regions of this Item.
+
+        A pipe (<code>|</code>) separated alphabetical list of the geographic countries and regions where the item cannot be shipped. <br /><br />These countries and regions refine (restrict) the <b> shipToIncludedRegions</b> list.  The COUNTRY: list is separated from the REGION: list with a semicolon (<code>;</code>).       <br /><br /><b> Format Example: </b> <br /> <code>COUNTRY:US|BM|GL|MX|PM;REGION:AFRICA|ASIA|CENTRAL_AMERICA_AND_CARIBBEAN|EUROPE|MIDDLE_EAST|OCEANIA|SOUTH_AMERICA|SOUTHEAST_ASIA;</code>  <br /><br /><b> Country Values: </b> The two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\">ISO 3166</a> standard code of the country.       <br /><br /><b> Region Values: </b> AFRICA, AMERICAS, ANTARCTIC, ARCTIC, ASIA, AUSTRALIA, CENTRAL_AMERICA_AND_CARIBBEAN, EUROPE, EURO_UNION, GREATER_CHINA, MIDDLE_EAST, NORTH_AMERICA, OCEANIA, REST_OF_ASIA, SOUTHEAST_ASIA, SOUTH_AMERICA, WORLDWIDE <br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+
+        :param ship_to_excluded_regions: The ship_to_excluded_regions of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._ship_to_excluded_regions = ship_to_excluded_regions
+
+    @property
+    def inferred_epid(self):
+        """Gets the inferred_epid of this Item.  # noqa: E501
+
+        The ePID (eBay Product ID of a product in the eBay product catalog) for the item, which has been programmatically determined by eBay using the item's title, aspects, and other data. <br /><br />If the seller actually provided an ePID at listing time for the item, the ePID value is returned in the <b>epid</b> column instead.  # noqa: E501
+
+        :return: The inferred_epid of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._inferred_epid
+
+    @inferred_epid.setter
+    def inferred_epid(self, inferred_epid):
+        """Sets the inferred_epid of this Item.
+
+        The ePID (eBay Product ID of a product in the eBay product catalog) for the item, which has been programmatically determined by eBay using the item's title, aspects, and other data. <br /><br />If the seller actually provided an ePID at listing time for the item, the ePID value is returned in the <b>epid</b> column instead.  # noqa: E501
+
+        :param inferred_epid: The inferred_epid of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._inferred_epid = inferred_epid
+
+    @property
+    def inferred_gtin(self):
+        """Gets the inferred_gtin of this Item.  # noqa: E501
+
+        The GTIN (Global Trade Item Number) of the product as defined by <a href=\"https://www.gtin.info\">https://www.gtin.info</a>, which as been programmatically determined by eBay. This can be a UPC (Universal Product Code), EAN (European Article Number), or an ISBN (International Standard Book Number) value. <br /><br />If the seller provided a GTIN for the item, the seller's value is returned in the <b> gtin</b> column.  # noqa: E501
+
+        :return: The inferred_gtin of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._inferred_gtin
+
+    @inferred_gtin.setter
+    def inferred_gtin(self, inferred_gtin):
+        """Sets the inferred_gtin of this Item.
+
+        The GTIN (Global Trade Item Number) of the product as defined by <a href=\"https://www.gtin.info\">https://www.gtin.info</a>, which as been programmatically determined by eBay. This can be a UPC (Universal Product Code), EAN (European Article Number), or an ISBN (International Standard Book Number) value. <br /><br />If the seller provided a GTIN for the item, the seller's value is returned in the <b> gtin</b> column.  # noqa: E501
+
+        :param inferred_gtin: The inferred_gtin of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._inferred_gtin = inferred_gtin
+
+    @property
+    def inferred_brand(self):
+        """Gets the inferred_brand of this Item.  # noqa: E501
+
+        The name brand for the item, such as Nike or Apple, which has been programmatically determined by eBay. To identify the product, this is always used along with <b> MPN</b>. <br /><br />If the seller provided a brand for the item, the seller's value is returned in the <b> brand</b> column.  # noqa: E501
+
+        :return: The inferred_brand of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._inferred_brand
+
+    @inferred_brand.setter
+    def inferred_brand(self, inferred_brand):
+        """Sets the inferred_brand of this Item.
+
+        The name brand for the item, such as Nike or Apple, which has been programmatically determined by eBay. To identify the product, this is always used along with <b> MPN</b>. <br /><br />If the seller provided a brand for the item, the seller's value is returned in the <b> brand</b> column.  # noqa: E501
+
+        :param inferred_brand: The inferred_brand of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._inferred_brand = inferred_brand
+
+    @property
+    def inferred_mpn(self):
+        """Gets the inferred_mpn of this Item.  # noqa: E501
+
+        The MPN (Manufacturer's Part Number) for the item, which has been programmatically determined by eBay. To identify the product, this is always used along with <b> brand</b>. <br /><br />If the seller provided a MPN for the item, the seller's value is returned in the <b> mpn</b> column.  # noqa: E501
+
+        :return: The inferred_mpn of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._inferred_mpn
+
+    @inferred_mpn.setter
+    def inferred_mpn(self, inferred_mpn):
+        """Sets the inferred_mpn of this Item.
+
+        The MPN (Manufacturer's Part Number) for the item, which has been programmatically determined by eBay. To identify the product, this is always used along with <b> brand</b>. <br /><br />If the seller provided a MPN for the item, the seller's value is returned in the <b> mpn</b> column.  # noqa: E501
+
+        :param inferred_mpn: The inferred_mpn of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._inferred_mpn = inferred_mpn
+
+    @property
+    def inferred_localized_aspects(self):
+        """Gets the inferred_localized_aspects of this Item.  # noqa: E501
+
+        A semicolon separated list of the name/value pairs for the aspects of the item, which are BASE64 encoded. These aspects have been programmatically determined by eBay. If the seller provided aspects for the item, the seller's values are returned in the <b>localizedAspects</b> column.  <br /><br />The aspect label is separated by a pipe (|), the aspect name and value are separated by a colon (:) and the name/value pairs are separated by a semicolon (;). <p><b> Example without Label</b></p>    <p>&nbsp;&nbsp;<b> Encoded Format:</b> <br />&nbsp;&nbsp;&nbsp;<code><em>encodedName</em>:<em>encodedValue</em>;<em>encodedName</em>:<em>encodedValue</em>;<em>encodedName</em>:<em>encodedValue</em></code> </p>       <p>&nbsp;&nbsp;<b> Encoded Example</b> (The delimiters are <b style=\"font-family: 'Arial Black';\">emphasized</b>):    <br />&nbsp;&nbsp;&nbsp;<code>U2l6ZQ==<b style=\"font-family: 'Arial Black';\">:</b>WEw=<b style=\"font-family: 'Arial Black';\">;</b>Q29sb3I=<b style=\"font-family: 'Arial Black';\">:</b>UmVk<b style=\"font-family: 'Arial Black';\">;</b>U2xlZXZlcw==<b style=\"font-family: 'Arial Black';\">:</b>TG9uZw==</code> </p>    <p>&nbsp;&nbsp;<b> Decoded: </b> <br />&nbsp;&nbsp;&nbsp;Size:XL;Color:Red;Sleeves:Long </p>        <p><br /><b> Example with Label</b></p>    <p>&nbsp;&nbsp;<b> Encoded Format:</b>   <br />&nbsp;&nbsp;&nbsp;<code><em>encodedLabel</em>|<em>encodedName</em>:<em>encodedValue</em>;<em>encodedName</em>:<em>encodedValue</em>;<em>encodedLabel</em>|</code></p>       <p>&nbsp;&nbsp;<b> Encoded Example</b> (The delimiters are <b style=\"font-family: 'Arial Black';\">emphasized</b>):  <br />&nbsp;&nbsp;&nbsp;<code>UHJvZHVjdCBJZGVudGlmaWVycw==<b style=\"font-family: 'Arial Black';\">|</b>R1RJTg==<b style=\"font-family: 'Arial Black';\">:</b>MDE5MDE5ODA2NjYzMw==<b style=\"font-family: 'Arial Black';\">;</b>QlJBTkQ=<b style=\"font-family: 'Arial Black';\">:</b>QXBwbGU=<b style=\"font-family: 'Arial Black';\">;</b>UHJvZHVjdCBLZXkgRmVhdHVyZXM=<b style=\"font-family: 'Arial Black';\">|</b>TW9kZWw=<b style=\"font-family: 'Arial Black';\">:</b>aVBob25lIDc=</code> </p>        <p>&nbsp;&nbsp;<b> Decoded: </b> <br />&nbsp;&nbsp;&nbsp;Product Identifiers|GTIN:0190198066633;BRAND:Apple;Product Key Features|Model:iPhone 7</p>        <p><span class=\"tablenote\"><b>Note: </b> The separators (<code> |  :  ; </code>) are <i> not</i> encoded. You must decode each label, name, and value separately. You cannot decode the entire string.</b></p> <p>For more information, see <a href=\"/api-docs/buy/static/api-feed.html#encoded-aspects\">Encoded Aspects</a> in the Buying Integration Guide.</p>  # noqa: E501
+
+        :return: The inferred_localized_aspects of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._inferred_localized_aspects
+
+    @inferred_localized_aspects.setter
+    def inferred_localized_aspects(self, inferred_localized_aspects):
+        """Sets the inferred_localized_aspects of this Item.
+
+        A semicolon separated list of the name/value pairs for the aspects of the item, which are BASE64 encoded. These aspects have been programmatically determined by eBay. If the seller provided aspects for the item, the seller's values are returned in the <b>localizedAspects</b> column.  <br /><br />The aspect label is separated by a pipe (|), the aspect name and value are separated by a colon (:) and the name/value pairs are separated by a semicolon (;). <p><b> Example without Label</b></p>    <p>&nbsp;&nbsp;<b> Encoded Format:</b> <br />&nbsp;&nbsp;&nbsp;<code><em>encodedName</em>:<em>encodedValue</em>;<em>encodedName</em>:<em>encodedValue</em>;<em>encodedName</em>:<em>encodedValue</em></code> </p>       <p>&nbsp;&nbsp;<b> Encoded Example</b> (The delimiters are <b style=\"font-family: 'Arial Black';\">emphasized</b>):    <br />&nbsp;&nbsp;&nbsp;<code>U2l6ZQ==<b style=\"font-family: 'Arial Black';\">:</b>WEw=<b style=\"font-family: 'Arial Black';\">;</b>Q29sb3I=<b style=\"font-family: 'Arial Black';\">:</b>UmVk<b style=\"font-family: 'Arial Black';\">;</b>U2xlZXZlcw==<b style=\"font-family: 'Arial Black';\">:</b>TG9uZw==</code> </p>    <p>&nbsp;&nbsp;<b> Decoded: </b> <br />&nbsp;&nbsp;&nbsp;Size:XL;Color:Red;Sleeves:Long </p>        <p><br /><b> Example with Label</b></p>    <p>&nbsp;&nbsp;<b> Encoded Format:</b>   <br />&nbsp;&nbsp;&nbsp;<code><em>encodedLabel</em>|<em>encodedName</em>:<em>encodedValue</em>;<em>encodedName</em>:<em>encodedValue</em>;<em>encodedLabel</em>|</code></p>       <p>&nbsp;&nbsp;<b> Encoded Example</b> (The delimiters are <b style=\"font-family: 'Arial Black';\">emphasized</b>):  <br />&nbsp;&nbsp;&nbsp;<code>UHJvZHVjdCBJZGVudGlmaWVycw==<b style=\"font-family: 'Arial Black';\">|</b>R1RJTg==<b style=\"font-family: 'Arial Black';\">:</b>MDE5MDE5ODA2NjYzMw==<b style=\"font-family: 'Arial Black';\">;</b>QlJBTkQ=<b style=\"font-family: 'Arial Black';\">:</b>QXBwbGU=<b style=\"font-family: 'Arial Black';\">;</b>UHJvZHVjdCBLZXkgRmVhdHVyZXM=<b style=\"font-family: 'Arial Black';\">|</b>TW9kZWw=<b style=\"font-family: 'Arial Black';\">:</b>aVBob25lIDc=</code> </p>        <p>&nbsp;&nbsp;<b> Decoded: </b> <br />&nbsp;&nbsp;&nbsp;Product Identifiers|GTIN:0190198066633;BRAND:Apple;Product Key Features|Model:iPhone 7</p>        <p><span class=\"tablenote\"><b>Note: </b> The separators (<code> |  :  ; </code>) are <i> not</i> encoded. You must decode each label, name, and value separately. You cannot decode the entire string.</b></p> <p>For more information, see <a href=\"/api-docs/buy/static/api-feed.html#encoded-aspects\">Encoded Aspects</a> in the Buying Integration Guide.</p>  # noqa: E501
+
+        :param inferred_localized_aspects: The inferred_localized_aspects of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._inferred_localized_aspects = inferred_localized_aspects
+
+    @property
+    def additional_image_urls(self):
+        """Gets the additional_image_urls of this Item.  # noqa: E501
+
+        A pipe separated (<code>|</code>) list of URLs for the additional images of the item. These images are in addition to the primary image, which is returned in the <b>imageUrl</b> column. <b>Note: </b> This column can contain multiple values.  # noqa: E501
+
+        :return: The additional_image_urls of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._additional_image_urls
+
+    @additional_image_urls.setter
+    def additional_image_urls(self, additional_image_urls):
+        """Sets the additional_image_urls of this Item.
+
+        A pipe separated (<code>|</code>) list of URLs for the additional images of the item. These images are in addition to the primary image, which is returned in the <b>imageUrl</b> column. <b>Note: </b> This column can contain multiple values.  # noqa: E501
+
+        :param additional_image_urls: The additional_image_urls of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._additional_image_urls = additional_image_urls
+
+    @property
+    def original_price_value(self):
+        """Gets the original_price_value of this Item.  # noqa: E501
+
+        The original selling price of the item. This lets you surface a strikethrough price for the item.   # noqa: E501
+
+        :return: The original_price_value of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._original_price_value
+
+    @original_price_value.setter
+    def original_price_value(self, original_price_value):
+        """Sets the original_price_value of this Item.
+
+        The original selling price of the item. This lets you surface a strikethrough price for the item.   # noqa: E501
+
+        :param original_price_value: The original_price_value of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._original_price_value = original_price_value
+
+    @property
+    def original_price_currency(self):
+        """Gets the original_price_currency of this Item.  # noqa: E501
+
+        The currency of the <b> originalPriceValue</b> of the item and the <b> discountAmount</b>.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/bas:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The original_price_currency of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._original_price_currency
+
+    @original_price_currency.setter
+    def original_price_currency(self, original_price_currency):
+        """Sets the original_price_currency of this Item.
+
+        The currency of the <b> originalPriceValue</b> of the item and the <b> discountAmount</b>.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/bas:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param original_price_currency: The original_price_currency of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._original_price_currency = original_price_currency
+
+    @property
+    def discount_amount(self):
+        """Gets the discount_amount of this Item.  # noqa: E501
+
+        The calculated amount of the discount (<b>originalPriceValue</b> - <b>priceValue</b>). For example,  if <b>originalPriceValue</b> is 70 and <b>priceValue</b> is 56, this value would be 14. <p><span class=\"tablenote\"><b>Note: </b> The currency shown in <b>originalPriceCurrency</b> is used for both <b>discountAmount</b> and <b>originalPriceCurrency</b>.</span></p>  # noqa: E501
+
+        :return: The discount_amount of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._discount_amount
+
+    @discount_amount.setter
+    def discount_amount(self, discount_amount):
+        """Sets the discount_amount of this Item.
+
+        The calculated amount of the discount (<b>originalPriceValue</b> - <b>priceValue</b>). For example,  if <b>originalPriceValue</b> is 70 and <b>priceValue</b> is 56, this value would be 14. <p><span class=\"tablenote\"><b>Note: </b> The currency shown in <b>originalPriceCurrency</b> is used for both <b>discountAmount</b> and <b>originalPriceCurrency</b>.</span></p>  # noqa: E501
+
+        :param discount_amount: The discount_amount of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._discount_amount = discount_amount
+
+    @property
+    def discount_percentage(self):
+        """Gets the discount_percentage of this Item.  # noqa: E501
+
+        The calculated discount percentage. For example, if <b> originalPriceValue</b> is 70 and <b> discountAmount</b> is 14, this value will be 20.  # noqa: E501
+
+        :return: The discount_percentage of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._discount_percentage
+
+    @discount_percentage.setter
+    def discount_percentage(self, discount_percentage):
+        """Sets the discount_percentage of this Item.
+
+        The calculated discount percentage. For example, if <b> originalPriceValue</b> is 70 and <b> discountAmount</b> is 14, this value will be 20.  # noqa: E501
+
+        :param discount_percentage: The discount_percentage of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._discount_percentage = discount_percentage
+
+    @property
+    def energy_efficiency_class(self):
+        """Gets the energy_efficiency_class of this Item.  # noqa: E501
+
+        Indicates the <a href=\"https://en.wikipedia.org/wiki/European_Union_energy_label\">European energy efficiency</a> rating (EEK) of the item. Data is returned in this column only if the seller specified the energy efficiency rating. <br /><br />The rating is a set of energy efficiency classes from A to G, where 'A' is the most energy efficient and 'G' is the least efficient. This rating helps buyers choose between various models. <br /><br />To retrieve the manufacturer's specifications for this item, when they are available, use the <a href=\"/api-docs/buy/browse/resources/item/methods/getItem\">getItem</a> method in the Browse API. The information is returned in the <b> productFicheWebUrl</b> field.  # noqa: E501
+
+        :return: The energy_efficiency_class of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._energy_efficiency_class
+
+    @energy_efficiency_class.setter
+    def energy_efficiency_class(self, energy_efficiency_class):
+        """Sets the energy_efficiency_class of this Item.
+
+        Indicates the <a href=\"https://en.wikipedia.org/wiki/European_Union_energy_label\">European energy efficiency</a> rating (EEK) of the item. Data is returned in this column only if the seller specified the energy efficiency rating. <br /><br />The rating is a set of energy efficiency classes from A to G, where 'A' is the most energy efficient and 'G' is the least efficient. This rating helps buyers choose between various models. <br /><br />To retrieve the manufacturer's specifications for this item, when they are available, use the <a href=\"/api-docs/buy/browse/resources/item/methods/getItem\">getItem</a> method in the Browse API. The information is returned in the <b> productFicheWebUrl</b> field.  # noqa: E501
+
+        :param energy_efficiency_class: The energy_efficiency_class of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._energy_efficiency_class = energy_efficiency_class
+
+    @property
+    def qualified_programs(self):
+        """Gets the qualified_programs of this Item.  # noqa: E501
+
+        A pipe separated list of the qualified programs available for the item, such as EBAY_PLUS and AUTHENTICITY_GUARANTEE.  <br /><br />eBay Plus is a premium account option for buyers, which provides benefits such as fast free domestic shipping and free returns on selected items. Top-Rated eBay sellers must opt in to eBay Plus to be able to offer the program on qualifying listings. Sellers must commit to next-day delivery of those items.  <span class=\"tablenote\"><b>Note: </b> eBay Plus is available only to buyers in Germany, Austria, and Australia marketplaces. </span><br /><br />The eBay Authenticity Guarantee program enables third-party authenticators to perform authentication verification inspections on items such as watches and sneakers.  # noqa: E501
+
+        :return: The qualified_programs of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._qualified_programs
+
+    @qualified_programs.setter
+    def qualified_programs(self, qualified_programs):
+        """Sets the qualified_programs of this Item.
+
+        A pipe separated list of the qualified programs available for the item, such as EBAY_PLUS and AUTHENTICITY_GUARANTEE.  <br /><br />eBay Plus is a premium account option for buyers, which provides benefits such as fast free domestic shipping and free returns on selected items. Top-Rated eBay sellers must opt in to eBay Plus to be able to offer the program on qualifying listings. Sellers must commit to next-day delivery of those items.  <span class=\"tablenote\"><b>Note: </b> eBay Plus is available only to buyers in Germany, Austria, and Australia marketplaces. </span><br /><br />The eBay Authenticity Guarantee program enables third-party authenticators to perform authentication verification inspections on items such as watches and sneakers.  # noqa: E501
+
+        :param qualified_programs: The qualified_programs of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._qualified_programs = qualified_programs
+
+    @property
+    def lot_size(self):
+        """Gets the lot_size of this Item.  # noqa: E501
+
+        The number of items in a lot. In other words, a lot size is the number of items that are being sold together.  <br /><br />A lot is a set of two or more items included in a single listing that must be purchased together in a single order line item. All the items in the lot are the same but there can be multiple items in a single lot,  such as the package of batteries shown in the example below.  <br /><br /><b>For example:</b> <br /><br /><table border=\"1\"> <tr> <tr>  <th>Item</th>  <th>Lot Definition</th> <th>Lot Size</th></tr>  <tr>  <td>A package of 24 AA batteries</td>  <td>A box of 10 packages</td>  <td>10  </td> </tr>  <tr>  <td>A P235/75-15 Goodyear tire </td>  <td>4 tires  </td>  <td>4  </td> </tr> <tr> <td>Fashion Jewelry Rings  </td> <td>Package of 100 assorted rings  </td> <td>100 </td> </tr></table>  <br /><br /><span class=\"tablenote\"><b>Note: </b>  Lots are not supported in all categories.  </span>  # noqa: E501
+
+        :return: The lot_size of this Item.  # noqa: E501
+        :rtype: int
+        """
+        return self._lot_size
+
+    @lot_size.setter
+    def lot_size(self, lot_size):
+        """Sets the lot_size of this Item.
+
+        The number of items in a lot. In other words, a lot size is the number of items that are being sold together.  <br /><br />A lot is a set of two or more items included in a single listing that must be purchased together in a single order line item. All the items in the lot are the same but there can be multiple items in a single lot,  such as the package of batteries shown in the example below.  <br /><br /><b>For example:</b> <br /><br /><table border=\"1\"> <tr> <tr>  <th>Item</th>  <th>Lot Definition</th> <th>Lot Size</th></tr>  <tr>  <td>A package of 24 AA batteries</td>  <td>A box of 10 packages</td>  <td>10  </td> </tr>  <tr>  <td>A P235/75-15 Goodyear tire </td>  <td>4 tires  </td>  <td>4  </td> </tr> <tr> <td>Fashion Jewelry Rings  </td> <td>Package of 100 assorted rings  </td> <td>100 </td> </tr></table>  <br /><br /><span class=\"tablenote\"><b>Note: </b>  Lots are not supported in all categories.  </span>  # noqa: E501
+
+        :param lot_size: The lot_size of this Item.  # noqa: E501
+        :type: int
+        """
+
+        self._lot_size = lot_size
+
+    @property
+    def length_unit_of_measure(self):
+        """Gets the length_unit_of_measure of this Item.  # noqa: E501
+
+        The unit of measurement used for the package dimensions, such as INCH, FEET, CENTIMETER, or METER. <br /><br />Code so that your app gracefully handles any future changes to this list.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:LengthUnitOfMeasureEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The length_unit_of_measure of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._length_unit_of_measure
+
+    @length_unit_of_measure.setter
+    def length_unit_of_measure(self, length_unit_of_measure):
+        """Sets the length_unit_of_measure of this Item.
+
+        The unit of measurement used for the package dimensions, such as INCH, FEET, CENTIMETER, or METER. <br /><br />Code so that your app gracefully handles any future changes to this list.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:LengthUnitOfMeasureEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param length_unit_of_measure: The length_unit_of_measure of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._length_unit_of_measure = length_unit_of_measure
+
+    @property
+    def package_width(self):
+        """Gets the package_width of this Item.  # noqa: E501
+
+        The width of the shipping package that contains the item.  # noqa: E501
+
+        :return: The package_width of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._package_width
+
+    @package_width.setter
+    def package_width(self, package_width):
+        """Sets the package_width of this Item.
+
+        The width of the shipping package that contains the item.  # noqa: E501
+
+        :param package_width: The package_width of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._package_width = package_width
+
+    @property
+    def package_height(self):
+        """Gets the package_height of this Item.  # noqa: E501
+
+        The height of the shipping package that contains the item.  # noqa: E501
+
+        :return: The package_height of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._package_height
+
+    @package_height.setter
+    def package_height(self, package_height):
+        """Sets the package_height of this Item.
+
+        The height of the shipping package that contains the item.  # noqa: E501
+
+        :param package_height: The package_height of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._package_height = package_height
+
+    @property
+    def package_length(self):
+        """Gets the package_length of this Item.  # noqa: E501
+
+        The length of the shipping package that contains the item.  # noqa: E501
+
+        :return: The package_length of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._package_length
+
+    @package_length.setter
+    def package_length(self, package_length):
+        """Sets the package_length of this Item.
+
+        The length of the shipping package that contains the item.  # noqa: E501
+
+        :param package_length: The package_length of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._package_length = package_length
+
+    @property
+    def weight_unit_of_measure(self):
+        """Gets the weight_unit_of_measure of this Item.  # noqa: E501
+
+        The unit of measurement used for the package weight, such as POUND, KILOGRAM, OUNCE, or GRAM. <br /><br />Code so that your app gracefully handles any future changes to this list.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:WeightUnitOfMeasureEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The weight_unit_of_measure of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._weight_unit_of_measure
+
+    @weight_unit_of_measure.setter
+    def weight_unit_of_measure(self, weight_unit_of_measure):
+        """Sets the weight_unit_of_measure of this Item.
+
+        The unit of measurement used for the package weight, such as POUND, KILOGRAM, OUNCE, or GRAM. <br /><br />Code so that your app gracefully handles any future changes to this list.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:WeightUnitOfMeasureEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param weight_unit_of_measure: The weight_unit_of_measure of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._weight_unit_of_measure = weight_unit_of_measure
+
+    @property
+    def package_weight(self):
+        """Gets the package_weight of this Item.  # noqa: E501
+
+        The weight of the package that contains the item.  # noqa: E501
+
+        :return: The package_weight of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._package_weight
+
+    @package_weight.setter
+    def package_weight(self, package_weight):
+        """Sets the package_weight of this Item.
+
+        The weight of the package that contains the item.  # noqa: E501
+
+        :param package_weight: The package_weight of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._package_weight = package_weight
 
     @property
     def shipping_carrier_code(self):
@@ -2107,52 +1808,6 @@ class Item(object):
         """
 
         self._shipping_carrier_code = shipping_carrier_code
-
-    @property
-    def shipping_cost(self):
-        """Gets the shipping_cost of this Item.  # noqa: E501
-
-        The final shipping cost for all the items after all discounts are applied. Note: The price includes the value-added tax (VAT) for applicable jurisdictions when requested from supported marketplaces. In this case, users must pass the X-EBAY-C-MARKETPLACE-ID request header specifying the supported marketplace (such as EBAY_GB) to see the VAT-inclusive pricing. For more information on VAT, refer to VAT Obligations in the EU.  # noqa: E501
-
-        :return: The shipping_cost of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._shipping_cost
-
-    @shipping_cost.setter
-    def shipping_cost(self, shipping_cost):
-        """Sets the shipping_cost of this Item.
-
-        The final shipping cost for all the items after all discounts are applied. Note: The price includes the value-added tax (VAT) for applicable jurisdictions when requested from supported marketplaces. In this case, users must pass the X-EBAY-C-MARKETPLACE-ID request header specifying the supported marketplace (such as EBAY_GB) to see the VAT-inclusive pricing. For more information on VAT, refer to VAT Obligations in the EU.  # noqa: E501
-
-        :param shipping_cost: The shipping_cost of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._shipping_cost = shipping_cost
-
-    @property
-    def shipping_cost_type(self):
-        """Gets the shipping_cost_type of this Item.  # noqa: E501
-
-        Indicates the class of the shipping cost. Valid Values: FIXED or CALCULATED.  # noqa: E501
-
-        :return: The shipping_cost_type of this Item.  # noqa: E501
-        :rtype: str
-        """
-        return self._shipping_cost_type
-
-    @shipping_cost_type.setter
-    def shipping_cost_type(self, shipping_cost_type):
-        """Sets the shipping_cost_type of this Item.
-
-        Indicates the class of the shipping cost. Valid Values: FIXED or CALCULATED.  # noqa: E501
-
-        :param shipping_cost_type: The shipping_cost_type of this Item.  # noqa: E501
-        :type: str
-        """
-
-        self._shipping_cost_type = shipping_cost_type
 
     @property
     def shipping_service_code(self):
@@ -2201,73 +1856,211 @@ class Item(object):
         self._shipping_type = shipping_type
 
     @property
-    def size(self):
-        """Gets the size of this Item.  # noqa: E501
+    def shipping_cost(self):
+        """Gets the shipping_cost of this Item.  # noqa: E501
 
-        The size of the item.  # noqa: E501
+        The final shipping cost for all the items after all discounts are applied.<br /><br /><span class=\"tablenote\"><b> Note: </b>The price includes the value-added tax (VAT) for applicable jurisdictions when requested from supported marketplaces. In this case, users must pass the <a href=\"/api-docs/static/rest-request-components.html#HTTP\"><code>X-EBAY-C-MARKETPLACE-ID</code></a> request header specifying the supported marketplace (such as <code>EBAY_GB</code>) to see the VAT-inclusive pricing. For more information on VAT, refer to <a href=\"https://www.ebay.co.uk/help/listings/default/vat-obligations-eu?id=4650&st=12&pos=1&query=Your%20VAT%20obligations%20in%20the%20EU&intent=VAT\">VAT Obligations in the EU</a>.</span>  # noqa: E501
 
-        :return: The size of this Item.  # noqa: E501
+        :return: The shipping_cost of this Item.  # noqa: E501
         :rtype: str
         """
-        return self._size
+        return self._shipping_cost
 
-    @size.setter
-    def size(self, size):
-        """Sets the size of this Item.
+    @shipping_cost.setter
+    def shipping_cost(self, shipping_cost):
+        """Sets the shipping_cost of this Item.
 
-        The size of the item.  # noqa: E501
+        The final shipping cost for all the items after all discounts are applied.<br /><br /><span class=\"tablenote\"><b> Note: </b>The price includes the value-added tax (VAT) for applicable jurisdictions when requested from supported marketplaces. In this case, users must pass the <a href=\"/api-docs/static/rest-request-components.html#HTTP\"><code>X-EBAY-C-MARKETPLACE-ID</code></a> request header specifying the supported marketplace (such as <code>EBAY_GB</code>) to see the VAT-inclusive pricing. For more information on VAT, refer to <a href=\"https://www.ebay.co.uk/help/listings/default/vat-obligations-eu?id=4650&st=12&pos=1&query=Your%20VAT%20obligations%20in%20the%20EU&intent=VAT\">VAT Obligations in the EU</a>.</span>  # noqa: E501
 
-        :param size: The size of this Item.  # noqa: E501
+        :param shipping_cost: The shipping_cost of this Item.  # noqa: E501
         :type: str
         """
 
-        self._size = size
+        self._shipping_cost = shipping_cost
 
     @property
-    def title(self):
-        """Gets the title of this Item.  # noqa: E501
+    def shipping_cost_type(self):
+        """Gets the shipping_cost_type of this Item.  # noqa: E501
 
-        The seller created title of the item. This text is an escaped string when special characters are present, using the following rules: Double quotes (&quot;) and backslashes (\\) in the Title are escaped with a backslash (\\) character If there are any tabs (\\t), double quotes (&quot;), or backslashes (\\) in the Title, the entire Title will be wrapped in double quotes. For example Before: Misty Rainforest Modern Masters 2017 MTG Magic Fetch Land Free Ship W\\Tracking Marvel Legends HULK 8&quot; Figure Avengers Age of Ultron Studios 6&quot; Series After: &quot;Misty Rainforest Modern Masters 2017 MTG Magic Fetch Land Free Ship W\\\\ Tracking&quot; &quot;Marvel Legends HULK 8\\&quot; Figure Avengers Age of Ultron Studios 6\\&quot; Series&quot;  # noqa: E501
+        Indicates the class of the shipping cost. <br /><br /><b> Valid Values: </b> FIXED or CALCULATED.  # noqa: E501
 
-        :return: The title of this Item.  # noqa: E501
+        :return: The shipping_cost_type of this Item.  # noqa: E501
         :rtype: str
         """
-        return self._title
+        return self._shipping_cost_type
 
-    @title.setter
-    def title(self, title):
-        """Sets the title of this Item.
+    @shipping_cost_type.setter
+    def shipping_cost_type(self, shipping_cost_type):
+        """Sets the shipping_cost_type of this Item.
 
-        The seller created title of the item. This text is an escaped string when special characters are present, using the following rules: Double quotes (&quot;) and backslashes (\\) in the Title are escaped with a backslash (\\) character If there are any tabs (\\t), double quotes (&quot;), or backslashes (\\) in the Title, the entire Title will be wrapped in double quotes. For example Before: Misty Rainforest Modern Masters 2017 MTG Magic Fetch Land Free Ship W\\Tracking Marvel Legends HULK 8&quot; Figure Avengers Age of Ultron Studios 6&quot; Series After: &quot;Misty Rainforest Modern Masters 2017 MTG Magic Fetch Land Free Ship W\\\\ Tracking&quot; &quot;Marvel Legends HULK 8\\&quot; Figure Avengers Age of Ultron Studios 6\\&quot; Series&quot;  # noqa: E501
+        Indicates the class of the shipping cost. <br /><br /><b> Valid Values: </b> FIXED or CALCULATED.  # noqa: E501
 
-        :param title: The title of this Item.  # noqa: E501
+        :param shipping_cost_type: The shipping_cost_type of this Item.  # noqa: E501
         :type: str
         """
 
-        self._title = title
+        self._shipping_cost_type = shipping_cost_type
 
     @property
-    def total_units(self):
-        """Gets the total_units of this Item.  # noqa: E501
+    def additional_shipping_cost_per_unit(self):
+        """Gets the additional_shipping_cost_per_unit of this Item.  # noqa: E501
 
-        For an item that is priced by the unit, the total number of units that are on offer. For example, if the item is priced by the meter and 50 cm is on offer, the totalUnits would be 0.5 m.  # noqa: E501
+        Any per item additional shipping costs for a multi-item purchase. For example, let's say the shipping cost for a power cord is $3. But for an additional cord, the shipping cost is only $1. So if you bought 3 cords, the <b> shippingCost</b> would be $3 and this value would be $2 ($1 for each additional item).  # noqa: E501
 
-        :return: The total_units of this Item.  # noqa: E501
+        :return: The additional_shipping_cost_per_unit of this Item.  # noqa: E501
         :rtype: str
         """
-        return self._total_units
+        return self._additional_shipping_cost_per_unit
 
-    @total_units.setter
-    def total_units(self, total_units):
-        """Sets the total_units of this Item.
+    @additional_shipping_cost_per_unit.setter
+    def additional_shipping_cost_per_unit(self, additional_shipping_cost_per_unit):
+        """Sets the additional_shipping_cost_per_unit of this Item.
 
-        For an item that is priced by the unit, the total number of units that are on offer. For example, if the item is priced by the meter and 50 cm is on offer, the totalUnits would be 0.5 m.  # noqa: E501
+        Any per item additional shipping costs for a multi-item purchase. For example, let's say the shipping cost for a power cord is $3. But for an additional cord, the shipping cost is only $1. So if you bought 3 cords, the <b> shippingCost</b> would be $3 and this value would be $2 ($1 for each additional item).  # noqa: E501
 
-        :param total_units: The total_units of this Item.  # noqa: E501
+        :param additional_shipping_cost_per_unit: The additional_shipping_cost_per_unit of this Item.  # noqa: E501
         :type: str
         """
 
-        self._total_units = total_units
+        self._additional_shipping_cost_per_unit = additional_shipping_cost_per_unit
+
+    @property
+    def quantity_used_for_estimate(self):
+        """Gets the quantity_used_for_estimate of this Item.  # noqa: E501
+
+        The number of items used when calculating the estimation information.  # noqa: E501
+
+        :return: The quantity_used_for_estimate of this Item.  # noqa: E501
+        :rtype: int
+        """
+        return self._quantity_used_for_estimate
+
+    @quantity_used_for_estimate.setter
+    def quantity_used_for_estimate(self, quantity_used_for_estimate):
+        """Sets the quantity_used_for_estimate of this Item.
+
+        The number of items used when calculating the estimation information.  # noqa: E501
+
+        :param quantity_used_for_estimate: The quantity_used_for_estimate of this Item.  # noqa: E501
+        :type: int
+        """
+
+        self._quantity_used_for_estimate = quantity_used_for_estimate
+
+    @property
+    def unit_price(self):
+        """Gets the unit_price of this Item.  # noqa: E501
+
+        This is the price per unit for the item. Some European countries require listings for certain types of products to include the price per unit so buyers can accurately compare prices.   <br /><br />For example: <br /><br /><code>\"unitPricingMeasure\": \"100g\",<br /> \"unitPrice\": {<br />&nbsp;&nbsp;\"value\": \"7.99\",<br />&nbsp;&nbsp;\"currency\": \"GBP\"</code>  # noqa: E501
+
+        :return: The unit_price of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._unit_price
+
+    @unit_price.setter
+    def unit_price(self, unit_price):
+        """Sets the unit_price of this Item.
+
+        This is the price per unit for the item. Some European countries require listings for certain types of products to include the price per unit so buyers can accurately compare prices.   <br /><br />For example: <br /><br /><code>\"unitPricingMeasure\": \"100g\",<br /> \"unitPrice\": {<br />&nbsp;&nbsp;\"value\": \"7.99\",<br />&nbsp;&nbsp;\"currency\": \"GBP\"</code>  # noqa: E501
+
+        :param unit_price: The unit_price of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._unit_price = unit_price
+
+    @property
+    def unit_pricing_measure(self):
+        """Gets the unit_pricing_measure of this Item.  # noqa: E501
+
+        The designation, such as size, weight, volume, count, etc., that was used to specify the quantity of the item.  This helps buyers compare prices. <br /><br />For example, the following tells the buyer that the item is 7.99 per 100 grams. <br /><br /><code>\"unitPricingMeasure\": \"100g\",<br /> \"unitPrice\": {<br />&nbsp;&nbsp;\"value\": \"7.99\",<br />&nbsp;&nbsp;\"currency\": \"GBP\"</code>  # noqa: E501
+
+        :return: The unit_pricing_measure of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._unit_pricing_measure
+
+    @unit_pricing_measure.setter
+    def unit_pricing_measure(self, unit_pricing_measure):
+        """Sets the unit_pricing_measure of this Item.
+
+        The designation, such as size, weight, volume, count, etc., that was used to specify the quantity of the item.  This helps buyers compare prices. <br /><br />For example, the following tells the buyer that the item is 7.99 per 100 grams. <br /><br /><code>\"unitPricingMeasure\": \"100g\",<br /> \"unitPrice\": {<br />&nbsp;&nbsp;\"value\": \"7.99\",<br />&nbsp;&nbsp;\"currency\": \"GBP\"</code>  # noqa: E501
+
+        :param unit_pricing_measure: The unit_pricing_measure of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._unit_pricing_measure = unit_pricing_measure
+
+    @property
+    def legacy_item_id(self):
+        """Gets the legacy_item_id of this Item.  # noqa: E501
+
+        The unique identifier of the eBay listing that contains the item. This is the traditional/legacy ID that is often seen in the URL of the listing View Item page.  # noqa: E501
+
+        :return: The legacy_item_id of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._legacy_item_id
+
+    @legacy_item_id.setter
+    def legacy_item_id(self, legacy_item_id):
+        """Sets the legacy_item_id of this Item.
+
+        The unique identifier of the eBay listing that contains the item. This is the traditional/legacy ID that is often seen in the URL of the listing View Item page.  # noqa: E501
+
+        :param legacy_item_id: The legacy_item_id of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._legacy_item_id = legacy_item_id
+
+    @property
+    def alerts(self):
+        """Gets the alerts of this Item.  # noqa: E501
+
+        A pipe-separated list of alerts available for the item.<br /><br />For example, if the <code>DELAYED_DELIVERY</code> alert was returned for an item, it would indicate a delay in shipping by the seller.  # noqa: E501
+
+        :return: The alerts of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._alerts
+
+    @alerts.setter
+    def alerts(self, alerts):
+        """Sets the alerts of this Item.
+
+        A pipe-separated list of alerts available for the item.<br /><br />For example, if the <code>DELAYED_DELIVERY</code> alert was returned for an item, it would indicate a delay in shipping by the seller.  # noqa: E501
+
+        :param alerts: The alerts of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._alerts = alerts
+
+    @property
+    def seller_account_type(self):
+        """Gets the seller_account_type of this Item.  # noqa: E501
+
+        A string value that specifies whether the seller is a business or an individual. This is determined when the seller registers with eBay. If the seller registers for a business account, the value returned in this field will be <code>BUSINESS</code>. If the seller registers for a private account, the value returned in this field will be <code>INDIVIDUAL</code>.<br /><br /><span class=\"tablenote\"><b>Note:</b> This designation is required by the tax laws in some countries.</span><br /><br />This field is returned only on the following sites: EBAY_AT, EBAY_BE, EBAY_CH, EBAY_DE, EBAY_ES, EBAY_FR, EBAY_GB, EBAY_IE, EBAY_IT, and EBAY_PL.<br /><br />Code so that your app gracefully handles any future changes to this list.<br /><br /><b>Valid Values:</b> <code>BUSINESS</code> or <code>INDIVIDUAL</code>  # noqa: E501
+
+        :return: The seller_account_type of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._seller_account_type
+
+    @seller_account_type.setter
+    def seller_account_type(self, seller_account_type):
+        """Sets the seller_account_type of this Item.
+
+        A string value that specifies whether the seller is a business or an individual. This is determined when the seller registers with eBay. If the seller registers for a business account, the value returned in this field will be <code>BUSINESS</code>. If the seller registers for a private account, the value returned in this field will be <code>INDIVIDUAL</code>.<br /><br /><span class=\"tablenote\"><b>Note:</b> This designation is required by the tax laws in some countries.</span><br /><br />This field is returned only on the following sites: EBAY_AT, EBAY_BE, EBAY_CH, EBAY_DE, EBAY_ES, EBAY_FR, EBAY_GB, EBAY_IE, EBAY_IT, and EBAY_PL.<br /><br />Code so that your app gracefully handles any future changes to this list.<br /><br /><b>Valid Values:</b> <code>BUSINESS</code> or <code>INDIVIDUAL</code>  # noqa: E501
+
+        :param seller_account_type: The seller_account_type of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._seller_account_type = seller_account_type
 
     @property
     def tyre_label_image_url(self):
@@ -2293,73 +2086,280 @@ class Item(object):
         self._tyre_label_image_url = tyre_label_image_url
 
     @property
-    def unit_price(self):
-        """Gets the unit_price of this Item.  # noqa: E501
+    def priority_listing_payload(self):
+        """Gets the priority_listing_payload of this Item.  # noqa: E501
 
-        This is the price per unit for the item. Some European countries require listings for certain types of products to include the price per unit so buyers can accurately compare prices. For example: &quot;unitPricingMeasure&quot;: &quot;100g&quot;, &quot;unitPrice&quot;: { &nbsp;&nbsp;&quot;value&quot;: &quot;7.99&quot;, &nbsp;&nbsp;&quot;currency&quot;: &quot;GBP&quot;  # noqa: E501
+        EPN (eBay Partner Network) publishers append this value to their affiliate tracking URL when using an EPN tracking link to track changes that occur to Priority Listing items. <br /><br /><b>Example:</b><code>amdata=enc%3AAQAFAAAAkB1DmsmXf%2BqZ%2BCEMGdebW6oR75GCMdBmc4MCQ%2FCEPqgKHbT0jdWhPwfY5LdUs6HTaP0eBlwKE7Smy2eDslewF7l3xjwWxjqwzNAnsYgxn2PiGkTKbiQSQytFUiymdtANpk1qOnBOoMGMK%2BWsji7jYlvySSs9o9s24TxD6RqWZpNrltzOU7mfnv3H40SZ3YESzg%3D%3D</code><br/><br />See <a  href=\"https://developer.ebay.com/api-docs/buy/static/ref-epn-link.html\">Creating an EPN Tracking Link</a> for information on EPN tracking links.  # noqa: E501
 
-        :return: The unit_price of this Item.  # noqa: E501
+        :return: The priority_listing_payload of this Item.  # noqa: E501
         :rtype: str
         """
-        return self._unit_price
+        return self._priority_listing_payload
 
-    @unit_price.setter
-    def unit_price(self, unit_price):
-        """Sets the unit_price of this Item.
+    @priority_listing_payload.setter
+    def priority_listing_payload(self, priority_listing_payload):
+        """Sets the priority_listing_payload of this Item.
 
-        This is the price per unit for the item. Some European countries require listings for certain types of products to include the price per unit so buyers can accurately compare prices. For example: &quot;unitPricingMeasure&quot;: &quot;100g&quot;, &quot;unitPrice&quot;: { &nbsp;&nbsp;&quot;value&quot;: &quot;7.99&quot;, &nbsp;&nbsp;&quot;currency&quot;: &quot;GBP&quot;  # noqa: E501
+        EPN (eBay Partner Network) publishers append this value to their affiliate tracking URL when using an EPN tracking link to track changes that occur to Priority Listing items. <br /><br /><b>Example:</b><code>amdata=enc%3AAQAFAAAAkB1DmsmXf%2BqZ%2BCEMGdebW6oR75GCMdBmc4MCQ%2FCEPqgKHbT0jdWhPwfY5LdUs6HTaP0eBlwKE7Smy2eDslewF7l3xjwWxjqwzNAnsYgxn2PiGkTKbiQSQytFUiymdtANpk1qOnBOoMGMK%2BWsji7jYlvySSs9o9s24TxD6RqWZpNrltzOU7mfnv3H40SZ3YESzg%3D%3D</code><br/><br />See <a  href=\"https://developer.ebay.com/api-docs/buy/static/ref-epn-link.html\">Creating an EPN Tracking Link</a> for information on EPN tracking links.  # noqa: E501
 
-        :param unit_price: The unit_price of this Item.  # noqa: E501
+        :param priority_listing_payload: The priority_listing_payload of this Item.  # noqa: E501
         :type: str
         """
 
-        self._unit_price = unit_price
+        self._priority_listing_payload = priority_listing_payload
 
     @property
-    def unit_pricing_measure(self):
-        """Gets the unit_pricing_measure of this Item.  # noqa: E501
+    def item_creation_date(self):
+        """Gets the item_creation_date of this Item.  # noqa: E501
 
-        The designation, such as size, weight, volume, count, etc., that was used to specify the quantity of the item. This helps buyers compare prices. For example, the following tells the buyer that the item is 7.99 per 100 grams. &quot;unitPricingMeasure&quot;: &quot;100g&quot;, &quot;unitPrice&quot;: { &nbsp;&nbsp;&quot;value&quot;: &quot;7.99&quot;, &nbsp;&nbsp;&quot;currency&quot;: &quot;GBP&quot;  # noqa: E501
+        A timestamp indicating when the item was created. The format is UTC (<code>yyyy-MM-ddThh:mm:ss.sssZ</code>).  # noqa: E501
 
-        :return: The unit_pricing_measure of this Item.  # noqa: E501
+        :return: The item_creation_date of this Item.  # noqa: E501
         :rtype: str
         """
-        return self._unit_pricing_measure
+        return self._item_creation_date
 
-    @unit_pricing_measure.setter
-    def unit_pricing_measure(self, unit_pricing_measure):
-        """Sets the unit_pricing_measure of this Item.
+    @item_creation_date.setter
+    def item_creation_date(self, item_creation_date):
+        """Sets the item_creation_date of this Item.
 
-        The designation, such as size, weight, volume, count, etc., that was used to specify the quantity of the item. This helps buyers compare prices. For example, the following tells the buyer that the item is 7.99 per 100 grams. &quot;unitPricingMeasure&quot;: &quot;100g&quot;, &quot;unitPrice&quot;: { &nbsp;&nbsp;&quot;value&quot;: &quot;7.99&quot;, &nbsp;&nbsp;&quot;currency&quot;: &quot;GBP&quot;  # noqa: E501
+        A timestamp indicating when the item was created. The format is UTC (<code>yyyy-MM-ddThh:mm:ss.sssZ</code>).  # noqa: E501
 
-        :param unit_pricing_measure: The unit_pricing_measure of this Item.  # noqa: E501
+        :param item_creation_date: The item_creation_date of this Item.  # noqa: E501
         :type: str
         """
 
-        self._unit_pricing_measure = unit_pricing_measure
+        self._item_creation_date = item_creation_date
 
     @property
-    def weight_unit_of_measure(self):
-        """Gets the weight_unit_of_measure of this Item.  # noqa: E501
+    def item_web_url(self):
+        """Gets the item_web_url of this Item.  # noqa: E501
 
-        The unit of measurement used for the package weight, such as POUND, KILOGRAM, OUNCE, or GRAM. Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:WeightUnitOfMeasureEnum'>eBay API documentation</a>  # noqa: E501
+        The URL of the View Item page of the item. <br/><br /><b>For example:</b><br /><br /><b>Single SKU:</b><br /><code>https://www.ebay.de/itm/2********0</code><br /><br /><b>MSKU:</b><br /><code>https://www.ebay.com/itm/2********9?var=5********2</code>  # noqa: E501
 
-        :return: The weight_unit_of_measure of this Item.  # noqa: E501
+        :return: The item_web_url of this Item.  # noqa: E501
         :rtype: str
         """
-        return self._weight_unit_of_measure
+        return self._item_web_url
 
-    @weight_unit_of_measure.setter
-    def weight_unit_of_measure(self, weight_unit_of_measure):
-        """Sets the weight_unit_of_measure of this Item.
+    @item_web_url.setter
+    def item_web_url(self, item_web_url):
+        """Sets the item_web_url of this Item.
 
-        The unit of measurement used for the package weight, such as POUND, KILOGRAM, OUNCE, or GRAM. Code so that your app gracefully handles any future changes to this list. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/feed/types/api:WeightUnitOfMeasureEnum'>eBay API documentation</a>  # noqa: E501
+        The URL of the View Item page of the item. <br/><br /><b>For example:</b><br /><br /><b>Single SKU:</b><br /><code>https://www.ebay.de/itm/2********0</code><br /><br /><b>MSKU:</b><br /><code>https://www.ebay.com/itm/2********9?var=5********2</code>  # noqa: E501
 
-        :param weight_unit_of_measure: The weight_unit_of_measure of this Item.  # noqa: E501
+        :param item_web_url: The item_web_url of this Item.  # noqa: E501
         :type: str
         """
 
-        self._weight_unit_of_measure = weight_unit_of_measure
+        self._item_web_url = item_web_url
+
+    @property
+    def default_image_url(self):
+        """Gets the default_image_url of this Item.  # noqa: E501
+
+        URL to the gallery or default image of the item. The other images of the item are returned in the <b>additionalImageUrls</b> field.<br /><br /><b>For example</b><br /><br /><code>https://i.ebayimg.com/00/s/M********w/z/W********p/$_1.JPG?set_id=8********F</code>  # noqa: E501
+
+        :return: The default_image_url of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._default_image_url
+
+    @default_image_url.setter
+    def default_image_url(self, default_image_url):
+        """Sets the default_image_url of this Item.
+
+        URL to the gallery or default image of the item. The other images of the item are returned in the <b>additionalImageUrls</b> field.<br /><br /><b>For example</b><br /><br /><code>https://i.ebayimg.com/00/s/M********w/z/W********p/$_1.JPG?set_id=8********F</code>  # noqa: E501
+
+        :param default_image_url: The default_image_url of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._default_image_url = default_image_url
+
+    @property
+    def item_affiliate_web_url(self):
+        """Gets the item_affiliate_web_url of this Item.  # noqa: E501
+
+        The URL of the View Item page of the item, with the affiliate tracking ID appended to it.<br /><br /><b>For example</b><br /><br /><code>https://www.ebay.de/itm/2********0?mkevt=1&mkcid=1&mkrid=707-53477-19255-0&campid=CAMPAIGNID&toolid=2***6&customid=CUSTOMID</code>  # noqa: E501
+
+        :return: The item_affiliate_web_url of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._item_affiliate_web_url
+
+    @item_affiliate_web_url.setter
+    def item_affiliate_web_url(self, item_affiliate_web_url):
+        """Sets the item_affiliate_web_url of this Item.
+
+        The URL of the View Item page of the item, with the affiliate tracking ID appended to it.<br /><br /><b>For example</b><br /><br /><code>https://www.ebay.de/itm/2********0?mkevt=1&mkcid=1&mkrid=707-53477-19255-0&campid=CAMPAIGNID&toolid=2***6&customid=CUSTOMID</code>  # noqa: E501
+
+        :param item_affiliate_web_url: The item_affiliate_web_url of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._item_affiliate_web_url = item_affiliate_web_url
+
+    @property
+    def age_group(self):
+        """Gets the age_group of this Item.  # noqa: E501
+
+        The age group that the product is recommended for. <br /><br /><b>Valid values:</b> <code>newborn</code>, <code>infant</code>, <code>toddler</code>, <code>kids</code>, <code>adult</code>.  # noqa: E501
+
+        :return: The age_group of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._age_group
+
+    @age_group.setter
+    def age_group(self, age_group):
+        """Sets the age_group of this Item.
+
+        The age group that the product is recommended for. <br /><br /><b>Valid values:</b> <code>newborn</code>, <code>infant</code>, <code>toddler</code>, <code>kids</code>, <code>adult</code>.  # noqa: E501
+
+        :param age_group: The age_group of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._age_group = age_group
+
+    @property
+    def color(self):
+        """Gets the color of this Item.  # noqa: E501
+
+        The color of the item.  # noqa: E501
+
+        :return: The color of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._color
+
+    @color.setter
+    def color(self, color):
+        """Sets the color of this Item.
+
+        The color of the item.  # noqa: E501
+
+        :param color: The color of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._color = color
+
+    @property
+    def pattern(self):
+        """Gets the pattern of this Item.  # noqa: E501
+
+        Text describing the pattern used on the item. For example, paisley.<br /><br /><b>Note:</b> All the item aspects, including this aspect, are returned in the localizedAspects container.  # noqa: E501
+
+        :return: The pattern of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._pattern
+
+    @pattern.setter
+    def pattern(self, pattern):
+        """Sets the pattern of this Item.
+
+        Text describing the pattern used on the item. For example, paisley.<br /><br /><b>Note:</b> All the item aspects, including this aspect, are returned in the localizedAspects container.  # noqa: E501
+
+        :param pattern: The pattern of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._pattern = pattern
+
+    @property
+    def size(self):
+        """Gets the size of this Item.  # noqa: E501
+
+        The size of the item.  # noqa: E501
+
+        :return: The size of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._size
+
+    @size.setter
+    def size(self, size):
+        """Sets the size of this Item.
+
+        The size of the item.  # noqa: E501
+
+        :param size: The size of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._size = size
+
+    @property
+    def gender(self):
+        """Gets the gender of this Item.  # noqa: E501
+
+        In cases where items could vary by gender, this specifies which gender the product is for. <br /><br /><b>Valid values:</b> <code>male</code>, <code>female</code>, <code>unisex</code>.  # noqa: E501
+
+        :return: The gender of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._gender
+
+    @gender.setter
+    def gender(self, gender):
+        """Sets the gender of this Item.
+
+        In cases where items could vary by gender, this specifies which gender the product is for. <br /><br /><b>Valid values:</b> <code>male</code>, <code>female</code>, <code>unisex</code>.  # noqa: E501
+
+        :param gender: The gender of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._gender = gender
+
+    @property
+    def material(self):
+        """Gets the material of this Item.  # noqa: E501
+
+        The material that the item is made of.  # noqa: E501
+
+        :return: The material of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._material
+
+    @material.setter
+    def material(self, material):
+        """Sets the material of this Item.
+
+        The material that the item is made of.  # noqa: E501
+
+        :param material: The material of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._material = material
+
+    @property
+    def total_units(self):
+        """Gets the total_units of this Item.  # noqa: E501
+
+        For an item that is priced by the unit, the total number of units that are on offer. For example, if the item is priced by the meter and 50 cm is on offer, the <b>totalUnits</b> would be 0.5 m.  # noqa: E501
+
+        :return: The total_units of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._total_units
+
+    @total_units.setter
+    def total_units(self, total_units):
+        """Sets the total_units of this Item.
+
+        For an item that is priced by the unit, the total number of units that are on offer. For example, if the item is priced by the meter and 50 cm is on offer, the <b>totalUnits</b> would be 0.5 m.  # noqa: E501
+
+        :param total_units: The total_units of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._total_units = total_units
 
     def to_dict(self):
         """Returns the model properties as a dict"""

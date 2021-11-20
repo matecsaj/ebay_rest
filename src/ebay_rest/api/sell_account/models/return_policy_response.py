@@ -33,8 +33,8 @@ class ReturnPolicyResponse(object):
         'next': 'str',
         'offset': 'int',
         'prev': 'str',
-        'return_policies': 'list[ReturnPolicy]',
-        'total': 'int'
+        'total': 'int',
+        'return_policies': 'list[ReturnPolicy]'
     }
 
     attribute_map = {
@@ -43,19 +43,19 @@ class ReturnPolicyResponse(object):
         'next': 'next',
         'offset': 'offset',
         'prev': 'prev',
-        'return_policies': 'returnPolicies',
-        'total': 'total'
+        'total': 'total',
+        'return_policies': 'returnPolicies'
     }
 
-    def __init__(self, href=None, limit=None, next=None, offset=None, prev=None, return_policies=None, total=None):  # noqa: E501
+    def __init__(self, href=None, limit=None, next=None, offset=None, prev=None, total=None, return_policies=None):  # noqa: E501
         """ReturnPolicyResponse - a model defined in Swagger"""  # noqa: E501
         self._href = None
         self._limit = None
         self._next = None
         self._offset = None
         self._prev = None
-        self._return_policies = None
         self._total = None
+        self._return_policies = None
         self.discriminator = None
         if href is not None:
             self.href = href
@@ -67,10 +67,10 @@ class ReturnPolicyResponse(object):
             self.offset = offset
         if prev is not None:
             self.prev = prev
-        if return_policies is not None:
-            self.return_policies = return_policies
         if total is not None:
             self.total = total
+        if return_policies is not None:
+            self.return_policies = return_policies
 
     @property
     def href(self):
@@ -188,29 +188,6 @@ class ReturnPolicyResponse(object):
         self._prev = prev
 
     @property
-    def return_policies(self):
-        """Gets the return_policies of this ReturnPolicyResponse.  # noqa: E501
-
-        A list of the seller's return policies.  # noqa: E501
-
-        :return: The return_policies of this ReturnPolicyResponse.  # noqa: E501
-        :rtype: list[ReturnPolicy]
-        """
-        return self._return_policies
-
-    @return_policies.setter
-    def return_policies(self, return_policies):
-        """Sets the return_policies of this ReturnPolicyResponse.
-
-        A list of the seller's return policies.  # noqa: E501
-
-        :param return_policies: The return_policies of this ReturnPolicyResponse.  # noqa: E501
-        :type: list[ReturnPolicy]
-        """
-
-        self._return_policies = return_policies
-
-    @property
     def total(self):
         """Gets the total of this ReturnPolicyResponse.  # noqa: E501
 
@@ -232,6 +209,29 @@ class ReturnPolicyResponse(object):
         """
 
         self._total = total
+
+    @property
+    def return_policies(self):
+        """Gets the return_policies of this ReturnPolicyResponse.  # noqa: E501
+
+        A list of the seller's return policies.  # noqa: E501
+
+        :return: The return_policies of this ReturnPolicyResponse.  # noqa: E501
+        :rtype: list[ReturnPolicy]
+        """
+        return self._return_policies
+
+    @return_policies.setter
+    def return_policies(self, return_policies):
+        """Sets the return_policies of this ReturnPolicyResponse.
+
+        A list of the seller's return policies.  # noqa: E501
+
+        :param return_policies: The return_policies of this ReturnPolicyResponse.  # noqa: E501
+        :type: list[ReturnPolicy]
+        """
+
+        self._return_policies = return_policies
 
     def to_dict(self):
         """Returns the model properties as a dict"""

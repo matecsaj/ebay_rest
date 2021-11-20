@@ -198,6 +198,12 @@
                 "type_sql": "price_display_condition"
             },
             {
+                "name_python": "priority_listing",
+                "name_sql": "priority_listing",
+                "required": true,
+                "type_sql": "bool"
+            },
+            {
                 "name_python": "product_fiche_web_url",
                 "name_sql": "product_fiche_web_url",
                 "required": false,
@@ -280,6 +286,12 @@
                 "name_sql": "unit_pricing_measure",
                 "required": false,
                 "type_sql": "varchar"
+            },
+            {
+                "name_python": "watch_count",
+                "name_sql": "watch_count",
+                "required": false,
+                "type_sql": "int"
             }
         ],
         "required": false,

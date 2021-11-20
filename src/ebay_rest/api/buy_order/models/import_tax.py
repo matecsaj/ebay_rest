@@ -3,7 +3,7 @@
 """
     Order API
 
-    <span class=\"tablenote\"><b>Note:</b> This version of the Order API (v2) currently only supports the guest payment flow for eBay managed payments. To view the v1_beta version of the Order API, which includes both member and guest checkout payment flows, refer to the <a href=\"/api-docs/buy/order_v1/resources/methods\">Order_v1 API</a> documentation.</span><br /><br /><span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#Limited\" target=\"_blank\"><img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\"  alt=\"Limited Release\" title=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />The Order API provides interfaces that let shoppers pay for items. It also returns payment and shipping status of the order.  # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> This version of the Order API (v2) currently only supports the guest payment flow for eBay managed payments. To view the v1_beta version of the Order API, which includes both member and guest checkout payment flows, refer to the <a href=\"/api-docs/buy/order_v1/resources/methods\">Order_v1 API</a> documentation.</span><br /><br /><span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"><img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\"  alt=\"Limited Release\" title=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />The Order API provides interfaces that let shoppers pay for items. It also returns payment and shipping status of the order.  # noqa: E501
 
     OpenAPI spec version: v2.0.0
     
@@ -72,7 +72,7 @@ class ImportTax(object):
     def import_tax_type(self):
         """Gets the import_tax_type of this ImportTax.  # noqa: E501
 
-        An enumeration value that indicates the type of import tax applicable to the order. Currently, the only applicable import tax is the Goods and Services tax (indicated with GST). The Goods and Services tax is only applicable to orders for the eBay Australia marketplace. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/order/types/gct:ImportTaxTypeEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value that indicates the type of import tax applicable to the order. Currently, the only applicable import tax is the <i>Goods and Services</i> tax (indicated with <code>GST</code>). The Goods and Services tax is only applicable to orders for the eBay Australia marketplace. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/order/types/gct:ImportTaxTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The import_tax_type of this ImportTax.  # noqa: E501
         :rtype: str
@@ -83,7 +83,7 @@ class ImportTax(object):
     def import_tax_type(self, import_tax_type):
         """Sets the import_tax_type of this ImportTax.
 
-        An enumeration value that indicates the type of import tax applicable to the order. Currently, the only applicable import tax is the Goods and Services tax (indicated with GST). The Goods and Services tax is only applicable to orders for the eBay Australia marketplace. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/order/types/gct:ImportTaxTypeEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value that indicates the type of import tax applicable to the order. Currently, the only applicable import tax is the <i>Goods and Services</i> tax (indicated with <code>GST</code>). The Goods and Services tax is only applicable to orders for the eBay Australia marketplace. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/order/types/gct:ImportTaxTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param import_tax_type: The import_tax_type of this ImportTax.  # noqa: E501
         :type: str

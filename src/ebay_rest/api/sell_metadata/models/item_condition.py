@@ -56,7 +56,7 @@ class ItemCondition(object):
     def condition_description(self):
         """Gets the condition_description of this ItemCondition.  # noqa: E501
 
-        The human-readable label for the condition (e.g., &quot;New&quot;). This value is typically localized for each site. Note that the display name can vary by category. For example, the description for condition ID 1000 could be called &quot;New: with Tags&quot; in one category and &quot;Brand New&quot; in another. For details on condition IDs and descriptions, see Item condition ID and name values.  # noqa: E501
+        The human-readable label for the condition (e.g., \"New\"). This value is typically localized for each site.  <br><br>Note that the display name can vary by category. For example, the description for condition ID <code>1000</code> could be called \"New: with Tags\" in one category and \"Brand New\" in another. For details on condition IDs and descriptions, see <a href='/api-docs/sell/static/metadata/condition-id-values.html'>Item condition ID and name values</a>.  # noqa: E501
 
         :return: The condition_description of this ItemCondition.  # noqa: E501
         :rtype: str
@@ -67,7 +67,7 @@ class ItemCondition(object):
     def condition_description(self, condition_description):
         """Sets the condition_description of this ItemCondition.
 
-        The human-readable label for the condition (e.g., &quot;New&quot;). This value is typically localized for each site. Note that the display name can vary by category. For example, the description for condition ID 1000 could be called &quot;New: with Tags&quot; in one category and &quot;Brand New&quot; in another. For details on condition IDs and descriptions, see Item condition ID and name values.  # noqa: E501
+        The human-readable label for the condition (e.g., \"New\"). This value is typically localized for each site.  <br><br>Note that the display name can vary by category. For example, the description for condition ID <code>1000</code> could be called \"New: with Tags\" in one category and \"Brand New\" in another. For details on condition IDs and descriptions, see <a href='/api-docs/sell/static/metadata/condition-id-values.html'>Item condition ID and name values</a>.  # noqa: E501
 
         :param condition_description: The condition_description of this ItemCondition.  # noqa: E501
         :type: str
@@ -79,7 +79,7 @@ class ItemCondition(object):
     def condition_id(self):
         """Gets the condition_id of this ItemCondition.  # noqa: E501
 
-        The ID value of the selected item condition. For information on the supported condition ID values, see Item condition ID and name values.  # noqa: E501
+        The ID value of the selected item condition. For information on the supported condition ID values, see <a href='/api-docs/sell/static/metadata/condition-id-values.html'>Item condition ID and name values</a>.  # noqa: E501
 
         :return: The condition_id of this ItemCondition.  # noqa: E501
         :rtype: str
@@ -90,7 +90,7 @@ class ItemCondition(object):
     def condition_id(self, condition_id):
         """Sets the condition_id of this ItemCondition.
 
-        The ID value of the selected item condition. For information on the supported condition ID values, see Item condition ID and name values.  # noqa: E501
+        The ID value of the selected item condition. For information on the supported condition ID values, see <a href='/api-docs/sell/static/metadata/condition-id-values.html'>Item condition ID and name values</a>.  # noqa: E501
 
         :param condition_id: The condition_id of this ItemCondition.  # noqa: E501
         :type: str
@@ -102,7 +102,7 @@ class ItemCondition(object):
     def usage(self):
         """Gets the usage of this ItemCondition.  # noqa: E501
 
-        The value returned in this field indicates if there are any usage restrictions or requirements for the corresponding item condition in the corresponding category. Note: Currently, the only supported value is 'RESTRICTED', and this field will only be returned for the following conditions: 2000, 2010, 2020, 2030. Sellers must be pre-approved to use any of these item conditions. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/metadata/types/sel:UsageEnum'>eBay API documentation</a>  # noqa: E501
+        The value returned in this field indicates if there are any usage restrictions or requirements for the corresponding item condition in the corresponding category.<br /><br /><span class=\"tablenote\"><b>Note:</b> Currently, the only supported value is 'RESTRICTED', and this field will only be returned for the following conditions: 2000, 2010, 2020, 2030. Sellers must be pre-approved to use any of these item conditions.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/metadata/types/sel:UsageEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The usage of this ItemCondition.  # noqa: E501
         :rtype: str
@@ -113,7 +113,7 @@ class ItemCondition(object):
     def usage(self, usage):
         """Sets the usage of this ItemCondition.
 
-        The value returned in this field indicates if there are any usage restrictions or requirements for the corresponding item condition in the corresponding category. Note: Currently, the only supported value is 'RESTRICTED', and this field will only be returned for the following conditions: 2000, 2010, 2020, 2030. Sellers must be pre-approved to use any of these item conditions. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/metadata/types/sel:UsageEnum'>eBay API documentation</a>  # noqa: E501
+        The value returned in this field indicates if there are any usage restrictions or requirements for the corresponding item condition in the corresponding category.<br /><br /><span class=\"tablenote\"><b>Note:</b> Currently, the only supported value is 'RESTRICTED', and this field will only be returned for the following conditions: 2000, 2010, 2020, 2030. Sellers must be pre-approved to use any of these item conditions.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/metadata/types/sel:UsageEnum'>eBay API documentation</a>  # noqa: E501
 
         :param usage: The usage of this ItemCondition.  # noqa: E501
         :type: str

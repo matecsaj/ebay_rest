@@ -32,8 +32,8 @@ class ReturnPolicyDetails(object):
         'refund_methods': 'list[str]',
         'return_methods': 'list[str]',
         'return_periods': 'list[TimeDuration]',
-        'return_shipping_cost_payers': 'list[str]',
-        'returns_acceptance_enabled': 'bool'
+        'returns_acceptance_enabled': 'bool',
+        'return_shipping_cost_payers': 'list[str]'
     }
 
     attribute_map = {
@@ -41,18 +41,18 @@ class ReturnPolicyDetails(object):
         'refund_methods': 'refundMethods',
         'return_methods': 'returnMethods',
         'return_periods': 'returnPeriods',
-        'return_shipping_cost_payers': 'returnShippingCostPayers',
-        'returns_acceptance_enabled': 'returnsAcceptanceEnabled'
+        'returns_acceptance_enabled': 'returnsAcceptanceEnabled',
+        'return_shipping_cost_payers': 'returnShippingCostPayers'
     }
 
-    def __init__(self, policy_description_enabled=None, refund_methods=None, return_methods=None, return_periods=None, return_shipping_cost_payers=None, returns_acceptance_enabled=None):  # noqa: E501
+    def __init__(self, policy_description_enabled=None, refund_methods=None, return_methods=None, return_periods=None, returns_acceptance_enabled=None, return_shipping_cost_payers=None):  # noqa: E501
         """ReturnPolicyDetails - a model defined in Swagger"""  # noqa: E501
         self._policy_description_enabled = None
         self._refund_methods = None
         self._return_methods = None
         self._return_periods = None
-        self._return_shipping_cost_payers = None
         self._returns_acceptance_enabled = None
+        self._return_shipping_cost_payers = None
         self.discriminator = None
         if policy_description_enabled is not None:
             self.policy_description_enabled = policy_description_enabled
@@ -62,16 +62,16 @@ class ReturnPolicyDetails(object):
             self.return_methods = return_methods
         if return_periods is not None:
             self.return_periods = return_periods
-        if return_shipping_cost_payers is not None:
-            self.return_shipping_cost_payers = return_shipping_cost_payers
         if returns_acceptance_enabled is not None:
             self.returns_acceptance_enabled = returns_acceptance_enabled
+        if return_shipping_cost_payers is not None:
+            self.return_shipping_cost_payers = return_shipping_cost_payers
 
     @property
     def policy_description_enabled(self):
         """Gets the policy_description_enabled of this ReturnPolicyDetails.  # noqa: E501
 
-        If set to true, this flag indicates you can supply a detailed return policy description within your return policy (for example, by populating the returnInstructions field in the Account API's createReturnPolicy). User-supplied return policy details are allowed only in the DE, ES, FR, and IT marketplaces.  # noqa: E501
+        If set to <code>true</code>, this flag indicates you can supply a detailed return policy description within your return policy (for example, by populating the <b>returnInstructions</b> field in the Account API's <b>createReturnPolicy</b>). User-supplied return policy details are allowed only in the DE, ES, FR, and IT marketplaces.  # noqa: E501
 
         :return: The policy_description_enabled of this ReturnPolicyDetails.  # noqa: E501
         :rtype: bool
@@ -82,7 +82,7 @@ class ReturnPolicyDetails(object):
     def policy_description_enabled(self, policy_description_enabled):
         """Sets the policy_description_enabled of this ReturnPolicyDetails.
 
-        If set to true, this flag indicates you can supply a detailed return policy description within your return policy (for example, by populating the returnInstructions field in the Account API's createReturnPolicy). User-supplied return policy details are allowed only in the DE, ES, FR, and IT marketplaces.  # noqa: E501
+        If set to <code>true</code>, this flag indicates you can supply a detailed return policy description within your return policy (for example, by populating the <b>returnInstructions</b> field in the Account API's <b>createReturnPolicy</b>). User-supplied return policy details are allowed only in the DE, ES, FR, and IT marketplaces.  # noqa: E501
 
         :param policy_description_enabled: The policy_description_enabled of this ReturnPolicyDetails.  # noqa: E501
         :type: bool
@@ -140,7 +140,7 @@ class ReturnPolicyDetails(object):
     def return_periods(self):
         """Gets the return_periods of this ReturnPolicyDetails.  # noqa: E501
 
-        A list of return periods allowed for the associated category. Note that different APIs require you to enter the return period in different ways. For example, the Account API uses the complex TimeDuration type, which takes two values (a unit and a value), whereas the Trading API takes a single value (such as Days_30).  # noqa: E501
+        A list of return periods allowed for the associated category.  <br><br>Note that different APIs require you to enter the return period in different ways. For example, the Account API uses the complex <b>TimeDuration</b> type, which takes two values (a <b>unit</b> and a <b>value</b>), whereas the Trading API takes a single value (such as <code>Days_30</code>).  # noqa: E501
 
         :return: The return_periods of this ReturnPolicyDetails.  # noqa: E501
         :rtype: list[TimeDuration]
@@ -151,7 +151,7 @@ class ReturnPolicyDetails(object):
     def return_periods(self, return_periods):
         """Sets the return_periods of this ReturnPolicyDetails.
 
-        A list of return periods allowed for the associated category. Note that different APIs require you to enter the return period in different ways. For example, the Account API uses the complex TimeDuration type, which takes two values (a unit and a value), whereas the Trading API takes a single value (such as Days_30).  # noqa: E501
+        A list of return periods allowed for the associated category.  <br><br>Note that different APIs require you to enter the return period in different ways. For example, the Account API uses the complex <b>TimeDuration</b> type, which takes two values (a <b>unit</b> and a <b>value</b>), whereas the Trading API takes a single value (such as <code>Days_30</code>).  # noqa: E501
 
         :param return_periods: The return_periods of this ReturnPolicyDetails.  # noqa: E501
         :type: list[TimeDuration]
@@ -160,33 +160,10 @@ class ReturnPolicyDetails(object):
         self._return_periods = return_periods
 
     @property
-    def return_shipping_cost_payers(self):
-        """Gets the return_shipping_cost_payers of this ReturnPolicyDetails.  # noqa: E501
-
-        A list of allowed values for who pays for the return shipping cost. Note that for SNAD returns, the seller is always responsible for the return shipping cost.  # noqa: E501
-
-        :return: The return_shipping_cost_payers of this ReturnPolicyDetails.  # noqa: E501
-        :rtype: list[str]
-        """
-        return self._return_shipping_cost_payers
-
-    @return_shipping_cost_payers.setter
-    def return_shipping_cost_payers(self, return_shipping_cost_payers):
-        """Sets the return_shipping_cost_payers of this ReturnPolicyDetails.
-
-        A list of allowed values for who pays for the return shipping cost. Note that for SNAD returns, the seller is always responsible for the return shipping cost.  # noqa: E501
-
-        :param return_shipping_cost_payers: The return_shipping_cost_payers of this ReturnPolicyDetails.  # noqa: E501
-        :type: list[str]
-        """
-
-        self._return_shipping_cost_payers = return_shipping_cost_payers
-
-    @property
     def returns_acceptance_enabled(self):
         """Gets the returns_acceptance_enabled of this ReturnPolicyDetails.  # noqa: E501
 
-        If set to true, this flag indicates the seller can configure how they handle domestic returns.  # noqa: E501
+        If set to <code>true</code>, this flag indicates the seller can configure how they handle domestic returns.  # noqa: E501
 
         :return: The returns_acceptance_enabled of this ReturnPolicyDetails.  # noqa: E501
         :rtype: bool
@@ -197,13 +174,36 @@ class ReturnPolicyDetails(object):
     def returns_acceptance_enabled(self, returns_acceptance_enabled):
         """Sets the returns_acceptance_enabled of this ReturnPolicyDetails.
 
-        If set to true, this flag indicates the seller can configure how they handle domestic returns.  # noqa: E501
+        If set to <code>true</code>, this flag indicates the seller can configure how they handle domestic returns.  # noqa: E501
 
         :param returns_acceptance_enabled: The returns_acceptance_enabled of this ReturnPolicyDetails.  # noqa: E501
         :type: bool
         """
 
         self._returns_acceptance_enabled = returns_acceptance_enabled
+
+    @property
+    def return_shipping_cost_payers(self):
+        """Gets the return_shipping_cost_payers of this ReturnPolicyDetails.  # noqa: E501
+
+        A list of allowed values for who pays for the return shipping cost.  <br><br>Note that for SNAD returns, the seller is always responsible for the return shipping cost.  # noqa: E501
+
+        :return: The return_shipping_cost_payers of this ReturnPolicyDetails.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._return_shipping_cost_payers
+
+    @return_shipping_cost_payers.setter
+    def return_shipping_cost_payers(self, return_shipping_cost_payers):
+        """Sets the return_shipping_cost_payers of this ReturnPolicyDetails.
+
+        A list of allowed values for who pays for the return shipping cost.  <br><br>Note that for SNAD returns, the seller is always responsible for the return shipping cost.  # noqa: E501
+
+        :param return_shipping_cost_payers: The return_shipping_cost_payers of this ReturnPolicyDetails.  # noqa: E501
+        :type: list[str]
+        """
+
+        self._return_shipping_cost_payers = return_shipping_cost_payers
 
     def to_dict(self):
         """Returns the model properties as a dict"""

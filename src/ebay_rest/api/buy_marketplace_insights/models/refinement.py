@@ -3,7 +3,7 @@
 """
     Marketplace Insights API
 
-    <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#Limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.  # noqa: E501
+    <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.  # noqa: E501
 
     OpenAPI spec version: v1_beta.2.2
     
@@ -158,7 +158,7 @@ class Refinement(object):
     def dominant_category_id(self):
         """Gets the dominant_category_id of this Refinement.  # noqa: E501
 
-        The identifier of the category that most of the items are part of.  # noqa: E501
+        The identifier of the category that most of the items are part of.   # noqa: E501
 
         :return: The dominant_category_id of this Refinement.  # noqa: E501
         :rtype: str
@@ -169,7 +169,7 @@ class Refinement(object):
     def dominant_category_id(self, dominant_category_id):
         """Sets the dominant_category_id of this Refinement.
 
-        The identifier of the category that most of the items are part of.  # noqa: E501
+        The identifier of the category that most of the items are part of.   # noqa: E501
 
         :param dominant_category_id: The dominant_category_id of this Refinement.  # noqa: E501
         :type: str

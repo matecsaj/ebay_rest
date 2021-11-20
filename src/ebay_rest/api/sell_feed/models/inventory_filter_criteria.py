@@ -29,33 +29,33 @@ class InventoryFilterCriteria(object):
     """
     swagger_types = {
         'creation_date_range': 'DateRange',
+        'modified_date_range': 'DateRange',
         'listing_format': 'str',
-        'listing_status': 'str',
-        'modified_date_range': 'DateRange'
+        'listing_status': 'str'
     }
 
     attribute_map = {
         'creation_date_range': 'creationDateRange',
+        'modified_date_range': 'modifiedDateRange',
         'listing_format': 'listingFormat',
-        'listing_status': 'listingStatus',
-        'modified_date_range': 'modifiedDateRange'
+        'listing_status': 'listingStatus'
     }
 
-    def __init__(self, creation_date_range=None, listing_format=None, listing_status=None, modified_date_range=None):  # noqa: E501
+    def __init__(self, creation_date_range=None, modified_date_range=None, listing_format=None, listing_status=None):  # noqa: E501
         """InventoryFilterCriteria - a model defined in Swagger"""  # noqa: E501
         self._creation_date_range = None
+        self._modified_date_range = None
         self._listing_format = None
         self._listing_status = None
-        self._modified_date_range = None
         self.discriminator = None
         if creation_date_range is not None:
             self.creation_date_range = creation_date_range
+        if modified_date_range is not None:
+            self.modified_date_range = modified_date_range
         if listing_format is not None:
             self.listing_format = listing_format
         if listing_status is not None:
             self.listing_status = listing_status
-        if modified_date_range is not None:
-            self.modified_date_range = modified_date_range
 
     @property
     def creation_date_range(self):
@@ -77,6 +77,27 @@ class InventoryFilterCriteria(object):
         """
 
         self._creation_date_range = creation_date_range
+
+    @property
+    def modified_date_range(self):
+        """Gets the modified_date_range of this InventoryFilterCriteria.  # noqa: E501
+
+
+        :return: The modified_date_range of this InventoryFilterCriteria.  # noqa: E501
+        :rtype: DateRange
+        """
+        return self._modified_date_range
+
+    @modified_date_range.setter
+    def modified_date_range(self, modified_date_range):
+        """Sets the modified_date_range of this InventoryFilterCriteria.
+
+
+        :param modified_date_range: The modified_date_range of this InventoryFilterCriteria.  # noqa: E501
+        :type: DateRange
+        """
+
+        self._modified_date_range = modified_date_range
 
     @property
     def listing_format(self):
@@ -123,27 +144,6 @@ class InventoryFilterCriteria(object):
         """
 
         self._listing_status = listing_status
-
-    @property
-    def modified_date_range(self):
-        """Gets the modified_date_range of this InventoryFilterCriteria.  # noqa: E501
-
-
-        :return: The modified_date_range of this InventoryFilterCriteria.  # noqa: E501
-        :rtype: DateRange
-        """
-        return self._modified_date_range
-
-    @modified_date_range.setter
-    def modified_date_range(self, modified_date_range):
-        """Sets the modified_date_range of this InventoryFilterCriteria.
-
-
-        :param modified_date_range: The modified_date_range of this InventoryFilterCriteria.  # noqa: E501
-        :type: DateRange
-        """
-
-        self._modified_date_range = modified_date_range
 
     def to_dict(self):
         """Returns the model properties as a dict"""

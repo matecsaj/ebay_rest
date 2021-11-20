@@ -3,7 +3,7 @@
 """
     Order API
 
-    <span class=\"tablenote\"><b>Note:</b> This version of the Order API (v2) currently only supports the guest payment flow for eBay managed payments. To view the v1_beta version of the Order API, which includes both member and guest checkout payment flows, refer to the <a href=\"/api-docs/buy/order_v1/resources/methods\">Order_v1 API</a> documentation.</span><br /><br /><span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#Limited\" target=\"_blank\"><img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\"  alt=\"Limited Release\" title=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />The Order API provides interfaces that let shoppers pay for items. It also returns payment and shipping status of the order.  # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> This version of the Order API (v2) currently only supports the guest payment flow for eBay managed payments. To view the v1_beta version of the Order API, which includes both member and guest checkout payment flows, refer to the <a href=\"/api-docs/buy/order_v1/resources/methods\">Order_v1 API</a> documentation.</span><br /><br /><span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"><img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\"  alt=\"Limited Release\" title=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />The Order API provides interfaces that let shoppers pay for items. It also returns payment and shipping status of the order.  # noqa: E501
 
     OpenAPI spec version: v2.0.0
     
@@ -212,7 +212,7 @@ class OrderLineItemV2(object):
     def item_id(self):
         """Gets the item_id of this OrderLineItemV2.  # noqa: E501
 
-        The eBay identifier of an item. This ID is returned by the Browse and Feed API methods.  # noqa: E501
+        The eBay identifier of an item. This ID is returned by the <b>Browse</b> and <b>Feed</b> API methods.  # noqa: E501
 
         :return: The item_id of this OrderLineItemV2.  # noqa: E501
         :rtype: str
@@ -223,7 +223,7 @@ class OrderLineItemV2(object):
     def item_id(self, item_id):
         """Sets the item_id of this OrderLineItemV2.
 
-        The eBay identifier of an item. This ID is returned by the Browse and Feed API methods.  # noqa: E501
+        The eBay identifier of an item. This ID is returned by the <b>Browse</b> and <b>Feed</b> API methods.  # noqa: E501
 
         :param item_id: The item_id of this OrderLineItemV2.  # noqa: E501
         :type: str
@@ -256,7 +256,7 @@ class OrderLineItemV2(object):
     def line_item_id(self):
         """Gets the line_item_id of this OrderLineItemV2.  # noqa: E501
 
-        A unique eBay-assigned ID value that identifies a line item in a checkout session. This is created by the initiateGuestCheckoutSession.  # noqa: E501
+        A unique eBay-assigned ID value that identifies a line item in a checkout session. This is created by the <a href=\"/api-docs/buy/order/resources/guest_checkout_session/methods/initiateGuestCheckoutSession\">initiateGuestCheckoutSession</a>.  # noqa: E501
 
         :return: The line_item_id of this OrderLineItemV2.  # noqa: E501
         :rtype: str
@@ -267,7 +267,7 @@ class OrderLineItemV2(object):
     def line_item_id(self, line_item_id):
         """Sets the line_item_id of this OrderLineItemV2.
 
-        A unique eBay-assigned ID value that identifies a line item in a checkout session. This is created by the initiateGuestCheckoutSession.  # noqa: E501
+        A unique eBay-assigned ID value that identifies a line item in a checkout session. This is created by the <a href=\"/api-docs/buy/order/resources/guest_checkout_session/methods/initiateGuestCheckoutSession\">initiateGuestCheckoutSession</a>.  # noqa: E501
 
         :param line_item_id: The line_item_id of this OrderLineItemV2.  # noqa: E501
         :type: str
@@ -302,7 +302,7 @@ class OrderLineItemV2(object):
     def line_item_status(self):
         """Gets the line_item_status of this OrderLineItemV2.  # noqa: E501
 
-        An enumeration value that indicates the fulfillment state of this line item. Note: When there is no tracking information, the status will never change from FULFILLMENT_IN_PROGRESS; without tracking information, eBay has no way of knowing whether the order was delivered. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/order/types/gct:LineItemStatusEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value that indicates the fulfillment state of this line item.<br /><br /><span class=\"tablenote\"><b>Note:</b> When there is no tracking information, the status will never change from <code>FULFILLMENT_IN_PROGRESS</code>; without tracking information, eBay has no way of knowing whether the order was delivered.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/order/types/gct:LineItemStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The line_item_status of this OrderLineItemV2.  # noqa: E501
         :rtype: str
@@ -313,7 +313,7 @@ class OrderLineItemV2(object):
     def line_item_status(self, line_item_status):
         """Sets the line_item_status of this OrderLineItemV2.
 
-        An enumeration value that indicates the fulfillment state of this line item. Note: When there is no tracking information, the status will never change from FULFILLMENT_IN_PROGRESS; without tracking information, eBay has no way of knowing whether the order was delivered. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/order/types/gct:LineItemStatusEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value that indicates the fulfillment state of this line item.<br /><br /><span class=\"tablenote\"><b>Note:</b> When there is no tracking information, the status will never change from <code>FULFILLMENT_IN_PROGRESS</code>; without tracking information, eBay has no way of knowing whether the order was delivered.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/order/types/gct:LineItemStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :param line_item_status: The line_item_status of this OrderLineItemV2.  # noqa: E501
         :type: str
@@ -346,7 +346,7 @@ class OrderLineItemV2(object):
     def order_id(self):
         """Gets the order_id of this OrderLineItemV2.  # noqa: E501
 
-        The unique order ID for the line item. Maximum Length: 40 characters  # noqa: E501
+        The unique order ID for the line item.<br /><br /><b>Maximum Length:</b> 40 characters  # noqa: E501
 
         :return: The order_id of this OrderLineItemV2.  # noqa: E501
         :rtype: str
@@ -357,7 +357,7 @@ class OrderLineItemV2(object):
     def order_id(self, order_id):
         """Sets the order_id of this OrderLineItemV2.
 
-        The unique order ID for the line item. Maximum Length: 40 characters  # noqa: E501
+        The unique order ID for the line item.<br /><br /><b>Maximum Length:</b> 40 characters  # noqa: E501
 
         :param order_id: The order_id of this OrderLineItemV2.  # noqa: E501
         :type: str

@@ -51,7 +51,7 @@ class CategoryType(object):
     def default(self):
         """Gets the default of this CategoryType.  # noqa: E501
 
-        Specifies the default policy for a <b>marketplaceId</b> and <b>categoryTypes.name</b> pair. Sellers can create multiple policies for any <b>marketplaceId</b> and <b>categoryTypes.name</b> combination. For example, you can create multiple fulfillment policies for one marketplace, where they all target the same category type <b>name</b>. However, only one policy can be the default for any <b>marketplaceId</b> and <b>name</b> combination, and eBay designates the first policy created for a combination as the default.  <br><br>If set to <code>true</code>, this policy is the default policy for the associated <b>categoryTypes.name</b> and <b>marketplaceId</b> pair.<br><br><span class=\"tablenote\"><b>Note</b>: eBay considers the status of this field only when you create listings through the Web flow. If you create listings using the APIs, you must specifically set the policies you want applied to a listing in the payload of the call you use to create the listing. If you use the Web flow to create item listings, eBay uses the default policy for the marketplace and category type specified, unless you override the default.</span> <br><br>For more on default policies, see <a href=\"/api-docs/sell/static/seller-accounts/business-policies.html#default_policy\">Changing the default policy for a category type</a>.  # noqa: E501
+        This field is no longer used. The policy preference that was entered for the seller's previous listing is used by default for the next listing.  # noqa: E501
 
         :return: The default of this CategoryType.  # noqa: E501
         :rtype: bool
@@ -62,7 +62,7 @@ class CategoryType(object):
     def default(self, default):
         """Sets the default of this CategoryType.
 
-        Specifies the default policy for a <b>marketplaceId</b> and <b>categoryTypes.name</b> pair. Sellers can create multiple policies for any <b>marketplaceId</b> and <b>categoryTypes.name</b> combination. For example, you can create multiple fulfillment policies for one marketplace, where they all target the same category type <b>name</b>. However, only one policy can be the default for any <b>marketplaceId</b> and <b>name</b> combination, and eBay designates the first policy created for a combination as the default.  <br><br>If set to <code>true</code>, this policy is the default policy for the associated <b>categoryTypes.name</b> and <b>marketplaceId</b> pair.<br><br><span class=\"tablenote\"><b>Note</b>: eBay considers the status of this field only when you create listings through the Web flow. If you create listings using the APIs, you must specifically set the policies you want applied to a listing in the payload of the call you use to create the listing. If you use the Web flow to create item listings, eBay uses the default policy for the marketplace and category type specified, unless you override the default.</span> <br><br>For more on default policies, see <a href=\"/api-docs/sell/static/seller-accounts/business-policies.html#default_policy\">Changing the default policy for a category type</a>.  # noqa: E501
+        This field is no longer used. The policy preference that was entered for the seller's previous listing is used by default for the next listing.  # noqa: E501
 
         :param default: The default of this CategoryType.  # noqa: E501
         :type: bool

@@ -79,7 +79,7 @@ class ListingStructurePolicy(object):
     def category_tree_id(self):
         """Gets the category_tree_id of this ListingStructurePolicy.  # noqa: E501
 
-        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree. A category tree is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique categoryId value. Within a category tree, the root node has no parent node and leaf nodes are nodes that have no child nodes.  # noqa: E501
+        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree.    <br><br>A <i>category tree</i> is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique <b>categoryId</b> value. Within a category tree, the root node has no parent node and <i>leaf nodes</i> are nodes that have no child nodes.  # noqa: E501
 
         :return: The category_tree_id of this ListingStructurePolicy.  # noqa: E501
         :rtype: str
@@ -90,7 +90,7 @@ class ListingStructurePolicy(object):
     def category_tree_id(self, category_tree_id):
         """Sets the category_tree_id of this ListingStructurePolicy.
 
-        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree. A category tree is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique categoryId value. Within a category tree, the root node has no parent node and leaf nodes are nodes that have no child nodes.  # noqa: E501
+        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree.    <br><br>A <i>category tree</i> is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique <b>categoryId</b> value. Within a category tree, the root node has no parent node and <i>leaf nodes</i> are nodes that have no child nodes.  # noqa: E501
 
         :param category_tree_id: The category_tree_id of this ListingStructurePolicy.  # noqa: E501
         :type: str
@@ -102,7 +102,7 @@ class ListingStructurePolicy(object):
     def variations_supported(self):
         """Gets the variations_supported of this ListingStructurePolicy.  # noqa: E501
 
-        This flag denotes whether or not the associated category supports listings with item variations. If set to true, the category does support item variations.  # noqa: E501
+        This flag denotes whether or not the associated category supports listings with item variations. If set to <code>true</code>, the category does support item variations.  # noqa: E501
 
         :return: The variations_supported of this ListingStructurePolicy.  # noqa: E501
         :rtype: bool
@@ -113,7 +113,7 @@ class ListingStructurePolicy(object):
     def variations_supported(self, variations_supported):
         """Sets the variations_supported of this ListingStructurePolicy.
 
-        This flag denotes whether or not the associated category supports listings with item variations. If set to true, the category does support item variations.  # noqa: E501
+        This flag denotes whether or not the associated category supports listings with item variations. If set to <code>true</code>, the category does support item variations.  # noqa: E501
 
         :param variations_supported: The variations_supported of this ListingStructurePolicy.  # noqa: E501
         :type: bool

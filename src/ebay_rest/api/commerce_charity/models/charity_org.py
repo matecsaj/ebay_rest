@@ -215,7 +215,7 @@ class CharityOrg(object):
     def registration_id(self):
         """Gets the registration_id of this CharityOrg.  # noqa: E501
 
-        The registration ID for the charitable organization. For the US marketplace, this is the EIN.  # noqa: E501
+        The registration ID for the charitable organization.<br /><br /><span class=\"tablenote\"><span style=\"color:#004680\"><strong>Note:</strong></span> For the US marketplace, this is the EIN.</span>  # noqa: E501
 
         :return: The registration_id of this CharityOrg.  # noqa: E501
         :rtype: str
@@ -226,7 +226,7 @@ class CharityOrg(object):
     def registration_id(self, registration_id):
         """Sets the registration_id of this CharityOrg.
 
-        The registration ID for the charitable organization. For the US marketplace, this is the EIN.  # noqa: E501
+        The registration ID for the charitable organization.<br /><br /><span class=\"tablenote\"><span style=\"color:#004680\"><strong>Note:</strong></span> For the US marketplace, this is the EIN.</span>  # noqa: E501
 
         :param registration_id: The registration_id of this CharityOrg.  # noqa: E501
         :type: str

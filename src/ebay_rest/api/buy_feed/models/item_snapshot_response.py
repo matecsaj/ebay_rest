@@ -46,7 +46,7 @@ class ItemSnapshotResponse(object):
     def items(self):
         """Gets the items of this ItemSnapshotResponse.  # noqa: E501
 
-        The container for the array of items returned by the getItemSnapshotFeed method. Note: When the value of the availability column is UNAVAILABLE, only the itemId and availability columns are populated.  # noqa: E501
+        The container for the array of items returned by the <b> getItemSnapshotFeed</b> method. <p><b>Note: </b> When the value of the <b> availability</b> column is <code>UNAVAILABLE</code>, only the <b>itemId</b> and <b> availability</b> columns are populated.  </p>   # noqa: E501
 
         :return: The items of this ItemSnapshotResponse.  # noqa: E501
         :rtype: list[ItemSnapshot]
@@ -57,7 +57,7 @@ class ItemSnapshotResponse(object):
     def items(self, items):
         """Sets the items of this ItemSnapshotResponse.
 
-        The container for the array of items returned by the getItemSnapshotFeed method. Note: When the value of the availability column is UNAVAILABLE, only the itemId and availability columns are populated.  # noqa: E501
+        The container for the array of items returned by the <b> getItemSnapshotFeed</b> method. <p><b>Note: </b> When the value of the <b> availability</b> column is <code>UNAVAILABLE</code>, only the <b>itemId</b> and <b> availability</b> columns are populated.  </p>   # noqa: E501
 
         :param items: The items of this ItemSnapshotResponse.  # noqa: E501
         :type: list[ItemSnapshot]

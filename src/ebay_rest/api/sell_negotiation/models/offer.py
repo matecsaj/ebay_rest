@@ -35,10 +35,10 @@ class Offer(object):
         'last_modified_date': 'str',
         'message': 'str',
         'offer_duration': 'TimeDuration',
+        'offered_items': 'list[OfferedItem]',
         'offer_id': 'str',
         'offer_status': 'str',
         'offer_type': 'str',
-        'offered_items': 'list[OfferedItem]',
         'revision': 'str'
     }
 
@@ -50,14 +50,14 @@ class Offer(object):
         'last_modified_date': 'lastModifiedDate',
         'message': 'message',
         'offer_duration': 'offerDuration',
+        'offered_items': 'offeredItems',
         'offer_id': 'offerId',
         'offer_status': 'offerStatus',
         'offer_type': 'offerType',
-        'offered_items': 'offeredItems',
         'revision': 'revision'
     }
 
-    def __init__(self, allow_counter_offer=None, buyer=None, creation_date=None, initiated_by=None, last_modified_date=None, message=None, offer_duration=None, offer_id=None, offer_status=None, offer_type=None, offered_items=None, revision=None):  # noqa: E501
+    def __init__(self, allow_counter_offer=None, buyer=None, creation_date=None, initiated_by=None, last_modified_date=None, message=None, offer_duration=None, offered_items=None, offer_id=None, offer_status=None, offer_type=None, revision=None):  # noqa: E501
         """Offer - a model defined in Swagger"""  # noqa: E501
         self._allow_counter_offer = None
         self._buyer = None
@@ -66,10 +66,10 @@ class Offer(object):
         self._last_modified_date = None
         self._message = None
         self._offer_duration = None
+        self._offered_items = None
         self._offer_id = None
         self._offer_status = None
         self._offer_type = None
-        self._offered_items = None
         self._revision = None
         self.discriminator = None
         if allow_counter_offer is not None:
@@ -86,14 +86,14 @@ class Offer(object):
             self.message = message
         if offer_duration is not None:
             self.offer_duration = offer_duration
+        if offered_items is not None:
+            self.offered_items = offered_items
         if offer_id is not None:
             self.offer_id = offer_id
         if offer_status is not None:
             self.offer_status = offer_status
         if offer_type is not None:
             self.offer_type = offer_type
-        if offered_items is not None:
-            self.offered_items = offered_items
         if revision is not None:
             self.revision = revision
 
@@ -255,6 +255,29 @@ class Offer(object):
         self._offer_duration = offer_duration
 
     @property
+    def offered_items(self):
+        """Gets the offered_items of this Offer.  # noqa: E501
+
+        The list of items associated with the offer. Currently, the offer list is restricted to a single offer.  # noqa: E501
+
+        :return: The offered_items of this Offer.  # noqa: E501
+        :rtype: list[OfferedItem]
+        """
+        return self._offered_items
+
+    @offered_items.setter
+    def offered_items(self, offered_items):
+        """Sets the offered_items of this Offer.
+
+        The list of items associated with the offer. Currently, the offer list is restricted to a single offer.  # noqa: E501
+
+        :param offered_items: The offered_items of this Offer.  # noqa: E501
+        :type: list[OfferedItem]
+        """
+
+        self._offered_items = offered_items
+
+    @property
     def offer_id(self):
         """Gets the offer_id of this Offer.  # noqa: E501
 
@@ -322,29 +345,6 @@ class Offer(object):
         """
 
         self._offer_type = offer_type
-
-    @property
-    def offered_items(self):
-        """Gets the offered_items of this Offer.  # noqa: E501
-
-        The list of items associated with the offer. Currently, the offer list is restricted to a single offer.  # noqa: E501
-
-        :return: The offered_items of this Offer.  # noqa: E501
-        :rtype: list[OfferedItem]
-        """
-        return self._offered_items
-
-    @offered_items.setter
-    def offered_items(self, offered_items):
-        """Sets the offered_items of this Offer.
-
-        The list of items associated with the offer. Currently, the offer list is restricted to a single offer.  # noqa: E501
-
-        :param offered_items: The offered_items of this Offer.  # noqa: E501
-        :type: list[OfferedItem]
-        """
-
-        self._offered_items = offered_items
 
     @property
     def revision(self):

@@ -28,6 +28,7 @@ class UserScheduleResponse(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'schedule_id': 'str',
         'creation_date': 'str',
         'feed_type': 'str',
         'last_modified_date': 'str',
@@ -35,7 +36,6 @@ class UserScheduleResponse(object):
         'preferred_trigger_day_of_week': 'str',
         'preferred_trigger_hour': 'str',
         'schedule_end_date': 'str',
-        'schedule_id': 'str',
         'schedule_name': 'str',
         'schedule_start_date': 'str',
         'schedule_template_id': 'str',
@@ -45,6 +45,7 @@ class UserScheduleResponse(object):
     }
 
     attribute_map = {
+        'schedule_id': 'scheduleId',
         'creation_date': 'creationDate',
         'feed_type': 'feedType',
         'last_modified_date': 'lastModifiedDate',
@@ -52,7 +53,6 @@ class UserScheduleResponse(object):
         'preferred_trigger_day_of_week': 'preferredTriggerDayOfWeek',
         'preferred_trigger_hour': 'preferredTriggerHour',
         'schedule_end_date': 'scheduleEndDate',
-        'schedule_id': 'scheduleId',
         'schedule_name': 'scheduleName',
         'schedule_start_date': 'scheduleStartDate',
         'schedule_template_id': 'scheduleTemplateId',
@@ -61,8 +61,9 @@ class UserScheduleResponse(object):
         'status_reason': 'statusReason'
     }
 
-    def __init__(self, creation_date=None, feed_type=None, last_modified_date=None, preferred_trigger_day_of_month=None, preferred_trigger_day_of_week=None, preferred_trigger_hour=None, schedule_end_date=None, schedule_id=None, schedule_name=None, schedule_start_date=None, schedule_template_id=None, schema_version=None, status=None, status_reason=None):  # noqa: E501
+    def __init__(self, schedule_id=None, creation_date=None, feed_type=None, last_modified_date=None, preferred_trigger_day_of_month=None, preferred_trigger_day_of_week=None, preferred_trigger_hour=None, schedule_end_date=None, schedule_name=None, schedule_start_date=None, schedule_template_id=None, schema_version=None, status=None, status_reason=None):  # noqa: E501
         """UserScheduleResponse - a model defined in Swagger"""  # noqa: E501
+        self._schedule_id = None
         self._creation_date = None
         self._feed_type = None
         self._last_modified_date = None
@@ -70,7 +71,6 @@ class UserScheduleResponse(object):
         self._preferred_trigger_day_of_week = None
         self._preferred_trigger_hour = None
         self._schedule_end_date = None
-        self._schedule_id = None
         self._schedule_name = None
         self._schedule_start_date = None
         self._schedule_template_id = None
@@ -78,6 +78,8 @@ class UserScheduleResponse(object):
         self._status = None
         self._status_reason = None
         self.discriminator = None
+        if schedule_id is not None:
+            self.schedule_id = schedule_id
         if creation_date is not None:
             self.creation_date = creation_date
         if feed_type is not None:
@@ -92,8 +94,6 @@ class UserScheduleResponse(object):
             self.preferred_trigger_hour = preferred_trigger_hour
         if schedule_end_date is not None:
             self.schedule_end_date = schedule_end_date
-        if schedule_id is not None:
-            self.schedule_id = schedule_id
         if schedule_name is not None:
             self.schedule_name = schedule_name
         if schedule_start_date is not None:
@@ -106,6 +106,29 @@ class UserScheduleResponse(object):
             self.status = status
         if status_reason is not None:
             self.status_reason = status_reason
+
+    @property
+    def schedule_id(self):
+        """Gets the schedule_id of this UserScheduleResponse.  # noqa: E501
+
+        The ID of the schedule. This ID is generated when the schedule was created by the createSchedule method.  # noqa: E501
+
+        :return: The schedule_id of this UserScheduleResponse.  # noqa: E501
+        :rtype: str
+        """
+        return self._schedule_id
+
+    @schedule_id.setter
+    def schedule_id(self, schedule_id):
+        """Sets the schedule_id of this UserScheduleResponse.
+
+        The ID of the schedule. This ID is generated when the schedule was created by the createSchedule method.  # noqa: E501
+
+        :param schedule_id: The schedule_id of this UserScheduleResponse.  # noqa: E501
+        :type: str
+        """
+
+        self._schedule_id = schedule_id
 
     @property
     def creation_date(self):
@@ -267,29 +290,6 @@ class UserScheduleResponse(object):
         """
 
         self._schedule_end_date = schedule_end_date
-
-    @property
-    def schedule_id(self):
-        """Gets the schedule_id of this UserScheduleResponse.  # noqa: E501
-
-        The ID of the schedule. This ID is generated when the schedule was created by the createSchedule method.  # noqa: E501
-
-        :return: The schedule_id of this UserScheduleResponse.  # noqa: E501
-        :rtype: str
-        """
-        return self._schedule_id
-
-    @schedule_id.setter
-    def schedule_id(self, schedule_id):
-        """Sets the schedule_id of this UserScheduleResponse.
-
-        The ID of the schedule. This ID is generated when the schedule was created by the createSchedule method.  # noqa: E501
-
-        :param schedule_id: The schedule_id of this UserScheduleResponse.  # noqa: E501
-        :type: str
-        """
-
-        self._schedule_id = schedule_id
 
     @property
     def schedule_name(self):

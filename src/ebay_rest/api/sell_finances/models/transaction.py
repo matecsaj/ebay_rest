@@ -38,8 +38,8 @@ class Transaction(object):
         'payout_id': 'str',
         'references': 'list[Reference]',
         'sales_record_reference': 'str',
-        'total_fee_amount': 'Amount',
         'total_fee_basis_amount': 'Amount',
+        'total_fee_amount': 'Amount',
         'transaction_date': 'str',
         'transaction_id': 'str',
         'transaction_memo': 'str',
@@ -58,8 +58,8 @@ class Transaction(object):
         'payout_id': 'payoutId',
         'references': 'references',
         'sales_record_reference': 'salesRecordReference',
-        'total_fee_amount': 'totalFeeAmount',
         'total_fee_basis_amount': 'totalFeeBasisAmount',
+        'total_fee_amount': 'totalFeeAmount',
         'transaction_date': 'transactionDate',
         'transaction_id': 'transactionId',
         'transaction_memo': 'transactionMemo',
@@ -67,7 +67,7 @@ class Transaction(object):
         'transaction_type': 'transactionType'
     }
 
-    def __init__(self, amount=None, booking_entry=None, buyer=None, fee_type=None, order_id=None, order_line_items=None, payments_entity=None, payout_id=None, references=None, sales_record_reference=None, total_fee_amount=None, total_fee_basis_amount=None, transaction_date=None, transaction_id=None, transaction_memo=None, transaction_status=None, transaction_type=None):  # noqa: E501
+    def __init__(self, amount=None, booking_entry=None, buyer=None, fee_type=None, order_id=None, order_line_items=None, payments_entity=None, payout_id=None, references=None, sales_record_reference=None, total_fee_basis_amount=None, total_fee_amount=None, transaction_date=None, transaction_id=None, transaction_memo=None, transaction_status=None, transaction_type=None):  # noqa: E501
         """Transaction - a model defined in Swagger"""  # noqa: E501
         self._amount = None
         self._booking_entry = None
@@ -79,8 +79,8 @@ class Transaction(object):
         self._payout_id = None
         self._references = None
         self._sales_record_reference = None
-        self._total_fee_amount = None
         self._total_fee_basis_amount = None
+        self._total_fee_amount = None
         self._transaction_date = None
         self._transaction_id = None
         self._transaction_memo = None
@@ -107,10 +107,10 @@ class Transaction(object):
             self.references = references
         if sales_record_reference is not None:
             self.sales_record_reference = sales_record_reference
-        if total_fee_amount is not None:
-            self.total_fee_amount = total_fee_amount
         if total_fee_basis_amount is not None:
             self.total_fee_basis_amount = total_fee_basis_amount
+        if total_fee_amount is not None:
+            self.total_fee_amount = total_fee_amount
         if transaction_date is not None:
             self.transaction_date = transaction_date
         if transaction_id is not None:
@@ -349,27 +349,6 @@ class Transaction(object):
         self._sales_record_reference = sales_record_reference
 
     @property
-    def total_fee_amount(self):
-        """Gets the total_fee_amount of this Transaction.  # noqa: E501
-
-
-        :return: The total_fee_amount of this Transaction.  # noqa: E501
-        :rtype: Amount
-        """
-        return self._total_fee_amount
-
-    @total_fee_amount.setter
-    def total_fee_amount(self, total_fee_amount):
-        """Sets the total_fee_amount of this Transaction.
-
-
-        :param total_fee_amount: The total_fee_amount of this Transaction.  # noqa: E501
-        :type: Amount
-        """
-
-        self._total_fee_amount = total_fee_amount
-
-    @property
     def total_fee_basis_amount(self):
         """Gets the total_fee_basis_amount of this Transaction.  # noqa: E501
 
@@ -389,6 +368,27 @@ class Transaction(object):
         """
 
         self._total_fee_basis_amount = total_fee_basis_amount
+
+    @property
+    def total_fee_amount(self):
+        """Gets the total_fee_amount of this Transaction.  # noqa: E501
+
+
+        :return: The total_fee_amount of this Transaction.  # noqa: E501
+        :rtype: Amount
+        """
+        return self._total_fee_amount
+
+    @total_fee_amount.setter
+    def total_fee_amount(self, total_fee_amount):
+        """Sets the total_fee_amount of this Transaction.
+
+
+        :param total_fee_amount: The total_fee_amount of this Transaction.  # noqa: E501
+        :type: Amount
+        """
+
+        self._total_fee_amount = total_fee_amount
 
     @property
     def transaction_date(self):

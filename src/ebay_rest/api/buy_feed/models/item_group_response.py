@@ -46,7 +46,7 @@ class ItemGroupResponse(object):
     def item_groups(self):
         """Gets the item_groups of this ItemGroupResponse.  # noqa: E501
 
-        The container for the array of items groups returned by the getItemGroupFeed method. The data in the file is tab separated and the first row is the header, which labels the columns and indicates the order of the values for each item. The header labels match the fields that are described in the Response fields section.  # noqa: E501
+        The container for the array of items groups returned by the <b> getItemGroupFeed</b> method. The data in the file is tab separated and the first row is the header, which labels the columns and indicates the order of the values for each item. The header labels match the fields that are described in the <a href=\"/api-docs/buy/feed/resources/item_group/methods/getItemGroupFeed#h3-response-fields\">Response fields</a> section.  # noqa: E501
 
         :return: The item_groups of this ItemGroupResponse.  # noqa: E501
         :rtype: list[ItemGroup]
@@ -57,7 +57,7 @@ class ItemGroupResponse(object):
     def item_groups(self, item_groups):
         """Sets the item_groups of this ItemGroupResponse.
 
-        The container for the array of items groups returned by the getItemGroupFeed method. The data in the file is tab separated and the first row is the header, which labels the columns and indicates the order of the values for each item. The header labels match the fields that are described in the Response fields section.  # noqa: E501
+        The container for the array of items groups returned by the <b> getItemGroupFeed</b> method. The data in the file is tab separated and the first row is the header, which labels the columns and indicates the order of the values for each item. The header labels match the fields that are described in the <a href=\"/api-docs/buy/feed/resources/item_group/methods/getItemGroupFeed#h3-response-fields\">Response fields</a> section.  # noqa: E501
 
         :param item_groups: The item_groups of this ItemGroupResponse.  # noqa: E501
         :type: list[ItemGroup]

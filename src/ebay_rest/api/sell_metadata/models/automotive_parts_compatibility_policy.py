@@ -89,7 +89,7 @@ class AutomotivePartsCompatibilityPolicy(object):
     def category_tree_id(self):
         """Gets the category_tree_id of this AutomotivePartsCompatibilityPolicy.  # noqa: E501
 
-        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree. A category tree is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique categoryId value. Within a category tree, the root node has no parent node and leaf nodes are nodes that have no child nodes.  # noqa: E501
+        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree.    <br><br>A <i>category tree</i> is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique <b>categoryId</b> value. Within a category tree, the root node has no parent node and <i>leaf nodes</i> are nodes that have no child nodes.  # noqa: E501
 
         :return: The category_tree_id of this AutomotivePartsCompatibilityPolicy.  # noqa: E501
         :rtype: str
@@ -100,7 +100,7 @@ class AutomotivePartsCompatibilityPolicy(object):
     def category_tree_id(self, category_tree_id):
         """Sets the category_tree_id of this AutomotivePartsCompatibilityPolicy.
 
-        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree. A category tree is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique categoryId value. Within a category tree, the root node has no parent node and leaf nodes are nodes that have no child nodes.  # noqa: E501
+        A value that indicates the root node of the category tree used for the response set. Each marketplace is based on a category tree whose root node is indicated by this unique category ID value. All category policy information returned by this call pertains to the categories included below this root node of the tree.    <br><br>A <i>category tree</i> is a hierarchical framework of eBay categories that begins at the root node of the tree and extends to include all the child nodes in the tree. Each child node in the tree is an eBay category that is represented by a unique <b>categoryId</b> value. Within a category tree, the root node has no parent node and <i>leaf nodes</i> are nodes that have no child nodes.  # noqa: E501
 
         :param category_tree_id: The category_tree_id of this AutomotivePartsCompatibilityPolicy.  # noqa: E501
         :type: str
@@ -112,7 +112,7 @@ class AutomotivePartsCompatibilityPolicy(object):
     def compatibility_based_on(self):
         """Gets the compatibility_based_on of this AutomotivePartsCompatibilityPolicy.  # noqa: E501
 
-        Indicates whether the category supports parts compatibility by either ASSEMBLY or by SPECIFICATION. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/metadata/types/sel:CompatibilityTypeEnum'>eBay API documentation</a>  # noqa: E501
+        Indicates whether the category supports parts compatibility by either <code>ASSEMBLY</code> or by <code>SPECIFICATION</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/metadata/types/sel:CompatibilityTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The compatibility_based_on of this AutomotivePartsCompatibilityPolicy.  # noqa: E501
         :rtype: str
@@ -123,7 +123,7 @@ class AutomotivePartsCompatibilityPolicy(object):
     def compatibility_based_on(self, compatibility_based_on):
         """Sets the compatibility_based_on of this AutomotivePartsCompatibilityPolicy.
 
-        Indicates whether the category supports parts compatibility by either ASSEMBLY or by SPECIFICATION. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/metadata/types/sel:CompatibilityTypeEnum'>eBay API documentation</a>  # noqa: E501
+        Indicates whether the category supports parts compatibility by either <code>ASSEMBLY</code> or by <code>SPECIFICATION</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/metadata/types/sel:CompatibilityTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param compatibility_based_on: The compatibility_based_on of this AutomotivePartsCompatibilityPolicy.  # noqa: E501
         :type: str

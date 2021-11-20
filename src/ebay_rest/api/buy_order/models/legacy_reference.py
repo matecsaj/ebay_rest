@@ -3,7 +3,7 @@
 """
     Order API
 
-    <span class=\"tablenote\"><b>Note:</b> This version of the Order API (v2) currently only supports the guest payment flow for eBay managed payments. To view the v1_beta version of the Order API, which includes both member and guest checkout payment flows, refer to the <a href=\"/api-docs/buy/order_v1/resources/methods\">Order_v1 API</a> documentation.</span><br /><br /><span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#Limited\" target=\"_blank\"><img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\"  alt=\"Limited Release\" title=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />The Order API provides interfaces that let shoppers pay for items. It also returns payment and shipping status of the order.  # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> This version of the Order API (v2) currently only supports the guest payment flow for eBay managed payments. To view the v1_beta version of the Order API, which includes both member and guest checkout payment flows, refer to the <a href=\"/api-docs/buy/order_v1/resources/methods\">Order_v1 API</a> documentation.</span><br /><br /><span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"><img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\"  alt=\"Limited Release\" title=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />The Order API provides interfaces that let shoppers pay for items. It also returns payment and shipping status of the order.  # noqa: E501
 
     OpenAPI spec version: v2.0.0
     
@@ -56,7 +56,7 @@ class LegacyReference(object):
     def legacy_item_id(self):
         """Gets the legacy_item_id of this LegacyReference.  # noqa: E501
 
-        The legacy ID used to identify an item. This is used by the Post Order API Create Return Request method. This call initiates the item return process. For more information on how to use this field in the Post Order API, see Create a return request in the Buy Integration Guide. Restriction: The Post Order API can be used only with eBay member checkouts.  # noqa: E501
+        The legacy ID used to identify an item.<br /><br />This is used by the Post Order API <a href=\"https://developer.ebay.com/Devzone/post-order/post-order_v2_return__post.html\" target=\"_blank\">Create Return Request</a> method. This call initiates the item return process. For more information on how to use this field in the Post Order API, see <a href=\"/api-docs/buy/static/api-order.html#return-request\">Create a return request</a> in the Buy Integration Guide.<br /><br /><b> Restriction:</b> The Post Order API can be used only with eBay member checkouts.  # noqa: E501
 
         :return: The legacy_item_id of this LegacyReference.  # noqa: E501
         :rtype: str
@@ -67,7 +67,7 @@ class LegacyReference(object):
     def legacy_item_id(self, legacy_item_id):
         """Sets the legacy_item_id of this LegacyReference.
 
-        The legacy ID used to identify an item. This is used by the Post Order API Create Return Request method. This call initiates the item return process. For more information on how to use this field in the Post Order API, see Create a return request in the Buy Integration Guide. Restriction: The Post Order API can be used only with eBay member checkouts.  # noqa: E501
+        The legacy ID used to identify an item.<br /><br />This is used by the Post Order API <a href=\"https://developer.ebay.com/Devzone/post-order/post-order_v2_return__post.html\" target=\"_blank\">Create Return Request</a> method. This call initiates the item return process. For more information on how to use this field in the Post Order API, see <a href=\"/api-docs/buy/static/api-order.html#return-request\">Create a return request</a> in the Buy Integration Guide.<br /><br /><b> Restriction:</b> The Post Order API can be used only with eBay member checkouts.  # noqa: E501
 
         :param legacy_item_id: The legacy_item_id of this LegacyReference.  # noqa: E501
         :type: str
@@ -79,7 +79,7 @@ class LegacyReference(object):
     def legacy_order_id(self):
         """Gets the legacy_order_id of this LegacyReference.  # noqa: E501
 
-        The legacy ID of the order. This is used by the Post Order API Submit Cancellation Request method. This method initiates the item cancellation process. For more information on how to use this field in the Post Order API, see Using the Post Order API. Restriction: The Post Order API can be used only with eBay member checkouts.  # noqa: E501
+        The legacy ID of the order.<br /><br />This is used by the Post Order API <a href=\"https://developer.ebay.com/Devzone/post-order/post-order_v2_cancellation__post.html\" target=\"_blank\">Submit Cancellation Request</a> method. This method initiates the item cancellation process. For more information on how to use this field in the Post Order API, see <a href=\"/api-docs/buy/static/api-order.html#using\">Using the Post Order API</a>.<br /><br /><b>Restriction:</b> The Post Order API can be used only with eBay member checkouts.  # noqa: E501
 
         :return: The legacy_order_id of this LegacyReference.  # noqa: E501
         :rtype: str
@@ -90,7 +90,7 @@ class LegacyReference(object):
     def legacy_order_id(self, legacy_order_id):
         """Sets the legacy_order_id of this LegacyReference.
 
-        The legacy ID of the order. This is used by the Post Order API Submit Cancellation Request method. This method initiates the item cancellation process. For more information on how to use this field in the Post Order API, see Using the Post Order API. Restriction: The Post Order API can be used only with eBay member checkouts.  # noqa: E501
+        The legacy ID of the order.<br /><br />This is used by the Post Order API <a href=\"https://developer.ebay.com/Devzone/post-order/post-order_v2_cancellation__post.html\" target=\"_blank\">Submit Cancellation Request</a> method. This method initiates the item cancellation process. For more information on how to use this field in the Post Order API, see <a href=\"/api-docs/buy/static/api-order.html#using\">Using the Post Order API</a>.<br /><br /><b>Restriction:</b> The Post Order API can be used only with eBay member checkouts.  # noqa: E501
 
         :param legacy_order_id: The legacy_order_id of this LegacyReference.  # noqa: E501
         :type: str
@@ -102,7 +102,7 @@ class LegacyReference(object):
     def legacy_transaction_id(self):
         """Gets the legacy_transaction_id of this LegacyReference.  # noqa: E501
 
-        The legacy ID of the transaction. This is used by the Post Order API Create Return Request call. This call initiates the item return process. For more information on how to use this field in the Post Order API, see Using the Post Order API in the Buy Integration Guide. Restriction: The Post Order API can be used only with eBay member checkouts.  # noqa: E501
+        The legacy ID of the transaction.<br /><br />This is used by the Post Order API <a href=\"https://developer.ebay.com/devzone/post-order/post-order_v2_return__post.html\" target=\"_blank\">Create Return Request</a> call. This call initiates the item return process. For more information on how to use this field in the Post Order API, see <a href=\"/api-docs/buy/static/api-order.html#using\">Using the Post Order API</a> in the Buy Integration Guide.<br /><br /><b>Restriction:</b> The Post Order API can be used only with eBay member checkouts.  # noqa: E501
 
         :return: The legacy_transaction_id of this LegacyReference.  # noqa: E501
         :rtype: str
@@ -113,7 +113,7 @@ class LegacyReference(object):
     def legacy_transaction_id(self, legacy_transaction_id):
         """Sets the legacy_transaction_id of this LegacyReference.
 
-        The legacy ID of the transaction. This is used by the Post Order API Create Return Request call. This call initiates the item return process. For more information on how to use this field in the Post Order API, see Using the Post Order API in the Buy Integration Guide. Restriction: The Post Order API can be used only with eBay member checkouts.  # noqa: E501
+        The legacy ID of the transaction.<br /><br />This is used by the Post Order API <a href=\"https://developer.ebay.com/devzone/post-order/post-order_v2_return__post.html\" target=\"_blank\">Create Return Request</a> call. This call initiates the item return process. For more information on how to use this field in the Post Order API, see <a href=\"/api-docs/buy/static/api-order.html#using\">Using the Post Order API</a> in the Buy Integration Guide.<br /><br /><b>Restriction:</b> The Post Order API can be used only with eBay member checkouts.  # noqa: E501
 
         :param legacy_transaction_id: The legacy_transaction_id of this LegacyReference.  # noqa: E501
         :type: str

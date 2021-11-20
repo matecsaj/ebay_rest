@@ -273,15 +273,18 @@ class APISandboxSingleSiteTests(unittest.TestCase):
             self.fail(f'Error {self.number} is {self.reason}  {self.detail}.\n')
 
     def test_paging_no_results(self):
-        for record in self._api.buy_browse_search(q='atomic-donkey-kick--this-will-not-be-found-Geraldine'):
-            if 'record' not in record:
-                self.assertTrue('total' in record, f'Unexpected non-record{record}.')
-                self.assertEqual(record['total']['records_yielded'], 0)
-                self.assertEqual(record['total']['records_available'], 0)
-            else:
-                item = record['record']
-                self.assertTrue(isinstance(item['item_id'], str), "Malformed item.")
-                self.fail(msg='No items should be returned.')
+        try:
+            for record in self._api.buy_browse_search(q='atomic-donkey-kick--this-will-not-be-found-Geraldine'):
+                if 'record' not in record:
+                    self.assertTrue('total' in record, f'Unexpected non-record{record}.')
+                    self.assertEqual(record['total']['records_yielded'], 0)
+                    self.assertEqual(record['total']['records_available'], 0)
+                else:
+                    item = record['record']
+                    self.assertTrue(isinstance(item['item_id'], str), "Malformed item.")
+                    self.fail(msg='No items should be returned.')
+        except Error as error:
+            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
 
     def test_positional_none_kw_none(self):
         """ Try a call with no positional arguments and no keyword arguments. """

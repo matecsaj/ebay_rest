@@ -38,9 +38,9 @@ class Shipment(object):
         'rate': 'PurchasedRate',
         'return_to': 'Contact',
         'ship_from': 'Contact',
-        'ship_to': 'Contact',
         'shipment_id': 'str',
-        'shipment_tracking_number': 'str'
+        'shipment_tracking_number': 'str',
+        'ship_to': 'Contact'
     }
 
     attribute_map = {
@@ -54,12 +54,12 @@ class Shipment(object):
         'rate': 'rate',
         'return_to': 'returnTo',
         'ship_from': 'shipFrom',
-        'ship_to': 'shipTo',
         'shipment_id': 'shipmentId',
-        'shipment_tracking_number': 'shipmentTrackingNumber'
+        'shipment_tracking_number': 'shipmentTrackingNumber',
+        'ship_to': 'shipTo'
     }
 
-    def __init__(self, cancellation=None, creation_date=None, label_custom_message=None, label_download_url=None, label_size=None, orders=None, package_specification=None, rate=None, return_to=None, ship_from=None, ship_to=None, shipment_id=None, shipment_tracking_number=None):  # noqa: E501
+    def __init__(self, cancellation=None, creation_date=None, label_custom_message=None, label_download_url=None, label_size=None, orders=None, package_specification=None, rate=None, return_to=None, ship_from=None, shipment_id=None, shipment_tracking_number=None, ship_to=None):  # noqa: E501
         """Shipment - a model defined in Swagger"""  # noqa: E501
         self._cancellation = None
         self._creation_date = None
@@ -71,9 +71,9 @@ class Shipment(object):
         self._rate = None
         self._return_to = None
         self._ship_from = None
-        self._ship_to = None
         self._shipment_id = None
         self._shipment_tracking_number = None
+        self._ship_to = None
         self.discriminator = None
         if cancellation is not None:
             self.cancellation = cancellation
@@ -95,12 +95,12 @@ class Shipment(object):
             self.return_to = return_to
         if ship_from is not None:
             self.ship_from = ship_from
-        if ship_to is not None:
-            self.ship_to = ship_to
         if shipment_id is not None:
             self.shipment_id = shipment_id
         if shipment_tracking_number is not None:
             self.shipment_tracking_number = shipment_tracking_number
+        if ship_to is not None:
+            self.ship_to = ship_to
 
     @property
     def cancellation(self):
@@ -323,27 +323,6 @@ class Shipment(object):
         self._ship_from = ship_from
 
     @property
-    def ship_to(self):
-        """Gets the ship_to of this Shipment.  # noqa: E501
-
-
-        :return: The ship_to of this Shipment.  # noqa: E501
-        :rtype: Contact
-        """
-        return self._ship_to
-
-    @ship_to.setter
-    def ship_to(self, ship_to):
-        """Sets the ship_to of this Shipment.
-
-
-        :param ship_to: The ship_to of this Shipment.  # noqa: E501
-        :type: Contact
-        """
-
-        self._ship_to = ship_to
-
-    @property
     def shipment_id(self):
         """Gets the shipment_id of this Shipment.  # noqa: E501
 
@@ -388,6 +367,27 @@ class Shipment(object):
         """
 
         self._shipment_tracking_number = shipment_tracking_number
+
+    @property
+    def ship_to(self):
+        """Gets the ship_to of this Shipment.  # noqa: E501
+
+
+        :return: The ship_to of this Shipment.  # noqa: E501
+        :rtype: Contact
+        """
+        return self._ship_to
+
+    @ship_to.setter
+    def ship_to(self, ship_to):
+        """Sets the ship_to of this Shipment.
+
+
+        :param ship_to: The ship_to of this Shipment.  # noqa: E501
+        :type: Contact
+        """
+
+        self._ship_to = ship_to
 
     def to_dict(self):
         """Returns the model properties as a dict"""

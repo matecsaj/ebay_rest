@@ -3,7 +3,7 @@
 """
     Marketplace Insights API
 
-    <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#Limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.  # noqa: E501
+    <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.  # noqa: E501
 
     OpenAPI spec version: v1_beta.2.2
     
@@ -122,7 +122,7 @@ class ItemLocation(object):
     def city(self):
         """Gets the city of this ItemLocation.  # noqa: E501
 
-        The city in which the item is located.  # noqa: E501
+        The city in which the item is located.   # noqa: E501
 
         :return: The city of this ItemLocation.  # noqa: E501
         :rtype: str
@@ -133,7 +133,7 @@ class ItemLocation(object):
     def city(self, city):
         """Sets the city of this ItemLocation.
 
-        The city in which the item is located.  # noqa: E501
+        The city in which the item is located.   # noqa: E501
 
         :param city: The city of this ItemLocation.  # noqa: E501
         :type: str
@@ -145,7 +145,7 @@ class ItemLocation(object):
     def country(self):
         """Gets the country of this ItemLocation.  # noqa: E501
 
-        The two-letter ISO 3166 standard code that indicates the country in which the item is located. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/marketplace_insights/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
+        The two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\">ISO 3166</a> standard code that indicates the country in which the item is located.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/marketplace_insights/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The country of this ItemLocation.  # noqa: E501
         :rtype: str
@@ -156,7 +156,7 @@ class ItemLocation(object):
     def country(self, country):
         """Sets the country of this ItemLocation.
 
-        The two-letter ISO 3166 standard code that indicates the country in which the item is located. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/marketplace_insights/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
+        The two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\">ISO 3166</a> standard code that indicates the country in which the item is located.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/marketplace_insights/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param country: The country of this ItemLocation.  # noqa: E501
         :type: str
@@ -191,7 +191,7 @@ class ItemLocation(object):
     def postal_code(self):
         """Gets the postal_code of this ItemLocation.  # noqa: E501
 
-        The postal code (or zip code in US) where the item is located. Note: Beginning in late January 2020, the displayed postal code will be masked to all users. Different countries will mask postal/zip codes in slightly different ways, but an example would be 951**.  # noqa: E501
+        The postal code (or zip code in US) where the item is located.<br /> <br /><span class=\"tablenote\"> <b>  Note: </b>Beginning in late January 2020, the displayed postal code will be masked to all users. Different countries will mask postal/zip codes in slightly different ways, but an example would be <code>951**</code>.</span>  # noqa: E501
 
         :return: The postal_code of this ItemLocation.  # noqa: E501
         :rtype: str
@@ -202,7 +202,7 @@ class ItemLocation(object):
     def postal_code(self, postal_code):
         """Sets the postal_code of this ItemLocation.
 
-        The postal code (or zip code in US) where the item is located. Note: Beginning in late January 2020, the displayed postal code will be masked to all users. Different countries will mask postal/zip codes in slightly different ways, but an example would be 951**.  # noqa: E501
+        The postal code (or zip code in US) where the item is located.<br /> <br /><span class=\"tablenote\"> <b>  Note: </b>Beginning in late January 2020, the displayed postal code will be masked to all users. Different countries will mask postal/zip codes in slightly different ways, but an example would be <code>951**</code>.</span>  # noqa: E501
 
         :param postal_code: The postal_code of this ItemLocation.  # noqa: E501
         :type: str

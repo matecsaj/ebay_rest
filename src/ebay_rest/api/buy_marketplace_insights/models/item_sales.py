@@ -3,7 +3,7 @@
 """
     Marketplace Insights API
 
-    <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#Limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.  # noqa: E501
+    <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.  # noqa: E501
 
     OpenAPI spec version: v1_beta.2.2
     
@@ -151,7 +151,7 @@ class ItemSales(object):
     def additional_images(self):
         """Gets the additional_images of this ItemSales.  # noqa: E501
 
-        An array of containers with the URLs for the images that are in addition to the primary image. The primary image is returned in the image.imageUrl field.  # noqa: E501
+        An array of containers with the URLs for the images that are in addition to the primary image.  The primary image is returned in the <b> image.imageUrl</b> field.  # noqa: E501
 
         :return: The additional_images of this ItemSales.  # noqa: E501
         :rtype: list[Image]
@@ -162,7 +162,7 @@ class ItemSales(object):
     def additional_images(self, additional_images):
         """Sets the additional_images of this ItemSales.
 
-        An array of containers with the URLs for the images that are in addition to the primary image. The primary image is returned in the image.imageUrl field.  # noqa: E501
+        An array of containers with the URLs for the images that are in addition to the primary image.  The primary image is returned in the <b> image.imageUrl</b> field.  # noqa: E501
 
         :param additional_images: The additional_images of this ItemSales.  # noqa: E501
         :type: list[Image]
@@ -174,7 +174,7 @@ class ItemSales(object):
     def adult_only(self):
         """Gets the adult_only of this ItemSales.  # noqa: E501
 
-        This indicates if the item is for adults only. For more information about adult-only items on eBay, see Adult items policy for sellers and Adult-Only items on eBay for buyers.  # noqa: E501
+        This indicates if the item is for  adults only. For more information about adult-only items on eBay, see <a href=\"https://pages.ebay.com/help/policies/adult-only.html\" target=\"_blank\">Adult items policy</a> for sellers and <a href=\"https://www.ebay.com/help/terms-conditions/default/searching-adult-items?id=4661\" target=\"_blank\">Adult-Only items on eBay</a> for buyers.  # noqa: E501
 
         :return: The adult_only of this ItemSales.  # noqa: E501
         :rtype: bool
@@ -185,7 +185,7 @@ class ItemSales(object):
     def adult_only(self, adult_only):
         """Sets the adult_only of this ItemSales.
 
-        This indicates if the item is for adults only. For more information about adult-only items on eBay, see Adult items policy for sellers and Adult-Only items on eBay for buyers.  # noqa: E501
+        This indicates if the item is for  adults only. For more information about adult-only items on eBay, see <a href=\"https://pages.ebay.com/help/policies/adult-only.html\" target=\"_blank\">Adult items policy</a> for sellers and <a href=\"https://www.ebay.com/help/terms-conditions/default/searching-adult-items?id=4661\" target=\"_blank\">Adult-Only items on eBay</a> for buyers.  # noqa: E501
 
         :param adult_only: The adult_only of this ItemSales.  # noqa: E501
         :type: bool
@@ -220,7 +220,7 @@ class ItemSales(object):
     def buying_options(self):
         """Gets the buying_options of this ItemSales.  # noqa: E501
 
-        A comma separated list of the purchase options available for the item, such as FIXED_PRICE, AUCTION. FIXED_PRICE - Returned for fixed-price items (non-auction) AUCTION - Returned for auction items without Buy It Now feature FIXED_PRICE and AUCTION - Returned for auction items enabled with the Buy It Now feature Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        A comma separated list of the purchase options available for the item, such as FIXED_PRICE, AUCTION.  <ul> <li><code>FIXED_PRICE</code> - Returned for fixed-price items (non-auction)</li>  <li><code>AUCTION</code> - Returned for auction items without Buy It Now feature</li>  <li><code>FIXED_PRICE</code> and <code>AUCTION</code> - Returned for auction items enabled with the Buy It Now feature</li> </ul> Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :return: The buying_options of this ItemSales.  # noqa: E501
         :rtype: list[str]
@@ -231,7 +231,7 @@ class ItemSales(object):
     def buying_options(self, buying_options):
         """Sets the buying_options of this ItemSales.
 
-        A comma separated list of the purchase options available for the item, such as FIXED_PRICE, AUCTION. FIXED_PRICE - Returned for fixed-price items (non-auction) AUCTION - Returned for auction items without Buy It Now feature FIXED_PRICE and AUCTION - Returned for auction items enabled with the Buy It Now feature Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        A comma separated list of the purchase options available for the item, such as FIXED_PRICE, AUCTION.  <ul> <li><code>FIXED_PRICE</code> - Returned for fixed-price items (non-auction)</li>  <li><code>AUCTION</code> - Returned for auction items without Buy It Now feature</li>  <li><code>FIXED_PRICE</code> and <code>AUCTION</code> - Returned for auction items enabled with the Buy It Now feature</li> </ul> Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :param buying_options: The buying_options of this ItemSales.  # noqa: E501
         :type: list[str]
@@ -243,7 +243,7 @@ class ItemSales(object):
     def categories(self):
         """Gets the categories of this ItemSales.  # noqa: E501
 
-        This container returns the primary category ID of the item, as well as the secondary category if the item was listed in two categories.  # noqa: E501
+        This container returns the primary category ID of the item, as well as the secondary category if the item was listed in two categories.   # noqa: E501
 
         :return: The categories of this ItemSales.  # noqa: E501
         :rtype: list[Category]
@@ -254,7 +254,7 @@ class ItemSales(object):
     def categories(self, categories):
         """Sets the categories of this ItemSales.
 
-        This container returns the primary category ID of the item, as well as the secondary category if the item was listed in two categories.  # noqa: E501
+        This container returns the primary category ID of the item, as well as the secondary category if the item was listed in two categories.   # noqa: E501
 
         :param categories: The categories of this ItemSales.  # noqa: E501
         :type: list[Category]
@@ -266,7 +266,7 @@ class ItemSales(object):
     def condition(self):
         """Gets the condition of this ItemSales.  # noqa: E501
 
-        The text describing the condition of the item, such as New or Used. For a list of condition names, see Item Condition IDs and Names. Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        The text describing the condition of the item, such as New or Used. For a list of condition names, see <a href=\"https://developer.ebay.com/devzone/finding/callref/enums/conditionIdList.html\" target=\"_blank\">Item Condition IDs and Names</a>.  <br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :return: The condition of this ItemSales.  # noqa: E501
         :rtype: str
@@ -277,7 +277,7 @@ class ItemSales(object):
     def condition(self, condition):
         """Sets the condition of this ItemSales.
 
-        The text describing the condition of the item, such as New or Used. For a list of condition names, see Item Condition IDs and Names. Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        The text describing the condition of the item, such as New or Used. For a list of condition names, see <a href=\"https://developer.ebay.com/devzone/finding/callref/enums/conditionIdList.html\" target=\"_blank\">Item Condition IDs and Names</a>.  <br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :param condition: The condition of this ItemSales.  # noqa: E501
         :type: str
@@ -289,7 +289,7 @@ class ItemSales(object):
     def condition_id(self):
         """Gets the condition_id of this ItemSales.  # noqa: E501
 
-        The identifier of the condition of the item. For example, 1000 is the identifier for NEW. For a list of condition names and IDs, see Item Condition IDs and Names. Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        The identifier of the condition of the item. For example, 1000 is the identifier for NEW. For a list of condition names and IDs, see <a href=\"https://developer.ebay.com/devzone/finding/callref/enums/conditionIdList.html\" target=\"_blank\">Item Condition IDs and Names</a>. <br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :return: The condition_id of this ItemSales.  # noqa: E501
         :rtype: str
@@ -300,7 +300,7 @@ class ItemSales(object):
     def condition_id(self, condition_id):
         """Sets the condition_id of this ItemSales.
 
-        The identifier of the condition of the item. For example, 1000 is the identifier for NEW. For a list of condition names and IDs, see Item Condition IDs and Names. Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        The identifier of the condition of the item. For example, 1000 is the identifier for NEW. For a list of condition names and IDs, see <a href=\"https://developer.ebay.com/devzone/finding/callref/enums/conditionIdList.html\" target=\"_blank\">Item Condition IDs and Names</a>. <br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :param condition_id: The condition_id of this ItemSales.  # noqa: E501
         :type: str
@@ -312,7 +312,7 @@ class ItemSales(object):
     def epid(self):
         """Gets the epid of this ItemSales.  # noqa: E501
 
-        An ePID is the eBay product identifier of a product from the eBay product catalog. This indicates the product in which the item belongs.  # noqa: E501
+        An ePID is the eBay product identifier of a product from the eBay product catalog.  This indicates the product in which the item belongs.  # noqa: E501
 
         :return: The epid of this ItemSales.  # noqa: E501
         :rtype: str
@@ -323,7 +323,7 @@ class ItemSales(object):
     def epid(self, epid):
         """Sets the epid of this ItemSales.
 
-        An ePID is the eBay product identifier of a product from the eBay product catalog. This indicates the product in which the item belongs.  # noqa: E501
+        An ePID is the eBay product identifier of a product from the eBay product catalog.  This indicates the product in which the item belongs.  # noqa: E501
 
         :param epid: The epid of this ItemSales.  # noqa: E501
         :type: str
@@ -356,7 +356,7 @@ class ItemSales(object):
     def item_affiliate_web_url(self):
         """Gets the item_affiliate_web_url of this ItemSales.  # noqa: E501
 
-        The URL to the View Item page of the item, which includes the affiliate tracking ID. This field is only returned if the eBay partner enables affiliate tracking for the item by including the X-EBAY-C-ENDUSERCTX request header in the method.  # noqa: E501
+        The URL to the View Item page of the item, which includes the affiliate tracking ID. This field is only returned if the eBay partner  enables affiliate tracking for the item by including the <code><a href=\"/api-docs/buy/static/api-browse.html#Headers\">X-EBAY-C-ENDUSERCTX</a></code> request header in the method.  # noqa: E501
 
         :return: The item_affiliate_web_url of this ItemSales.  # noqa: E501
         :rtype: str
@@ -367,7 +367,7 @@ class ItemSales(object):
     def item_affiliate_web_url(self, item_affiliate_web_url):
         """Sets the item_affiliate_web_url of this ItemSales.
 
-        The URL to the View Item page of the item, which includes the affiliate tracking ID. This field is only returned if the eBay partner enables affiliate tracking for the item by including the X-EBAY-C-ENDUSERCTX request header in the method.  # noqa: E501
+        The URL to the View Item page of the item, which includes the affiliate tracking ID. This field is only returned if the eBay partner  enables affiliate tracking for the item by including the <code><a href=\"/api-docs/buy/static/api-browse.html#Headers\">X-EBAY-C-ENDUSERCTX</a></code> request header in the method.  # noqa: E501
 
         :param item_affiliate_web_url: The item_affiliate_web_url of this ItemSales.  # noqa: E501
         :type: str
@@ -379,7 +379,7 @@ class ItemSales(object):
     def item_group_href(self):
         """Gets the item_group_href of this ItemSales.  # noqa: E501
 
-        The HATEOAS reference of the parent page of the item group. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. Note: This field is returned only for item groups.  # noqa: E501
+        The HATEOAS reference of the parent page of the item group. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. <br /> <br /><span class=\"tablenote\"> <b>  Note: </b>This field is returned only for item groups.</span>  # noqa: E501
 
         :return: The item_group_href of this ItemSales.  # noqa: E501
         :rtype: str
@@ -390,7 +390,7 @@ class ItemSales(object):
     def item_group_href(self, item_group_href):
         """Sets the item_group_href of this ItemSales.
 
-        The HATEOAS reference of the parent page of the item group. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. Note: This field is returned only for item groups.  # noqa: E501
+        The HATEOAS reference of the parent page of the item group. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. <br /> <br /><span class=\"tablenote\"> <b>  Note: </b>This field is returned only for item groups.</span>  # noqa: E501
 
         :param item_group_href: The item_group_href of this ItemSales.  # noqa: E501
         :type: str
@@ -402,7 +402,7 @@ class ItemSales(object):
     def item_group_type(self):
         """Gets the item_group_type of this ItemSales.  # noqa: E501
 
-        Indicates the item group type. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. Currently, only the SELLER_DEFINED_VARIATIONS group type is supported and indicates that this is an item group created by the seller. Note: This field is returned only for item groups. Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        Indicates the item group type. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. <br /><br />Currently, only the <code>SELLER_DEFINED_VARIATIONS</code> group type is supported and indicates that this is an item group created by the seller.<br /> <br /><span class=\"tablenote\"> <b> Note: </b>This field is returned only for item groups.</span><br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :return: The item_group_type of this ItemSales.  # noqa: E501
         :rtype: str
@@ -413,7 +413,7 @@ class ItemSales(object):
     def item_group_type(self, item_group_type):
         """Sets the item_group_type of this ItemSales.
 
-        Indicates the item group type. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. Currently, only the SELLER_DEFINED_VARIATIONS group type is supported and indicates that this is an item group created by the seller. Note: This field is returned only for item groups. Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        Indicates the item group type. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. <br /><br />Currently, only the <code>SELLER_DEFINED_VARIATIONS</code> group type is supported and indicates that this is an item group created by the seller.<br /> <br /><span class=\"tablenote\"> <b> Note: </b>This field is returned only for item groups.</span><br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :param item_group_type: The item_group_type of this ItemSales.  # noqa: E501
         :type: str
@@ -515,7 +515,7 @@ class ItemSales(object):
     def last_sold_date(self):
         """Gets the last_sold_date of this ItemSales.  # noqa: E501
 
-        The date the last item was purchased within the last 90 days. The totalSoldQuantity returns the total number of items that were sold. This field returns the date the last item in that group was sold.  # noqa: E501
+        The date the last item was purchased within the last 90 days. The <b>totalSoldQuantity</b> returns the total number of items that were sold. This field returns the date the last item in that group was sold.   # noqa: E501
 
         :return: The last_sold_date of this ItemSales.  # noqa: E501
         :rtype: str
@@ -526,7 +526,7 @@ class ItemSales(object):
     def last_sold_date(self, last_sold_date):
         """Sets the last_sold_date of this ItemSales.
 
-        The date the last item was purchased within the last 90 days. The totalSoldQuantity returns the total number of items that were sold. This field returns the date the last item in that group was sold.  # noqa: E501
+        The date the last item was purchased within the last 90 days. The <b>totalSoldQuantity</b> returns the total number of items that were sold. This field returns the date the last item in that group was sold.   # noqa: E501
 
         :param last_sold_date: The last_sold_date of this ItemSales.  # noqa: E501
         :type: str
@@ -580,7 +580,7 @@ class ItemSales(object):
     def thumbnail_images(self):
         """Gets the thumbnail_images of this ItemSales.  # noqa: E501
 
-        An array of thumbnail images for the item.  # noqa: E501
+        An array of thumbnail images for the item.   # noqa: E501
 
         :return: The thumbnail_images of this ItemSales.  # noqa: E501
         :rtype: list[Image]
@@ -591,7 +591,7 @@ class ItemSales(object):
     def thumbnail_images(self, thumbnail_images):
         """Sets the thumbnail_images of this ItemSales.
 
-        An array of thumbnail images for the item.  # noqa: E501
+        An array of thumbnail images for the item.   # noqa: E501
 
         :param thumbnail_images: The thumbnail_images of this ItemSales.  # noqa: E501
         :type: list[Image]
@@ -603,7 +603,7 @@ class ItemSales(object):
     def title(self):
         """Gets the title of this ItemSales.  # noqa: E501
 
-        The seller-created title of the item. Maximum Length: 80 characters  # noqa: E501
+        The seller-created title of the item.  <br><br><b>Maximum Length: </b> 80 characters  # noqa: E501
 
         :return: The title of this ItemSales.  # noqa: E501
         :rtype: str
@@ -614,7 +614,7 @@ class ItemSales(object):
     def title(self, title):
         """Sets the title of this ItemSales.
 
-        The seller-created title of the item. Maximum Length: 80 characters  # noqa: E501
+        The seller-created title of the item.  <br><br><b>Maximum Length: </b> 80 characters  # noqa: E501
 
         :param title: The title of this ItemSales.  # noqa: E501
         :type: str

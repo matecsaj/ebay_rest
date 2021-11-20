@@ -3,7 +3,7 @@
 """
     Order API
 
-    <span class=\"tablenote\"><b>Note:</b> This version of the Order API (v2) currently only supports the guest payment flow for eBay managed payments. To view the v1_beta version of the Order API, which includes both member and guest checkout payment flows, refer to the <a href=\"/api-docs/buy/order_v1/resources/methods\">Order_v1 API</a> documentation.</span><br /><br /><span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#Limited\" target=\"_blank\"><img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\"  alt=\"Limited Release\" title=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />The Order API provides interfaces that let shoppers pay for items. It also returns payment and shipping status of the order.  # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> This version of the Order API (v2) currently only supports the guest payment flow for eBay managed payments. To view the v1_beta version of the Order API, which includes both member and guest checkout payment flows, refer to the <a href=\"/api-docs/buy/order_v1/resources/methods\">Order_v1 API</a> documentation.</span><br /><br /><span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"><img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\"  alt=\"Limited Release\" title=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />The Order API provides interfaces that let shoppers pay for items. It also returns payment and shipping status of the order.  # noqa: E501
 
     OpenAPI spec version: v2.0.0
     
@@ -84,7 +84,7 @@ class AuthenticityVerificationProgram(object):
     def outcome_reason(self):
         """Gets the outcome_reason of this AuthenticityVerificationProgram.  # noqa: E501
 
-        An informational message regarding the authentication outcome of an Authenticity Guarantee verification inspection. Note: This field is conditionally returned when there is information that applies to the Authenticity Guarantee program.  # noqa: E501
+        An informational message regarding the authentication outcome of an Authenticity Guarantee verification inspection.<br /><br /><span class=\"tablenote\"><b>Note:</b> This field is conditionally returned when there is information that applies to the Authenticity Guarantee program.</span>  # noqa: E501
 
         :return: The outcome_reason of this AuthenticityVerificationProgram.  # noqa: E501
         :rtype: str
@@ -95,7 +95,7 @@ class AuthenticityVerificationProgram(object):
     def outcome_reason(self, outcome_reason):
         """Sets the outcome_reason of this AuthenticityVerificationProgram.
 
-        An informational message regarding the authentication outcome of an Authenticity Guarantee verification inspection. Note: This field is conditionally returned when there is information that applies to the Authenticity Guarantee program.  # noqa: E501
+        An informational message regarding the authentication outcome of an Authenticity Guarantee verification inspection.<br /><br /><span class=\"tablenote\"><b>Note:</b> This field is conditionally returned when there is information that applies to the Authenticity Guarantee program.</span>  # noqa: E501
 
         :param outcome_reason: The outcome_reason of this AuthenticityVerificationProgram.  # noqa: E501
         :type: str
@@ -107,7 +107,7 @@ class AuthenticityVerificationProgram(object):
     def status(self):
         """Gets the status of this AuthenticityVerificationProgram.  # noqa: E501
 
-        An enumerated value that indicates whether the order line item has passed or failed the Authenticity Guarantee verification inspection, or whether the inspection and/or results are still pending. Note: This field is conditionally returned when the purchase is complete. Valid Values: PENDING PASSED FAILED INELIGIBLE For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/order/types/gct:AuthenticityVerificationStatusEnum'>eBay API documentation</a>  # noqa: E501
+        An enumerated value that indicates whether the order line item has passed or failed the Authenticity Guarantee verification inspection, or whether the inspection and/or results are still pending.<br /><br /><span class=\"tablenote\"><b>Note:</b> This field is conditionally returned when the purchase is complete.</span><br /><br /><b>Valid Values:</b><ul><li><code>PENDING</code></li><li><code>PASSED</code></li><li><code>FAILED</code></li><li><code>INELIGIBLE</code></li></ul> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/order/types/gct:AuthenticityVerificationStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The status of this AuthenticityVerificationProgram.  # noqa: E501
         :rtype: str
@@ -118,7 +118,7 @@ class AuthenticityVerificationProgram(object):
     def status(self, status):
         """Sets the status of this AuthenticityVerificationProgram.
 
-        An enumerated value that indicates whether the order line item has passed or failed the Authenticity Guarantee verification inspection, or whether the inspection and/or results are still pending. Note: This field is conditionally returned when the purchase is complete. Valid Values: PENDING PASSED FAILED INELIGIBLE For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/order/types/gct:AuthenticityVerificationStatusEnum'>eBay API documentation</a>  # noqa: E501
+        An enumerated value that indicates whether the order line item has passed or failed the Authenticity Guarantee verification inspection, or whether the inspection and/or results are still pending.<br /><br /><span class=\"tablenote\"><b>Note:</b> This field is conditionally returned when the purchase is complete.</span><br /><br /><b>Valid Values:</b><ul><li><code>PENDING</code></li><li><code>PASSED</code></li><li><code>FAILED</code></li><li><code>INELIGIBLE</code></li></ul> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/order/types/gct:AuthenticityVerificationStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :param status: The status of this AuthenticityVerificationProgram.  # noqa: E501
         :type: str

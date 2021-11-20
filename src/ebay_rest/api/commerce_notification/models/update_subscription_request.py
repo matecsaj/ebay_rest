@@ -28,73 +28,29 @@ class UpdateSubscriptionRequest(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'destination_id': 'str',
+        'status': 'str',
         'payload': 'SubscriptionPayloadDetail',
-        'status': 'str'
+        'destination_id': 'str'
     }
 
     attribute_map = {
-        'destination_id': 'destinationId',
+        'status': 'status',
         'payload': 'payload',
-        'status': 'status'
+        'destination_id': 'destinationId'
     }
 
-    def __init__(self, destination_id=None, payload=None, status=None):  # noqa: E501
+    def __init__(self, status=None, payload=None, destination_id=None):  # noqa: E501
         """UpdateSubscriptionRequest - a model defined in Swagger"""  # noqa: E501
-        self._destination_id = None
-        self._payload = None
         self._status = None
+        self._payload = None
+        self._destination_id = None
         self.discriminator = None
-        if destination_id is not None:
-            self.destination_id = destination_id
-        if payload is not None:
-            self.payload = payload
         if status is not None:
             self.status = status
-
-    @property
-    def destination_id(self):
-        """Gets the destination_id of this UpdateSubscriptionRequest.  # noqa: E501
-
-        The unique identifier for the destination associated with this subscription.  # noqa: E501
-
-        :return: The destination_id of this UpdateSubscriptionRequest.  # noqa: E501
-        :rtype: str
-        """
-        return self._destination_id
-
-    @destination_id.setter
-    def destination_id(self, destination_id):
-        """Sets the destination_id of this UpdateSubscriptionRequest.
-
-        The unique identifier for the destination associated with this subscription.  # noqa: E501
-
-        :param destination_id: The destination_id of this UpdateSubscriptionRequest.  # noqa: E501
-        :type: str
-        """
-
-        self._destination_id = destination_id
-
-    @property
-    def payload(self):
-        """Gets the payload of this UpdateSubscriptionRequest.  # noqa: E501
-
-
-        :return: The payload of this UpdateSubscriptionRequest.  # noqa: E501
-        :rtype: SubscriptionPayloadDetail
-        """
-        return self._payload
-
-    @payload.setter
-    def payload(self, payload):
-        """Sets the payload of this UpdateSubscriptionRequest.
-
-
-        :param payload: The payload of this UpdateSubscriptionRequest.  # noqa: E501
-        :type: SubscriptionPayloadDetail
-        """
-
-        self._payload = payload
+        if payload is not None:
+            self.payload = payload
+        if destination_id is not None:
+            self.destination_id = destination_id
 
     @property
     def status(self):
@@ -118,6 +74,50 @@ class UpdateSubscriptionRequest(object):
         """
 
         self._status = status
+
+    @property
+    def payload(self):
+        """Gets the payload of this UpdateSubscriptionRequest.  # noqa: E501
+
+
+        :return: The payload of this UpdateSubscriptionRequest.  # noqa: E501
+        :rtype: SubscriptionPayloadDetail
+        """
+        return self._payload
+
+    @payload.setter
+    def payload(self, payload):
+        """Sets the payload of this UpdateSubscriptionRequest.
+
+
+        :param payload: The payload of this UpdateSubscriptionRequest.  # noqa: E501
+        :type: SubscriptionPayloadDetail
+        """
+
+        self._payload = payload
+
+    @property
+    def destination_id(self):
+        """Gets the destination_id of this UpdateSubscriptionRequest.  # noqa: E501
+
+        The unique identifier for the destination associated with this subscription.  # noqa: E501
+
+        :return: The destination_id of this UpdateSubscriptionRequest.  # noqa: E501
+        :rtype: str
+        """
+        return self._destination_id
+
+    @destination_id.setter
+    def destination_id(self, destination_id):
+        """Sets the destination_id of this UpdateSubscriptionRequest.
+
+        The unique identifier for the destination associated with this subscription.  # noqa: E501
+
+        :param destination_id: The destination_id of this UpdateSubscriptionRequest.  # noqa: E501
+        :type: str
+        """
+
+        self._destination_id = destination_id
 
     def to_dict(self):
         """Returns the model properties as a dict"""
