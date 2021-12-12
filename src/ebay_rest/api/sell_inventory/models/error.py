@@ -86,7 +86,7 @@ class Error(object):
     def category(self):
         """Gets the category of this Error.  # noqa: E501
 
-        This string value indicates the error category. There are three categories of errors: request errors, application errors, and system errors.  # noqa: E501
+        This string value indicates the error category. There are three categories of errors: request errors, application errors, and system errors.   # noqa: E501
 
         :return: The category of this Error.  # noqa: E501
         :rtype: str
@@ -97,7 +97,7 @@ class Error(object):
     def category(self, category):
         """Sets the category of this Error.
 
-        This string value indicates the error category. There are three categories of errors: request errors, application errors, and system errors.  # noqa: E501
+        This string value indicates the error category. There are three categories of errors: request errors, application errors, and system errors.   # noqa: E501
 
         :param category: The category of this Error.  # noqa: E501
         :type: str

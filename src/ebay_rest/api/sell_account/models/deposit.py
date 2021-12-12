@@ -3,7 +3,7 @@
 """
     Account API
 
-    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (the Fulfillment Policy, Payment Policy, and Return Policy), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
+    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's business policies (the fulfillment policy, payment policy, and return policy), verify seller eligibility for eBay seller programs and opt in/out of those programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
 
     OpenAPI spec version: v1.6.3
     
@@ -98,7 +98,7 @@ class Deposit(object):
     def payment_methods(self):
         """Gets the payment_methods of this Deposit.  # noqa: E501
 
-        For deposits (which are applicable to only motor listings), the <b>paymentMethodType</b> must be set to '<code>PAYPAL</code>' and you must also populate the fields in the <b>recipientAccountReference</b> object.  <br><br><i>Required if</i> your motor vehicles listing requires a deposit.  # noqa: E501
+        This field is no longer applicable. eBay now manages the electronic payment options that are available to buyers to pay the deposit.  # noqa: E501
 
         :return: The payment_methods of this Deposit.  # noqa: E501
         :rtype: list[PaymentMethod]
@@ -109,7 +109,7 @@ class Deposit(object):
     def payment_methods(self, payment_methods):
         """Sets the payment_methods of this Deposit.
 
-        For deposits (which are applicable to only motor listings), the <b>paymentMethodType</b> must be set to '<code>PAYPAL</code>' and you must also populate the fields in the <b>recipientAccountReference</b> object.  <br><br><i>Required if</i> your motor vehicles listing requires a deposit.  # noqa: E501
+        This field is no longer applicable. eBay now manages the electronic payment options that are available to buyers to pay the deposit.  # noqa: E501
 
         :param payment_methods: The payment_methods of this Deposit.  # noqa: E501
         :type: list[PaymentMethod]

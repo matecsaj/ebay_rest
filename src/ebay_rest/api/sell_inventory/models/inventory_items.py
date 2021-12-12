@@ -191,7 +191,7 @@ class InventoryItems(object):
     def size(self):
         """Gets the size of this InventoryItems.  # noqa: E501
 
-        This integer value indicates the total number of pages of results that are available. This number will depend on the total number of inventory items available for viewing, and on the limit value.  # noqa: E501
+        This integer value indicates the total number of pages of results that are available. This number will depend on the total number of inventory items available for viewing, and on the <strong>limit</strong> value.  # noqa: E501
 
         :return: The size of this InventoryItems.  # noqa: E501
         :rtype: int
@@ -202,7 +202,7 @@ class InventoryItems(object):
     def size(self, size):
         """Sets the size of this InventoryItems.
 
-        This integer value indicates the total number of pages of results that are available. This number will depend on the total number of inventory items available for viewing, and on the limit value.  # noqa: E501
+        This integer value indicates the total number of pages of results that are available. This number will depend on the total number of inventory items available for viewing, and on the <strong>limit</strong> value.  # noqa: E501
 
         :param size: The size of this InventoryItems.  # noqa: E501
         :type: int
@@ -214,7 +214,7 @@ class InventoryItems(object):
     def total(self):
         """Gets the total of this InventoryItems.  # noqa: E501
 
-        This integer value is the total number of inventory items that exist for the seller's account. Based on this number and on the limit value, the seller may have to toggle through multiple pages to view all inventory items.  # noqa: E501
+        This integer value is the total number of inventory items that exist for the seller's account. Based on this number and on the <strong>limit</strong> value, the seller may have to toggle through multiple pages to view all inventory items.  # noqa: E501
 
         :return: The total of this InventoryItems.  # noqa: E501
         :rtype: int
@@ -225,7 +225,7 @@ class InventoryItems(object):
     def total(self, total):
         """Sets the total of this InventoryItems.
 
-        This integer value is the total number of inventory items that exist for the seller's account. Based on this number and on the limit value, the seller may have to toggle through multiple pages to view all inventory items.  # noqa: E501
+        This integer value is the total number of inventory items that exist for the seller's account. Based on this number and on the <strong>limit</strong> value, the seller may have to toggle through multiple pages to view all inventory items.  # noqa: E501
 
         :param total: The total of this InventoryItems.  # noqa: E501
         :type: int

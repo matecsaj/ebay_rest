@@ -46,7 +46,7 @@ class BulkOffer(object):
     def requests(self):
         """Gets the requests of this BulkOffer.  # noqa: E501
 
-        This container is used to pass in an array of offers to publish. Up to 25 offers can be published with one bulkPublishOffer method.  # noqa: E501
+        This container is used to pass in an array of offers to publish. Up to 25 offers can be published with one <strong>bulkPublishOffer</strong> method.  # noqa: E501
 
         :return: The requests of this BulkOffer.  # noqa: E501
         :rtype: list[OfferKeyWithId]
@@ -57,7 +57,7 @@ class BulkOffer(object):
     def requests(self, requests):
         """Sets the requests of this BulkOffer.
 
-        This container is used to pass in an array of offers to publish. Up to 25 offers can be published with one bulkPublishOffer method.  # noqa: E501
+        This container is used to pass in an array of offers to publish. Up to 25 offers can be published with one <strong>bulkPublishOffer</strong> method.  # noqa: E501
 
         :param requests: The requests of this BulkOffer.  # noqa: E501
         :type: list[OfferKeyWithId]

@@ -74,7 +74,7 @@ class NameValueList(object):
     def value(self):
         """Gets the value of this NameValueList.  # noqa: E501
 
-        This string value identifies the motor vehicle aspect specified in the corresponding name field. For example, if the name field is 'make', this field may be 'Toyota', or if the name field is 'model', this field may be 'Camry'.  # noqa: E501
+        This string value identifies the motor vehicle aspect specified in the corresponding <strong>name</strong> field. For example, if the <strong>name</strong> field is 'make', this field may be 'Toyota', or if the <strong>name</strong> field is 'model', this field may be 'Camry'.  # noqa: E501
 
         :return: The value of this NameValueList.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class NameValueList(object):
     def value(self, value):
         """Sets the value of this NameValueList.
 
-        This string value identifies the motor vehicle aspect specified in the corresponding name field. For example, if the name field is 'make', this field may be 'Toyota', or if the name field is 'model', this field may be 'Camry'.  # noqa: E501
+        This string value identifies the motor vehicle aspect specified in the corresponding <strong>name</strong> field. For example, if the <strong>name</strong> field is 'make', this field may be 'Toyota', or if the <strong>name</strong> field is 'model', this field may be 'Camry'.  # noqa: E501
 
         :param value: The value of this NameValueList.  # noqa: E501
         :type: str

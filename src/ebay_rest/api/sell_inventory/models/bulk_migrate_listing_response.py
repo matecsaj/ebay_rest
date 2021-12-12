@@ -46,7 +46,7 @@ class BulkMigrateListingResponse(object):
     def responses(self):
         """Gets the responses of this BulkMigrateListingResponse.  # noqa: E501
 
-        This is the base container of the response payload of the bulkMigrateListings call. The results of each attempted listing migration is captured under this container.  # noqa: E501
+        This is the base container of the response payload of the <strong>bulkMigrateListings</strong> call. The results of each attempted listing migration is captured under this container.  # noqa: E501
 
         :return: The responses of this BulkMigrateListingResponse.  # noqa: E501
         :rtype: list[MigrateListingResponse]
@@ -57,7 +57,7 @@ class BulkMigrateListingResponse(object):
     def responses(self, responses):
         """Sets the responses of this BulkMigrateListingResponse.
 
-        This is the base container of the response payload of the bulkMigrateListings call. The results of each attempted listing migration is captured under this container.  # noqa: E501
+        This is the base container of the response payload of the <strong>bulkMigrateListings</strong> call. The results of each attempted listing migration is captured under this container.  # noqa: E501
 
         :param responses: The responses of this BulkMigrateListingResponse.  # noqa: E501
         :type: list[MigrateListingResponse]

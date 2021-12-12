@@ -77,7 +77,7 @@ class PackageWeightAndSize(object):
     def package_type(self):
         """Gets the package_type of this PackageWeightAndSize.  # noqa: E501
 
-        This enumeration value indicates the type of shipping package used to ship the inventory item. The supported values for this field can be found in the PackageTypeEnum type. This field will be returned if the package type is set for the inventory item. Note: You can use the GeteBayDetails Trading API call to retrieve a list of supported package types for a specific marketplace. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:PackageTypeEnum'>eBay API documentation</a>  # noqa: E501
+        This enumeration value indicates the type of shipping package used to ship the inventory item. The supported values for this field can be found in the <a href=\"/api-docs/sell/inventory/types/slr:PackageTypeEnum\">PackageTypeEnum</a> type.<br/><br/>This field will be returned if the package type is set for the inventory item.<br /><br /><span class=\"tablenote\"> <strong>Note:</strong> You can use the <a href=\"/Devzone/XML/docs/Reference/eBay/GeteBayDetails.html#Response.ShippingPackageDetails\">GeteBayDetails</a> Trading API call to retrieve a list of supported package types for a specific marketplace.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:PackageTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The package_type of this PackageWeightAndSize.  # noqa: E501
         :rtype: str
@@ -88,7 +88,7 @@ class PackageWeightAndSize(object):
     def package_type(self, package_type):
         """Sets the package_type of this PackageWeightAndSize.
 
-        This enumeration value indicates the type of shipping package used to ship the inventory item. The supported values for this field can be found in the PackageTypeEnum type. This field will be returned if the package type is set for the inventory item. Note: You can use the GeteBayDetails Trading API call to retrieve a list of supported package types for a specific marketplace. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:PackageTypeEnum'>eBay API documentation</a>  # noqa: E501
+        This enumeration value indicates the type of shipping package used to ship the inventory item. The supported values for this field can be found in the <a href=\"/api-docs/sell/inventory/types/slr:PackageTypeEnum\">PackageTypeEnum</a> type.<br/><br/>This field will be returned if the package type is set for the inventory item.<br /><br /><span class=\"tablenote\"> <strong>Note:</strong> You can use the <a href=\"/Devzone/XML/docs/Reference/eBay/GeteBayDetails.html#Response.ShippingPackageDetails\">GeteBayDetails</a> Trading API call to retrieve a list of supported package types for a specific marketplace.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:PackageTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param package_type: The package_type of this PackageWeightAndSize.  # noqa: E501
         :type: str

@@ -51,7 +51,7 @@ class Amount(object):
     def currency(self):
         """Gets the currency of this Amount.  # noqa: E501
 
-        A three-digit string value respresenting the type of currency being used. Both the value and currency fields are required/always returned when expressing prices. See the CurrencyCodeEnum type for the full list of currencies and their corresponding three-digit string values.  # noqa: E501
+        A three-digit string value respresenting the type of currency being used. Both the <strong>value</strong> and <strong>currency</strong> fields are required/always returned when expressing prices. See the <a href=\"/api-docs/sell/inventory/types/ba:CurrencyCodeEnum\">CurrencyCodeEnum</a> type for the full list of currencies and their corresponding three-digit string values.  # noqa: E501
 
         :return: The currency of this Amount.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class Amount(object):
     def currency(self, currency):
         """Sets the currency of this Amount.
 
-        A three-digit string value respresenting the type of currency being used. Both the value and currency fields are required/always returned when expressing prices. See the CurrencyCodeEnum type for the full list of currencies and their corresponding three-digit string values.  # noqa: E501
+        A three-digit string value respresenting the type of currency being used. Both the <strong>value</strong> and <strong>currency</strong> fields are required/always returned when expressing prices. See the <a href=\"/api-docs/sell/inventory/types/ba:CurrencyCodeEnum\">CurrencyCodeEnum</a> type for the full list of currencies and their corresponding three-digit string values.  # noqa: E501
 
         :param currency: The currency of this Amount.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class Amount(object):
     def value(self):
         """Gets the value of this Amount.  # noqa: E501
 
-        A string representation of a dollar value expressed in the currency specified in the currency field. Both the value and currency fields are required/always returned when expressing prices.  # noqa: E501
+        A string representation of a dollar value expressed in the currency specified in the <strong>currency</strong> field. Both the <strong>value</strong> and <strong>currency</strong> fields are required/always returned when expressing prices.  # noqa: E501
 
         :return: The value of this Amount.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class Amount(object):
     def value(self, value):
         """Sets the value of this Amount.
 
-        A string representation of a dollar value expressed in the currency specified in the currency field. Both the value and currency fields are required/always returned when expressing prices.  # noqa: E501
+        A string representation of a dollar value expressed in the currency specified in the <strong>currency</strong> field. Both the <strong>value</strong> and <strong>currency</strong> fields are required/always returned when expressing prices.  # noqa: E501
 
         :param value: The value of this Amount.  # noqa: E501
         :type: str

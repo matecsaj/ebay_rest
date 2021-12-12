@@ -46,7 +46,7 @@ class BulkPublishResponse(object):
     def responses(self):
         """Gets the responses of this BulkPublishResponse.  # noqa: E501
 
-        A node is returned under the responses container to indicate the success or failure of each offer that the seller was attempting to publish.  # noqa: E501
+        A node is returned under the <strong>responses</strong> container to indicate the success or failure of each offer that the seller was attempting to publish.  # noqa: E501
 
         :return: The responses of this BulkPublishResponse.  # noqa: E501
         :rtype: list[OfferResponseWithListingId]
@@ -57,7 +57,7 @@ class BulkPublishResponse(object):
     def responses(self, responses):
         """Sets the responses of this BulkPublishResponse.
 
-        A node is returned under the responses container to indicate the success or failure of each offer that the seller was attempting to publish.  # noqa: E501
+        A node is returned under the <strong>responses</strong> container to indicate the success or failure of each offer that the seller was attempting to publish.  # noqa: E501
 
         :param responses: The responses of this BulkPublishResponse.  # noqa: E501
         :type: list[OfferResponseWithListingId]

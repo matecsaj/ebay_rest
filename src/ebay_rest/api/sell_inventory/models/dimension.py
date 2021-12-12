@@ -61,7 +61,7 @@ class Dimension(object):
     def height(self):
         """Gets the height of this Dimension.  # noqa: E501
 
-        The actual height (in the measurement unit specified in the unit field) of the shipping package. All fields of the dimensions container are required if package dimensions are specified. If a shipping package measured 21.5 inches in length, 15.0 inches in width, and 12.0 inches in height, the dimensions container would look as follows: &quot;dimensions&quot;: {  &quot;length&quot;: 21.5,  &quot;width&quot;: 15.0,  &quot;height&quot;: 12.0,  &quot;unit&quot;: &quot;INCH&quot;  }  # noqa: E501
+        The actual height (in the measurement unit specified in the <strong>unit</strong> field) of the shipping package. All fields of the <strong>dimensions</strong> container are required if package dimensions are specified. <br/><br/> If a shipping package measured 21.5 inches in length, 15.0 inches in width, and 12.0 inches in height, the <strong>dimensions</strong> container would look as follows: <br/> <pre><code>\"dimensions\": {<br/> \"length\": 21.5,<br/> \"width\": 15.0,<br/> \"height\": 12.0,<br/> \"unit\": \"INCH\"<br/> } </pre></code>  # noqa: E501
 
         :return: The height of this Dimension.  # noqa: E501
         :rtype: float
@@ -72,7 +72,7 @@ class Dimension(object):
     def height(self, height):
         """Sets the height of this Dimension.
 
-        The actual height (in the measurement unit specified in the unit field) of the shipping package. All fields of the dimensions container are required if package dimensions are specified. If a shipping package measured 21.5 inches in length, 15.0 inches in width, and 12.0 inches in height, the dimensions container would look as follows: &quot;dimensions&quot;: {  &quot;length&quot;: 21.5,  &quot;width&quot;: 15.0,  &quot;height&quot;: 12.0,  &quot;unit&quot;: &quot;INCH&quot;  }  # noqa: E501
+        The actual height (in the measurement unit specified in the <strong>unit</strong> field) of the shipping package. All fields of the <strong>dimensions</strong> container are required if package dimensions are specified. <br/><br/> If a shipping package measured 21.5 inches in length, 15.0 inches in width, and 12.0 inches in height, the <strong>dimensions</strong> container would look as follows: <br/> <pre><code>\"dimensions\": {<br/> \"length\": 21.5,<br/> \"width\": 15.0,<br/> \"height\": 12.0,<br/> \"unit\": \"INCH\"<br/> } </pre></code>  # noqa: E501
 
         :param height: The height of this Dimension.  # noqa: E501
         :type: float
@@ -84,7 +84,7 @@ class Dimension(object):
     def length(self):
         """Gets the length of this Dimension.  # noqa: E501
 
-        The actual length (in the measurement unit specified in the unit field) of the shipping package. All fields of the dimensions container are required if package dimensions are specified. If a shipping package measured 21.5 inches in length, 15.0 inches in width, and 12.0 inches in height, the dimensions container would look as follows: &quot;dimensions&quot;: {  &quot;length&quot;: 21.5,  &quot;width&quot;: 15.0,  &quot;height&quot;: 12.0,  &quot;unit&quot;: &quot;INCH&quot;  }  # noqa: E501
+        The actual length (in the measurement unit specified in the <strong>unit</strong> field) of the shipping package. All fields of the <strong>dimensions</strong> container are required if package dimensions are specified. <br/><br/> If a shipping package measured 21.5 inches in length, 15.0 inches in width, and 12.0 inches in height,  the <strong>dimensions</strong> container would look as follows: <br/> <pre><code>\"dimensions\": {<br/> \"length\": 21.5,<br/> \"width\": 15.0,<br/> \"height\": 12.0,<br/> \"unit\": \"INCH\"<br/> } </pre></code>  # noqa: E501
 
         :return: The length of this Dimension.  # noqa: E501
         :rtype: float
@@ -95,7 +95,7 @@ class Dimension(object):
     def length(self, length):
         """Sets the length of this Dimension.
 
-        The actual length (in the measurement unit specified in the unit field) of the shipping package. All fields of the dimensions container are required if package dimensions are specified. If a shipping package measured 21.5 inches in length, 15.0 inches in width, and 12.0 inches in height, the dimensions container would look as follows: &quot;dimensions&quot;: {  &quot;length&quot;: 21.5,  &quot;width&quot;: 15.0,  &quot;height&quot;: 12.0,  &quot;unit&quot;: &quot;INCH&quot;  }  # noqa: E501
+        The actual length (in the measurement unit specified in the <strong>unit</strong> field) of the shipping package. All fields of the <strong>dimensions</strong> container are required if package dimensions are specified. <br/><br/> If a shipping package measured 21.5 inches in length, 15.0 inches in width, and 12.0 inches in height,  the <strong>dimensions</strong> container would look as follows: <br/> <pre><code>\"dimensions\": {<br/> \"length\": 21.5,<br/> \"width\": 15.0,<br/> \"height\": 12.0,<br/> \"unit\": \"INCH\"<br/> } </pre></code>  # noqa: E501
 
         :param length: The length of this Dimension.  # noqa: E501
         :type: float
@@ -107,7 +107,7 @@ class Dimension(object):
     def unit(self):
         """Gets the unit of this Dimension.  # noqa: E501
 
-        The unit of measurement used to specify the dimensions of a shipping package. All fields of the dimensions container are required if package dimensions are specified. If the English system of measurement is being used, the applicable values for dimension units are FEET and INCH. If the metric system of measurement is being used, the applicable values for weight units are METER and CENTIMETER. The metric system is used by most countries outside of the US. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:LengthUnitOfMeasureEnum'>eBay API documentation</a>  # noqa: E501
+        The unit of measurement used to specify the dimensions of a shipping package. All fields of the <strong>dimensions</strong> container are required if package dimensions are specified. If the English system of measurement is being used, the applicable values for dimension units are <code>FEET</code> and <code>INCH</code>. If the metric system of measurement is being used, the applicable values for weight units are <code>METER</code> and <code>CENTIMETER</code>. The metric system is used by most countries outside of the US. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:LengthUnitOfMeasureEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The unit of this Dimension.  # noqa: E501
         :rtype: str
@@ -118,7 +118,7 @@ class Dimension(object):
     def unit(self, unit):
         """Sets the unit of this Dimension.
 
-        The unit of measurement used to specify the dimensions of a shipping package. All fields of the dimensions container are required if package dimensions are specified. If the English system of measurement is being used, the applicable values for dimension units are FEET and INCH. If the metric system of measurement is being used, the applicable values for weight units are METER and CENTIMETER. The metric system is used by most countries outside of the US. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:LengthUnitOfMeasureEnum'>eBay API documentation</a>  # noqa: E501
+        The unit of measurement used to specify the dimensions of a shipping package. All fields of the <strong>dimensions</strong> container are required if package dimensions are specified. If the English system of measurement is being used, the applicable values for dimension units are <code>FEET</code> and <code>INCH</code>. If the metric system of measurement is being used, the applicable values for weight units are <code>METER</code> and <code>CENTIMETER</code>. The metric system is used by most countries outside of the US. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:LengthUnitOfMeasureEnum'>eBay API documentation</a>  # noqa: E501
 
         :param unit: The unit of this Dimension.  # noqa: E501
         :type: str
@@ -130,7 +130,7 @@ class Dimension(object):
     def width(self):
         """Gets the width of this Dimension.  # noqa: E501
 
-        The actual width (in the measurement unit specified in the unit field) of the shipping package. All fields of the dimensions container are required if package dimensions are specified. If a shipping package measured 21.5 inches in length, 15.0 inches in width, and 12.0 inches in height, the dimensions container would look as follows: &quot;dimensions&quot;: {  &quot;length&quot;: 21.5,  &quot;width&quot;: 15.0,  &quot;height&quot;: 12.0,  &quot;unit&quot;: &quot;INCH&quot;  }  # noqa: E501
+        The actual width (in the measurement unit specified in the <strong>unit</strong> field) of the shipping package. All fields of the <strong>dimensions</strong> container are required if package dimensions are specified.<br/><br/> If a shipping package measured 21.5 inches in length, 15.0 inches in width, and 12.0 inches in height,  the <strong>dimensions</strong> container would look as follows: <br/> <pre><code>\"dimensions\": {<br/> \"length\": 21.5,<br/> \"width\": 15.0,<br/> \"height\": 12.0,<br/> \"unit\": \"INCH\"<br/> } </pre></code>  # noqa: E501
 
         :return: The width of this Dimension.  # noqa: E501
         :rtype: float
@@ -141,7 +141,7 @@ class Dimension(object):
     def width(self, width):
         """Sets the width of this Dimension.
 
-        The actual width (in the measurement unit specified in the unit field) of the shipping package. All fields of the dimensions container are required if package dimensions are specified. If a shipping package measured 21.5 inches in length, 15.0 inches in width, and 12.0 inches in height, the dimensions container would look as follows: &quot;dimensions&quot;: {  &quot;length&quot;: 21.5,  &quot;width&quot;: 15.0,  &quot;height&quot;: 12.0,  &quot;unit&quot;: &quot;INCH&quot;  }  # noqa: E501
+        The actual width (in the measurement unit specified in the <strong>unit</strong> field) of the shipping package. All fields of the <strong>dimensions</strong> container are required if package dimensions are specified.<br/><br/> If a shipping package measured 21.5 inches in length, 15.0 inches in width, and 12.0 inches in height,  the <strong>dimensions</strong> container would look as follows: <br/> <pre><code>\"dimensions\": {<br/> \"length\": 21.5,<br/> \"width\": 15.0,<br/> \"height\": 12.0,<br/> \"unit\": \"INCH\"<br/> } </pre></code>  # noqa: E501
 
         :param width: The width of this Dimension.  # noqa: E501
         :type: float

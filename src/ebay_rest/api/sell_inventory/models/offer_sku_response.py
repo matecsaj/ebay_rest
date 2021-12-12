@@ -122,7 +122,7 @@ class OfferSkuResponse(object):
     def marketplace_id(self):
         """Gets the marketplace_id of this OfferSkuResponse.  # noqa: E501
 
-        This enumeration value is the unique identifier of the eBay marketplace for which the offer will be made available. This enumeration value should be the same for all offers since the bulkCreateOffer method can only be used to create offers for one eBay marketplace at a time. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:MarketplaceEnum'>eBay API documentation</a>  # noqa: E501
+        This enumeration value is the unique identifier of the eBay marketplace for which the offer will be made available. This enumeration value should be the same for all offers since the <strong>bulkCreateOffer</strong> method can only be used to create offers for one eBay marketplace at a time. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:MarketplaceEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The marketplace_id of this OfferSkuResponse.  # noqa: E501
         :rtype: str
@@ -133,7 +133,7 @@ class OfferSkuResponse(object):
     def marketplace_id(self, marketplace_id):
         """Sets the marketplace_id of this OfferSkuResponse.
 
-        This enumeration value is the unique identifier of the eBay marketplace for which the offer will be made available. This enumeration value should be the same for all offers since the bulkCreateOffer method can only be used to create offers for one eBay marketplace at a time. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:MarketplaceEnum'>eBay API documentation</a>  # noqa: E501
+        This enumeration value is the unique identifier of the eBay marketplace for which the offer will be made available. This enumeration value should be the same for all offers since the <strong>bulkCreateOffer</strong> method can only be used to create offers for one eBay marketplace at a time. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:MarketplaceEnum'>eBay API documentation</a>  # noqa: E501
 
         :param marketplace_id: The marketplace_id of this OfferSkuResponse.  # noqa: E501
         :type: str
@@ -145,7 +145,7 @@ class OfferSkuResponse(object):
     def offer_id(self):
         """Gets the offer_id of this OfferSkuResponse.  # noqa: E501
 
-        The unique identifier of the newly-created offer. This identifier should be automatically created by eBay if the creation of the offer was successful. It is not returned if the creation of the offer was not successful. In which case, the user may want to scan the corresponding errors and/or warnings container to see what the issue may be.  # noqa: E501
+        The unique identifier of the newly-created offer. This identifier should be automatically created by eBay if the creation of the offer was successful. It is not returned if the creation of the offer was not successful. In which case, the user may want to scan the corresponding <strong>errors</strong> and/or <strong>warnings</strong> container to see what the issue may be.  # noqa: E501
 
         :return: The offer_id of this OfferSkuResponse.  # noqa: E501
         :rtype: str
@@ -156,7 +156,7 @@ class OfferSkuResponse(object):
     def offer_id(self, offer_id):
         """Sets the offer_id of this OfferSkuResponse.
 
-        The unique identifier of the newly-created offer. This identifier should be automatically created by eBay if the creation of the offer was successful. It is not returned if the creation of the offer was not successful. In which case, the user may want to scan the corresponding errors and/or warnings container to see what the issue may be.  # noqa: E501
+        The unique identifier of the newly-created offer. This identifier should be automatically created by eBay if the creation of the offer was successful. It is not returned if the creation of the offer was not successful. In which case, the user may want to scan the corresponding <strong>errors</strong> and/or <strong>warnings</strong> container to see what the issue may be.  # noqa: E501
 
         :param offer_id: The offer_id of this OfferSkuResponse.  # noqa: E501
         :type: str
@@ -168,7 +168,7 @@ class OfferSkuResponse(object):
     def sku(self):
         """Gets the sku of this OfferSkuResponse.  # noqa: E501
 
-        The seller-defined Stock-Keeping Unit (SKU) of the inventory item. The sku value is required for each product offer that the seller is trying to create, and it is always returned to identified the product that is associated with the offer.  # noqa: E501
+        The seller-defined Stock-Keeping Unit (SKU) of the inventory item. The <strong>sku</strong> value is required for each product offer that the seller is trying to create, and it is always returned to identified the product that is associated with the offer.  # noqa: E501
 
         :return: The sku of this OfferSkuResponse.  # noqa: E501
         :rtype: str
@@ -179,7 +179,7 @@ class OfferSkuResponse(object):
     def sku(self, sku):
         """Sets the sku of this OfferSkuResponse.
 
-        The seller-defined Stock-Keeping Unit (SKU) of the inventory item. The sku value is required for each product offer that the seller is trying to create, and it is always returned to identified the product that is associated with the offer.  # noqa: E501
+        The seller-defined Stock-Keeping Unit (SKU) of the inventory item. The <strong>sku</strong> value is required for each product offer that the seller is trying to create, and it is always returned to identified the product that is associated with the offer.  # noqa: E501
 
         :param sku: The sku of this OfferSkuResponse.  # noqa: E501
         :type: str
@@ -191,7 +191,7 @@ class OfferSkuResponse(object):
     def status_code(self):
         """Gets the status_code of this OfferSkuResponse.  # noqa: E501
 
-        The integer value returned in this field is the http status code. If an offer is created successfully, the value returned in this field should be 200. A user can view the HTTP status codes section for information on other status codes that may be returned with the bulkCreateOffer method.  # noqa: E501
+        The integer value returned in this field is the http status code. If an offer is created successfully, the value returned in this field should be <code>200</code>. A user can view the <strong>HTTP status codes</strong> section for information on other status codes that may be returned with the <strong>bulkCreateOffer</strong> method.  # noqa: E501
 
         :return: The status_code of this OfferSkuResponse.  # noqa: E501
         :rtype: int
@@ -202,7 +202,7 @@ class OfferSkuResponse(object):
     def status_code(self, status_code):
         """Sets the status_code of this OfferSkuResponse.
 
-        The integer value returned in this field is the http status code. If an offer is created successfully, the value returned in this field should be 200. A user can view the HTTP status codes section for information on other status codes that may be returned with the bulkCreateOffer method.  # noqa: E501
+        The integer value returned in this field is the http status code. If an offer is created successfully, the value returned in this field should be <code>200</code>. A user can view the <strong>HTTP status codes</strong> section for information on other status codes that may be returned with the <strong>bulkCreateOffer</strong> method.  # noqa: E501
 
         :param status_code: The status_code of this OfferSkuResponse.  # noqa: E501
         :type: int

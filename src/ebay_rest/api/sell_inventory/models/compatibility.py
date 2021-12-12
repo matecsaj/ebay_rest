@@ -74,7 +74,7 @@ class Compatibility(object):
     def sku(self):
         """Gets the sku of this Compatibility.  # noqa: E501
 
-        This is the seller-defined SKU value of the inventory item that will be associated with the compatible vehicles. This field is not applicable to the createOrReplaceProductCompatibility call, but it is always returned with the getProductCompatibility call. For the createOrReplaceProductCompatibility call, the SKU value for the inventory item is actually passed in as part of the call URI, and not in the request payload.  # noqa: E501
+        This is the seller-defined SKU value of the inventory item that will be associated with the compatible vehicles. This field is not applicable to the <strong>createOrReplaceProductCompatibility</strong>  call, but it is always returned with the <strong>getProductCompatibility</strong> call. For the <strong>createOrReplaceProductCompatibility</strong>  call, the SKU value for the inventory item is actually passed in as part of the call URI, and not in the request payload.  # noqa: E501
 
         :return: The sku of this Compatibility.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class Compatibility(object):
     def sku(self, sku):
         """Sets the sku of this Compatibility.
 
-        This is the seller-defined SKU value of the inventory item that will be associated with the compatible vehicles. This field is not applicable to the createOrReplaceProductCompatibility call, but it is always returned with the getProductCompatibility call. For the createOrReplaceProductCompatibility call, the SKU value for the inventory item is actually passed in as part of the call URI, and not in the request payload.  # noqa: E501
+        This is the seller-defined SKU value of the inventory item that will be associated with the compatible vehicles. This field is not applicable to the <strong>createOrReplaceProductCompatibility</strong>  call, but it is always returned with the <strong>getProductCompatibility</strong> call. For the <strong>createOrReplaceProductCompatibility</strong>  call, the SKU value for the inventory item is actually passed in as part of the call URI, and not in the request payload.  # noqa: E501
 
         :param sku: The sku of this Compatibility.  # noqa: E501
         :type: str

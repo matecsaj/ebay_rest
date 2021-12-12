@@ -112,7 +112,7 @@ class PriceQuantityResponse(object):
     def sku(self):
         """Gets the sku of this PriceQuantityResponse.  # noqa: E501
 
-        This is the seller-defined SKU value of the product. This field is returned whether the seller attempted to update an offer with the SKU value or just attempted to update the total 'ship-to-home' quantity of an inventory item record. Max Length: 50  # noqa: E501
+        This is the seller-defined SKU value of the product. This field is returned whether the seller attempted to update an offer with the SKU value or just attempted to update the total 'ship-to-home' quantity of an inventory item record.<br/><br/><strong>Max Length</strong>: 50<br/>  # noqa: E501
 
         :return: The sku of this PriceQuantityResponse.  # noqa: E501
         :rtype: str
@@ -123,7 +123,7 @@ class PriceQuantityResponse(object):
     def sku(self, sku):
         """Sets the sku of this PriceQuantityResponse.
 
-        This is the seller-defined SKU value of the product. This field is returned whether the seller attempted to update an offer with the SKU value or just attempted to update the total 'ship-to-home' quantity of an inventory item record. Max Length: 50  # noqa: E501
+        This is the seller-defined SKU value of the product. This field is returned whether the seller attempted to update an offer with the SKU value or just attempted to update the total 'ship-to-home' quantity of an inventory item record.<br/><br/><strong>Max Length</strong>: 50<br/>  # noqa: E501
 
         :param sku: The sku of this PriceQuantityResponse.  # noqa: E501
         :type: str
@@ -135,7 +135,7 @@ class PriceQuantityResponse(object):
     def status_code(self):
         """Gets the status_code of this PriceQuantityResponse.  # noqa: E501
 
-        The value returned in this container will indicate the status of the attempt to update the price and/or quantity of the offer (specified in the corresponding offerId field) or the attempt to update the total 'ship-to-home' quantity of an inventory item (specified in the corresponding sku field). For a completely successful update of an offer or inventory item record, a value of 200 will appear in this field. A user can view the HTTP status codes section for information on other status codes that may be returned with the bulkUpdatePriceQuantity method.  # noqa: E501
+        The value returned in this container will indicate the status of the attempt to update the price and/or quantity of the offer (specified in the corresponding <strong>offerId</strong> field) or the attempt to update the total 'ship-to-home' quantity of an inventory item (specified in the corresponding <strong>sku</strong> field). For a completely successful update of an offer or inventory item record, a value of <code>200</code> will appear in this field.  A user can view the <strong>HTTP status codes</strong> section for information on other status codes that may be returned with the <strong>bulkUpdatePriceQuantity</strong> method.  # noqa: E501
 
         :return: The status_code of this PriceQuantityResponse.  # noqa: E501
         :rtype: int
@@ -146,7 +146,7 @@ class PriceQuantityResponse(object):
     def status_code(self, status_code):
         """Sets the status_code of this PriceQuantityResponse.
 
-        The value returned in this container will indicate the status of the attempt to update the price and/or quantity of the offer (specified in the corresponding offerId field) or the attempt to update the total 'ship-to-home' quantity of an inventory item (specified in the corresponding sku field). For a completely successful update of an offer or inventory item record, a value of 200 will appear in this field. A user can view the HTTP status codes section for information on other status codes that may be returned with the bulkUpdatePriceQuantity method.  # noqa: E501
+        The value returned in this container will indicate the status of the attempt to update the price and/or quantity of the offer (specified in the corresponding <strong>offerId</strong> field) or the attempt to update the total 'ship-to-home' quantity of an inventory item (specified in the corresponding <strong>sku</strong> field). For a completely successful update of an offer or inventory item record, a value of <code>200</code> will appear in this field.  A user can view the <strong>HTTP status codes</strong> section for information on other status codes that may be returned with the <strong>bulkUpdatePriceQuantity</strong> method.  # noqa: E501
 
         :param status_code: The status_code of this PriceQuantityResponse.  # noqa: E501
         :type: int

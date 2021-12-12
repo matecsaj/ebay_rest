@@ -98,7 +98,7 @@ class BestOffer(object):
     def best_offer_enabled(self):
         """Gets the best_offer_enabled of this BestOffer.  # noqa: E501
 
-        This field indicates whether or not the Best Offer feature is enabled for the listing. A seller can enable the Best Offer feature for a listing as long as the category supports the Best Offer feature. The seller includes this field and sets its value to true to enable Best Offer feature.  # noqa: E501
+        This field indicates whether or not the Best Offer feature is enabled for the listing. A seller can enable the Best Offer feature for a listing as long as the category supports the Best Offer feature.<br><br>The seller includes this field and sets its value to <code>true</code> to enable Best Offer feature.  # noqa: E501
 
         :return: The best_offer_enabled of this BestOffer.  # noqa: E501
         :rtype: bool
@@ -109,7 +109,7 @@ class BestOffer(object):
     def best_offer_enabled(self, best_offer_enabled):
         """Sets the best_offer_enabled of this BestOffer.
 
-        This field indicates whether or not the Best Offer feature is enabled for the listing. A seller can enable the Best Offer feature for a listing as long as the category supports the Best Offer feature. The seller includes this field and sets its value to true to enable Best Offer feature.  # noqa: E501
+        This field indicates whether or not the Best Offer feature is enabled for the listing. A seller can enable the Best Offer feature for a listing as long as the category supports the Best Offer feature.<br><br>The seller includes this field and sets its value to <code>true</code> to enable Best Offer feature.  # noqa: E501
 
         :param best_offer_enabled: The best_offer_enabled of this BestOffer.  # noqa: E501
         :type: bool

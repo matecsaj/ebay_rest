@@ -3,7 +3,7 @@
 """
     Account API
 
-    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (the Fulfillment Policy, Payment Policy, and Return Policy), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
+    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's business policies (the fulfillment policy, payment policy, and return policy), verify seller eligibility for eBay seller programs and opt in/out of those programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
 
     OpenAPI spec version: v1.6.3
     
@@ -35,14 +35,14 @@ class FulfillmentPolicyApi(object):
     def create_fulfillment_policy(self, body, **kwargs):  # noqa: E501
         """create_fulfillment_policy  # noqa: E501
 
-        This method creates a new fulfillment policy where the policy encapsulates seller's terms for fulfilling item purchases. Fulfillment policies include the shipment options that the seller offers to buyers.  <br><br>Each policy targets a <b>marketplaceId</b> and <code>categoryTypes.</code><b>name</b> combination and you can create multiple policies for each combination. Be aware that some marketplaces require a specific fulfillment policy for vehicle listings.  <br><br>A successful request returns the URI to the new policy in the <b>Location</b> response header and the ID for the new policy is returned in the response payload.  <p class=\"tablenote\"><b>Tip:</b> For details on creating and using the business policies supported by the Account API, see <a href=\"/api-docs/sell/static/seller-accounts/business-policies.html\">eBay business policies</a>.</p>  <p><b>Marketplaces and locales</b></p>  <p>Policy instructions can be localized by providing a locale in the <code>Accept-Language</code> HTTP request header. For example, the following setting displays field values from the request body in German: <code>Accept-Language: de-DE</code>.</p>  <p>Target the specific locale of a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, target the French locale of the Canadian marketplace by specifying the <code>fr-CA</code> locale for <code>Content-Language</code>. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>.</p> <p class=\"tablenote\"><b>Tip:</b> For details on headers, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.</p><p><b>Using the eBay standard envelope service (eSE)</b></p>  <p>The eBay standard envelope service (eSE) is a domestic envelope service with tracking through eBay. This service applies to specific Trading Cards categories (not all categories are supported), and to Coins & Paper Money, Postcards, and Stamps. See <a href=\"/api-docs/sell/static/seller-accounts/using-the-ebay-standard-envelope-service.html\" target=\"_blank\">Using the eBay standard envelope (eSE) service</a>.</p>  # noqa: E501
+        This method creates a new fulfillment business policy where the policy encapsulates seller's terms for fulfilling item purchases. Fulfillment policies include the shipment options that the seller offers to buyers.  <br><br>Each policy targets a <b>marketplaceId</b> and <code>categoryTypes.</code><b>name</b> combination and you can create multiple policies for each combination. Be aware that some marketplaces require a specific fulfillment business policy for vehicle listings.  <br><br>A successful request returns the URI to the new policy in the <b>Location</b> response header and the ID for the new policy is returned in the response payload.  <p class=\"tablenote\"><b>Tip:</b> For details on creating and using the business policies supported by the Account API, see <a href=\"/api-docs/sell/static/seller-accounts/business-policies.html\">eBay business policies</a>.</p>  <p><b>Marketplaces and locales</b></p>  <p>Policy instructions can be localized by providing a locale in the <code>Accept-Language</code> HTTP request header. For example, the following setting displays field values from the request body in German: <code>Accept-Language: de-DE</code>.</p>  <p>Target the specific locale of a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, target the French locale of the Canadian marketplace by specifying the <code>fr-CA</code> locale for <code>Content-Language</code>. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>.</p> <p class=\"tablenote\"><b>Tip:</b> For details on headers, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.</p><p><b>Using the eBay standard envelope service (eSE)</b></p>  <p>The eBay standard envelope service (eSE) is a domestic envelope service with tracking through eBay. This service applies to specific Trading Cards categories (not all categories are supported), and to Coins & Paper Money, Postcards, and Stamps. See <a href=\"/api-docs/sell/static/seller-accounts/using-the-ebay-standard-envelope-service.html\" target=\"_blank\">Using the eBay standard envelope (eSE) service</a>.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_fulfillment_policy(body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param FulfillmentPolicyRequest body: Request to create a seller account fulfillment policy. (required)
+        :param FulfillmentPolicyRequest body: Request to create a seller account fulfillment business policy. (required)
         :return: SetFulfillmentPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -57,14 +57,14 @@ class FulfillmentPolicyApi(object):
     def create_fulfillment_policy_with_http_info(self, body, **kwargs):  # noqa: E501
         """create_fulfillment_policy  # noqa: E501
 
-        This method creates a new fulfillment policy where the policy encapsulates seller's terms for fulfilling item purchases. Fulfillment policies include the shipment options that the seller offers to buyers.  <br><br>Each policy targets a <b>marketplaceId</b> and <code>categoryTypes.</code><b>name</b> combination and you can create multiple policies for each combination. Be aware that some marketplaces require a specific fulfillment policy for vehicle listings.  <br><br>A successful request returns the URI to the new policy in the <b>Location</b> response header and the ID for the new policy is returned in the response payload.  <p class=\"tablenote\"><b>Tip:</b> For details on creating and using the business policies supported by the Account API, see <a href=\"/api-docs/sell/static/seller-accounts/business-policies.html\">eBay business policies</a>.</p>  <p><b>Marketplaces and locales</b></p>  <p>Policy instructions can be localized by providing a locale in the <code>Accept-Language</code> HTTP request header. For example, the following setting displays field values from the request body in German: <code>Accept-Language: de-DE</code>.</p>  <p>Target the specific locale of a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, target the French locale of the Canadian marketplace by specifying the <code>fr-CA</code> locale for <code>Content-Language</code>. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>.</p> <p class=\"tablenote\"><b>Tip:</b> For details on headers, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.</p><p><b>Using the eBay standard envelope service (eSE)</b></p>  <p>The eBay standard envelope service (eSE) is a domestic envelope service with tracking through eBay. This service applies to specific Trading Cards categories (not all categories are supported), and to Coins & Paper Money, Postcards, and Stamps. See <a href=\"/api-docs/sell/static/seller-accounts/using-the-ebay-standard-envelope-service.html\" target=\"_blank\">Using the eBay standard envelope (eSE) service</a>.</p>  # noqa: E501
+        This method creates a new fulfillment business policy where the policy encapsulates seller's terms for fulfilling item purchases. Fulfillment policies include the shipment options that the seller offers to buyers.  <br><br>Each policy targets a <b>marketplaceId</b> and <code>categoryTypes.</code><b>name</b> combination and you can create multiple policies for each combination. Be aware that some marketplaces require a specific fulfillment business policy for vehicle listings.  <br><br>A successful request returns the URI to the new policy in the <b>Location</b> response header and the ID for the new policy is returned in the response payload.  <p class=\"tablenote\"><b>Tip:</b> For details on creating and using the business policies supported by the Account API, see <a href=\"/api-docs/sell/static/seller-accounts/business-policies.html\">eBay business policies</a>.</p>  <p><b>Marketplaces and locales</b></p>  <p>Policy instructions can be localized by providing a locale in the <code>Accept-Language</code> HTTP request header. For example, the following setting displays field values from the request body in German: <code>Accept-Language: de-DE</code>.</p>  <p>Target the specific locale of a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, target the French locale of the Canadian marketplace by specifying the <code>fr-CA</code> locale for <code>Content-Language</code>. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>.</p> <p class=\"tablenote\"><b>Tip:</b> For details on headers, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.</p><p><b>Using the eBay standard envelope service (eSE)</b></p>  <p>The eBay standard envelope service (eSE) is a domestic envelope service with tracking through eBay. This service applies to specific Trading Cards categories (not all categories are supported), and to Coins & Paper Money, Postcards, and Stamps. See <a href=\"/api-docs/sell/static/seller-accounts/using-the-ebay-standard-envelope-service.html\" target=\"_blank\">Using the eBay standard envelope (eSE) service</a>.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_fulfillment_policy_with_http_info(body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param FulfillmentPolicyRequest body: Request to create a seller account fulfillment policy. (required)
+        :param FulfillmentPolicyRequest body: Request to create a seller account fulfillment business policy. (required)
         :return: SetFulfillmentPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -134,14 +134,14 @@ class FulfillmentPolicyApi(object):
     def delete_fulfillment_policy(self, fulfillment_policy_id, **kwargs):  # noqa: E501
         """delete_fulfillment_policy  # noqa: E501
 
-        This method deletes a fulfillment policy. Supply the ID of the policy you want to delete in the <b>fulfillmentPolicyId</b> path parameter. Note that you cannot delete the default fulfillment policy.  # noqa: E501
+        This method deletes a fulfillment business policy. Supply the ID of the policy you want to delete in the <b>fulfillmentPolicyId</b> path parameter.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_fulfillment_policy(fulfillment_policy_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy to delete. (required)
+        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment business policy to delete. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -156,14 +156,14 @@ class FulfillmentPolicyApi(object):
     def delete_fulfillment_policy_with_http_info(self, fulfillment_policy_id, **kwargs):  # noqa: E501
         """delete_fulfillment_policy  # noqa: E501
 
-        This method deletes a fulfillment policy. Supply the ID of the policy you want to delete in the <b>fulfillmentPolicyId</b> path parameter. Note that you cannot delete the default fulfillment policy.  # noqa: E501
+        This method deletes a fulfillment business policy. Supply the ID of the policy you want to delete in the <b>fulfillmentPolicyId</b> path parameter.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_fulfillment_policy_with_http_info(fulfillment_policy_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy to delete. (required)
+        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment business policy to delete. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -320,14 +320,14 @@ class FulfillmentPolicyApi(object):
     def get_fulfillment_policy(self, fulfillment_policy_id, **kwargs):  # noqa: E501
         """get_fulfillment_policy  # noqa: E501
 
-        This method retrieves the complete details of a fulfillment policy. Supply the ID of the policy you want to retrieve using the <b>fulfillmentPolicyId</b> path parameter.  # noqa: E501
+        This method retrieves the complete details of a fulfillment business policy. Supply the ID of the policy you want to retrieve using the <b>fulfillmentPolicyId</b> path parameter.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_fulfillment_policy(fulfillment_policy_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy you want to retrieve. (required)
+        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment business policy you want to retrieve. (required)
         :return: FulfillmentPolicy
                  If the method is called asynchronously,
                  returns the request thread.
@@ -342,14 +342,14 @@ class FulfillmentPolicyApi(object):
     def get_fulfillment_policy_with_http_info(self, fulfillment_policy_id, **kwargs):  # noqa: E501
         """get_fulfillment_policy  # noqa: E501
 
-        This method retrieves the complete details of a fulfillment policy. Supply the ID of the policy you want to retrieve using the <b>fulfillmentPolicyId</b> path parameter.  # noqa: E501
+        This method retrieves the complete details of a fulfillment business policy. Supply the ID of the policy you want to retrieve using the <b>fulfillmentPolicyId</b> path parameter.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_fulfillment_policy_with_http_info(fulfillment_policy_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy you want to retrieve. (required)
+        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment business policy you want to retrieve. (required)
         :return: FulfillmentPolicy
                  If the method is called asynchronously,
                  returns the request thread.
@@ -415,15 +415,15 @@ class FulfillmentPolicyApi(object):
     def get_fulfillment_policy_by_name(self, marketplace_id, name, **kwargs):  # noqa: E501
         """get_fulfillment_policy_by_name  # noqa: E501
 
-        This method retrieves the complete details for a single fulfillment policy. In the request, supply both the policy <code>name</code> and its associated <code>marketplace_id</code> as query parameters.   <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policy for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get a policy for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.  # noqa: E501
+        This method retrieves the complete details for a single fulfillment business policy. In the request, supply both the policy <code>name</code> and its associated <code>marketplace_id</code> as query parameters.   <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policy for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get a policy for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_fulfillment_policy_by_name(marketplace_id, name, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str marketplace_id: This query parameter specifies the eBay marketplace of the policy you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
-        :param str name: This query parameter specifies the user-defined name of the fulfillment policy you want to retrieve. (required)
+        :param str marketplace_id: This query parameter specifies the eBay marketplace of the business policy you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
+        :param str name: This query parameter specifies the user-defined name of the fulfillment business policy you want to retrieve. (required)
         :return: FulfillmentPolicy
                  If the method is called asynchronously,
                  returns the request thread.
@@ -438,15 +438,15 @@ class FulfillmentPolicyApi(object):
     def get_fulfillment_policy_by_name_with_http_info(self, marketplace_id, name, **kwargs):  # noqa: E501
         """get_fulfillment_policy_by_name  # noqa: E501
 
-        This method retrieves the complete details for a single fulfillment policy. In the request, supply both the policy <code>name</code> and its associated <code>marketplace_id</code> as query parameters.   <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policy for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get a policy for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.  # noqa: E501
+        This method retrieves the complete details for a single fulfillment business policy. In the request, supply both the policy <code>name</code> and its associated <code>marketplace_id</code> as query parameters.   <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policy for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get a policy for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_fulfillment_policy_by_name_with_http_info(marketplace_id, name, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str marketplace_id: This query parameter specifies the eBay marketplace of the policy you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
-        :param str name: This query parameter specifies the user-defined name of the fulfillment policy you want to retrieve. (required)
+        :param str marketplace_id: This query parameter specifies the eBay marketplace of the business policy you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
+        :param str name: This query parameter specifies the user-defined name of the fulfillment business policy you want to retrieve. (required)
         :return: FulfillmentPolicy
                  If the method is called asynchronously,
                  returns the request thread.
@@ -518,7 +518,7 @@ class FulfillmentPolicyApi(object):
     def update_fulfillment_policy(self, body, fulfillment_policy_id, **kwargs):  # noqa: E501
         """update_fulfillment_policy  # noqa: E501
 
-        This method updates an existing fulfillment policy. Specify the policy you want to update using the <b>fulfillment_policy_id</b> path parameter. Supply a complete policy payload with the updates you want to make; this call overwrites the existing policy with the new details specified in the payload.  # noqa: E501
+        This method updates an existing fulfillment business policy. Specify the policy you want to update using the <b>fulfillment_policy_id</b> path parameter. Supply a complete policy payload with the updates you want to make; this call overwrites the existing policy with the new details specified in the payload.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_fulfillment_policy(body, fulfillment_policy_id, async_req=True)
@@ -526,7 +526,7 @@ class FulfillmentPolicyApi(object):
 
         :param async_req bool
         :param FulfillmentPolicyRequest body: Fulfillment policy request (required)
-        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy you want to update. (required)
+        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment business policy you want to update. (required)
         :return: SetFulfillmentPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -541,7 +541,7 @@ class FulfillmentPolicyApi(object):
     def update_fulfillment_policy_with_http_info(self, body, fulfillment_policy_id, **kwargs):  # noqa: E501
         """update_fulfillment_policy  # noqa: E501
 
-        This method updates an existing fulfillment policy. Specify the policy you want to update using the <b>fulfillment_policy_id</b> path parameter. Supply a complete policy payload with the updates you want to make; this call overwrites the existing policy with the new details specified in the payload.  # noqa: E501
+        This method updates an existing fulfillment business policy. Specify the policy you want to update using the <b>fulfillment_policy_id</b> path parameter. Supply a complete policy payload with the updates you want to make; this call overwrites the existing policy with the new details specified in the payload.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_fulfillment_policy_with_http_info(body, fulfillment_policy_id, async_req=True)
@@ -549,7 +549,7 @@ class FulfillmentPolicyApi(object):
 
         :param async_req bool
         :param FulfillmentPolicyRequest body: Fulfillment policy request (required)
-        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy you want to update. (required)
+        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment business policy you want to update. (required)
         :return: SetFulfillmentPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.

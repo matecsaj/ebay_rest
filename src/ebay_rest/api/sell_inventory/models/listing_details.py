@@ -56,7 +56,7 @@ class ListingDetails(object):
     def listing_id(self):
         """Gets the listing_id of this ListingDetails.  # noqa: E501
 
-        The unique identifier of the eBay listing that is associated with the published offer.  # noqa: E501
+        The unique identifier of the eBay listing that is associated with the published offer.   # noqa: E501
 
         :return: The listing_id of this ListingDetails.  # noqa: E501
         :rtype: str
@@ -67,7 +67,7 @@ class ListingDetails(object):
     def listing_id(self, listing_id):
         """Sets the listing_id of this ListingDetails.
 
-        The unique identifier of the eBay listing that is associated with the published offer.  # noqa: E501
+        The unique identifier of the eBay listing that is associated with the published offer.   # noqa: E501
 
         :param listing_id: The listing_id of this ListingDetails.  # noqa: E501
         :type: str

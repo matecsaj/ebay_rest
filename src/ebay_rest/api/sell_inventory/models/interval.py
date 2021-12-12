@@ -51,7 +51,7 @@ class Interval(object):
     def close(self):
         """Gets the close of this Interval.  # noqa: E501
 
-        The close value is actually the time that the store closes. Local time (in Military format) is used. So, if a store closed at 8 PM local time, the close time would look like the following: 20:00:00. This field is conditionally required if the intervals container is used to specify working hours or special hours for a store. This field is returned if set for the store location.  # noqa: E501
+        The <strong>close</strong> value is actually the time that the store closes. Local time (in Military format) is used. So, if a store closed at 8 PM local time, the <strong>close</strong> time would look like the following: <code>20:00:00</code>. This field is conditionally required if the <strong>intervals</strong> container is used to specify working hours or special hours for a store. <br><br>This field is returned if set for the store location.  # noqa: E501
 
         :return: The close of this Interval.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class Interval(object):
     def close(self, close):
         """Sets the close of this Interval.
 
-        The close value is actually the time that the store closes. Local time (in Military format) is used. So, if a store closed at 8 PM local time, the close time would look like the following: 20:00:00. This field is conditionally required if the intervals container is used to specify working hours or special hours for a store. This field is returned if set for the store location.  # noqa: E501
+        The <strong>close</strong> value is actually the time that the store closes. Local time (in Military format) is used. So, if a store closed at 8 PM local time, the <strong>close</strong> time would look like the following: <code>20:00:00</code>. This field is conditionally required if the <strong>intervals</strong> container is used to specify working hours or special hours for a store. <br><br>This field is returned if set for the store location.  # noqa: E501
 
         :param close: The close of this Interval.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class Interval(object):
     def open(self):
         """Gets the open of this Interval.  # noqa: E501
 
-        The open value is actually the time that the store opens. Local time (in Military format) is used. So, if a store opens at 9 AM local time, the close time would look like the following: 09:00:00. This field is conditionally required if the intervals container is used to specify working hours or special hours for a store. This field is returned if set for the store location.  # noqa: E501
+        The <strong>open</strong> value is actually the time that the store opens. Local time (in Military format) is used. So, if a store opens at 9 AM local time, the <strong>close</strong> time would look like the following: <code>09:00:00</code>. This field is conditionally required if the <strong>intervals</strong> container is used to specify working hours or special hours for a store. <br><br>This field is returned if set for the store location.  # noqa: E501
 
         :return: The open of this Interval.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class Interval(object):
     def open(self, open):
         """Sets the open of this Interval.
 
-        The open value is actually the time that the store opens. Local time (in Military format) is used. So, if a store opens at 9 AM local time, the close time would look like the following: 09:00:00. This field is conditionally required if the intervals container is used to specify working hours or special hours for a store. This field is returned if set for the store location.  # noqa: E501
+        The <strong>open</strong> value is actually the time that the store opens. Local time (in Military format) is used. So, if a store opens at 9 AM local time, the <strong>close</strong> time would look like the following: <code>09:00:00</code>. This field is conditionally required if the <strong>intervals</strong> container is used to specify working hours or special hours for a store. <br><br>This field is returned if set for the store location.  # noqa: E501
 
         :param open: The open of this Interval.  # noqa: E501
         :type: str

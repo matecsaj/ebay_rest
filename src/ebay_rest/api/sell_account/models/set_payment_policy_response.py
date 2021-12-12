@@ -3,7 +3,7 @@
 """
     Account API
 
-    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (the Fulfillment Policy, Payment Policy, and Return Policy), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
+    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's business policies (the fulfillment policy, payment policy, and return policy), verify seller eligibility for eBay seller programs and opt in/out of those programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
 
     OpenAPI spec version: v1.6.3
     
@@ -140,7 +140,7 @@ class SetPaymentPolicyResponse(object):
     def description(self):
         """Gets the description of this SetPaymentPolicyResponse.  # noqa: E501
 
-        An optional seller-defined description of the payment policy for internal use (this value is not displayed to end users).  # noqa: E501
+        An optional seller-defined description of the payment business policy.  # noqa: E501
 
         :return: The description of this SetPaymentPolicyResponse.  # noqa: E501
         :rtype: str
@@ -151,7 +151,7 @@ class SetPaymentPolicyResponse(object):
     def description(self, description):
         """Sets the description of this SetPaymentPolicyResponse.
 
-        An optional seller-defined description of the payment policy for internal use (this value is not displayed to end users).  # noqa: E501
+        An optional seller-defined description of the payment business policy.  # noqa: E501
 
         :param description: The description of this SetPaymentPolicyResponse.  # noqa: E501
         :type: str
@@ -184,7 +184,7 @@ class SetPaymentPolicyResponse(object):
     def immediate_pay(self):
         """Gets the immediate_pay of this SetPaymentPolicyResponse.  # noqa: E501
 
-        If set to <code>true</code>,  payment is due upon receipt (eBay generates a receipt when the buyer agrees to purchase an item). The items will be available for other buyers until the payment is complete.<br /><br />This boolean must be set in the payment policy if the seller wants to create a listing that has an <i>immediate payment</i> requirement. <p class=\"tablenote\"><b>Note:</b> This container can be used for sellers who opt-in to the <a href=\"/managed-payments\" title=\"eBay Developers Program page\" target=\"_blank\">managed payments</a> program, but some requirements do not apply.</p><b>Default:</b> False  # noqa: E501
+        The value returned in this field will reflect the value set by the seller in the <b>immediatePay</b> request field. A value of <code>true</code> indicates that immediate payment is required from the buyer for: <ul><li>A fixed-price item</li><li>An auction item where the buyer is using the 'Buy it Now' option</li><li>A deposit for a motor vehicle listing</li></ul><br /><br />It is possible for the seller to set this field as <code>true</code> in the payment business policy, but it will not apply in some scenarios. For example, immediate payment is not applicable for auction listings that have a winning bidder, for buyer purchases that involve the Best Offer feature, or for transactions that happen offline between the buyer and seller.  # noqa: E501
 
         :return: The immediate_pay of this SetPaymentPolicyResponse.  # noqa: E501
         :rtype: bool
@@ -195,7 +195,7 @@ class SetPaymentPolicyResponse(object):
     def immediate_pay(self, immediate_pay):
         """Sets the immediate_pay of this SetPaymentPolicyResponse.
 
-        If set to <code>true</code>,  payment is due upon receipt (eBay generates a receipt when the buyer agrees to purchase an item). The items will be available for other buyers until the payment is complete.<br /><br />This boolean must be set in the payment policy if the seller wants to create a listing that has an <i>immediate payment</i> requirement. <p class=\"tablenote\"><b>Note:</b> This container can be used for sellers who opt-in to the <a href=\"/managed-payments\" title=\"eBay Developers Program page\" target=\"_blank\">managed payments</a> program, but some requirements do not apply.</p><b>Default:</b> False  # noqa: E501
+        The value returned in this field will reflect the value set by the seller in the <b>immediatePay</b> request field. A value of <code>true</code> indicates that immediate payment is required from the buyer for: <ul><li>A fixed-price item</li><li>An auction item where the buyer is using the 'Buy it Now' option</li><li>A deposit for a motor vehicle listing</li></ul><br /><br />It is possible for the seller to set this field as <code>true</code> in the payment business policy, but it will not apply in some scenarios. For example, immediate payment is not applicable for auction listings that have a winning bidder, for buyer purchases that involve the Best Offer feature, or for transactions that happen offline between the buyer and seller.  # noqa: E501
 
         :param immediate_pay: The immediate_pay of this SetPaymentPolicyResponse.  # noqa: E501
         :type: bool
@@ -207,7 +207,7 @@ class SetPaymentPolicyResponse(object):
     def marketplace_id(self):
         """Gets the marketplace_id of this SetPaymentPolicyResponse.  # noqa: E501
 
-        The ID of the eBay marketplace to which this payment policy applies. If this value is not specified, the value defaults to the seller's eBay registration site. <p class=\"tablenote\"><b>Note:</b> A limited number of sellers, on a limited number of eBay marketplaces, are currently opted-in to the eBay managed payments program. To view the eBay marketplaces where managed payments are currently supported, see the <a href=\"/managed-payments\" title=\"eBay Developers Program page\" target=\"_blank\">managed payments</a> landing page.</p> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+        The ID of the eBay marketplace to which this payment business policy applies. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The marketplace_id of this SetPaymentPolicyResponse.  # noqa: E501
         :rtype: str
@@ -218,7 +218,7 @@ class SetPaymentPolicyResponse(object):
     def marketplace_id(self, marketplace_id):
         """Sets the marketplace_id of this SetPaymentPolicyResponse.
 
-        The ID of the eBay marketplace to which this payment policy applies. If this value is not specified, the value defaults to the seller's eBay registration site. <p class=\"tablenote\"><b>Note:</b> A limited number of sellers, on a limited number of eBay marketplaces, are currently opted-in to the eBay managed payments program. To view the eBay marketplaces where managed payments are currently supported, see the <a href=\"/managed-payments\" title=\"eBay Developers Program page\" target=\"_blank\">managed payments</a> landing page.</p> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+        The ID of the eBay marketplace to which this payment business policy applies. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :param marketplace_id: The marketplace_id of this SetPaymentPolicyResponse.  # noqa: E501
         :type: str
@@ -230,7 +230,7 @@ class SetPaymentPolicyResponse(object):
     def name(self):
         """Gets the name of this SetPaymentPolicyResponse.  # noqa: E501
 
-        A user-defined name for this payment policy. Names must be unique for policies assigned to the same marketplace. <p class=\"tablenote\"><b>Note</b>: eBay will create a new payment policy for sellers who opt-in to the <a href=\"/managed-payments\" title=\"eBay Developers Program page\" target=\"_blank\">managed payments</a> program.</p><b>Max length:</b> 64  # noqa: E501
+        A user-defined name for this payment business policy. Names must be unique for policies assigned to the same marketplace.<br /><br /><b>Max length:</b> 64  # noqa: E501
 
         :return: The name of this SetPaymentPolicyResponse.  # noqa: E501
         :rtype: str
@@ -241,7 +241,7 @@ class SetPaymentPolicyResponse(object):
     def name(self, name):
         """Sets the name of this SetPaymentPolicyResponse.
 
-        A user-defined name for this payment policy. Names must be unique for policies assigned to the same marketplace. <p class=\"tablenote\"><b>Note</b>: eBay will create a new payment policy for sellers who opt-in to the <a href=\"/managed-payments\" title=\"eBay Developers Program page\" target=\"_blank\">managed payments</a> program.</p><b>Max length:</b> 64  # noqa: E501
+        A user-defined name for this payment business policy. Names must be unique for policies assigned to the same marketplace.<br /><br /><b>Max length:</b> 64  # noqa: E501
 
         :param name: The name of this SetPaymentPolicyResponse.  # noqa: E501
         :type: str
@@ -253,7 +253,7 @@ class SetPaymentPolicyResponse(object):
     def payment_instructions(self):
         """Gets the payment_instructions of this SetPaymentPolicyResponse.  # noqa: E501
 
-        A free-form string field that allows sellers to add detailed payment instructions to their listings. The payment instructions appear on eBay's View Item and Checkout pages. <br><br>eBay recommends sellers use this field to clarify payment policies for motor vehicle listings on eBay Motors. For example, sellers can include the specifics on the deposit (if required), pickup/delivery arrangements, and full payment details on the vehicle. <br><br>The field allows only 500 characters as input, but due to the way the eBay web site UI treats characters, this field can return more than 500 characters in the response. For example, characters like & and ' (ampersand and single quote) count as 5 characters each. <br /><br /><b>Restriction:</b> This container is not supported for sellers who opt-in to the <a href=\"/managed-payments\" title=\"eBay Developers Program page\" target=\"_blank\">managed payments</a> program.  <br><br><b>Max length:</b> 1000  # noqa: E501
+        <p class=\"tablenote\"><b>Note:</b> NO LONGER SUPPORTED. Although this field may be returned for some older payment business policies, payment instructions are no longer supported by payment business policies. If this field is returned, it can be ignored and these payment instructions will not appear in any listings that use the corresponding business policy.</p>A free-form string field that allows sellers to add detailed payment instructions to their listings.  # noqa: E501
 
         :return: The payment_instructions of this SetPaymentPolicyResponse.  # noqa: E501
         :rtype: str
@@ -264,7 +264,7 @@ class SetPaymentPolicyResponse(object):
     def payment_instructions(self, payment_instructions):
         """Sets the payment_instructions of this SetPaymentPolicyResponse.
 
-        A free-form string field that allows sellers to add detailed payment instructions to their listings. The payment instructions appear on eBay's View Item and Checkout pages. <br><br>eBay recommends sellers use this field to clarify payment policies for motor vehicle listings on eBay Motors. For example, sellers can include the specifics on the deposit (if required), pickup/delivery arrangements, and full payment details on the vehicle. <br><br>The field allows only 500 characters as input, but due to the way the eBay web site UI treats characters, this field can return more than 500 characters in the response. For example, characters like & and ' (ampersand and single quote) count as 5 characters each. <br /><br /><b>Restriction:</b> This container is not supported for sellers who opt-in to the <a href=\"/managed-payments\" title=\"eBay Developers Program page\" target=\"_blank\">managed payments</a> program.  <br><br><b>Max length:</b> 1000  # noqa: E501
+        <p class=\"tablenote\"><b>Note:</b> NO LONGER SUPPORTED. Although this field may be returned for some older payment business policies, payment instructions are no longer supported by payment business policies. If this field is returned, it can be ignored and these payment instructions will not appear in any listings that use the corresponding business policy.</p>A free-form string field that allows sellers to add detailed payment instructions to their listings.  # noqa: E501
 
         :param payment_instructions: The payment_instructions of this SetPaymentPolicyResponse.  # noqa: E501
         :type: str
@@ -276,7 +276,7 @@ class SetPaymentPolicyResponse(object):
     def payment_methods(self):
         """Gets the payment_methods of this SetPaymentPolicyResponse.  # noqa: E501
 
-        If the seller is not opted-in to managed payments, this container returns a list of the payment methods accepted by the seller.  <br><br>When not opted-in to managed payments, each payment policy must specify at least one payment method. <p class=\"tablenote\"><b>Note:</b> The <b>paymentMethods</b> container is not returned if the seller is opted-in to the <a href=\"https://pages.ebay.com/seller-center/service-and-payments/managed-payments-on-ebay.html\" title=\"eBay Seller Center page\" target=\"_blank\">managed payments</a> program.</p>  # noqa: E501
+        This array shows the available payment methods that the seller has set for the payment business policy.<br /><br />Sellers do not have to specify any electronic payment methods for listings, so this array will often be returned empty unless the payment business policy is intended for motor vehicle listings or other items in categories where offline payments are required or supported.  # noqa: E501
 
         :return: The payment_methods of this SetPaymentPolicyResponse.  # noqa: E501
         :rtype: list[PaymentMethod]
@@ -287,7 +287,7 @@ class SetPaymentPolicyResponse(object):
     def payment_methods(self, payment_methods):
         """Sets the payment_methods of this SetPaymentPolicyResponse.
 
-        If the seller is not opted-in to managed payments, this container returns a list of the payment methods accepted by the seller.  <br><br>When not opted-in to managed payments, each payment policy must specify at least one payment method. <p class=\"tablenote\"><b>Note:</b> The <b>paymentMethods</b> container is not returned if the seller is opted-in to the <a href=\"https://pages.ebay.com/seller-center/service-and-payments/managed-payments-on-ebay.html\" title=\"eBay Seller Center page\" target=\"_blank\">managed payments</a> program.</p>  # noqa: E501
+        This array shows the available payment methods that the seller has set for the payment business policy.<br /><br />Sellers do not have to specify any electronic payment methods for listings, so this array will often be returned empty unless the payment business policy is intended for motor vehicle listings or other items in categories where offline payments are required or supported.  # noqa: E501
 
         :param payment_methods: The payment_methods of this SetPaymentPolicyResponse.  # noqa: E501
         :type: list[PaymentMethod]
@@ -299,7 +299,7 @@ class SetPaymentPolicyResponse(object):
     def payment_policy_id(self):
         """Gets the payment_policy_id of this SetPaymentPolicyResponse.  # noqa: E501
 
-        A unique eBay-assigned ID for a payment policy. This ID is generated when the policy is created.  # noqa: E501
+        A unique eBay-assigned ID for a payment business policy. This ID is generated when the policy is created.  # noqa: E501
 
         :return: The payment_policy_id of this SetPaymentPolicyResponse.  # noqa: E501
         :rtype: str
@@ -310,7 +310,7 @@ class SetPaymentPolicyResponse(object):
     def payment_policy_id(self, payment_policy_id):
         """Sets the payment_policy_id of this SetPaymentPolicyResponse.
 
-        A unique eBay-assigned ID for a payment policy. This ID is generated when the policy is created.  # noqa: E501
+        A unique eBay-assigned ID for a payment business policy. This ID is generated when the policy is created.  # noqa: E501
 
         :param payment_policy_id: The payment_policy_id of this SetPaymentPolicyResponse.  # noqa: E501
         :type: str

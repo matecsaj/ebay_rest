@@ -112,7 +112,7 @@ class InventoryLocationFull(object):
     def location_additional_information(self):
         """Gets the location_additional_information of this InventoryLocationFull.  # noqa: E501
 
-        This text field is used by the merchant to provide additional information about an inventory location. Max length: 256  # noqa: E501
+        This text field is used by the merchant to provide additional information about an inventory location. <br><br><b>Max length</b>: 256  # noqa: E501
 
         :return: The location_additional_information of this InventoryLocationFull.  # noqa: E501
         :rtype: str
@@ -123,7 +123,7 @@ class InventoryLocationFull(object):
     def location_additional_information(self, location_additional_information):
         """Sets the location_additional_information of this InventoryLocationFull.
 
-        This text field is used by the merchant to provide additional information about an inventory location. Max length: 256  # noqa: E501
+        This text field is used by the merchant to provide additional information about an inventory location. <br><br><b>Max length</b>: 256  # noqa: E501
 
         :param location_additional_information: The location_additional_information of this InventoryLocationFull.  # noqa: E501
         :type: str
@@ -135,7 +135,7 @@ class InventoryLocationFull(object):
     def location_instructions(self):
         """Gets the location_instructions of this InventoryLocationFull.  # noqa: E501
 
-        This text field is generally used by the merchant to provide special pickup instructions for a store inventory location. Although this field is optional, it is recommended that merchants provide this field to create a pleasant and easy pickup experience for In-Store Pickup and Click and Collect orders. If this field is not included in the call request payload, eBay will use the default pickup instructions contained in the merchant's profile (if available).  # noqa: E501
+        This text field is generally used by the merchant to provide special pickup instructions for a store inventory location. Although this field is optional, it is recommended that merchants provide this field to create a pleasant and easy pickup experience for In-Store Pickup and Click and Collect orders. If this field is not included in the call request payload, eBay will use the default pickup instructions contained in the merchant's profile (if available). <br><br>  # noqa: E501
 
         :return: The location_instructions of this InventoryLocationFull.  # noqa: E501
         :rtype: str
@@ -146,7 +146,7 @@ class InventoryLocationFull(object):
     def location_instructions(self, location_instructions):
         """Sets the location_instructions of this InventoryLocationFull.
 
-        This text field is generally used by the merchant to provide special pickup instructions for a store inventory location. Although this field is optional, it is recommended that merchants provide this field to create a pleasant and easy pickup experience for In-Store Pickup and Click and Collect orders. If this field is not included in the call request payload, eBay will use the default pickup instructions contained in the merchant's profile (if available).  # noqa: E501
+        This text field is generally used by the merchant to provide special pickup instructions for a store inventory location. Although this field is optional, it is recommended that merchants provide this field to create a pleasant and easy pickup experience for In-Store Pickup and Click and Collect orders. If this field is not included in the call request payload, eBay will use the default pickup instructions contained in the merchant's profile (if available). <br><br>  # noqa: E501
 
         :param location_instructions: The location_instructions of this InventoryLocationFull.  # noqa: E501
         :type: str
@@ -158,7 +158,7 @@ class InventoryLocationFull(object):
     def location_types(self):
         """Gets the location_types of this InventoryLocationFull.  # noqa: E501
 
-        This container is used to define the function of the inventory location. Typically, an inventory location will serve as a store or a warehouse, but in some cases, an inventory location may be both. If this container is omitted, the location type of the inventory location will default to WAREHOUSE. See StoreTypeEnum for the supported values. Default: WAREHOUSE  # noqa: E501
+        This container is used to define the function of the inventory location. Typically, an inventory location will serve as a store or a warehouse, but in some cases, an inventory location may be both. <br><br> If this container is omitted, the location type of the inventory location will default to <code>WAREHOUSE</code>. See <a href=\"/api-docs/sell/inventory/types/api:StoreTypeEnum\">StoreTypeEnum</a> for the supported values.<br/><br/><b>Default</b>: WAREHOUSE  # noqa: E501
 
         :return: The location_types of this InventoryLocationFull.  # noqa: E501
         :rtype: list[str]
@@ -169,7 +169,7 @@ class InventoryLocationFull(object):
     def location_types(self, location_types):
         """Sets the location_types of this InventoryLocationFull.
 
-        This container is used to define the function of the inventory location. Typically, an inventory location will serve as a store or a warehouse, but in some cases, an inventory location may be both. If this container is omitted, the location type of the inventory location will default to WAREHOUSE. See StoreTypeEnum for the supported values. Default: WAREHOUSE  # noqa: E501
+        This container is used to define the function of the inventory location. Typically, an inventory location will serve as a store or a warehouse, but in some cases, an inventory location may be both. <br><br> If this container is omitted, the location type of the inventory location will default to <code>WAREHOUSE</code>. See <a href=\"/api-docs/sell/inventory/types/api:StoreTypeEnum\">StoreTypeEnum</a> for the supported values.<br/><br/><b>Default</b>: WAREHOUSE  # noqa: E501
 
         :param location_types: The location_types of this InventoryLocationFull.  # noqa: E501
         :type: list[str]
@@ -181,7 +181,7 @@ class InventoryLocationFull(object):
     def location_web_url(self):
         """Gets the location_web_url of this InventoryLocationFull.  # noqa: E501
 
-        This text field is used by the merchant to provide the Website address (URL) associated with the inventory location. Max length: 512  # noqa: E501
+        This text field is used by the merchant to provide the Website address (URL) associated with the inventory location. <br><br><b>Max length</b>: 512  # noqa: E501
 
         :return: The location_web_url of this InventoryLocationFull.  # noqa: E501
         :rtype: str
@@ -192,7 +192,7 @@ class InventoryLocationFull(object):
     def location_web_url(self, location_web_url):
         """Sets the location_web_url of this InventoryLocationFull.
 
-        This text field is used by the merchant to provide the Website address (URL) associated with the inventory location. Max length: 512  # noqa: E501
+        This text field is used by the merchant to provide the Website address (URL) associated with the inventory location. <br><br><b>Max length</b>: 512  # noqa: E501
 
         :param location_web_url: The location_web_url of this InventoryLocationFull.  # noqa: E501
         :type: str
@@ -204,7 +204,7 @@ class InventoryLocationFull(object):
     def merchant_location_status(self):
         """Gets the merchant_location_status of this InventoryLocationFull.  # noqa: E501
 
-        This field is used to indicate whether the inventory location will be enabled (inventory can be loaded to location) or disabled (inventory can not be loaded to location). If this field is omitted, a successful createInventoryLocation call will automatically enable the inventory location. A merchant may want to create a new inventory location but leave it as disabled if the inventory location is not yet ready for active inventory. Once the inventory location is ready, the merchant can use the enableInventoryLocation call to enable an inventory location that is in a disabled state. See StatusEnum for the supported values. Default: ENABLED For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/api:StatusEnum'>eBay API documentation</a>  # noqa: E501
+        This field is used to indicate whether the inventory location will be enabled (inventory can be loaded to location) or disabled (inventory can not be loaded to location). If this field is omitted, a successful <strong>createInventoryLocation</strong> call will automatically enable the inventory location. A merchant may want to create a new inventory location but leave it as disabled if the inventory location is not yet ready for active inventory. Once the inventory location is ready, the merchant can use the <strong>enableInventoryLocation</strong> call to enable an inventory location that is in a disabled state. See <a href=\"/api-docs/sell/inventory/types/api:StatusEnum\">StatusEnum</a> for the supported values.  <br/><br/><b>Default</b>: ENABLED For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/api:StatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The merchant_location_status of this InventoryLocationFull.  # noqa: E501
         :rtype: str
@@ -215,7 +215,7 @@ class InventoryLocationFull(object):
     def merchant_location_status(self, merchant_location_status):
         """Sets the merchant_location_status of this InventoryLocationFull.
 
-        This field is used to indicate whether the inventory location will be enabled (inventory can be loaded to location) or disabled (inventory can not be loaded to location). If this field is omitted, a successful createInventoryLocation call will automatically enable the inventory location. A merchant may want to create a new inventory location but leave it as disabled if the inventory location is not yet ready for active inventory. Once the inventory location is ready, the merchant can use the enableInventoryLocation call to enable an inventory location that is in a disabled state. See StatusEnum for the supported values. Default: ENABLED For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/api:StatusEnum'>eBay API documentation</a>  # noqa: E501
+        This field is used to indicate whether the inventory location will be enabled (inventory can be loaded to location) or disabled (inventory can not be loaded to location). If this field is omitted, a successful <strong>createInventoryLocation</strong> call will automatically enable the inventory location. A merchant may want to create a new inventory location but leave it as disabled if the inventory location is not yet ready for active inventory. Once the inventory location is ready, the merchant can use the <strong>enableInventoryLocation</strong> call to enable an inventory location that is in a disabled state. See <a href=\"/api-docs/sell/inventory/types/api:StatusEnum\">StatusEnum</a> for the supported values.  <br/><br/><b>Default</b>: ENABLED For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/api:StatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :param merchant_location_status: The merchant_location_status of this InventoryLocationFull.  # noqa: E501
         :type: str
@@ -227,7 +227,7 @@ class InventoryLocationFull(object):
     def name(self):
         """Gets the name of this InventoryLocationFull.  # noqa: E501
 
-        The name of the inventory location. This name should be a human-friendly name as it will be displayed in In-Store Pickup and Click and Collect listings. A name is not required for warehouse inventory locations. For store inventory locations, this field is not immediately required, but will be required before an offer enabled with the In-Store Pickup or Click and Collect capability can be published. So, if the seller omits this field in a createInventoryLocation call, it becomes required for an updateInventoryLocation call. Max length: 1000  # noqa: E501
+        The name of the inventory location. This name should be a human-friendly name as it will be displayed in In-Store Pickup and Click and Collect listings. A name is not required for warehouse inventory locations. For store inventory locations, this field is not immediately required, but will be required before an offer enabled with the In-Store Pickup or Click and Collect capability can be published. So, if the seller omits this field in a <strong>createInventoryLocation</strong> call, it becomes required for an <strong>updateInventoryLocation</strong> call.<br/><br/><b>Max length</b>: 1000  # noqa: E501
 
         :return: The name of this InventoryLocationFull.  # noqa: E501
         :rtype: str
@@ -238,7 +238,7 @@ class InventoryLocationFull(object):
     def name(self, name):
         """Sets the name of this InventoryLocationFull.
 
-        The name of the inventory location. This name should be a human-friendly name as it will be displayed in In-Store Pickup and Click and Collect listings. A name is not required for warehouse inventory locations. For store inventory locations, this field is not immediately required, but will be required before an offer enabled with the In-Store Pickup or Click and Collect capability can be published. So, if the seller omits this field in a createInventoryLocation call, it becomes required for an updateInventoryLocation call. Max length: 1000  # noqa: E501
+        The name of the inventory location. This name should be a human-friendly name as it will be displayed in In-Store Pickup and Click and Collect listings. A name is not required for warehouse inventory locations. For store inventory locations, this field is not immediately required, but will be required before an offer enabled with the In-Store Pickup or Click and Collect capability can be published. So, if the seller omits this field in a <strong>createInventoryLocation</strong> call, it becomes required for an <strong>updateInventoryLocation</strong> call.<br/><br/><b>Max length</b>: 1000  # noqa: E501
 
         :param name: The name of this InventoryLocationFull.  # noqa: E501
         :type: str
@@ -250,7 +250,7 @@ class InventoryLocationFull(object):
     def operating_hours(self):
         """Gets the operating_hours of this InventoryLocationFull.  # noqa: E501
 
-        Although not technically required, this container is highly recommended to be used to specify operating hours for a store inventory location. This container is used to express the regular operating hours for a store location during each day of the week. A dayOfWeekEnum field and an intervals container will be needed for each day of the week that the store location is open.  # noqa: E501
+        Although not technically required, this container is highly recommended to be used to specify operating hours for a store inventory location. This container is used to express the regular operating hours for a store location during each day of the week. A <strong>dayOfWeekEnum</strong> field and an <strong>intervals</strong> container will be needed for each day of the week that the store location is open.  # noqa: E501
 
         :return: The operating_hours of this InventoryLocationFull.  # noqa: E501
         :rtype: list[OperatingHours]
@@ -261,7 +261,7 @@ class InventoryLocationFull(object):
     def operating_hours(self, operating_hours):
         """Sets the operating_hours of this InventoryLocationFull.
 
-        Although not technically required, this container is highly recommended to be used to specify operating hours for a store inventory location. This container is used to express the regular operating hours for a store location during each day of the week. A dayOfWeekEnum field and an intervals container will be needed for each day of the week that the store location is open.  # noqa: E501
+        Although not technically required, this container is highly recommended to be used to specify operating hours for a store inventory location. This container is used to express the regular operating hours for a store location during each day of the week. A <strong>dayOfWeekEnum</strong> field and an <strong>intervals</strong> container will be needed for each day of the week that the store location is open.  # noqa: E501
 
         :param operating_hours: The operating_hours of this InventoryLocationFull.  # noqa: E501
         :type: list[OperatingHours]
@@ -273,7 +273,7 @@ class InventoryLocationFull(object):
     def phone(self):
         """Gets the phone of this InventoryLocationFull.  # noqa: E501
 
-        Although not technically required, this field is highly recommended to be used to specify the phone number for a store inventory location. Max length: 36  # noqa: E501
+        Although not technically required, this field is highly recommended to be used to specify the phone number for a store inventory location. <br><br><b>Max length</b>: 36  # noqa: E501
 
         :return: The phone of this InventoryLocationFull.  # noqa: E501
         :rtype: str
@@ -284,7 +284,7 @@ class InventoryLocationFull(object):
     def phone(self, phone):
         """Sets the phone of this InventoryLocationFull.
 
-        Although not technically required, this field is highly recommended to be used to specify the phone number for a store inventory location. Max length: 36  # noqa: E501
+        Although not technically required, this field is highly recommended to be used to specify the phone number for a store inventory location. <br><br><b>Max length</b>: 36  # noqa: E501
 
         :param phone: The phone of this InventoryLocationFull.  # noqa: E501
         :type: str

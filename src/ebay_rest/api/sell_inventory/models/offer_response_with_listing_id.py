@@ -135,7 +135,7 @@ class OfferResponseWithListingId(object):
     def status_code(self):
         """Gets the status_code of this OfferResponseWithListingId.  # noqa: E501
 
-        The HTTP status code returned in this field indicates the success or failure of publishing the offer specified in the offerId field. See the HTTP status codes table to see which each status code indicates.  # noqa: E501
+        The HTTP status code returned in this field indicates the success or failure of publishing the offer specified in the <strong>offerId</strong> field. See the <strong>HTTP status codes</strong> table to see which each status code indicates.  # noqa: E501
 
         :return: The status_code of this OfferResponseWithListingId.  # noqa: E501
         :rtype: int
@@ -146,7 +146,7 @@ class OfferResponseWithListingId(object):
     def status_code(self, status_code):
         """Sets the status_code of this OfferResponseWithListingId.
 
-        The HTTP status code returned in this field indicates the success or failure of publishing the offer specified in the offerId field. See the HTTP status codes table to see which each status code indicates.  # noqa: E501
+        The HTTP status code returned in this field indicates the success or failure of publishing the offer specified in the <strong>offerId</strong> field. See the <strong>HTTP status codes</strong> table to see which each status code indicates.  # noqa: E501
 
         :param status_code: The status_code of this OfferResponseWithListingId.  # noqa: E501
         :type: int

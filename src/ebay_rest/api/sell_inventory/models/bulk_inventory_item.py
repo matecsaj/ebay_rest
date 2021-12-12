@@ -46,7 +46,7 @@ class BulkInventoryItem(object):
     def requests(self):
         """Gets the requests of this BulkInventoryItem.  # noqa: E501
 
-        The details of each inventory item that is being created or updated is passed in under this container. Up to 25 inventory item records can be created and/or updated with one bulkCreateOrReplaceInventoryItem call.  # noqa: E501
+        The details of each inventory item that is being created or updated is passed in under this container. Up to 25 inventory item records can be created and/or updated with one <strong>bulkCreateOrReplaceInventoryItem</strong> call.  # noqa: E501
 
         :return: The requests of this BulkInventoryItem.  # noqa: E501
         :rtype: list[InventoryItemWithSkuLocale]
@@ -57,7 +57,7 @@ class BulkInventoryItem(object):
     def requests(self, requests):
         """Sets the requests of this BulkInventoryItem.
 
-        The details of each inventory item that is being created or updated is passed in under this container. Up to 25 inventory item records can be created and/or updated with one bulkCreateOrReplaceInventoryItem call.  # noqa: E501
+        The details of each inventory item that is being created or updated is passed in under this container. Up to 25 inventory item records can be created and/or updated with one <strong>bulkCreateOrReplaceInventoryItem</strong> call.  # noqa: E501
 
         :param requests: The requests of this BulkInventoryItem.  # noqa: E501
         :type: list[InventoryItemWithSkuLocale]

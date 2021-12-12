@@ -77,7 +77,7 @@ class Fee(object):
     def fee_type(self):
         """Gets the fee_type of this Fee.  # noqa: E501
 
-        The value returned in this field indicates the type of listing fee that the seller may incur if one or more unpublished offers (offers are specified in the call request) are published on the marketplace specified in the marketplaceId field. Applicable listing fees will often include things such as InsertionFee or SubtitleFee, but many fee types will get returned even when they are 0.0. See the Standard selling fees help page for more information on listing fees.  # noqa: E501
+        The value returned in this field indicates the type of listing fee that the seller may incur if one or more unpublished offers (offers are specified in the call request) are published on the marketplace specified in the <strong>marketplaceId</strong> field. Applicable listing fees will often include things such as <code>InsertionFee</code> or <code>SubtitleFee</code>, but many fee types will get returned even when they are <code>0.0</code>.<br/><br/>See the <a href=\"https://pages.ebay.com/help/sell/fees.html\" target=\"_blank\">Standard selling fees</a> help page for more information on listing fees.  # noqa: E501
 
         :return: The fee_type of this Fee.  # noqa: E501
         :rtype: str
@@ -88,7 +88,7 @@ class Fee(object):
     def fee_type(self, fee_type):
         """Sets the fee_type of this Fee.
 
-        The value returned in this field indicates the type of listing fee that the seller may incur if one or more unpublished offers (offers are specified in the call request) are published on the marketplace specified in the marketplaceId field. Applicable listing fees will often include things such as InsertionFee or SubtitleFee, but many fee types will get returned even when they are 0.0. See the Standard selling fees help page for more information on listing fees.  # noqa: E501
+        The value returned in this field indicates the type of listing fee that the seller may incur if one or more unpublished offers (offers are specified in the call request) are published on the marketplace specified in the <strong>marketplaceId</strong> field. Applicable listing fees will often include things such as <code>InsertionFee</code> or <code>SubtitleFee</code>, but many fee types will get returned even when they are <code>0.0</code>.<br/><br/>See the <a href=\"https://pages.ebay.com/help/sell/fees.html\" target=\"_blank\">Standard selling fees</a> help page for more information on listing fees.  # noqa: E501
 
         :param fee_type: The fee_type of this Fee.  # noqa: E501
         :type: str

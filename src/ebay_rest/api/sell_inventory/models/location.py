@@ -98,7 +98,7 @@ class Location(object):
     def location_id(self):
         """Gets the location_id of this Location.  # noqa: E501
 
-        A unique eBay-assigned ID for the location. Note: This field should not be confused with the seller-defined merchantLocationKey value. It is the merchantLocationKey value which is used to identify an inventory location when working with inventory location API calls. The locationId value is only used internally by eBay.  # noqa: E501
+        A unique eBay-assigned ID for the location. <br><br> <span class=\"tablenote\"> <strong>Note:</strong> This field should not be confused with the seller-defined <b>merchantLocationKey</b> value. It is the <b>merchantLocationKey</b> value which is used to identify an inventory location when working with inventory location API calls. The <strong>locationId</strong> value is only used internally by eBay.</span>  # noqa: E501
 
         :return: The location_id of this Location.  # noqa: E501
         :rtype: str
@@ -109,7 +109,7 @@ class Location(object):
     def location_id(self, location_id):
         """Sets the location_id of this Location.
 
-        A unique eBay-assigned ID for the location. Note: This field should not be confused with the seller-defined merchantLocationKey value. It is the merchantLocationKey value which is used to identify an inventory location when working with inventory location API calls. The locationId value is only used internally by eBay.  # noqa: E501
+        A unique eBay-assigned ID for the location. <br><br> <span class=\"tablenote\"> <strong>Note:</strong> This field should not be confused with the seller-defined <b>merchantLocationKey</b> value. It is the <b>merchantLocationKey</b> value which is used to identify an inventory location when working with inventory location API calls. The <strong>locationId</strong> value is only used internally by eBay.</span>  # noqa: E501
 
         :param location_id: The location_id of this Location.  # noqa: E501
         :type: str

@@ -51,7 +51,7 @@ class AvailabilityWithAll(object):
     def pickup_at_location_availability(self):
         """Gets the pickup_at_location_availability of this AvailabilityWithAll.  # noqa: E501
 
-        This container consists of an array of one or more of the merchant's physical stores where the inventory item is available for in-store pickup. The store ID, the quantity available, and the fulfillment time (how soon the item will be ready for pickup after the order occurs) are all returned in this container.  # noqa: E501
+        This container consists of an array of one or more of the merchant's physical stores where the inventory item is available for in-store pickup.<br /><br />The store ID, the quantity available, and the fulfillment time (how soon the item will be ready for pickup after the order occurs) are all returned in this container.  # noqa: E501
 
         :return: The pickup_at_location_availability of this AvailabilityWithAll.  # noqa: E501
         :rtype: list[PickupAtLocationAvailability]
@@ -62,7 +62,7 @@ class AvailabilityWithAll(object):
     def pickup_at_location_availability(self, pickup_at_location_availability):
         """Sets the pickup_at_location_availability of this AvailabilityWithAll.
 
-        This container consists of an array of one or more of the merchant's physical stores where the inventory item is available for in-store pickup. The store ID, the quantity available, and the fulfillment time (how soon the item will be ready for pickup after the order occurs) are all returned in this container.  # noqa: E501
+        This container consists of an array of one or more of the merchant's physical stores where the inventory item is available for in-store pickup.<br /><br />The store ID, the quantity available, and the fulfillment time (how soon the item will be ready for pickup after the order occurs) are all returned in this container.  # noqa: E501
 
         :param pickup_at_location_availability: The pickup_at_location_availability of this AvailabilityWithAll.  # noqa: E501
         :type: list[PickupAtLocationAvailability]

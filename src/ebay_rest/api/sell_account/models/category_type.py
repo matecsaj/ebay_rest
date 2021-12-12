@@ -3,7 +3,7 @@
 """
     Account API
 
-    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (the Fulfillment Policy, Payment Policy, and Return Policy), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
+    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's business policies (the fulfillment policy, payment policy, and return policy), verify seller eligibility for eBay seller programs and opt in/out of those programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
 
     OpenAPI spec version: v1.6.3
     
@@ -74,7 +74,7 @@ class CategoryType(object):
     def name(self):
         """Gets the name of this CategoryType.  # noqa: E501
 
-        The category type to which the policy applies (motor vehicles or non-motor vehicles). <br /><br /><b>Restrictions</b>: <ul><li>The <code>MOTORS_VEHICLES</code> category type is not valid for return policies. eBay flows do not support the return of motor vehicles.</li><li>Only the <code>ALL_EXCLUDING_MOTORS_VEHICLES</code> category type is supported for sellers who opt-in to the <a href=\"/managed-payments\" title=\"eBay Developers Program page\" target=\"_blank\">managed payments</a> program. Managed payments does not currently support the sale of motor vehicles.</li></ul> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:CategoryTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The category type to which the business policy applies (motor vehicles or non-motor vehicles). <br /><br /><b>Restrictions</b>: The <code>MOTORS_VEHICLES</code> category type is not valid for return policies. eBay flows do not support the return of motor vehicles. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:CategoryTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The name of this CategoryType.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class CategoryType(object):
     def name(self, name):
         """Sets the name of this CategoryType.
 
-        The category type to which the policy applies (motor vehicles or non-motor vehicles). <br /><br /><b>Restrictions</b>: <ul><li>The <code>MOTORS_VEHICLES</code> category type is not valid for return policies. eBay flows do not support the return of motor vehicles.</li><li>Only the <code>ALL_EXCLUDING_MOTORS_VEHICLES</code> category type is supported for sellers who opt-in to the <a href=\"/managed-payments\" title=\"eBay Developers Program page\" target=\"_blank\">managed payments</a> program. Managed payments does not currently support the sale of motor vehicles.</li></ul> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:CategoryTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The category type to which the business policy applies (motor vehicles or non-motor vehicles). <br /><br /><b>Restrictions</b>: The <code>MOTORS_VEHICLES</code> category type is not valid for return policies. eBay flows do not support the return of motor vehicles. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:CategoryTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param name: The name of this CategoryType.  # noqa: E501
         :type: str

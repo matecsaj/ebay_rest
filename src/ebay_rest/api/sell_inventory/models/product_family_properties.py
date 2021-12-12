@@ -66,7 +66,7 @@ class ProductFamilyProperties(object):
     def engine(self):
         """Gets the engine of this ProductFamilyProperties.  # noqa: E501
 
-        This field indicates the specifications of the engine, including its size, block type, and fuel type. An example is 2.7L V6 gas DOHC naturally aspirated. This field is conditionally required, but should be supplied if known/applicable.  # noqa: E501
+        This field indicates the specifications of the engine, including its size, block type, and fuel type. An example is <code>2.7L V6 gas DOHC naturally aspirated</code>. This field is conditionally required, but should be supplied if known/applicable.  # noqa: E501
 
         :return: The engine of this ProductFamilyProperties.  # noqa: E501
         :rtype: str
@@ -77,7 +77,7 @@ class ProductFamilyProperties(object):
     def engine(self, engine):
         """Sets the engine of this ProductFamilyProperties.
 
-        This field indicates the specifications of the engine, including its size, block type, and fuel type. An example is 2.7L V6 gas DOHC naturally aspirated. This field is conditionally required, but should be supplied if known/applicable.  # noqa: E501
+        This field indicates the specifications of the engine, including its size, block type, and fuel type. An example is <code>2.7L V6 gas DOHC naturally aspirated</code>. This field is conditionally required, but should be supplied if known/applicable.  # noqa: E501
 
         :param engine: The engine of this ProductFamilyProperties.  # noqa: E501
         :type: str
@@ -89,7 +89,7 @@ class ProductFamilyProperties(object):
     def make(self):
         """Gets the make of this ProductFamilyProperties.  # noqa: E501
 
-        This field indicates the make of the vehicle (e.g. Toyota). This field is always required to identify a motor vehicle.  # noqa: E501
+        This field indicates the make of the vehicle (e.g. <code>Toyota</code>). This field is always required to identify a motor vehicle.  # noqa: E501
 
         :return: The make of this ProductFamilyProperties.  # noqa: E501
         :rtype: str
@@ -100,7 +100,7 @@ class ProductFamilyProperties(object):
     def make(self, make):
         """Sets the make of this ProductFamilyProperties.
 
-        This field indicates the make of the vehicle (e.g. Toyota). This field is always required to identify a motor vehicle.  # noqa: E501
+        This field indicates the make of the vehicle (e.g. <code>Toyota</code>). This field is always required to identify a motor vehicle.  # noqa: E501
 
         :param make: The make of this ProductFamilyProperties.  # noqa: E501
         :type: str
@@ -112,7 +112,7 @@ class ProductFamilyProperties(object):
     def model(self):
         """Gets the model of this ProductFamilyProperties.  # noqa: E501
 
-        This field indicates the model of the vehicle (e.g. Camry). This field is always required to identify a motor vehicle.  # noqa: E501
+        This field indicates the model of the vehicle (e.g. <code>Camry</code>). This field is always required to identify a motor vehicle.  # noqa: E501
 
         :return: The model of this ProductFamilyProperties.  # noqa: E501
         :rtype: str
@@ -123,7 +123,7 @@ class ProductFamilyProperties(object):
     def model(self, model):
         """Sets the model of this ProductFamilyProperties.
 
-        This field indicates the model of the vehicle (e.g. Camry). This field is always required to identify a motor vehicle.  # noqa: E501
+        This field indicates the model of the vehicle (e.g. <code>Camry</code>). This field is always required to identify a motor vehicle.  # noqa: E501
 
         :param model: The model of this ProductFamilyProperties.  # noqa: E501
         :type: str
@@ -135,7 +135,7 @@ class ProductFamilyProperties(object):
     def trim(self):
         """Gets the trim of this ProductFamilyProperties.  # noqa: E501
 
-        This field indicates the trim of the vehicle (e.g. 2-door Coupe). This field is conditionally required, but should be supplied if known/applicable.  # noqa: E501
+        This field indicates the trim of the vehicle (e.g. <code>2-door Coupe</code>). This field is conditionally required, but should be supplied if known/applicable.  # noqa: E501
 
         :return: The trim of this ProductFamilyProperties.  # noqa: E501
         :rtype: str
@@ -146,7 +146,7 @@ class ProductFamilyProperties(object):
     def trim(self, trim):
         """Sets the trim of this ProductFamilyProperties.
 
-        This field indicates the trim of the vehicle (e.g. 2-door Coupe). This field is conditionally required, but should be supplied if known/applicable.  # noqa: E501
+        This field indicates the trim of the vehicle (e.g. <code>2-door Coupe</code>). This field is conditionally required, but should be supplied if known/applicable.  # noqa: E501
 
         :param trim: The trim of this ProductFamilyProperties.  # noqa: E501
         :type: str
@@ -158,7 +158,7 @@ class ProductFamilyProperties(object):
     def year(self):
         """Gets the year of this ProductFamilyProperties.  # noqa: E501
 
-        This field indicates the year of the vehicle (e.g. 2016). This field is always required to identify a motor vehicle.  # noqa: E501
+        This field indicates the year of the vehicle (e.g. <code>2016</code>). This field is always required to identify a motor vehicle.  # noqa: E501
 
         :return: The year of this ProductFamilyProperties.  # noqa: E501
         :rtype: str
@@ -169,7 +169,7 @@ class ProductFamilyProperties(object):
     def year(self, year):
         """Sets the year of this ProductFamilyProperties.
 
-        This field indicates the year of the vehicle (e.g. 2016). This field is always required to identify a motor vehicle.  # noqa: E501
+        This field indicates the year of the vehicle (e.g. <code>2016</code>). This field is always required to identify a motor vehicle.  # noqa: E501
 
         :param year: The year of this ProductFamilyProperties.  # noqa: E501
         :type: str

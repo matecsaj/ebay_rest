@@ -46,7 +46,7 @@ class BulkInventoryItemResponse(object):
     def responses(self):
         """Gets the responses of this BulkInventoryItemResponse.  # noqa: E501
 
-        This is the base container of the bulkCreateOrReplaceInventoryItem response. The results of each attempted inventory item creation/update is captured under this container.  # noqa: E501
+        This is the base container of the <strong>bulkCreateOrReplaceInventoryItem</strong> response. The results of each attempted inventory item creation/update is captured under this container.  # noqa: E501
 
         :return: The responses of this BulkInventoryItemResponse.  # noqa: E501
         :rtype: list[InventoryItemResponse]
@@ -57,7 +57,7 @@ class BulkInventoryItemResponse(object):
     def responses(self, responses):
         """Sets the responses of this BulkInventoryItemResponse.
 
-        This is the base container of the bulkCreateOrReplaceInventoryItem response. The results of each attempted inventory item creation/update is captured under this container.  # noqa: E501
+        This is the base container of the <strong>bulkCreateOrReplaceInventoryItem</strong> response. The results of each attempted inventory item creation/update is captured under this container.  # noqa: E501
 
         :param responses: The responses of this BulkInventoryItemResponse.  # noqa: E501
         :type: list[InventoryItemResponse]

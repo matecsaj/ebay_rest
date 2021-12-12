@@ -151,7 +151,7 @@ class EbayOfferDetailsWithAll(object):
     def available_quantity(self):
         """Gets the available_quantity of this EbayOfferDetailsWithAll.  # noqa: E501
 
-        This integer value indicates the quantity of the inventory item (specified by the sku value) that will be available for purchase by buyers shopping on the eBay site specified in the marketplaceId field. For unpublished offers where the available quantity has yet to be set, the availableQuantity value is set to 0.  # noqa: E501
+        This integer value indicates the quantity of the inventory item (specified by the <strong>sku</strong> value) that will be available for purchase by buyers shopping on the eBay site specified in the <strong>marketplaceId</strong> field. For unpublished offers where the available quantity has yet to be set, the <strong>availableQuantity</strong> value is set to <code>0</code>.  # noqa: E501
 
         :return: The available_quantity of this EbayOfferDetailsWithAll.  # noqa: E501
         :rtype: int
@@ -162,7 +162,7 @@ class EbayOfferDetailsWithAll(object):
     def available_quantity(self, available_quantity):
         """Sets the available_quantity of this EbayOfferDetailsWithAll.
 
-        This integer value indicates the quantity of the inventory item (specified by the sku value) that will be available for purchase by buyers shopping on the eBay site specified in the marketplaceId field. For unpublished offers where the available quantity has yet to be set, the availableQuantity value is set to 0.  # noqa: E501
+        This integer value indicates the quantity of the inventory item (specified by the <strong>sku</strong> value) that will be available for purchase by buyers shopping on the eBay site specified in the <strong>marketplaceId</strong> field. For unpublished offers where the available quantity has yet to be set, the <strong>availableQuantity</strong> value is set to <code>0</code>.  # noqa: E501
 
         :param available_quantity: The available_quantity of this EbayOfferDetailsWithAll.  # noqa: E501
         :type: int
@@ -241,7 +241,7 @@ class EbayOfferDetailsWithAll(object):
     def hide_buyer_details(self):
         """Gets the hide_buyer_details of this EbayOfferDetailsWithAll.  # noqa: E501
 
-        This field is returned as true if the private listing feature has been enabled for the offer. Sellers may want to use this feature when they believe that a listing's potential bidders/buyers would not want their obfuscated user IDs (and feedback scores) exposed to other users. This field is always returned even if not explicitly set in the offer. It defaults to false, so will get returned as false if seller does not set this feature with a 'Create' or 'Update' offer method.  # noqa: E501
+        This field is returned as <code>true</code> if the private listing feature has been enabled for the offer. Sellers may want to use this feature when they believe that a listing's potential bidders/buyers would not want their obfuscated user IDs (and feedback scores) exposed to other users. <br><br> This field is always returned even if not explicitly set in the offer. It defaults to <code>false</code>, so will get returned as <code>false</code> if seller does not set this feature with a 'Create' or 'Update' offer method.  # noqa: E501
 
         :return: The hide_buyer_details of this EbayOfferDetailsWithAll.  # noqa: E501
         :rtype: bool
@@ -252,7 +252,7 @@ class EbayOfferDetailsWithAll(object):
     def hide_buyer_details(self, hide_buyer_details):
         """Sets the hide_buyer_details of this EbayOfferDetailsWithAll.
 
-        This field is returned as true if the private listing feature has been enabled for the offer. Sellers may want to use this feature when they believe that a listing's potential bidders/buyers would not want their obfuscated user IDs (and feedback scores) exposed to other users. This field is always returned even if not explicitly set in the offer. It defaults to false, so will get returned as false if seller does not set this feature with a 'Create' or 'Update' offer method.  # noqa: E501
+        This field is returned as <code>true</code> if the private listing feature has been enabled for the offer. Sellers may want to use this feature when they believe that a listing's potential bidders/buyers would not want their obfuscated user IDs (and feedback scores) exposed to other users. <br><br> This field is always returned even if not explicitly set in the offer. It defaults to <code>false</code>, so will get returned as <code>false</code> if seller does not set this feature with a 'Create' or 'Update' offer method.  # noqa: E501
 
         :param hide_buyer_details: The hide_buyer_details of this EbayOfferDetailsWithAll.  # noqa: E501
         :type: bool
@@ -264,7 +264,7 @@ class EbayOfferDetailsWithAll(object):
     def include_catalog_product_details(self):
         """Gets the include_catalog_product_details of this EbayOfferDetailsWithAll.  # noqa: E501
 
-        This field indicates whether or not eBay product catalog details are applied to a listing. A value of true indicates the listing corresponds to the eBay product associated with the provided product identifier. The product identifier is provided in createOrReplaceInventoryItem. Note: Though the includeCatalogProductDetails parameter is not required to be submitted in the request, the parameter defaults to 'true' if omitted.  # noqa: E501
+        This field indicates whether or not eBay product catalog details are applied to a listing. A value of <code>true</code> indicates the listing corresponds to the eBay product associated with the provided product identifier. The product identifier is provided in <strong>createOrReplaceInventoryItem</strong>.<p><span class=\"tablenote\"><strong>Note:</strong> Though the <strong>includeCatalogProductDetails</strong> parameter is not required to be submitted in the request, the parameter defaults to 'true' if omitted.</span></p>  # noqa: E501
 
         :return: The include_catalog_product_details of this EbayOfferDetailsWithAll.  # noqa: E501
         :rtype: bool
@@ -275,7 +275,7 @@ class EbayOfferDetailsWithAll(object):
     def include_catalog_product_details(self, include_catalog_product_details):
         """Sets the include_catalog_product_details of this EbayOfferDetailsWithAll.
 
-        This field indicates whether or not eBay product catalog details are applied to a listing. A value of true indicates the listing corresponds to the eBay product associated with the provided product identifier. The product identifier is provided in createOrReplaceInventoryItem. Note: Though the includeCatalogProductDetails parameter is not required to be submitted in the request, the parameter defaults to 'true' if omitted.  # noqa: E501
+        This field indicates whether or not eBay product catalog details are applied to a listing. A value of <code>true</code> indicates the listing corresponds to the eBay product associated with the provided product identifier. The product identifier is provided in <strong>createOrReplaceInventoryItem</strong>.<p><span class=\"tablenote\"><strong>Note:</strong> Though the <strong>includeCatalogProductDetails</strong> parameter is not required to be submitted in the request, the parameter defaults to 'true' if omitted.</span></p>  # noqa: E501
 
         :param include_catalog_product_details: The include_catalog_product_details of this EbayOfferDetailsWithAll.  # noqa: E501
         :type: bool
@@ -308,7 +308,7 @@ class EbayOfferDetailsWithAll(object):
     def listing_description(self):
         """Gets the listing_description of this EbayOfferDetailsWithAll.  # noqa: E501
 
-        The description of the eBay listing that is part of the unpublished or published offer. This field is always returned for published offers, but is only returned if set for unpublished offers. Max Length: 500000 (which includes HTML markup/tags)  # noqa: E501
+        The description of the eBay listing that is part of the unpublished or published offer. This field is always returned for published offers, but is only returned if set for unpublished offers.<br/><br/><strong>Max Length</strong>: 500000 (which includes HTML markup/tags)  # noqa: E501
 
         :return: The listing_description of this EbayOfferDetailsWithAll.  # noqa: E501
         :rtype: str
@@ -319,7 +319,7 @@ class EbayOfferDetailsWithAll(object):
     def listing_description(self, listing_description):
         """Sets the listing_description of this EbayOfferDetailsWithAll.
 
-        The description of the eBay listing that is part of the unpublished or published offer. This field is always returned for published offers, but is only returned if set for unpublished offers. Max Length: 500000 (which includes HTML markup/tags)  # noqa: E501
+        The description of the eBay listing that is part of the unpublished or published offer. This field is always returned for published offers, but is only returned if set for unpublished offers.<br/><br/><strong>Max Length</strong>: 500000 (which includes HTML markup/tags)  # noqa: E501
 
         :param listing_description: The listing_description of this EbayOfferDetailsWithAll.  # noqa: E501
         :type: str
@@ -331,7 +331,7 @@ class EbayOfferDetailsWithAll(object):
     def listing_duration(self):
         """Gets the listing_duration of this EbayOfferDetailsWithAll.  # noqa: E501
 
-        This field indicates the number of days that the listing will be active. This field is returned for both auction and fixed-price listings; however, the value returned for fixed-price listings will always be GTC. The GTC (Good 'Til Cancelled) listings are automatically renewed each calendar month until the seller decides to end the listing. Note: If the listing duration expires for an auction offer, the listing then becomes available as a fixed-price offer and will be GTC. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:ListingDurationEnum'>eBay API documentation</a>  # noqa: E501
+        This field indicates the number of days that the listing will be active.<br /><br />This field is returned for both auction and fixed-price listings; however, the value returned for fixed-price listings will always be <code>GTC</code>. The GTC (Good 'Til Cancelled) listings are automatically renewed each calendar month until the seller decides to end the listing.<br /><br /><span class=\"tablenote\"> <strong>Note:</strong> If the listing duration expires for an auction offer, the listing then becomes available as a fixed-price offer and will be GTC.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:ListingDurationEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The listing_duration of this EbayOfferDetailsWithAll.  # noqa: E501
         :rtype: str
@@ -342,7 +342,7 @@ class EbayOfferDetailsWithAll(object):
     def listing_duration(self, listing_duration):
         """Sets the listing_duration of this EbayOfferDetailsWithAll.
 
-        This field indicates the number of days that the listing will be active. This field is returned for both auction and fixed-price listings; however, the value returned for fixed-price listings will always be GTC. The GTC (Good 'Til Cancelled) listings are automatically renewed each calendar month until the seller decides to end the listing. Note: If the listing duration expires for an auction offer, the listing then becomes available as a fixed-price offer and will be GTC. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:ListingDurationEnum'>eBay API documentation</a>  # noqa: E501
+        This field indicates the number of days that the listing will be active.<br /><br />This field is returned for both auction and fixed-price listings; however, the value returned for fixed-price listings will always be <code>GTC</code>. The GTC (Good 'Til Cancelled) listings are automatically renewed each calendar month until the seller decides to end the listing.<br /><br /><span class=\"tablenote\"> <strong>Note:</strong> If the listing duration expires for an auction offer, the listing then becomes available as a fixed-price offer and will be GTC.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:ListingDurationEnum'>eBay API documentation</a>  # noqa: E501
 
         :param listing_duration: The listing_duration of this EbayOfferDetailsWithAll.  # noqa: E501
         :type: str
@@ -375,7 +375,7 @@ class EbayOfferDetailsWithAll(object):
     def listing_start_date(self):
         """Gets the listing_start_date of this EbayOfferDetailsWithAll.  # noqa: E501
 
-        This timestamp is the date/time that the seller set for the scheduled listing. With the scheduled listing feature, the seller can set a time in the future that the listing will become active, instead of the listing becoming active immediately after a publishOffer call. Scheduled listings do not always start at the exact date/time specified by the seller, but the date/time of the timestamp returned in getOffer/getOffers will be the same as the timestamp passed into a 'Create' or 'Update' offer call. This field is returned if set for an offer.  # noqa: E501
+        This timestamp is the date/time that the seller set for the scheduled listing. With the scheduled listing feature, the seller can set a time in the future that the listing will become active, instead of the listing becoming active immediately after a <strong>publishOffer</strong> call. <br><br> Scheduled listings do not always start at the exact date/time specified by the seller, but the date/time of the timestamp returned in <strong>getOffer</strong>/<strong>getOffers</strong> will be the same as the timestamp passed into a 'Create' or 'Update' offer call. <br><br> This field is returned if set for an offer.  # noqa: E501
 
         :return: The listing_start_date of this EbayOfferDetailsWithAll.  # noqa: E501
         :rtype: str
@@ -386,7 +386,7 @@ class EbayOfferDetailsWithAll(object):
     def listing_start_date(self, listing_start_date):
         """Sets the listing_start_date of this EbayOfferDetailsWithAll.
 
-        This timestamp is the date/time that the seller set for the scheduled listing. With the scheduled listing feature, the seller can set a time in the future that the listing will become active, instead of the listing becoming active immediately after a publishOffer call. Scheduled listings do not always start at the exact date/time specified by the seller, but the date/time of the timestamp returned in getOffer/getOffers will be the same as the timestamp passed into a 'Create' or 'Update' offer call. This field is returned if set for an offer.  # noqa: E501
+        This timestamp is the date/time that the seller set for the scheduled listing. With the scheduled listing feature, the seller can set a time in the future that the listing will become active, instead of the listing becoming active immediately after a <strong>publishOffer</strong> call. <br><br> Scheduled listings do not always start at the exact date/time specified by the seller, but the date/time of the timestamp returned in <strong>getOffer</strong>/<strong>getOffers</strong> will be the same as the timestamp passed into a 'Create' or 'Update' offer call. <br><br> This field is returned if set for an offer.  # noqa: E501
 
         :param listing_start_date: The listing_start_date of this EbayOfferDetailsWithAll.  # noqa: E501
         :type: str
@@ -444,7 +444,7 @@ class EbayOfferDetailsWithAll(object):
     def merchant_location_key(self):
         """Gets the merchant_location_key of this EbayOfferDetailsWithAll.  # noqa: E501
 
-        The unique identifier of the inventory location. This identifier is set up by the merchant when the inventory location is first created with the createInventoryLocation call. Once this value is set for an inventory location, it can not be modified. To get more information about this inventory location, the getInventoryLocation call can be used, passing in this value at the end of the call URI. This field is always returned for published offers, but is only returned if set for unpublished offers. Max length: 36  # noqa: E501
+        The unique identifier of the inventory location. This identifier is set up by the merchant when the inventory location is first created with the <strong>createInventoryLocation</strong> call. Once this value is set for an inventory location, it can not be modified. To get more information about this inventory location, the <strong>getInventoryLocation</strong> call can be used, passing in this value at the end of the call URI.<br/><br/>This field is always returned for published offers, but is only returned if set for unpublished offers.<br/><br/><b>Max length</b>: 36  # noqa: E501
 
         :return: The merchant_location_key of this EbayOfferDetailsWithAll.  # noqa: E501
         :rtype: str
@@ -455,7 +455,7 @@ class EbayOfferDetailsWithAll(object):
     def merchant_location_key(self, merchant_location_key):
         """Sets the merchant_location_key of this EbayOfferDetailsWithAll.
 
-        The unique identifier of the inventory location. This identifier is set up by the merchant when the inventory location is first created with the createInventoryLocation call. Once this value is set for an inventory location, it can not be modified. To get more information about this inventory location, the getInventoryLocation call can be used, passing in this value at the end of the call URI. This field is always returned for published offers, but is only returned if set for unpublished offers. Max length: 36  # noqa: E501
+        The unique identifier of the inventory location. This identifier is set up by the merchant when the inventory location is first created with the <strong>createInventoryLocation</strong> call. Once this value is set for an inventory location, it can not be modified. To get more information about this inventory location, the <strong>getInventoryLocation</strong> call can be used, passing in this value at the end of the call URI.<br/><br/>This field is always returned for published offers, but is only returned if set for unpublished offers.<br/><br/><b>Max length</b>: 36  # noqa: E501
 
         :param merchant_location_key: The merchant_location_key of this EbayOfferDetailsWithAll.  # noqa: E501
         :type: str
@@ -467,7 +467,7 @@ class EbayOfferDetailsWithAll(object):
     def offer_id(self):
         """Gets the offer_id of this EbayOfferDetailsWithAll.  # noqa: E501
 
-        The unique identifier of the offer. This identifier is used in many offer-related calls, and it is also used in the bulkUpdatePriceQuantity call.  # noqa: E501
+        The unique identifier of the offer. This identifier is used in many offer-related calls, and it is also used in the <strong>bulkUpdatePriceQuantity</strong> call.  # noqa: E501
 
         :return: The offer_id of this EbayOfferDetailsWithAll.  # noqa: E501
         :rtype: str
@@ -478,7 +478,7 @@ class EbayOfferDetailsWithAll(object):
     def offer_id(self, offer_id):
         """Sets the offer_id of this EbayOfferDetailsWithAll.
 
-        The unique identifier of the offer. This identifier is used in many offer-related calls, and it is also used in the bulkUpdatePriceQuantity call.  # noqa: E501
+        The unique identifier of the offer. This identifier is used in many offer-related calls, and it is also used in the <strong>bulkUpdatePriceQuantity</strong> call.  # noqa: E501
 
         :param offer_id: The offer_id of this EbayOfferDetailsWithAll.  # noqa: E501
         :type: str
@@ -511,7 +511,7 @@ class EbayOfferDetailsWithAll(object):
     def quantity_limit_per_buyer(self):
         """Gets the quantity_limit_per_buyer of this EbayOfferDetailsWithAll.  # noqa: E501
 
-        This field is only applicable and set if the seller wishes to set a restriction on the purchase quantity of an inventory item per seller. If this field is set by the seller for the offer, then each distinct buyer may purchase up to, but not exceed the quantity in this field. So, if this field's value is 5, each buyer may purchase a quantity of the inventory item between one and five, and the purchases can occur in one multiple-quantity purchase, or over multiple transactions. If a buyer attempts to purchase one or more of these products, and the cumulative quantity will take the buyer beyond the quantity limit, that buyer will be blocked from that purchase.  # noqa: E501
+        This field is only applicable and set if the seller wishes to set a restriction on the purchase quantity of an inventory item per seller. If this field is set by the seller for the offer, then each distinct buyer may purchase up to, but not exceed the quantity in this field. So, if this field's value is <code>5</code>, each buyer may purchase a quantity of the inventory item between one and five, and the purchases can occur in one multiple-quantity purchase, or over multiple transactions. If a buyer attempts to purchase one or more of these products, and the cumulative quantity will take the buyer beyond the quantity limit, that buyer will be blocked from that purchase.<br/>  # noqa: E501
 
         :return: The quantity_limit_per_buyer of this EbayOfferDetailsWithAll.  # noqa: E501
         :rtype: int
@@ -522,7 +522,7 @@ class EbayOfferDetailsWithAll(object):
     def quantity_limit_per_buyer(self, quantity_limit_per_buyer):
         """Sets the quantity_limit_per_buyer of this EbayOfferDetailsWithAll.
 
-        This field is only applicable and set if the seller wishes to set a restriction on the purchase quantity of an inventory item per seller. If this field is set by the seller for the offer, then each distinct buyer may purchase up to, but not exceed the quantity in this field. So, if this field's value is 5, each buyer may purchase a quantity of the inventory item between one and five, and the purchases can occur in one multiple-quantity purchase, or over multiple transactions. If a buyer attempts to purchase one or more of these products, and the cumulative quantity will take the buyer beyond the quantity limit, that buyer will be blocked from that purchase.  # noqa: E501
+        This field is only applicable and set if the seller wishes to set a restriction on the purchase quantity of an inventory item per seller. If this field is set by the seller for the offer, then each distinct buyer may purchase up to, but not exceed the quantity in this field. So, if this field's value is <code>5</code>, each buyer may purchase a quantity of the inventory item between one and five, and the purchases can occur in one multiple-quantity purchase, or over multiple transactions. If a buyer attempts to purchase one or more of these products, and the cumulative quantity will take the buyer beyond the quantity limit, that buyer will be blocked from that purchase.<br/>  # noqa: E501
 
         :param quantity_limit_per_buyer: The quantity_limit_per_buyer of this EbayOfferDetailsWithAll.  # noqa: E501
         :type: int
@@ -534,7 +534,7 @@ class EbayOfferDetailsWithAll(object):
     def secondary_category_id(self):
         """Gets the secondary_category_id of this EbayOfferDetailsWithAll.  # noqa: E501
 
-        The unique identifier for a secondary category. This field is applicable if the seller decides to list the item under two categories. Sellers can use the getCategorySuggestions method of the Taxonomy API to retrieve suggested category ID values. A fee may be charged when adding a secondary category to a listing. Note: You cannot list US eBay Motors vehicles in two categories. However, you can list Parts &amp; Accessories in two categories.  # noqa: E501
+        The unique identifier for a secondary category. This field is applicable if the seller decides to list the item under two categories. Sellers can use the <a href=\"/api-docs/commerce/taxonomy/resources/category_tree/methods/getCategorySuggestions\" target=\"_blank\">getCategorySuggestions</a> method of the Taxonomy API to retrieve suggested category ID values. A fee may be charged when adding a secondary category to a listing. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> You cannot list <strong>US eBay Motors</strong> vehicles in two categories. However, you can list <strong>Parts & Accessories</strong> in two categories.</span>  # noqa: E501
 
         :return: The secondary_category_id of this EbayOfferDetailsWithAll.  # noqa: E501
         :rtype: str
@@ -545,7 +545,7 @@ class EbayOfferDetailsWithAll(object):
     def secondary_category_id(self, secondary_category_id):
         """Sets the secondary_category_id of this EbayOfferDetailsWithAll.
 
-        The unique identifier for a secondary category. This field is applicable if the seller decides to list the item under two categories. Sellers can use the getCategorySuggestions method of the Taxonomy API to retrieve suggested category ID values. A fee may be charged when adding a secondary category to a listing. Note: You cannot list US eBay Motors vehicles in two categories. However, you can list Parts &amp; Accessories in two categories.  # noqa: E501
+        The unique identifier for a secondary category. This field is applicable if the seller decides to list the item under two categories. Sellers can use the <a href=\"/api-docs/commerce/taxonomy/resources/category_tree/methods/getCategorySuggestions\" target=\"_blank\">getCategorySuggestions</a> method of the Taxonomy API to retrieve suggested category ID values. A fee may be charged when adding a secondary category to a listing. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> You cannot list <strong>US eBay Motors</strong> vehicles in two categories. However, you can list <strong>Parts & Accessories</strong> in two categories.</span>  # noqa: E501
 
         :param secondary_category_id: The secondary_category_id of this EbayOfferDetailsWithAll.  # noqa: E501
         :type: str
@@ -557,7 +557,7 @@ class EbayOfferDetailsWithAll(object):
     def sku(self):
         """Gets the sku of this EbayOfferDetailsWithAll.  # noqa: E501
 
-        This is the seller-defined SKU value of the product in the offer. Max Length: 50  # noqa: E501
+        This is the seller-defined SKU value of the product in the offer.<br/><br/><strong>Max Length</strong>: 50 <br/>  # noqa: E501
 
         :return: The sku of this EbayOfferDetailsWithAll.  # noqa: E501
         :rtype: str
@@ -568,7 +568,7 @@ class EbayOfferDetailsWithAll(object):
     def sku(self, sku):
         """Sets the sku of this EbayOfferDetailsWithAll.
 
-        This is the seller-defined SKU value of the product in the offer. Max Length: 50  # noqa: E501
+        This is the seller-defined SKU value of the product in the offer.<br/><br/><strong>Max Length</strong>: 50 <br/>  # noqa: E501
 
         :param sku: The sku of this EbayOfferDetailsWithAll.  # noqa: E501
         :type: str
@@ -580,7 +580,7 @@ class EbayOfferDetailsWithAll(object):
     def status(self):
         """Gets the status of this EbayOfferDetailsWithAll.  # noqa: E501
 
-        The enumeration value in this field specifies the status of the offer - either PUBLISHED or UNPUBLISHED. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:OfferStatusEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value in this field specifies the status of the offer - either <code>PUBLISHED</code> or <code>UNPUBLISHED</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:OfferStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The status of this EbayOfferDetailsWithAll.  # noqa: E501
         :rtype: str
@@ -591,7 +591,7 @@ class EbayOfferDetailsWithAll(object):
     def status(self, status):
         """Sets the status of this EbayOfferDetailsWithAll.
 
-        The enumeration value in this field specifies the status of the offer - either PUBLISHED or UNPUBLISHED. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:OfferStatusEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value in this field specifies the status of the offer - either <code>PUBLISHED</code> or <code>UNPUBLISHED</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:OfferStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :param status: The status of this EbayOfferDetailsWithAll.  # noqa: E501
         :type: str
@@ -603,7 +603,7 @@ class EbayOfferDetailsWithAll(object):
     def store_category_names(self):
         """Gets the store_category_names of this EbayOfferDetailsWithAll.  # noqa: E501
 
-        This container is returned if the seller chose to place the inventory item into one or two eBay store categories that the seller has set up for their eBay store. The string value(s) in this container will be the full path(s) to the eBay store categories, as shown below: &quot;storeCategoryNames&quot;: [  &quot;/Fashion/Men/Shirts&quot;,  &quot;/Fashion/Men/Accessories&quot; ],  # noqa: E501
+        This container is returned if the seller chose to place the inventory item into one or two eBay store categories that the seller has set up for their eBay store. The string value(s) in this container will be the full path(s) to the eBay store categories, as shown below:<br> <pre><code>\"storeCategoryNames\": [<br/> \"/Fashion/Men/Shirts\", <br/> \"/Fashion/Men/Accessories\" ], </pre></code>  # noqa: E501
 
         :return: The store_category_names of this EbayOfferDetailsWithAll.  # noqa: E501
         :rtype: list[str]
@@ -614,7 +614,7 @@ class EbayOfferDetailsWithAll(object):
     def store_category_names(self, store_category_names):
         """Sets the store_category_names of this EbayOfferDetailsWithAll.
 
-        This container is returned if the seller chose to place the inventory item into one or two eBay store categories that the seller has set up for their eBay store. The string value(s) in this container will be the full path(s) to the eBay store categories, as shown below: &quot;storeCategoryNames&quot;: [  &quot;/Fashion/Men/Shirts&quot;,  &quot;/Fashion/Men/Accessories&quot; ],  # noqa: E501
+        This container is returned if the seller chose to place the inventory item into one or two eBay store categories that the seller has set up for their eBay store. The string value(s) in this container will be the full path(s) to the eBay store categories, as shown below:<br> <pre><code>\"storeCategoryNames\": [<br/> \"/Fashion/Men/Shirts\", <br/> \"/Fashion/Men/Accessories\" ], </pre></code>  # noqa: E501
 
         :param store_category_names: The store_category_names of this EbayOfferDetailsWithAll.  # noqa: E501
         :type: list[str]

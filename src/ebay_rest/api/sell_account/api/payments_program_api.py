@@ -3,7 +3,7 @@
 """
     Account API
 
-    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (the Fulfillment Policy, Payment Policy, and Return Policy), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
+    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's business policies (the fulfillment policy, payment policy, and return policy), verify seller eligibility for eBay seller programs and opt in/out of those programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
 
     OpenAPI spec version: v1.6.3
     
@@ -35,7 +35,7 @@ class PaymentsProgramApi(object):
     def get_payments_program(self, marketplace_id, payments_program_type, **kwargs):  # noqa: E501
         """get_payments_program  # noqa: E501
 
-        This method returns whether or not the user is opted-in to the specified payments program. Sellers opt-in to payments programs by marketplace and you use the <b>marketplace_id</b> path parameter to specify the marketplace of the status flag you want returned.  <br><br><span class=\"tablenote\"><b>Note:</b> Currently, the only supported payments program is <b>eBay Payments</b>. For details, see: <ul><li><a href=\"https://pages.ebay.com/seller-center/service-and-payments/managed-payments-on-ebay.html\" target=\"_blank\">Managed Payments on eBay</a></li> <li><a href=\"https://pages.ebay.com/payment/2.0/terms.html\" target=\"_blank\">Payments Terms of Use</a></li></ul></span>  # noqa: E501
+        <br><br><span class=\"tablenote\"><b>Note:</b> This method is no longer applicable, as all seller accounts globally have been enabled for the new eBay payment and checkout flow.</span><br/>This method returns whether or not the user is opted-in to the specified payments program. Sellers opt-in to payments programs by marketplace and you use the <b>marketplace_id</b> path parameter to specify the marketplace of the status flag you want returned.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_payments_program(marketplace_id, payments_program_type, async_req=True)
@@ -43,7 +43,7 @@ class PaymentsProgramApi(object):
 
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace of the payments program for which you want to retrieve the seller's status. (required)
-        :param str payments_program_type: This path parameter specifies the payments program whose status is returned by the call.  <br><br>Currently the only supported payments program is <code>EBAY_PAYMENTS</code>. For details on the program, see <a href=\"https://pages.ebay.com/payment/2.0/terms.html\" target=\"_blank\">Payments Terms of Use</a>. (required)
+        :param str payments_program_type: This path parameter specifies the payments program whose status is returned by the call. (required)
         :return: PaymentsProgramResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -58,7 +58,7 @@ class PaymentsProgramApi(object):
     def get_payments_program_with_http_info(self, marketplace_id, payments_program_type, **kwargs):  # noqa: E501
         """get_payments_program  # noqa: E501
 
-        This method returns whether or not the user is opted-in to the specified payments program. Sellers opt-in to payments programs by marketplace and you use the <b>marketplace_id</b> path parameter to specify the marketplace of the status flag you want returned.  <br><br><span class=\"tablenote\"><b>Note:</b> Currently, the only supported payments program is <b>eBay Payments</b>. For details, see: <ul><li><a href=\"https://pages.ebay.com/seller-center/service-and-payments/managed-payments-on-ebay.html\" target=\"_blank\">Managed Payments on eBay</a></li> <li><a href=\"https://pages.ebay.com/payment/2.0/terms.html\" target=\"_blank\">Payments Terms of Use</a></li></ul></span>  # noqa: E501
+        <br><br><span class=\"tablenote\"><b>Note:</b> This method is no longer applicable, as all seller accounts globally have been enabled for the new eBay payment and checkout flow.</span><br/>This method returns whether or not the user is opted-in to the specified payments program. Sellers opt-in to payments programs by marketplace and you use the <b>marketplace_id</b> path parameter to specify the marketplace of the status flag you want returned.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_payments_program_with_http_info(marketplace_id, payments_program_type, async_req=True)
@@ -66,7 +66,7 @@ class PaymentsProgramApi(object):
 
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace of the payments program for which you want to retrieve the seller's status. (required)
-        :param str payments_program_type: This path parameter specifies the payments program whose status is returned by the call.  <br><br>Currently the only supported payments program is <code>EBAY_PAYMENTS</code>. For details on the program, see <a href=\"https://pages.ebay.com/payment/2.0/terms.html\" target=\"_blank\">Payments Terms of Use</a>. (required)
+        :param str payments_program_type: This path parameter specifies the payments program whose status is returned by the call. (required)
         :return: PaymentsProgramResponse
                  If the method is called asynchronously,
                  returns the request thread.

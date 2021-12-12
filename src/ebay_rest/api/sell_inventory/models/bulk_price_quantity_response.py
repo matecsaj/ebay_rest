@@ -46,7 +46,7 @@ class BulkPriceQuantityResponse(object):
     def responses(self):
         """Gets the responses of this BulkPriceQuantityResponse.  # noqa: E501
 
-        This container will return an HTTP status code, offer ID, and SKU value for each offer/inventory item being updated, as well as an errors and/or warnings container if any errors or warnings are triggered while trying to update those offers/inventory items.  # noqa: E501
+        This container will return an HTTP status code, offer ID, and SKU value for each offer/inventory item being updated, as well as an <strong>errors</strong> and/or <strong>warnings</strong> container if any errors or warnings are triggered while trying to update those offers/inventory items.  # noqa: E501
 
         :return: The responses of this BulkPriceQuantityResponse.  # noqa: E501
         :rtype: list[PriceQuantityResponse]
@@ -57,7 +57,7 @@ class BulkPriceQuantityResponse(object):
     def responses(self, responses):
         """Sets the responses of this BulkPriceQuantityResponse.
 
-        This container will return an HTTP status code, offer ID, and SKU value for each offer/inventory item being updated, as well as an errors and/or warnings container if any errors or warnings are triggered while trying to update those offers/inventory items.  # noqa: E501
+        This container will return an HTTP status code, offer ID, and SKU value for each offer/inventory item being updated, as well as an <strong>errors</strong> and/or <strong>warnings</strong> container if any errors or warnings are triggered while trying to update those offers/inventory items.  # noqa: E501
 
         :param responses: The responses of this BulkPriceQuantityResponse.  # noqa: E501
         :type: list[PriceQuantityResponse]

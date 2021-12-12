@@ -46,7 +46,7 @@ class GetInventoryItem(object):
     def sku(self):
         """Gets the sku of this GetInventoryItem.  # noqa: E501
 
-        An array of SKU values are passed in under the sku container to retrieve up to 25 inventory item records.  # noqa: E501
+        An array of SKU values are passed in under the <strong>sku</strong> container to retrieve up to 25 inventory item records.  # noqa: E501
 
         :return: The sku of this GetInventoryItem.  # noqa: E501
         :rtype: str
@@ -57,7 +57,7 @@ class GetInventoryItem(object):
     def sku(self, sku):
         """Sets the sku of this GetInventoryItem.
 
-        An array of SKU values are passed in under the sku container to retrieve up to 25 inventory item records.  # noqa: E501
+        An array of SKU values are passed in under the <strong>sku</strong> container to retrieve up to 25 inventory item records.  # noqa: E501
 
         :param sku: The sku of this GetInventoryItem.  # noqa: E501
         :type: str

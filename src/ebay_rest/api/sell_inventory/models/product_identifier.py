@@ -79,7 +79,7 @@ class ProductIdentifier(object):
     def gtin(self):
         """Gets the gtin of this ProductIdentifier.  # noqa: E501
 
-        This field can be used if the seller knows the Global Trade Item Number for the motor vehicle that is to be added to the compatible product list. If this GTIN value is found in the eBay product catalog, the motor vehicle properties (e.g. make, model, year, engine, and trim will automatically get picked up for that motor vehicle. Note: This field is for future use.  # noqa: E501
+        This field can be used if the seller knows the Global Trade Item Number for the motor vehicle that is to be added to the compatible product list. If this GTIN value is found in the eBay product catalog, the motor vehicle properties (e.g. make, model, year, engine, and trim will automatically get picked up for that motor vehicle.<br/><br/><span class=\"tablenote\"> <strong>Note:</strong> This field is for future use.</span>  # noqa: E501
 
         :return: The gtin of this ProductIdentifier.  # noqa: E501
         :rtype: str
@@ -90,7 +90,7 @@ class ProductIdentifier(object):
     def gtin(self, gtin):
         """Sets the gtin of this ProductIdentifier.
 
-        This field can be used if the seller knows the Global Trade Item Number for the motor vehicle that is to be added to the compatible product list. If this GTIN value is found in the eBay product catalog, the motor vehicle properties (e.g. make, model, year, engine, and trim will automatically get picked up for that motor vehicle. Note: This field is for future use.  # noqa: E501
+        This field can be used if the seller knows the Global Trade Item Number for the motor vehicle that is to be added to the compatible product list. If this GTIN value is found in the eBay product catalog, the motor vehicle properties (e.g. make, model, year, engine, and trim will automatically get picked up for that motor vehicle.<br/><br/><span class=\"tablenote\"> <strong>Note:</strong> This field is for future use.</span>  # noqa: E501
 
         :param gtin: The gtin of this ProductIdentifier.  # noqa: E501
         :type: str
@@ -102,7 +102,7 @@ class ProductIdentifier(object):
     def ktype(self):
         """Gets the ktype of this ProductIdentifier.  # noqa: E501
 
-        This field can be used if the seller knows the K Type Number for the motor vehicle that is to be added to the compatible product list. If this K Type value is found in the eBay product catalog, the motor vehicle properties (e.g. make, model, year, engine, and trim) will automatically get picked up for that motor vehicle. Only the DE, UK, and AU sites support the use of K Type Numbers.  # noqa: E501
+        This field can be used if the seller knows the K Type Number for the motor vehicle that is to be added to the compatible product list. If this K Type value is found in the eBay product catalog, the motor vehicle properties (e.g. make, model, year, engine, and trim) will automatically get picked up for that motor vehicle. <br/><br/> Only the DE, UK, and AU sites support the use of K Type Numbers.  # noqa: E501
 
         :return: The ktype of this ProductIdentifier.  # noqa: E501
         :rtype: str
@@ -113,7 +113,7 @@ class ProductIdentifier(object):
     def ktype(self, ktype):
         """Sets the ktype of this ProductIdentifier.
 
-        This field can be used if the seller knows the K Type Number for the motor vehicle that is to be added to the compatible product list. If this K Type value is found in the eBay product catalog, the motor vehicle properties (e.g. make, model, year, engine, and trim) will automatically get picked up for that motor vehicle. Only the DE, UK, and AU sites support the use of K Type Numbers.  # noqa: E501
+        This field can be used if the seller knows the K Type Number for the motor vehicle that is to be added to the compatible product list. If this K Type value is found in the eBay product catalog, the motor vehicle properties (e.g. make, model, year, engine, and trim) will automatically get picked up for that motor vehicle. <br/><br/> Only the DE, UK, and AU sites support the use of K Type Numbers.  # noqa: E501
 
         :param ktype: The ktype of this ProductIdentifier.  # noqa: E501
         :type: str

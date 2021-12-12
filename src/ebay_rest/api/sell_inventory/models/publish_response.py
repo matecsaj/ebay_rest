@@ -51,7 +51,7 @@ class PublishResponse(object):
     def listing_id(self):
         """Gets the listing_id of this PublishResponse.  # noqa: E501
 
-        The unique identifier of the newly created eBay listing. This field is returned if the single offer (if publishOffer call was used) or group of offers in an inventory item group (if publishOfferByInventoryItemGroup call was used) was successfully converted into an eBay listing.  # noqa: E501
+        The unique identifier of the newly created eBay listing. This field is returned if the single offer (if <strong>publishOffer</strong> call was used) or group of offers in an inventory item group (if <strong>publishOfferByInventoryItemGroup</strong> call was used) was successfully converted into an eBay listing.  # noqa: E501
 
         :return: The listing_id of this PublishResponse.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class PublishResponse(object):
     def listing_id(self, listing_id):
         """Sets the listing_id of this PublishResponse.
 
-        The unique identifier of the newly created eBay listing. This field is returned if the single offer (if publishOffer call was used) or group of offers in an inventory item group (if publishOfferByInventoryItemGroup call was used) was successfully converted into an eBay listing.  # noqa: E501
+        The unique identifier of the newly created eBay listing. This field is returned if the single offer (if <strong>publishOffer</strong> call was used) or group of offers in an inventory item group (if <strong>publishOfferByInventoryItemGroup</strong> call was used) was successfully converted into an eBay listing.  # noqa: E501
 
         :param listing_id: The listing_id of this PublishResponse.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class PublishResponse(object):
     def warnings(self):
         """Gets the warnings of this PublishResponse.  # noqa: E501
 
-        This container will contain an array of errors and/or warnings if any occur when a publishOffer or publishOfferByInventoryItemGroup call is made.  # noqa: E501
+        This container will contain an array of errors and/or warnings if any occur when a <strong>publishOffer</strong> or <strong>publishOfferByInventoryItemGroup</strong> call is made.  # noqa: E501
 
         :return: The warnings of this PublishResponse.  # noqa: E501
         :rtype: list[Error]
@@ -85,7 +85,7 @@ class PublishResponse(object):
     def warnings(self, warnings):
         """Sets the warnings of this PublishResponse.
 
-        This container will contain an array of errors and/or warnings if any occur when a publishOffer or publishOfferByInventoryItemGroup call is made.  # noqa: E501
+        This container will contain an array of errors and/or warnings if any occur when a <strong>publishOffer</strong> or <strong>publishOfferByInventoryItemGroup</strong> call is made.  # noqa: E501
 
         :param warnings: The warnings of this PublishResponse.  # noqa: E501
         :type: list[Error]

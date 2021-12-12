@@ -133,7 +133,7 @@ class GetInventoryItemResponse(object):
     def status_code(self):
         """Gets the status_code of this GetInventoryItemResponse.  # noqa: E501
 
-        The HTTP status code returned in this field indicates the success or failure of retrieving the inventory item record for the inventory item specified in the sku field. See the HTTP status codes table to see which each status code indicates.  # noqa: E501
+        The HTTP status code returned in this field indicates the success or failure of retrieving the inventory item record for the inventory item specified in the <strong>sku</strong> field. See the <strong>HTTP status codes</strong> table to see which each status code indicates.  # noqa: E501
 
         :return: The status_code of this GetInventoryItemResponse.  # noqa: E501
         :rtype: int
@@ -144,7 +144,7 @@ class GetInventoryItemResponse(object):
     def status_code(self, status_code):
         """Sets the status_code of this GetInventoryItemResponse.
 
-        The HTTP status code returned in this field indicates the success or failure of retrieving the inventory item record for the inventory item specified in the sku field. See the HTTP status codes table to see which each status code indicates.  # noqa: E501
+        The HTTP status code returned in this field indicates the success or failure of retrieving the inventory item record for the inventory item specified in the <strong>sku</strong> field. See the <strong>HTTP status codes</strong> table to see which each status code indicates.  # noqa: E501
 
         :param status_code: The status_code of this GetInventoryItemResponse.  # noqa: E501
         :type: int

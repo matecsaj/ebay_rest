@@ -46,7 +46,7 @@ class BulkEbayOfferDetailsWithKeys(object):
     def requests(self):
         """Gets the requests of this BulkEbayOfferDetailsWithKeys.  # noqa: E501
 
-        The details of each offer that is being created is passed in under this container. Up to 25 offers can be created with one bulkCreateOffer call.  # noqa: E501
+        The details of each offer that is being created is passed in under this container. Up to 25 offers can be created with one <strong>bulkCreateOffer</strong> call.  # noqa: E501
 
         :return: The requests of this BulkEbayOfferDetailsWithKeys.  # noqa: E501
         :rtype: list[EbayOfferDetailsWithKeys]
@@ -57,7 +57,7 @@ class BulkEbayOfferDetailsWithKeys(object):
     def requests(self, requests):
         """Sets the requests of this BulkEbayOfferDetailsWithKeys.
 
-        The details of each offer that is being created is passed in under this container. Up to 25 offers can be created with one bulkCreateOffer call.  # noqa: E501
+        The details of each offer that is being created is passed in under this container. Up to 25 offers can be created with one <strong>bulkCreateOffer</strong> call.  # noqa: E501
 
         :param requests: The requests of this BulkEbayOfferDetailsWithKeys.  # noqa: E501
         :type: list[EbayOfferDetailsWithKeys]

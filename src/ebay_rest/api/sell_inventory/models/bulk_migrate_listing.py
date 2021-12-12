@@ -46,7 +46,7 @@ class BulkMigrateListing(object):
     def requests(self):
         """Gets the requests of this BulkMigrateListing.  # noqa: E501
 
-        This is the base container of the bulkMigrateListings request payload. One to five eBay listings will be included under this container.  # noqa: E501
+        This is the base container of the <strong>bulkMigrateListings</strong> request payload. One to five eBay listings will be included under this container.  # noqa: E501
 
         :return: The requests of this BulkMigrateListing.  # noqa: E501
         :rtype: list[MigrateListing]
@@ -57,7 +57,7 @@ class BulkMigrateListing(object):
     def requests(self, requests):
         """Sets the requests of this BulkMigrateListing.
 
-        This is the base container of the bulkMigrateListings request payload. One to five eBay listings will be included under this container.  # noqa: E501
+        This is the base container of the <strong>bulkMigrateListings</strong> request payload. One to five eBay listings will be included under this container.  # noqa: E501
 
         :param requests: The requests of this BulkMigrateListing.  # noqa: E501
         :type: list[MigrateListing]

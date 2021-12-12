@@ -56,7 +56,7 @@ class FeeSummary(object):
     def fees(self):
         """Gets the fees of this FeeSummary.  # noqa: E501
 
-        This container is an array of listing fees that can be expected to be applied to an offer on the specified eBay marketplace (marketplaceId value). Many fee types will get returned even when they are 0.0. See the Standard selling fees help page for more information on listing fees.  # noqa: E501
+        This container is an array of listing fees that can be expected to be applied to an offer on the specified eBay marketplace (<strong>marketplaceId</strong> value). Many fee types will get returned even when they are <code>0.0</code>.<br/><br/>See the <a href=\"https://pages.ebay.com/help/sell/fees.html\" target=\"_blank\">Standard selling fees</a> help page for more information on listing fees.  # noqa: E501
 
         :return: The fees of this FeeSummary.  # noqa: E501
         :rtype: list[Fee]
@@ -67,7 +67,7 @@ class FeeSummary(object):
     def fees(self, fees):
         """Sets the fees of this FeeSummary.
 
-        This container is an array of listing fees that can be expected to be applied to an offer on the specified eBay marketplace (marketplaceId value). Many fee types will get returned even when they are 0.0. See the Standard selling fees help page for more information on listing fees.  # noqa: E501
+        This container is an array of listing fees that can be expected to be applied to an offer on the specified eBay marketplace (<strong>marketplaceId</strong> value). Many fee types will get returned even when they are <code>0.0</code>.<br/><br/>See the <a href=\"https://pages.ebay.com/help/sell/fees.html\" target=\"_blank\">Standard selling fees</a> help page for more information on listing fees.  # noqa: E501
 
         :param fees: The fees of this FeeSummary.  # noqa: E501
         :type: list[Fee]
@@ -79,7 +79,7 @@ class FeeSummary(object):
     def marketplace_id(self):
         """Gets the marketplace_id of this FeeSummary.  # noqa: E501
 
-        This is the unique identifier of the eBay site for which listing fees for the offer are applicable. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:MarketplaceEnum'>eBay API documentation</a>  # noqa: E501
+        This is the unique identifier of the eBay site for which  listing fees for the offer are applicable. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:MarketplaceEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The marketplace_id of this FeeSummary.  # noqa: E501
         :rtype: str
@@ -90,7 +90,7 @@ class FeeSummary(object):
     def marketplace_id(self, marketplace_id):
         """Sets the marketplace_id of this FeeSummary.
 
-        This is the unique identifier of the eBay site for which listing fees for the offer are applicable. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:MarketplaceEnum'>eBay API documentation</a>  # noqa: E501
+        This is the unique identifier of the eBay site for which  listing fees for the offer are applicable. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:MarketplaceEnum'>eBay API documentation</a>  # noqa: E501
 
         :param marketplace_id: The marketplace_id of this FeeSummary.  # noqa: E501
         :type: str

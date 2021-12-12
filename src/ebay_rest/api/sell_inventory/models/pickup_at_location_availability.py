@@ -61,7 +61,7 @@ class PickupAtLocationAvailability(object):
     def availability_type(self):
         """Gets the availability_type of this PickupAtLocationAvailability.  # noqa: E501
 
-        The enumeration value in this field indicates the availability status of the inventory item at the merchant's physical store specified by the pickupAtLocationAvailability.merchantLocationKey field. This field is required if the pickupAtLocationAvailability container is used, and is always returned with the pickupAtLocationAvailability container. See AvailabilityTypeEnum for more information about how/when you use each enumeration value. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:AvailabilityTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value in this field indicates the availability status of the inventory item at the merchant's physical store specified by the <strong>pickupAtLocationAvailability.merchantLocationKey</strong> field. This field is required if the <strong>pickupAtLocationAvailability</strong> container is used, and is always returned with the <strong>pickupAtLocationAvailability</strong> container.  <br/><br/> See <a href=\"/api-docs/sell/inventory/types/slr:AvailabilityTypeEnum\">AvailabilityTypeEnum</a> for more information about how/when you use each enumeration value. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:AvailabilityTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The availability_type of this PickupAtLocationAvailability.  # noqa: E501
         :rtype: str
@@ -72,7 +72,7 @@ class PickupAtLocationAvailability(object):
     def availability_type(self, availability_type):
         """Sets the availability_type of this PickupAtLocationAvailability.
 
-        The enumeration value in this field indicates the availability status of the inventory item at the merchant's physical store specified by the pickupAtLocationAvailability.merchantLocationKey field. This field is required if the pickupAtLocationAvailability container is used, and is always returned with the pickupAtLocationAvailability container. See AvailabilityTypeEnum for more information about how/when you use each enumeration value. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:AvailabilityTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value in this field indicates the availability status of the inventory item at the merchant's physical store specified by the <strong>pickupAtLocationAvailability.merchantLocationKey</strong> field. This field is required if the <strong>pickupAtLocationAvailability</strong> container is used, and is always returned with the <strong>pickupAtLocationAvailability</strong> container.  <br/><br/> See <a href=\"/api-docs/sell/inventory/types/slr:AvailabilityTypeEnum\">AvailabilityTypeEnum</a> for more information about how/when you use each enumeration value. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:AvailabilityTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param availability_type: The availability_type of this PickupAtLocationAvailability.  # noqa: E501
         :type: str
@@ -105,7 +105,7 @@ class PickupAtLocationAvailability(object):
     def merchant_location_key(self):
         """Gets the merchant_location_key of this PickupAtLocationAvailability.  # noqa: E501
 
-        The unique identifier of a merchant's store where the In-Store Pickup inventory item is currently located, or where inventory will be sent to. If the merchant's store is currently awaiting for inventory, the availabilityType value should be SHIP_TO_STORE. This field is required if the pickupAtLocationAvailability container is used, and is always returned with the pickupAtLocationAvailability container. Max length: 36  # noqa: E501
+        The unique identifier of a merchant's store where the In-Store Pickup inventory item is currently located, or where inventory will be sent to. If the merchant's store is currently awaiting for inventory, the <strong>availabilityType</strong> value should be <code>SHIP_TO_STORE</code>. This field is required if the <strong>pickupAtLocationAvailability</strong> container is used, and is always returned with the <strong>pickupAtLocationAvailability</strong> container.<br/> <br/><b>Max length</b>: 36  # noqa: E501
 
         :return: The merchant_location_key of this PickupAtLocationAvailability.  # noqa: E501
         :rtype: str
@@ -116,7 +116,7 @@ class PickupAtLocationAvailability(object):
     def merchant_location_key(self, merchant_location_key):
         """Sets the merchant_location_key of this PickupAtLocationAvailability.
 
-        The unique identifier of a merchant's store where the In-Store Pickup inventory item is currently located, or where inventory will be sent to. If the merchant's store is currently awaiting for inventory, the availabilityType value should be SHIP_TO_STORE. This field is required if the pickupAtLocationAvailability container is used, and is always returned with the pickupAtLocationAvailability container. Max length: 36  # noqa: E501
+        The unique identifier of a merchant's store where the In-Store Pickup inventory item is currently located, or where inventory will be sent to. If the merchant's store is currently awaiting for inventory, the <strong>availabilityType</strong> value should be <code>SHIP_TO_STORE</code>. This field is required if the <strong>pickupAtLocationAvailability</strong> container is used, and is always returned with the <strong>pickupAtLocationAvailability</strong> container.<br/> <br/><b>Max length</b>: 36  # noqa: E501
 
         :param merchant_location_key: The merchant_location_key of this PickupAtLocationAvailability.  # noqa: E501
         :type: str
@@ -128,7 +128,7 @@ class PickupAtLocationAvailability(object):
     def quantity(self):
         """Gets the quantity of this PickupAtLocationAvailability.  # noqa: E501
 
-        This integer value indicates the quantity of the inventory item that is available for In-Store Pickup at the store identified by the merchantLocationKey value. The value of quantity should be an integer value greater than 0, unless the inventory item is out of stock. This field is required if the pickupAtLocationAvailability container is used, and is always returned with the pickupAtLocationAvailability container.  # noqa: E501
+        This integer value indicates the quantity of the inventory item that is available for In-Store Pickup at the store identified by the  <strong>merchantLocationKey</strong> value.  The value of <strong>quantity</strong> should be an integer value greater than <code>0</code>, unless the inventory item is out of stock. This field is required if the <strong>pickupAtLocationAvailability</strong> container is used, and is always returned with the <strong>pickupAtLocationAvailability</strong> container.  # noqa: E501
 
         :return: The quantity of this PickupAtLocationAvailability.  # noqa: E501
         :rtype: int
@@ -139,7 +139,7 @@ class PickupAtLocationAvailability(object):
     def quantity(self, quantity):
         """Sets the quantity of this PickupAtLocationAvailability.
 
-        This integer value indicates the quantity of the inventory item that is available for In-Store Pickup at the store identified by the merchantLocationKey value. The value of quantity should be an integer value greater than 0, unless the inventory item is out of stock. This field is required if the pickupAtLocationAvailability container is used, and is always returned with the pickupAtLocationAvailability container.  # noqa: E501
+        This integer value indicates the quantity of the inventory item that is available for In-Store Pickup at the store identified by the  <strong>merchantLocationKey</strong> value.  The value of <strong>quantity</strong> should be an integer value greater than <code>0</code>, unless the inventory item is out of stock. This field is required if the <strong>pickupAtLocationAvailability</strong> container is used, and is always returned with the <strong>pickupAtLocationAvailability</strong> container.  # noqa: E501
 
         :param quantity: The quantity of this PickupAtLocationAvailability.  # noqa: E501
         :type: int

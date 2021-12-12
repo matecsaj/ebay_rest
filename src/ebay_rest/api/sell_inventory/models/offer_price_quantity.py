@@ -56,7 +56,7 @@ class OfferPriceQuantity(object):
     def available_quantity(self):
         """Gets the available_quantity of this OfferPriceQuantity.  # noqa: E501
 
-        This field is used if the seller wants to modify the current quantity of the inventory item that will be available for purchase in the offer (identified by the corresponding offerId value). Either the availableQuantity field or the price container is required, but not necessarily both.  # noqa: E501
+        This field is used if the seller wants to modify the current quantity of the inventory item that will be available for purchase in the offer (identified by the corresponding <strong>offerId</strong> value). Either the <strong>availableQuantity</strong> field or the <strong>price</strong> container is required, but not necessarily both.  # noqa: E501
 
         :return: The available_quantity of this OfferPriceQuantity.  # noqa: E501
         :rtype: int
@@ -67,7 +67,7 @@ class OfferPriceQuantity(object):
     def available_quantity(self, available_quantity):
         """Sets the available_quantity of this OfferPriceQuantity.
 
-        This field is used if the seller wants to modify the current quantity of the inventory item that will be available for purchase in the offer (identified by the corresponding offerId value). Either the availableQuantity field or the price container is required, but not necessarily both.  # noqa: E501
+        This field is used if the seller wants to modify the current quantity of the inventory item that will be available for purchase in the offer (identified by the corresponding <strong>offerId</strong> value). Either the <strong>availableQuantity</strong> field or the <strong>price</strong> container is required, but not necessarily both.  # noqa: E501
 
         :param available_quantity: The available_quantity of this OfferPriceQuantity.  # noqa: E501
         :type: int
@@ -79,7 +79,7 @@ class OfferPriceQuantity(object):
     def offer_id(self):
         """Gets the offer_id of this OfferPriceQuantity.  # noqa: E501
 
-        This field is the unique identifier of the offer. If an offers container is used to update one or more offers associated to a specific inventory item, the offerId value is required in order to identify the offer to update with a modified price and/or quantity. The seller can run a getOffers call (passing in the correct SKU value as a query parameter) to retrieve offerId values for offers associated with the SKU.  # noqa: E501
+        This field is the unique identifier of the offer. If an <strong>offers</strong> container is used to update one or more offers associated to a specific inventory item, the <strong>offerId</strong> value is required in order to identify the offer to update with a modified price and/or quantity.<br/><br/>The seller can run a <strong>getOffers</strong> call (passing in the correct SKU value as a query parameter) to retrieve <strong>offerId</strong> values for offers associated with the SKU.  # noqa: E501
 
         :return: The offer_id of this OfferPriceQuantity.  # noqa: E501
         :rtype: str
@@ -90,7 +90,7 @@ class OfferPriceQuantity(object):
     def offer_id(self, offer_id):
         """Sets the offer_id of this OfferPriceQuantity.
 
-        This field is the unique identifier of the offer. If an offers container is used to update one or more offers associated to a specific inventory item, the offerId value is required in order to identify the offer to update with a modified price and/or quantity. The seller can run a getOffers call (passing in the correct SKU value as a query parameter) to retrieve offerId values for offers associated with the SKU.  # noqa: E501
+        This field is the unique identifier of the offer. If an <strong>offers</strong> container is used to update one or more offers associated to a specific inventory item, the <strong>offerId</strong> value is required in order to identify the offer to update with a modified price and/or quantity.<br/><br/>The seller can run a <strong>getOffers</strong> call (passing in the correct SKU value as a query parameter) to retrieve <strong>offerId</strong> values for offers associated with the SKU.  # noqa: E501
 
         :param offer_id: The offer_id of this OfferPriceQuantity.  # noqa: E501
         :type: str

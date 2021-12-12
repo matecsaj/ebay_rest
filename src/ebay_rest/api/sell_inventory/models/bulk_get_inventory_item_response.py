@@ -46,7 +46,7 @@ class BulkGetInventoryItemResponse(object):
     def responses(self):
         """Gets the responses of this BulkGetInventoryItemResponse.  # noqa: E501
 
-        This is the base container of the bulkGetInventoryItem response. The results of each attempted inventory item retrieval is captured under this container.  # noqa: E501
+        This is the base container of the <strong>bulkGetInventoryItem</strong> response. The results of each attempted inventory item retrieval is captured under this container.  # noqa: E501
 
         :return: The responses of this BulkGetInventoryItemResponse.  # noqa: E501
         :rtype: list[GetInventoryItemResponse]
@@ -57,7 +57,7 @@ class BulkGetInventoryItemResponse(object):
     def responses(self, responses):
         """Sets the responses of this BulkGetInventoryItemResponse.
 
-        This is the base container of the bulkGetInventoryItem response. The results of each attempted inventory item retrieval is captured under this container.  # noqa: E501
+        This is the base container of the <strong>bulkGetInventoryItem</strong> response. The results of each attempted inventory item retrieval is captured under this container.  # noqa: E501
 
         :param responses: The responses of this BulkGetInventoryItemResponse.  # noqa: E501
         :type: list[GetInventoryItemResponse]

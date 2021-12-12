@@ -168,7 +168,7 @@ class MigrateListingResponse(object):
     def marketplace_id(self):
         """Gets the marketplace_id of this MigrateListingResponse.  # noqa: E501
 
-        This is the unique identifier of the eBay Marketplace where the listing resides. The value fo the eBay US site will be EBAY_US. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:MarketplaceEnum'>eBay API documentation</a>  # noqa: E501
+        This is the unique identifier of the eBay Marketplace where the listing resides. The value fo the eBay US site will be <code>EBAY_US</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:MarketplaceEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The marketplace_id of this MigrateListingResponse.  # noqa: E501
         :rtype: str
@@ -179,7 +179,7 @@ class MigrateListingResponse(object):
     def marketplace_id(self, marketplace_id):
         """Sets the marketplace_id of this MigrateListingResponse.
 
-        This is the unique identifier of the eBay Marketplace where the listing resides. The value fo the eBay US site will be EBAY_US. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:MarketplaceEnum'>eBay API documentation</a>  # noqa: E501
+        This is the unique identifier of the eBay Marketplace where the listing resides. The value fo the eBay US site will be <code>EBAY_US</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:MarketplaceEnum'>eBay API documentation</a>  # noqa: E501
 
         :param marketplace_id: The marketplace_id of this MigrateListingResponse.  # noqa: E501
         :type: str
@@ -191,7 +191,7 @@ class MigrateListingResponse(object):
     def status_code(self):
         """Gets the status_code of this MigrateListingResponse.  # noqa: E501
 
-        This field is returned for each listing that the seller attempted to migrate. See the HTTP status codes table to see which each status code indicates.  # noqa: E501
+        This field is returned for each listing that the seller attempted to migrate. See the <strong>HTTP status codes</strong> table to see which each status code indicates.  # noqa: E501
 
         :return: The status_code of this MigrateListingResponse.  # noqa: E501
         :rtype: int
@@ -202,7 +202,7 @@ class MigrateListingResponse(object):
     def status_code(self, status_code):
         """Sets the status_code of this MigrateListingResponse.
 
-        This field is returned for each listing that the seller attempted to migrate. See the HTTP status codes table to see which each status code indicates.  # noqa: E501
+        This field is returned for each listing that the seller attempted to migrate. See the <strong>HTTP status codes</strong> table to see which each status code indicates.  # noqa: E501
 
         :param status_code: The status_code of this MigrateListingResponse.  # noqa: E501
         :type: int

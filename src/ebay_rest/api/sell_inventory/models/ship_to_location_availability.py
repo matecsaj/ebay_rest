@@ -51,7 +51,7 @@ class ShipToLocationAvailability(object):
     def availability_distributions(self):
         """Gets the availability_distributions of this ShipToLocationAvailability.  # noqa: E501
 
-        This container is used to set the available quantity of the inventory item at one or more warehouse locations. This container will be returned if available quantity is set for one or more inventory locations.  # noqa: E501
+        This container is used to set the available quantity of the inventory item at one or more warehouse locations.<br><br> This container will be returned if available quantity is set for one or more inventory locations.  # noqa: E501
 
         :return: The availability_distributions of this ShipToLocationAvailability.  # noqa: E501
         :rtype: list[AvailabilityDistribution]
@@ -62,7 +62,7 @@ class ShipToLocationAvailability(object):
     def availability_distributions(self, availability_distributions):
         """Sets the availability_distributions of this ShipToLocationAvailability.
 
-        This container is used to set the available quantity of the inventory item at one or more warehouse locations. This container will be returned if available quantity is set for one or more inventory locations.  # noqa: E501
+        This container is used to set the available quantity of the inventory item at one or more warehouse locations.<br><br> This container will be returned if available quantity is set for one or more inventory locations.  # noqa: E501
 
         :param availability_distributions: The availability_distributions of this ShipToLocationAvailability.  # noqa: E501
         :type: list[AvailabilityDistribution]
@@ -74,7 +74,7 @@ class ShipToLocationAvailability(object):
     def quantity(self):
         """Gets the quantity of this ShipToLocationAvailability.  # noqa: E501
 
-        This container is used to set the total 'ship-to-home' quantity of the inventory item that will be available for purchase through one or more published offers. This container is not immediately required, but 'ship-to-home' quantity must be set before an offer of the inventory item can be published. If an existing inventory item is being updated, and the 'ship-to-home' quantity already exists for the inventory item record, this container should be included again, even if the value is not changing, or the available quantity data will be lost.  # noqa: E501
+        This container is used to set the total 'ship-to-home' quantity of the inventory item that will be available for purchase through one or more published offers. This container is not immediately required, but 'ship-to-home' quantity must be set before an offer of the inventory item can be published.<br/><br/>If an existing inventory item is being updated, and the 'ship-to-home' quantity already exists for the inventory item record, this container should be included again, even if the value is not changing, or the available quantity data will be lost.  # noqa: E501
 
         :return: The quantity of this ShipToLocationAvailability.  # noqa: E501
         :rtype: int
@@ -85,7 +85,7 @@ class ShipToLocationAvailability(object):
     def quantity(self, quantity):
         """Sets the quantity of this ShipToLocationAvailability.
 
-        This container is used to set the total 'ship-to-home' quantity of the inventory item that will be available for purchase through one or more published offers. This container is not immediately required, but 'ship-to-home' quantity must be set before an offer of the inventory item can be published. If an existing inventory item is being updated, and the 'ship-to-home' quantity already exists for the inventory item record, this container should be included again, even if the value is not changing, or the available quantity data will be lost.  # noqa: E501
+        This container is used to set the total 'ship-to-home' quantity of the inventory item that will be available for purchase through one or more published offers. This container is not immediately required, but 'ship-to-home' quantity must be set before an offer of the inventory item can be published.<br/><br/>If an existing inventory item is being updated, and the 'ship-to-home' quantity already exists for the inventory item record, this container should be included again, even if the value is not changing, or the available quantity data will be lost.  # noqa: E501
 
         :param quantity: The quantity of this ShipToLocationAvailability.  # noqa: E501
         :type: int

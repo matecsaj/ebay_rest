@@ -51,7 +51,7 @@ class OfferResponse(object):
     def offer_id(self):
         """Gets the offer_id of this OfferResponse.  # noqa: E501
 
-        The unique identifier of the offer that was just created with a createOffer call. It is not returned if the createOffer call fails to create an offer. This identifier will be needed for many offer-related calls. Note: The offerId value is only returned with a successful createOffer call. This field will not be returned in the updateOffer response.  # noqa: E501
+        The unique identifier of the offer that was just created with a <strong>createOffer</strong> call. It is not returned if the <strong>createOffer</strong> call fails to create an offer. This identifier will be needed for many offer-related calls. <p> <span class=\"tablenote\"><strong>Note:</strong> The <strong>offerId</strong> value is only returned with a successful <strong>createOffer</strong> call. This field will not be returned in the <strong>updateOffer </strong> response.</span></p>  # noqa: E501
 
         :return: The offer_id of this OfferResponse.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class OfferResponse(object):
     def offer_id(self, offer_id):
         """Sets the offer_id of this OfferResponse.
 
-        The unique identifier of the offer that was just created with a createOffer call. It is not returned if the createOffer call fails to create an offer. This identifier will be needed for many offer-related calls. Note: The offerId value is only returned with a successful createOffer call. This field will not be returned in the updateOffer response.  # noqa: E501
+        The unique identifier of the offer that was just created with a <strong>createOffer</strong> call. It is not returned if the <strong>createOffer</strong> call fails to create an offer. This identifier will be needed for many offer-related calls. <p> <span class=\"tablenote\"><strong>Note:</strong> The <strong>offerId</strong> value is only returned with a successful <strong>createOffer</strong> call. This field will not be returned in the <strong>updateOffer </strong> response.</span></p>  # noqa: E501
 
         :param offer_id: The offer_id of this OfferResponse.  # noqa: E501
         :type: str

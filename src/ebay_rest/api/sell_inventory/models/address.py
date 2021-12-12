@@ -76,7 +76,7 @@ class Address(object):
     def address_line1(self):
         """Gets the address_line1 of this Address.  # noqa: E501
 
-        The first line of a street address. This field is required for store inventory locations that will be holding In-Store Pickup inventory. A street address is not required if the inventory location is not holding In-Store Pickup Inventory. This field will be returned if defined for an inventory location. Max length: 128  # noqa: E501
+        The first line of a street address. This field is required for store inventory locations that will be holding In-Store Pickup inventory. A street address is not required if the inventory location is not holding In-Store Pickup Inventory. This field will be returned if defined for an inventory location. <br><br><b>Max length</b>: 128  # noqa: E501
 
         :return: The address_line1 of this Address.  # noqa: E501
         :rtype: str
@@ -87,7 +87,7 @@ class Address(object):
     def address_line1(self, address_line1):
         """Sets the address_line1 of this Address.
 
-        The first line of a street address. This field is required for store inventory locations that will be holding In-Store Pickup inventory. A street address is not required if the inventory location is not holding In-Store Pickup Inventory. This field will be returned if defined for an inventory location. Max length: 128  # noqa: E501
+        The first line of a street address. This field is required for store inventory locations that will be holding In-Store Pickup inventory. A street address is not required if the inventory location is not holding In-Store Pickup Inventory. This field will be returned if defined for an inventory location. <br><br><b>Max length</b>: 128  # noqa: E501
 
         :param address_line1: The address_line1 of this Address.  # noqa: E501
         :type: str
@@ -99,7 +99,7 @@ class Address(object):
     def address_line2(self):
         """Gets the address_line2 of this Address.  # noqa: E501
 
-        The second line of a street address. This field can be used for additional address information, such as a suite or apartment number. A street address is not required if the inventory location is not holding In-Store Pickup Inventory. This field will be returned if defined for an inventory location. Max length: 128  # noqa: E501
+        The second line of a street address. This field can be used for additional address information, such as a suite or apartment number. A street address is not required if the inventory location is not holding In-Store Pickup Inventory. This field will be returned if defined for an inventory location. <br><br><b>Max length</b>: 128  # noqa: E501
 
         :return: The address_line2 of this Address.  # noqa: E501
         :rtype: str
@@ -110,7 +110,7 @@ class Address(object):
     def address_line2(self, address_line2):
         """Sets the address_line2 of this Address.
 
-        The second line of a street address. This field can be used for additional address information, such as a suite or apartment number. A street address is not required if the inventory location is not holding In-Store Pickup Inventory. This field will be returned if defined for an inventory location. Max length: 128  # noqa: E501
+        The second line of a street address. This field can be used for additional address information, such as a suite or apartment number. A street address is not required if the inventory location is not holding In-Store Pickup Inventory. This field will be returned if defined for an inventory location. <br><br><b>Max length</b>: 128  # noqa: E501
 
         :param address_line2: The address_line2 of this Address.  # noqa: E501
         :type: str
@@ -122,7 +122,7 @@ class Address(object):
     def city(self):
         """Gets the city of this Address.  # noqa: E501
 
-        The city in which the inventory location resides. This field is required for store inventory locations that will be holding In-Store Pickup inventory. For warehouse locations, this field is technically optional, as a postalCode can be used instead of city/stateOrProvince pair, and then the city is just derived from this postal/zip code. This field is returned if defined for an inventory location. Max length: 128  # noqa: E501
+        The city in which the inventory location resides. This field is required for store inventory locations that will be holding In-Store Pickup inventory. For warehouse locations, this field is technically optional, as a <strong>postalCode</strong> can be used instead of  <strong>city</strong>/<strong>stateOrProvince</strong> pair, and then the city is just derived from this postal/zip code. This field is returned if defined for an inventory location. <br><br><b>Max length</b>: 128  # noqa: E501
 
         :return: The city of this Address.  # noqa: E501
         :rtype: str
@@ -133,7 +133,7 @@ class Address(object):
     def city(self, city):
         """Sets the city of this Address.
 
-        The city in which the inventory location resides. This field is required for store inventory locations that will be holding In-Store Pickup inventory. For warehouse locations, this field is technically optional, as a postalCode can be used instead of city/stateOrProvince pair, and then the city is just derived from this postal/zip code. This field is returned if defined for an inventory location. Max length: 128  # noqa: E501
+        The city in which the inventory location resides. This field is required for store inventory locations that will be holding In-Store Pickup inventory. For warehouse locations, this field is technically optional, as a <strong>postalCode</strong> can be used instead of  <strong>city</strong>/<strong>stateOrProvince</strong> pair, and then the city is just derived from this postal/zip code. This field is returned if defined for an inventory location. <br><br><b>Max length</b>: 128  # noqa: E501
 
         :param city: The city of this Address.  # noqa: E501
         :type: str
@@ -145,7 +145,7 @@ class Address(object):
     def country(self):
         """Gets the country of this Address.  # noqa: E501
 
-        The country in which the address resides, represented as two-letter ISO 3166 country code. For example, US represents the United States, and DE represents Germany. Max length: 2 For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/CountryCodeEnum\"'>eBay API documentation</a>  # noqa: E501
+        The country in which the address resides, represented as two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> country code. For example, <code>US</code> represents the United States, and <code>DE</code> represents Germany. <br><br><b>Max length</b>: 2 For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/CountryCodeEnum\"'>eBay API documentation</a>  # noqa: E501
 
         :return: The country of this Address.  # noqa: E501
         :rtype: str
@@ -156,7 +156,7 @@ class Address(object):
     def country(self, country):
         """Sets the country of this Address.
 
-        The country in which the address resides, represented as two-letter ISO 3166 country code. For example, US represents the United States, and DE represents Germany. Max length: 2 For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/CountryCodeEnum\"'>eBay API documentation</a>  # noqa: E501
+        The country in which the address resides, represented as two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> country code. For example, <code>US</code> represents the United States, and <code>DE</code> represents Germany. <br><br><b>Max length</b>: 2 For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/CountryCodeEnum\"'>eBay API documentation</a>  # noqa: E501
 
         :param country: The country of this Address.  # noqa: E501
         :type: str
@@ -191,7 +191,7 @@ class Address(object):
     def postal_code(self):
         """Gets the postal_code of this Address.  # noqa: E501
 
-        The postal/zip code of the address. eBay uses postal codes to surface In-Store Pickup items within the vicinity of a buyer's location, and it also user postal codes (origin and destination) to estimate shipping costs when the seller uses calculated shipping. A city/stateOrProvince pair can be used instead of a postalCode value, and then the postal code is just derived from the city and state/province. This field is returned if defined for an inventory location. Max length: 16  # noqa: E501
+        The postal/zip code of the address. eBay uses postal codes to surface In-Store Pickup items within the vicinity of a buyer's location, and it also user postal codes (origin and destination) to estimate shipping costs when the seller uses calculated shipping. A <strong>city</strong>/<strong>stateOrProvince</strong> pair can be used instead of a <strong>postalCode</strong> value, and then the postal code is just derived from the city and state/province. This field is returned if defined for an inventory location. <br><br><b>Max length</b>: 16  # noqa: E501
 
         :return: The postal_code of this Address.  # noqa: E501
         :rtype: str
@@ -202,7 +202,7 @@ class Address(object):
     def postal_code(self, postal_code):
         """Sets the postal_code of this Address.
 
-        The postal/zip code of the address. eBay uses postal codes to surface In-Store Pickup items within the vicinity of a buyer's location, and it also user postal codes (origin and destination) to estimate shipping costs when the seller uses calculated shipping. A city/stateOrProvince pair can be used instead of a postalCode value, and then the postal code is just derived from the city and state/province. This field is returned if defined for an inventory location. Max length: 16  # noqa: E501
+        The postal/zip code of the address. eBay uses postal codes to surface In-Store Pickup items within the vicinity of a buyer's location, and it also user postal codes (origin and destination) to estimate shipping costs when the seller uses calculated shipping. A <strong>city</strong>/<strong>stateOrProvince</strong> pair can be used instead of a <strong>postalCode</strong> value, and then the postal code is just derived from the city and state/province. This field is returned if defined for an inventory location. <br><br><b>Max length</b>: 16  # noqa: E501
 
         :param postal_code: The postal_code of this Address.  # noqa: E501
         :type: str
@@ -214,7 +214,7 @@ class Address(object):
     def state_or_province(self):
         """Gets the state_or_province of this Address.  # noqa: E501
 
-        The state/province in which the inventory location resides. This field is required for store inventory locations that will be holding In-Store Pickup inventory. For warehouse locations, this field is technically optional, as a postalCode can be used instead of city/stateOrProvince pair, and then the state or province is just derived from this postal/zip code. Max length: 128  # noqa: E501
+        The state/province in which the inventory location resides. This field is required for store inventory locations that will be holding In-Store Pickup inventory. For warehouse locations, this field is technically optional, as a <strong>postalCode</strong> can be used instead of <strong>city</strong>/<strong>stateOrProvince</strong> pair, and then the state or province is just derived from this postal/zip code. <br><br><b>Max length</b>: 128  # noqa: E501
 
         :return: The state_or_province of this Address.  # noqa: E501
         :rtype: str
@@ -225,7 +225,7 @@ class Address(object):
     def state_or_province(self, state_or_province):
         """Sets the state_or_province of this Address.
 
-        The state/province in which the inventory location resides. This field is required for store inventory locations that will be holding In-Store Pickup inventory. For warehouse locations, this field is technically optional, as a postalCode can be used instead of city/stateOrProvince pair, and then the state or province is just derived from this postal/zip code. Max length: 128  # noqa: E501
+        The state/province in which the inventory location resides. This field is required for store inventory locations that will be holding In-Store Pickup inventory. For warehouse locations, this field is technically optional, as a <strong>postalCode</strong> can be used instead of <strong>city</strong>/<strong>stateOrProvince</strong> pair, and then the state or province is just derived from this postal/zip code. <br><br><b>Max length</b>: 128  # noqa: E501
 
         :param state_or_province: The state_or_province of this Address.  # noqa: E501
         :type: str

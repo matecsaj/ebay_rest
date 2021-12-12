@@ -46,7 +46,7 @@ class FeesSummaryResponse(object):
     def fee_summaries(self):
         """Gets the fee_summaries of this FeesSummaryResponse.  # noqa: E501
 
-        This container consists of an array of one or more listing fees that the seller can expect to pay for unpublished offers specified in the call request. Many fee types will get returned even when they are 0.0.  # noqa: E501
+        This container consists of an array of one or more listing fees that the seller can expect to pay for unpublished offers specified in the call request. Many fee types will get returned even when they are <code>0.0</code>.  # noqa: E501
 
         :return: The fee_summaries of this FeesSummaryResponse.  # noqa: E501
         :rtype: list[FeeSummary]
@@ -57,7 +57,7 @@ class FeesSummaryResponse(object):
     def fee_summaries(self, fee_summaries):
         """Sets the fee_summaries of this FeesSummaryResponse.
 
-        This container consists of an array of one or more listing fees that the seller can expect to pay for unpublished offers specified in the call request. Many fee types will get returned even when they are 0.0.  # noqa: E501
+        This container consists of an array of one or more listing fees that the seller can expect to pay for unpublished offers specified in the call request. Many fee types will get returned even when they are <code>0.0</code>.  # noqa: E501
 
         :param fee_summaries: The fee_summaries of this FeesSummaryResponse.  # noqa: E501
         :type: list[FeeSummary]
