@@ -131,6 +131,12 @@ class API:
                     config_contents = loads(f.read())
             except IOError:
                 raise Error(number=99001, reason='Unable to open ' + self._config_location)
+        else:
+            if not(isinstance(application, dict) and isinstance(user, dict) and isinstance(header, dict)):
+                detail = 'Either at ' + self._config_location + \
+                          ' do this https://github.com/matecsaj/ebay_rest/blob/main/tests/ebay_rest_EXAMPLE.json.' + \
+                          ' Or, supply dicts to all of the params application, user, and header.'
+                raise Error(number=99015, reason='Missing configuration information.', detail=detail)
 
         # get configuration sections from parameters or the loaded file
         try:

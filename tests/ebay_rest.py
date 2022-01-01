@@ -9,8 +9,8 @@
 
 # Standard library imports
 import datetime
+import os
 from json import loads
-from os import getcwd
 import unittest
 import warnings
 
@@ -74,38 +74,46 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
 
     def test_credentials_from_dicts(self):
         """ set credentials via dicts """
+        config_location = os.path.join(os.getcwd(), 'ebay_rest.json')
         try:
-            with open('ebay_rest.json', 'r') as f:
-                contents = loads(f.read())
-        except IOError:
-            raise Error(number=1, reason="Unable to open the file ebay_rest.json from the test directory.")
+            f = open(config_location, 'r')
+        except FileNotFoundError:
+            self.fail(f"File not found, unable to open {config_location}.")
         else:
-
-            application = None
-            if 'applications' in contents:
-                if 'sandbox_1' in contents['applications']:
-                    application = contents['applications']['sandbox_1']
-            self.assertIsInstance(application, dict, 'Failed to load application credentials.')
-
-            user = None
-            if 'users' in contents:
-                if 'sandbox_1' in contents['users']:
-                    user = contents['users']['sandbox_1']
-            self.assertIsInstance(user, dict, 'Failed to load user credentials.')
-
-            header = None
-            if 'headers' in contents:
-                if 'US' in contents['headers']:
-                    header = contents['headers']['US']
-            self.assertIsInstance(header, dict, 'Failed to load header credentials.')
-
             try:
-                api = API(application=application, user=user, header=header)  # params are dicts
-            except Error as error:
-                self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                contents = loads(f.read())
+            except IOError:
+                f.close()
+                self.fail(f"Unable to load the file {config_location}; likely the json is malformed.")
             else:
-                # Ignore the PyCharm linter bug 'Expected type 'Union[type, Tuple[type, ...]]', got 'Multiton' instead'
-                self.assertIsInstance(api, API, 'An API object was not returned.')  # type: ignore
+                f.close()
+
+                application = None
+                if 'applications' in contents:
+                    if 'sandbox_1' in contents['applications']:
+                        application = contents['applications']['sandbox_1']
+                self.assertIsInstance(application, dict, 'Failed to load application credentials.')
+
+                user = None
+                if 'users' in contents:
+                    if 'sandbox_1' in contents['users']:
+                        user = contents['users']['sandbox_1']
+                self.assertIsInstance(user, dict, 'Failed to load user credentials.')
+
+                header = None
+                if 'headers' in contents:
+                    if 'US' in contents['headers']:
+                        header = contents['headers']['US']
+                self.assertIsInstance(header, dict, 'Failed to load header credentials.')
+
+                try:
+                    api = API(application=application, user=user, header=header)  # params are dicts
+                except Error as error:
+                    self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                else:
+                    # Ignore the PyCharm linter bug
+                    # 'Expected type 'Union[type, Tuple[type, ...]]', got 'Multiton' instead'
+                    self.assertIsInstance(api, API, 'An API object was not returned.')  # type: ignore
 
     def test_object_reuse(self):
         """ Do the same parameters return the same API object? """
@@ -117,9 +125,8 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
 
     def test_credential_path(self):
         """ supply a path to ebay_rest.json """
-        path = getcwd()
         try:
-            api = API(path=path, application='sandbox_1', user='sandbox_1', header='US')
+            api = API(path=os.getcwd(), application='sandbox_1', user='sandbox_1', header='US')
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
@@ -474,7 +481,6 @@ class APIProductionSingleTests(unittest.TestCase):
 
         # ensure that an alert email is correctly configured
 
-
         try:
             result = self._api.commerce_notification_get_config()
         except Error as error:
@@ -520,9 +526,9 @@ class APIProductionSingleTests(unittest.TestCase):
                 except Error as error:
                     self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
                 else:
-                    todo = True
+                    pass    # TODO
             else:
-                todo = True
+                pass    # TODO
 
         # ensure subscribed
         # TODO
@@ -533,20 +539,13 @@ class APIProductionSingleTests(unittest.TestCase):
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
-            todo = True
+            pass    # TODO
             self.assertTrue('Subscribe' not in result['description'])
 
             # description: 'The Account Deletion payload.'
-            # properties:
-            #     username:
-            #     type: string
-            #     description: 'The username for the user.'
-            #     userId:
-            #     type: string
-            #     description: 'The immutable public userId for the user'
-            #     eiasToken:
-            #     type: string
-            #     description: 'The legacy eiasToken specific to the user'
+            #     username, string, The username for the user.
+            #     userId, string, The immutable public userId for the user
+            #     eiasToken, string, The legacy eiasToken specific to the user
 
 
 class DateTimeTests(unittest.TestCase):
