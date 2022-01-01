@@ -437,6 +437,117 @@ class APIProductionSingleTests(unittest.TestCase):
                         break
             self.assertTrue(counter == limit, f"Page boundary error on limit {limit}.")
 
+    @unittest.skip  # TODO finish it
+    def test_marketplace_account_deletion(self):
+        """
+        See https://developer.ebay.com/marketplace-account-deletion
+        and https://developer.ebay.com/api-docs/commerce/notification/overview.html.
+
+        # AsyncAPI specification
+        # https://developer.ebay.com/cms/files/asyncapi/marketplace_account_deletion.yaml
+        # https://www.asyncapi.com
+        # https://github.com/dedoussis/asynction
+        # https://github.com/dutradda/asyncapi-python
+
+        :return:
+        """
+        # TODO get this from ebay_rest.json
+        alert_email = '**@**.com'
+
+        topic_id = 'MARKETPLACE_ACCOUNT_DELETION'
+
+        # confirm that the desired topic is available, eBay's recommended workflow does not require this
+        try:
+            result = self._api.commerce_notification_get_topics()
+        except Error as error:
+            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+        else:
+            success = False
+            key = 'topics'
+            if key in result:
+                for topic in result[key]:
+                    if topic['topic_id'] == topic_id:
+                        if topic['status'] == 'ENABLED':
+                            success = True
+                            break
+            self.assertTrue(success)
+
+        # ensure that an alert email is correctly configured
+
+
+        try:
+            result = self._api.commerce_notification_get_config()
+        except Error as error:
+            if error.reason != 'Not Found':
+                self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+            else:
+                try:
+                    config = {'alertEmail': alert_email}
+                    self._api.commerce_notification_update_config(body=config)
+                except Error as error:
+                    self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+        else:
+            self.assertEqual(result['alert_email'], alert_email)
+
+        # ensure that a destination is correctly configured
+
+        # Note: The destination should be created and ready to respond with the expected
+        # challengeResponse for the endpoint to be registered successfully.
+        # Refer to the Notification API overview for more information.
+        # https://developer.ebay.com/api-docs/commerce/notification/overview.html
+
+        # TODO get these from ebay_rest.json
+        # The endpoint for this destination.
+        end_point = "https://e***********4.s*************.com/notification-endpoint"
+        # The verification token associated with this endpoint.
+        verification_token = "7*******-d***-***c-b***-***********a"
+
+        try:
+            result = self._api.commerce_notification_get_destinations()
+        except Error as error:
+            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+        else:
+            if result['total'] == 0:
+                try:
+                    destination_request = {
+                        "status": "ENABLED",
+                        "deliveryConfig": {
+                            "endpoint": end_point,
+                            "verificationToken": verification_token
+                        }
+                    }
+                    self._api.commerce_notification_create_destination(body=destination_request)
+                except Error as error:
+                    self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+                else:
+                    todo = True
+            else:
+                todo = True
+
+        # ensure subscribed
+        # TODO
+
+        # get notices
+        try:
+            result = self._api.commerce_notification_get_topic(topic_id)
+        except Error as error:
+            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+        else:
+            todo = True
+            self.assertTrue('Subscribe' not in result['description'])
+
+            # description: 'The Account Deletion payload.'
+            # properties:
+            #     username:
+            #     type: string
+            #     description: 'The username for the user.'
+            #     userId:
+            #     type: string
+            #     description: 'The immutable public userId for the user'
+            #     eiasToken:
+            #     type: string
+            #     description: 'The legacy eiasToken specific to the user'
+
 
 class DateTimeTests(unittest.TestCase):
 
