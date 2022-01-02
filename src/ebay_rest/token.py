@@ -272,6 +272,17 @@ class UserToken:
             access_token=refresh_token.access_token,
             token_expiry=refresh_token.token_expiry)
 
+        # Give the user a helpful suggestion.
+        try:
+            expiry = DateTime.to_string(refresh_token.refresh_token_expiry)
+        except Error:
+            raise
+        message = f'Edit to your ebay_rest.json file to avoid the browser pop-up.\n' \
+                  f'For the user with an email or username of {self._user_id}.\n' \
+                  f'"refresh_token": "{refresh_token.refresh_token}"\n' \
+                  f'"refresh_token_expiry": "{expiry}"'
+        logging.info(message)
+
     def _get_authorization_code(self, sign_in_url: str) -> str:
         """Run the authorization flow in order to get an authorization code,
         which can subsequently be exchanged for a refresh (and user) token.
@@ -285,8 +296,13 @@ class UserToken:
         # In README.md note the extra installation steps.
         from selenium import webdriver
 
-        # open browser and load the initial page
-        browser = webdriver.Chrome()
+        # open browser
+        try:
+            browser = webdriver.Chrome()
+        except Exception as exc:
+            raise Error(number=96014, reason="ChromeDriver instantiation failure.", detail=exc.msg)
+
+        # load the initial page
         browser.get(sign_in_url)
         sleep(delay)
 
@@ -300,6 +316,10 @@ class UserToken:
         form_pw = browser.find_element_by_name('pass')
         form_pw.send_keys(self._user_password)
         browser.find_element_by_id('sgnBt').submit()
+        sleep(delay)
+
+        # click "I agree"
+        browser.find_element_by_id('submit').click()
         sleep(delay)
 
         # get the result url and then close browser

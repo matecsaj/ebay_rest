@@ -95,6 +95,11 @@ print(help(Reference))
 * Avoid exhausting memory by making the call within a ["for" loop](https://docs.python.org/3/reference/compound_stmts.html#for).
 
 ##
+**Q:** Can the browser pop-up be stopped? 
+
+**A:** Reusing the result of the browser pop-up is possible. After running your program, check your terminal/console or [info level logger](https://docs.python.org/3.7/library/logging.html).
+
+##
 **Q:** Why is eBay giving an "Internal Error" or "Internal Server Error"? 
 
 **A:** Rapidly repeating an API call with the same parameter values can trigger this.
