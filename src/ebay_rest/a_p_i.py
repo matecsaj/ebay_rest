@@ -1804,12 +1804,69 @@ class API:
         except Error:
             raise
 
+    def sell_account_create_custom_policy(self, body, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
+        """create_custom_policy  # noqa: E501
+
+        This method creates a new custom policy in which a seller specifies their terms for complying with local governmental regulations. <br/><br/>Two Custom Policy types are supported: <ul><li>Product Compliance (PRODUCT_COMPLIANCE)</li> <li>Takeback (TAKE_BACK)</li></ul>Each Custom Policy targets a <b>policyType</b> and <b>eBay marketplace</b> combination. Multiple policies may be created as follows: <ul><li><b>Product Compliance</b>: a maximum of 10 policies per eBay marketplace may be created</li> <li><b>Takeback</b>: a maximum of 3 policies per eBay marketplace may be created</li></ul>A successful create policy call returns an HTTP status code of <b>201 Created</b> with the system-generated policy ID included in the <b>Location</b> response header.<br/><br/><b>Product Compliance Policy</b><br/><br/>Product Compliance policies disclose product information as required for regulatory compliance.<br/><br/><span class=\"tablenote\"><strong>Note:</strong> A maximum of 10 Product Compliance policies per eBay marketplace may be created.</span> <br/><br/> <b>Takeback Policy</b><br/><br/>Takeback policies describe the seller's legal obligation to take back a previously purchased item when the buyer purchases a new one.<br/><br/><span class=\"tablenote\"><strong>Note:</strong> A maximum of 3 Takeback policies per eBay marketplace may be created.</span>  # noqa: E501
+
+        :param CustomPolicyCreateRequest body: Request to create a new Custom Policy. (required)
+        :param str x_ebay_c_marketplace_id: This header parameter specifies the eBay markeplace for the custom policy that is being created. Supported values for this header can be found in the <a href=\"/api-docs/sell/compliance/types/bas:MarketplaceIdEnum\" target=\"_blank\">MarketplaceIdEnum</a> type definition.<br/> <br/> <span class=\"tablenote\"><strong>Note:</strong> The following eBay marketplaces support Custom Policies: <ul><li>Germany (EBAY_DE)</li> <li>Canada (EBAY_CA)</li> <li>Australia (EBAY_AU)</li> <li>United States (EBAY_US)</li> <li>France (EBAY_FR)</li></ul></span> (required)
+        :return: object
+        """
+        try:
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.CustomPolicyApi, sell_account.ApiClient, 'create_custom_policy', SellAccountException, True, ['sell.account', 'custom_policy'], (body, x_ebay_c_marketplace_id), **kwargs)  # noqa: E501
+        except Error:
+            raise
+
+    def sell_account_get_custom_policies(self, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
+        """get_custom_policies  # noqa: E501
+
+        This method retrieves the list of custom policies specified by the <b>policy_types</b> query parameter for the selected eBay marketplace.<br/> <br/> <span class=\"tablenote\"><strong>Note:</strong> The following eBay marketplaces support Custom Policies: <ul><li>Germany (EBAY_DE)</li> <li>Canada (EBAY_CA)</li> <li>Australia (EBAY_AU)</li> <li>United States (EBAY_US)</li> <li>France (EBAY_FR)</li></ul></span><br/><br/>For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank\">HTTP request headers</a>.  # noqa: E501
+
+        :param str x_ebay_c_marketplace_id: This header parameter specifies the eBay markeplace for the custom policy that is being created. Supported values for this header can be found in the <a href=\"/api-docs/sell/compliance/types/bas:MarketplaceIdEnum\" target=\"_blank\">MarketplaceIdEnum</a> type definition.<br/> <br/> <span class=\"tablenote\"><strong>Note:</strong> The following eBay marketplaces support Custom Policies: <ul><li>Germany (EBAY_DE)</li> <li>Canada (EBAY_CA)</li> <li>Australia (EBAY_AU)</li> <li>United States (EBAY_US)</li> <li>France (EBAY_FR)</li></ul></span> (required)
+        :param str policy_types: This query parameter specifies the type of custom policies to be returned.<br /><br />Multiple policy types may be requested in a single call by providing a comma-delimited set of all policy types to be returned.<br/><br/><span class=\"tablenote\"><strong>Note:</strong> Omitting this query parameter from a request will also return policies of all policy types.</span><br/><br/>Two Custom Policy types are supported: <ul><li>Product Compliance (PRODUCT_COMPLIANCE)</li> <li>Takeback (TAKE_BACK)</li></ul>
+        :return: CustomPolicyResponse
+        """
+        try:
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.CustomPolicyApi, sell_account.ApiClient, 'get_custom_policies', SellAccountException, True, ['sell.account', 'custom_policy'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+        except Error:
+            raise
+
+    def sell_account_get_custom_policy(self, custom_policy_id, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
+        """get_custom_policy  # noqa: E501
+
+        This method retrieves the custom policy specified by the <b>custom_policy_id</b> path parameter for the selected eBay marketplace.<br/> <br/> <span class=\"tablenote\"><strong>Note:</strong> The following eBay marketplaces support Custom Policies: <ul><li>Germany (EBAY_DE)</li> <li>Canada (EBAY_CA)</li> <li>Australia (EBAY_AU)</li> <li>United States (EBAY_US)</li> <li>France (EBAY_FR)</li></ul></span><br/><br/>For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank\">HTTP request headers</a>.  # noqa: E501
+
+        :param str custom_policy_id: This path parameter is the unique custom policy identifier for the policy to be returned.<br/><br/><span class=\"tablenote\"><strong>Note:</strong> This value is automatically assigned by the system when the policy is created.</span> (required)
+        :param str x_ebay_c_marketplace_id: This header parameter specifies the eBay markeplace for the custom policy that is being created. Supported values for this header can be found in the <a href=\"/api-docs/sell/compliance/types/bas:MarketplaceIdEnum\" target=\"_blank\">MarketplaceIdEnum</a> type definition.<br/> <br/> <span class=\"tablenote\"><strong>Note:</strong> The following eBay marketplaces support Custom Policies: <ul><li>Germany (EBAY_DE)</li> <li>Canada (EBAY_CA)</li> <li>Australia (EBAY_AU)</li> <li>United States (EBAY_US)</li> <li>France (EBAY_FR)</li></ul></span> (required)
+        :return: CustomPolicy
+        """
+        try:
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.CustomPolicyApi, sell_account.ApiClient, 'get_custom_policy', SellAccountException, True, ['sell.account', 'custom_policy'], (custom_policy_id, x_ebay_c_marketplace_id), **kwargs)  # noqa: E501
+        except Error:
+            raise
+
+    def sell_account_update_custom_policy(self, body, x_ebay_c_marketplace_id, custom_policy_id, **kwargs):  # noqa: E501
+        """update_custom_policy  # noqa: E501
+
+        This method updates an existing custom policy specified by the <b>custom_policy_id</b> path parameter for the selected marketplace. This method overwrites the policy's <b>Name</b>, <b>Label</b>, and <b>Description</b> fields. Therefore, the complete, current text of all three policy fields must be included in the request payload even when one or two of these fields will not actually be updated.<br/> <br/>For example, the value for the <b>Label</b> field is to be updated, but the <b>Name</b> and <b>Description</b> values will remain unchanged. The existing <b>Name</b> and <b>Description</b> values, as they are defined in the current policy, must also be passed in. <br/><br/>A successful policy update call returns an HTTP status code of <b>204 No Content</b>.<br/><br/><span class=\"tablenote\"><strong>Note:</strong> The following eBay marketplaces support Custom Policies: <ul><li>Germany (EBAY_DE)</li> <li>Canada (EBAY_CA)</li> <li>Australia (EBAY_AU)</li> <li>United States (EBAY_US)</li> <li>France (EBAY_FR)</li></ul></span><br/><br/>For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.  # noqa: E501
+
+        :param CustomPolicyRequest body: Request to update a current custom policy. (required)
+        :param str x_ebay_c_marketplace_id: This header parameter specifies the eBay markeplace for the custom policy that is being created. Supported values for this header can be found in the <a href=\"/api-docs/sell/compliance/types/bas:MarketplaceIdEnum\" target=\"_blank\">MarketplaceIdEnum</a> type definition.<br/> <br/> <span class=\"tablenote\"><strong>Note:</strong> The following eBay marketplaces support Custom Policies: <ul><li>Germany (EBAY_DE)</li> <li>Canada (EBAY_CA)</li> <li>Australia (EBAY_AU)</li> <li>United States (EBAY_US)</li> <li>France (EBAY_FR)</li></ul></span> (required)
+        :param str custom_policy_id: This path parameter is the unique custom policy identifier for the policy to be returned.<br/><br/><span class=\"tablenote\"><strong>Note:</strong> This value is automatically assigned by the system when the policy is created.</span> (required)
+        :return: None
+        """
+        try:
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.CustomPolicyApi, sell_account.ApiClient, 'update_custom_policy', SellAccountException, True, ['sell.account', 'custom_policy'], (body, x_ebay_c_marketplace_id, custom_policy_id), **kwargs)  # noqa: E501
+        except Error:
+            raise
+
     def sell_account_create_fulfillment_policy(self, body, **kwargs):  # noqa: E501
         """create_fulfillment_policy  # noqa: E501
 
-        This method creates a new fulfillment business policy where the policy encapsulates seller's terms for fulfilling item purchases. Fulfillment policies include the shipment options that the seller offers to buyers.  <br><br>Each policy targets a <b>marketplaceId</b> and <code>categoryTypes.</code><b>name</b> combination and you can create multiple policies for each combination. Be aware that some marketplaces require a specific fulfillment business policy for vehicle listings.  <br><br>A successful request returns the URI to the new policy in the <b>Location</b> response header and the ID for the new policy is returned in the response payload.  <p class=\"tablenote\"><b>Tip:</b> For details on creating and using the business policies supported by the Account API, see <a href=\"/api-docs/sell/static/seller-accounts/business-policies.html\">eBay business policies</a>.</p>  <p><b>Marketplaces and locales</b></p>  <p>Policy instructions can be localized by providing a locale in the <code>Accept-Language</code> HTTP request header. For example, the following setting displays field values from the request body in German: <code>Accept-Language: de-DE</code>.</p>  <p>Target the specific locale of a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, target the French locale of the Canadian marketplace by specifying the <code>fr-CA</code> locale for <code>Content-Language</code>. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>.</p> <p class=\"tablenote\"><b>Tip:</b> For details on headers, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.</p><p><b>Using the eBay standard envelope service (eSE)</b></p>  <p>The eBay standard envelope service (eSE) is a domestic envelope service with tracking through eBay. This service applies to specific Trading Cards categories (not all categories are supported), and to Coins & Paper Money, Postcards, and Stamps. See <a href=\"/api-docs/sell/static/seller-accounts/using-the-ebay-standard-envelope-service.html\" target=\"_blank\">Using the eBay standard envelope (eSE) service</a>.</p>  # noqa: E501
+        This method creates a new fulfillment policy where the policy encapsulates seller's terms for fulfilling item purchases. Fulfillment policies include the shipment options that the seller offers to buyers.  <br><br>Each policy targets a <b>marketplaceId</b> and <code>categoryTypes.</code><b>name</b> combination and you can create multiple policies for each combination. Be aware that some marketplaces require a specific fulfillment policy for vehicle listings.  <br><br>A successful request returns the URI to the new policy in the <b>Location</b> response header and the ID for the new policy is returned in the response payload.  <p class=\"tablenote\"><b>Tip:</b> For details on creating and using the business policies supported by the Account API, see <a href=\"/api-docs/sell/static/seller-accounts/business-policies.html\">eBay business policies</a>.</p>  <p><b>Marketplaces and locales</b></p>  <p>Policy instructions can be localized by providing a locale in the <code>Accept-Language</code> HTTP request header. For example, the following setting displays field values from the request body in German: <code>Accept-Language: de-DE</code>.</p>  <p>Target the specific locale of a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, target the French locale of the Canadian marketplace by specifying the <code>fr-CA</code> locale for <code>Content-Language</code>. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>.</p> <p class=\"tablenote\"><b>Tip:</b> For details on headers, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.</p><p><b>Using the eBay standard envelope service (eSE)</b></p>  <p>The eBay standard envelope service (eSE) is a domestic envelope service with tracking through eBay. This service applies to specific Trading Cards categories (not all categories are supported), and to Coins & Paper Money, Postcards, and Stamps. See <a href=\"/api-docs/sell/static/seller-accounts/using-the-ebay-standard-envelope-service.html\" target=\"_blank\">Using the eBay standard envelope (eSE) service</a>.</p>  # noqa: E501
 
-        :param FulfillmentPolicyRequest body: Request to create a seller account fulfillment business policy. (required)
+        :param FulfillmentPolicyRequest body: Request to create a seller account fulfillment policy. (required)
         :return: SetFulfillmentPolicyResponse
         """
         try:
@@ -1820,9 +1877,9 @@ class API:
     def sell_account_delete_fulfillment_policy(self, fulfillment_policy_id, **kwargs):  # noqa: E501
         """delete_fulfillment_policy  # noqa: E501
 
-        This method deletes a fulfillment business policy. Supply the ID of the policy you want to delete in the <b>fulfillmentPolicyId</b> path parameter.  # noqa: E501
+        This method deletes a fulfillment policy. Supply the ID of the policy you want to delete in the <b>fulfillmentPolicyId</b> path parameter. Note that you cannot delete the default fulfillment policy.  # noqa: E501
 
-        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment business policy to delete. (required)
+        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy to delete. (required)
         :return: None
         """
         try:
@@ -1846,9 +1903,9 @@ class API:
     def sell_account_get_fulfillment_policy(self, fulfillment_policy_id, **kwargs):  # noqa: E501
         """get_fulfillment_policy  # noqa: E501
 
-        This method retrieves the complete details of a fulfillment business policy. Supply the ID of the policy you want to retrieve using the <b>fulfillmentPolicyId</b> path parameter.  # noqa: E501
+        This method retrieves the complete details of a fulfillment policy. Supply the ID of the policy you want to retrieve using the <b>fulfillmentPolicyId</b> path parameter.  # noqa: E501
 
-        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment business policy you want to retrieve. (required)
+        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy you want to retrieve. (required)
         :return: FulfillmentPolicy
         """
         try:
@@ -1859,10 +1916,10 @@ class API:
     def sell_account_get_fulfillment_policy_by_name(self, marketplace_id, name, **kwargs):  # noqa: E501
         """get_fulfillment_policy_by_name  # noqa: E501
 
-        This method retrieves the complete details for a single fulfillment business policy. In the request, supply both the policy <code>name</code> and its associated <code>marketplace_id</code> as query parameters.   <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policy for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get a policy for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.  # noqa: E501
+        This method retrieves the complete details for a single fulfillment policy. In the request, supply both the policy <code>name</code> and its associated <code>marketplace_id</code> as query parameters.   <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policy for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get a policy for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.  # noqa: E501
 
-        :param str marketplace_id: This query parameter specifies the eBay marketplace of the business policy you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
-        :param str name: This query parameter specifies the user-defined name of the fulfillment business policy you want to retrieve. (required)
+        :param str marketplace_id: This query parameter specifies the eBay marketplace of the policy you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
+        :param str name: This query parameter specifies the user-defined name of the fulfillment policy you want to retrieve. (required)
         :return: FulfillmentPolicy
         """
         try:
@@ -1873,10 +1930,10 @@ class API:
     def sell_account_update_fulfillment_policy(self, body, fulfillment_policy_id, **kwargs):  # noqa: E501
         """update_fulfillment_policy  # noqa: E501
 
-        This method updates an existing fulfillment business policy. Specify the policy you want to update using the <b>fulfillment_policy_id</b> path parameter. Supply a complete policy payload with the updates you want to make; this call overwrites the existing policy with the new details specified in the payload.  # noqa: E501
+        This method updates an existing fulfillment policy. Specify the policy you want to update using the <b>fulfillment_policy_id</b> path parameter. Supply a complete policy payload with the updates you want to make; this call overwrites the existing policy with the new details specified in the payload.  # noqa: E501
 
         :param FulfillmentPolicyRequest body: Fulfillment policy request (required)
-        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment business policy you want to update. (required)
+        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy you want to update. (required)
         :return: SetFulfillmentPolicyResponse
         """
         try:
@@ -1887,7 +1944,7 @@ class API:
     def sell_account_get_kyc(self, **kwargs):  # noqa: E501
         """get_kyc  # noqa: E501
 
-        This method is used by sellers to discover if there are any action items in regards to providing more documentation and/or information about themselves, their company, or the bank account they are or will be using for seller payouts. These 'action items' are also know as 'Know Your Customer' (or KYC) checks.<br><br>This method does not require any parameters other than the OAuth user token associated with the seller's account.<br><br>If the seller does not currently have any pending 'KYC' action items, only a <code>204 No Content</code> HTTP status code is returned, and no response payload.   # noqa: E501
+        This method is used by sellers onboarded for eBay managed payments, or sellers who are currently going through, or who are eligible for onboarding for eBay managed payments. With this method, a seller can discover if there are any action items in regards to providing more documentation and/or information about themselves, their company, or the bank account they are or will be using for seller payouts. These 'action items' are also know as 'Know Your Customer' (or KYC) checks.<br><br>This method does not require any parameters other than the OAuth user token associated with the seller's account.<br><br>If the managed payments seller does not currently have any pending 'KYC' action items, only a <code>204 No Content</code> HTTP status code is returned, and no response payload. <br><br><span class=\"tablenote\"><b>Note</b>: This method is not applicable for sellers who are not eligible for eBay managed payments. For sellers who sell on one or more eBay marketplaces that currently support managed payments, they can check on their managed payments onboarding status by using the <a href=\"../../payments_program/onboarding/methods/getPaymentsProgramOnboarding\">getPaymentsProgramOnboarding</a> method. </span>  # noqa: E501
 
         :return: KycResponse
         """
@@ -1899,10 +1956,10 @@ class API:
     def sell_account_get_payments_program_onboarding(self, marketplace_id, payments_program_type, **kwargs):  # noqa: E501
         """get_payments_program_onboarding  # noqa: E501
 
-        <br><br><span class=\"tablenote\"><b>Note:</b> This method is no longer applicable, as all seller accounts globally have been enabled for the new eBay payment and checkout flow.</span><br/>This method retrieves a seller's onboarding status for a payments program for a specified marketplace. The overall onboarding status of the seller and the status of each onboarding step is returned.  # noqa: E501
+        This method retrieves a seller's onboarding status of eBay managed payments for a specified marketplace. The overall onboarding status of the seller and the status of each onboarding step is returned. <p>Presently, the only supported payments program type is <code>EBAY_PAYMENTS</code>. See <a href=\"https://pages.ebay.com/seller-center/service-and-payments/managed-payments-on-ebay.html\" target=\"_blank\">Managed Payments on eBay</a> and <a href=\"https://pages.ebay.com/payment/2.0/terms.html\" target=\"_blank\">Payments Terms of Use</a>.</p><p> <span class=\"tablenote\"><strong>Note:</strong> Managed payments availability: <a href=\"/managed-payments\">eBay managed payments</a> is presently available in the US and Germany, and will roll out to Canada, UK, and Australia in July 2020.</span></p>  # noqa: E501
 
-        :param str marketplace_id: The eBay marketplace ID associated with the onboarding status to retrieve.  (required)
-        :param str payments_program_type: The type of payments program whose status is returned by the call. (required)
+        :param str marketplace_id: The eBay marketplace ID associated with the onboarding status to retrieve. Only enums for marketplaces that support or will soon support eBay managed payments are allowed. Error 20408 is returned for any other eBay marketplace. No response payload is returned with this error. (required)
+        :param str payments_program_type: The type of payments program whose status is returned by the call. Presently, the only supported payments program is <code>EBAY_PAYMENTS</code>. For details on the program, see <a href=\"https://pages.ebay.com/payment/2.0/terms.html\" target=\"_blank\">Payments Terms of Use</a>.  (required)
         :return: PaymentsProgramOnboardingResponse
         """
         try:
@@ -1913,9 +1970,9 @@ class API:
     def sell_account_create_payment_policy(self, body, **kwargs):  # noqa: E501
         """create_payment_policy  # noqa: E501
 
-        This method creates a new payment business policy.  <br><br>Each policy targets a <b>marketplaceId</b> and <code>categoryTypes.</code><b>name</b> combination and you can create multiple policies for each combination. Be aware that some marketplaces require a specific payment business policy for vehicle listings.  <br><br>A successful request returns the URI to the new policy in the <b>Location</b> response header and the ID for the new policy is returned in the response payload.  <p class=\"tablenote\"><b>Tip:</b> For details on creating and using the business policies supported by the Account API, see <a href=\"/api-docs/sell/static/seller-accounts/business-policies.html\">eBay business policies</a>.</p>  <p><b>Marketplaces and locales</b></p>  <p>Policy instructions can be localized by providing a locale in the <code>Accept-Language</code> HTTP request header. For example, the following setting displays field values from the request body in German: <code>Accept-Language: de-DE</code>.</p>  <p>Target the specific locale of a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, target the French locale of the Canadian marketplace by specifying the <code>fr-CA</code> locale for <code>Content-Language</code>. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>.</p> <p class=\"tablenote\"><b>Tip:</b> For details on headers, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.</p>  # noqa: E501
+        This method creates a new payment policy where the policy encapsulates seller's terms for purchase payments.  <br><br>Each policy targets a <b>marketplaceId</b> and <code>categoryTypes.</code><b>name</b> combination and you can create multiple policies for each combination. Be aware that some marketplaces require a specific payment policy for vehicle listings.  <br><br>A successful request returns the URI to the new policy in the <b>Location</b> response header and the ID for the new policy is returned in the response payload.  <p class=\"tablenote\"><b>Tip:</b> For details on creating and using the business policies supported by the Account API, see <a href=\"/api-docs/sell/static/seller-accounts/business-policies.html\">eBay business policies</a>.</p>  <p><b>Marketplaces and locales</b></p>  <p>Policy instructions can be localized by providing a locale in the <code>Accept-Language</code> HTTP request header. For example, the following setting displays field values from the request body in German: <code>Accept-Language: de-DE</code>.</p>  <p>Target the specific locale of a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, target the French locale of the Canadian marketplace by specifying the <code>fr-CA</code> locale for <code>Content-Language</code>. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>.</p> <p class=\"tablenote\"><b>Tip:</b> For details on headers, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.</p>  # noqa: E501
 
-        :param PaymentPolicyRequest body: payment business policy request (required)
+        :param PaymentPolicyRequest body: Payment policy request (required)
         :return: SetPaymentPolicyResponse
         """
         try:
@@ -1926,9 +1983,9 @@ class API:
     def sell_account_delete_payment_policy(self, payment_policy_id, **kwargs):  # noqa: E501
         """delete_payment_policy  # noqa: E501
 
-        This method deletes a payment business policy. Supply the ID of the policy you want to delete in the <b>paymentPolicyId</b> path parameter.  # noqa: E501
+        This method deletes a payment policy. Supply the ID of the policy you want to delete in the <b>paymentPolicyId</b> path parameter. Note that you cannot delete the default payment policy.  # noqa: E501
 
-        :param str payment_policy_id: This path parameter specifies the ID of the payment business policy you want to delete. (required)
+        :param str payment_policy_id: This path parameter specifies the ID of the payment policy you want to delete. (required)
         :return: None
         """
         try:
@@ -1939,7 +1996,7 @@ class API:
     def sell_account_get_payment_policies(self, marketplace_id, **kwargs):  # noqa: E501
         """get_payment_policies  # noqa: E501
 
-        This method retrieves all the payment business policies configured for the marketplace you specify using the <code>marketplace_id</code> query parameter.  <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policies for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get the policies for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank\">HTTP request headers</a>.  # noqa: E501
+        This method retrieves all the payment policies configured for the marketplace you specify using the <code>marketplace_id</code> query parameter.  <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policies for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get the policies for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank\">HTTP request headers</a>.  # noqa: E501
 
         :param str marketplace_id: This query parameter specifies the eBay marketplace of the policies you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
         :return: PaymentPolicyResponse
@@ -1952,9 +2009,9 @@ class API:
     def sell_account_get_payment_policy(self, payment_policy_id, **kwargs):  # noqa: E501
         """get_payment_policy  # noqa: E501
 
-        This method retrieves the complete details of a payment business policy. Supply the ID of the policy you want to retrieve using the <b>paymentPolicyId</b> path parameter.  # noqa: E501
+        This method retrieves the complete details of a payment policy. Supply the ID of the policy you want to retrieve using the <b>paymentPolicyId</b> path parameter.  # noqa: E501
 
-        :param str payment_policy_id: This path parameter specifies the ID of the payment business policy you want to retrieve. (required)
+        :param str payment_policy_id: This path parameter specifies the ID of the payment policy you want to retrieve. (required)
         :return: PaymentPolicy
         """
         try:
@@ -1965,10 +2022,10 @@ class API:
     def sell_account_get_payment_policy_by_name(self, marketplace_id, name, **kwargs):  # noqa: E501
         """get_payment_policy_by_name  # noqa: E501
 
-        This method retrieves the complete details of a single payment business policy. Supply both the policy <code>name</code> and its associated <code>marketplace_id</code> in the request query parameters.   <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policy for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get a policy for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.  # noqa: E501
+        This method retrieves the complete details of a single payment policy. Supply both the policy <code>name</code> and its associated <code>marketplace_id</code> in the request query parameters.   <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policy for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get a policy for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.  # noqa: E501
 
         :param str marketplace_id: This query parameter specifies the eBay marketplace of the policy you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
-        :param str name: This query parameter specifies the user-defined name of the payment business policy you want to retrieve. (required)
+        :param str name: This query parameter specifies the user-defined name of the payment policy you want to retrieve. (required)
         :return: PaymentPolicy
         """
         try:
@@ -1979,10 +2036,10 @@ class API:
     def sell_account_update_payment_policy(self, body, payment_policy_id, **kwargs):  # noqa: E501
         """update_payment_policy  # noqa: E501
 
-        This method updates an existing payment business policy. Specify the policy you want to update using the <b>payment_policy_id</b> path parameter. Supply a complete policy payload with the updates you want to make; this call overwrites the existing policy with the new details specified in the payload.  # noqa: E501
+        This method updates an existing payment policy. Specify the policy you want to update using the <b>payment_policy_id</b> path parameter. Supply a complete policy payload with the updates you want to make; this call overwrites the existing policy with the new details specified in the payload.  # noqa: E501
 
-        :param PaymentPolicyRequest body: payment business policy request (required)
-        :param str payment_policy_id: This path parameter specifies the ID of the payment business policy you want to update. (required)
+        :param PaymentPolicyRequest body: Payment policy request (required)
+        :param str payment_policy_id: This path parameter specifies the ID of the payment policy you want to update. (required)
         :return: SetPaymentPolicyResponse
         """
         try:
@@ -1993,10 +2050,10 @@ class API:
     def sell_account_get_payments_program(self, marketplace_id, payments_program_type, **kwargs):  # noqa: E501
         """get_payments_program  # noqa: E501
 
-        <br><br><span class=\"tablenote\"><b>Note:</b> This method is no longer applicable, as all seller accounts globally have been enabled for the new eBay payment and checkout flow.</span><br/>This method returns whether or not the user is opted-in to the specified payments program. Sellers opt-in to payments programs by marketplace and you use the <b>marketplace_id</b> path parameter to specify the marketplace of the status flag you want returned.  # noqa: E501
+        This method returns whether or not the user is opted-in to the specified payments program. Sellers opt-in to payments programs by marketplace and you use the <b>marketplace_id</b> path parameter to specify the marketplace of the status flag you want returned.  <br><br><span class=\"tablenote\"><b>Note:</b> Currently, the only supported payments program is <b>eBay Payments</b>. For details, see: <ul><li><a href=\"https://pages.ebay.com/seller-center/service-and-payments/managed-payments-on-ebay.html\" target=\"_blank\">Managed Payments on eBay</a></li> <li><a href=\"https://pages.ebay.com/payment/2.0/terms.html\" target=\"_blank\">Payments Terms of Use</a></li></ul></span>  # noqa: E501
 
         :param str marketplace_id: This path parameter specifies the eBay marketplace of the payments program for which you want to retrieve the seller's status. (required)
-        :param str payments_program_type: This path parameter specifies the payments program whose status is returned by the call. (required)
+        :param str payments_program_type: This path parameter specifies the payments program whose status is returned by the call.  <br><br>Currently the only supported payments program is <code>EBAY_PAYMENTS</code>. For details on the program, see <a href=\"https://pages.ebay.com/payment/2.0/terms.html\" target=\"_blank\">Payments Terms of Use</a>. (required)
         :return: PaymentsProgramResponse
         """
         try:
@@ -2070,7 +2127,7 @@ class API:
     def sell_account_create_return_policy(self, body, **kwargs):  # noqa: E501
         """create_return_policy  # noqa: E501
 
-        This method creates a new return business policy where the policy encapsulates seller's terms for returning items. Use the Metadata API method <b>getReturnPolicies</b> to determine which categories require you to supply a return policy for the marketplace(s) into which you list.  <br><br>Each policy targets a <b>marketplaceId</b> and <code>categoryTypes.</code><b>name</b> combination and you can create multiple policies for each combination.  <br><br>A successful request returns the URI to the new policy in the <b>Location</b> response header and the ID for the new policy is returned in the response payload.  <p class=\"tablenote\"><b>Tip:</b> For details on creating and using the business policies supported by the Account API, see <a href=\"/api-docs/sell/static/seller-accounts/business-policies.html\">eBay business policies</a>.</p>  <p><b>Marketplaces and locales</b></p>  <p>Policy instructions can be localized by providing a locale in the <code>Accept-Language</code> HTTP request header. For example, the following setting displays field values from the request body in German: <code>Accept-Language: de-DE</code>.</p>  <p>Target the specific locale of a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, target the French locale of the Canadian marketplace by specifying the <code>fr-CA</code> locale for <code>Content-Language</code>. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>.</p> <p class=\"tablenote\"><b>Tip:</b> For details on headers, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.</p>  # noqa: E501
+        This method creates a new return policy where the policy encapsulates seller's terms for returning items. Use the Metadata API method <b>getReturnPolicies</b> to determine which categories require you to supply a return policy for the marketplace(s) into which you list.  <br><br>Each policy targets a <b>marketplaceId</b> and <code>categoryTypes.</code><b>name</b> combination and you can create multiple policies for each combination.  <br><br>A successful request returns the URI to the new policy in the <b>Location</b> response header and the ID for the new policy is returned in the response payload.  <p class=\"tablenote\"><b>Tip:</b> For details on creating and using the business policies supported by the Account API, see <a href=\"/api-docs/sell/static/seller-accounts/business-policies.html\">eBay business policies</a>.</p>  <p><b>Marketplaces and locales</b></p>  <p>Policy instructions can be localized by providing a locale in the <code>Accept-Language</code> HTTP request header. For example, the following setting displays field values from the request body in German: <code>Accept-Language: de-DE</code>.</p>  <p>Target the specific locale of a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, target the French locale of the Canadian marketplace by specifying the <code>fr-CA</code> locale for <code>Content-Language</code>. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>.</p> <p class=\"tablenote\"><b>Tip:</b> For details on headers, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.</p>  # noqa: E501
 
         :param ReturnPolicyRequest body: Return policy request (required)
         :return: SetReturnPolicyResponse
@@ -2083,9 +2140,9 @@ class API:
     def sell_account_delete_return_policy(self, return_policy_id, **kwargs):  # noqa: E501
         """delete_return_policy  # noqa: E501
 
-        This method deletes a return business policy. Supply the ID of the policy you want to delete in the <b>returnPolicyId</b> path parameter.   # noqa: E501
+        This method deletes a return policy. Supply the ID of the policy you want to delete in the <b>returnPolicyId</b> path parameter. Note that you cannot delete the default return policy.  # noqa: E501
 
-        :param str return_policy_id: This path parameter specifies the ID of the return business policy you want to delete. (required)
+        :param str return_policy_id: This path parameter specifies the ID of the return policy you want to delete. (required)
         :return: None
         """
         try:
@@ -2098,7 +2155,7 @@ class API:
 
         This method retrieves all the return policies configured for the marketplace you specify using the <code>marketplace_id</code> query parameter.  <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policies for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get the policies for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank\">HTTP request headers</a>.  # noqa: E501
 
-        :param str marketplace_id: This query parameter specifies the ID of the eBay marketplace of the business policy you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
+        :param str marketplace_id: This query parameter specifies the ID of the eBay marketplace of the policy you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
         :return: ReturnPolicyResponse
         """
         try:
@@ -2109,9 +2166,9 @@ class API:
     def sell_account_get_return_policy(self, return_policy_id, **kwargs):  # noqa: E501
         """get_return_policy  # noqa: E501
 
-        This method retrieves the complete details of the return business policy specified by the <b>returnPolicyId</b> path parameter.  # noqa: E501
+        This method retrieves the complete details of the return policy specified by the <b>returnPolicyId</b> path parameter.  # noqa: E501
 
-        :param str return_policy_id: This path parameter specifies the of the return business policy you want to retrieve. (required)
+        :param str return_policy_id: This path parameter specifies the of the return policy you want to retrieve. (required)
         :return: ReturnPolicy
         """
         try:
@@ -2122,10 +2179,10 @@ class API:
     def sell_account_get_return_policy_by_name(self, marketplace_id, name, **kwargs):  # noqa: E501
         """get_return_policy_by_name  # noqa: E501
 
-        This method retrieves the complete details of a single return business policy. Supply both the policy <code>name</code> and its associated <code>marketplace_id</code> in the request query parameters.   <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policy for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get a policy for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.  # noqa: E501
+        This method retrieves the complete details of a single return policy. Supply both the policy <code>name</code> and its associated <code>marketplace_id</code> in the request query parameters.   <br><br><b>Marketplaces and locales</b>  <br><br>Get the correct policy for a marketplace that supports multiple locales using the <code>Content-Language</code> request header. For example, get a policy for the French locale of the Canadian marketplace by specifying <code>fr-CA</code> for the <code>Content-Language</code> header. Likewise, target the Dutch locale of the Belgium marketplace by setting <code>Content-Language: nl-BE</code>. For details on header values, see <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a>.  # noqa: E501
 
-        :param str marketplace_id: This query parameter specifies the ID of the eBay marketplace of the business policy you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
-        :param str name: This query parameter specifies the user-defined name of the return business policy you want to retrieve. (required)
+        :param str marketplace_id: This query parameter specifies the ID of the eBay marketplace of the policy you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
+        :param str name: This query parameter specifies the user-defined name of the return policy you want to retrieve. (required)
         :return: ReturnPolicy
         """
         try:
@@ -2136,10 +2193,10 @@ class API:
     def sell_account_update_return_policy(self, body, return_policy_id, **kwargs):  # noqa: E501
         """update_return_policy  # noqa: E501
 
-        This method updates an existing return business policy. Specify the policy you want to update using the <b>return_policy_id</b> path parameter. Supply a complete policy payload with the updates you want to make; this call overwrites the existing policy with the new details specified in the payload.  # noqa: E501
+        This method updates an existing return policy. Specify the policy you want to update using the <b>return_policy_id</b> path parameter. Supply a complete policy payload with the updates you want to make; this call overwrites the existing policy with the new details specified in the payload.  # noqa: E501
 
-        :param ReturnPolicyRequest body: Container for a return business policy request. (required)
-        :param str return_policy_id: This path parameter specifies the ID of the return business policy you want to update. (required)
+        :param ReturnPolicyRequest body: Container for a return policy request. (required)
+        :param str return_policy_id: This path parameter specifies the ID of the return policy you want to update. (required)
         :return: SetReturnPolicyResponse
         """
         try:
@@ -4149,7 +4206,7 @@ class API:
     def sell_metadata_get_automotive_parts_compatibility_policies(self, marketplace_id, **kwargs):  # noqa: E501
         """get_automotive_parts_compatibility_policies  # noqa: E501
 
-        This method returns the eBay policies that define how to list automotive-parts-compatibility items in the categories of a specific marketplace.  <br><br>By default, this method returns the entire category tree for the specified marketplace. You can limit the size of the result set by using the <b>filter</b> query parameter to specify only the category IDs you want to review.  <p class=\"tablenote\"><strong>Tip:</strong> This method can return a very large response payload and we strongly recommend you get the results from this call in a GZIP file by including the following HTTP header with your request:  <br><br><code>&nbsp;&nbsp;Accept-Encoding: application/gzip</code></p>  # noqa: E501
+        This method returns the eBay policies that define how to list automotive-parts-compatibility items in the categories of a specific marketplace.  <br><br>By default, this method returns the entire category tree for the specified marketplace. You can limit the size of the result set by using the <b>filter</b> query parameter to specify only the category IDs you want to review.<br /><br /><span class=\"tablenote\"><span style=\"color:#478415\"><strong>Tip:</strong></span> This method can potentially return a very large response payload. eBay recommends that the response payload be compressed by passing in the <b>Accept-Encoding</b> request header and setting the value to <code>application/gzip</code>.</span>  # noqa: E501
 
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.  <br><br><b>Note:</b> Only the following eBay marketplaces support automotive parts compatibility: <ul> <li>EBAY_US</li> <li>EBAY_AU</li> <li>EBAY_CA</li> <li>EBAY_DE</li> <li>EBAY_ES</li> <li>EBAY_FR</li> <li>EBAY_GB</li> <li>EBAY_IT</li><ul> (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply <b>categoryId</b> values for the sections of the tree you want returned.  <br><br>When you specify a <b>categoryId</b> value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  <br><br><b>Example:</b> <code>filter=categoryIds:{100|101|102}</code>  <br><br>Note that you must URL-encode the parameter list, which results in the following filter for the above example: <br><br> &nbsp;&nbsp;<code>filter=categoryIds%3A%7B100%7C101%7C102%7D</code>
@@ -4160,10 +4217,24 @@ class API:
         except Error:
             raise
 
+    def sell_metadata_get_extended_producer_responsibility_policies(self, marketplace_id, **kwargs):  # noqa: E501
+        """get_extended_producer_responsibility_policies  # noqa: E501
+
+        This method returns the Extended Producer Responsibility policies for one, multiple, or all eBay categories in an eBay marketplace.<br /><br />The identifier of the eBay marketplace is passed in as a path parameter, and unless one or more eBay category IDs are passed in through the filter query parameter, this method will return metadata on every applicable category for the specified marketplace.<br /><br /><span class=\"tablenote\"><span style=\"color:#004680\"><strong>Note:</strong></span> Currently, the Extended Producer Responsibility policies are only applicable to a limited number of categories, and only in the EBAY_FR marketplace.</span><br /><br /><span class=\"tablenote\"><span style=\"color:#478415\"><strong>Tip:</strong></span> This method can potentially return a very large response payload. eBay recommends that the response payload be compressed by passing in the <b>Accept-Encoding</b> request header and setting the value to <code>application/gzip</code>.</span>  # noqa: E501
+
+        :param str marketplace_id: A path parameter that specifies the eBay marketplace for which policy information shall be retrieved.<br /><br /><span class=\"tablenote\"><span style=\"color:#478415\"><strong>Tip:</strong></span> See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">Request components</a> for a list of valid eBay marketplace IDs.</span> (required)
+        :param str filter: A query parameter that can be used to limit the response by returning policy information for only the selected sections of the category tree. Supply <b>categoryId</b> values for the sections of the tree that should be returned.<br /><br />When a <b>categoryId</b> value is specified, the returned category tree includes the policies for that parent node, as well as the policies for any child nodes below that parent node.<br /><br />Pass in the <b>categoryId</b> values using a URL-encoded, pipe-separated ('|') list. For example:<br /><br /><code>filter=categoryIds%3A%7B100%7C101%7C102%7D</code><br /><br /><b>Maximum:</b> 50
+        :return: ExtendedProducerResponsibilityPolicyResponse
+        """
+        try:
+            return self._method_single(sell_metadata.Configuration, '/sell/metadata/v1', sell_metadata.MarketplaceApi, sell_metadata.ApiClient, 'get_extended_producer_responsibility_policies', SellMetadataException, False, ['sell.metadata', 'marketplace'], marketplace_id, **kwargs)  # noqa: E501
+        except Error:
+            raise
+
     def sell_metadata_get_item_condition_policies(self, marketplace_id, **kwargs):  # noqa: E501
         """get_item_condition_policies  # noqa: E501
 
-        This method returns item condition metadata on one, multiple, or all eBay categories on an eBay marketplace. This metadata consists of the different item conditions (with IDs) that an eBay category supports, and a boolean to indicate if an eBay category requires an item condition. <br><br>The identifier of the eBay marketplace is passed in as a path parameter, and unless one or more eBay category IDs are passed in through the <b>filter</b> query parameter, this method will return metadata on every single category for the specified marketplace. If you only want to view item condition metadata for one eBay category or a select group of eBay categories, you can pass in up to 50 eBay category ID through the <b>filter</b> query parameter. <p class=\"tablenote\"><strong>Important!:</strong> <b>Certified - Refurbished</b>-eligible sellers, and sellers who are eligible to list with the new values (EXCELLENT_REFURBISHED, VERY_GOOD_REFURBISHED, and GOOD_REFURBISHED) in category 9355, must use an OAuth token created with the <a href=\"/api-docs/static/oauth-authorization-code-grant.html\" target=\"_blank\">authorization code grant flow</a> and <b>https://api.ebay.com/oauth/api_scope/sell.inventory</b> scope in order to retrieve the refurbished conditions for the relevant categories. <br/><br/> These restricted item conditions will not be returned if an OAuth token created with the <a href=\"/api-docs/static/oauth-client-credentials-grant.html\" target=\"_blank\">client credentials grant flow</a> and <b>https://api.ebay.com/oauth/api_scope</b> scope is used, or if any seller is not eligible to list with that item condition. <br/><br/> See the <a href=\"/api-docs/static/oauth-scopes.html\" target=\"_blank\">Specifying OAuth scopes</a> topic for more information about specifying scopes.</p> <p class=\"tablenote\"><strong>Tip:</strong> If you retrieve metadata on all eBay categories for a marketplace, the response payload can be quite large. For this reason, we suggest that you consider using the <b>Accept-Encoding</b> request header and set its value to <code>application/gzip</code>. By doing this, the response payload output will be compressed into a GZIP file. </p>  # noqa: E501
+        This method returns item condition metadata on one, multiple, or all eBay categories on an eBay marketplace. This metadata consists of the different item conditions (with IDs) that an eBay category supports, and a boolean to indicate if an eBay category requires an item condition. <br><br>The identifier of the eBay marketplace is passed in as a path parameter, and unless one or more eBay category IDs are passed in through the <b>filter</b> query parameter, this method will return metadata on every single category for the specified marketplace. If you only want to view item condition metadata for one eBay category or a select group of eBay categories, you can pass in up to 50 eBay category ID through the <b>filter</b> query parameter.<br /><br /><span class=\"tablenote\"><span style=\"color:#FF0000\"><strong>Important:</strong></span> <b>Certified - Refurbished</b>-eligible sellers, and sellers who are eligible to list with the new values (EXCELLENT_REFURBISHED, VERY_GOOD_REFURBISHED, and GOOD_REFURBISHED) in category 9355, must use an OAuth token created with the <a href=\"/api-docs/static/oauth-authorization-code-grant.html\" target=\"_blank\">authorization code grant flow</a> and <b>https://api.ebay.com/oauth/api_scope/sell.inventory</b> scope in order to retrieve the refurbished conditions for the relevant categories. <br/><br/> These restricted item conditions will not be returned if an OAuth token created with the <a href=\"/api-docs/static/oauth-client-credentials-grant.html\" target=\"_blank\">client credentials grant flow</a> and <b>https://api.ebay.com/oauth/api_scope</b> scope is used, or if any seller is not eligible to list with that item condition. <br/><br/> See the <a href=\"/api-docs/static/oauth-scopes.html\" target=\"_blank\">Specifying OAuth scopes</a> topic for more information about specifying scopes.</span><br /><br /><span class=\"tablenote\"><span style=\"color:#478415\"><strong>Tip:</strong></span> This method can potentially return a very large response payload. eBay recommends that the response payload be compressed by passing in the <b>Accept-Encoding</b> request header and setting the value to <code>application/gzip</code>.</span>  # noqa: E501
 
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved. See the following page for a list of valid eBay marketplace IDs: <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">Request components</a>. (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply <b>categoryId</b> values for the sections of the tree you want returned.  <br><br>When you specify a <b>categoryId</b> value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  <br><br><b>Example:</b> <code>filter=categoryIds:{100|101|102}</code>  <br><br>Note that you must URL-encode the parameter list, which results in the following filter for the above example: <br><br> &nbsp;&nbsp;<code>filter=categoryIds%3A%7B100%7C101%7C102%7D</code>
@@ -4177,7 +4248,7 @@ class API:
     def sell_metadata_get_listing_structure_policies(self, marketplace_id, **kwargs):  # noqa: E501
         """get_listing_structure_policies  # noqa: E501
 
-        This method returns the eBay policies that define the allowed listing structures for the categories of a specific marketplace. The listing-structure policies currently pertain to whether or not you can list items with variations.  <br><br>By default, this method returns the entire category tree for the specified marketplace. You can limit the size of the result set by using the <b>filter</b> query parameter to specify only the category IDs you want to review.  <p class=\"tablenote\"><strong>Tip:</strong> This method can return a very large response payload and we strongly recommend you get the results from this call in a GZIP file by including the following HTTP header with your request:  <br><br><code>&nbsp;&nbsp;Accept-Encoding: application/gzip</code></p>  # noqa: E501
+        This method returns the eBay policies that define the allowed listing structures for the categories of a specific marketplace. The listing-structure policies currently pertain to whether or not you can list items with variations.  <br><br>By default, this method returns the entire category tree for the specified marketplace. You can limit the size of the result set by using the <b>filter</b> query parameter to specify only the category IDs you want to review.<br /><br /><span class=\"tablenote\"><span style=\"color:#478415\"><strong>Tip:</strong></span> This method can potentially return a very large response payload. eBay recommends that the response payload be compressed by passing in the <b>Accept-Encoding</b> request header and setting the value to <code>application/gzip</code>.</span>  # noqa: E501
 
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved. See the following page for a list of valid eBay marketplace IDs: <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">Request components</a>. (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply <b>categoryId</b> values for the sections of the tree you want returned.  <br><br>When you specify a <b>categoryId</b> value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  <br><br><b>Example:</b> <code>filter=categoryIds:{100|101|102}</code>  <br><br>Note that you must URL-encode the parameter list, which results in the following filter for the above example: <br><br> &nbsp;&nbsp;<code>filter=categoryIds%3A%7B100%7C101%7C102%7D</code>
@@ -4191,7 +4262,7 @@ class API:
     def sell_metadata_get_negotiated_price_policies(self, marketplace_id, **kwargs):  # noqa: E501
         """get_negotiated_price_policies  # noqa: E501
 
-        This method returns the eBay policies that define the supported negotiated price features (like \"best offer\") for the categories of a specific marketplace.  <br><br>By default, this method returns the entire category tree for the specified marketplace. You can limit the size of the result set by using the <b>filter</b> query parameter to specify only the category IDs you want to review.  <p class=\"tablenote\"><strong>Tip:</strong> This method can return a very large response payload and we strongly recommend you get the results from this call in a GZIP file by including the following HTTP header with your request:  <br><br><code>&nbsp;&nbsp;Accept-Encoding: application/gzip</code></p>  # noqa: E501
+        This method returns the eBay policies that define the supported negotiated price features (like \"best offer\") for the categories of a specific marketplace.  <br><br>By default, this method returns the entire category tree for the specified marketplace. You can limit the size of the result set by using the <b>filter</b> query parameter to specify only the category IDs you want to review.<br /><br /><span class=\"tablenote\"><span style=\"color:#478415\"><strong>Tip:</strong></span> This method can potentially return a very large response payload. eBay recommends that the response payload be compressed by passing in the <b>Accept-Encoding</b> request header and setting the value to <code>application/gzip</code>.</span>  # noqa: E501
 
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved. See the following page for a list of valid eBay marketplace IDs: <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">Request components</a>. (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply <b>categoryId</b> values for the sections of the tree you want returned.  <br><br>When you specify a <b>categoryId</b> value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  <br><br><b>Example:</b> <code>filter=categoryIds:{100|101|102}</code>  <br><br>Note that you must URL-encode the parameter list, which results in the following filter for the above example: <br><br> &nbsp;&nbsp;<code>filter=categoryIds%3A%7B100%7C101%7C102%7D</code>
@@ -4205,7 +4276,7 @@ class API:
     def sell_metadata_get_return_policies(self, marketplace_id, **kwargs):  # noqa: E501
         """get_return_policies  # noqa: E501
 
-        This method returns the eBay policies that define whether or not you must include a return policy for the items you list in the categories of a specific marketplace, plus the guidelines for creating domestic and international return policies in the different eBay categories.  <br><br>By default, this method returns the entire category tree for the specified marketplace. You can limit the size of the result set by using the <b>filter</b> query parameter to specify only the category IDs you want to review.  <p class=\"tablenote\"><strong>Tip:</strong> This method can return a very large response payload and we strongly recommend you get the results from this call in a GZIP file by including the following HTTP header with your request:  <br><br><code>&nbsp;&nbsp;Accept-Encoding: application/gzip</code></p>  # noqa: E501
+        This method returns the eBay policies that define whether or not you must include a return policy for the items you list in the categories of a specific marketplace, plus the guidelines for creating domestic and international return policies in the different eBay categories.  <br><br>By default, this method returns the entire category tree for the specified marketplace. You can limit the size of the result set by using the <b>filter</b> query parameter to specify only the category IDs you want to review.<br /><br /><span class=\"tablenote\"><span style=\"color:#478415\"><strong>Tip:</strong></span> This method can potentially return a very large response payload. eBay recommends that the response payload be compressed by passing in the <b>Accept-Encoding</b> request header and setting the value to <code>application/gzip</code>.</span>  # noqa: E501
 
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved. See the following page for a list of valid eBay marketplace IDs: <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">Request components</a>. (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply <b>categoryId</b> values for the sections of the tree you want returned.  <br><br>When you specify a <b>categoryId</b> value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  <br><br><b>Example:</b> <code>filter=categoryIds:{100|101|102}</code>  <br><br>Note that you must URL-encode the parameter list, which results in the following filter for the above example: <br><br> &nbsp;&nbsp;<code>filter=categoryIds%3A%7B100%7C101%7C102%7D</code>

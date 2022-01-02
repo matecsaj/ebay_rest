@@ -3,11 +3,14 @@ from base64 import b64encode
 from datetime import datetime, timedelta, timezone
 from json import loads
 import logging
-from requests import codes, post, Response
 from time import sleep
 from threading import Lock
 from typing import List
 from urllib.parse import parse_qs, urlencode
+
+# 3rd party library imports
+from requests import codes, post, Response
+from selenium import webdriver  # In README.md note the extra installation steps.
 
 # Local imports
 from .date_time import DateTime
@@ -291,10 +294,6 @@ class UserToken:
         :return code (str): Authorization code.
         """
         delay = 5  # delay seconds to give the page an opportunity to render and the user to act on a possible captcha
-
-        # Don't move the import to the top of the file because not everyone uses this method.
-        # In README.md note the extra installation steps.
-        from selenium import webdriver
 
         # open browser
         try:

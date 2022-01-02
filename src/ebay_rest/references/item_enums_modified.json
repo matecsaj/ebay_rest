@@ -518,6 +518,10 @@
         "BUYER"
     ],
     "seller_account_type": [],
+    "seller_custom_policy_type": [
+        "PRODUCT_COMPLIANCE",
+        "TAKE_BACK"
+    ],
     "seller_instruction": [
         "ACCEPTS_CREDIT_CARD",
         "SEE_DESCRIPTION"

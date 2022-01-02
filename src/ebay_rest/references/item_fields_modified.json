@@ -8,6 +8,7 @@
             "ebay_item_available_coupons",
             "ebay_item_buying_options",
             "ebay_item_current_bid_price",
+            "ebay_item_eco_participation_fee",
             "ebay_item_estimated_availabilities",
             "ebay_item_image",
             "ebay_item_item_location",
@@ -22,6 +23,7 @@
             "ebay_item_qualified_programs",
             "ebay_item_return_terms",
             "ebay_item_seller",
+            "ebay_item_seller_custom_policies",
             "ebay_item_shipping_options",
             "ebay_item_ship_to_locations",
             "ebay_item_taxes",
@@ -440,6 +442,38 @@
         "shape": "array_of_enum"
     },
     "ebay_item_current_bid_price": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "converted_from_currency",
+                "name_sql": "converted_from_currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "converted_from_value",
+                "name_sql": "converted_from_value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            },
+            {
+                "name_python": "currency",
+                "name_sql": "currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "value",
+                "name_sql": "value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            }
+        ],
+        "required": false,
+        "shape": "container"
+    },
+    "ebay_item_eco_participation_fee": {
         "array_type_sql": null,
         "children": [],
         "fields": [
@@ -1253,6 +1287,32 @@
         ],
         "required": false,
         "shape": "container"
+    },
+    "ebay_item_seller_custom_policies": {
+        "array_type_sql": "SellerCustomPolicy",
+        "children": [],
+        "fields": [
+            {
+                "name_python": "description",
+                "name_sql": "description",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "label",
+                "name_sql": "label",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "type",
+                "name_sql": "type",
+                "required": false,
+                "type_sql": "seller_custom_policy_type"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
     },
     "ebay_item_seller_seller_legal_info": {
         "array_type_sql": null,
