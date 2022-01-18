@@ -7,7 +7,7 @@ import json
 import logging
 import os
 import sys
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlsplit, urlunsplit
 from urllib.request import urlretrieve
 import shutil
 from sys import platform
@@ -78,41 +78,66 @@ class Contract:
 
     def cache_contracts(self) -> None:
         for contract in self.contracts:
-            [category, call, link_href, file_name] = contract
+            [_category, _call, link_href, file_name] = contract
             destination = os.path.join(Locations.cache_path, file_name)
             urlretrieve(link_href, destination)     # if a destination file exists, it will be replaced
 
     def get_contracts(self, limit: int = 100) -> List[List[str]]:
         contracts = []
-        overview_links = []
-        base = 'https://developer.ebay.com/'
 
         logging.info('Find eBay OpenAPI 3 JSON contracts.')
 
-        soup = self.get_soup_via_link(urljoin(base, 'docs'))
-        for link in soup.find_all('a', href=lambda href: href and 'overview.html' in href):
-            overview_links.append(urljoin(base, link.get('href')))
-            if len(contracts) >= limit:
-                break
-        assert (len(overview_links) > 0), 'No contract overview pages found!'
+        for overview_link in self.get_overview_links():
 
-        for overview_link in overview_links:
+            # find the path to the json contract with the highest version number
             soup = self.get_soup_via_link(overview_link)
-            for link in soup.find_all('a', href=lambda href: href and 'oas3.json' in href, limit=1):
-                link_href = urljoin(base, link.get('href'))
-                parts = link_href.split('/')
-                category = parts[5]
-                call = parts[6].replace('-', '_')
-                file_name = parts[-1]
-                record = [category, call, link_href, file_name]
-                if ('beta' not in call) and (record not in contracts):
-                    contracts.append(record)
-                    logging.info(record)
+            paths = []
+            for link in soup.find_all('a', href=lambda href: href and 'oas' in href and '.json' in href):
+                path = link.get('href')
+                if path not in paths:
+                    paths.append(path)
+            assert (len(paths) > 0), f'{overview_link} should contain a contract!'
+            paths.sort()
+            path = paths[-1]
+
+            # get parts
+            path_split = path.split('/')
+            url_split = urlsplit(overview_link)
+
+            # make a record from the parts
+            category = path_split[-5]
+            call = path_split[-4].replace('-', '_')
+            link_href = urlunsplit((url_split.scheme, url_split.hostname, path, '', ''))
+            file_name = path_split[-1]
+            record = [category, call, link_href, file_name]
+            contracts.append(record)
+
             if len(contracts) >= limit:  # useful for expediting debugging with a reduced data set
                 break
-        assert (len(contracts) > 0), 'No contracts found on any overview pages!'
 
         return contracts
+
+    def get_overview_links(self):
+        logging.info('Get a list of links to overview pages; pages contain links to eBay OpenAPI 3 JSON contracts.')
+
+        overview_links = []
+        developer_url = 'https://developer.ebay.com/'
+        soup = self.get_soup_via_link(urljoin(developer_url, 'docs'))
+
+        for link in soup.find_all('a', href=lambda href: href and 'overview.html' in href):
+            path = link.get('href')
+            if path.split('/')[6] == 'static':  # filter atypical links
+                overview_link = urljoin(developer_url, path)
+                if overview_link not in overview_links:     # filter redundant links
+                    overview_links.append(overview_link)
+
+        # safety check
+        count = len(overview_links)
+        logging.info('Found {count} links to overview pages.')
+        assert (25 < count < 40), f'Having {count} contract overview links is unexpected!'
+
+        overview_links.sort()
+        return overview_links
 
     @staticmethod
     def patch_contracts() -> None:
@@ -170,7 +195,7 @@ class Contract:
         flows = {}
         scopes = {}
 
-        for [category, call, link_href, file_name] in self.contracts:
+        for [category, call, _link_href, file_name] in self.contracts:
             source = os.path.join(Locations.cache_path, file_name)
             with open(source) as file_handle:
                 try:
@@ -179,16 +204,50 @@ class Contract:
                     message = "Invalid JSON in " + source
                     logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
                     sys.exit(message)
+
+            # Get the contract's major version number
+            if 'swagger' in data:
+                (version_major, _version_minor) = data['swagger'].split('.')
+            elif 'openapi' in data:
+                (version_major, _version_minor, _version_tertiary) = data['openapi'].split('.')
+            else:
+                message = f"{source} has no OpenAPI version number."
+                logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
+                sys.exit(message)
+
             # Get base path
-            base_path = data['servers'][0]['variables']['basePath']['default']
+            if version_major == '2':
+                base_path = data['basePath']
+            elif version_major == '3':
+                base_path = data['servers'][0]['variables']['basePath']['default']
+            else:
+                message = f"{source} has unrecognized OpenAPI version {version_major}."
+                logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
+                sys.exit(message)
+
             # Get flows for this category_call
-            category_flows = (
-                data['components']['securitySchemes']['api_auth']['flows']
-            )
+            if version_major == '2':
+                category_flows = (
+                    data['securityDefinitions']
+                )
+            elif version_major == '3':
+                category_flows = (
+                    data['components']['securitySchemes']['api_auth']['flows']
+                )
+            else:
+                message = f"{source} has unrecognized OpenAPI version {version_major}."
+                logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
+                sys.exit(message)
             flow_by_scope = {}  # dict of scope: flow type
             for flow, flow_details in category_flows.items():
                 for scope in flow_details['scopes']:
-                    flow_by_scope[scope] = flow
+                    if flow == 'Authorization Code':    # needed by version_major 2
+                        value = 'authorizationCode'
+                    elif flow == 'Client Credentials':  # needed by version_major 2
+                        value = 'clientCredentials'
+                    else:
+                        value = flow
+                    flow_by_scope[scope] = value
 
             # Get scope for each individually path-ed call
             operation_id_scopes = {}
@@ -200,10 +259,14 @@ class Contract:
                     operation_id = method_dict['operationId'].lower()
                     security_list = method_dict.get('security', [])
                     if len(security_list) > 1:
-                        raise ValueError(
-                            'Expected zero/one security entry per path!')
+                        raise ValueError('Expected zero/one security entry per path!')
                     elif len(security_list) == 1:
-                        security = security_list[0]['api_auth']
+                        if 'api_auth' in security_list[0]:
+                            security = security_list[0]['api_auth']
+                        elif 'Authorization Code' in security_list[0]:    # needed by version_major 2
+                            security = security_list[0]['Authorization Code']
+                        else:
+                            raise ValueError("Expected 'api_auth' or 'Authorization Code' in security_list!'")
                     else:
                         security = None
                     if operation_id in operation_id_scopes:
@@ -681,7 +744,7 @@ def main() -> None:
 
     logging.info('For each contract generate and install a library.')
     for contract in c.contracts:
-        [category, call, link_href, file_name] = contract
+        [category, call, _link_href, file_name] = contract
         source = os.path.join(Locations.cache_path, file_name)
         name = f'{category}_{call}'
         command = f' generate -l python -o {Locations.cache_path}/{name} -DpackageName={name} -i {source}'

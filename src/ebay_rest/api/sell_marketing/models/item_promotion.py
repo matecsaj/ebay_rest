@@ -222,7 +222,7 @@ class ItemPromotion(object):
     def end_date(self):
         """Gets the end_date of this ItemPromotion.  # noqa: E501
 
-        The date and time the promotion ends in UTC format (<code>yyyy-MM-ddThh:mm:ssZ</code>). If this field is blank (<code>null</code>), it indicates the promotion has no end date. For display purposes, convert this time into the local time of the seller.  # noqa: E501
+        The date and time the promotion ends in UTC format (<code>yyyy-MM-ddThh:mm:ssZ</code>). For display purposes, convert this time into the local time of the seller.  # noqa: E501
 
         :return: The end_date of this ItemPromotion.  # noqa: E501
         :rtype: str
@@ -233,7 +233,7 @@ class ItemPromotion(object):
     def end_date(self, end_date):
         """Sets the end_date of this ItemPromotion.
 
-        The date and time the promotion ends in UTC format (<code>yyyy-MM-ddThh:mm:ssZ</code>). If this field is blank (<code>null</code>), it indicates the promotion has no end date. For display purposes, convert this time into the local time of the seller.  # noqa: E501
+        The date and time the promotion ends in UTC format (<code>yyyy-MM-ddThh:mm:ssZ</code>). For display purposes, convert this time into the local time of the seller.  # noqa: E501
 
         :param end_date: The end_date of this ItemPromotion.  # noqa: E501
         :type: str

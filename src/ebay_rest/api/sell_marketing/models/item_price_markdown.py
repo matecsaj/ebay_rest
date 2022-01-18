@@ -193,7 +193,7 @@ class ItemPriceMarkdown(object):
     def end_date(self):
         """Gets the end_date of this ItemPriceMarkdown.  # noqa: E501
 
-        The date and time the promotion ends, in UTC format (<code>yyyy-MM-ddThh:mm:ssZ</code>). The value supplied for <b>endDate</b> must be at least 24 hours after the value supplied for the <b>startDate</b> of the markdown promotion. If this field is blank (<code>null</code>), it indicates the promotion has no end date.  <br><br>For display purposes, convert this time into the local time of the seller.  <br><br><b>Max value:</b><ul><li><code>14</code> days for the AT, CH, DE, ES, FR, IE, IT, and UK, marketplaces.</li>  <li><code>45</code> days for all other marketplaces.</li></ul>  # noqa: E501
+        The date and time the promotion ends, in UTC format (<code>yyyy-MM-ddThh:mm:ssZ</code>). The value supplied for <b>endDate</b> must be at least 24 hours after the value supplied for the <b>startDate</b> of the markdown promotion.<br><br>For display purposes, convert this time into the local time of the seller.  <br><br><b>Max value:</b><ul><li><code>14</code> days for the AT, CH, DE, ES, FR, IE, IT, and UK, marketplaces.</li>  <li><code>45</code> days for all other marketplaces.</li></ul>  # noqa: E501
 
         :return: The end_date of this ItemPriceMarkdown.  # noqa: E501
         :rtype: str
@@ -204,7 +204,7 @@ class ItemPriceMarkdown(object):
     def end_date(self, end_date):
         """Sets the end_date of this ItemPriceMarkdown.
 
-        The date and time the promotion ends, in UTC format (<code>yyyy-MM-ddThh:mm:ssZ</code>). The value supplied for <b>endDate</b> must be at least 24 hours after the value supplied for the <b>startDate</b> of the markdown promotion. If this field is blank (<code>null</code>), it indicates the promotion has no end date.  <br><br>For display purposes, convert this time into the local time of the seller.  <br><br><b>Max value:</b><ul><li><code>14</code> days for the AT, CH, DE, ES, FR, IE, IT, and UK, marketplaces.</li>  <li><code>45</code> days for all other marketplaces.</li></ul>  # noqa: E501
+        The date and time the promotion ends, in UTC format (<code>yyyy-MM-ddThh:mm:ssZ</code>). The value supplied for <b>endDate</b> must be at least 24 hours after the value supplied for the <b>startDate</b> of the markdown promotion.<br><br>For display purposes, convert this time into the local time of the seller.  <br><br><b>Max value:</b><ul><li><code>14</code> days for the AT, CH, DE, ES, FR, IE, IT, and UK, marketplaces.</li>  <li><code>45</code> days for all other marketplaces.</li></ul>  # noqa: E501
 
         :param end_date: The end_date of this ItemPriceMarkdown.  # noqa: E501
         :type: str
