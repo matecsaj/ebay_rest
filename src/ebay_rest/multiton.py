@@ -1,5 +1,6 @@
 # Standard library imports
 import datetime
+from functools import update_wrapper
 from threading import Lock
 
 
@@ -36,6 +37,7 @@ class Multiton(object):
         # self.instances = list()
         # self.lock = threading.Lock()
         # self.cls = cls
+        update_wrapper(self, cls)  # from the wrapped class transfer over __name__, __module__ and __doc__
 
     def __call__(self, *args, **kwargs):
         with self.lock:
