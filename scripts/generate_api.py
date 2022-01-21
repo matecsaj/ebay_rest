@@ -11,7 +11,7 @@ from urllib.parse import urljoin, urlsplit, urlunsplit
 from urllib.request import urlretrieve
 import shutil
 from sys import platform
-from typing import Any, Dict, List, Optional, Tuple
+from typing import List, Tuple
 
 # Third party imports
 import bs4
@@ -67,6 +67,52 @@ class State:
             message = f"Can't write to {Locations.state_path_file}."
             logging.fatal(message)
             sys.exit(message)
+
+
+def ensure_cache():
+    # ensure that we have a cache
+    if os.path.isdir(Locations.cache_path):
+        # delete_folder_contents(Locations.cache_path)  # TODO flush the cache when we want a fresh start
+        pass
+    else:
+        os.mkdir(Locations.cache_path)
+
+
+def ensure_swagger() -> None:
+    s = State()  # skip if this was already done less than a day ago
+    key = 'tool_date_time'
+    dt_format = "%Y-%m-%dT%H:%M:%S.%fZ"
+    if s.get(key) is None or datetime.strptime(s.get(key), dt_format) < datetime.now() - timedelta(days=1):
+
+        if platform == 'darwin':  # OS X or MacOS
+            logging.info('Install or update the package manager named HomeBrew.')
+            os.system('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
+
+            if os.path.isfile('/usr/local/bin/swagger-codegen'):
+                logging.info('Upgrade the code generator from Swagger. https://swagger.io/')
+                os.system('brew upgrade swagger-codegen')
+            else:
+                logging.info('Install the code generator from Swagger. https://swagger.io/')
+                os.system('brew install swagger-codegen')
+
+            logging.info('Test the generator installation by invoking its help screen.')
+            os.system('/usr/local/bin/swagger-codegen -h')
+        elif platform == 'linux':  # Linux platform
+            # Don't install packages without user interaction.
+            if not os.path.isfile('swagger-codegen-cli.jar'):
+                os.system(
+                    'wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/'
+                    + 'swagger-codegen-cli/3.0.26/swagger-codegen-cli-3.0.26.jar '
+                    + '-O swagger-codegen-cli.jar'
+                )
+            logging.info('Test the generator installation by invoking its help screen.')
+            os.system('java -jar swagger-codegen-cli.jar -h')
+        else:
+            message = f'Please extend install_tools() for your {platform} platform.'
+            logging.fatal(message)
+            sys.exit(message)
+
+        s.set(key, datetime.now().strftime(dt_format))
 
 
 class Contracts:
@@ -189,27 +235,27 @@ class Contracts:
         # Parse the html content
         return BeautifulSoup(html_content, "html.parser")
 
-    def get_all_base_paths_and_flows(self) -> Tuple[dict, Dict[Any, dict], Dict[Any, Dict[Any, Optional[Any]]]]:
+    @staticmethod
+    def swagger_codegen(call, category, file_name):
+        logging.info('For each contract generate and install a library.')
+        source = os.path.join(Locations.cache_path, file_name)
+        name = f'{category}_{call}'
+        command = f' generate -l python -o {Locations.cache_path}/{name} -DpackageName={name} -i {source}'
+        if platform == 'darwin':  # OS X or MacOS
+            command = '/usr/local/bin/swagger-codegen' + command
+        elif platform == 'linux':  # Linux
+            command = 'java -jar swagger-codegen-cli.jar' + command
+        else:
+            assert False, f'Please extend main() for your {platform} platform.'
+        os.system(command)
+
+    @staticmethod
+    def get_one_base_paths_and_flows(call, category, file_name):
         """Process the JSON contract and extract three things for later use.
         1) the base_path for each category_call (e.g. buy_browse)
         2) the security flow for each scope in each category_call
         3) the scopes for each call in each category_call
         """
-        base_paths = {}
-        flows = {}
-        scopes = {}
-
-        for [category, call, _link_href, file_name] in self.contracts:
-            base_path, flow_by_scope, name, operation_id_scopes = \
-                self.get_one_base_paths_and_flows(call, category, file_name)
-            base_paths[name] = base_path
-            flows[name] = flow_by_scope
-            scopes[name] = operation_id_scopes
-
-        return base_paths, flows, scopes
-
-    @staticmethod
-    def get_one_base_paths_and_flows(call, category, file_name):
         source = os.path.join(Locations.cache_path, file_name)
         with open(source) as file_handle:
             try:
@@ -289,36 +335,6 @@ class Contracts:
         # look for this  "in": "header",
         name = category + '_' + call
         return base_path, flow_by_scope, name, operation_id_scopes
-
-
-def install_tools() -> None:
-    if platform == 'darwin':  # OS X or MacOS
-        logging.info('Install or update the package manager named HomeBrew.')
-        os.system('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
-
-        if os.path.isfile('/usr/local/bin/swagger-codegen'):
-            logging.info('Upgrade the code generator from Swagger. https://swagger.io/')
-            os.system('brew upgrade swagger-codegen')
-        else:
-            logging.info('Install the code generator from Swagger. https://swagger.io/')
-            os.system('brew install swagger-codegen')
-
-        logging.info('Test the generator installation by invoking its help screen.')
-        os.system('/usr/local/bin/swagger-codegen -h')
-    elif platform == 'linux':  # Linux platform
-        # Don't install packages without user interaction.
-        if not os.path.isfile('swagger-codegen-cli.jar'):
-            os.system(
-                'wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/'
-                + 'swagger-codegen-cli/3.0.26/swagger-codegen-cli-3.0.26.jar '
-                + '-O swagger-codegen-cli.jar'
-            )
-        logging.info('Test the generator installation by invoking its help screen.')
-        os.system('java -jar swagger-codegen-cli.jar -h')
-    else:
-        message = f'Please extend install_tools() for your {platform} platform.'
-        logging.fatal(message)
-        sys.exit(message)
 
 
 def delete_folder_contents(path_to_folder: str):
@@ -725,40 +741,25 @@ def main() -> None:
     # while debugging it is handy to change the log level from INFO to DEBUG
     logging.basicConfig(format='%(asctime)s %(levelname)s %(filename)s %(funcName)s: %(message)s', level=logging.DEBUG)
 
-    # ensure that we have a cache
-    if os.path.isdir(Locations.cache_path):
-        # delete_folder_contents(Locations.cache_path)  # TODO flush the cache when we want a fresh start
-        pass
-    else:
-        os.mkdir(Locations.cache_path)
-
-    s = State()  # Track the state of progress
-
-    # install tools if they are missing # TODO
-    # or, update tools if it has been more than a day
-    key = 'tool_date_time'
-    dt_format = "%Y-%m-%dT%H:%M:%S.%fZ"
-    if s.get(key) is None or datetime.strptime(s.get(key), dt_format) < datetime.now() - timedelta(days=1):
-        # install_tools()
-        s.set(key, datetime.now().strftime(dt_format))
+    ensure_cache()
+    ensure_swagger()
 
     c = Contracts(limit=100)  # hint, save time by reducing the limit while debugging
 
-    base_paths, flows, scopes = c.get_all_base_paths_and_flows()
+    base_paths = {}
+    flows = {}
+    scopes = {}
 
-    logging.info('For each contract generate and install a library.')
     for contract in c.contracts:
         [category, call, _link_href, file_name] = contract
-        source = os.path.join(Locations.cache_path, file_name)
-        name = f'{category}_{call}'
-        command = f' generate -l python -o {Locations.cache_path}/{name} -DpackageName={name} -i {source}'
-        if platform == 'darwin':  # OS X or MacOS
-            command = '/usr/local/bin/swagger-codegen' + command
-        elif platform == 'linux':  # Linux
-            command = 'java -jar swagger-codegen-cli.jar' + command
-        else:
-            assert False, f'Please extend main() for your {platform} platform.'
-        os.system(command)
+
+        Contracts.swagger_codegen(call, category, file_name)
+
+        base_path, flow_by_scope, name, operation_id_scopes = \
+            Contracts.get_one_base_paths_and_flows(call, category, file_name)
+        base_paths[name] = base_path
+        flows[name] = flow_by_scope
+        scopes[name] = operation_id_scopes
 
     destination = os.path.join(Locations.cache_path, 'base_paths.json')
     with open(destination, 'w') as outfile:
