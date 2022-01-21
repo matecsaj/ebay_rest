@@ -564,6 +564,15 @@ class DateTimeTests(unittest.TestCase):
                         msg="Unexpected return type from a DateTime member function.")
 
 
+class MultitonTests(unittest.TestCase):
+
+    def test_help(self):
+        """ Documentation from the wrapped class should be returned instead of Multiton. """
+        doc_string = API.__doc__
+        self.assertTrue('Multiton' not in doc_string and 'API' in doc_string,
+                        msg="Double-check functools.update_wrapper in mutition.py.")
+
+
 class ReferenceTests(unittest.TestCase):
 
     def test_enum_load(self):

@@ -3,14 +3,17 @@ from base64 import b64encode
 from datetime import datetime, timedelta, timezone
 from json import loads
 import logging
-from time import sleep
 from threading import Lock
+from time import sleep
 from typing import List
 from urllib.parse import parse_qs, urlencode
 
 # 3rd party library imports
 from requests import codes, post, Response
 from selenium import webdriver  # In README.md note the extra installation steps.
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import WebDriverException
 
 # Local imports
 from .date_time import DateTime
@@ -293,35 +296,47 @@ class UserToken:
         :param sign_in_url (str): The redirect URL for gaining user consent.
         :return code (str): Authorization code.
         """
-        delay = 5  # delay seconds to give the page an opportunity to render and the user to act on a possible captcha
 
         # open browser
         try:
             browser = webdriver.Chrome()
-        except Exception as exc:
+        except WebDriverException as exc:
             raise Error(number=96014, reason="ChromeDriver instantiation failure.", detail=exc.msg)
 
         # load the initial page
         browser.get(sign_in_url)
-        sleep(delay)
 
-        # fill in the username then click continue
-        form_userid = browser.find_element_by_name('userid')
-        form_userid.send_keys(self._user_id)
-        browser.find_element_by_id('signin-continue-btn').click()
-        sleep(delay)
+        try:
+            # fill in the username then click continue
+            # sometimes a captcha appears, so wait an extra 30-seconds for the user to fill it in
+            WebDriverWait(browser, 10+30).until(lambda x: x.find_element_by_name('userid')).send_keys(self._user_id)
+            WebDriverWait(browser, 10).until(lambda x: x.find_element_by_id('signin-continue-btn')).click()
 
-        # fill in the password then submit
-        form_pw = browser.find_element_by_name('pass')
-        form_pw.send_keys(self._user_password)
-        browser.find_element_by_id('sgnBt').submit()
-        sleep(delay)
+            # fill in the password then submit
+            sleep(5)    # Why? Perhaps an element I'm not aware of needs to finish rendering.
+            WebDriverWait(browser, 10).until(lambda x: x.find_element_by_name('pass')).send_keys(self._user_password)
+            WebDriverWait(browser, 10).until(lambda x: x.find_element_by_id('sgnBt')).submit()
 
-        # click "I agree"
-        browser.find_element_by_id('submit').click()
-        sleep(delay)
+        except NoSuchElementException:
+            raise Error(number=96015, reason="ChromeDriver element not found.", detail="Has eBay's website changed?")
+        except TimeoutException:
+            raise Error(number=96016, reason="ChromeDriver timeout.", detail='Slow computer or Internet?')
+
+        # in some countries an "I agree" prompt interjects
+        try:
+            element = WebDriverWait(browser, 10).until(lambda x: x.find_element_by_id('submit'))
+        except TimeoutException:
+            pass
+        else:
+            element.click()
 
         # get the result url and then close browser
+        try:
+            WebDriverWait(browser, 10).until(lambda x: x.find_element_by_id('thnk-wrap'))
+        except NoSuchElementException:
+            raise Error(number=96017, reason="ChromeDriver element not found.", detail="Has eBay's website changed?")
+        except TimeoutException:
+            raise Error(number=96018, reason="ChromeDriver timeout.", detail='Slow computer or Internet?')
         qs = browser.current_url.partition('?')[2]
         parsed = parse_qs(qs, encoding='utf-8')
         browser.quit()

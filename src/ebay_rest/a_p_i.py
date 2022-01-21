@@ -35,6 +35,8 @@ from .api import commerce_charity
 from .api.commerce_charity.rest import ApiException as CommerceCharityException
 from .api import commerce_identity
 from .api.commerce_identity.rest import ApiException as CommerceIdentityException
+from .api import commerce_media
+from .api.commerce_media.rest import ApiException as CommerceMediaException
 from .api import commerce_notification
 from .api.commerce_notification.rest import ApiException as CommerceNotificationException
 from .api import commerce_taxonomy
@@ -1107,47 +1109,15 @@ class API:
         except Error:
             raise
 
-    def buy_marketing_get_also_bought_by_product(self, **kwargs):  # noqa: E501
-        """get_also_bought_by_product  # noqa: E501
-
-        This method returns products that were also bought when shoppers bought the product specified in the request. Showing 'also bought' products inspires up-selling and cross-selling. You specify the product by one of the following: epid - eBay Product ID gtin - Global Trade Item Number (UPC, ISBN, EAN) brand - (brand name, such as Nike) plus mpn (Manufacturer's Part Number) Restrictions For a list of supported sites and other restrictions, see API Restrictions. Note: A maximum of 12 products are returned. The method will return up to 12 products, but it can be less than 12. If the number of products found is less than 12, the method will return all of the products matching the criteria.  # noqa: E501
-
-        :param str brand: The brand of the product. Restriction: This must be used along with mpn. Required: You must specify one epid, or one gtin, or one brand plus mpn pair.
-        :param str epid: The eBay product identifier of a product. Required: You must specify one epid, or one gtin, or one brand plus mpn pair.
-        :param str gtin: The unique Global Trade Item Number of the item as defined by https://www.gtin.info. This can be a UPC (Universal Product Code), EAN (European Article Number), or an ISBN (International Standard Book Number value. Required: You must specify one epid, or one gtin, or one brand plus mpn pair.
-        :param str mpn: The manufacturer part number of the product. Restriction: This must be used along with brand. Required: You must specify one epid, or one gtin, or one brand plus mpn pair.
-        :return: BestSellingProductResponse
-        """
-        try:
-            return self._method_single(buy_marketing.Configuration, '/buy/marketing/v1_beta', buy_marketing.MerchandisedProductApi, buy_marketing.ApiClient, 'get_also_bought_by_product', BuyMarketingException, False, ['buy.marketing', 'merchandised_product'], None, **kwargs)  # noqa: E501
-        except Error:
-            raise
-
-    def buy_marketing_get_also_viewed_by_product(self, **kwargs):  # noqa: E501
-        """get_also_viewed_by_product  # noqa: E501
-
-        This method returns products that were also viewed when shoppers viewed the product specified in the request. Showing 'also viewed' products encourages up-selling and cross-selling. You specify the product by one of the following: epid - eBay Product ID gtin - Global Trade Item Number (UPC, ISBN, EAN) brand (brand name, such as Nike) plus mpn (Manufacturer's Part Number) Restrictions For a list of supported sites and other restrictions, see API Restrictions. Note: A maximum of 12 products are returned. The method will return up to 12 products, but it can be less than 12. If the number of products found is less than 12, the method will return all of the products matching the criteria.  # noqa: E501
-
-        :param str brand: The brand of the product. Restriction: This must be used along with mpn. Required: You must specify one epid, or one gtin, or one brand plus mpn pair.
-        :param str epid: The eBay product identifier of a product. Required: You must specify one epid, or one gtin, or one brand plus mpn pair.
-        :param str gtin: The unique Global Trade Item Number of the item as defined by https://www.gtin.info. This can be a UPC (Universal Product Code), EAN (European Article Number), or an ISBN (International Standard Book Number value. Required: You must specify one epid, or one gtin, or one brand plus mpn pair.
-        :param str mpn: The manufacturer part number of the product. Restriction: This must be used along with brand.
-        :return: BestSellingProductResponse
-        """
-        try:
-            return self._method_single(buy_marketing.Configuration, '/buy/marketing/v1_beta', buy_marketing.MerchandisedProductApi, buy_marketing.ApiClient, 'get_also_viewed_by_product', BuyMarketingException, False, ['buy.marketing', 'merchandised_product'], None, **kwargs)  # noqa: E501
-        except Error:
-            raise
-
     def buy_marketing_get_merchandised_products(self, category_id, metric_name, **kwargs):  # noqa: E501
         """get_merchandised_products  # noqa: E501
 
-        This method returns an array of products based on the category and metric specified. This includes details of the product, such as the eBay product ID (EPID), title, and user reviews and ratings for the product. You can use the epid returned by this method in the Browse API search method to retrieve items for this product. Restrictions To test getMerchandisedProducts in Sandbox, you must use category ID 9355 and the response will be mock data. For a list of supported sites and other restrictions, see API Restrictions.  # noqa: E501
+        This method returns an array of products based on the category and metric specified. This includes details of the product, such as the eBay product ID (EPID), title, and user reviews and ratings for the product. You can use the <code>epid</code> returned by this method in the Browse API <b>search</b> method to retrieve items for this product. <h3><b>Restrictions </b></h3> <ul><li>To test <b> getMerchandisedProducts</b> in Sandbox, you must use category ID 9355 and the response will be mock data.  </li>   <li>For a list of supported sites and other restrictions, see <a href=\"/api-docs/buy/marketing/overview.html#API\">API Restrictions</a>.</li>  </ul>  # noqa: E501
 
-        :param str category_id: This query parameter limits the products returned to a specific eBay category. The list of eBay category IDs is not published and category IDs are not all the same across all the eBay marketplace. You can use the following techniques to find a category by site: Use the Category Changes page. Use the Taxonomy API. For details see Get Categories for Buy APIs. Use the Browse API and submit the following method to get the dominantCategoryId for an item. /buy/browse/v1/item_summary/search?q=keyword&amp;fieldgroups=ASPECT_REFINEMENTS Maximum: 1 Required: 1 (required)
-        :param str metric_name: This value filters the result set by the specified metric. Only products in this metric are returned. Currently, the only metric supported is BEST_SELLING. Default: BEST_SELLING Maximum: 1 Required: 1 (required)
-        :param str aspect_filter: The aspect name/value pairs used to further refine product results. For example: &nbsp;&nbsp;&nbsp;/buy/marketing/v1_beta/merchandised_product?category_id=31388&amp;metric_name=BEST_SELLING&amp;aspect_filter=Brand:Canon You can use the Browse API search method with the fieldgroups=ASPECT_REFINEMENTS field to return the aspects of a product. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/buy/marketing/types/gct:MarketingAspectFilter
-        :param str limit: This value specifies the maximum number of products to return in a result set. Note: Maximum value means the method will return up to that many products per set, but it can be less than this value. If the number of products found is less than this value, the method will return all of the products matching the criteria. Default: 8 Maximum: 100
+        :param str category_id: This query parameter limits the products returned to a specific eBay category.  <br /> <br />The list of eBay category IDs is not published and category IDs are not all the same across all the eBay marketplace. You can use the following techniques to find a category by site: <ul> <li>Use the <a href=\"https://pages.ebay.com/sellerinformation/news/categorychanges.html\" target=\"_blank\">Category Changes page</a>.</li> <li>Use the Taxonomy API. For details see <a href=\"/api-docs/buy/buy-categories.html\">Get Categories for Buy APIs</a>. </li>  <li>Use the Browse API and submit the following method to get the <b> dominantCategoryId</b> for an item. <br /><code>/buy/browse/v1/item_summary/search?q=<em>keyword</em>&fieldgroups=ASPECT_REFINEMENTS  </code></li></ul>  <b> Maximum: </b> 1 <br /> <b> Required: </b> 1  (required)
+        :param str metric_name: This value filters the result set by the specified metric. Only products in this metric are returned. Currently, the only metric supported is <code> BEST_SELLING</code>. <br /><br /><b> Default: </b>BEST_SELLING <br /> <b> Maximum: </b> 1 <br /> <b> Required: </b> 1 (required)
+        :param str aspect_filter: The aspect name/value pairs used to further refine product results. <br /><br /> For example: <br />&nbsp;&nbsp;&nbsp;<code>/buy/marketing/v1_beta/merchandised_product?category_id=31388&metric_name=BEST_SELLING&aspect_filter=Brand:Canon</code>  <br /><br />You can use the Browse API <b>search</b> method with the <code>fieldgroups=ASPECT_REFINEMENTS</code> field to return the aspects of a product. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/buy/marketing/types/gct:MarketingAspectFilter
+        :param str limit: This value specifies the maximum number of products to return in a result set. <br /> <br /><span class=\"tablenote\"> <b>Note:</b> Maximum value means the method will return up <em>to</em> that many products per set, but it can be less than this value. If the number of products found is less than this value, the method will return all of the products matching the criteria.</span>  <br /><br /><b> Default:</b> 8<br /><b> Maximum: </b>100
         :return: BestSellingProductResponse
         """
         try:
@@ -1410,6 +1380,49 @@ class API:
         """
         try:
             return self._method_single(commerce_identity.Configuration, '/commerce/identity/v1', commerce_identity.UserApi, commerce_identity.ApiClient, 'get_user', CommerceIdentityException, True, ['commerce.identity', 'user'], None, **kwargs)  # noqa: E501
+        except Error:
+            raise
+
+    def commerce_media_create_video(self, **kwargs):  # noqa: E501
+        """create_video  # noqa: E501
+
+        This method creates a video. When using this method, specify the <b>title</b>, <b>size</b>, and <b>classification</b> of the video to be created. <b>Description</b> is an optional field for this method.<br /><br /><span class=\"tablenote\"><span style=\"color:#478415\"><strong>Tip:</strong></span> See <a href=\"https://www.ebay.com/help/selling/listings/creating-managing-listings/add-video-to-listing?id=5272#section3\" target=\"_blank\">Adding a video to your listing</a> in the eBay Seller Center for details about video formatting requirements and restrictions, or visit the relevant eBay site help pages for the region in which the listings will be posted.</span><br /><br />When a video is successfully created, the method returns the HTTP Status Code <code>201 Created.</code>The method also returns the location response header containing the <b>video ID</b>, which you can use to retrieve the video.<br /><br /><span class=\"tablenote\"><span style=\"color:#004680\"><strong>Note:</strong></span> There is no ability to edit metadata on videos at this time. There is also no method to delete videos.</span><br /><br />To upload a created video, use the <a href=\" /api-docs/commerce/media/resources/video/methods/uploadVideo\" target=\"_blank\">uploadVideo</a> method.  # noqa: E501
+
+        :param CreateVideoRequest body:
+        :return: None
+        """
+        try:
+            return self._method_single(commerce_media.Configuration, '/commerce/media/v1_beta', commerce_media.VideoApi, commerce_media.ApiClient, 'create_video', CommerceMediaException, True, ['commerce.media', 'video'], None, **kwargs)  # noqa: E501
+        except Error:
+            raise
+
+    def commerce_media_get_video(self, video_id, **kwargs):  # noqa: E501
+        """get_video  # noqa: E501
+
+        This method retrieves a video's metadata and content given a specified <b>video ID</b>. The method returns the <b>title</b>, <b>size</b>, <b>classification</b>, <b>description</b>, <b>video ID</b>, <b>playList</b>, <b>status</b>, <b>status message</b> (if any), <b>expiration  date</b>, and <b>thumbnail</b> image of the retrieved video. <p>The video’s <b>title</b>, <b>size</b>, <b>classification</b>, and <b>description</b> are set using the <a href=\" /api-docs/commerce/media/resources/video/methods/createVideo\" target=\"_blank\">createVideo</a> method.</p> <p>The video's <b>playList</b> contains two URLs that link to instances of the streaming video based on the supported protocol.</p><p>The <b>status</b> field contains the current status of the video. After a video upload is successfully completed, the video's <b>status</b> will show as <code>PROCESSING</code> until the video reaches one of the terminal states of <code>LIVE</code>, <code>BLOCKED</code> or <code>PROCESSING_FAILED</code>.<p> If a video's processing fails, it could be because the file is corrupted, is too large, or its size doesn’t match what was provided in the metadata. Refer to the error messages to determine the cause of the video’s failure to upload.</p> <p> The <b>status message</b> will indicate why a video was blocked from uploading.</p><p>The video’s <b>expiration date</b> is automatically set to 365 days (one year) after the video’s initial creation.<p>The video's <b>thumbnail</b> image is automatically generated when the video is created.  # noqa: E501
+
+        :param str video_id: The <b>video ID</b> for the video to be retrieved. (required)
+        :return: Video
+        """
+        try:
+            return self._method_single(commerce_media.Configuration, '/commerce/media/v1_beta', commerce_media.VideoApi, commerce_media.ApiClient, 'get_video', CommerceMediaException, True, ['commerce.media', 'video'], video_id, **kwargs)  # noqa: E501
+        except Error:
+            raise
+
+    def commerce_media_upload_video(self, content_type, video_id, **kwargs):  # noqa: E501
+        """upload_video  # noqa: E501
+
+        This method associates the specified file with the specified <b>video ID</b> and uploads the input file. After the file has been uploaded the processing of the file begins.<br /><br /><span class=\"tablenote\"><span style=\"color:#004680\"><strong>Note:</strong></span> The size of the video to be uploaded must exactly match the size of the video's input stream that was set in the <a href=\" /api-docs/commerce/media/resources/video/methods/createVideo\" target=\"_blank\">createVideo</a> method. If the sizes do not match, the video will not upload successfully.</span><br /><br />When a video is successfully uploaded, it returns the HTTP Status Code <code>200 OK</code>.<br /><br />The status flow is <code>PENDING_UPLOAD</code> > <code>PROCESSING</code> > <code>LIVE</code>,  <code>PROCESSING_FAILED</code>, or <code>BLOCKED</code>. After a video upload is successfully completed, the status will show as <code>PROCESSING</code> until the video reaches one of the terminal states of <code>LIVE</code>, <code>BLOCKED</code>, or <code>PROCESSING_FAILED</code>. If the size information (in bytes) provided is incorrect, the API will throw an error.<br /><br /><span class=\"tablenote\"><span style=\"color:#478415\"><strong>Tip:</strong></span> See <a href=\"https://www.ebay.com/help/selling/listings/creating-managing-listings/add-video-to-listing?id=5272#section3\" target=\"_blank\">Adding a video to your listing</a> in the eBay Seller Center for details about video formatting requirements and restrictions, or visit the relevant eBay site help pages for the region in which the listings will be posted.</span><br /><br />To retrieve an uploaded video, use the <a href=\"/api-docs/commerce/media/resources/video/methods/getVideo\" target=\"_blank\">getVideo</a> method.  # noqa: E501
+
+        :param str content_type: Use this header to specify the content type for the upload. The Content-Type should be set to <code>application/octet-stream</code>. (required)
+        :param str video_id: The <b>video ID</b> for the uploaded video. (required)
+        :param InputStream body: The request payload for this method is the input stream for the video source. The input source must be an .mp4 file of the type MPEG-4 Part 10 or Advanced Video Coding (MPEG-4 AVC).
+        :param str content_length: Use this header to specify the content length for the upload. Use Content-Range: bytes {1}-{2}/{3} and Content-Length:{4} headers.<br /><br /><span class=\"tablenote\"><span style=\"color:#004680\"><strong>Note:</strong></span> This header is optional and is only required for <i>resumable</i> uploads (when an upload is interrupted and must be resumed from a certain point).</span>
+        :param str content_range: Use this header to specify the content range for the upload. The Content-Range should be of the following bytes ((?:[0-9]+-[0-9]+)|\\\\\\\\*)/([0-9]+|\\\\\\\\*) pattern.<br /><br /><span class=\"tablenote\"><span style=\"color:#004680\"><strong>Note:</strong></span> This header is optional and is only required for <i>resumable</i> uploads (when an upload is interrupted and must be resumed from a certain point).</span>
+        :return: None
+        """
+        try:
+            return self._method_single(commerce_media.Configuration, '/commerce/media/v1_beta', commerce_media.VideoApi, commerce_media.ApiClient, 'upload_video', CommerceMediaException, True, ['commerce.media', 'video'], (content_type, video_id), **kwargs)  # noqa: E501
         except Error:
             raise
 

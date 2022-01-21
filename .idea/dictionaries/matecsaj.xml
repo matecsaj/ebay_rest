@@ -11,6 +11,7 @@
       <w>eias</w>
       <w>endpos</w>
       <w>fulfillments</w>
+      <w>functools</w>
       <w>getitemconditionpolicies</w>
       <w>groupid</w>
       <w>itemsthatare</w>
@@ -18,6 +19,7 @@
       <w>lastmodifieddate</w>
       <w>manditories</w>
       <w>multiton</w>
+      <w>mutition</w>
       <w>onboarding</w>
       <w>orderfulfillmentstatus</w>
       <w>orgs</w>
@@ -27,6 +29,7 @@
       <w>startpos</w>
       <w>tablenote</w>
       <w>tful</w>
+      <w>thnk</w>
       <w>yyyymmdd</w>
     </words>
   </dictionary>
