@@ -56,7 +56,7 @@ class CategorySuggestionResponse(object):
     def category_suggestions(self):
         """Gets the category_suggestions of this CategorySuggestionResponse.  # noqa: E501
 
-        Contains details about one or more suggested categories that correspond to the provided keywords. The array of suggested categories is sorted in order of eBay's confidence of the relevance of each category (the first category is the most relevant). Important: This call is not supported in the Sandbox environment. It will return a response payload in which the categoryName fields contain random or boilerplate text regardless of the query submitted.  # noqa: E501
+        Contains details about one or more suggested categories that correspond to the provided keywords. The array of suggested categories is sorted in order of eBay's confidence of the relevance of each category (the first category is the most relevant).<br /><br /><span class=\"tablenote\"> <strong><span style=\"color:red\">Important:</span></strong> This call is not supported in the Sandbox environment. It will return a response payload in which the <b>categoryName</b> fields contain random or boilerplate text regardless of the query submitted. </span>  # noqa: E501
 
         :return: The category_suggestions of this CategorySuggestionResponse.  # noqa: E501
         :rtype: list[CategorySuggestion]
@@ -67,7 +67,7 @@ class CategorySuggestionResponse(object):
     def category_suggestions(self, category_suggestions):
         """Sets the category_suggestions of this CategorySuggestionResponse.
 
-        Contains details about one or more suggested categories that correspond to the provided keywords. The array of suggested categories is sorted in order of eBay's confidence of the relevance of each category (the first category is the most relevant). Important: This call is not supported in the Sandbox environment. It will return a response payload in which the categoryName fields contain random or boilerplate text regardless of the query submitted.  # noqa: E501
+        Contains details about one or more suggested categories that correspond to the provided keywords. The array of suggested categories is sorted in order of eBay's confidence of the relevance of each category (the first category is the most relevant).<br /><br /><span class=\"tablenote\"> <strong><span style=\"color:red\">Important:</span></strong> This call is not supported in the Sandbox environment. It will return a response payload in which the <b>categoryName</b> fields contain random or boilerplate text regardless of the query submitted. </span>  # noqa: E501
 
         :param category_suggestions: The category_suggestions of this CategorySuggestionResponse.  # noqa: E501
         :type: list[CategorySuggestion]
@@ -102,7 +102,7 @@ class CategorySuggestionResponse(object):
     def category_tree_version(self):
         """Gets the category_tree_version of this CategorySuggestionResponse.  # noqa: E501
 
-        The version of the category tree identified by categoryTreeId. It's a good idea to cache this value for comparison so you can determine if this category tree has been modified in subsequent calls.  # noqa: E501
+        The version of the category tree identified by <b>categoryTreeId</b>. It's a good idea to cache this value for comparison so you can determine if this category tree has been modified in subsequent calls.  # noqa: E501
 
         :return: The category_tree_version of this CategorySuggestionResponse.  # noqa: E501
         :rtype: str
@@ -113,7 +113,7 @@ class CategorySuggestionResponse(object):
     def category_tree_version(self, category_tree_version):
         """Sets the category_tree_version of this CategorySuggestionResponse.
 
-        The version of the category tree identified by categoryTreeId. It's a good idea to cache this value for comparison so you can determine if this category tree has been modified in subsequent calls.  # noqa: E501
+        The version of the category tree identified by <b>categoryTreeId</b>. It's a good idea to cache this value for comparison so you can determine if this category tree has been modified in subsequent calls.  # noqa: E501
 
         :param category_tree_version: The category_tree_version of this CategorySuggestionResponse.  # noqa: E501
         :type: str

@@ -51,7 +51,7 @@ class CompatibilityProperty(object):
     def name(self):
         """Gets the name of this CompatibilityProperty.  # noqa: E501
 
-        This is the actual name of the compatible vehicle property as it is known on the specified eBay marketplace and in the eBay category. This is the string value that should be used in the compatibility_property and filter query parameters of a getCompatibilityPropertyValues request URI. Typical vehicle properties are 'Make', 'Model', 'Year', 'Engine', and 'Trim', but will vary based on the eBay marketplace and the eBay category.  # noqa: E501
+        This is the actual name of the compatible vehicle property as it is known on the specified eBay marketplace and in the eBay category. This is the string value that should be used in the <strong>compatibility_property</strong> and <strong>filter</strong> query parameters of a <strong>getCompatibilityPropertyValues</strong> request URI. <br/><br/> Typical vehicle properties are 'Make', 'Model', 'Year', 'Engine', and 'Trim', but will vary based on the eBay marketplace and the eBay category.  # noqa: E501
 
         :return: The name of this CompatibilityProperty.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class CompatibilityProperty(object):
     def name(self, name):
         """Sets the name of this CompatibilityProperty.
 
-        This is the actual name of the compatible vehicle property as it is known on the specified eBay marketplace and in the eBay category. This is the string value that should be used in the compatibility_property and filter query parameters of a getCompatibilityPropertyValues request URI. Typical vehicle properties are 'Make', 'Model', 'Year', 'Engine', and 'Trim', but will vary based on the eBay marketplace and the eBay category.  # noqa: E501
+        This is the actual name of the compatible vehicle property as it is known on the specified eBay marketplace and in the eBay category. This is the string value that should be used in the <strong>compatibility_property</strong> and <strong>filter</strong> query parameters of a <strong>getCompatibilityPropertyValues</strong> request URI. <br/><br/> Typical vehicle properties are 'Make', 'Model', 'Year', 'Engine', and 'Trim', but will vary based on the eBay marketplace and the eBay category.  # noqa: E501
 
         :param name: The name of this CompatibilityProperty.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class CompatibilityProperty(object):
     def localized_name(self):
         """Gets the localized_name of this CompatibilityProperty.  # noqa: E501
 
-        This is the localized name of the compatible vehicle property. The language that is used will depend on the user making the call, or based on the language specified if the Content-Language HTTP header is used. In some instances, the string value in this field may be the same as the string in the corresponding name field.  # noqa: E501
+        This is the localized name of the compatible vehicle property. The language that is used will depend on the user making the call, or based on the language specified if the <strong>Content-Language</strong> HTTP header is used.<br/><br/>In some instances, the string value in this field may be the same as the string in the corresponding <strong>name</strong> field.  # noqa: E501
 
         :return: The localized_name of this CompatibilityProperty.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class CompatibilityProperty(object):
     def localized_name(self, localized_name):
         """Sets the localized_name of this CompatibilityProperty.
 
-        This is the localized name of the compatible vehicle property. The language that is used will depend on the user making the call, or based on the language specified if the Content-Language HTTP header is used. In some instances, the string value in this field may be the same as the string in the corresponding name field.  # noqa: E501
+        This is the localized name of the compatible vehicle property. The language that is used will depend on the user making the call, or based on the language specified if the <strong>Content-Language</strong> HTTP header is used.<br/><br/>In some instances, the string value in this field may be the same as the string in the corresponding <strong>name</strong> field.  # noqa: E501
 
         :param localized_name: The localized_name of this CompatibilityProperty.  # noqa: E501
         :type: str

@@ -69,53 +69,19 @@ class State:
             sys.exit(message)
 
 
-class Contract:
+class Contracts:
 
     def __init__(self, limit: int = 100) -> None:
-        self.contracts = self.get_contracts(limit=limit)
-        self.cache_contracts()
-        self.patch_contracts()
-
-    def cache_contracts(self) -> None:
-        for contract in self.contracts:
-            [_category, _call, link_href, file_name] = contract
-            destination = os.path.join(Locations.cache_path, file_name)
-            urlretrieve(link_href, destination)     # if a destination file exists, it will be replaced
-
-    def get_contracts(self, limit: int = 100) -> List[List[str]]:
-        contracts = []
-
-        logging.info('Find eBay OpenAPI 3 JSON contracts.')
+        self.contracts = []
 
         for overview_link in self.get_overview_links():
+            contract = self.get_contract(overview_link)
+            self.cache_contract(contract)
+            self.patch_contract(contract)
+            self.contracts.append(contract)
 
-            # find the path to the json contract with the highest version number
-            soup = self.get_soup_via_link(overview_link)
-            paths = []
-            for link in soup.find_all('a', href=lambda href: href and 'oas' in href and '.json' in href):
-                path = link.get('href')
-                if path not in paths:
-                    paths.append(path)
-            assert (len(paths) > 0), f'{overview_link} should contain a contract!'
-            paths.sort()
-            path = paths[-1]
-
-            # get parts
-            path_split = path.split('/')
-            url_split = urlsplit(overview_link)
-
-            # make a record from the parts
-            category = path_split[-5]
-            call = path_split[-4].replace('-', '_')
-            link_href = urlunsplit((url_split.scheme, url_split.hostname, path, '', ''))
-            file_name = path_split[-1]
-            record = [category, call, link_href, file_name]
-            contracts.append(record)
-
-            if len(contracts) >= limit:  # useful for expediting debugging with a reduced data set
+            if len(self.contracts) >= limit:  # useful for expediting debugging with a reduced data set
                 break
-
-        return contracts
 
     def get_overview_links(self):
         logging.info('Get a list of links to overview pages; pages contain links to eBay OpenAPI 3 JSON contracts.')
@@ -140,26 +106,46 @@ class Contract:
         return overview_links
 
     @staticmethod
-    def patch_contracts() -> None:
+    def cache_contract(contract):
+        [_category, _call, link_href, file_name] = contract
+        destination = os.path.join(Locations.cache_path, file_name)
+        urlretrieve(link_href, destination)  # if a destination file exists, it will be replaced
 
-        # In the Sell Fulfillment API, the model 'Address' is returned with attribute 'countryCode'.
-        # However, the JSON specifies 'country' instead, thus Swagger generates the wrong API.
-        file_location = os.path.join(Locations.cache_path, 'sell_fulfillment_v1_oas3.json')
-        try:
-            with open(file_location) as file_handle:
-                data = json.load(file_handle)
-                properties = data['components']['schemas']['Address']['properties']
-                if 'country' in properties:
-                    properties['countryCode'] = properties.pop('country')  # Warning, alphabetical key order spoiled.
-                    with open(file_location, 'w') as outfile:
-                        json.dump(data, outfile, sort_keys=True, indent=4)
-                else:
-                    logging.warning('Patching sell_fulfillment_v1_oas3.json is no longer needed.')
-        except FileNotFoundError:
-            logging.error(f"Can't open {file_location}.")
+    def get_contract(self, overview_link):
+        # find the path to the json contract with the highest version number
+        soup = self.get_soup_via_link(overview_link)
+        paths = []
+        for link in soup.find_all('a', href=lambda href: href and 'oas' in href and '.json' in href):
+            path = link.get('href')
+            if path not in paths:
+                paths.append(path)
+        assert (len(paths) > 0), f'{overview_link} should contain a contract!'
+        paths.sort()
+        path = paths[-1]
+        # get parts
+        path_split = path.split('/')
+        url_split = urlsplit(overview_link)
+        # make a record from the parts
+        category = path_split[-5]
+        call = path_split[-4].replace('-', '_')
+        link_href = urlunsplit((url_split.scheme, url_split.hostname, path, '', ''))
+        file_name = path_split[-1]
+        contract = [category, call, link_href, file_name]
+        return contract
 
+    @staticmethod
+    def patch_contract(contract) -> None:
+        [category, call, _link_href, file_name] = contract
+
+        if category == 'buy' and call == 'browse':
+            Contracts.patch_contract_buy_browse(file_name)
+        elif category == 'sell' and call == 'fulfillment':
+            Contracts.patch_contract_sell_fulfillment(file_name)
+
+    @staticmethod
+    def patch_contract_buy_browse(file_name):
         # A description in buy_browse_v1_oas3.json contains invalid escapes.
-        file_location = os.path.join(Locations.cache_path, 'buy_browse_v1_oas3.json')
+        file_location = os.path.join(Locations.cache_path, file_name)
         bad = '\\\n          \\'
         problem_fixed = True
         content = ''
@@ -178,6 +164,24 @@ class Contract:
                 file_handle.write(content)
 
     @staticmethod
+    def patch_contract_sell_fulfillment(file_name):
+        # In the Sell Fulfillment API, the model 'Address' is returned with attribute 'countryCode'.
+        # However, the JSON specifies 'country' instead, thus Swagger generates the wrong API.
+        file_location = os.path.join(Locations.cache_path, file_name)
+        try:
+            with open(file_location) as file_handle:
+                data = json.load(file_handle)
+                properties = data['components']['schemas']['Address']['properties']
+                if 'country' in properties:
+                    properties['countryCode'] = properties.pop('country')  # Warning, alphabetical key order spoiled.
+                    with open(file_location, 'w') as outfile:
+                        json.dump(data, outfile, sort_keys=True, indent=4)
+                else:
+                    logging.warning('Patching sell_fulfillment_v1_oas3.json is no longer needed.')
+        except FileNotFoundError:
+            logging.error(f"Can't open {file_location}.")
+
+    @staticmethod
     def get_soup_via_link(url: str) -> bs4.BeautifulSoup:
         # Make a GET request to fetch the raw HTML content
         html_content = requests.get(url).text
@@ -185,8 +189,8 @@ class Contract:
         # Parse the html content
         return BeautifulSoup(html_content, "html.parser")
 
-    def get_base_paths_and_flows(self) -> Tuple[dict, Dict[Any, dict], Dict[Any, Dict[Any, Optional[Any]]]]:
-        """Process the JSON contract and extract two things for later use.
+    def get_all_base_paths_and_flows(self) -> Tuple[dict, Dict[Any, dict], Dict[Any, Dict[Any, Optional[Any]]]]:
+        """Process the JSON contract and extract three things for later use.
         1) the base_path for each category_call (e.g. buy_browse)
         2) the security flow for each scope in each category_call
         3) the scopes for each call in each category_call
@@ -196,95 +200,95 @@ class Contract:
         scopes = {}
 
         for [category, call, _link_href, file_name] in self.contracts:
-            source = os.path.join(Locations.cache_path, file_name)
-            with open(source) as file_handle:
-                try:
-                    data = json.load(file_handle)
-                except ValueError:
-                    message = "Invalid JSON in " + source
-                    logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
-                    sys.exit(message)
-
-            # Get the contract's major version number
-            if 'swagger' in data:
-                (version_major, _version_minor) = data['swagger'].split('.')
-            elif 'openapi' in data:
-                (version_major, _version_minor, _version_tertiary) = data['openapi'].split('.')
-            else:
-                message = f"{source} has no OpenAPI version number."
-                logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
-                sys.exit(message)
-
-            # Get base path
-            if version_major == '2':
-                base_path = data['basePath']
-            elif version_major == '3':
-                base_path = data['servers'][0]['variables']['basePath']['default']
-            else:
-                message = f"{source} has unrecognized OpenAPI version {version_major}."
-                logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
-                sys.exit(message)
-
-            # Get flows for this category_call
-            if version_major == '2':
-                category_flows = (
-                    data['securityDefinitions']
-                )
-            elif version_major == '3':
-                category_flows = (
-                    data['components']['securitySchemes']['api_auth']['flows']
-                )
-            else:
-                message = f"{source} has unrecognized OpenAPI version {version_major}."
-                logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
-                sys.exit(message)
-            flow_by_scope = {}  # dict of scope: flow type
-            for flow, flow_details in category_flows.items():
-                for scope in flow_details['scopes']:
-                    if flow == 'Authorization Code':    # needed by version_major 2
-                        value = 'authorizationCode'
-                    elif flow == 'Client Credentials':  # needed by version_major 2
-                        value = 'clientCredentials'
-                    else:
-                        value = flow
-                    flow_by_scope[scope] = value
-
-            # Get scope for each individually path-ed call
-            operation_id_scopes = {}
-            for path, path_methods in data['paths'].items():
-                for method, method_dict in path_methods.items():
-                    if method not in ('get', 'post', 'put', 'delete'):
-                        # Consider only the HTTP request parts
-                        continue
-                    operation_id = method_dict['operationId'].lower()
-                    security_list = method_dict.get('security', [])
-                    if len(security_list) > 1:
-                        raise ValueError('Expected zero/one security entry per path!')
-                    elif len(security_list) == 1:
-                        if 'api_auth' in security_list[0]:
-                            security = security_list[0]['api_auth']
-                        elif 'Authorization Code' in security_list[0]:    # needed by version_major 2
-                            security = security_list[0]['Authorization Code']
-                        else:
-                            raise ValueError("Expected 'api_auth' or 'Authorization Code' in security_list!'")
-                    else:
-                        security = None
-                    if operation_id in operation_id_scopes:
-                        logging.warning('Duplicate operation!')
-                        logging.warning(path, path_methods)
-                        logging.warning(method, method_dict)
-                        raise ValueError('nope')
-                    operation_id_scopes[operation_id] = security
-
-            # TODO Get headers parameters
-            # look for this  "in": "header",
-
-            name = category + '_' + call
+            base_path, flow_by_scope, name, operation_id_scopes = \
+                self.get_one_base_paths_and_flows(call, category, file_name)
             base_paths[name] = base_path
             flows[name] = flow_by_scope
             scopes[name] = operation_id_scopes
 
         return base_paths, flows, scopes
+
+    @staticmethod
+    def get_one_base_paths_and_flows(call, category, file_name):
+        source = os.path.join(Locations.cache_path, file_name)
+        with open(source) as file_handle:
+            try:
+                data = json.load(file_handle)
+            except ValueError:
+                message = "Invalid JSON in " + source
+                logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
+                sys.exit(message)
+        # Get the contract's major version number
+        if 'swagger' in data:
+            (version_major, _version_minor) = data['swagger'].split('.')
+        elif 'openapi' in data:
+            (version_major, _version_minor, _version_tertiary) = data['openapi'].split('.')
+        else:
+            message = f"{source} has no OpenAPI version number."
+            logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
+            sys.exit(message)
+        # Get base path
+        if version_major == '2':
+            base_path = data['basePath']
+        elif version_major == '3':
+            base_path = data['servers'][0]['variables']['basePath']['default']
+        else:
+            message = f"{source} has unrecognized OpenAPI version {version_major}."
+            logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
+            sys.exit(message)
+        # Get flows for this category_call
+        if version_major == '2':
+            category_flows = (
+                data['securityDefinitions']
+            )
+        elif version_major == '3':
+            category_flows = (
+                data['components']['securitySchemes']['api_auth']['flows']
+            )
+        else:
+            message = f"{source} has unrecognized OpenAPI version {version_major}."
+            logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
+            sys.exit(message)
+        flow_by_scope = {}  # dict of scope: flow type
+        for flow, flow_details in category_flows.items():
+            for scope in flow_details['scopes']:
+                if flow == 'Authorization Code':  # needed by version_major 2
+                    value = 'authorizationCode'
+                elif flow == 'Client Credentials':  # needed by version_major 2
+                    value = 'clientCredentials'
+                else:
+                    value = flow
+                flow_by_scope[scope] = value
+        # Get scope for each individually path-ed call
+        operation_id_scopes = {}
+        for path, path_methods in data['paths'].items():
+            for method, method_dict in path_methods.items():
+                if method not in ('get', 'post', 'put', 'delete'):
+                    # Consider only the HTTP request parts
+                    continue
+                operation_id = method_dict['operationId'].lower()
+                security_list = method_dict.get('security', [])
+                if len(security_list) > 1:
+                    raise ValueError('Expected zero/one security entry per path!')
+                elif len(security_list) == 1:
+                    if 'api_auth' in security_list[0]:
+                        security = security_list[0]['api_auth']
+                    elif 'Authorization Code' in security_list[0]:  # needed by version_major 2
+                        security = security_list[0]['Authorization Code']
+                    else:
+                        raise ValueError("Expected 'api_auth' or 'Authorization Code' in security_list!'")
+                else:
+                    security = None
+                if operation_id in operation_id_scopes:
+                    logging.warning('Duplicate operation!')
+                    logging.warning(path, path_methods)
+                    logging.warning(method, method_dict)
+                    raise ValueError('nope')
+                operation_id_scopes[operation_id] = security
+        # TODO Get headers parameters
+        # look for this  "in": "header",
+        name = category + '_' + call
+        return base_path, flow_by_scope, name, operation_id_scopes
 
 
 def install_tools() -> None:
@@ -738,9 +742,9 @@ def main() -> None:
         # install_tools()
         s.set(key, datetime.now().strftime(dt_format))
 
-    c = Contract(limit=100)  # hint, save time by reducing the limit while debugging
+    c = Contracts(limit=100)  # hint, save time by reducing the limit while debugging
 
-    base_paths, flows, scopes = c.get_base_paths_and_flows()
+    base_paths, flows, scopes = c.get_all_base_paths_and_flows()
 
     logging.info('For each contract generate and install a library.')
     for contract in c.contracts:

@@ -51,7 +51,7 @@ class Category(object):
     def category_id(self):
         """Gets the category_id of this Category.  # noqa: E501
 
-        The unique identifier of the eBay category within its category tree. Note: The root node of a full default category tree includes the categoryId field, but its value should not be relied upon. It provides no useful information for application development.  # noqa: E501
+        The unique identifier of the eBay category within its category tree.<br /><br /><span class=\"tablenote\"> <strong>Note:</strong> The root node of a full default category tree includes the <b>categoryId</b> field, but its value should not be relied upon. It provides no useful information for application development. </span>  # noqa: E501
 
         :return: The category_id of this Category.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class Category(object):
     def category_id(self, category_id):
         """Sets the category_id of this Category.
 
-        The unique identifier of the eBay category within its category tree. Note: The root node of a full default category tree includes the categoryId field, but its value should not be relied upon. It provides no useful information for application development.  # noqa: E501
+        The unique identifier of the eBay category within its category tree.<br /><br /><span class=\"tablenote\"> <strong>Note:</strong> The root node of a full default category tree includes the <b>categoryId</b> field, but its value should not be relied upon. It provides no useful information for application development. </span>  # noqa: E501
 
         :param category_id: The category_id of this Category.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class Category(object):
     def category_name(self):
         """Gets the category_name of this Category.  # noqa: E501
 
-        The name of the category identified by categoryId.  # noqa: E501
+        The name of the category identified by <b>categoryId</b>.  # noqa: E501
 
         :return: The category_name of this Category.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class Category(object):
     def category_name(self, category_name):
         """Sets the category_name of this Category.
 
-        The name of the category identified by categoryId.  # noqa: E501
+        The name of the category identified by <b>categoryId</b>.  # noqa: E501
 
         :param category_name: The category_name of this Category.  # noqa: E501
         :type: str

@@ -74,7 +74,7 @@ class BaseCategoryTree(object):
     def category_tree_version(self):
         """Gets the category_tree_version of this BaseCategoryTree.  # noqa: E501
 
-        The version of the category tree identified by categoryTreeId. It's a good idea to cache this value for comparison so you can determine if this category tree has been modified in subsequent calls.  # noqa: E501
+        The version of the category tree identified by <b>categoryTreeId</b>. It's a good idea to cache this value for comparison so you can determine if this category tree has been modified in subsequent calls.  # noqa: E501
 
         :return: The category_tree_version of this BaseCategoryTree.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class BaseCategoryTree(object):
     def category_tree_version(self, category_tree_version):
         """Sets the category_tree_version of this BaseCategoryTree.
 
-        The version of the category tree identified by categoryTreeId. It's a good idea to cache this value for comparison so you can determine if this category tree has been modified in subsequent calls.  # noqa: E501
+        The version of the category tree identified by <b>categoryTreeId</b>. It's a good idea to cache this value for comparison so you can determine if this category tree has been modified in subsequent calls.  # noqa: E501
 
         :param category_tree_version: The category_tree_version of this BaseCategoryTree.  # noqa: E501
         :type: str

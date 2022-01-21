@@ -87,7 +87,7 @@ class CategoryTreeNode(object):
     def category_tree_node_level(self):
         """Gets the category_tree_node_level of this CategoryTreeNode.  # noqa: E501
 
-        The absolute level of the current category tree node in the hierarchy of its category tree. Note: The root node of any full category tree is always at level 0.  # noqa: E501
+        The absolute level of the current category tree node in the hierarchy of its category tree.    <br /><br />          <span class=\"tablenote\"> <strong>Note:</strong> The root node of any full category tree is always at level <code><b>0</b></code>. </span>  # noqa: E501
 
         :return: The category_tree_node_level of this CategoryTreeNode.  # noqa: E501
         :rtype: int
@@ -98,7 +98,7 @@ class CategoryTreeNode(object):
     def category_tree_node_level(self, category_tree_node_level):
         """Sets the category_tree_node_level of this CategoryTreeNode.
 
-        The absolute level of the current category tree node in the hierarchy of its category tree. Note: The root node of any full category tree is always at level 0.  # noqa: E501
+        The absolute level of the current category tree node in the hierarchy of its category tree.    <br /><br />          <span class=\"tablenote\"> <strong>Note:</strong> The root node of any full category tree is always at level <code><b>0</b></code>. </span>  # noqa: E501
 
         :param category_tree_node_level: The category_tree_node_level of this CategoryTreeNode.  # noqa: E501
         :type: int
@@ -110,7 +110,7 @@ class CategoryTreeNode(object):
     def child_category_tree_nodes(self):
         """Gets the child_category_tree_nodes of this CategoryTreeNode.  # noqa: E501
 
-        An array of one or more category tree nodes that are the immediate children of the current category tree node, as well as their children, recursively down to the leaf nodes. Returned only if the current category tree node is not a leaf node (the value of leafCategoryTreeNode is false).  # noqa: E501
+        An array of one or more category tree nodes that are the immediate children of the current category tree node, as well as their children, recursively down to the leaf nodes.    <br /><br /><i>Returned only if</i> the current category tree node is not a leaf node (the value of <b>leafCategoryTreeNode</b> is <code>false</code>).  # noqa: E501
 
         :return: The child_category_tree_nodes of this CategoryTreeNode.  # noqa: E501
         :rtype: list[CategoryTreeNode]
@@ -121,7 +121,7 @@ class CategoryTreeNode(object):
     def child_category_tree_nodes(self, child_category_tree_nodes):
         """Sets the child_category_tree_nodes of this CategoryTreeNode.
 
-        An array of one or more category tree nodes that are the immediate children of the current category tree node, as well as their children, recursively down to the leaf nodes. Returned only if the current category tree node is not a leaf node (the value of leafCategoryTreeNode is false).  # noqa: E501
+        An array of one or more category tree nodes that are the immediate children of the current category tree node, as well as their children, recursively down to the leaf nodes.    <br /><br /><i>Returned only if</i> the current category tree node is not a leaf node (the value of <b>leafCategoryTreeNode</b> is <code>false</code>).  # noqa: E501
 
         :param child_category_tree_nodes: The child_category_tree_nodes of this CategoryTreeNode.  # noqa: E501
         :type: list[CategoryTreeNode]
@@ -133,7 +133,7 @@ class CategoryTreeNode(object):
     def leaf_category_tree_node(self):
         """Gets the leaf_category_tree_node of this CategoryTreeNode.  # noqa: E501
 
-        A value of true indicates that the current category tree node is a leaf node (it has no child nodes). A value of false indicates that the current node has one or more child nodes, which are identified by the childCategoryTreeNodes array. Returned only if the value of this field is true.  # noqa: E501
+        A value of <code>true</code> indicates that the current category tree node is a leaf node (it has no child nodes). A value of <code>false</code> indicates that the current node has one or more child nodes, which are identified by the <b>childCategoryTreeNodes</b> array.    <br /><br />          <i>Returned only if</i> the value of this field is <code>true</code>.  # noqa: E501
 
         :return: The leaf_category_tree_node of this CategoryTreeNode.  # noqa: E501
         :rtype: bool
@@ -144,7 +144,7 @@ class CategoryTreeNode(object):
     def leaf_category_tree_node(self, leaf_category_tree_node):
         """Sets the leaf_category_tree_node of this CategoryTreeNode.
 
-        A value of true indicates that the current category tree node is a leaf node (it has no child nodes). A value of false indicates that the current node has one or more child nodes, which are identified by the childCategoryTreeNodes array. Returned only if the value of this field is true.  # noqa: E501
+        A value of <code>true</code> indicates that the current category tree node is a leaf node (it has no child nodes). A value of <code>false</code> indicates that the current node has one or more child nodes, which are identified by the <b>childCategoryTreeNodes</b> array.    <br /><br />          <i>Returned only if</i> the value of this field is <code>true</code>.  # noqa: E501
 
         :param leaf_category_tree_node: The leaf_category_tree_node of this CategoryTreeNode.  # noqa: E501
         :type: bool
@@ -156,7 +156,7 @@ class CategoryTreeNode(object):
     def parent_category_tree_node_href(self):
         """Gets the parent_category_tree_node_href of this CategoryTreeNode.  # noqa: E501
 
-        The href portion of the getCategorySubtree call that retrieves the subtree below the parent of this category tree node. Not returned if the current category tree node is the root node of its tree.  # noqa: E501
+        The href portion of the <b>getCategorySubtree</b> call that retrieves the subtree below the parent of this category tree node.    <br /><br />          <i>Not returned if</i> the current category tree node is the root node of its tree.  # noqa: E501
 
         :return: The parent_category_tree_node_href of this CategoryTreeNode.  # noqa: E501
         :rtype: str
@@ -167,7 +167,7 @@ class CategoryTreeNode(object):
     def parent_category_tree_node_href(self, parent_category_tree_node_href):
         """Sets the parent_category_tree_node_href of this CategoryTreeNode.
 
-        The href portion of the getCategorySubtree call that retrieves the subtree below the parent of this category tree node. Not returned if the current category tree node is the root node of its tree.  # noqa: E501
+        The href portion of the <b>getCategorySubtree</b> call that retrieves the subtree below the parent of this category tree node.    <br /><br />          <i>Not returned if</i> the current category tree node is the root node of its tree.  # noqa: E501
 
         :param parent_category_tree_node_href: The parent_category_tree_node_href of this CategoryTreeNode.  # noqa: E501
         :type: str

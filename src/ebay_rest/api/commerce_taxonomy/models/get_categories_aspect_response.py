@@ -79,7 +79,7 @@ class GetCategoriesAspectResponse(object):
     def category_tree_version(self):
         """Gets the category_tree_version of this GetCategoriesAspectResponse.  # noqa: E501
 
-        The version of the category tree that is returned in the categoryTreeId field.  # noqa: E501
+        The version of the category tree that is returned in the <b>categoryTreeId</b> field.  # noqa: E501
 
         :return: The category_tree_version of this GetCategoriesAspectResponse.  # noqa: E501
         :rtype: str
@@ -90,7 +90,7 @@ class GetCategoriesAspectResponse(object):
     def category_tree_version(self, category_tree_version):
         """Sets the category_tree_version of this GetCategoriesAspectResponse.
 
-        The version of the category tree that is returned in the categoryTreeId field.  # noqa: E501
+        The version of the category tree that is returned in the <b>categoryTreeId</b> field.  # noqa: E501
 
         :param category_tree_version: The category_tree_version of this GetCategoriesAspectResponse.  # noqa: E501
         :type: str

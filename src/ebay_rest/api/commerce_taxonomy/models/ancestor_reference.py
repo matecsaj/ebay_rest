@@ -61,7 +61,7 @@ class AncestorReference(object):
     def category_id(self):
         """Gets the category_id of this AncestorReference.  # noqa: E501
 
-        The unique identifier of the eBay ancestor category. Note: The root node of a full default category tree includes the categoryId field, but its value should not be relied upon. It provides no useful information for application development.  # noqa: E501
+        The unique identifier of the eBay ancestor category.      <br /><br />     <span class=\"tablenote\"> <strong>Note:</strong> The root node of a full default category tree includes the <b>categoryId</b> field, but its value should not be relied upon. It provides no useful information for application development. </span>  # noqa: E501
 
         :return: The category_id of this AncestorReference.  # noqa: E501
         :rtype: str
@@ -72,7 +72,7 @@ class AncestorReference(object):
     def category_id(self, category_id):
         """Sets the category_id of this AncestorReference.
 
-        The unique identifier of the eBay ancestor category. Note: The root node of a full default category tree includes the categoryId field, but its value should not be relied upon. It provides no useful information for application development.  # noqa: E501
+        The unique identifier of the eBay ancestor category.      <br /><br />     <span class=\"tablenote\"> <strong>Note:</strong> The root node of a full default category tree includes the <b>categoryId</b> field, but its value should not be relied upon. It provides no useful information for application development. </span>  # noqa: E501
 
         :param category_id: The category_id of this AncestorReference.  # noqa: E501
         :type: str
@@ -84,7 +84,7 @@ class AncestorReference(object):
     def category_name(self):
         """Gets the category_name of this AncestorReference.  # noqa: E501
 
-        The name of the ancestor category identified by categoryId.  # noqa: E501
+        The name of the ancestor category identified by <b>categoryId</b>.  # noqa: E501
 
         :return: The category_name of this AncestorReference.  # noqa: E501
         :rtype: str
@@ -95,7 +95,7 @@ class AncestorReference(object):
     def category_name(self, category_name):
         """Sets the category_name of this AncestorReference.
 
-        The name of the ancestor category identified by categoryId.  # noqa: E501
+        The name of the ancestor category identified by <b>categoryId</b>.  # noqa: E501
 
         :param category_name: The category_name of this AncestorReference.  # noqa: E501
         :type: str
@@ -107,7 +107,7 @@ class AncestorReference(object):
     def category_subtree_node_href(self):
         """Gets the category_subtree_node_href of this AncestorReference.  # noqa: E501
 
-        The href portion of the getCategorySubtree call that retrieves the subtree below the ancestor category node.  # noqa: E501
+        The href portion of the <b>getCategorySubtree</b> call that retrieves the subtree below the ancestor category node.  # noqa: E501
 
         :return: The category_subtree_node_href of this AncestorReference.  # noqa: E501
         :rtype: str
@@ -118,7 +118,7 @@ class AncestorReference(object):
     def category_subtree_node_href(self, category_subtree_node_href):
         """Sets the category_subtree_node_href of this AncestorReference.
 
-        The href portion of the getCategorySubtree call that retrieves the subtree below the ancestor category node.  # noqa: E501
+        The href portion of the <b>getCategorySubtree</b> call that retrieves the subtree below the ancestor category node.  # noqa: E501
 
         :param category_subtree_node_href: The category_subtree_node_href of this AncestorReference.  # noqa: E501
         :type: str
@@ -130,7 +130,7 @@ class AncestorReference(object):
     def category_tree_node_level(self):
         """Gets the category_tree_node_level of this AncestorReference.  # noqa: E501
 
-        The absolute level of the ancestor category node in the hierarchy of its category tree. Note: The root node of any full category tree is always at level 0.  # noqa: E501
+        The absolute level of the ancestor category node in the hierarchy of its category tree.<br /><br /><span class=\"tablenote\"> <strong>Note:</strong> The root node of any full category tree is always at level <code><b>0</b></code>. </span>  # noqa: E501
 
         :return: The category_tree_node_level of this AncestorReference.  # noqa: E501
         :rtype: int
@@ -141,7 +141,7 @@ class AncestorReference(object):
     def category_tree_node_level(self, category_tree_node_level):
         """Sets the category_tree_node_level of this AncestorReference.
 
-        The absolute level of the ancestor category node in the hierarchy of its category tree. Note: The root node of any full category tree is always at level 0.  # noqa: E501
+        The absolute level of the ancestor category node in the hierarchy of its category tree.<br /><br /><span class=\"tablenote\"> <strong>Note:</strong> The root node of any full category tree is always at level <code><b>0</b></code>. </span>  # noqa: E501
 
         :param category_tree_node_level: The category_tree_node_level of this AncestorReference.  # noqa: E501
         :type: int

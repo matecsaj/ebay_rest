@@ -51,7 +51,7 @@ class AspectValue(object):
     def localized_value(self):
         """Gets the localized_value of this AspectValue.  # noqa: E501
 
-        The localized value of this aspect. Note: This value is always localized for the specified marketplace.  # noqa: E501
+        The localized value of this aspect.<br /><br />          <span class=\"tablenote\"> <strong>Note:</strong> This value is always localized for the specified marketplace. </span>  # noqa: E501
 
         :return: The localized_value of this AspectValue.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class AspectValue(object):
     def localized_value(self, localized_value):
         """Sets the localized_value of this AspectValue.
 
-        The localized value of this aspect. Note: This value is always localized for the specified marketplace.  # noqa: E501
+        The localized value of this aspect.<br /><br />          <span class=\"tablenote\"> <strong>Note:</strong> This value is always localized for the specified marketplace. </span>  # noqa: E501
 
         :param localized_value: The localized_value of this AspectValue.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class AspectValue(object):
     def value_constraints(self):
         """Gets the value_constraints of this AspectValue.  # noqa: E501
 
-        Not returned if the value of the localizedValue field can always be selected for this aspect of the specified category. Contains a list of the dependencies that identify when the value of the localizedValue field is available for the current aspect. Each dependency specifies the values of another aspect of the same category (a control aspect), for which the current value of the current aspect can also be selected by the seller. Example: A shirt is available in three sizes and three colors, but only the Small and Medium sizes come in Green. Thus for the Color aspect, the value Green is constrained by its dependency on Size (the control aspect). Only when the Size aspect value is Small or Medium, can the Color aspect value of Green be selected by the seller.  # noqa: E501
+        <i>Not returned if</i> the value of the <b>localizedValue</b> field can always be selected for this aspect of the specified category.<br /><br />Contains a list of the dependencies that identify when the value of the <b>localizedValue</b> field is available for the current aspect. Each dependency specifies the values of another aspect of the same category (a <i>control</i> aspect), for which the current value of the current aspect can also be selected by the seller. <br /><br />          <b>Example:</b> A shirt is available in three sizes and three colors, but only the Small and Medium sizes come in Green. Thus for the Color aspect, the value Green is constrained by its dependency on Size (the control aspect). Only when the Size aspect value is Small or Medium, can the Color aspect value of Green be selected by the seller.  # noqa: E501
 
         :return: The value_constraints of this AspectValue.  # noqa: E501
         :rtype: list[ValueConstraint]
@@ -85,7 +85,7 @@ class AspectValue(object):
     def value_constraints(self, value_constraints):
         """Sets the value_constraints of this AspectValue.
 
-        Not returned if the value of the localizedValue field can always be selected for this aspect of the specified category. Contains a list of the dependencies that identify when the value of the localizedValue field is available for the current aspect. Each dependency specifies the values of another aspect of the same category (a control aspect), for which the current value of the current aspect can also be selected by the seller. Example: A shirt is available in three sizes and three colors, but only the Small and Medium sizes come in Green. Thus for the Color aspect, the value Green is constrained by its dependency on Size (the control aspect). Only when the Size aspect value is Small or Medium, can the Color aspect value of Green be selected by the seller.  # noqa: E501
+        <i>Not returned if</i> the value of the <b>localizedValue</b> field can always be selected for this aspect of the specified category.<br /><br />Contains a list of the dependencies that identify when the value of the <b>localizedValue</b> field is available for the current aspect. Each dependency specifies the values of another aspect of the same category (a <i>control</i> aspect), for which the current value of the current aspect can also be selected by the seller. <br /><br />          <b>Example:</b> A shirt is available in three sizes and three colors, but only the Small and Medium sizes come in Green. Thus for the Color aspect, the value Green is constrained by its dependency on Size (the control aspect). Only when the Size aspect value is Small or Medium, can the Color aspect value of Green be selected by the seller.  # noqa: E501
 
         :param value_constraints: The value_constraints of this AspectValue.  # noqa: E501
         :type: list[ValueConstraint]

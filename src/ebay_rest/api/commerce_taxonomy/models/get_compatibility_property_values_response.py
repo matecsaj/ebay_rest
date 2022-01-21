@@ -46,7 +46,7 @@ class GetCompatibilityPropertyValuesResponse(object):
     def compatibility_property_values(self):
         """Gets the compatibility_property_values of this GetCompatibilityPropertyValuesResponse.  # noqa: E501
 
-        This array contains all compatible vehicle property values that match the specified eBay marketplace, specified eBay category, and filters in the request. If the compatibility_property parameter value in the request is 'Trim', each value returned in each value field will be a different vehicle trim, applicable to any filters that are set in the filter query parameter of the request, and also based on the eBay marketplace and category specified in the call request.  # noqa: E501
+        This array contains all compatible vehicle property values that match the specified eBay marketplace, specified eBay category, and filters in the request. If the <strong>compatibility_property</strong> parameter value in the request is 'Trim', each value returned in each <strong>value</strong> field will be a different vehicle trim, applicable to any filters that are set in the <string>filter</string> query parameter of the request, and also based on the eBay marketplace and category specified in the call request.  # noqa: E501
 
         :return: The compatibility_property_values of this GetCompatibilityPropertyValuesResponse.  # noqa: E501
         :rtype: list[CompatibilityPropertyValue]
@@ -57,7 +57,7 @@ class GetCompatibilityPropertyValuesResponse(object):
     def compatibility_property_values(self, compatibility_property_values):
         """Sets the compatibility_property_values of this GetCompatibilityPropertyValuesResponse.
 
-        This array contains all compatible vehicle property values that match the specified eBay marketplace, specified eBay category, and filters in the request. If the compatibility_property parameter value in the request is 'Trim', each value returned in each value field will be a different vehicle trim, applicable to any filters that are set in the filter query parameter of the request, and also based on the eBay marketplace and category specified in the call request.  # noqa: E501
+        This array contains all compatible vehicle property values that match the specified eBay marketplace, specified eBay category, and filters in the request. If the <strong>compatibility_property</strong> parameter value in the request is 'Trim', each value returned in each <strong>value</strong> field will be a different vehicle trim, applicable to any filters that are set in the <string>filter</string> query parameter of the request, and also based on the eBay marketplace and category specified in the call request.  # noqa: E501
 
         :param compatibility_property_values: The compatibility_property_values of this GetCompatibilityPropertyValuesResponse.  # noqa: E501
         :type: list[CompatibilityPropertyValue]

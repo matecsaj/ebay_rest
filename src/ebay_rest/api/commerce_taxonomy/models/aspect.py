@@ -82,7 +82,7 @@ class Aspect(object):
     def aspect_values(self):
         """Gets the aspect_values of this Aspect.  # noqa: E501
 
-        A list of valid values for this aspect (for example: Red, Green, and Blue), along with any constraints on those values.  # noqa: E501
+        A list of valid values for this aspect (for example: <code>Red</code>, <code>Green</code>, and <code>Blue</code>), along with any constraints on those values.  # noqa: E501
 
         :return: The aspect_values of this Aspect.  # noqa: E501
         :rtype: list[AspectValue]
@@ -93,7 +93,7 @@ class Aspect(object):
     def aspect_values(self, aspect_values):
         """Sets the aspect_values of this Aspect.
 
-        A list of valid values for this aspect (for example: Red, Green, and Blue), along with any constraints on those values.  # noqa: E501
+        A list of valid values for this aspect (for example: <code>Red</code>, <code>Green</code>, and <code>Blue</code>), along with any constraints on those values.  # noqa: E501
 
         :param aspect_values: The aspect_values of this Aspect.  # noqa: E501
         :type: list[AspectValue]
@@ -105,7 +105,7 @@ class Aspect(object):
     def localized_aspect_name(self):
         """Gets the localized_aspect_name of this Aspect.  # noqa: E501
 
-        The localized name of this aspect (for example: Colour on the eBay UK site). Note: This name is always localized for the specified marketplace.  # noqa: E501
+        The localized name of this aspect (for example: <code>Colour</code> on the eBay UK site). <br /><br /><span class=\"tablenote\"> <strong>Note:</strong> This name is always localized for the specified marketplace. </span>  # noqa: E501
 
         :return: The localized_aspect_name of this Aspect.  # noqa: E501
         :rtype: str
@@ -116,7 +116,7 @@ class Aspect(object):
     def localized_aspect_name(self, localized_aspect_name):
         """Sets the localized_aspect_name of this Aspect.
 
-        The localized name of this aspect (for example: Colour on the eBay UK site). Note: This name is always localized for the specified marketplace.  # noqa: E501
+        The localized name of this aspect (for example: <code>Colour</code> on the eBay UK site). <br /><br /><span class=\"tablenote\"> <strong>Note:</strong> This name is always localized for the specified marketplace. </span>  # noqa: E501
 
         :param localized_aspect_name: The localized_aspect_name of this Aspect.  # noqa: E501
         :type: str

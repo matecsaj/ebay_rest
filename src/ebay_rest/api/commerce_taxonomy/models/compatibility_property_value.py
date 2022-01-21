@@ -46,7 +46,7 @@ class CompatibilityPropertyValue(object):
     def value(self):
         """Gets the value of this CompatibilityPropertyValue.  # noqa: E501
 
-        Each value field shows one applicable compatible vehicle property value. The values that are returned will depend on the specified eBay marketplace, specified eBay category, and filters in the request.  # noqa: E501
+        Each <strong>value</strong> field shows one applicable compatible vehicle property value. The values that are returned will depend on the specified eBay marketplace, specified eBay category, and filters in the request.  # noqa: E501
 
         :return: The value of this CompatibilityPropertyValue.  # noqa: E501
         :rtype: str
@@ -57,7 +57,7 @@ class CompatibilityPropertyValue(object):
     def value(self, value):
         """Sets the value of this CompatibilityPropertyValue.
 
-        Each value field shows one applicable compatible vehicle property value. The values that are returned will depend on the specified eBay marketplace, specified eBay category, and filters in the request.  # noqa: E501
+        Each <strong>value</strong> field shows one applicable compatible vehicle property value. The values that are returned will depend on the specified eBay marketplace, specified eBay category, and filters in the request.  # noqa: E501
 
         :param value: The value of this CompatibilityPropertyValue.  # noqa: E501
         :type: str
