@@ -10,6 +10,8 @@
 # Standard library imports
 import datetime
 import os
+import random
+import string
 from json import loads
 import unittest
 import warnings
@@ -459,7 +461,16 @@ class APIProductionSingleTests(unittest.TestCase):
         :return:
         """
         # TODO get this from ebay_rest.json
+        end_point = "https://e***********4.s*************.com/notification-endpoint"
         alert_email = '**@**.com'
+
+        # The verification token has to be between 32 and 80 characters,
+        # and allowed characters include alphanumeric characters, underscore (_),  and hyphen (-).
+        # No other characters are allowed.
+        # verification_token = "7*******-d***-***c-b***-***********a"
+        length = random.randint(32, 80)
+        allowed = string.ascii_letters + string.digits + '_' + '-'
+        verification_token = ''.join(random.choice(allowed) for i in range(length))
 
         topic_id = 'MARKETPLACE_ACCOUNT_DELETION'
 
@@ -480,7 +491,6 @@ class APIProductionSingleTests(unittest.TestCase):
             self.assertTrue(success)
 
         # ensure that an alert email is correctly configured
-
         try:
             result = self._api.commerce_notification_get_config()
         except Error as error:
@@ -496,18 +506,10 @@ class APIProductionSingleTests(unittest.TestCase):
             self.assertEqual(result['alert_email'], alert_email)
 
         # ensure that a destination is correctly configured
-
         # Note: The destination should be created and ready to respond with the expected
         # challengeResponse for the endpoint to be registered successfully.
         # Refer to the Notification API overview for more information.
         # https://developer.ebay.com/api-docs/commerce/notification/overview.html
-
-        # TODO get these from ebay_rest.json
-        # The endpoint for this destination.
-        end_point = "https://e***********4.s*************.com/notification-endpoint"
-        # The verification token associated with this endpoint.
-        verification_token = "7*******-d***-***c-b***-***********a"
-
         try:
             result = self._api.commerce_notification_get_destinations()
         except Error as error:
@@ -526,14 +528,18 @@ class APIProductionSingleTests(unittest.TestCase):
                 except Error as error:
                     self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
                 else:
-                    pass    # TODO
+                    todo = True
             else:
-                pass    # TODO
+                todo = True
 
         # ensure subscribed
         # TODO
 
         # get notices
+        # description: 'The Account Deletion payload.'
+        #     username, string, The username for the user.
+        #     userId, string, The immutable public userId for the user
+        #     eiasToken, string, The legacy eiasToken specific to the user
         try:
             result = self._api.commerce_notification_get_topic(topic_id)
         except Error as error:
@@ -541,11 +547,6 @@ class APIProductionSingleTests(unittest.TestCase):
         else:
             pass    # TODO
             self.assertTrue('Subscribe' not in result['description'])
-
-            # description: 'The Account Deletion payload.'
-            #     username, string, The username for the user.
-            #     userId, string, The immutable public userId for the user
-            #     eiasToken, string, The legacy eiasToken specific to the user
 
 
 class DateTimeTests(unittest.TestCase):
