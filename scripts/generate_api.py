@@ -35,11 +35,13 @@ class Locations:
     """ Where things are located in the locale file store. """
 
     target_directory: str = 'api'
-    target_path: str = '../src/ebay_rest/' + target_directory
-    cache_path: str = './' + target_directory + '_cache'
+    target_path: str = os.path.abspath('../src/ebay_rest/' + target_directory)
+    cache_path: str = os.path.abspath('./' + target_directory + '_cache')
 
     state_file: str = 'state.json'
-    state_path_file: str = os.path.join(cache_path, state_file)
+    state_path_file: str = os.path.abspath(os.path.join(cache_path, state_file))
+
+    file_ebay_rest = os.path.abspath('../src/ebay_rest/a_p_i.py')
 
 
 class State:
@@ -239,7 +241,7 @@ class Contracts:
     def swagger_codegen(call, category, file_name):
         logging.info('For each contract generate and install a library.')
         source = os.path.join(Locations.cache_path, file_name)
-        name = f'{category}_{call}'
+        name = Contracts.get_api_name(call, category)
         command = f' generate -l python -o {Locations.cache_path}/{name} -DpackageName={name} -i {source}'
         if platform == 'darwin':  # OS X or MacOS
             command = '/usr/local/bin/swagger-codegen' + command
@@ -248,6 +250,11 @@ class Contracts:
         else:
             assert False, f'Please extend main() for your {platform} platform.'
         os.system(command)
+
+    @staticmethod
+    def get_api_name(call, category):
+        name = f'{category}_{call}'
+        return name
 
     @staticmethod
     def get_one_base_paths_and_flows(call, category, file_name):
@@ -352,46 +359,37 @@ def delete_folder_contents(path_to_folder: str):
 class Process:
     """ The processing steps are split into bite sized methods. """
 
-    def __init__(self) -> None:
-        self.file_ebay_rest = os.path.abspath('../src/ebay_rest/a_p_i.py')
-        self.file_setup = os.path.abspath('../setup.cfg')
+    def __init__(self, contracts, base_paths, flows, scopes) -> None:
 
-        self.path_cache = os.path.abspath(Locations.cache_path)
-        self.path_final = os.path.abspath(Locations.target_path)
-        self.path_ebay_rest = os.path.abspath('../src/ebay_rest')
+        self.contracts = contracts
+        self.base_paths = base_paths
+        self.flows = flows
+        self.scopes = scopes
 
-        assert os.path.isdir(self.path_cache), \
-            'Fatal error. Prior, you must run the script generate_api_cache.py.'
-        for (_root, dirs, _files) in os.walk(self.path_cache):
-            dirs.sort()
-            self.names = dirs
-            break
+        self.names = []
+        for contract in self.contracts.contracts:
+            [category, call, _link_href, _file_name] = contract
+            self.names.append(Contracts.get_api_name(call, category))
 
-        with open(os.path.join(Locations.cache_path, 'base_paths.json')) as file_handle:
-            self.base_paths = json.load(file_handle)
-        with open(os.path.join(Locations.cache_path, 'flows.json')) as file_handle:
-            self.flows = json.load(file_handle)
-        with open(os.path.join(Locations.cache_path, 'scopes.json')) as file_handle:
-            self.scopes = json.load(file_handle)
-
-    def copy_libraries(self) -> None:
-        """ Copy essential parts of the generated eBay libraries to within the src folder. """
+    @staticmethod
+    def purge_existing():
         # purge what might already be there
-        for filename in os.listdir(self.path_final):
-            file_path = os.path.join(self.path_final, filename)
+        for filename in os.listdir(Locations.target_path):
+            file_path = os.path.join(Locations.target_path, filename)
             if os.path.isdir(file_path):
                 shutil.rmtree(file_path)
 
-        # copy each library's directory
+    def copy_libraries(self) -> None:
+        """ Copy essential parts of the generated eBay libraries to within the src folder. """
         for name in self.names:
-            src = os.path.join(self.path_cache, name, name)
-            dst = os.path.join(self.path_final, name)
+            src = os.path.join(Locations.cache_path, name, name)
+            dst = os.path.join(Locations.target_path, name)
             _destination = shutil.copytree(src, dst)
 
     def fix_imports(self) -> None:
         """ The deeper the directory, the more dots are needed to make the correct relative path. """
         for name in self.names:
-            self._fix_imports_recursive(name, '..', os.path.join(self.path_final, name))
+            self._fix_imports_recursive(name, '..', os.path.join(Locations.target_path, name))
 
     def _fix_imports_recursive(self, name: str, dots: str, path: str) -> None:
         """ This does the recursive part of fix_imports. """
@@ -432,7 +430,7 @@ class Process:
         end_tag = ']\n'
         requirements = set()
         for name in self.names:
-            src = os.path.join(self.path_cache, name, 'setup.py')
+            src = os.path.join(Locations.cache_path, name, 'setup.py')
             with open(src) as file:
                 for line in file:
                     if line.startswith(start_tag):
@@ -461,7 +459,7 @@ class Process:
             line = f'from .{Locations.target_directory}.{name}.rest import ApiException as {self._camel(name)}Exception'
             lines.append(line)
         insert_lines = '\n'.join(lines) + '\n'
-        self._put_anchored_lines(target_file=self.file_ebay_rest, anchor='er_imports', insert_lines=insert_lines)
+        self._put_anchored_lines(target_file=Locations.file_ebay_rest, anchor='er_imports', insert_lines=insert_lines)
 
     def get_methods(self) -> List[Tuple[str, str, str, str, str, str]]:
         """ For all modules, get all methods. """
@@ -469,7 +467,7 @@ class Process:
         # catalog the module files that contain all method implementations
         modules = []
         for name in self.names:
-            path = os.path.join(self.path_cache, name, name, 'api')
+            path = os.path.join(Locations.cache_path, name, name, 'api')
             for (root, _dirs, files) in os.walk(path):
                 for file in files:
                     if file != '__init__.py':
@@ -543,7 +541,7 @@ class Process:
         code = "\n"
         for method in methods:
             code += self._make_method(method)
-        self._put_anchored_lines(target_file=self.file_ebay_rest, anchor='er_methods', insert_lines=code)
+        self._put_anchored_lines(target_file=Locations.file_ebay_rest, anchor='er_methods', insert_lines=code)
 
     def _make_method(self, method: Tuple[str, str, str, str, str, str]) -> str:
         """ Return the code for one python method. """
@@ -655,7 +653,7 @@ class Process:
         # build a catalog that includes a hashed file signature
         catalog = []
         for name in self.names:
-            catalog.extend(self._remove_duplicates_recursive_catalog(name, os.path.join(self.path_final, name)))
+            catalog.extend(self._remove_duplicates_recursive_catalog(name, os.path.join(Locations.target_path, name)))
 
         # count how many times each signature appears
         signature_tally = {}
@@ -743,14 +741,15 @@ def main() -> None:
 
     ensure_cache()
     ensure_swagger()
+    Process.purge_existing()
 
-    c = Contracts(limit=100)  # hint, save time by reducing the limit while debugging
+    contracts = Contracts(limit=100)  # hint, save time by reducing the limit while debugging
 
     base_paths = {}
     flows = {}
     scopes = {}
 
-    for contract in c.contracts:
+    for contract in contracts.contracts:
         [category, call, _link_href, file_name] = contract
 
         Contracts.swagger_codegen(call, category, file_name)
@@ -761,18 +760,8 @@ def main() -> None:
         flows[name] = flow_by_scope
         scopes[name] = operation_id_scopes
 
-    destination = os.path.join(Locations.cache_path, 'base_paths.json')
-    with open(destination, 'w') as outfile:
-        json.dump(base_paths, outfile, sort_keys=True, indent=4)
-    destination = os.path.join(Locations.cache_path, 'flows.json')
-    with open(destination, 'w') as outfile:
-        json.dump(flows, outfile, sort_keys=True, indent=4)
-    destination = os.path.join(Locations.cache_path, 'scopes.json')
-    with open(destination, 'w') as outfile:
-        json.dump(scopes, outfile, sort_keys=True, indent=4)
-
     # Refrain from altering the sequence of the method calls because there may be dependencies.
-    p = Process()
+    p = Process(contracts, base_paths, flows, scopes)
     p.copy_libraries()
     p.fix_imports()
     p.merge_setup()
