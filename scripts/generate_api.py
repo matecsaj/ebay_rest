@@ -11,7 +11,7 @@ from urllib.parse import urljoin, urlsplit, urlunsplit
 from urllib.request import urlretrieve
 import shutil
 from sys import platform
-from typing import List, Tuple
+from typing import List, Tuple, Set
 
 # Third party imports
 import bs4
@@ -185,31 +185,8 @@ class Contracts:
     def patch_contract(contract) -> None:
         [category, call, _link_href, file_name] = contract
 
-        if category == 'buy' and call == 'browse':
-            Contracts.patch_contract_buy_browse(file_name)
-        elif category == 'sell' and call == 'fulfillment':
+        if category == 'sell' and call == 'fulfillment':
             Contracts.patch_contract_sell_fulfillment(file_name)
-
-    @staticmethod
-    def patch_contract_buy_browse(file_name):
-        # A description in buy_browse_v1_oas3.json contains invalid escapes.
-        file_location = os.path.join(Locations.cache_path, file_name)
-        bad = '\\\n          \\'
-        problem_fixed = True
-        content = ''
-        try:
-            with open(file_location) as file_handle:
-                content = file_handle.read()
-                if bad in content:
-                    problem_fixed = False
-                    content = content.replace(bad, '')
-        except FileNotFoundError:
-            logging.error(f"Can't open {file_location}.")
-        if problem_fixed:
-            logging.warning('Patching buy_browse_v1_oas3.json is no longer needed.')
-        else:
-            with open(file_location, 'w') as file_handle:
-                file_handle.write(content)
 
     @staticmethod
     def patch_contract_sell_fulfillment(file_name):
@@ -371,6 +348,20 @@ class Process:
             [category, call, _link_href, _file_name] = contract
             self.names.append(Contracts.get_api_name(call, category))
 
+    def do(self):
+        requirements = set()
+        includes = list()
+        for name in self.names:
+            self.copy_library(name)
+            self.fix_imports(name)
+            requirements.update(self.get_requirements(name))
+            includes.extend(self.get_includes(name))
+        self.insert_requirements(requirements)
+        self.insert_includes(includes)
+
+        # self.remove_duplicates()     # uncomment the method call when work on it resumes
+        self.make_methods(self.get_methods())
+
     @staticmethod
     def purge_existing():
         # purge what might already be there
@@ -379,17 +370,16 @@ class Process:
             if os.path.isdir(file_path):
                 shutil.rmtree(file_path)
 
-    def copy_libraries(self) -> None:
-        """ Copy essential parts of the generated eBay libraries to within the src folder. """
-        for name in self.names:
-            src = os.path.join(Locations.cache_path, name, name)
-            dst = os.path.join(Locations.target_path, name)
-            _destination = shutil.copytree(src, dst)
+    @staticmethod
+    def copy_library(name) -> None:
+        """ Copy the essential parts of the generated eBay library to within the src folder. """
+        src = os.path.join(Locations.cache_path, name, name)
+        dst = os.path.join(Locations.target_path, name)
+        _destination = shutil.copytree(src, dst)
 
-    def fix_imports(self) -> None:
+    def fix_imports(self, name) -> None:
         """ The deeper the directory, the more dots are needed to make the correct relative path. """
-        for name in self.names:
-            self._fix_imports_recursive(name, '..', os.path.join(Locations.target_path, name))
+        self._fix_imports_recursive(name, '..', os.path.join(Locations.target_path, name))
 
     def _fix_imports_recursive(self, name: str, dots: str, path: str) -> None:
         """ This does the recursive part of fix_imports. """
@@ -422,43 +412,49 @@ class Process:
 
             break
 
-    def merge_setup(self) -> None:
-        """ Merge the essential bits of the generated setup files into the master. """
+    @staticmethod
+    def get_requirements(name) -> Set[str]:
+        """ Get the library's requirements. """
 
-        # compile a list of all unique requirements from the generated libraries
+        # compile the set of all unique requirements from the generated library
         start_tag = 'REQUIRES = ['
         end_tag = ']\n'
         requirements = set()
-        for name in self.names:
-            src = os.path.join(Locations.cache_path, name, 'setup.py')
-            with open(src) as file:
-                for line in file:
-                    if line.startswith(start_tag):
-                        line = line.replace(start_tag, '')
-                        line = line.replace(end_tag, '')
-                        parts = line.split(', ')
-                        for part in parts:
-                            requirements.add(part)
-                        break
+        src = os.path.join(Locations.cache_path, name, 'setup.py')
+        with open(src) as file:
+            for line in file:
+                if line.startswith(start_tag):
+                    line = line.replace(start_tag, '')
+                    line = line.replace(end_tag, '')
+                    parts = line.split(', ')
+                    for part in parts:
+                        requirements.add(part)
+                    break
+        return requirements
+
+    @staticmethod
+    def insert_requirements(requirements):
+        """ Merge the required libraries into the master. """
         requirements = list(requirements)
         requirements.sort()
-
         # include these with the other requirements for our package
         insert_lines = ''
         for requirement in requirements:
             insert_lines += f'    {requirement}\n'
-        # TODO This was commented out because it caused an error. Is something like it truly needed?
+        # TODO Finish this and don't repeat things that are required for other reasons.
         # self._put_anchored_lines(target_file=self.file_setup, anchor='setup.cfg', insert_lines=insert_lines)
 
-    def make_includes(self) -> None:
-        """ Make includes for all the libraries. """
+    def get_includes(self, name) -> List[str]:
+        """ Get the includes for a library. """
+        includes = list()
+        includes.append(f'from .{Locations.target_directory} import {name}')
+        line = f'from .{Locations.target_directory}.{name}.rest import ApiException as {self._camel(name)}Exception'
+        includes.append(line)
+        return includes
 
-        lines = []
-        for name in self.names:
-            lines.append(f'from .{Locations.target_directory} import {name}')
-            line = f'from .{Locations.target_directory}.{name}.rest import ApiException as {self._camel(name)}Exception'
-            lines.append(line)
-        insert_lines = '\n'.join(lines) + '\n'
+    def insert_includes(self, includes):
+        """ Insert the includes for all libraries. """
+        insert_lines = '\n'.join(includes) + '\n'
         self._put_anchored_lines(target_file=Locations.file_ebay_rest, anchor='er_imports', insert_lines=insert_lines)
 
     def get_methods(self) -> List[Tuple[str, str, str, str, str, str]]:
@@ -761,13 +757,7 @@ def main() -> None:
         scopes[name] = operation_id_scopes
 
     # Refrain from altering the sequence of the method calls because there may be dependencies.
-    p = Process(contracts, base_paths, flows, scopes)
-    p.copy_libraries()
-    p.fix_imports()
-    p.merge_setup()
-    p.make_includes()
-    # p.remove_duplicates()     # uncomment the method call when work on it resumes
-    p.make_methods(p.get_methods())
+    Process(contracts, base_paths, flows, scopes).do()
 
     return
 
