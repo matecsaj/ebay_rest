@@ -336,32 +336,11 @@ def delete_folder_contents(path_to_folder: str):
 class Process:
     """ The processing steps are split into bite sized methods. """
 
-    def __init__(self, contracts, base_paths, flows, scopes) -> None:
+    def __init__(self, base_paths, flows, scopes) -> None:
 
-        self.contracts = contracts
         self.base_paths = base_paths
         self.flows = flows
         self.scopes = scopes
-
-    def do(self):
-        names = list()
-        requirements = set()
-        includes = list()
-        methods = list()
-
-        for contract in self.contracts.contracts:
-            [category, call, _link_href, _file_name] = contract
-            name = Contracts.get_api_name(call, category)
-            names.append(name)
-            self.copy_library(name)
-            self.fix_imports(name)
-            requirements.update(self.get_requirements(name))
-            includes.extend(self.get_includes(name))
-            methods.extend(self.get_methods(name))
-        self.insert_requirements(requirements)
-        self.insert_includes(includes)
-        self.insert_methods(methods)
-        # self.remove_duplicates(names)     # uncomment the method call when work on it resumes
 
     @staticmethod
     def purge_existing():
@@ -746,6 +725,11 @@ def main() -> None:
     flows = {}
     scopes = {}
 
+    names = list()
+    requirements = set()
+    includes = list()
+    methods = list()
+
     for contract in contracts.contracts:
         [category, call, _link_href, file_name] = contract
 
@@ -757,8 +741,20 @@ def main() -> None:
         flows[name] = flow_by_scope
         scopes[name] = operation_id_scopes
 
-    # Refrain from altering the sequence of the method calls because there may be dependencies.
-    Process(contracts, base_paths, flows, scopes).do()
+    p = Process(base_paths, flows, scopes)
+    for contract in contracts.contracts:
+        [category, call, _link_href, _file_name] = contract
+        name = Contracts.get_api_name(call, category)
+        names.append(name)
+        p.copy_library(name)
+        p.fix_imports(name)
+        requirements.update(p.get_requirements(name))
+        includes.extend(p.get_includes(name))
+        methods.extend(p.get_methods(name))
+    p.insert_requirements(requirements)
+    p.insert_includes(includes)
+    p.insert_methods(methods)
+    # p.remove_duplicates(names)     # uncomment the method call when work on it resumes
 
     return
 
