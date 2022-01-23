@@ -343,24 +343,25 @@ class Process:
         self.flows = flows
         self.scopes = scopes
 
-        self.names = []
-        for contract in self.contracts.contracts:
-            [category, call, _link_href, _file_name] = contract
-            self.names.append(Contracts.get_api_name(call, category))
-
     def do(self):
+        names = list()
         requirements = set()
         includes = list()
-        for name in self.names:
+        methods = list()
+
+        for contract in self.contracts.contracts:
+            [category, call, _link_href, _file_name] = contract
+            name = Contracts.get_api_name(call, category)
+            names.append(name)
             self.copy_library(name)
             self.fix_imports(name)
             requirements.update(self.get_requirements(name))
             includes.extend(self.get_includes(name))
+            methods.extend(self.get_methods(name))
         self.insert_requirements(requirements)
         self.insert_includes(includes)
-
-        # self.remove_duplicates()     # uncomment the method call when work on it resumes
-        self.make_methods(self.get_methods())
+        self.insert_methods(methods)
+        # self.remove_duplicates(names)     # uncomment the method call when work on it resumes
 
     @staticmethod
     def purge_existing():
@@ -457,20 +458,20 @@ class Process:
         insert_lines = '\n'.join(includes) + '\n'
         self._put_anchored_lines(target_file=Locations.file_ebay_rest, anchor='er_imports', insert_lines=insert_lines)
 
-    def get_methods(self) -> List[Tuple[str, str, str, str, str, str]]:
+    @staticmethod
+    def get_methods(name) -> List[Tuple[str, str, str, str, str, str]]:
         """ For all modules, get all methods. """
 
         # catalog the module files that contain all method implementations
         modules = []
-        for name in self.names:
-            path = os.path.join(Locations.cache_path, name, name, 'api')
-            for (root, _dirs, files) in os.walk(path):
-                for file in files:
-                    if file != '__init__.py':
-                        modules.append((name, file.replace('.py', ''), os.path.join(root, file)))
+        path = os.path.join(Locations.cache_path, name, name, 'api')
+        for (root, _dirs, files) in os.walk(path):
+            for file in files:
+                if file != '__init__.py':
+                    modules.append((name, file.replace('.py', ''), os.path.join(root, file)))
 
         # catalog all methods in all modules
-        methods = []
+        methods = list()
         method_marker_part = '_with_http_info'
         method_marker_whole = method_marker_part + '(self,'
         docstring_marker = '"""'
@@ -531,7 +532,7 @@ class Process:
 
         return methods
 
-    def make_methods(self, methods: List[Tuple[str, str, str, str, str, str]]) -> None:
+    def insert_methods(self, methods: List[Tuple[str, str, str, str, str, str]]) -> None:
         """ Make all the python methods and insert them where needed. """
 
         code = "\n"
@@ -642,13 +643,13 @@ class Process:
 
         return code
 
-    def remove_duplicates(self) -> None:
+    def remove_duplicates(self, names) -> None:
         """ Deduplicate identical .py files found in all APIs.
         for example when comments are ignored the rest.py files appear identical. """
 
         # build a catalog that includes a hashed file signature
         catalog = []
-        for name in self.names:
+        for name in names:
             catalog.extend(self._remove_duplicates_recursive_catalog(name, os.path.join(Locations.target_path, name)))
 
         # count how many times each signature appears
