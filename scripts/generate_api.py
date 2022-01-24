@@ -119,24 +119,16 @@ def ensure_swagger() -> None:
 
 class Contracts:
 
-    def __init__(self, limit: int = 100) -> None:
-        self.contracts = []
+    def __init__(self) -> None:
+        pass
 
-        for overview_link in self.get_overview_links():
-            contract = self.get_contract(overview_link)
-            self.cache_contract(contract)
-            self.patch_contract(contract)
-            self.contracts.append(contract)
-
-            if len(self.contracts) >= limit:  # useful for expediting debugging with a reduced data set
-                break
-
-    def get_overview_links(self):
+    @staticmethod
+    def get_overview_links():
         logging.info('Get a list of links to overview pages; pages contain links to eBay OpenAPI 3 JSON contracts.')
 
         overview_links = []
         developer_url = 'https://developer.ebay.com/'
-        soup = self.get_soup_via_link(urljoin(developer_url, 'docs'))
+        soup = Contracts.get_soup_via_link(urljoin(developer_url, 'docs'))
 
         for link in soup.find_all('a', href=lambda href: href and 'overview.html' in href):
             path = link.get('href')
@@ -159,9 +151,10 @@ class Contracts:
         destination = os.path.join(Locations.cache_path, file_name)
         urlretrieve(link_href, destination)  # if a destination file exists, it will be replaced
 
-    def get_contract(self, overview_link):
+    @staticmethod
+    def get_contract(overview_link: str):
         # find the path to the json contract with the highest version number
-        soup = self.get_soup_via_link(overview_link)
+        soup = Contracts.get_soup_via_link(overview_link)
         paths = []
         for link in soup.find_all('a', href=lambda href: href and 'oas' in href and '.json' in href):
             path = link.get('href')
@@ -731,12 +724,16 @@ def main() -> None:
     includes = list()
     methods = str()
 
-    contracts = Contracts(limit=100)  # hint, save time by reducing the limit while debugging
-    for contract in contracts.contracts:
+    limit = 100     # lower to expediting debugging with a reduced data set
+    counter = 0
+
+    overview_links = Contracts.get_overview_links()
+    for overview_link in overview_links:
+        contract = Contracts.get_contract(overview_link)
         [category, call, _link_href, file_name] = contract
-
         Contracts.swagger_codegen(call, category, file_name)
-
+        Contracts.cache_contract(contract)
+        Contracts.patch_contract(contract)
         name = Contracts.get_api_name(call, category)
         names.append(name)
         p = Process(name)
@@ -745,6 +742,10 @@ def main() -> None:
         requirements.update(p.get_requirements())
         includes.extend(p.get_includes())
         methods += p.get_methods(call, category, file_name)
+
+        counter += 1
+        if counter >= limit:
+            break
 
     Insert().do(requirements, includes, methods)
     # p.remove_duplicates(names)     # uncomment the method call when work on it resumes
