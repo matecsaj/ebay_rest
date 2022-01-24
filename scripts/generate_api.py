@@ -336,11 +336,8 @@ def delete_folder_contents(path_to_folder: str):
 class Process:
     """ The processing steps are split into bite sized methods. """
 
-    def __init__(self, base_paths, flows, scopes) -> None:
-
-        self.base_paths = base_paths
-        self.flows = flows
-        self.scopes = scopes
+    def __init__(self, name) -> None:
+        self.name = name
 
     @staticmethod
     def purge_existing():
@@ -350,16 +347,15 @@ class Process:
             if os.path.isdir(file_path):
                 shutil.rmtree(file_path)
 
-    @staticmethod
-    def copy_library(name) -> None:
+    def copy_library(self) -> None:
         """ Copy the essential parts of the generated eBay library to within the src folder. """
-        src = os.path.join(Locations.cache_path, name, name)
-        dst = os.path.join(Locations.target_path, name)
+        src = os.path.join(Locations.cache_path, self.name, self.name)
+        dst = os.path.join(Locations.target_path, self.name)
         _destination = shutil.copytree(src, dst)
 
-    def fix_imports(self, name) -> None:
+    def fix_imports(self) -> None:
         """ The deeper the directory, the more dots are needed to make the correct relative path. """
-        self._fix_imports_recursive(name, '..', os.path.join(Locations.target_path, name))
+        self._fix_imports_recursive(self.name, '..', os.path.join(Locations.target_path, self.name))
 
     def _fix_imports_recursive(self, name: str, dots: str, path: str) -> None:
         """ This does the recursive part of fix_imports. """
@@ -392,15 +388,14 @@ class Process:
 
             break
 
-    @staticmethod
-    def get_requirements(name) -> Set[str]:
+    def get_requirements(self) -> Set[str]:
         """ Get the library's requirements. """
 
         # compile the set of all unique requirements from the generated library
         start_tag = 'REQUIRES = ['
         end_tag = ']\n'
         requirements = set()
-        src = os.path.join(Locations.cache_path, name, 'setup.py')
+        src = os.path.join(Locations.cache_path, self.name, 'setup.py')
         with open(src) as file:
             for line in file:
                 if line.startswith(start_tag):
@@ -412,42 +407,25 @@ class Process:
                     break
         return requirements
 
-    @staticmethod
-    def insert_requirements(requirements):
-        """ Merge the required libraries into the master. """
-        requirements = list(requirements)
-        requirements.sort()
-        # include these with the other requirements for our package
-        insert_lines = ''
-        for requirement in requirements:
-            insert_lines += f'    {requirement}\n'
-        # TODO Finish this and don't repeat things that are required for other reasons.
-        # self._put_anchored_lines(target_file=self.file_setup, anchor='setup.cfg', insert_lines=insert_lines)
-
-    def get_includes(self, name) -> List[str]:
+    def get_includes(self) -> List[str]:
         """ Get the includes for a library. """
         includes = list()
-        includes.append(f'from .{Locations.target_directory} import {name}')
-        line = f'from .{Locations.target_directory}.{name}.rest import ApiException as {self._camel(name)}Exception'
+        includes.append(f'from .{Locations.target_directory} import {self.name}')
+        line = f'from .{Locations.target_directory}.{self.name}.rest import ApiException as ' \
+               f'{self._camel(self.name)}Exception'
         includes.append(line)
         return includes
 
-    def insert_includes(self, includes):
-        """ Insert the includes for all libraries. """
-        insert_lines = '\n'.join(includes) + '\n'
-        self._put_anchored_lines(target_file=Locations.file_ebay_rest, anchor='er_imports', insert_lines=insert_lines)
-
-    @staticmethod
-    def get_methods(name) -> List[Tuple[str, str, str, str, str, str]]:
-        """ For all modules, get all methods. """
+    def get_methods(self, call, category, file_name) -> str:
+        """ For a modules, get all code for it's methods. """
 
         # catalog the module files that contain all method implementations
         modules = []
-        path = os.path.join(Locations.cache_path, name, name, 'api')
+        path = os.path.join(Locations.cache_path, self.name, self.name, 'api')
         for (root, _dirs, files) in os.walk(path):
             for file in files:
                 if file != '__init__.py':
-                    modules.append((name, file.replace('.py', ''), os.path.join(root, file)))
+                    modules.append((self.name, file.replace('.py', ''), os.path.join(root, file)))
 
         # catalog all methods in all modules
         methods = list()
@@ -509,20 +487,19 @@ class Process:
 
         methods.sort()
 
-        return methods
-
-    def insert_methods(self, methods: List[Tuple[str, str, str, str, str, str]]) -> None:
-        """ Make all the python methods and insert them where needed. """
-
-        code = "\n"
+        code = str()
         for method in methods:
-            code += self._make_method(method)
-        self._put_anchored_lines(target_file=Locations.file_ebay_rest, anchor='er_methods', insert_lines=code)
+            code += self._make_method(method, call, category, file_name)
 
-    def _make_method(self, method: Tuple[str, str, str, str, str, str]) -> str:
+        return code
+
+    def _make_method(self, method: Tuple[str, str, str, str, str, str], call, category, file_name) -> str:
         """ Return the code for one python method. """
 
         (name, module, path, method, params, docstring) = method
+        base_path, flow_by_scope, name, operation_id_scopes = \
+            Contracts.get_one_base_paths_and_flows(call, category, file_name)
+
         ignore_long = '  # noqa: E501'  # flake8 compatible linters should not warn about long lines
 
         # Fix how the docstring expresses optional parameters then end up in **kwargs
@@ -549,12 +526,12 @@ class Process:
 
         # identify if this is a user_access_token routine
         operation_id = method.lower().replace('_', '')
-        scopes = self.scopes[name][operation_id]
+        scopes = operation_id_scopes[operation_id]
         if not scopes:
             # Assume application keys
             flows = {'clientCredentials'}
         else:
-            flows = {self.flows[name][scope] for scope in scopes}
+            flows = {flow_by_scope[scope] for scope in scopes}
         if len(flows) != 1:
             if operation_id in ('getitemconditionpolicies',) or module in ('subscription_api',):
                 # This usually uses the client credentials method
@@ -597,7 +574,7 @@ class Process:
         code += "        try:\n"
         code += f"            return self._method_{method_type}(" \
                 f"{name}.Configuration," \
-                f" '{self.base_paths[name]}'," \
+                f" '{base_path}'," \
                 f" {name}.{self._camel(module)}," \
                 f" {name}.ApiClient," \
                 f" '{method}'," \
@@ -676,6 +653,36 @@ class Process:
             camel += part.capitalize()
         return camel
 
+
+class Insert:
+
+    def do(self, requirements, includes, methods):
+        self.insert_requirements(requirements)
+        self.insert_includes(includes)
+        self.insert_methods(methods)
+
+    def insert_requirements(self, requirements):
+        """ Merge the required libraries into the master. """
+        requirements = list(requirements)
+        requirements.sort()
+        # include these with the other requirements for our package
+        insert_lines = ''
+        for requirement in requirements:
+            insert_lines += f'    {requirement}\n'
+        # TODO Finish this and don't repeat things that are required for other reasons.
+        # self._put_anchored_lines(target_file=self.file_setup, anchor='setup.cfg', insert_lines=insert_lines)
+
+    def insert_includes(self, includes):
+        """ Insert the includes for all libraries. """
+        insert_lines = '\n'.join(includes) + '\n'
+        self._put_anchored_lines(target_file=Locations.file_ebay_rest, anchor='er_imports', insert_lines=insert_lines)
+
+    def insert_methods(self, methods: str) -> None:
+        """ Make all the python methods and insert them where needed. """
+
+        methods = "\n" + methods
+        self._put_anchored_lines(target_file=Locations.file_ebay_rest, anchor='er_methods', insert_lines=methods)
+
     @staticmethod
     def _put_anchored_lines(target_file: str, anchor: str, insert_lines: str) -> None:
         """ In the file replace what is between anchors with new lines of code. """
@@ -719,41 +726,27 @@ def main() -> None:
     ensure_swagger()
     Process.purge_existing()
 
-    contracts = Contracts(limit=100)  # hint, save time by reducing the limit while debugging
-
-    base_paths = {}
-    flows = {}
-    scopes = {}
-
     names = list()
     requirements = set()
     includes = list()
-    methods = list()
+    methods = str()
 
+    contracts = Contracts(limit=100)  # hint, save time by reducing the limit while debugging
     for contract in contracts.contracts:
         [category, call, _link_href, file_name] = contract
 
         Contracts.swagger_codegen(call, category, file_name)
 
-        base_path, flow_by_scope, name, operation_id_scopes = \
-            Contracts.get_one_base_paths_and_flows(call, category, file_name)
-        base_paths[name] = base_path
-        flows[name] = flow_by_scope
-        scopes[name] = operation_id_scopes
-
-    p = Process(base_paths, flows, scopes)
-    for contract in contracts.contracts:
-        [category, call, _link_href, _file_name] = contract
         name = Contracts.get_api_name(call, category)
         names.append(name)
-        p.copy_library(name)
-        p.fix_imports(name)
-        requirements.update(p.get_requirements(name))
-        includes.extend(p.get_includes(name))
-        methods.extend(p.get_methods(name))
-    p.insert_requirements(requirements)
-    p.insert_includes(includes)
-    p.insert_methods(methods)
+        p = Process(name)
+        p.copy_library()
+        p.fix_imports()
+        requirements.update(p.get_requirements())
+        includes.extend(p.get_includes())
+        methods += p.get_methods(call, category, file_name)
+
+    Insert().do(requirements, includes, methods)
     # p.remove_duplicates(names)     # uncomment the method call when work on it resumes
 
     return
