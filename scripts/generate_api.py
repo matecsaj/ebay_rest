@@ -119,8 +119,14 @@ def ensure_swagger() -> None:
 
 class Contracts:
 
-    def __init__(self) -> None:
-        pass
+    def __init__(self, overview_link) -> None:
+        [self.category, self.call, self.link_href, self.file_name] = self.get_contract(overview_link)
+        self.name = self.get_api_name()
+        self.cache_contract()
+        self.patch_contract()
+        self.swagger_codegen()
+        self.copy_library()
+        self.fix_imports()
 
     @staticmethod
     def get_overview_links():
@@ -145,11 +151,9 @@ class Contracts:
         overview_links.sort()
         return overview_links
 
-    @staticmethod
-    def cache_contract(contract):
-        [_category, _call, link_href, file_name] = contract
-        destination = os.path.join(Locations.cache_path, file_name)
-        urlretrieve(link_href, destination)  # if a destination file exists, it will be replaced
+    def cache_contract(self):
+        destination = os.path.join(Locations.cache_path, self.file_name)
+        urlretrieve(self.link_href, destination)  # if a destination file exists, it will be replaced
 
     @staticmethod
     def get_contract(overview_link: str):
@@ -174,12 +178,10 @@ class Contracts:
         contract = [category, call, link_href, file_name]
         return contract
 
-    @staticmethod
-    def patch_contract(contract) -> None:
-        [category, call, _link_href, file_name] = contract
-
-        if category == 'sell' and call == 'fulfillment':
-            Contracts.patch_contract_sell_fulfillment(file_name)
+    def patch_contract(self) -> None:
+        """ If the contract from eBay has an error then patch it before generating code. """
+        if self.category == 'sell' and self.call == 'fulfillment':
+            Contracts.patch_contract_sell_fulfillment(self.file_name)
 
     @staticmethod
     def patch_contract_sell_fulfillment(file_name):
@@ -207,12 +209,10 @@ class Contracts:
         # Parse the html content
         return BeautifulSoup(html_content, "html.parser")
 
-    @staticmethod
-    def swagger_codegen(call, category, file_name):
+    def swagger_codegen(self):
         logging.info('For each contract generate and install a library.')
-        source = os.path.join(Locations.cache_path, file_name)
-        name = Contracts.get_api_name(call, category)
-        command = f' generate -l python -o {Locations.cache_path}/{name} -DpackageName={name} -i {source}'
+        source = os.path.join(Locations.cache_path, self.file_name)
+        command = f' generate -l python -o {Locations.cache_path}/{self.name} -DpackageName={self.name} -i {source}'
         if platform == 'darwin':  # OS X or MacOS
             command = '/usr/local/bin/swagger-codegen' + command
         elif platform == 'linux':  # Linux
@@ -221,19 +221,17 @@ class Contracts:
             assert False, f'Please extend main() for your {platform} platform.'
         os.system(command)
 
-    @staticmethod
-    def get_api_name(call, category):
-        name = f'{category}_{call}'
+    def get_api_name(self):
+        name = f'{self.category}_{self.call}'
         return name
 
-    @staticmethod
-    def get_one_base_paths_and_flows(call, category, file_name):
+    def get_one_base_paths_and_flows(self):
         """Process the JSON contract and extract three things for later use.
         1) the base_path for each category_call (e.g. buy_browse)
         2) the security flow for each scope in each category_call
         3) the scopes for each call in each category_call
         """
-        source = os.path.join(Locations.cache_path, file_name)
+        source = os.path.join(Locations.cache_path, self.file_name)
         with open(source) as file_handle:
             try:
                 data = json.load(file_handle)
@@ -310,27 +308,20 @@ class Contracts:
                 operation_id_scopes[operation_id] = security
         # TODO Get headers parameters
         # look for this  "in": "header",
-        name = category + '_' + call
+        name = self.category + '_' + self.call
         return base_path, flow_by_scope, name, operation_id_scopes
 
-
-def delete_folder_contents(path_to_folder: str):
-    list_dir = os.listdir(path_to_folder)
-    for filename in list_dir:
-        file_path = os.path.join(path_to_folder, filename)
-        if os.path.isfile(file_path) or os.path.islink(file_path):
-            logging.debug("deleting file:", file_path)
-            os.unlink(file_path)
-        elif os.path.isdir(file_path):
-            logging.debug("deleting folder:", file_path)
-            shutil.rmtree(file_path)
-
-
-class Process:
-    """ The processing steps are split into bite sized methods. """
-
-    def __init__(self, name) -> None:
-        self.name = name
+    @staticmethod
+    def delete_folder_contents(path_to_folder: str):
+        list_dir = os.listdir(path_to_folder)
+        for filename in list_dir:
+            file_path = os.path.join(path_to_folder, filename)
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                logging.debug("deleting file:", file_path)
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                logging.debug("deleting folder:", file_path)
+                shutil.rmtree(file_path)
 
     @staticmethod
     def purge_existing():
@@ -409,7 +400,7 @@ class Process:
         includes.append(line)
         return includes
 
-    def get_methods(self, call, category, file_name) -> str:
+    def get_methods(self) -> str:
         """ For a modules, get all code for it's methods. """
 
         # catalog the module files that contain all method implementations
@@ -482,16 +473,16 @@ class Process:
 
         code = str()
         for method in methods:
-            code += self._make_method(method, call, category, file_name)
+            code += self._make_method(method)
 
         return code
 
-    def _make_method(self, method: Tuple[str, str, str, str, str, str], call, category, file_name) -> str:
+    def _make_method(self, method: Tuple[str, str, str, str, str, str]) -> str:
         """ Return the code for one python method. """
 
         (name, module, path, method, params, docstring) = method
         base_path, flow_by_scope, name, operation_id_scopes = \
-            Contracts.get_one_base_paths_and_flows(call, category, file_name)
+            self.get_one_base_paths_and_flows()
 
         ignore_long = '  # noqa: E501'  # flake8 compatible linters should not warn about long lines
 
@@ -717,34 +708,22 @@ def main() -> None:
 
     ensure_cache()
     ensure_swagger()
-    Process.purge_existing()
+    Contracts.purge_existing()
 
     names = list()
     requirements = set()
     includes = list()
     methods = str()
 
-    limit = 100     # lower to expediting debugging with a reduced data set
-    counter = 0
-
-    overview_links = Contracts.get_overview_links()
-    for overview_link in overview_links:
-        contract = Contracts.get_contract(overview_link)
-        [category, call, _link_href, file_name] = contract
-        Contracts.swagger_codegen(call, category, file_name)
-        Contracts.cache_contract(contract)
-        Contracts.patch_contract(contract)
-        name = Contracts.get_api_name(call, category)
-        names.append(name)
-        p = Process(name)
-        p.copy_library()
-        p.fix_imports()
-        requirements.update(p.get_requirements())
-        includes.extend(p.get_includes())
-        methods += p.get_methods(call, category, file_name)
-
-        counter += 1
-        if counter >= limit:
+    limit = 100     # lower to expedite debugging with a reduced data set
+    for overview_link in Contracts.get_overview_links():
+        c = Contracts(overview_link)
+        names.append(c.name)
+        requirements.update(c.get_requirements())
+        includes.extend(c.get_includes())
+        methods += c.get_methods()
+        limit -= 1
+        if limit <= 0:
             break
 
     Insert().do(requirements, includes, methods)
