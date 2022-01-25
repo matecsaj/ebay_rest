@@ -383,7 +383,6 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         else:
             self.assertTrue('credit_count' in result)
 
-    @unittest.skip  # TODO solve the permission problem
     def test_sell_account(self):
         """
         It is required that the seller be opted in to Business Policies before being able to create live eBay
@@ -397,7 +396,10 @@ class APISandboxSingleSiteTests(unittest.TestCase):
 
             self._api.sell_account_opt_in_to_program(body=body)
         except Error as error:
-            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+            # Opting in more than once triggers an already exists error.
+            # Any other error is considered to be a unit test failure.
+            message = f'Unexpected Error {error.number} is {error.reason}  {error.detail}.'
+            self.assertTrue(error.reason == 'Conflict', message)
 
 
 class APIProductionSingleTests(unittest.TestCase):
@@ -445,6 +447,24 @@ class APIProductionSingleTests(unittest.TestCase):
                     if counter >= safety:
                         break
             self.assertTrue(counter == limit, f"Page boundary error on limit {limit}.")
+
+    def test_sell_inventory_get_inventory_locations(self):
+        """
+        See https://developer.ebay.com/api-docs/sell/inventory/static/overview.html
+        https://developer.ebay.com/api-docs/sell/inventory/resources/location/methods/getInventoryLocation
+
+        :return:
+        """
+        try:
+            for record in self._api.sell_inventory_get_inventory_locations():
+                if 'record' not in record:
+                    self.assertTrue('total' in record, f'Unexpected non-record{record}. Check refresh_token and ')
+                else:
+                    location = record['location']
+                    self.assertTrue('address' in location, f'Unexpected location record{record}.')
+                break   # while testing only consider the first result
+        except Error as error:
+            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
 
     @unittest.skip  # TODO finish it
     def test_marketplace_account_deletion(self):
