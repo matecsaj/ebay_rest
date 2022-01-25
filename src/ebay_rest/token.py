@@ -331,8 +331,9 @@ class UserToken:
             element.click()
 
         # get the result url and then close browser
+        # some people enable 2FA, so wait an extra 30-seconds for the user interaction
         try:
-            WebDriverWait(browser, 10).until(lambda x: x.find_element_by_id('thnk-wrap'))
+            WebDriverWait(browser, 10+30).until(lambda x: x.find_element_by_id('thnk-wrap'))
         except NoSuchElementException:
             raise Error(number=96017, reason="ChromeDriver element not found.", detail="Has eBay's website changed?")
         except TimeoutException:

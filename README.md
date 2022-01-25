@@ -95,6 +95,14 @@ print(help(Reference))
 * Avoid exhausting memory by making the call within a ["for" loop](https://docs.python.org/3/reference/compound_stmts.html#for).
 
 ##
+**Q:** What should I do when the browser pop-up happens? 
+
+**A:** Watch and be ready to act.
+* At the beginning, you may see a captcha; you need to complete it within 30-seconds.
+* Near the end, you may see a 2FA (two-factor authentication) prompt; you need to complete it within 30-seconds.
+* Otherwise, be patient, give the whole thing up to 2-minutes to complete, the pop-up will close automatically.
+
+##
 **Q:** Can the browser pop-up be stopped? 
 
 **A:** Reusing the result of the browser pop-up is possible. After running your program, check your terminal/console or [info level logger](https://docs.python.org/3.7/library/logging.html).
