@@ -1,9 +1,9 @@
 #!/usr/bin/python3
-# Run this script from the command-line get info from https://developer.ebay.com and generate code in the src folder.
+# Run this script from the command-line to get info from https://developer.ebay.com and generate code in the src folder.
 
 
 # Standard library imports
-from datetime import datetime, timedelta
+import datetime
 import hashlib
 import json
 import logging
@@ -625,7 +625,8 @@ def ensure_swagger() -> None:
     s = State()  # skip if this was already done less than a day ago
     key = 'tool_date_time'
     dt_format = "%Y-%m-%dT%H:%M:%S.%fZ"
-    if s.get(key) is None or datetime.strptime(s.get(key), dt_format) < datetime.now() - timedelta(days=1):
+    if s.get(key) is None or \
+            datetime.datetime.strptime(s.get(key), dt_format) < datetime.datetime.now() - datetime.timedelta(days=1):
 
         if sys.platform == 'darwin':  # OS X or MacOS
             logging.info('Install or update the package manager named HomeBrew.')
@@ -655,7 +656,7 @@ def ensure_swagger() -> None:
             logging.fatal(message)
             sys.exit(message)
 
-        s.set(key, datetime.now().strftime(dt_format))
+        s.set(key, datetime.datetime.now().strftime(dt_format))
 
 
 class Contracts:
