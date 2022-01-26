@@ -170,6 +170,12 @@
                 "type_sql": "bigint"
             },
             {
+                "name_python": "listing_marketplace_id",
+                "name_sql": "listing_marketplace_id",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
                 "name_python": "lot_size",
                 "name_sql": "lot_size",
                 "required": false,

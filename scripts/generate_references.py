@@ -8,13 +8,9 @@ Run this whenever the Response Fields in the following link change.
 """
 
 # Standard library imports
-import collections
-import os.path
-import pickle
 from re import findall
 from requests import get
 from string import ascii_uppercase
-from sys import getrecursionlimit, setrecursionlimit
 from json import dump
 from typing import Dict, List, Tuple, Union
 
@@ -22,24 +18,6 @@ from typing import Dict, List, Tuple, Union
 from bs4 import BeautifulSoup
 
 # Local imports
-
-
-class Cache:
-    """ Provide short-term persistence. """
-
-    def __init__(self, file_name: str) -> None:
-        self.__file_name = file_name + '.pkl'
-
-    def exists(self) -> bool:
-        return os.path.isfile(self.__file_name)
-
-    def get(self) -> collections:
-        with open(self.__file_name, 'rb') as f:
-            return pickle.load(f)
-
-    def put(self, python_object: collections):
-        with open(self.__file_name, 'wb') as f:
-            pickle.dump(python_object, f, pickle.HIGHEST_PROTOCOL)
 
 
 def add_enum(enums: Dict[str, list], new_enum: str) -> None:
@@ -56,10 +34,11 @@ def camel_to_snake_case(name: str) -> str:
     return result
 
 
-def change_type_per_full_field(containers: Dict[str, Dict[str, Union[bool, str, List[Dict[str, Union[str, None, bool]]], List[str]]]],  # noqa: E501
-                               full_field: str,
-                               new_type: str
-                               ) -> None:
+def change_type_per_full_field(
+        containers: Dict[str, Dict[str, Union[bool, str, List[Dict[str, Union[str, None, bool]]], List[str]]]],
+        full_field: str,
+        new_type: str
+        ) -> None:
     """ In a container change sql types when a partial field name matches. """
 
     found = False
@@ -73,10 +52,11 @@ def change_type_per_full_field(containers: Dict[str, Dict[str, Union[bool, str, 
         print(f'change_type_per_full_field failed on full_field {full_field} and new_type {new_type}.')
 
 
-def change_type_per_partial_field(containers: Dict[str, Dict[str, Union[bool, str, List[Dict[str, Union[str, None, bool]]], List[str]]]],   # noqa: E501
-                                  partial_field: str,
-                                  new_type: str
-                                  ) -> None:
+def change_type_per_partial_field(
+        containers: Dict[str, Dict[str, Union[bool, str, List[Dict[str, Union[str, None, bool]]], List[str]]]],
+        partial_field: str,
+        new_type: str
+        ) -> None:
     """ In a container change sql types when a partial field name matches. """
 
     found = False
@@ -95,6 +75,26 @@ def enum_name_converter(kind: str) -> str:
         return camel_to_snake_case(kind[:-4])
     else:
         print(f'{kind} does not end in Enum or Type.')
+
+
+def get_table_via_link(url):
+    soup = get_soup_via_link(url)
+    # find the rows regarding Response Fields.
+    table = soup.find('table')
+    rows = table.find_all('tr')
+    # put the rows into a table of data
+    data = []
+    for row in rows:
+        cols = row.find_all('td')
+        cols = [ele.text.strip() for ele in cols]
+        data.append([ele for ele in cols if ele])  # Get rid of empty values
+    return data
+
+
+def make_json_file(source: dict or list, name: str) -> None:
+    path = '../src/ebay_rest/references/'
+    with open(path + name + '.json', 'w') as outfile:
+        dump(source, outfile, sort_keys=True, indent=4)
 
 
 def get_enumerations(response_fields: List[Tuple[str, str, str, str]]) -> Dict[str, list]:
@@ -191,23 +191,12 @@ def get_response_fields() -> List[Tuple[str, str, str, str]]:
     return data
 
 
-def get_country_codes() -> dict:
+def generate_country_codes() -> None:
     print("Find the eBay's Country Codes.")
 
     # load the target webpage
     url = 'https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/countrycodetype.html'
-    soup = get_soup_via_link(url)
-
-    # find the rows regarding Response Fields.
-    table = soup.find('table')
-    rows = table.find_all('tr')
-
-    # put the rows into a table of data
-    data = []
-    for row in rows:
-        cols = row.find_all('td')
-        cols = [ele.text.strip() for ele in cols]
-        data.append([ele for ele in cols if ele])  # Get rid of empty values
+    data = get_table_via_link(url)
 
     # ignore header, convert to a dict & delete bad values
     dict_ = {}
@@ -219,26 +208,16 @@ def get_country_codes() -> dict:
         else:
             print("Bad value " + bad_value + "no longer needs to be deleted.")
 
-    return dict_
+    make_json_file(dict_, 'country_codes')
+    return
 
 
-def get_currency_codes() -> dict:
+def generate_currency_codes() -> None:
     print("Find the eBay's Currency Codes.")
 
     # load the target webpage
     url = 'https://developer.ebay.com/devzone/xml/docs/Reference/eBay/types/CurrencyCodeType.html'
-    soup = get_soup_via_link(url)
-
-    # find the rows regarding Response Fields.
-    table = soup.find('table')
-    rows = table.find_all('tr')
-
-    # put the rows into a table of data
-    data = []
-    for row in rows:
-        cols = row.find_all('td')
-        cols = [ele.text.strip() for ele in cols]
-        data.append([ele for ele in cols if ele])  # Get rid of empty values
+    data = get_table_via_link(url)
 
     # ignore header, convert to a dict & delete bad values
     dict_ = {}
@@ -253,26 +232,16 @@ def get_currency_codes() -> dict:
     for key in to_delete:
         del dict_[key]
 
-    return dict_
+    make_json_file(dict_, 'currency_codes')
+    return
 
 
-def get_global_id_values() -> List[Dict[str, str]]:
+def generate_global_id_values() -> None:
     print("Find the eBay's Global ID Values.")
 
     # load the target webpage
     url = 'https://developer.ebay.com/Devzone/merchandising/docs/CallRef/Enums/GlobalIdList.html'
-    soup = get_soup_via_link(url)
-
-    # find the rows regarding Response Fields.
-    table = soup.find('table')
-    rows = table.find_all('tr')
-
-    # put the rows into a table of data
-    data = []
-    for row in rows:
-        cols = row.find_all('td')
-        cols = [ele.text.strip() for ele in cols]
-        data.append([ele for ele in cols if ele])  # Get rid of empty values
+    data = get_table_via_link(url)
 
     # the header got messed up and is unlikely to change, so hard code it
     cols = ['global_id', 'language', 'territory', 'site_name', 'ebay_site_id']
@@ -285,10 +254,11 @@ def get_global_id_values() -> List[Dict[str, str]]:
             my_dict[column] = datum[index]
         dicts.append(my_dict)
 
-    return dicts
+    make_json_file(dicts, 'global_id_values')
+    return
 
 
-def get_marketplace_id_values() -> Dict[str, List[Dict[str, list]]]:
+def generate_marketplace_id_values() -> None:
     print("Find the eBay's Marketplace ID Values.")
 
     # load the target webpage
@@ -316,7 +286,7 @@ def get_marketplace_id_values() -> Dict[str, List[Dict[str, list]]]:
         locale_support = locale_support.replace(' ', '')
         locales = locale_support.split(',')  # convert comma separated locales to a list of strings
         sites = findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
-                           marketplace_site)
+                        marketplace_site)
         comments = findall('\(([^)]*)\)', marketplace_site)
         comment_shortage = len(locales) - len(comments)
         for _ in range(comment_shortage):
@@ -326,7 +296,8 @@ def get_marketplace_id_values() -> Dict[str, List[Dict[str, list]]]:
             my_locales[locale] = [sites[index], comments[index]]
         my_dict[marketplace_id] = [country, my_locales]
 
-    return my_dict
+    make_json_file(my_dict, 'marketplace_id_values')
+    return
 
 
 def get_soup_via_link(url: str) -> BeautifulSoup:
@@ -488,45 +459,10 @@ def subfield_next(dot_level: int, i: int, response_fields: List[Tuple[str, str, 
     return result
 
 
-def use_cache(should_use: bool,
-              object_name: str,
-              get_function: callable,
-              get_param: None or collections
-              ) -> collections:
-    # increase the safety limit because our object has too many elements for pickle
-    default = getrecursionlimit()
-    setrecursionlimit(default * 10)
-
-    # initialize a cache
-    cache = Cache(object_name)
-
-    # should we use the last object that was stored
-    if should_use and cache.exists():
-        obj = cache.get()
-
-    # otherwise, get a fresh object and then store it in case it will be needed next time
-    else:
-        if get_param:
-            obj = get_function(get_param)
-        else:
-            obj = get_function()
-        cache.put(obj)
-
-    setrecursionlimit(default)  # restore the default limit
-
-    return obj
-
-
-def main():
-    currency_codes = get_currency_codes()
-    country_codes = get_country_codes()
-    marketplace_id_values = get_marketplace_id_values()
-    global_id_values = get_global_id_values()
-
+def generate_containers_and_enums():
     # True will slowly get a fresh object --- False will quickly reload the last object
-    response_fields = use_cache(True, 'response_fields', get_response_fields, None)
-    enums = use_cache(True, 'enums', get_enumerations, response_fields)
-
+    response_fields = get_response_fields()
+    enums = get_enumerations(response_fields)
     # create containers from the response fields
     containers = make_containers(parent_is_array=False,
                                  parent_container_kind='item',
@@ -534,7 +470,6 @@ def main():
                                  table_parent='ebay',
                                  dot_level=0,
                                  response_fields=response_fields)
-
     # despite what the ebay documentation says, this field is not always provided
     found = False
     for field in containers['ebay_item_shipping_options']['fields']:
@@ -544,19 +479,15 @@ def main():
             break
     if not found:
         print('ebay_item_shipping_options was not found.')
-
     # Add a missing enum. To learn why this hack is required, search on 'CouponConstraint' in this python file.
     # add_enum(enums=enums, field_name='coupon_constraint')  TODO double check database to see if we should change this
-
     # SQL types are changed from varchar, when it would improve computational and storage efficiency
-
     # change that are possible by a simple partial field name match
     change_type_per_partial_field(containers, 'rating', 'numeric(1)')
     change_type_per_partial_field(containers, 'average_rating', 'numeric(2,1)')  # this must be after 'rating'
     change_type_per_partial_field(containers, '_date', 'timestamp with time zone')
     change_type_per_partial_field(containers, 'gtin', 'numeric(14,0)')
     change_type_per_partial_field(containers, 'percentage', 'numeric(4,1)')
-
     # change currency values to numeric(16,4)
     found = False
     for key in containers:
@@ -573,20 +504,16 @@ def main():
                     found = True
     if not found:
         print('No currency values were found.')
-
     # change complete field names that are always integers
     for field_name in ('category_id', 'condition_id', 'identifier_value', 'item_group_id'):
         change_type_per_full_field(containers, field_name, 'int')
-
     change_type_per_full_field(containers, 'legacy_item_id', 'bigint')
-
     # change complete field names that would make ideal enums
     for field_name in ('age_group', 'condition', 'domain', 'energy_efficiency_class', 'gender', 'identifier_type',
                        'region_id', 'region_name', 'seller_account_type', 'shipping_carrier_code',
                        'shipping_cost_type', 'size_system', 'subdomain', 'tax_jurisdiction_id', 'trademark_symbol'):
         change_type_per_full_field(containers, field_name, field_name)
         add_enum(enums, field_name)
-
     # handle generic sounding field names, that would make good enums
     for (container_name, field_name, new_type) in (
             ('ebay_item_authenticity_verification', 'description', 'authenticity_verification_description'),
@@ -602,35 +529,31 @@ def main():
                 break
         if not found:
             print(f'Handle generic sounding field names failed on {container_name}, {field_name} and {new_type}.')
-
     containers['ebay_item_product_gtins']['array_type_sql'] = 'numeric(14,0)'
     containers['ebay_item_product_gtins']['shape'] = 'array_of_type'
-
     for (container_name, new_enum) in (
             ('ebay_item_buying_options', 'buying_options'),
             ('ebay_item_qualified_programs', 'qualified_programs')):
         containers[container_name]['array_type_sql'] = new_enum
         containers[container_name]['shape'] = 'array_of_enum'
         add_enum(enums, new_enum)
-
     # safety check
     for key in containers:
         if containers[key]['shape'] not in ('container', 'array_of_type', 'array_of_enum', 'array_of_container'):
             print(f"Container {key} has unexpected shape {containers[key]['shape']}.")
 
-    # dump all the .json files
-    path = '../src/ebay_rest/references/'
-    sources_names = [
-        (country_codes, 'country_codes'),
-        (currency_codes, 'currency_codes'),
-        (global_id_values, 'global_id_values'),
-        (containers, 'item_fields_modified'),
-        (enums, 'item_enums_modified'),
-        (marketplace_id_values, 'marketplace_id_values'),
-    ]
-    for (source, name) in sources_names:
-        with open(path + name + '.json', 'w') as outfile:
-            dump(source, outfile, sort_keys=True, indent=4)
+    make_json_file(containers, 'item_fields_modified')
+    make_json_file(enums, 'item_enums_modified')
+
+    return
+
+
+def main():
+    generate_containers_and_enums()
+    generate_country_codes()
+    generate_currency_codes()
+    generate_global_id_values()
+    generate_marketplace_id_values()
 
     return
 
