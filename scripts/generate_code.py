@@ -292,9 +292,9 @@ def generate_marketplace_id_values() -> None:
         [marketplace_id, country, marketplace_site, locale_support] = datum
         locale_support = locale_support.replace(' ', '')
         locales = locale_support.split(',')  # convert comma separated locales to a list of strings
-        sites = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
+        sites = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|%[0-9a-fA-F][0-9a-fA-F])+',
                            marketplace_site)
-        comments = re.findall('\(([^)]*)\)', marketplace_site)
+        comments = re.findall('\\(([^)]*)\\)', marketplace_site)
         comment_shortage = len(locales) - len(comments)
         for _ in range(comment_shortage):
             comments.append('')
