@@ -12,19 +12,35 @@ import re
 import shutil
 import sys
 import string
+import time
 from typing import Dict, List, Set, Tuple, Union
 
 # Third party imports
-import bs4
+import aiofiles
+import aiohttp
+import asyncio
 from bs4 import BeautifulSoup
-import requests
-from urllib.request import urlretrieve
 from urllib.parse import urljoin, urlsplit, urlunsplit
 
 
 # Local imports
 
 # Globals
+
+async def run(cmd):
+    """ Run a command line in a subprocess. """
+    proc = await asyncio.create_subprocess_shell(
+        cmd,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE)
+
+    stdout, stderr = await proc.communicate()
+
+    print(f'[{cmd!r} exited with {proc.returncode}]')
+    if stdout:
+        print(f'[stdout]\n{stdout.decode()}')
+    if stderr:
+        print(f'[stderr]\n{stderr.decode()}')
 
 
 def add_enum(enums: Dict[str, list], new_enum: str) -> None:
@@ -56,7 +72,7 @@ def change_type_per_full_field(
                 field['type_sql'] = new_type
                 found = True
     if not found:
-        print(f'change_type_per_full_field failed on full_field {full_field} and new_type {new_type}.')
+        logging.debug(f'change_type_per_full_field failed on full_field {full_field} and new_type {new_type}.')
 
 
 def change_type_per_partial_field(
@@ -74,18 +90,18 @@ def change_type_per_partial_field(
                 field['type_sql'] = new_type
                 found = True
     if not found:
-        print(f'change_type_per_partial_field failed on partial_field {partial_field} and new_type {new_type}.')
+        logging.debug(f'change_type_per_partial_field failed on partial_field {partial_field} and new_type {new_type}.')
 
 
 def enum_name_converter(kind: str) -> str:
     if kind[-4:] in ('Enum', 'Type'):
         return camel_to_snake_case(kind[:-4])
     else:
-        print(f'{kind} does not end in Enum or Type.')
+        logging.debug(f'{kind} does not end in Enum or Type.')
 
 
-def get_table_via_link(url):
-    soup = get_soup_via_link(url)
+async def get_table_via_link(url):
+    soup = await get_soup_via_link(url)
     # find the rows regarding Response Fields.
     table = soup.find('table')
     rows = table.find_all('tr')
@@ -104,7 +120,7 @@ def make_json_file(source: dict or list, name: str) -> None:
         json.dump(source, outfile, sort_keys=True, indent=4)
 
 
-def get_enumerations(response_fields: List[Tuple[str, str, str, str]]) -> Dict[str, list]:
+async def get_enumerations(response_fields: List[Tuple[str, str, str, str]]) -> Dict[str, list]:
     enums_dict = {}
     variants = ['ba', 'gct']
 
@@ -127,24 +143,24 @@ def get_enumerations(response_fields: List[Tuple[str, str, str, str]]) -> Dict[s
                     url = f'https://developer.ebay.com/api-docs/buy/browse/types/{variants[variant_count]}:{last}'
 
                     # load the target webpage
-                    soup = get_soup_via_link(url)
+                    soup = await get_soup_via_link(url)
                     for datum in soup.find_all('div', class_='flex-4 first-column'):
                         data.append(datum.contents[0])
                     variant_count += 1
                 if data:
                     enums_dict[enum_name] = data
                 else:
-                    print(f'Could not find values for {kind}.')
+                    logging.debug(f'Could not find values for {kind}.')
 
     return enums_dict
 
 
-def get_response_fields() -> List[Tuple[str, str, str, str]]:
-    print('Find the Response Fields for the eBay Get Item call.')
+async def get_response_fields() -> List[Tuple[str, str, str, str]]:
+    logging.info('Find the Response Fields for the eBay Get Item call.')
 
     # load the target webpage
     url = 'https://developer.ebay.com/api-docs/buy/browse/resources/item/methods/getItem'
-    soup = get_soup_via_link(url)
+    soup = await get_soup_via_link(url)
 
     # find the rows regarding Response Fields.
     table = soup.find('table', id='Output-field-definitions-table')
@@ -198,12 +214,12 @@ def get_response_fields() -> List[Tuple[str, str, str, str]]:
     return data
 
 
-def generate_country_codes() -> None:
-    print("Find the eBay's Country Codes.")
+async def generate_country_codes() -> None:
+    logging.info("Find the eBay's Country Codes.")
 
     # load the target webpage
     url = 'https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/countrycodetype.html'
-    data = get_table_via_link(url)
+    data = await get_table_via_link(url)
 
     # ignore header, convert to a dict & delete bad values
     dict_ = {}
@@ -213,18 +229,18 @@ def generate_country_codes() -> None:
         if bad_value in dict_:
             del dict_[bad_value]
         else:
-            print("Bad value " + bad_value + "no longer needs to be deleted.")
+            logging.debug("Bad value " + bad_value + "no longer needs to be deleted.")
 
     make_json_file(dict_, 'country_codes')
     return
 
 
-def generate_currency_codes() -> None:
-    print("Find the eBay's Currency Codes.")
+async def generate_currency_codes() -> None:
+    logging.info("Find the eBay's Currency Codes.")
 
     # load the target webpage
     url = 'https://developer.ebay.com/devzone/xml/docs/Reference/eBay/types/CurrencyCodeType.html'
-    data = get_table_via_link(url)
+    data = await get_table_via_link(url)
 
     # ignore header, convert to a dict & delete bad values
     dict_ = {}
@@ -243,12 +259,12 @@ def generate_currency_codes() -> None:
     return
 
 
-def generate_global_id_values() -> None:
-    print("Find the eBay's Global ID Values.")
+async def generate_global_id_values() -> None:
+    logging.info("Find the eBay's Global ID Values.")
 
     # load the target webpage
     url = 'https://developer.ebay.com/Devzone/merchandising/docs/CallRef/Enums/GlobalIdList.html'
-    data = get_table_via_link(url)
+    data = await get_table_via_link(url)
 
     # the header got messed up and is unlikely to change, so hard code it
     cols = ['global_id', 'language', 'territory', 'site_name', 'ebay_site_id']
@@ -265,12 +281,12 @@ def generate_global_id_values() -> None:
     return
 
 
-def generate_marketplace_id_values() -> None:
-    print("Find the eBay's Marketplace ID Values.")
+async def generate_marketplace_id_values() -> None:
+    logging.info("Find the eBay's Marketplace ID Values.")
 
     # load the target webpage
     url = 'https://developer.ebay.com/api-docs/static/rest-request-components.html#marketpl'
-    soup = get_soup_via_link(url)
+    soup = await get_soup_via_link(url)
 
     # find the rows regarding Response Fields.
     table = soup.findAll('table')[1]  # the second table is index 1
@@ -307,9 +323,13 @@ def generate_marketplace_id_values() -> None:
     return
 
 
-def get_soup_via_link(url: str) -> BeautifulSoup:
-    # Make a GET request to fetch the raw HTML content
-    html_content = requests.get(url).text
+async def get_soup_via_link(url: str) -> BeautifulSoup:
+    # Get the html at a url and then make soup of it.
+
+    # Get the html
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            html_content = await response.text()
 
     # Parse the html content
     return BeautifulSoup(html_content, "html.parser")
@@ -393,7 +413,7 @@ def make_containers(parent_is_array: bool,
             elif occurrence in ('Conditional', 'NA'):
                 required_field = False
             else:
-                print(f"Unexpected occurrence value {occurrence}.")
+                logging.debug(f"Unexpected occurrence value {occurrence}.")
 
             # Does the field's type directly correspond to an SQL type?
             if root_kind in ebay_to_sql_types:
@@ -421,7 +441,7 @@ def make_containers(parent_is_array: bool,
                 field_success = True
 
             else:
-                print(f'Unhandled field {name_full} of type {kind}')
+                logging.debug(f'Unhandled field {name_full} of type {kind}')
 
             if field_success:
                 field = {
@@ -452,7 +472,7 @@ def most_values_not_none(name: str, dictionary: Dict[str, str]) -> bool:
     for key, value in dictionary.items():
         if key != 'array_type_sql':
             if value is None:
-                print(f"In dictionary {name} key {key} should not have value {value}.")
+                logging.debug(f"In dictionary {name} key {key} should not have value {value}.")
                 return False
     return True
 
@@ -466,10 +486,10 @@ def subfield_next(dot_level: int, i: int, response_fields: List[Tuple[str, str, 
     return result
 
 
-def generate_containers_and_enums():
+async def generate_containers_and_enums():
     # True will slowly get a fresh object --- False will quickly reload the last object
-    response_fields = get_response_fields()
-    enums = get_enumerations(response_fields)
+    response_fields = await get_response_fields()
+    enums = await get_enumerations(response_fields)
     # create containers from the response fields
     containers = make_containers(parent_is_array=False,
                                  parent_container_kind='item',
@@ -485,7 +505,7 @@ def generate_containers_and_enums():
             found = True
             break
     if not found:
-        print('ebay_item_shipping_options was not found.')
+        logging.debug('ebay_item_shipping_options was not found.')
     # Add a missing enum. To learn why this hack is required, search on 'CouponConstraint' in this python file.
     # add_enum(enums=enums, field_name='coupon_constraint')  TODO double check database to see if we should change this
     # SQL types are changed from varchar, when it would improve computational and storage efficiency
@@ -510,7 +530,7 @@ def generate_containers_and_enums():
                     field['type_sql'] = 'numeric(16,4)'
                     found = True
     if not found:
-        print('No currency values were found.')
+        logging.debug('No currency values were found.')
     # change complete field names that are always integers
     for field_name in ('category_id', 'condition_id', 'identifier_value', 'item_group_id'):
         change_type_per_full_field(containers, field_name, 'int')
@@ -535,7 +555,8 @@ def generate_containers_and_enums():
                 found = True
                 break
         if not found:
-            print(f'Handle generic sounding field names failed on {container_name}, {field_name} and {new_type}.')
+            message = f'Handle generic sounding field names failed on {container_name}, {field_name} and {new_type}.'
+            logging.debug(message)
     containers['ebay_item_product_gtins']['array_type_sql'] = 'numeric(14,0)'
     containers['ebay_item_product_gtins']['shape'] = 'array_of_type'
     for (container_name, new_enum) in (
@@ -547,7 +568,7 @@ def generate_containers_and_enums():
     # safety check
     for key in containers:
         if containers[key]['shape'] not in ('container', 'array_of_type', 'array_of_enum', 'array_of_container'):
-            print(f"Container {key} has unexpected shape {containers[key]['shape']}.")
+            logging.debug(f"Container {key} has unexpected shape {containers[key]['shape']}.")
 
     make_json_file(containers, 'item_fields_modified')
     make_json_file(enums, 'item_enums_modified')
@@ -555,7 +576,7 @@ def generate_containers_and_enums():
     return
 
 
-def generate_references():
+async def generate_references():
     """
     Generated json files for the references directory found in src.
 
@@ -565,11 +586,13 @@ def generate_references():
     """
     # TODO Clear out any junk that happens to be in the target folder.
 
-    generate_containers_and_enums()
-    generate_country_codes()
-    generate_currency_codes()
-    generate_global_id_values()
-    generate_marketplace_id_values()
+    await asyncio.gather(
+        generate_containers_and_enums(),
+        generate_country_codes(),
+        generate_currency_codes(),
+        generate_global_id_values(),
+        generate_marketplace_id_values()
+    )
 
 
 class Locations:
@@ -612,7 +635,7 @@ class State:
             sys.exit(message)
 
 
-def ensure_cache():
+async def ensure_cache():
     # ensure that we have a cache
     if os.path.isdir(Locations.cache_path):
         # delete_folder_contents(Locations.cache_path)  # TODO flush the cache when we want a fresh start
@@ -621,7 +644,7 @@ def ensure_cache():
         os.mkdir(Locations.cache_path)
 
 
-def ensure_swagger() -> None:
+async def ensure_swagger() -> None:
     s = State()  # skip if this was already done less than a day ago
     key = 'tool_date_time'
     dt_format = "%Y-%m-%dT%H:%M:%S.%fZ"
@@ -630,27 +653,27 @@ def ensure_swagger() -> None:
 
         if sys.platform == 'darwin':  # OS X or MacOS
             logging.info('Install or update the package manager named HomeBrew.')
-            os.system('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
+            await run('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
 
             if os.path.isfile('/usr/local/bin/swagger-codegen'):
                 logging.info('Upgrade the code generator from Swagger. https://swagger.io/')
-                os.system('brew upgrade swagger-codegen')
+                await run('brew upgrade swagger-codegen')
             else:
                 logging.info('Install the code generator from Swagger. https://swagger.io/')
-                os.system('brew install swagger-codegen')
+                await run('brew install swagger-codegen')
 
             logging.info('Test the generator installation by invoking its help screen.')
-            os.system('/usr/local/bin/swagger-codegen -h')
+            await run('/usr/local/bin/swagger-codegen -h')
         elif sys.platform == 'linux':  # Linux platform
             # Don't install packages without user interaction.
             if not os.path.isfile('swagger-codegen-cli.jar'):
-                os.system(
+                await run(
                     'wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/'
                     + 'swagger-codegen-cli/3.0.26/swagger-codegen-cli-3.0.26.jar '
                     + '-O swagger-codegen-cli.jar'
                 )
             logging.info('Test the generator installation by invoking its help screen.')
-            os.system('java -jar swagger-codegen-cli.jar -h')
+            await run('java -jar swagger-codegen-cli.jar -h')
         else:
             message = f'Please extend install_tools() for your {sys.platform} platform.'
             logging.fatal(message)
@@ -662,21 +685,29 @@ def ensure_swagger() -> None:
 class Contracts:
 
     def __init__(self, overview_link) -> None:
-        [self.category, self.call, self.link_href, self.file_name] = self.get_contract(overview_link)
+        self.overview_link = overview_link
+        self.category = None
+        self.call = None
+        self.link_href = None
+        self.file_name = None
+        self.name = None
+
+    async def process(self):
+        [self.category, self.call, self.link_href, self.file_name] = await self.get_contract(self.overview_link)
         self.name = self.get_api_name()
-        self.cache_contract()
-        self.patch_contract()
-        self.swagger_codegen()
+        await self.cache_contract()
+        await self.patch_contract()
+        await self.swagger_codegen()
         self.copy_library()
         self.fix_imports()
 
     @staticmethod
-    def get_overview_links():
+    async def get_overview_links():
         logging.info('Get a list of links to overview pages; pages contain links to eBay OpenAPI 3 JSON contracts.')
 
         overview_links = []
         developer_url = 'https://developer.ebay.com/'
-        soup = Contracts.get_soup_via_link(urljoin(developer_url, 'docs'))
+        soup = await get_soup_via_link(urljoin(developer_url, 'docs'))
 
         for link in soup.find_all('a', href=lambda href: href and 'overview.html' in href):
             path = link.get('href')
@@ -687,20 +718,24 @@ class Contracts:
 
         # safety check
         count = len(overview_links)
-        logging.info('Found {count} links to overview pages.')
+        logging.info(f'Found {count} links to overview pages.')
         assert (25 < count < 40), f'Having {count} contract overview links is unexpected!'
 
         overview_links.sort()
         return overview_links
 
-    def cache_contract(self):
+    async def cache_contract(self):
         destination = os.path.join(Locations.cache_path, self.file_name)
-        urlretrieve(self.link_href, destination)  # if a destination file exists, it will be replaced
+        async with aiohttp.ClientSession() as session:
+            async with session.get(self.link_href) as response:
+                text_content = await response.text()
+        async with aiofiles.open(destination, mode='w') as f:
+            await f.write(text_content)
 
     @staticmethod
-    def get_contract(overview_link: str):
+    async def get_contract(overview_link: str):
         # find the path to the json contract with the highest version number
-        soup = Contracts.get_soup_via_link(overview_link)
+        soup = await get_soup_via_link(overview_link)
         paths = []
         for link in soup.find_all('a', href=lambda href: href and 'oas' in href and '.json' in href):
             path = link.get('href')
@@ -720,39 +755,33 @@ class Contracts:
         contract = [category, call, link_href, file_name]
         return contract
 
-    def patch_contract(self) -> None:
+    async def patch_contract(self) -> None:
         """ If the contract from eBay has an error then patch it before generating code. """
         if self.category == 'sell' and self.call == 'fulfillment':
-            Contracts.patch_contract_sell_fulfillment(self.file_name)
+            await Contracts.patch_contract_sell_fulfillment(self.file_name)
 
     @staticmethod
-    def patch_contract_sell_fulfillment(file_name):
+    async def patch_contract_sell_fulfillment(file_name):
         # In the Sell Fulfillment API, the model 'Address' is returned with attribute 'countryCode'.
         # However, the JSON specifies 'country' instead, thus Swagger generates the wrong API.
         file_location = os.path.join(Locations.cache_path, file_name)
         try:
-            with open(file_location) as file_handle:
-                data = json.load(file_handle)
-                properties = data['components']['schemas']['Address']['properties']
-                if 'country' in properties:
-                    properties['countryCode'] = properties.pop('country')  # Warning, alphabetical key order spoiled.
-                    with open(file_location, 'w') as outfile:
-                        json.dump(data, outfile, sort_keys=True, indent=4)
-                else:
-                    logging.warning('Patching sell_fulfillment_v1_oas3.json is no longer needed.')
+            async with aiofiles.open(file_location, mode='r') as f:
+                data = await f.read()
         except FileNotFoundError:
             logging.error(f"Can't open {file_location}.")
+        else:
+            data = json.loads(data)
+            properties = data['components']['schemas']['Address']['properties']
+            if 'country' in properties:
+                properties['countryCode'] = properties.pop('country')  # Warning, alphabetical key order spoiled.
+                data = json.dumps(data, sort_keys=True, indent=4)
+                async with aiofiles.open(file_location, mode='w') as f:
+                    await f.write(data)
+            else:
+                logging.warning('Patching sell_fulfillment_v1_oas3.json is no longer needed.')
 
-    @staticmethod
-    def get_soup_via_link(url: str) -> bs4.BeautifulSoup:
-        # Make a GET request to fetch the raw HTML content
-        html_content = requests.get(url).text
-
-        # Parse the html content
-        return BeautifulSoup(html_content, "html.parser")
-
-    def swagger_codegen(self):
-        logging.info('For each contract generate and install a library.')
+    async def swagger_codegen(self):
         source = os.path.join(Locations.cache_path, self.file_name)
         command = f' generate -l python -o {Locations.cache_path}/{self.name} -DpackageName={self.name} -i {source}'
         if sys.platform == 'darwin':  # OS X or MacOS
@@ -761,96 +790,104 @@ class Contracts:
             command = 'java -jar swagger-codegen-cli.jar' + command
         else:
             assert False, f'Please extend main() for your {sys.platform} platform.'
-        os.system(command)
+        await run(command)
 
     def get_api_name(self):
         name = f'{self.category}_{self.call}'
         return name
 
-    def get_one_base_paths_and_flows(self):
+    async def get_one_base_paths_and_flows(self):
         """Process the JSON contract and extract three things for later use.
         1) the base_path for each category_call (e.g. buy_browse)
         2) the security flow for each scope in each category_call
         3) the scopes for each call in each category_call
         """
         source = os.path.join(Locations.cache_path, self.file_name)
-        with open(source) as file_handle:
+        try:
+            async with aiofiles.open(source, mode='r') as f:
+                data = await f.read()
+        except FileNotFoundError:
+            message = f"Can't open {source}."
+            logging.error(message)
+            sys.exit(message)
+        else:
             try:
-                data = json.load(file_handle)
+                data = json.loads(data)
             except ValueError:
                 message = "Invalid JSON in " + source
                 logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
                 sys.exit(message)
-        # Get the contract's major version number
-        if 'swagger' in data:
-            (version_major, _version_minor) = data['swagger'].split('.')
-        elif 'openapi' in data:
-            (version_major, _version_minor, _version_tertiary) = data['openapi'].split('.')
-        else:
-            message = f"{source} has no OpenAPI version number."
-            logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
-            sys.exit(message)
-        # Get base path
-        if version_major == '2':
-            base_path = data['basePath']
-        elif version_major == '3':
-            base_path = data['servers'][0]['variables']['basePath']['default']
-        else:
-            message = f"{source} has unrecognized OpenAPI version {version_major}."
-            logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
-            sys.exit(message)
-        # Get flows for this category_call
-        if version_major == '2':
-            category_flows = (
-                data['securityDefinitions']
-            )
-        elif version_major == '3':
-            category_flows = (
-                data['components']['securitySchemes']['api_auth']['flows']
-            )
-        else:
-            message = f"{source} has unrecognized OpenAPI version {version_major}."
-            logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
-            sys.exit(message)
-        flow_by_scope = {}  # dict of scope: flow type
-        for flow, flow_details in category_flows.items():
-            for scope in flow_details['scopes']:
-                if flow == 'Authorization Code':  # needed by version_major 2
-                    value = 'authorizationCode'
-                elif flow == 'Client Credentials':  # needed by version_major 2
-                    value = 'clientCredentials'
+            else:
+                # Get the contract's major version number
+                if 'swagger' in data:
+                    (version_major, _version_minor) = data['swagger'].split('.')
+                elif 'openapi' in data:
+                    (version_major, _version_minor, _version_tertiary) = data['openapi'].split('.')
                 else:
-                    value = flow
-                flow_by_scope[scope] = value
-        # Get scope for each individually path-ed call
-        operation_id_scopes = {}
-        for path, path_methods in data['paths'].items():
-            for method, method_dict in path_methods.items():
-                if method not in ('get', 'post', 'put', 'delete'):
-                    # Consider only the HTTP request parts
-                    continue
-                operation_id = method_dict['operationId'].lower()
-                security_list = method_dict.get('security', [])
-                if len(security_list) > 1:
-                    raise ValueError('Expected zero/one security entry per path!')
-                elif len(security_list) == 1:
-                    if 'api_auth' in security_list[0]:
-                        security = security_list[0]['api_auth']
-                    elif 'Authorization Code' in security_list[0]:  # needed by version_major 2
-                        security = security_list[0]['Authorization Code']
-                    else:
-                        raise ValueError("Expected 'api_auth' or 'Authorization Code' in security_list!'")
+                    message = f"{source} has no OpenAPI version number."
+                    logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
+                    sys.exit(message)
+                # Get base path
+                if version_major == '2':
+                    base_path = data['basePath']
+                elif version_major == '3':
+                    base_path = data['servers'][0]['variables']['basePath']['default']
                 else:
-                    security = None
-                if operation_id in operation_id_scopes:
-                    logging.warning('Duplicate operation!')
-                    logging.warning(path, path_methods)
-                    logging.warning(method, method_dict)
-                    raise ValueError('nope')
-                operation_id_scopes[operation_id] = security
-        # TODO Get headers parameters
-        # look for this  "in": "header",
-        name = self.category + '_' + self.call
+                    message = f"{source} has unrecognized OpenAPI version {version_major}."
+                    logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
+                    sys.exit(message)
+                # Get flows for this category_call
+                if version_major == '2':
+                    category_flows = (
+                        data['securityDefinitions']
+                    )
+                elif version_major == '3':
+                    category_flows = (
+                        data['components']['securitySchemes']['api_auth']['flows']
+                    )
+                else:
+                    message = f"{source} has unrecognized OpenAPI version {version_major}."
+                    logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
+                    sys.exit(message)
+                flow_by_scope = {}  # dict of scope: flow type
+                for flow, flow_details in category_flows.items():
+                    for scope in flow_details['scopes']:
+                        if flow == 'Authorization Code':  # needed by version_major 2
+                            value = 'authorizationCode'
+                        elif flow == 'Client Credentials':  # needed by version_major 2
+                            value = 'clientCredentials'
+                        else:
+                            value = flow
+                        flow_by_scope[scope] = value
+                # Get scope for each individually path-ed call
+                operation_id_scopes = {}
+                for path, path_methods in data['paths'].items():
+                    for method, method_dict in path_methods.items():
+                        if method not in ('get', 'post', 'put', 'delete'):
+                            # Consider only the HTTP request parts
+                            continue
+                        operation_id = method_dict['operationId'].lower()
+                        security_list = method_dict.get('security', [])
+                        if len(security_list) > 1:
+                            raise ValueError('Expected zero/one security entry per path!')
+                        elif len(security_list) == 1:
+                            if 'api_auth' in security_list[0]:
+                                security = security_list[0]['api_auth']
+                            elif 'Authorization Code' in security_list[0]:  # needed by version_major 2
+                                security = security_list[0]['Authorization Code']
+                            else:
+                                raise ValueError("Expected 'api_auth' or 'Authorization Code' in security_list!'")
+                        else:
+                            security = None
+                        if operation_id in operation_id_scopes:
+                            logging.warning('Duplicate operation!')
+                            logging.warning(path, path_methods)
+                            logging.warning(method, method_dict)
+                            raise ValueError('nope')
+                        operation_id_scopes[operation_id] = security
+                # TODO Get headers parameters
+                # look for this  "in": "header",
+                name = self.category + '_' + self.call
         return base_path, flow_by_scope, name, operation_id_scopes
 
     @staticmethod
@@ -866,7 +903,7 @@ class Contracts:
                 shutil.rmtree(file_path)
 
     @staticmethod
-    def purge_existing():
+    async def purge_existing():
         # purge what might already be there
         for filename in os.listdir(Locations.target_path):
             file_path = os.path.join(Locations.target_path, filename)
@@ -942,7 +979,7 @@ class Contracts:
         includes.append(line)
         return includes
 
-    def get_methods(self) -> str:
+    async def get_methods(self) -> str:
         """ For a modules, get all code for it's methods. """
 
         # catalog the module files that contain all method implementations
@@ -1015,16 +1052,16 @@ class Contracts:
 
         code = str()
         for method in methods:
-            code += self._make_method(method)
+            code += await self._make_method(method)
 
         return code
 
-    def _make_method(self, method: Tuple[str, str, str, str, str, str]) -> str:
+    async def _make_method(self, method: Tuple[str, str, str, str, str, str]) -> str:
         """ Return the code for one python method. """
 
         (name, module, path, method, params, docstring) = method
         base_path, flow_by_scope, name, operation_id_scopes = \
-            self.get_one_base_paths_and_flows()
+            await self.get_one_base_paths_and_flows()
 
         ignore_long = '  # noqa: E501'  # flake8 compatible linters should not warn about long lines
 
@@ -1244,7 +1281,18 @@ class Insert:
             logging.error(f"Can't find {target_file}")
 
 
-def generate_apis():
+async def process_overview_link(overview_link):
+    logging.info(f"Process overview link {overview_link}.")
+    c = Contracts(overview_link)
+    await c.process()
+    name = c.name
+    requirement = c.get_requirements()
+    include = c.get_includes()
+    method = await c.get_methods()
+    return include, method, name, requirement
+
+
+async def generate_apis():
     """
     Generate the contents of the api folder in src/ebay_rest and some code in a_p_i.py.
 
@@ -1254,38 +1302,47 @@ def generate_apis():
     visit https://developer.ebay.com/api-docs/static/openapi-swagger-codegen.html.
     :return:
     """
-    ensure_cache()
-    ensure_swagger()
-    Contracts.purge_existing()
+    await asyncio.gather(
+        ensure_cache(),
+        ensure_swagger(),
+        Contracts.purge_existing()
+    )
+
+    limit = 100  # lower to expedite debugging with a reduced data set
+    records = list()
+    tasks = list()
+    overview_links = await Contracts.get_overview_links()
+    for overview_link in overview_links[:limit]:
+        task = asyncio.create_task(process_overview_link(overview_link))
+        tasks.append(task)
+    for task in tasks:
+        record = await task
+        records.append(record)
 
     names = list()
     requirements = set()
     includes = list()
     methods = str()
-    limit = 100  # lower to expedite debugging with a reduced data set
-    for overview_link in Contracts.get_overview_links():
-        c = Contracts(overview_link)
-        names.append(c.name)
-        requirements.update(c.get_requirements())
-        includes.extend(c.get_includes())
-        methods += c.get_methods()
-        limit -= 1
-        if limit <= 0:
-            break
-
+    for record in records:
+        include, method, name, requirement = record
+        names.append(name)
+        requirements.update(requirement)
+        includes.extend(include)
+        methods += method
     Insert().do(requirements, includes, methods)
     # p.remove_duplicates(names)     # uncomment the method call when work on it resumes
 
 
-def main() -> None:
+async def main() -> None:
+    start = time.time()
+
     # while debugging it is handy to change the log level from INFO to DEBUG
     logging.basicConfig(format='%(asctime)s %(levelname)s %(filename)s %(funcName)s: %(message)s', level=logging.DEBUG)
 
-    generate_apis()
-    generate_references()
-
+    await asyncio.gather(generate_apis(), generate_references())
+    logging.info(f'Run time was {int(time.time() - start)} seconds.')
     return
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())     # Python 3.7+
