@@ -1001,18 +1001,6 @@ class Contracts:
             'async_req',
             'request thread',
         )
-        typo_remedy = (  # pairs of typos found in docstrings and their remedy
-            ('cerate', 'create'),  # noqa: - suppress flake8 compatible linters, misspelling is intended
-            ('distibuted', 'distributed'),  # noqa:
-            ('http:', 'https:'),  # noqa:
-            ('identfier', 'identifier'),  # noqa:
-            ('Limt', 'Limit'),  # noqa:
-            ('lisitng', 'listing'),  # noqa:
-            ('maketplace', 'marketplace'),  # noqa:
-            ('motorcyles', 'motorcycles'),  # noqa:
-            ('parmeter', 'parameter'),  # noqa:
-            ('publlish', 'publish'),  # noqa:
-        )
         for (name, module, path) in modules:
             step = 0
             with open(path) as file_handle:
@@ -1043,8 +1031,7 @@ class Contracts:
                                 docstring += line
                         else:
                             docstring += line
-                            for (typo, remedy) in typo_remedy:
-                                docstring = docstring.replace(typo, remedy)
+                            docstring = await self.clean_docstring(docstring)
                             methods.append((name, module, path, method, params, docstring))
                             step = 0
 
@@ -1055,6 +1042,45 @@ class Contracts:
             code += await self._make_method(method)
 
         return code
+
+    @staticmethod
+    async def clean_docstring(docstring: string) -> string:
+
+        # fix typos
+        typo_remedy = (  # pairs of typos found in docstrings and their remedy
+            ('AustraliaeBay', 'Australia eBay'),  # noqa: - suppress flake8 compatible linters, misspelling is intended
+            ('cerate', 'create'),  # noqa: - suppress flake8 compatible linters, misspelling is intended
+            ('distibuted', 'distributed'),  # noqa:
+            ('FranceeBay', 'Francee Bay'),  # noqa:
+            ('GermanyeBay', 'Germany eBay'),  # noqa:
+            ('http:', 'https:'),  # noqa:
+            ('identfier', 'identifier'),  # noqa:
+            ('ItalyeBay', 'Italy eBay'),  # noqa:
+            ('Limt', 'Limit'),  # noqa:
+            ('lisitng', 'listing'),  # noqa:
+            ('maketplace', 'marketplace'),  # noqa:
+            ('markeplace', 'marketplace'),  # noqa:
+            ('motorcyles', 'motorcycles'),  # noqa:
+            ('parmeter', 'parameter'),  # noqa:
+            ('publlish', 'publish'),  # noqa:
+            ('qroup', 'group'),  # noqa:
+            ('retrybable', 'retryable'),  # noqa:
+            ('takeback', 'take back'),  # noqa:
+            ('Takeback', 'Take back'),  # noqa:
+            ('theste', 'these'),  # noqa:
+            ('UKeBay', 'UK eBay'),  # noqa:
+        )
+        for (typo, remedy) in typo_remedy:
+            docstring = docstring.replace(typo, remedy)
+
+        # strip HTML
+        leading_white_space = docstring.split('"""')[0]
+        docstring = leading_white_space + BeautifulSoup(docstring).get_text()
+
+        # telling the linter to suppress long line warnings taints the Sphinx generated docs so filter them out
+        docstring = docstring.replace('# noqa: E501', "")
+
+        return docstring
 
     async def _make_method(self, method: Tuple[str, str, str, str, str, str]) -> str:
         """ Return the code for one python method. """
