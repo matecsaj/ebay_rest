@@ -173,7 +173,7 @@
                 "name_python": "listing_marketplace_id",
                 "name_sql": "listing_marketplace_id",
                 "required": false,
-                "type_sql": "varchar"
+                "type_sql": "marketplace_id"
             },
             {
                 "name_python": "lot_size",

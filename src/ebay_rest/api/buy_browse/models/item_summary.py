@@ -818,7 +818,7 @@ class ItemSummary(object):
     def listing_marketplace_id(self):
         """Gets the listing_marketplace_id of this ItemSummary.  # noqa: E501
 
-        The ID of the marketplace where the item is listed, such as EBAY_GB for the eBay Great Britain marketplace.  # noqa: E501
+        The ID of the eBay marketplace where the item is listed. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/browse/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The listing_marketplace_id of this ItemSummary.  # noqa: E501
         :rtype: str
@@ -829,7 +829,7 @@ class ItemSummary(object):
     def listing_marketplace_id(self, listing_marketplace_id):
         """Sets the listing_marketplace_id of this ItemSummary.
 
-        The ID of the marketplace where the item is listed, such as EBAY_GB for the eBay Great Britain marketplace.  # noqa: E501
+        The ID of the eBay marketplace where the item is listed. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/browse/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :param listing_marketplace_id: The listing_marketplace_id of this ItemSummary.  # noqa: E501
         :type: str
