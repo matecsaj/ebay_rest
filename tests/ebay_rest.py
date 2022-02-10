@@ -448,23 +448,111 @@ class APIProductionSingleTests(unittest.TestCase):
                         break
             self.assertTrue(counter == limit, f"Page boundary error on limit {limit}.")
 
-    def test_sell_inventory_get_inventory_locations(self):
+    def test_sell_inventory(self):
         """
         See https://developer.ebay.com/api-docs/sell/inventory/static/overview.html
-        https://developer.ebay.com/api-docs/sell/inventory/resources/location/methods/getInventoryLocation
 
         :return:
         """
+        # A unique, merchant-defined key (ID) for an inventory location.
+        # This unique identifier, or key, is used in other Inventory API calls to identify an inventory location.
+        length = random.randint(1, 36)
+        allowed = string.ascii_letters + string.digits + '_' + '-'  # more might be allowed, eBay's docs are unclear
+        merchant_location_key = ''.join(random.choice(allowed) for i in range(length))
+
+        # Create a new inventory location.
+        # https://developer.ebay.com/api-docs/sell/inventory/resources/location/methods/createInventoryLocation
+        # A template for supplying all possible information about a location.
+        _body = {
+            "location": {
+                "address": {
+                    "addressLine1": "string",
+                    "addressLine2": "string",
+                    "city": "string",
+                    "country": "CountryCodeEnum",
+                    "county": "string",
+                    "postalCode": "string",
+                    "stateOrProvince": "string"
+                },
+                "geoCoordinates": {
+                    "latitude": "number",
+                    "longitude": "number"
+                }
+            },
+            "locationAdditionalInformation": "string",
+            "locationInstructions": "string",
+            "locationTypes": [
+                "StoreTypeEnum"
+            ],
+            "locationWebUrl": "string",
+            "merchantLocationStatus": "StatusEnum : [DISABLED,ENABLED]",
+            "name": "string",
+            "operatingHours": [
+                {
+                    "dayOfWeekEnum": "DayOfWeekEnum : [MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY]",
+                    "intervals": [
+                        {
+                            "close": "string",
+                            "open": "string"
+                        }
+                    ]
+                }
+            ],
+            "phone": "string",
+            "specialHours": [
+                {
+                    "date": "string",
+                    "intervals": [
+                        {
+                            "close": "string",
+                            "open": "string"
+                        }
+                    ]
+                }
+            ]
+        }
+        # A template for supplying the bare minimum about a location.
+        body = {
+            "location": {
+                "address": {
+                    "addressLine1": "2********e",
+                    "addressLine2": "B********3",
+                    "city": "S*****e",
+                    "stateOrProvince": "**",
+                    "postalCode": "9***5",
+                    "country": "US"
+                }
+            },
+            "locationInstructions": "Items ship from here.",
+            "name": "W********1",
+            "merchantLocationStatus": "ENABLED",
+            "locationTypes": [
+                "WAREHOUSE"
+            ]
+        }
+        try:
+            self._api.sell_inventory_create_inventory_location(body=body, merchant_location_key=merchant_location_key)
+        except Error as error:
+            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+
+        # Confirm the new location.
+        # https://developer.ebay.com/api-docs/sell/inventory/resources/location/methods/getInventoryLocations
+        confirmed = False
         try:
             for record in self._api.sell_inventory_get_inventory_locations():
                 if 'record' not in record:
-                    self.assertTrue('total' in record, f'Unexpected non-record{record}. Check refresh_token and ')
+                    self.assertTrue('total' in record, f'Unexpected non-record{record}.')
                 else:
-                    location = record['location']
-                    self.assertTrue('address' in location, f'Unexpected location record{record}.')
-                break   # while testing only consider the first result
+                    location = record['record']
+                    if 'merchant_location_key' in location:
+                        if location['merchant_location_key'] == merchant_location_key:
+                            confirmed = True
+                            break
+                    else:
+                        self.fail(f'A location is missing the merchant_location_key {record}.')
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+        self.assertTrue(confirmed, 'Failed to confirm that the new location exists.')
 
     @unittest.skip  # TODO finish it
     def test_marketplace_account_deletion(self):
@@ -565,7 +653,7 @@ class APIProductionSingleTests(unittest.TestCase):
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
-            pass    # TODO
+            pass  # TODO
             self.assertTrue('Subscribe' not in result['description'])
 
 
