@@ -554,6 +554,125 @@ class APIProductionSingleTests(unittest.TestCase):
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         self.assertTrue(confirmed, 'Failed to confirm that the new location exists.')
 
+    @unittest.skip  # eBay has a bug, when successful the call neglects to return a JSON response
+    def test_sell_create_or_replace_inventory_item(self):
+        """
+        See https://developer.ebay.com/api-docs/sell/inventory/static/overview.html &
+        https://developer.ebay.com/api-docs/sell/inventory/resources/inventory_item/methods/createOrReplaceInventoryItem#h2-samples
+
+        :return:
+        """
+        # Create a new inventory item.
+        # A template for supplying all possible information about an inventory item.
+        _body = {
+            "availability": {
+                "pickupAtLocationAvailability": [
+                    {
+                        "availabilityType": "AvailabilityTypeEnum : [IN_STOCK,OUT_OF_STOCK,SHIP_TO_STORE]",
+                        "fulfillmentTime": {
+                            "unit": "TimeDurationUnitEnum : [YEAR,MONTH,DAY,HOUR,CALENDAR_DAY,BUSINESS_DAY,MINUTE,SECOND,MILLISECOND]",
+                            # noqa: E501
+                            "value": "integer"
+                        },
+                        "merchantLocationKey": "string",
+                        "quantity": "integer"
+                    }
+                ],
+                "shipToLocationAvailability": {
+                    "availabilityDistributions": [
+                        {
+                            "fulfillmentTime": {
+                                "unit": "TimeDurationUnitEnum : [YEAR,MONTH,DAY,HOUR,CALENDAR_DAY,BUSINESS_DAY,MINUTE,SECOND,MILLISECOND]",
+                                # noqa: E501
+                                "value": "integer"
+                            },
+                            "merchantLocationKey": "string",
+                            "quantity": "integer"
+                        }
+                    ],
+                    "quantity": "integer"
+                }
+            },
+            "condition": "ConditionEnum : [NEW,LIKE_NEW,NEW_OTHER,NEW_WITH_DEFECTS,MANUFACTURER_REFURBISHED,CERTIFIED_REFURBISHED,EXCELLENT_REFURBISHED,VERY_GOOD_REFURBISHED,GOOD_REFURBISHED,SELLER_REFURBISHED,USED_EXCELLENT,USED_VERY_GOOD,USED_GOOD,USED_ACCEPTABLE,FOR_PARTS_OR_NOT_WORKING]",
+            # noqa: E501
+            "conditionDescription": "string",
+            "packageWeightAndSize": {
+                "dimensions": {
+                    "height": "number",
+                    "length": "number",
+                    "unit": "LengthUnitOfMeasureEnum : [INCH,FEET,CENTIMETER,METER]",
+                    "width": "number"
+                },
+                "packageType": "PackageTypeEnum : [LETTER,BULKY_GOODS,CARAVAN,CARS,EUROPALLET,EXPANDABLE_TOUGH_BAGS,EXTRA_LARGE_PACK,FURNITURE,INDUSTRY_VEHICLES,LARGE_CANADA_POSTBOX,LARGE_CANADA_POST_BUBBLE_MAILER,LARGE_ENVELOPE,MAILING_BOX,MEDIUM_CANADA_POST_BOX,MEDIUM_CANADA_POST_BUBBLE_MAILER,MOTORBIKES,ONE_WAY_PALLET,PACKAGE_THICK_ENVELOPE,PADDED_BAGS,PARCEL_OR_PADDED_ENVELOPE,ROLL,SMALL_CANADA_POST_BOX,SMALL_CANADA_POST_BUBBLE_MAILER,TOUGH_BAGS,UPS_LETTER,USPS_FLAT_RATE_ENVELOPE,USPS_LARGE_PACK,VERY_LARGE_PACK,WINE_PAK]",
+                # noqa: E501
+                "weight": {
+                    "unit": "WeightUnitOfMeasureEnum : [POUND,KILOGRAM,OUNCE,GRAM]",
+                    "value": "number"
+                }
+            },
+            "product": {
+                "aspects": "string",
+                "brand": "string",
+                "description": "string",
+                "ean": [
+                    "string"
+                ],
+                "epid": "string",
+                "imageUrls": [
+                    "string"
+                ],
+                "isbn": [
+                    "string"
+                ],
+                "mpn": "string",
+                "subtitle": "string",
+                "title": "string",
+                "upc": [
+                    "string"
+                ],
+                "videoIds": [
+                    "string"
+                ]
+            }
+        }
+        # A template for supplying limited information about an inventory item.
+        body = {
+            "availability": {
+                "shipToLocationAvailability": {
+                    "quantity": 50
+                }
+            },
+            "condition": "NEW",
+            "product": {
+                "title": "GoPro Hero4 Helmet Cam",
+                "description": "New GoPro Hero4 Helmet Cam. Unopened box.",
+                "imageUrls": [
+                    "https://i.ebayimg.com/images/i/182196556219-0-1/s-l1000.jpg",
+                    "https://i.ebayimg.com/images/i/182196556219-0-1/s-l1001.jpg",
+                    "https://i.ebayimg.com/images/i/182196556219-0-1/s-l1002.jpg"
+                ]
+            }
+        }
+
+        # The natural language used in the body; see 'Local Support' in the following link for permitted values.
+        # https://developer.ebay.com/api-docs/static/rest-request-components.html#HTTP
+        content_language = 'en-US'
+
+        # The seller-defined SKU value for the inventory item, unique across the seller's inventory.
+        length = random.randint(1, 50)
+        allowed = string.ascii_letters + string.digits + '_' + '-'  # more might be allowed, eBay's docs are unclear
+        sku = ''.join(random.choice(allowed) for i in range(length))
+
+        try:
+            result = self._api.sell_inventory_create_or_replace_inventory_item(body=body,
+                                                                               content_language=content_language,
+                                                                               sku=sku)
+        except Error as error:
+            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+
+        else:
+            tp = True
+
     @unittest.skip  # TODO finish it
     def test_marketplace_account_deletion(self):
         """
