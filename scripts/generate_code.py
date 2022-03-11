@@ -1363,7 +1363,8 @@ async def main() -> None:
     start = time.time()
 
     # while debugging it is handy to change the log level from INFO to DEBUG
-    logging.basicConfig(format='%(asctime)s %(levelname)s %(filename)s %(funcName)s: %(message)s', level=logging.DEBUG)
+    logging.basicConfig(format='%(asctime)s %(levelname)s %(filename)s %(lineno)d %(funcName)s: %(message)s',
+                        level=logging.DEBUG)
 
     await asyncio.gather(generate_apis(), generate_references())
     logging.info(f'Run time was {int(time.time() - start)} seconds.')

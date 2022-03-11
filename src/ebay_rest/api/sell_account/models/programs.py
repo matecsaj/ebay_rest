@@ -3,7 +3,7 @@
 """
     Account API
 
-    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (seller-defined custom policies and eBay business policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
+    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (eBay business policies and seller-defined custom policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br/><br/>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
 
     OpenAPI spec version: v1.7.0
     
@@ -46,7 +46,7 @@ class Programs(object):
     def programs(self):
         """Gets the programs of this Programs.  # noqa: E501
 
-        A list of seller programs.  # noqa: E501
+        An array of seller programs that the seller's account is opted in to.  # noqa: E501
 
         :return: The programs of this Programs.  # noqa: E501
         :rtype: list[Program]
@@ -57,7 +57,7 @@ class Programs(object):
     def programs(self, programs):
         """Sets the programs of this Programs.
 
-        A list of seller programs.  # noqa: E501
+        An array of seller programs that the seller's account is opted in to.  # noqa: E501
 
         :param programs: The programs of this Programs.  # noqa: E501
         :type: list[Program]

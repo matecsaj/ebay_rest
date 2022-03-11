@@ -3,7 +3,7 @@
 """
     Account API
 
-    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (seller-defined custom policies and eBay business policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
+    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (eBay business policies and seller-defined custom policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br/><br/>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
 
     OpenAPI spec version: v1.7.0
     
@@ -76,7 +76,7 @@ class ShippingOption(object):
     def cost_type(self):
         """Gets the cost_type of this ShippingOption.  # noqa: E501
 
-        Defines whether the shipping cost is <code>FLAT_RATE</code> (the same rate for all buyers), <code>CALCULATED</code> (the shipping rate varies by the ship-to location and size and weight of the package, as defined by the item), or <code>NOT_SPECIFIED</code> (for use with local pickup).  <br><br><i>Required if </i> the policy offers shipping options using a <b>shippingOptions</b> container. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ShippingCostTypeEnum'>eBay API documentation</a>  # noqa: E501
+        This field defines whether the shipping cost model is <code>FLAT_RATE</code> (the same rate for all buyers, or buyers within a region if shipping rate tables are used) or <code>CALCULATED</code> (the shipping rate varies by the ship-to location and size and weight of the package). <br/><br/>This field is conditionally required if any shipping service options are specified (domestic and/or international). For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ShippingCostTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The cost_type of this ShippingOption.  # noqa: E501
         :rtype: str
@@ -87,7 +87,7 @@ class ShippingOption(object):
     def cost_type(self, cost_type):
         """Sets the cost_type of this ShippingOption.
 
-        Defines whether the shipping cost is <code>FLAT_RATE</code> (the same rate for all buyers), <code>CALCULATED</code> (the shipping rate varies by the ship-to location and size and weight of the package, as defined by the item), or <code>NOT_SPECIFIED</code> (for use with local pickup).  <br><br><i>Required if </i> the policy offers shipping options using a <b>shippingOptions</b> container. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ShippingCostTypeEnum'>eBay API documentation</a>  # noqa: E501
+        This field defines whether the shipping cost model is <code>FLAT_RATE</code> (the same rate for all buyers, or buyers within a region if shipping rate tables are used) or <code>CALCULATED</code> (the shipping rate varies by the ship-to location and size and weight of the package). <br/><br/>This field is conditionally required if any shipping service options are specified (domestic and/or international). For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ShippingCostTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param cost_type: The cost_type of this ShippingOption.  # noqa: E501
         :type: str
@@ -120,7 +120,7 @@ class ShippingOption(object):
     def insurance_offered(self):
         """Gets the insurance_offered of this ShippingOption.  # noqa: E501
 
-        This field has been deprecated. <br><br>Shipping insurance is offered only via a shipping carrier's shipping services and is no longer available via eBay shipping policies.  # noqa: E501
+        This field has been deprecated. <br/><br/>Shipping insurance is offered only via a shipping carrier's shipping services and is no longer available via eBay shipping policies.  # noqa: E501
 
         :return: The insurance_offered of this ShippingOption.  # noqa: E501
         :rtype: bool
@@ -131,7 +131,7 @@ class ShippingOption(object):
     def insurance_offered(self, insurance_offered):
         """Sets the insurance_offered of this ShippingOption.
 
-        This field has been deprecated. <br><br>Shipping insurance is offered only via a shipping carrier's shipping services and is no longer available via eBay shipping policies.  # noqa: E501
+        This field has been deprecated. <br/><br/>Shipping insurance is offered only via a shipping carrier's shipping services and is no longer available via eBay shipping policies.  # noqa: E501
 
         :param insurance_offered: The insurance_offered of this ShippingOption.  # noqa: E501
         :type: bool
@@ -143,7 +143,7 @@ class ShippingOption(object):
     def option_type(self):
         """Gets the option_type of this ShippingOption.  # noqa: E501
 
-        Use this field to set the <b>ShippingOption</b> element to either <code>DOMESTIC</code> or <code>INTERNATIONAL</code>.  <br><br><i>Required if </i> the policy offers shipping options using a <b>shippingOptions</b> container. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ShippingOptionTypeEnum'>eBay API documentation</a>  # noqa: E501
+        This field is used to indicate if the corresponding shipping service options (under <b>shippingServices</b> array) are domestic or international shipping service options. This field is conditionally required if any shipping service options are specified (domestic and/or international). For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ShippingOptionTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The option_type of this ShippingOption.  # noqa: E501
         :rtype: str
@@ -154,7 +154,7 @@ class ShippingOption(object):
     def option_type(self, option_type):
         """Sets the option_type of this ShippingOption.
 
-        Use this field to set the <b>ShippingOption</b> element to either <code>DOMESTIC</code> or <code>INTERNATIONAL</code>.  <br><br><i>Required if </i> the policy offers shipping options using a <b>shippingOptions</b> container. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ShippingOptionTypeEnum'>eBay API documentation</a>  # noqa: E501
+        This field is used to indicate if the corresponding shipping service options (under <b>shippingServices</b> array) are domestic or international shipping service options. This field is conditionally required if any shipping service options are specified (domestic and/or international). For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ShippingOptionTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param option_type: The option_type of this ShippingOption.  # noqa: E501
         :type: str
@@ -187,7 +187,7 @@ class ShippingOption(object):
     def rate_table_id(self):
         """Gets the rate_table_id of this ShippingOption.  # noqa: E501
 
-        A unique eBay-assigned ID associated with a user-created shipping rate table. The <b>locality</b> of a shipping rate table can be either <code>DOMESTIC</code> or <code>INTERNATIONAL</code> and you must ensure the value specified in this field references a shipping rate table that matches the type specified in the <b>shippingOptions.optionType</b> field. If you mismatch the types, eBay responds with a <code>20403</code> error. <br><br>Call <a href=\"/api-docs/sell/account/resources/rate_table/methods/getRateTables\">getRateTable</a> to retrieve information (including <b>rateTableId</b> values) on the rate tables configured by a seller. For information on creating rate tables, see <a href=\"http://pages.ebay.com/help/pay/shipping-costs.html#tables\">Using shipping rate tables</a>.  # noqa: E501
+        This field is used if the seller wants to associate a domestic or international shipping rate table to the fulfillment business policy. The <a href=\"/api-docs/sell/account/resources/rate_table/methods/getRateTables\">getRateTables</a> method can be used to retrieve shipping rate table IDs.<br/><br/>With domestic and international shipping rate tables, the seller can set different shipping costs based on shipping regions and shipping speed/level of service (one-day, expedited, standard, economy). There are also options to additional per-weight and handling charges.<br/><br/>Sellers need to be careful that shipping rate tables match the corresponding shipping service options. In other words, a domestic shipping rate table must not be specified in the same container where international shipping service options are being specified, and vice versa, and the shipping speed/level of service of the provided shipping service options should match the shipping speed/level of service options that are defined in the shipping rate tables. For example, if the corresponding shipping rate table defines costs for one-day shipping services, there should be at least one one-day shipping service option specified under the <b>shippingServices</b> array.<br/><br/>This field is returned if set.  # noqa: E501
 
         :return: The rate_table_id of this ShippingOption.  # noqa: E501
         :rtype: str
@@ -198,7 +198,7 @@ class ShippingOption(object):
     def rate_table_id(self, rate_table_id):
         """Sets the rate_table_id of this ShippingOption.
 
-        A unique eBay-assigned ID associated with a user-created shipping rate table. The <b>locality</b> of a shipping rate table can be either <code>DOMESTIC</code> or <code>INTERNATIONAL</code> and you must ensure the value specified in this field references a shipping rate table that matches the type specified in the <b>shippingOptions.optionType</b> field. If you mismatch the types, eBay responds with a <code>20403</code> error. <br><br>Call <a href=\"/api-docs/sell/account/resources/rate_table/methods/getRateTables\">getRateTable</a> to retrieve information (including <b>rateTableId</b> values) on the rate tables configured by a seller. For information on creating rate tables, see <a href=\"http://pages.ebay.com/help/pay/shipping-costs.html#tables\">Using shipping rate tables</a>.  # noqa: E501
+        This field is used if the seller wants to associate a domestic or international shipping rate table to the fulfillment business policy. The <a href=\"/api-docs/sell/account/resources/rate_table/methods/getRateTables\">getRateTables</a> method can be used to retrieve shipping rate table IDs.<br/><br/>With domestic and international shipping rate tables, the seller can set different shipping costs based on shipping regions and shipping speed/level of service (one-day, expedited, standard, economy). There are also options to additional per-weight and handling charges.<br/><br/>Sellers need to be careful that shipping rate tables match the corresponding shipping service options. In other words, a domestic shipping rate table must not be specified in the same container where international shipping service options are being specified, and vice versa, and the shipping speed/level of service of the provided shipping service options should match the shipping speed/level of service options that are defined in the shipping rate tables. For example, if the corresponding shipping rate table defines costs for one-day shipping services, there should be at least one one-day shipping service option specified under the <b>shippingServices</b> array.<br/><br/>This field is returned if set.  # noqa: E501
 
         :param rate_table_id: The rate_table_id of this ShippingOption.  # noqa: E501
         :type: str
@@ -210,7 +210,7 @@ class ShippingOption(object):
     def shipping_services(self):
         """Gets the shipping_services of this ShippingOption.  # noqa: E501
 
-        Contains a list of shipping services offered for either DOMESTIC or INTERNATIONAL shipments. <br><br>Sellers can specify up to four domestic shipping services and up to five international shipping services by using separate <b>shippingService</b> containers for each. Note that if the seller is opted in to the Global Shipping Program, they can specify only four other international shipping services, regardless of whether or not Global Shipping is offered as one of the services.  <br><br> See <a href=\"/api-docs/sell/static/seller-accounts/ht_shipping-setting-shipping-carrier-and-service-values.html\" target=\"_blank\">How to set up shipping carrier and shipping service values</a>. <br /><br />To use the eBay standard envelope service (eSE), see <a href=\"/api-docs/sell/static/seller-accounts/using-the-ebay-standard-envelope-service.html\" target=\"_blank\">Using eBay standard envelope (eSE) service</a>.<br /><br /><i>Required if </i> the policy offers shipping options using a <b>shippingOptions</b> container.  # noqa: E501
+        This array consists of the domestic or international shipping services options that are defined for the policy. The shipping service options defined under this array should match what is set in the corresponding <b>shippingOptions.optionType</b> field (which controls whether domestic or international shipping service options are being defined). If a shipping rate table is being used, the specified shipping service options should also match the shipping rate table settings (domestic or international, shipping speed/level of service, etc.) <br/><br/>Sellers can specify up to four domestic shipping services and up to five international shipping service options by using separate <b>shippingService</b> containers for each. If the seller is using the Global Shipping Program as an international option, only a total of four international shipping service options (including GSP) can be offered. <br/><br/> See <a href=\"/api-docs/sell/static/seller-accounts/ht_shipping-setting-shipping-carrier-and-service-values.html\" target=\"_blank\">How to set up shipping carrier and shipping service values</a>. <br /><br />To use the eBay standard envelope service (eSE), see <a href=\"/api-docs/sell/static/seller-accounts/using-the-ebay-standard-envelope-service.html\" target=\"_blank\">Using eBay standard envelope (eSE) service</a>.<br /><br />This array is conditionally required if the seller is offering one or more domestic and/or international shipping service options.  # noqa: E501
 
         :return: The shipping_services of this ShippingOption.  # noqa: E501
         :rtype: list[ShippingService]
@@ -221,7 +221,7 @@ class ShippingOption(object):
     def shipping_services(self, shipping_services):
         """Sets the shipping_services of this ShippingOption.
 
-        Contains a list of shipping services offered for either DOMESTIC or INTERNATIONAL shipments. <br><br>Sellers can specify up to four domestic shipping services and up to five international shipping services by using separate <b>shippingService</b> containers for each. Note that if the seller is opted in to the Global Shipping Program, they can specify only four other international shipping services, regardless of whether or not Global Shipping is offered as one of the services.  <br><br> See <a href=\"/api-docs/sell/static/seller-accounts/ht_shipping-setting-shipping-carrier-and-service-values.html\" target=\"_blank\">How to set up shipping carrier and shipping service values</a>. <br /><br />To use the eBay standard envelope service (eSE), see <a href=\"/api-docs/sell/static/seller-accounts/using-the-ebay-standard-envelope-service.html\" target=\"_blank\">Using eBay standard envelope (eSE) service</a>.<br /><br /><i>Required if </i> the policy offers shipping options using a <b>shippingOptions</b> container.  # noqa: E501
+        This array consists of the domestic or international shipping services options that are defined for the policy. The shipping service options defined under this array should match what is set in the corresponding <b>shippingOptions.optionType</b> field (which controls whether domestic or international shipping service options are being defined). If a shipping rate table is being used, the specified shipping service options should also match the shipping rate table settings (domestic or international, shipping speed/level of service, etc.) <br/><br/>Sellers can specify up to four domestic shipping services and up to five international shipping service options by using separate <b>shippingService</b> containers for each. If the seller is using the Global Shipping Program as an international option, only a total of four international shipping service options (including GSP) can be offered. <br/><br/> See <a href=\"/api-docs/sell/static/seller-accounts/ht_shipping-setting-shipping-carrier-and-service-values.html\" target=\"_blank\">How to set up shipping carrier and shipping service values</a>. <br /><br />To use the eBay standard envelope service (eSE), see <a href=\"/api-docs/sell/static/seller-accounts/using-the-ebay-standard-envelope-service.html\" target=\"_blank\">Using eBay standard envelope (eSE) service</a>.<br /><br />This array is conditionally required if the seller is offering one or more domestic and/or international shipping service options.  # noqa: E501
 
         :param shipping_services: The shipping_services of this ShippingOption.  # noqa: E501
         :type: list[ShippingService]

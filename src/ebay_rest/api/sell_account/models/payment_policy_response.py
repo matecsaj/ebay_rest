@@ -3,7 +3,7 @@
 """
     Account API
 
-    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (seller-defined custom policies and eBay business policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
+    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (eBay business policies and seller-defined custom policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br/><br/>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
 
     OpenAPI spec version: v1.7.0
     
@@ -32,9 +32,9 @@ class PaymentPolicyResponse(object):
         'limit': 'int',
         'next': 'str',
         'offset': 'int',
+        'payment_policies': 'list[PaymentPolicy]',
         'prev': 'str',
-        'total': 'int',
-        'payment_policies': 'list[PaymentPolicy]'
+        'total': 'int'
     }
 
     attribute_map = {
@@ -42,20 +42,20 @@ class PaymentPolicyResponse(object):
         'limit': 'limit',
         'next': 'next',
         'offset': 'offset',
+        'payment_policies': 'paymentPolicies',
         'prev': 'prev',
-        'total': 'total',
-        'payment_policies': 'paymentPolicies'
+        'total': 'total'
     }
 
-    def __init__(self, href=None, limit=None, next=None, offset=None, prev=None, total=None, payment_policies=None):  # noqa: E501
+    def __init__(self, href=None, limit=None, next=None, offset=None, payment_policies=None, prev=None, total=None):  # noqa: E501
         """PaymentPolicyResponse - a model defined in Swagger"""  # noqa: E501
         self._href = None
         self._limit = None
         self._next = None
         self._offset = None
+        self._payment_policies = None
         self._prev = None
         self._total = None
-        self._payment_policies = None
         self.discriminator = None
         if href is not None:
             self.href = href
@@ -65,12 +65,12 @@ class PaymentPolicyResponse(object):
             self.next = next
         if offset is not None:
             self.offset = offset
+        if payment_policies is not None:
+            self.payment_policies = payment_policies
         if prev is not None:
             self.prev = prev
         if total is not None:
             self.total = total
-        if payment_policies is not None:
-            self.payment_policies = payment_policies
 
     @property
     def href(self):
@@ -165,6 +165,29 @@ class PaymentPolicyResponse(object):
         self._offset = offset
 
     @property
+    def payment_policies(self):
+        """Gets the payment_policies of this PaymentPolicyResponse.  # noqa: E501
+
+        A list of all of the seller's payment business policies defined for the specified marketplace. This array will be returned as empty if no payment business policies are defined for the specified marketplace.  # noqa: E501
+
+        :return: The payment_policies of this PaymentPolicyResponse.  # noqa: E501
+        :rtype: list[PaymentPolicy]
+        """
+        return self._payment_policies
+
+    @payment_policies.setter
+    def payment_policies(self, payment_policies):
+        """Sets the payment_policies of this PaymentPolicyResponse.
+
+        A list of all of the seller's payment business policies defined for the specified marketplace. This array will be returned as empty if no payment business policies are defined for the specified marketplace.  # noqa: E501
+
+        :param payment_policies: The payment_policies of this PaymentPolicyResponse.  # noqa: E501
+        :type: list[PaymentPolicy]
+        """
+
+        self._payment_policies = payment_policies
+
+    @property
     def prev(self):
         """Gets the prev of this PaymentPolicyResponse.  # noqa: E501
 
@@ -191,7 +214,7 @@ class PaymentPolicyResponse(object):
     def total(self):
         """Gets the total of this PaymentPolicyResponse.  # noqa: E501
 
-        The total number of items retrieved in the result set.  <br><br>If no items are found, this field is returned with a value of <code>0</code>.  # noqa: E501
+        The total number of payment business policies retrieved in the result set.  <br/><br/>If no payment business policies are defined for the specified marketplace, this field is returned with a value of <code>0</code>.  # noqa: E501
 
         :return: The total of this PaymentPolicyResponse.  # noqa: E501
         :rtype: int
@@ -202,36 +225,13 @@ class PaymentPolicyResponse(object):
     def total(self, total):
         """Sets the total of this PaymentPolicyResponse.
 
-        The total number of items retrieved in the result set.  <br><br>If no items are found, this field is returned with a value of <code>0</code>.  # noqa: E501
+        The total number of payment business policies retrieved in the result set.  <br/><br/>If no payment business policies are defined for the specified marketplace, this field is returned with a value of <code>0</code>.  # noqa: E501
 
         :param total: The total of this PaymentPolicyResponse.  # noqa: E501
         :type: int
         """
 
         self._total = total
-
-    @property
-    def payment_policies(self):
-        """Gets the payment_policies of this PaymentPolicyResponse.  # noqa: E501
-
-        A list of the seller's payment policies.  # noqa: E501
-
-        :return: The payment_policies of this PaymentPolicyResponse.  # noqa: E501
-        :rtype: list[PaymentPolicy]
-        """
-        return self._payment_policies
-
-    @payment_policies.setter
-    def payment_policies(self, payment_policies):
-        """Sets the payment_policies of this PaymentPolicyResponse.
-
-        A list of the seller's payment policies.  # noqa: E501
-
-        :param payment_policies: The payment_policies of this PaymentPolicyResponse.  # noqa: E501
-        :type: list[PaymentPolicy]
-        """
-
-        self._payment_policies = payment_policies
 
     def to_dict(self):
         """Returns the model properties as a dict"""

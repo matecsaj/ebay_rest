@@ -91,7 +91,7 @@ class CreateReportTask(object):
     def campaign_ids(self):
         """Gets the campaign_ids of this CreateReportTask.  # noqa: E501
 
-        A list of campaign IDs to be included in the report task. Call <b>getCampaigns</b> to get a list of the current campaign IDs for a seller. <p class=\"tablenote\"><b>Note: </b> The API currently supports only a single campaign ID per report task.</p>  <br><br><b>Maximum: </b>1  <br><br><i>Required if </i> <b>reportType</b> is set to <code>CAMPAIGN_PERFORMANCE_REPORT</code> or <code>CAMPAIGN_PERFORMANCE_SUMMARY_REPORT</code>.  # noqa: E501
+        A list of campaign IDs to be included in the report task. Call <b>getCampaigns</b> to get a list of the current campaign IDs for a seller.<br><br><b>Maximum: </b>10  <br><br><i>Required if </i> <b>reportType</b> is set to <code>CAMPAIGN_PERFORMANCE_REPORT</code> or <code>CAMPAIGN_PERFORMANCE_SUMMARY_REPORT</code>.  # noqa: E501
 
         :return: The campaign_ids of this CreateReportTask.  # noqa: E501
         :rtype: list[str]
@@ -102,7 +102,7 @@ class CreateReportTask(object):
     def campaign_ids(self, campaign_ids):
         """Sets the campaign_ids of this CreateReportTask.
 
-        A list of campaign IDs to be included in the report task. Call <b>getCampaigns</b> to get a list of the current campaign IDs for a seller. <p class=\"tablenote\"><b>Note: </b> The API currently supports only a single campaign ID per report task.</p>  <br><br><b>Maximum: </b>1  <br><br><i>Required if </i> <b>reportType</b> is set to <code>CAMPAIGN_PERFORMANCE_REPORT</code> or <code>CAMPAIGN_PERFORMANCE_SUMMARY_REPORT</code>.  # noqa: E501
+        A list of campaign IDs to be included in the report task. Call <b>getCampaigns</b> to get a list of the current campaign IDs for a seller.<br><br><b>Maximum: </b>10  <br><br><i>Required if </i> <b>reportType</b> is set to <code>CAMPAIGN_PERFORMANCE_REPORT</code> or <code>CAMPAIGN_PERFORMANCE_SUMMARY_REPORT</code>.  # noqa: E501
 
         :param campaign_ids: The campaign_ids of this CreateReportTask.  # noqa: E501
         :type: list[str]

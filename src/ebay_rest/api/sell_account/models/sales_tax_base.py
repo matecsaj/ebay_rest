@@ -3,7 +3,7 @@
 """
     Account API
 
-    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (seller-defined custom policies and eBay business policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
+    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (eBay business policies and seller-defined custom policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br/><br/>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
 
     OpenAPI spec version: v1.7.0
     
@@ -51,7 +51,7 @@ class SalesTaxBase(object):
     def sales_tax_percentage(self):
         """Gets the sales_tax_percentage of this SalesTaxBase.  # noqa: E501
 
-        The sales tax rate, as a percentage of the sale.  # noqa: E501
+        This field is used to set the sales tax rate for the tax jurisdiction set in the call URI. When applicable to an order, this sales tax rate will be applied to sales price. The <b>shippingAndHandlingTaxed</b> value will indicate whether or not sales tax is also applied to shipping and handling charges<br><br>Although it is a string, a percentage value is set here, such as <code>7.75</code>.  # noqa: E501
 
         :return: The sales_tax_percentage of this SalesTaxBase.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class SalesTaxBase(object):
     def sales_tax_percentage(self, sales_tax_percentage):
         """Sets the sales_tax_percentage of this SalesTaxBase.
 
-        The sales tax rate, as a percentage of the sale.  # noqa: E501
+        This field is used to set the sales tax rate for the tax jurisdiction set in the call URI. When applicable to an order, this sales tax rate will be applied to sales price. The <b>shippingAndHandlingTaxed</b> value will indicate whether or not sales tax is also applied to shipping and handling charges<br><br>Although it is a string, a percentage value is set here, such as <code>7.75</code>.  # noqa: E501
 
         :param sales_tax_percentage: The sales_tax_percentage of this SalesTaxBase.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class SalesTaxBase(object):
     def shipping_and_handling_taxed(self):
         """Gets the shipping_and_handling_taxed of this SalesTaxBase.  # noqa: E501
 
-        If set to <code>true</code>, shipping and handling charges are taxed.  # noqa: E501
+        This field is set to <code>true</code> if the seller wishes to apply sales tax to shipping and handling charges, and not just the total sales price of the order. Otherwise, this field's value should be set to <code>false</code>.  # noqa: E501
 
         :return: The shipping_and_handling_taxed of this SalesTaxBase.  # noqa: E501
         :rtype: bool
@@ -85,7 +85,7 @@ class SalesTaxBase(object):
     def shipping_and_handling_taxed(self, shipping_and_handling_taxed):
         """Sets the shipping_and_handling_taxed of this SalesTaxBase.
 
-        If set to <code>true</code>, shipping and handling charges are taxed.  # noqa: E501
+        This field is set to <code>true</code> if the seller wishes to apply sales tax to shipping and handling charges, and not just the total sales price of the order. Otherwise, this field's value should be set to <code>false</code>.  # noqa: E501
 
         :param shipping_and_handling_taxed: The shipping_and_handling_taxed of this SalesTaxBase.  # noqa: E501
         :type: bool

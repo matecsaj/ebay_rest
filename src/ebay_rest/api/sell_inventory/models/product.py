@@ -354,7 +354,7 @@ class Product(object):
     def video_ids(self):
         """Gets the video_ids of this Product.  # noqa: E501
 
-        An array of one or more VideoId values for the product. A VideoId is a unique identifier that is automatically created by eBay when a seller successfully uploads a video to eBay using the  <a href=\"https://developer.ebay.com/api-docs/commerce/media/resources/video/methods/uploadVideo\" target=\"_blank\">uploadVideo</a> method of the <a href=\"https://developer.ebay.com/api-docs/commerce/media/overview.html\" target=\"_blank\">Media API</a>. <br /><br />For information on supported marketplaces and platforms, as well as other requirements and limitations of video support, please refer to <a href=\"https://developer.ebay.com/api-docs/sell/static/inventory/managing-video-media.html\" target=\"_blank\">Managing videos</a>.  # noqa: E501
+        An array of one or more VideoId values for the product. A VideoId is a unique identifier that is automatically created by eBay when a seller successfully uploads a video to eBay using the  <a href=\"https://developer.ebay.com/api-docs/commerce/media/resources/video/methods/uploadVideo\" target=\"_blank\">uploadVideo</a> method of the <a href=\"https://developer.ebay.com/api-docs/commerce/media/overview.html\" target=\"_blank\">Media API</a>.<br /><br />For information on supported marketplaces and platforms, as well as other requirements and limitations of video support, please refer to <a href=\"https://developer.ebay.com/api-docs/sell/static/inventory/managing-video-media.html\" target=\"_blank\">Managing videos</a>.  # noqa: E501
 
         :return: The video_ids of this Product.  # noqa: E501
         :rtype: list[str]
@@ -365,7 +365,7 @@ class Product(object):
     def video_ids(self, video_ids):
         """Sets the video_ids of this Product.
 
-        An array of one or more VideoId values for the product. A VideoId is a unique identifier that is automatically created by eBay when a seller successfully uploads a video to eBay using the  <a href=\"https://developer.ebay.com/api-docs/commerce/media/resources/video/methods/uploadVideo\" target=\"_blank\">uploadVideo</a> method of the <a href=\"https://developer.ebay.com/api-docs/commerce/media/overview.html\" target=\"_blank\">Media API</a>. <br /><br />For information on supported marketplaces and platforms, as well as other requirements and limitations of video support, please refer to <a href=\"https://developer.ebay.com/api-docs/sell/static/inventory/managing-video-media.html\" target=\"_blank\">Managing videos</a>.  # noqa: E501
+        An array of one or more VideoId values for the product. A VideoId is a unique identifier that is automatically created by eBay when a seller successfully uploads a video to eBay using the  <a href=\"https://developer.ebay.com/api-docs/commerce/media/resources/video/methods/uploadVideo\" target=\"_blank\">uploadVideo</a> method of the <a href=\"https://developer.ebay.com/api-docs/commerce/media/overview.html\" target=\"_blank\">Media API</a>.<br /><br />For information on supported marketplaces and platforms, as well as other requirements and limitations of video support, please refer to <a href=\"https://developer.ebay.com/api-docs/sell/static/inventory/managing-video-media.html\" target=\"_blank\">Managing videos</a>.  # noqa: E501
 
         :param video_ids: The video_ids of this Product.  # noqa: E501
         :type: list[str]

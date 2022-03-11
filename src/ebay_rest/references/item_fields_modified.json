@@ -3,6 +3,7 @@
         "array_type_sql": null,
         "children": [
             "ebay_item_additional_images",
+            "ebay_item_addon_services",
             "ebay_item_authenticity_guarantee",
             "ebay_item_authenticity_verification",
             "ebay_item_available_coupons",
@@ -330,6 +331,66 @@
         ],
         "required": true,
         "shape": "array_of_container"
+    },
+    "ebay_item_addon_services": {
+        "array_type_sql": "AddonService",
+        "children": [
+            "ebay_item_addon_services_service_fee"
+        ],
+        "fields": [
+            {
+                "name_python": "selection",
+                "name_sql": "selection",
+                "required": false,
+                "type_sql": "addon_service_selection"
+            },
+            {
+                "name_python": "service_id",
+                "name_sql": "service_id",
+                "required": false,
+                "type_sql": "varchar"
+            },
+            {
+                "name_python": "service_type",
+                "name_sql": "service_type",
+                "required": false,
+                "type_sql": "addon_service_type"
+            }
+        ],
+        "required": true,
+        "shape": "array_of_container"
+    },
+    "ebay_item_addon_services_service_fee": {
+        "array_type_sql": null,
+        "children": [],
+        "fields": [
+            {
+                "name_python": "converted_from_currency",
+                "name_sql": "converted_from_currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "converted_from_value",
+                "name_sql": "converted_from_value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            },
+            {
+                "name_python": "currency",
+                "name_sql": "currency",
+                "required": false,
+                "type_sql": "currency_code"
+            },
+            {
+                "name_python": "value",
+                "name_sql": "value",
+                "required": false,
+                "type_sql": "numeric(16,4)"
+            }
+        ],
+        "required": false,
+        "shape": "container"
     },
     "ebay_item_authenticity_guarantee": {
         "array_type_sql": null,

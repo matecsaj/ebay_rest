@@ -3,7 +3,7 @@
 """
     Account API
 
-    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (seller-defined custom policies and eBay business policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
+    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (eBay business policies and seller-defined custom policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br/><br/>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
 
     OpenAPI spec version: v1.7.0
     
@@ -106,7 +106,7 @@ class SetFulfillmentPolicyResponse(object):
     def category_types(self):
         """Gets the category_types of this SetFulfillmentPolicyResponse.  # noqa: E501
 
-        The <b>CategoryTypeEnum</b> value to which this policy applies. This container is used to discern accounts that sell motor vehicles from those that do not.<br /><br /><b>Restriction:</b> Currently, each policy can be set to only one <b>categoryTypes</b> value at a time.  # noqa: E501
+        This container indicates whether the fulfillment business policy applies to motor vehicle listings, or if it applies to non-motor vehicle listings.  # noqa: E501
 
         :return: The category_types of this SetFulfillmentPolicyResponse.  # noqa: E501
         :rtype: list[CategoryType]
@@ -117,7 +117,7 @@ class SetFulfillmentPolicyResponse(object):
     def category_types(self, category_types):
         """Sets the category_types of this SetFulfillmentPolicyResponse.
 
-        The <b>CategoryTypeEnum</b> value to which this policy applies. This container is used to discern accounts that sell motor vehicles from those that do not.<br /><br /><b>Restriction:</b> Currently, each policy can be set to only one <b>categoryTypes</b> value at a time.  # noqa: E501
+        This container indicates whether the fulfillment business policy applies to motor vehicle listings, or if it applies to non-motor vehicle listings.  # noqa: E501
 
         :param category_types: The category_types of this SetFulfillmentPolicyResponse.  # noqa: E501
         :type: list[CategoryType]
@@ -129,7 +129,7 @@ class SetFulfillmentPolicyResponse(object):
     def description(self):
         """Gets the description of this SetFulfillmentPolicyResponse.  # noqa: E501
 
-        An optional seller-defined description of the fulfillment policy for internal use (this value is not displayed to end users).  <br><br><b>Max length</b>: 250  # noqa: E501
+        A seller-defined description of the fulfillment policy. This description is only for the seller's use, and is not exposed on any eBay pages. This field is returned if set for the policy. <br/><br/><b>Max length</b>: 250  # noqa: E501
 
         :return: The description of this SetFulfillmentPolicyResponse.  # noqa: E501
         :rtype: str
@@ -140,7 +140,7 @@ class SetFulfillmentPolicyResponse(object):
     def description(self, description):
         """Sets the description of this SetFulfillmentPolicyResponse.
 
-        An optional seller-defined description of the fulfillment policy for internal use (this value is not displayed to end users).  <br><br><b>Max length</b>: 250  # noqa: E501
+        A seller-defined description of the fulfillment policy. This description is only for the seller's use, and is not exposed on any eBay pages. This field is returned if set for the policy. <br/><br/><b>Max length</b>: 250  # noqa: E501
 
         :param description: The description of this SetFulfillmentPolicyResponse.  # noqa: E501
         :type: str
@@ -152,7 +152,7 @@ class SetFulfillmentPolicyResponse(object):
     def freight_shipping(self):
         """Gets the freight_shipping of this SetFulfillmentPolicyResponse.  # noqa: E501
 
-        If set to <code>true</code>, the seller offers freight shipping. Freight shipping can be used for large items over 150 lbs.  # noqa: E501
+        If returned as <code>true</code>, the seller offers freight shipping. Freight shipping can be used for large items over 150 lbs.  # noqa: E501
 
         :return: The freight_shipping of this SetFulfillmentPolicyResponse.  # noqa: E501
         :rtype: bool
@@ -163,7 +163,7 @@ class SetFulfillmentPolicyResponse(object):
     def freight_shipping(self, freight_shipping):
         """Sets the freight_shipping of this SetFulfillmentPolicyResponse.
 
-        If set to <code>true</code>, the seller offers freight shipping. Freight shipping can be used for large items over 150 lbs.  # noqa: E501
+        If returned as <code>true</code>, the seller offers freight shipping. Freight shipping can be used for large items over 150 lbs.  # noqa: E501
 
         :param freight_shipping: The freight_shipping of this SetFulfillmentPolicyResponse.  # noqa: E501
         :type: bool
@@ -175,7 +175,7 @@ class SetFulfillmentPolicyResponse(object):
     def fulfillment_policy_id(self):
         """Gets the fulfillment_policy_id of this SetFulfillmentPolicyResponse.  # noqa: E501
 
-        A unique eBay-assigned ID for a fulfillment policy. This ID is generated when the policy is created.  # noqa: E501
+        A unique eBay-assigned ID for a fulfillment business policy. This ID is generated when the policy is created.  # noqa: E501
 
         :return: The fulfillment_policy_id of this SetFulfillmentPolicyResponse.  # noqa: E501
         :rtype: str
@@ -186,7 +186,7 @@ class SetFulfillmentPolicyResponse(object):
     def fulfillment_policy_id(self, fulfillment_policy_id):
         """Sets the fulfillment_policy_id of this SetFulfillmentPolicyResponse.
 
-        A unique eBay-assigned ID for a fulfillment policy. This ID is generated when the policy is created.  # noqa: E501
+        A unique eBay-assigned ID for a fulfillment business policy. This ID is generated when the policy is created.  # noqa: E501
 
         :param fulfillment_policy_id: The fulfillment_policy_id of this SetFulfillmentPolicyResponse.  # noqa: E501
         :type: str
@@ -198,7 +198,7 @@ class SetFulfillmentPolicyResponse(object):
     def global_shipping(self):
         """Gets the global_shipping of this SetFulfillmentPolicyResponse.  # noqa: E501
 
-        If set to <code>true</code>, the seller has opted-in to the <i>Global Shipping Program</i> and eBay automatically sets the international shipping service options to <code>International Priority Shipping</code>. <br><br>If the value of <b>globalShipping</b> is <code>false</code>, the seller is responsible for specifying one or more international shipping service options if they want to ship internationally.  # noqa: E501
+        If returned as <code>true</code>, eBay's Global Shipping Program will be used by the seller to ship items to international locations.  # noqa: E501
 
         :return: The global_shipping of this SetFulfillmentPolicyResponse.  # noqa: E501
         :rtype: bool
@@ -209,7 +209,7 @@ class SetFulfillmentPolicyResponse(object):
     def global_shipping(self, global_shipping):
         """Sets the global_shipping of this SetFulfillmentPolicyResponse.
 
-        If set to <code>true</code>, the seller has opted-in to the <i>Global Shipping Program</i> and eBay automatically sets the international shipping service options to <code>International Priority Shipping</code>. <br><br>If the value of <b>globalShipping</b> is <code>false</code>, the seller is responsible for specifying one or more international shipping service options if they want to ship internationally.  # noqa: E501
+        If returned as <code>true</code>, eBay's Global Shipping Program will be used by the seller to ship items to international locations.  # noqa: E501
 
         :param global_shipping: The global_shipping of this SetFulfillmentPolicyResponse.  # noqa: E501
         :type: bool
@@ -242,7 +242,7 @@ class SetFulfillmentPolicyResponse(object):
     def local_pickup(self):
         """Gets the local_pickup of this SetFulfillmentPolicyResponse.  # noqa: E501
 
-        If set to <code>true</code>, no shipping is offered by this policy and the seller offers only local pickup of the item (normally from a non-business location). This option is most often used for customer-to-customer sales and if set, <b>costType</b> should be set to <code>NOT_SPECIFIED</code>.  # noqa: E501
+        If returned as <code>true</code>, local pickup is available for this policy.  # noqa: E501
 
         :return: The local_pickup of this SetFulfillmentPolicyResponse.  # noqa: E501
         :rtype: bool
@@ -253,7 +253,7 @@ class SetFulfillmentPolicyResponse(object):
     def local_pickup(self, local_pickup):
         """Sets the local_pickup of this SetFulfillmentPolicyResponse.
 
-        If set to <code>true</code>, no shipping is offered by this policy and the seller offers only local pickup of the item (normally from a non-business location). This option is most often used for customer-to-customer sales and if set, <b>costType</b> should be set to <code>NOT_SPECIFIED</code>.  # noqa: E501
+        If returned as <code>true</code>, local pickup is available for this policy.  # noqa: E501
 
         :param local_pickup: The local_pickup of this SetFulfillmentPolicyResponse.  # noqa: E501
         :type: bool
@@ -265,7 +265,7 @@ class SetFulfillmentPolicyResponse(object):
     def marketplace_id(self):
         """Gets the marketplace_id of this SetFulfillmentPolicyResponse.  # noqa: E501
 
-        The ID of the eBay marketplace to which this fulfillment policy applies. If this value is not specified, value defaults to the seller's eBay registration site. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+        The ID of the eBay marketplace to which this fulfillment business policy applies. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The marketplace_id of this SetFulfillmentPolicyResponse.  # noqa: E501
         :rtype: str
@@ -276,7 +276,7 @@ class SetFulfillmentPolicyResponse(object):
     def marketplace_id(self, marketplace_id):
         """Sets the marketplace_id of this SetFulfillmentPolicyResponse.
 
-        The ID of the eBay marketplace to which this fulfillment policy applies. If this value is not specified, value defaults to the seller's eBay registration site. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+        The ID of the eBay marketplace to which this fulfillment business policy applies. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :param marketplace_id: The marketplace_id of this SetFulfillmentPolicyResponse.  # noqa: E501
         :type: str
@@ -288,7 +288,7 @@ class SetFulfillmentPolicyResponse(object):
     def name(self):
         """Gets the name of this SetFulfillmentPolicyResponse.  # noqa: E501
 
-        A user-defined name for this fulfillment policy. Names must be unique for policies assigned to the same marketplace. <br><br><b>Max length</b>: 64  # noqa: E501
+        A seller-defined name for this fulfillment business policy. Names must be unique for policies assigned to the same marketplace. <br/><br/><b>Max length</b>: 64  # noqa: E501
 
         :return: The name of this SetFulfillmentPolicyResponse.  # noqa: E501
         :rtype: str
@@ -299,7 +299,7 @@ class SetFulfillmentPolicyResponse(object):
     def name(self, name):
         """Sets the name of this SetFulfillmentPolicyResponse.
 
-        A user-defined name for this fulfillment policy. Names must be unique for policies assigned to the same marketplace. <br><br><b>Max length</b>: 64  # noqa: E501
+        A seller-defined name for this fulfillment business policy. Names must be unique for policies assigned to the same marketplace. <br/><br/><b>Max length</b>: 64  # noqa: E501
 
         :param name: The name of this SetFulfillmentPolicyResponse.  # noqa: E501
         :type: str
@@ -311,7 +311,7 @@ class SetFulfillmentPolicyResponse(object):
     def pickup_drop_off(self):
         """Gets the pickup_drop_off of this SetFulfillmentPolicyResponse.  # noqa: E501
 
-        If set to <code>true</code>, the seller offers the \"Click and Collect\" option. <br><br>Currently, \"Click and Collect\" is available only to large retail merchants the eBay AU and UK marketplaces.  # noqa: E501
+        If returned as <code>true</code>, the seller offers the \"Click and Collect\" option. <br/><br/>Currently, \"Click and Collect\" is available only to large retail merchants the eBay AU and UK marketplaces.  # noqa: E501
 
         :return: The pickup_drop_off of this SetFulfillmentPolicyResponse.  # noqa: E501
         :rtype: bool
@@ -322,7 +322,7 @@ class SetFulfillmentPolicyResponse(object):
     def pickup_drop_off(self, pickup_drop_off):
         """Sets the pickup_drop_off of this SetFulfillmentPolicyResponse.
 
-        If set to <code>true</code>, the seller offers the \"Click and Collect\" option. <br><br>Currently, \"Click and Collect\" is available only to large retail merchants the eBay AU and UK marketplaces.  # noqa: E501
+        If returned as <code>true</code>, the seller offers the \"Click and Collect\" option. <br/><br/>Currently, \"Click and Collect\" is available only to large retail merchants the eBay AU and UK marketplaces.  # noqa: E501
 
         :param pickup_drop_off: The pickup_drop_off of this SetFulfillmentPolicyResponse.  # noqa: E501
         :type: bool
@@ -334,7 +334,7 @@ class SetFulfillmentPolicyResponse(object):
     def shipping_options(self):
         """Gets the shipping_options of this SetFulfillmentPolicyResponse.  # noqa: E501
 
-        A list that defines the seller's shipping configurations for <code>DOMESTIC</code> and <code>INTERNATIONAL</code> order shipments. <br><br>The list has a single element if the seller ships to only domestic locations. If the seller also ships internationally, a second element defines their international shipping options. <br><br>Shipping options configure the high-level shipping settings that apply to orders, such as flat-rate or calculated shipping, and any rate tables the seller wants to associate with the shipping services. <br><br>Each <b>shippingOption</b> element has a <b>shippingServices</b> container that defines the list of shipping services (domestic or international) offered with this fulfillment policy. See <a href=\"/api-docs/sell/static/seller-accounts/configuring-shipping-options.html\" target=\"_blank\">Configuring shipping options</a>.  # noqa: E501
+        This array is used to provide detailed information on the domestic and international shipping options available for the policy. A separate <b>ShippingOption</b> object covers domestic shipping service options and international shipping service options (if the seller ships to international locations). The <b>optionType</b> field indicates whether the <b>ShippingOption</b> object applies to domestic or international shipping, and the <b>costType</b> field indicates whether flat-rate shipping or calculated shipping will be used. <p>A separate <b>ShippingServices</b> object is used to specify cost and other details for every available domestic and international shipping service option. </p>  # noqa: E501
 
         :return: The shipping_options of this SetFulfillmentPolicyResponse.  # noqa: E501
         :rtype: list[ShippingOption]
@@ -345,7 +345,7 @@ class SetFulfillmentPolicyResponse(object):
     def shipping_options(self, shipping_options):
         """Sets the shipping_options of this SetFulfillmentPolicyResponse.
 
-        A list that defines the seller's shipping configurations for <code>DOMESTIC</code> and <code>INTERNATIONAL</code> order shipments. <br><br>The list has a single element if the seller ships to only domestic locations. If the seller also ships internationally, a second element defines their international shipping options. <br><br>Shipping options configure the high-level shipping settings that apply to orders, such as flat-rate or calculated shipping, and any rate tables the seller wants to associate with the shipping services. <br><br>Each <b>shippingOption</b> element has a <b>shippingServices</b> container that defines the list of shipping services (domestic or international) offered with this fulfillment policy. See <a href=\"/api-docs/sell/static/seller-accounts/configuring-shipping-options.html\" target=\"_blank\">Configuring shipping options</a>.  # noqa: E501
+        This array is used to provide detailed information on the domestic and international shipping options available for the policy. A separate <b>ShippingOption</b> object covers domestic shipping service options and international shipping service options (if the seller ships to international locations). The <b>optionType</b> field indicates whether the <b>ShippingOption</b> object applies to domestic or international shipping, and the <b>costType</b> field indicates whether flat-rate shipping or calculated shipping will be used. <p>A separate <b>ShippingServices</b> object is used to specify cost and other details for every available domestic and international shipping service option. </p>  # noqa: E501
 
         :param shipping_options: The shipping_options of this SetFulfillmentPolicyResponse.  # noqa: E501
         :type: list[ShippingOption]
@@ -378,7 +378,7 @@ class SetFulfillmentPolicyResponse(object):
     def warnings(self):
         """Gets the warnings of this SetFulfillmentPolicyResponse.  # noqa: E501
 
-        A list of warnings that were generated during the processing of the request. This field normally returns empty, which indicates the request did not generate any warnings.  # noqa: E501
+        An array of one or more errors or warnings that were generated during the processing of the request. If there were no issues with the request, this array will return empty.  # noqa: E501
 
         :return: The warnings of this SetFulfillmentPolicyResponse.  # noqa: E501
         :rtype: list[Error]
@@ -389,7 +389,7 @@ class SetFulfillmentPolicyResponse(object):
     def warnings(self, warnings):
         """Sets the warnings of this SetFulfillmentPolicyResponse.
 
-        A list of warnings that were generated during the processing of the request. This field normally returns empty, which indicates the request did not generate any warnings.  # noqa: E501
+        An array of one or more errors or warnings that were generated during the processing of the request. If there were no issues with the request, this array will return empty.  # noqa: E501
 
         :param warnings: The warnings of this SetFulfillmentPolicyResponse.  # noqa: E501
         :type: list[Error]

@@ -3,7 +3,7 @@
 """
     Account API
 
-    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (seller-defined custom policies and eBay business policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
+    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (eBay business policies and seller-defined custom policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br/><br/>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
 
     OpenAPI spec version: v1.7.0
     
@@ -61,7 +61,7 @@ class SalesTax(object):
     def country_code(self):
         """Gets the country_code of this SalesTax.  # noqa: E501
 
-        The country code identifying the country to which this tax rate applies. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
+        The country code enumeration value identifies the country to which this sales tax rate applies. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The country_code of this SalesTax.  # noqa: E501
         :rtype: str
@@ -72,7 +72,7 @@ class SalesTax(object):
     def country_code(self, country_code):
         """Sets the country_code of this SalesTax.
 
-        The country code identifying the country to which this tax rate applies. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
+        The country code enumeration value identifies the country to which this sales tax rate applies. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param country_code: The country_code of this SalesTax.  # noqa: E501
         :type: str
@@ -84,7 +84,7 @@ class SalesTax(object):
     def sales_tax_jurisdiction_id(self):
         """Gets the sales_tax_jurisdiction_id of this SalesTax.  # noqa: E501
 
-        A unique ID that identifies the sales tax jurisdiction to which the tax rate applies (for example a state within the United States).  # noqa: E501
+        A unique ID that identifies the sales tax jurisdiction to which the salest tax rate applies (for example, a state within the United States).  # noqa: E501
 
         :return: The sales_tax_jurisdiction_id of this SalesTax.  # noqa: E501
         :rtype: str
@@ -95,7 +95,7 @@ class SalesTax(object):
     def sales_tax_jurisdiction_id(self, sales_tax_jurisdiction_id):
         """Sets the sales_tax_jurisdiction_id of this SalesTax.
 
-        A unique ID that identifies the sales tax jurisdiction to which the tax rate applies (for example a state within the United States).  # noqa: E501
+        A unique ID that identifies the sales tax jurisdiction to which the salest tax rate applies (for example, a state within the United States).  # noqa: E501
 
         :param sales_tax_jurisdiction_id: The sales_tax_jurisdiction_id of this SalesTax.  # noqa: E501
         :type: str
@@ -107,7 +107,7 @@ class SalesTax(object):
     def sales_tax_percentage(self):
         """Gets the sales_tax_percentage of this SalesTax.  # noqa: E501
 
-        The sales tax rate (as a percentage of the sale) applied to sales transactions made in this country and sales tax jurisdiction.  # noqa: E501
+        The sales tax rate that will be applied to sales price. The <b>shippingAndHandlingTaxed</b> value will indicate whether or not sales tax is also applied to shipping and handling charges<br><br>Although it is a string, a percentage value is returned here, such as <code>7.75</code>  # noqa: E501
 
         :return: The sales_tax_percentage of this SalesTax.  # noqa: E501
         :rtype: str
@@ -118,7 +118,7 @@ class SalesTax(object):
     def sales_tax_percentage(self, sales_tax_percentage):
         """Sets the sales_tax_percentage of this SalesTax.
 
-        The sales tax rate (as a percentage of the sale) applied to sales transactions made in this country and sales tax jurisdiction.  # noqa: E501
+        The sales tax rate that will be applied to sales price. The <b>shippingAndHandlingTaxed</b> value will indicate whether or not sales tax is also applied to shipping and handling charges<br><br>Although it is a string, a percentage value is returned here, such as <code>7.75</code>  # noqa: E501
 
         :param sales_tax_percentage: The sales_tax_percentage of this SalesTax.  # noqa: E501
         :type: str
@@ -130,7 +130,7 @@ class SalesTax(object):
     def shipping_and_handling_taxed(self):
         """Gets the shipping_and_handling_taxed of this SalesTax.  # noqa: E501
 
-        If set to <code>true</code>, shipping and handling charges are taxed.  # noqa: E501
+        If returned as <code>true</code>, sales tax is also applied to shipping and handling charges, and not just the total sales price of the order.  # noqa: E501
 
         :return: The shipping_and_handling_taxed of this SalesTax.  # noqa: E501
         :rtype: bool
@@ -141,7 +141,7 @@ class SalesTax(object):
     def shipping_and_handling_taxed(self, shipping_and_handling_taxed):
         """Sets the shipping_and_handling_taxed of this SalesTax.
 
-        If set to <code>true</code>, shipping and handling charges are taxed.  # noqa: E501
+        If returned as <code>true</code>, sales tax is also applied to shipping and handling charges, and not just the total sales price of the order.  # noqa: E501
 
         :param shipping_and_handling_taxed: The shipping_and_handling_taxed of this SalesTax.  # noqa: E501
         :type: bool

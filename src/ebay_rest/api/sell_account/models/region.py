@@ -3,7 +3,7 @@
 """
     Account API
 
-    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (seller-defined custom policies and eBay business policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
+    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (eBay business policies and seller-defined custom policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br/><br/>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
 
     OpenAPI spec version: v1.7.0
     
@@ -51,7 +51,7 @@ class Region(object):
     def region_name(self):
         """Gets the region_name of this Region.  # noqa: E501
 
-        A string that indicates the name of a region, as defined by eBay. A \"region\" can be either a 'world region' (e.g., the \"Middle East\" or \"Southeast Asia\") or a country, as represented with a two-letter country code. Use <b>GeteBayDetails</b> to get the values accepted by this field. <p>The values that you're allowed to use for a specific <b>regionName</b> field depend on the context in which you are setting the value. For details on how to set the values for this field, see <a href=\"/api-docs/sell/static/seller-accounts/ht_shipping-worldwide.html#shipToLocations\">The shipToLocations container</a>.  # noqa: E501
+        A string that indicates the name of a region, as defined by eBay. A \"region\" can be either a 'world region' (e.g., the \"Middle East\" or \"Southeast Asia\"), a country (represented with a two-letter country code), a state or province (represented with a two-letter code), or a special domestic region within a country. The <b>GeteBayDetails</b> call in the Trading API can be used to retrieve the world regions and special domestic regions within a specific country. To get these enumeration values, call <b>GeteBayDetails</b>with the <b>DetailName</b> value set to <b>ExcludeShippingLocationDetails</b>.  # noqa: E501
 
         :return: The region_name of this Region.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class Region(object):
     def region_name(self, region_name):
         """Sets the region_name of this Region.
 
-        A string that indicates the name of a region, as defined by eBay. A \"region\" can be either a 'world region' (e.g., the \"Middle East\" or \"Southeast Asia\") or a country, as represented with a two-letter country code. Use <b>GeteBayDetails</b> to get the values accepted by this field. <p>The values that you're allowed to use for a specific <b>regionName</b> field depend on the context in which you are setting the value. For details on how to set the values for this field, see <a href=\"/api-docs/sell/static/seller-accounts/ht_shipping-worldwide.html#shipToLocations\">The shipToLocations container</a>.  # noqa: E501
+        A string that indicates the name of a region, as defined by eBay. A \"region\" can be either a 'world region' (e.g., the \"Middle East\" or \"Southeast Asia\"), a country (represented with a two-letter country code), a state or province (represented with a two-letter code), or a special domestic region within a country. The <b>GeteBayDetails</b> call in the Trading API can be used to retrieve the world regions and special domestic regions within a specific country. To get these enumeration values, call <b>GeteBayDetails</b>with the <b>DetailName</b> value set to <b>ExcludeShippingLocationDetails</b>.  # noqa: E501
 
         :param region_name: The region_name of this Region.  # noqa: E501
         :type: str

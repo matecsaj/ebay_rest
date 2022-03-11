@@ -3,7 +3,7 @@
 """
     Account API
 
-    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (seller-defined custom policies and eBay business policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
+    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (eBay business policies and seller-defined custom policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br/><br/>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
 
     OpenAPI spec version: v1.7.0
     
@@ -61,7 +61,7 @@ class CustomPolicyCreateRequest(object):
     def description(self):
         """Gets the description of this CustomPolicyCreateRequest.  # noqa: E501
 
-        Details of the seller's specific policy and terms for this policy.<br><br><b>Max length:</b> 15,000  # noqa: E501
+        Details of the seller's specific policy and terms for this policy.<br/><br/><b>Max length:</b> 15,000  # noqa: E501
 
         :return: The description of this CustomPolicyCreateRequest.  # noqa: E501
         :rtype: str
@@ -72,7 +72,7 @@ class CustomPolicyCreateRequest(object):
     def description(self, description):
         """Sets the description of this CustomPolicyCreateRequest.
 
-        Details of the seller's specific policy and terms for this policy.<br><br><b>Max length:</b> 15,000  # noqa: E501
+        Details of the seller's specific policy and terms for this policy.<br/><br/><b>Max length:</b> 15,000  # noqa: E501
 
         :param description: The description of this CustomPolicyCreateRequest.  # noqa: E501
         :type: str
@@ -84,7 +84,7 @@ class CustomPolicyCreateRequest(object):
     def label(self):
         """Gets the label of this CustomPolicyCreateRequest.  # noqa: E501
 
-        Customer-facing label shown on View Item pages for items to which the policy applies. This seller-defined string is displayed as a system-generated hyperlink pointing to detailed policy information.<br><br><b>Max length:</b> 65  # noqa: E501
+        Customer-facing label shown on View Item pages for items to which the policy applies. This seller-defined string is displayed as a system-generated hyperlink pointing to detailed policy information.<br/><br/><b>Max length:</b> 65  # noqa: E501
 
         :return: The label of this CustomPolicyCreateRequest.  # noqa: E501
         :rtype: str
@@ -95,7 +95,7 @@ class CustomPolicyCreateRequest(object):
     def label(self, label):
         """Sets the label of this CustomPolicyCreateRequest.
 
-        Customer-facing label shown on View Item pages for items to which the policy applies. This seller-defined string is displayed as a system-generated hyperlink pointing to detailed policy information.<br><br><b>Max length:</b> 65  # noqa: E501
+        Customer-facing label shown on View Item pages for items to which the policy applies. This seller-defined string is displayed as a system-generated hyperlink pointing to detailed policy information.<br/><br/><b>Max length:</b> 65  # noqa: E501
 
         :param label: The label of this CustomPolicyCreateRequest.  # noqa: E501
         :type: str

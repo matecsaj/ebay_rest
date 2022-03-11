@@ -237,7 +237,7 @@ class Transaction(object):
     def order_line_items(self):
         """Gets the order_line_items of this Transaction.  # noqa: E501
 
-        This array shows the fees that are deducted from a seller payout for each line item in an order.  # noqa: E501
+        This array shows the fees that are deducted from a seller payout for each line item in an order.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> In some cases, a transaction fee might be returned asynchronously from the associated order. In such cases, you can determine the order to which the fee applies by examining the referenceID value of the fee, which should match the ID of the order.</span>  # noqa: E501
 
         :return: The order_line_items of this Transaction.  # noqa: E501
         :rtype: list[OrderLineItem]
@@ -248,7 +248,7 @@ class Transaction(object):
     def order_line_items(self, order_line_items):
         """Sets the order_line_items of this Transaction.
 
-        This array shows the fees that are deducted from a seller payout for each line item in an order.  # noqa: E501
+        This array shows the fees that are deducted from a seller payout for each line item in an order.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> In some cases, a transaction fee might be returned asynchronously from the associated order. In such cases, you can determine the order to which the fee applies by examining the referenceID value of the fee, which should match the ID of the order.</span>  # noqa: E501
 
         :param order_line_items: The order_line_items of this Transaction.  # noqa: E501
         :type: list[OrderLineItem]
@@ -486,7 +486,7 @@ class Transaction(object):
     def transaction_type(self):
         """Gets the transaction_type of this Transaction.  # noqa: E501
 
-        This enumeration value indicates whether the monetary transaction is a buyer's payment for an order, a refund to the buyer for a returned item or cancelled order, a credit issued by eBay to the seller's account, a payment dispute between the buyer and seller, or where eBay is billing the seller for an eBay shipping label or another charge (such as a refund to a buyer). Note that the shipping label functionality will initially only be available to a select number of sellers. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:TransactionTypeEnum'>eBay API documentation</a>  # noqa: E501
+        This enumeration value indicates the type of monetary transaction. Examples of monetary transactions include a buyer's payment for an order, a refund to the buyer for a returned item or cancelled order, or a credit issued by eBay to the seller's account. For a complete list of monetary transaction types within the <strong>Finances API</strong>, see the <a href=\"/api-docs/sell/finances/types/pay:TransactionTypeEnum\">TransactionTypeEnum</a> type. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:TransactionTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The transaction_type of this Transaction.  # noqa: E501
         :rtype: str
@@ -497,7 +497,7 @@ class Transaction(object):
     def transaction_type(self, transaction_type):
         """Sets the transaction_type of this Transaction.
 
-        This enumeration value indicates whether the monetary transaction is a buyer's payment for an order, a refund to the buyer for a returned item or cancelled order, a credit issued by eBay to the seller's account, a payment dispute between the buyer and seller, or where eBay is billing the seller for an eBay shipping label or another charge (such as a refund to a buyer). Note that the shipping label functionality will initially only be available to a select number of sellers. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:TransactionTypeEnum'>eBay API documentation</a>  # noqa: E501
+        This enumeration value indicates the type of monetary transaction. Examples of monetary transactions include a buyer's payment for an order, a refund to the buyer for a returned item or cancelled order, or a credit issued by eBay to the seller's account. For a complete list of monetary transaction types within the <strong>Finances API</strong>, see the <a href=\"/api-docs/sell/finances/types/pay:TransactionTypeEnum\">TransactionTypeEnum</a> type. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:TransactionTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param transaction_type: The transaction_type of this Transaction.  # noqa: E501
         :type: str

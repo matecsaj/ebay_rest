@@ -79,7 +79,7 @@ class PayoutInstrument(object):
     def instrument_type(self):
         """Gets the instrument_type of this PayoutInstrument.  # noqa: E501
 
-        This string value indicates the type of account that received the payout. At this time, seller payouts can only be distributed to bank acounts, so the string value returned in this field will always be <code>BankAccount</code>.  # noqa: E501
+        This string value indicates the type of account that received the payout. At this time, seller payouts can only be distributed to bank acounts, so the string value returned in this field will always be <code>BANK</code>.  # noqa: E501
 
         :return: The instrument_type of this PayoutInstrument.  # noqa: E501
         :rtype: str
@@ -90,7 +90,7 @@ class PayoutInstrument(object):
     def instrument_type(self, instrument_type):
         """Sets the instrument_type of this PayoutInstrument.
 
-        This string value indicates the type of account that received the payout. At this time, seller payouts can only be distributed to bank acounts, so the string value returned in this field will always be <code>BankAccount</code>.  # noqa: E501
+        This string value indicates the type of account that received the payout. At this time, seller payouts can only be distributed to bank acounts, so the string value returned in this field will always be <code>BANK</code>.  # noqa: E501
 
         :param instrument_type: The instrument_type of this PayoutInstrument.  # noqa: E501
         :type: str

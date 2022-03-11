@@ -596,6 +596,9 @@ class _OAuth2Api:
                 - timedelta(minutes=5)
             )
         else:
-            token.error = str(resp.status_code) + ': ' + content['error_description']
+            token.error = str(resp.status_code)
+            key = 'error_description'
+            if key in content:
+                token.error += ': ' + content[key]
 
         return token

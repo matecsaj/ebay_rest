@@ -1,4 +1,11 @@
 {
+    "addon_service_selection": [
+        "OPTIONAL",
+        "REQUIRED"
+    ],
+    "addon_service_type": [
+        "AUTHENTICITY_GUARANTEE"
+    ],
     "age_group": [],
     "authenticity_verification_description": [],
     "availability_status": [

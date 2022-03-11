@@ -3,7 +3,7 @@
 """
     Account API
 
-    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (seller-defined custom policies and eBay business policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
+    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (eBay business policies and seller-defined custom policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br/><br/>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
 
     OpenAPI spec version: v1.7.0
     
@@ -117,7 +117,7 @@ class ShippingService(object):
     def buyer_responsible_for_pickup(self):
         """Gets the buyer_responsible_for_pickup of this ShippingService.  # noqa: E501
 
-        This field is only applicable to vehicle categories on eBay Motors (US and Canada). If set to <code>true</code>, the buyer is responsible for picking up the vehicle. Otherwise, the seller should specify the vehicle pickup arrangements in the item description. <br><br>The seller cannot modify this flag if the vehicle has bids or if the listing ends within 12 hours. <br><br><b>Default</b>: false  # noqa: E501
+        This field should be included and set to <code>true</code> for a motor vehicle listing if it will be the buyer's responsibility to pick up the purchased motor vehicle after full payment is made. This field is only applicable to motor vehicle listings. In the majority of motor vehicle listings, the seller does make the buyer responsible for pickup or shipment of the vehicle. <br/><br/>This field is returned if set.<br/><br/><b>Default</b>: false  # noqa: E501
 
         :return: The buyer_responsible_for_pickup of this ShippingService.  # noqa: E501
         :rtype: bool
@@ -128,7 +128,7 @@ class ShippingService(object):
     def buyer_responsible_for_pickup(self, buyer_responsible_for_pickup):
         """Sets the buyer_responsible_for_pickup of this ShippingService.
 
-        This field is only applicable to vehicle categories on eBay Motors (US and Canada). If set to <code>true</code>, the buyer is responsible for picking up the vehicle. Otherwise, the seller should specify the vehicle pickup arrangements in the item description. <br><br>The seller cannot modify this flag if the vehicle has bids or if the listing ends within 12 hours. <br><br><b>Default</b>: false  # noqa: E501
+        This field should be included and set to <code>true</code> for a motor vehicle listing if it will be the buyer's responsibility to pick up the purchased motor vehicle after full payment is made. This field is only applicable to motor vehicle listings. In the majority of motor vehicle listings, the seller does make the buyer responsible for pickup or shipment of the vehicle. <br/><br/>This field is returned if set.<br/><br/><b>Default</b>: false  # noqa: E501
 
         :param buyer_responsible_for_pickup: The buyer_responsible_for_pickup of this ShippingService.  # noqa: E501
         :type: bool
@@ -140,7 +140,7 @@ class ShippingService(object):
     def buyer_responsible_for_shipping(self):
         """Gets the buyer_responsible_for_shipping of this ShippingService.  # noqa: E501
 
-        This field is applicable for only items listed in vehicle categories on eBay Motors (US and Canada). If set to <code>true</code>, the buyer is responsible for the shipment of the vehicle. Otherwise, the seller should specify the vehicle shipping arrangements in the item description. <br><br>The seller cannot modify this flag if the vehicle has bids or if the listing ends within 12 hours. <br><br><b>Default</b>: false  # noqa: E501
+        This field should be included and set to <code>true</code> for a motor vehicle listing if it will be the buyer's responsibility to arrange for shipment of a purchased motor vehicle after full payment is made. This field is only applicable to motor vehicle listings. In the majority of motor vehicle listings, the seller does make the buyer responsible for pickup or shipment of the vehicle. <br/><br/>This field is returned if set.<br/><br/><b>Default</b>: false  # noqa: E501
 
         :return: The buyer_responsible_for_shipping of this ShippingService.  # noqa: E501
         :rtype: bool
@@ -151,7 +151,7 @@ class ShippingService(object):
     def buyer_responsible_for_shipping(self, buyer_responsible_for_shipping):
         """Sets the buyer_responsible_for_shipping of this ShippingService.
 
-        This field is applicable for only items listed in vehicle categories on eBay Motors (US and Canada). If set to <code>true</code>, the buyer is responsible for the shipment of the vehicle. Otherwise, the seller should specify the vehicle shipping arrangements in the item description. <br><br>The seller cannot modify this flag if the vehicle has bids or if the listing ends within 12 hours. <br><br><b>Default</b>: false  # noqa: E501
+        This field should be included and set to <code>true</code> for a motor vehicle listing if it will be the buyer's responsibility to arrange for shipment of a purchased motor vehicle after full payment is made. This field is only applicable to motor vehicle listings. In the majority of motor vehicle listings, the seller does make the buyer responsible for pickup or shipment of the vehicle. <br/><br/>This field is returned if set.<br/><br/><b>Default</b>: false  # noqa: E501
 
         :param buyer_responsible_for_shipping: The buyer_responsible_for_shipping of this ShippingService.  # noqa: E501
         :type: bool
@@ -184,7 +184,7 @@ class ShippingService(object):
     def free_shipping(self):
         """Gets the free_shipping of this ShippingService.  # noqa: E501
 
-        If set to <code>true</code>, the seller offers free shipping to the buyer. This field can only be included and set to 'true' for the first domestic shipping service option specified in the <b>shippingServices</b> container (it is ignored if set for subsequent shipping services). The first specified shipping service option has a <b>sortOrder</b> value of <code>1</code> or (if the sortOrderId field is not used) it is the shipping service option that's specified first in the <b>shippingServices</b> container.  # noqa: E501
+        This field is included and set to <code>true</code> if the seller offers a free shipping option to the buyer. This field can only be included and set to <code>true</code> for the first domestic shipping service option specified in the <b>shippingServices</b> container (it is ignored if set for subsequent shipping services or for any international shipping service option). The first specified shipping service option has a <b>sortOrder</b> value of <code>1</code> or if the <b>sortOrderId</b> field is not used, it is the shipping service option that's specified first in the <b>shippingServices</b> container.<br/><br/>This container is returned if set.  # noqa: E501
 
         :return: The free_shipping of this ShippingService.  # noqa: E501
         :rtype: bool
@@ -195,7 +195,7 @@ class ShippingService(object):
     def free_shipping(self, free_shipping):
         """Sets the free_shipping of this ShippingService.
 
-        If set to <code>true</code>, the seller offers free shipping to the buyer. This field can only be included and set to 'true' for the first domestic shipping service option specified in the <b>shippingServices</b> container (it is ignored if set for subsequent shipping services). The first specified shipping service option has a <b>sortOrder</b> value of <code>1</code> or (if the sortOrderId field is not used) it is the shipping service option that's specified first in the <b>shippingServices</b> container.  # noqa: E501
+        This field is included and set to <code>true</code> if the seller offers a free shipping option to the buyer. This field can only be included and set to <code>true</code> for the first domestic shipping service option specified in the <b>shippingServices</b> container (it is ignored if set for subsequent shipping services or for any international shipping service option). The first specified shipping service option has a <b>sortOrder</b> value of <code>1</code> or if the <b>sortOrderId</b> field is not used, it is the shipping service option that's specified first in the <b>shippingServices</b> container.<br/><br/>This container is returned if set.  # noqa: E501
 
         :param free_shipping: The free_shipping of this ShippingService.  # noqa: E501
         :type: bool
@@ -207,7 +207,7 @@ class ShippingService(object):
     def shipping_carrier_code(self):
         """Gets the shipping_carrier_code of this ShippingService.  # noqa: E501
 
-        The shipping carrier, such as 'USPS', 'FedEx', 'UPS', and so on.  # noqa: E501
+        This field sets/indicates the shipping carrier, such as <code>USPS</code>, <code>FedEx</code>, or <code>UPS</code>. Although this field uses the <b>string</b> type, the seller must pass in a pre-defined enumeration value here. For a full list of shipping carrier enum values for a specified eBay marketplace, the <b>GeteBayDetails</b> call of the <b>Trading API</b> can be used, and the <b>DetailName</b> field's value should be set to <code>ShippingCarrierDetails</code>. The enum values for each shipping carriers can be found in each <b>ShippingCarrierDetails.ShippingCarrier</b> field in the response payload.<br/><br/> This field is actually optional, as the shipping carrier is also tied into the <b>shippingServiceCode</b> enum value, and that field is required for every specified shipping service option.<br/><br/>This field is returned if set.  # noqa: E501
 
         :return: The shipping_carrier_code of this ShippingService.  # noqa: E501
         :rtype: str
@@ -218,7 +218,7 @@ class ShippingService(object):
     def shipping_carrier_code(self, shipping_carrier_code):
         """Sets the shipping_carrier_code of this ShippingService.
 
-        The shipping carrier, such as 'USPS', 'FedEx', 'UPS', and so on.  # noqa: E501
+        This field sets/indicates the shipping carrier, such as <code>USPS</code>, <code>FedEx</code>, or <code>UPS</code>. Although this field uses the <b>string</b> type, the seller must pass in a pre-defined enumeration value here. For a full list of shipping carrier enum values for a specified eBay marketplace, the <b>GeteBayDetails</b> call of the <b>Trading API</b> can be used, and the <b>DetailName</b> field's value should be set to <code>ShippingCarrierDetails</code>. The enum values for each shipping carriers can be found in each <b>ShippingCarrierDetails.ShippingCarrier</b> field in the response payload.<br/><br/> This field is actually optional, as the shipping carrier is also tied into the <b>shippingServiceCode</b> enum value, and that field is required for every specified shipping service option.<br/><br/>This field is returned if set.  # noqa: E501
 
         :param shipping_carrier_code: The shipping_carrier_code of this ShippingService.  # noqa: E501
         :type: str
@@ -251,7 +251,7 @@ class ShippingService(object):
     def shipping_service_code(self):
         """Gets the shipping_service_code of this ShippingService.  # noqa: E501
 
-        The shipping service that the shipping carrier uses to ship an item. For example, an overnight, two-day delivery, or other type of service. For details on how shipping services are configured, see <a href=\"/api-docs/sell/static/seller-accounts/ht_shipping-setting-shipping-carrier-and-service-values.html\" target=\"_blank\">Setting the shipping carrier and shipping service values</a> and <a href=\"/api-docs/sell/static/seller-accounts/using-the-ebay-standard-envelope-service.html\" target=\"_blank\">Using eBay standard envelope (eSE) service</a>.  # noqa: E501
+        This field sets/indicates the domestic or international shipping service option, such as <code>USPSPriority</code>, <code>FedEx2Day</code>, or <code>UPS3rdDay</code>. Although this field uses the <b>string</b> type, the seller must pass in a pre-defined enumeration value here. For a full list of shipping service option enum values for a specified eBay marketplace, the <b>GeteBayDetails</b> call of the <b>Trading API</b> can be used, and the <b>DetailName</b> field's value should be set to <code>ShippingServiceDetails</code>. The enum values for each shipping service option can be found in each <b>ShippingServiceDetails.ShippingService</b> field in the response payload. The seller must make sure that the shipping service option is still valid, which is indicated by a <code>true</code> value in the corresponding <b>ValidForSellingFlow</b> boolean field. International shipping service options are typically returned at the top of the response payload, and are indicated by an <b>InternationalService</b> boolean field that reads <code>true</code>. The <b>InternationalService</b> boolean field is not returned at all for domestic shipping service options. <br/><br/> This field is required for every specified shipping service option.<br/><br/>This field is returned if set.  # noqa: E501
 
         :return: The shipping_service_code of this ShippingService.  # noqa: E501
         :rtype: str
@@ -262,7 +262,7 @@ class ShippingService(object):
     def shipping_service_code(self, shipping_service_code):
         """Sets the shipping_service_code of this ShippingService.
 
-        The shipping service that the shipping carrier uses to ship an item. For example, an overnight, two-day delivery, or other type of service. For details on how shipping services are configured, see <a href=\"/api-docs/sell/static/seller-accounts/ht_shipping-setting-shipping-carrier-and-service-values.html\" target=\"_blank\">Setting the shipping carrier and shipping service values</a> and <a href=\"/api-docs/sell/static/seller-accounts/using-the-ebay-standard-envelope-service.html\" target=\"_blank\">Using eBay standard envelope (eSE) service</a>.  # noqa: E501
+        This field sets/indicates the domestic or international shipping service option, such as <code>USPSPriority</code>, <code>FedEx2Day</code>, or <code>UPS3rdDay</code>. Although this field uses the <b>string</b> type, the seller must pass in a pre-defined enumeration value here. For a full list of shipping service option enum values for a specified eBay marketplace, the <b>GeteBayDetails</b> call of the <b>Trading API</b> can be used, and the <b>DetailName</b> field's value should be set to <code>ShippingServiceDetails</code>. The enum values for each shipping service option can be found in each <b>ShippingServiceDetails.ShippingService</b> field in the response payload. The seller must make sure that the shipping service option is still valid, which is indicated by a <code>true</code> value in the corresponding <b>ValidForSellingFlow</b> boolean field. International shipping service options are typically returned at the top of the response payload, and are indicated by an <b>InternationalService</b> boolean field that reads <code>true</code>. The <b>InternationalService</b> boolean field is not returned at all for domestic shipping service options. <br/><br/> This field is required for every specified shipping service option.<br/><br/>This field is returned if set.  # noqa: E501
 
         :param shipping_service_code: The shipping_service_code of this ShippingService.  # noqa: E501
         :type: str
@@ -295,7 +295,7 @@ class ShippingService(object):
     def sort_order(self):
         """Gets the sort_order of this ShippingService.  # noqa: E501
 
-        This integer value controls the order that this shipping service option appears in the View Item and Checkout pages, as related to the other specified shipping service options. <br><br>Sellers can specify up to four domestic shipping services (in four separate <b>shippingService</b> containers), so valid values are 1, 2, 3, and 4. A shipping service option with a <b>sortOrder</b> value of '1' appears at the top of View Item and Checkout pages. Conversely, a shipping service option with a <b>sortOrder</b> value of '4' appears at the bottom of the list. <br><br>Sellers can specify up to five international shipping services (in five separate <b>shippingService</b> containers, so valid values for international shipping services are 1, 2, 3, 4, and 5. Similarly to domestic shipping service options, the <b>sortOrder</b> value of a international shipping service option controls the placement of that shipping service option in the View Item and Checkout pages. Set up different domestic and international services by configuring two <b>shippingOptions</b> containers, where you set <b>shippingOptions.optionType</b> to either <code>DOMESTIC</code> or <code>INTERNATIONAL</code> to indicate the area supported by the listed shipping services. <br><br>If the <b>sortOrder</b> field is not supplied, the order of domestic and international shipping service options is determined by the order in which they are listed in the API call. <br><br><b>Min</b>: 1. <b>Max</b>: 4 (for domestic shipping service) or 5 (for international shipping service).  # noqa: E501
+        The integer value set in this field controls the order of the corresponding domestic or international shipping service option in the View Item and Checkout pages. <br/><br/>Sellers can specify up to four domestic shipping services (in four separate <b>shippingService</b> containers), so valid values are 1, 2, 3, and 4. A shipping service option with a <b>sortOrder</b> value of <code>1</code> appears at the top of View Item and Checkout pages. Conversely, a shipping service option with a <b>sortOrder</b> value of <code>1</code> appears at the bottom of the list. <br/><br/>Sellers can specify up to five international shipping services (in five separate <b>shippingService</b> containers), so valid values for international shipping services are 1, 2, 3, 4, and 5. Similarly to domestic shipping service options, the <b>sortOrder</b> value of a international shipping service option controls the placement of that shipping service option in the View Item and Checkout pages. <br/><br/>If the <b>sortOrder</b> field is not supplied, the order of domestic and international shipping service options is determined by the order in which they are listed in the API call. <br/><br/><b>Min</b>: 1. <b>Max</b>: 4 (for domestic shipping service) or 5 (for international shipping service).  # noqa: E501
 
         :return: The sort_order of this ShippingService.  # noqa: E501
         :rtype: int
@@ -306,7 +306,7 @@ class ShippingService(object):
     def sort_order(self, sort_order):
         """Sets the sort_order of this ShippingService.
 
-        This integer value controls the order that this shipping service option appears in the View Item and Checkout pages, as related to the other specified shipping service options. <br><br>Sellers can specify up to four domestic shipping services (in four separate <b>shippingService</b> containers), so valid values are 1, 2, 3, and 4. A shipping service option with a <b>sortOrder</b> value of '1' appears at the top of View Item and Checkout pages. Conversely, a shipping service option with a <b>sortOrder</b> value of '4' appears at the bottom of the list. <br><br>Sellers can specify up to five international shipping services (in five separate <b>shippingService</b> containers, so valid values for international shipping services are 1, 2, 3, 4, and 5. Similarly to domestic shipping service options, the <b>sortOrder</b> value of a international shipping service option controls the placement of that shipping service option in the View Item and Checkout pages. Set up different domestic and international services by configuring two <b>shippingOptions</b> containers, where you set <b>shippingOptions.optionType</b> to either <code>DOMESTIC</code> or <code>INTERNATIONAL</code> to indicate the area supported by the listed shipping services. <br><br>If the <b>sortOrder</b> field is not supplied, the order of domestic and international shipping service options is determined by the order in which they are listed in the API call. <br><br><b>Min</b>: 1. <b>Max</b>: 4 (for domestic shipping service) or 5 (for international shipping service).  # noqa: E501
+        The integer value set in this field controls the order of the corresponding domestic or international shipping service option in the View Item and Checkout pages. <br/><br/>Sellers can specify up to four domestic shipping services (in four separate <b>shippingService</b> containers), so valid values are 1, 2, 3, and 4. A shipping service option with a <b>sortOrder</b> value of <code>1</code> appears at the top of View Item and Checkout pages. Conversely, a shipping service option with a <b>sortOrder</b> value of <code>1</code> appears at the bottom of the list. <br/><br/>Sellers can specify up to five international shipping services (in five separate <b>shippingService</b> containers), so valid values for international shipping services are 1, 2, 3, 4, and 5. Similarly to domestic shipping service options, the <b>sortOrder</b> value of a international shipping service option controls the placement of that shipping service option in the View Item and Checkout pages. <br/><br/>If the <b>sortOrder</b> field is not supplied, the order of domestic and international shipping service options is determined by the order in which they are listed in the API call. <br/><br/><b>Min</b>: 1. <b>Max</b>: 4 (for domestic shipping service) or 5 (for international shipping service).  # noqa: E501
 
         :param sort_order: The sort_order of this ShippingService.  # noqa: E501
         :type: int

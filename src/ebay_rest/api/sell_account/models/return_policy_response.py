@@ -3,7 +3,7 @@
 """
     Account API
 
-    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (seller-defined custom policies and eBay business policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
+    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (eBay business policies and seller-defined custom policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br/><br/>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
 
     OpenAPI spec version: v1.7.0
     
@@ -33,8 +33,8 @@ class ReturnPolicyResponse(object):
         'next': 'str',
         'offset': 'int',
         'prev': 'str',
-        'total': 'int',
-        'return_policies': 'list[ReturnPolicy]'
+        'return_policies': 'list[ReturnPolicy]',
+        'total': 'int'
     }
 
     attribute_map = {
@@ -43,19 +43,19 @@ class ReturnPolicyResponse(object):
         'next': 'next',
         'offset': 'offset',
         'prev': 'prev',
-        'total': 'total',
-        'return_policies': 'returnPolicies'
+        'return_policies': 'returnPolicies',
+        'total': 'total'
     }
 
-    def __init__(self, href=None, limit=None, next=None, offset=None, prev=None, total=None, return_policies=None):  # noqa: E501
+    def __init__(self, href=None, limit=None, next=None, offset=None, prev=None, return_policies=None, total=None):  # noqa: E501
         """ReturnPolicyResponse - a model defined in Swagger"""  # noqa: E501
         self._href = None
         self._limit = None
         self._next = None
         self._offset = None
         self._prev = None
-        self._total = None
         self._return_policies = None
+        self._total = None
         self.discriminator = None
         if href is not None:
             self.href = href
@@ -67,10 +67,10 @@ class ReturnPolicyResponse(object):
             self.offset = offset
         if prev is not None:
             self.prev = prev
-        if total is not None:
-            self.total = total
         if return_policies is not None:
             self.return_policies = return_policies
+        if total is not None:
+            self.total = total
 
     @property
     def href(self):
@@ -188,33 +188,10 @@ class ReturnPolicyResponse(object):
         self._prev = prev
 
     @property
-    def total(self):
-        """Gets the total of this ReturnPolicyResponse.  # noqa: E501
-
-        The total number of items retrieved in the result set.  <br><br>If no items are found, this field is returned with a value of <code>0</code>.  # noqa: E501
-
-        :return: The total of this ReturnPolicyResponse.  # noqa: E501
-        :rtype: int
-        """
-        return self._total
-
-    @total.setter
-    def total(self, total):
-        """Sets the total of this ReturnPolicyResponse.
-
-        The total number of items retrieved in the result set.  <br><br>If no items are found, this field is returned with a value of <code>0</code>.  # noqa: E501
-
-        :param total: The total of this ReturnPolicyResponse.  # noqa: E501
-        :type: int
-        """
-
-        self._total = total
-
-    @property
     def return_policies(self):
         """Gets the return_policies of this ReturnPolicyResponse.  # noqa: E501
 
-        A list of the seller's return policies.  # noqa: E501
+        A list of all of the seller's return business policies defined for the specified marketplace. This array will be returned as empty if no return business policies are defined for the specified marketplace.  # noqa: E501
 
         :return: The return_policies of this ReturnPolicyResponse.  # noqa: E501
         :rtype: list[ReturnPolicy]
@@ -225,13 +202,36 @@ class ReturnPolicyResponse(object):
     def return_policies(self, return_policies):
         """Sets the return_policies of this ReturnPolicyResponse.
 
-        A list of the seller's return policies.  # noqa: E501
+        A list of all of the seller's return business policies defined for the specified marketplace. This array will be returned as empty if no return business policies are defined for the specified marketplace.  # noqa: E501
 
         :param return_policies: The return_policies of this ReturnPolicyResponse.  # noqa: E501
         :type: list[ReturnPolicy]
         """
 
         self._return_policies = return_policies
+
+    @property
+    def total(self):
+        """Gets the total of this ReturnPolicyResponse.  # noqa: E501
+
+        The total number of return business policies retrieved in the result set.  <br/><br/>If no return business policies are defined for the specified marketplace, this field is returned with a value of <code>0</code>.  # noqa: E501
+
+        :return: The total of this ReturnPolicyResponse.  # noqa: E501
+        :rtype: int
+        """
+        return self._total
+
+    @total.setter
+    def total(self, total):
+        """Sets the total of this ReturnPolicyResponse.
+
+        The total number of return business policies retrieved in the result set.  <br/><br/>If no return business policies are defined for the specified marketplace, this field is returned with a value of <code>0</code>.  # noqa: E501
+
+        :param total: The total of this ReturnPolicyResponse.  # noqa: E501
+        :type: int
+        """
+
+        self._total = total
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -3,7 +3,7 @@
 """
     Account API
 
-    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (seller-defined custom policies and eBay business policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br><br>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
+    The <b>Account API</b> gives sellers the ability to configure their eBay seller accounts, including the seller's policies (eBay business policies and seller-defined custom policies), opt in and out of eBay seller programs, configure sales tax tables, and get account information.  <br/><br/>For details on the availability of the methods in this API, see <a href=\"/api-docs/sell/account/overview.html#requirements\">Account API requirements and restrictions</a>.  # noqa: E501
 
     OpenAPI spec version: v1.7.0
     
@@ -76,7 +76,7 @@ class FulfillmentPolicyResponse(object):
     def fulfillment_policies(self):
         """Gets the fulfillment_policies of this FulfillmentPolicyResponse.  # noqa: E501
 
-        A list of the seller's fulfillment policies.  # noqa: E501
+        A list of all of the seller's fulfillment policies defined for the specified marketplace. This array will be returned as empty if no fulfillment policies are defined for the specified marketplace.  # noqa: E501
 
         :return: The fulfillment_policies of this FulfillmentPolicyResponse.  # noqa: E501
         :rtype: list[FulfillmentPolicy]
@@ -87,7 +87,7 @@ class FulfillmentPolicyResponse(object):
     def fulfillment_policies(self, fulfillment_policies):
         """Sets the fulfillment_policies of this FulfillmentPolicyResponse.
 
-        A list of the seller's fulfillment policies.  # noqa: E501
+        A list of all of the seller's fulfillment policies defined for the specified marketplace. This array will be returned as empty if no fulfillment policies are defined for the specified marketplace.  # noqa: E501
 
         :param fulfillment_policies: The fulfillment_policies of this FulfillmentPolicyResponse.  # noqa: E501
         :type: list[FulfillmentPolicy]
@@ -214,7 +214,7 @@ class FulfillmentPolicyResponse(object):
     def total(self):
         """Gets the total of this FulfillmentPolicyResponse.  # noqa: E501
 
-        The total number of items retrieved in the result set.  <br><br>If no items are found, this field is returned with a value of <code>0</code>.  # noqa: E501
+        The total number of fulfillment policies retrieved in the result set.  <br/><br/>If no fulfillment policies are defined for the specified marketplace, this field is returned with a value of <code>0</code>.  # noqa: E501
 
         :return: The total of this FulfillmentPolicyResponse.  # noqa: E501
         :rtype: int
@@ -225,7 +225,7 @@ class FulfillmentPolicyResponse(object):
     def total(self, total):
         """Sets the total of this FulfillmentPolicyResponse.
 
-        The total number of items retrieved in the result set.  <br><br>If no items are found, this field is returned with a value of <code>0</code>.  # noqa: E501
+        The total number of fulfillment policies retrieved in the result set.  <br/><br/>If no fulfillment policies are defined for the specified marketplace, this field is returned with a value of <code>0</code>.  # noqa: E501
 
         :param total: The total of this FulfillmentPolicyResponse.  # noqa: E501
         :type: int
