@@ -156,7 +156,7 @@ class ApiClient(object):
         return_data = response_data
         if _preload_content:
             # deserialize response data
-            if response_type:
+            if response_type and response_data.status != 204:       # ebay_rest patch
                 return_data = self.deserialize(response_data, response_type)
             else:
                 return_data = None

@@ -554,7 +554,6 @@ class APIProductionSingleTests(unittest.TestCase):
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         self.assertTrue(confirmed, 'Failed to confirm that the new location exists.')
 
-    @unittest.skip  # eBay has a bug, when successful the call neglects to return a JSON response
     def test_sell_create_or_replace_inventory_item(self):
         """
         See https://developer.ebay.com/api-docs/sell/inventory/static/overview.html &

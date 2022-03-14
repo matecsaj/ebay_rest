@@ -698,6 +698,7 @@ class Contracts:
         await self.cache_contract()
         await self.patch_contract()
         await self.swagger_codegen()
+        await self.patch_generated()
         self.copy_library()
         self.fix_imports()
 
@@ -779,7 +780,30 @@ class Contracts:
                 async with aiofiles.open(file_location, mode='w') as f:
                     await f.write(data)
             else:
-                logging.warning('Patching sell_fulfillment_v1_oas3.json is no longer needed.')
+                logging.warning(f'Patching {file_name} is no longer needed.')
+
+    async def patch_generated(self) -> None:
+        """ If the generated code has an error then patch it before making use of it. """
+
+        # API calls that have a return type fail when there is no content. This is because
+        # there in attempt to de-serialize an empty string. If there is no content, indicated
+        # by a 204 status then don't de-serialize.
+        bad_code = 'if response_type:'
+        file_location = os.path.join(Locations.cache_path, self.name, self.name, 'api_client.py')
+        try:
+            async with aiofiles.open(file_location, mode='r') as f:
+                data = await f.read()
+        except FileNotFoundError:
+            logging.error(f"Can't open {file_location}.")
+        else:
+            if bad_code not in data:
+                logging.error(f"Maybe for {file_location} the 204 patch is not needed any longer.")
+            else:
+                # add a new condition before the colon
+                data = data.replace(bad_code,
+                                    bad_code[:-1] + ' and response_data.status != 204:       # ebay_rest patch')
+                async with aiofiles.open(file_location, mode='w') as f:
+                    await f.write(data)
 
     async def swagger_codegen(self):
         source = os.path.join(Locations.cache_path, self.file_name)
