@@ -128,7 +128,14 @@ print(help(Reference))
 1. Switch to a faster internet connection. 
 1. Switch to computer with faster cores.
 
+##
+**Q:** How to get data from a response header?
 
+**A:** As is this library can't get the data, pick a workaround.
+1. In some cases, another call can get the information; a demonstration is in the [unit tests](https://github.com/matecsaj/ebay_rest/blob/main/tests/ebay_rest.py), search for test_sell_feed_create_inventory_task and task_id_new.
+2. You could fork this library, and hack the call you need, so that it returns that needed data.
+3. You could write your only code from scratch to make the RestFul call.
+* [Swagger](https://swagger.io/tools/swagger-codegen/) with OpenAPI contracts from eBay generate the core of this library, and they are not currently able to return response header data. Please ask eBay to solve the root problem; many voices will convince them of the need to act.
 
 ## Contributing
 * Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
