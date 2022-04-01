@@ -324,7 +324,7 @@ async def generate_marketplace_id_values() -> None:
 
 
 async def get_soup_via_link(url: str) -> BeautifulSoup:
-    # Get the html at a url and then make soup of it.
+    # Get the html at an url and then make soup of it.
 
     # Get the html
     async with aiohttp.ClientSession() as session:
@@ -578,7 +578,7 @@ async def generate_containers_and_enums():
 
 async def generate_references():
     """
-    Generated json files for the references directory found in src.
+    Generated JSON files for the 'references' directory found in 'src'.
 
     If you add, delete or rename a json file, then alter /src/ebay_rest/reference.py accordingly.
 
@@ -1004,7 +1004,7 @@ class Contracts:
         return includes
 
     async def get_methods(self) -> str:
-        """ For a modules, get all code for it's methods. """
+        """ For a modules, get all code for its methods. """
 
         # catalog the module files that contain all method implementations
         modules = []
@@ -1274,7 +1274,8 @@ class Insert:
         self.insert_includes(includes)
         self.insert_methods(methods)
 
-    def insert_requirements(self, requirements):
+    @staticmethod
+    def insert_requirements(requirements):
         """ Merge the required libraries into the master. """
         requirements = list(requirements)
         requirements.sort()
@@ -1386,7 +1387,7 @@ async def generate_apis():
 async def main() -> None:
     start = time.time()
 
-    # while debugging it is handy to change the log level from INFO to DEBUG
+    # while debugging, it is handy to change the log level from INFO to DEBUG
     logging.basicConfig(format='%(asctime)s %(levelname)s %(filename)s %(lineno)d %(funcName)s: %(message)s',
                         level=logging.DEBUG)
 
