@@ -91,7 +91,7 @@ class InventoryTask(object):
     def task_id(self):
         """Gets the task_id of this InventoryTask.  # noqa: E501
 
-        The ID of the task. This ID is generated when the task was created by the createInventoryTask method.  # noqa: E501
+        The ID of the task. This ID is generated when the task was created by the <strong>createInventoryTask</strong> method.  # noqa: E501
 
         :return: The task_id of this InventoryTask.  # noqa: E501
         :rtype: str
@@ -102,7 +102,7 @@ class InventoryTask(object):
     def task_id(self, task_id):
         """Sets the task_id of this InventoryTask.
 
-        The ID of the task. This ID is generated when the task was created by the createInventoryTask method.  # noqa: E501
+        The ID of the task. This ID is generated when the task was created by the <strong>createInventoryTask</strong> method.  # noqa: E501
 
         :param task_id: The task_id of this InventoryTask.  # noqa: E501
         :type: str
@@ -183,7 +183,7 @@ class InventoryTask(object):
     def completion_date(self):
         """Gets the completion_date of this InventoryTask.  # noqa: E501
 
-        The timestamp when the task status went into the COMPLETED, COMPLETED_WITH_ERROR, or PARTIALLY_PROCESSED state. This field is only returned if the status is one of the three completed values.  # noqa: E501
+        The timestamp when the task <strong>status</strong> went into the <code>COMPLETED</code>, <code>COMPLETED_WITH_ERROR</code>, or <code>PARTIALLY_PROCESSED</code> state. This field is only returned if the status is one of the three completed values.  # noqa: E501
 
         :return: The completion_date of this InventoryTask.  # noqa: E501
         :rtype: str
@@ -194,7 +194,7 @@ class InventoryTask(object):
     def completion_date(self, completion_date):
         """Sets the completion_date of this InventoryTask.
 
-        The timestamp when the task status went into the COMPLETED, COMPLETED_WITH_ERROR, or PARTIALLY_PROCESSED state. This field is only returned if the status is one of the three completed values.  # noqa: E501
+        The timestamp when the task <strong>status</strong> went into the <code>COMPLETED</code>, <code>COMPLETED_WITH_ERROR</code>, or <code>PARTIALLY_PROCESSED</code> state. This field is only returned if the status is one of the three completed values.  # noqa: E501
 
         :param completion_date: The completion_date of this InventoryTask.  # noqa: E501
         :type: str
@@ -229,7 +229,7 @@ class InventoryTask(object):
     def detail_href(self):
         """Gets the detail_href of this InventoryTask.  # noqa: E501
 
-        The path to the call URI used to retrieve the task. This field points to the getInventoryTask URI.  # noqa: E501
+        The path to the call URI used to retrieve the task. This field points to the <strong>getInventoryTask</strong> URI.  # noqa: E501
 
         :return: The detail_href of this InventoryTask.  # noqa: E501
         :rtype: str
@@ -240,7 +240,7 @@ class InventoryTask(object):
     def detail_href(self, detail_href):
         """Sets the detail_href of this InventoryTask.
 
-        The path to the call URI used to retrieve the task. This field points to the getInventoryTask URI.  # noqa: E501
+        The path to the call URI used to retrieve the task. This field points to the <strong>getInventoryTask</strong> URI.  # noqa: E501
 
         :param detail_href: The detail_href of this InventoryTask.  # noqa: E501
         :type: str
@@ -294,7 +294,7 @@ class InventoryTask(object):
     def inventory_file_template(self):
         """Gets the inventory_file_template of this InventoryTask.  # noqa: E501
 
-        The inventory file template used to return specific types of inventory tasks, if set in the createInventoryTask method. This field does not apply to LMS_ACTIVE_INVENTORY_REPORT feed types. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:InventoryFileTemplateEnum'>eBay API documentation</a>  # noqa: E501
+        The inventory file template used to return specific types of inventory tasks, if set in the <strong>createInventoryTask</strong> method. This field does not apply to <code>LMS_ACTIVE_INVENTORY_REPORT</code> feed types. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:InventoryFileTemplateEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The inventory_file_template of this InventoryTask.  # noqa: E501
         :rtype: str
@@ -305,7 +305,7 @@ class InventoryTask(object):
     def inventory_file_template(self, inventory_file_template):
         """Sets the inventory_file_template of this InventoryTask.
 
-        The inventory file template used to return specific types of inventory tasks, if set in the createInventoryTask method. This field does not apply to LMS_ACTIVE_INVENTORY_REPORT feed types. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:InventoryFileTemplateEnum'>eBay API documentation</a>  # noqa: E501
+        The inventory file template used to return specific types of inventory tasks, if set in the <strong>createInventoryTask</strong> method. This field does not apply to <code>LMS_ACTIVE_INVENTORY_REPORT</code> feed types. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:InventoryFileTemplateEnum'>eBay API documentation</a>  # noqa: E501
 
         :param inventory_file_template: The inventory_file_template of this InventoryTask.  # noqa: E501
         :type: str

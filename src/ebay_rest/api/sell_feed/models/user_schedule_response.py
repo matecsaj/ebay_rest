@@ -111,7 +111,7 @@ class UserScheduleResponse(object):
     def schedule_id(self):
         """Gets the schedule_id of this UserScheduleResponse.  # noqa: E501
 
-        The ID of the schedule. This ID is generated when the schedule was created by the createSchedule method.  # noqa: E501
+        The ID of the schedule. This ID is generated when the schedule was created by the <strong>createSchedule</strong> method.  # noqa: E501
 
         :return: The schedule_id of this UserScheduleResponse.  # noqa: E501
         :rtype: str
@@ -122,7 +122,7 @@ class UserScheduleResponse(object):
     def schedule_id(self, schedule_id):
         """Sets the schedule_id of this UserScheduleResponse.
 
-        The ID of the schedule. This ID is generated when the schedule was created by the createSchedule method.  # noqa: E501
+        The ID of the schedule. This ID is generated when the schedule was created by the <strong>createSchedule</strong> method.  # noqa: E501
 
         :param schedule_id: The schedule_id of this UserScheduleResponse.  # noqa: E501
         :type: str
@@ -157,7 +157,7 @@ class UserScheduleResponse(object):
     def feed_type(self):
         """Gets the feed_type of this UserScheduleResponse.  # noqa: E501
 
-        The feedType associated with the schedule.  # noqa: E501
+        The <strong>feedType</strong> associated with the schedule.  # noqa: E501
 
         :return: The feed_type of this UserScheduleResponse.  # noqa: E501
         :rtype: str
@@ -168,7 +168,7 @@ class UserScheduleResponse(object):
     def feed_type(self, feed_type):
         """Sets the feed_type of this UserScheduleResponse.
 
-        The feedType associated with the schedule.  # noqa: E501
+        The <strong>feedType</strong> associated with the schedule.  # noqa: E501
 
         :param feed_type: The feed_type of this UserScheduleResponse.  # noqa: E501
         :type: str
@@ -203,7 +203,7 @@ class UserScheduleResponse(object):
     def preferred_trigger_day_of_month(self):
         """Gets the preferred_trigger_day_of_month of this UserScheduleResponse.  # noqa: E501
 
-        The preferred day of the month to trigger the schedule. This field can be used with preferredTriggerHour for monthly schedules. The last day of the month is used for numbers larger than the number of days in the month.  # noqa: E501
+        The preferred day of the month to trigger the schedule. This field can be used with <strong>preferredTriggerHour</strong> for monthly schedules. The last day of the month is used for numbers larger than the number of days in the month.  # noqa: E501
 
         :return: The preferred_trigger_day_of_month of this UserScheduleResponse.  # noqa: E501
         :rtype: int
@@ -214,7 +214,7 @@ class UserScheduleResponse(object):
     def preferred_trigger_day_of_month(self, preferred_trigger_day_of_month):
         """Sets the preferred_trigger_day_of_month of this UserScheduleResponse.
 
-        The preferred day of the month to trigger the schedule. This field can be used with preferredTriggerHour for monthly schedules. The last day of the month is used for numbers larger than the number of days in the month.  # noqa: E501
+        The preferred day of the month to trigger the schedule. This field can be used with <strong>preferredTriggerHour</strong> for monthly schedules. The last day of the month is used for numbers larger than the number of days in the month.  # noqa: E501
 
         :param preferred_trigger_day_of_month: The preferred_trigger_day_of_month of this UserScheduleResponse.  # noqa: E501
         :type: int
@@ -226,7 +226,7 @@ class UserScheduleResponse(object):
     def preferred_trigger_day_of_week(self):
         """Gets the preferred_trigger_day_of_week of this UserScheduleResponse.  # noqa: E501
 
-        The preferred day of the week to trigger the schedule. This field can be used with preferredTriggerHour for weekly schedules. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:DayOfWeekEnum'>eBay API documentation</a>  # noqa: E501
+        The preferred day of the week to trigger the schedule. This field can be used with <strong>preferredTriggerHour</strong> for weekly schedules. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:DayOfWeekEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The preferred_trigger_day_of_week of this UserScheduleResponse.  # noqa: E501
         :rtype: str
@@ -237,7 +237,7 @@ class UserScheduleResponse(object):
     def preferred_trigger_day_of_week(self, preferred_trigger_day_of_week):
         """Sets the preferred_trigger_day_of_week of this UserScheduleResponse.
 
-        The preferred day of the week to trigger the schedule. This field can be used with preferredTriggerHour for weekly schedules. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:DayOfWeekEnum'>eBay API documentation</a>  # noqa: E501
+        The preferred day of the week to trigger the schedule. This field can be used with <strong>preferredTriggerHour</strong> for weekly schedules. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:DayOfWeekEnum'>eBay API documentation</a>  # noqa: E501
 
         :param preferred_trigger_day_of_week: The preferred_trigger_day_of_week of this UserScheduleResponse.  # noqa: E501
         :type: str
@@ -249,7 +249,7 @@ class UserScheduleResponse(object):
     def preferred_trigger_hour(self):
         """Gets the preferred_trigger_hour of this UserScheduleResponse.  # noqa: E501
 
-        The preferred two-digit hour of the day to trigger the schedule. Format: UTC hhZ For example, the following represents 11:00 am UTC: 11Z  # noqa: E501
+        The preferred two-digit hour of the day to trigger the schedule. <br /><br /><b>Format:</b> UTC <code>hhZ</code><br /><br />For example, the following represents 11:00 am UTC:<br /><br /><code>11Z</code><br /><br />  # noqa: E501
 
         :return: The preferred_trigger_hour of this UserScheduleResponse.  # noqa: E501
         :rtype: str
@@ -260,7 +260,7 @@ class UserScheduleResponse(object):
     def preferred_trigger_hour(self, preferred_trigger_hour):
         """Sets the preferred_trigger_hour of this UserScheduleResponse.
 
-        The preferred two-digit hour of the day to trigger the schedule. Format: UTC hhZ For example, the following represents 11:00 am UTC: 11Z  # noqa: E501
+        The preferred two-digit hour of the day to trigger the schedule. <br /><br /><b>Format:</b> UTC <code>hhZ</code><br /><br />For example, the following represents 11:00 am UTC:<br /><br /><code>11Z</code><br /><br />  # noqa: E501
 
         :param preferred_trigger_hour: The preferred_trigger_hour of this UserScheduleResponse.  # noqa: E501
         :type: str
@@ -272,7 +272,7 @@ class UserScheduleResponse(object):
     def schedule_end_date(self):
         """Gets the schedule_end_date of this UserScheduleResponse.  # noqa: E501
 
-        The timestamp on which the report generation (subscription) ends. After this date, the schedule status becomes INACTIVE.  # noqa: E501
+        The timestamp on which the report generation (subscription) ends. After this date, the schedule status becomes <code>INACTIVE</code>.  # noqa: E501
 
         :return: The schedule_end_date of this UserScheduleResponse.  # noqa: E501
         :rtype: str
@@ -283,7 +283,7 @@ class UserScheduleResponse(object):
     def schedule_end_date(self, schedule_end_date):
         """Sets the schedule_end_date of this UserScheduleResponse.
 
-        The timestamp on which the report generation (subscription) ends. After this date, the schedule status becomes INACTIVE.  # noqa: E501
+        The timestamp on which the report generation (subscription) ends. After this date, the schedule status becomes <code>INACTIVE</code>.  # noqa: E501
 
         :param schedule_end_date: The schedule_end_date of this UserScheduleResponse.  # noqa: E501
         :type: str

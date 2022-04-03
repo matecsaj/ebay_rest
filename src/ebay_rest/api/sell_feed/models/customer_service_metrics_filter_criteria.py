@@ -61,7 +61,7 @@ class CustomerServiceMetricsFilterCriteria(object):
     def customer_service_metric_type(self):
         """Gets the customer_service_metric_type of this CustomerServiceMetricsFilterCriteria.  # noqa: E501
 
-        An enumeration value that specifies the customer service metric that eBay tracks to measure seller performance. See CustomerServiceMetricTypeEnum for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:CustomerServiceMetricTypeEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value that specifies the customer service metric that eBay tracks to measure seller performance. See <strong>CustomerServiceMetricTypeEnum</strong> for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:CustomerServiceMetricTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The customer_service_metric_type of this CustomerServiceMetricsFilterCriteria.  # noqa: E501
         :rtype: str
@@ -72,7 +72,7 @@ class CustomerServiceMetricsFilterCriteria(object):
     def customer_service_metric_type(self, customer_service_metric_type):
         """Sets the customer_service_metric_type of this CustomerServiceMetricsFilterCriteria.
 
-        An enumeration value that specifies the customer service metric that eBay tracks to measure seller performance. See CustomerServiceMetricTypeEnum for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:CustomerServiceMetricTypeEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value that specifies the customer service metric that eBay tracks to measure seller performance. See <strong>CustomerServiceMetricTypeEnum</strong> for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:CustomerServiceMetricTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param customer_service_metric_type: The customer_service_metric_type of this CustomerServiceMetricsFilterCriteria.  # noqa: E501
         :type: str
@@ -84,7 +84,7 @@ class CustomerServiceMetricsFilterCriteria(object):
     def evaluation_marketplace_id(self):
         """Gets the evaluation_marketplace_id of this CustomerServiceMetricsFilterCriteria.  # noqa: E501
 
-        An enumeration value that specifies the eBay marketplace where the evaluation occurs. See MarketplaceIdEnum for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/bas:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value that specifies the eBay marketplace where the evaluation occurs. See <strong>MarketplaceIdEnum</strong> for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/bas:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The evaluation_marketplace_id of this CustomerServiceMetricsFilterCriteria.  # noqa: E501
         :rtype: str
@@ -95,7 +95,7 @@ class CustomerServiceMetricsFilterCriteria(object):
     def evaluation_marketplace_id(self, evaluation_marketplace_id):
         """Sets the evaluation_marketplace_id of this CustomerServiceMetricsFilterCriteria.
 
-        An enumeration value that specifies the eBay marketplace where the evaluation occurs. See MarketplaceIdEnum for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/bas:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value that specifies the eBay marketplace where the evaluation occurs. See <strong>MarketplaceIdEnum</strong> for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/bas:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :param evaluation_marketplace_id: The evaluation_marketplace_id of this CustomerServiceMetricsFilterCriteria.  # noqa: E501
         :type: str
@@ -107,7 +107,7 @@ class CustomerServiceMetricsFilterCriteria(object):
     def listing_categories(self):
         """Gets the listing_categories of this CustomerServiceMetricsFilterCriteria.  # noqa: E501
 
-        A list of listing category IDs on which the service metric is measured. A seller can use one or more L1 (top-level) eBay categories to get metrics specific to those L1 categories. The Category IDs for each L1 category are required. Category ID values for L1 categories can be retrieved using the Taxonomy API. Note: Pass this attribute to narrow down your filter results for the ITEM_NOT_AS_DESCRIBED customerServiceMetricType. Supported categories include: primary(L1) category Id  # noqa: E501
+        A list of listing category IDs on which the service metric is measured. A seller can use one or more L1 (top-level) eBay categories to get metrics specific to those L1 categories. The Category IDs for each L1 category are required. Category ID values for L1 categories can be retrieved using the Taxonomy API.<p> <span class=\"tablenote\"><strong>Note: </strong>Pass this attribute to narrow down your filter results for the <code>ITEM_NOT_AS_DESCRIBED</code> customerServiceMetricType.</span></p> <p>Supported categories include:</p><p><code>primary(L1) category Id</code></p>  # noqa: E501
 
         :return: The listing_categories of this CustomerServiceMetricsFilterCriteria.  # noqa: E501
         :rtype: list[str]
@@ -118,7 +118,7 @@ class CustomerServiceMetricsFilterCriteria(object):
     def listing_categories(self, listing_categories):
         """Sets the listing_categories of this CustomerServiceMetricsFilterCriteria.
 
-        A list of listing category IDs on which the service metric is measured. A seller can use one or more L1 (top-level) eBay categories to get metrics specific to those L1 categories. The Category IDs for each L1 category are required. Category ID values for L1 categories can be retrieved using the Taxonomy API. Note: Pass this attribute to narrow down your filter results for the ITEM_NOT_AS_DESCRIBED customerServiceMetricType. Supported categories include: primary(L1) category Id  # noqa: E501
+        A list of listing category IDs on which the service metric is measured. A seller can use one or more L1 (top-level) eBay categories to get metrics specific to those L1 categories. The Category IDs for each L1 category are required. Category ID values for L1 categories can be retrieved using the Taxonomy API.<p> <span class=\"tablenote\"><strong>Note: </strong>Pass this attribute to narrow down your filter results for the <code>ITEM_NOT_AS_DESCRIBED</code> customerServiceMetricType.</span></p> <p>Supported categories include:</p><p><code>primary(L1) category Id</code></p>  # noqa: E501
 
         :param listing_categories: The listing_categories of this CustomerServiceMetricsFilterCriteria.  # noqa: E501
         :type: list[str]
@@ -130,7 +130,7 @@ class CustomerServiceMetricsFilterCriteria(object):
     def shipping_regions(self):
         """Gets the shipping_regions of this CustomerServiceMetricsFilterCriteria.  # noqa: E501
 
-        A list of shipping region enumeration values on which the service metric is measured. This comma delimited array allows the seller to customize the report to focus on domestic or international shipping. Note: Pass this attribute to narrow down your filter results for the ITEM_NOT_RECEIVED customerServiceMetricType. Supported categories include: primary(L1) category IdSee ShippingRegionTypeEnum for values  # noqa: E501
+        A list of shipping region enumeration values on which the service metric is measured. This comma delimited array allows the seller to customize the report to focus on domestic or international shipping. <p> <span class=\"tablenote\"><strong>Note: </strong>Pass this attribute to narrow down your filter results for the <code>ITEM_NOT_RECEIVED</code> customerServiceMetricType.</span></p> <p>Supported categories include:</p><p><code>primary(L1) category Id</code></p>See <strong>ShippingRegionTypeEnum</strong> for values  # noqa: E501
 
         :return: The shipping_regions of this CustomerServiceMetricsFilterCriteria.  # noqa: E501
         :rtype: list[str]
@@ -141,7 +141,7 @@ class CustomerServiceMetricsFilterCriteria(object):
     def shipping_regions(self, shipping_regions):
         """Sets the shipping_regions of this CustomerServiceMetricsFilterCriteria.
 
-        A list of shipping region enumeration values on which the service metric is measured. This comma delimited array allows the seller to customize the report to focus on domestic or international shipping. Note: Pass this attribute to narrow down your filter results for the ITEM_NOT_RECEIVED customerServiceMetricType. Supported categories include: primary(L1) category IdSee ShippingRegionTypeEnum for values  # noqa: E501
+        A list of shipping region enumeration values on which the service metric is measured. This comma delimited array allows the seller to customize the report to focus on domestic or international shipping. <p> <span class=\"tablenote\"><strong>Note: </strong>Pass this attribute to narrow down your filter results for the <code>ITEM_NOT_RECEIVED</code> customerServiceMetricType.</span></p> <p>Supported categories include:</p><p><code>primary(L1) category Id</code></p>See <strong>ShippingRegionTypeEnum</strong> for values  # noqa: E501
 
         :param shipping_regions: The shipping_regions of this CustomerServiceMetricsFilterCriteria.  # noqa: E501
         :type: list[str]

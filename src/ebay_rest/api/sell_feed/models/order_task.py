@@ -86,7 +86,7 @@ class OrderTask(object):
     def completion_date(self):
         """Gets the completion_date of this OrderTask.  # noqa: E501
 
-        The timestamp when the task went into the COMPLETED or COMPLETED_WITH_ERROR state. This state means that eBay has compiled the report for the seller based on the seller&rsquo;s filter criteria, and the seller can run a getResultFile call to download the report.  # noqa: E501
+        The timestamp when the task went into the <code>COMPLETED</code> or <code>COMPLETED_WITH_ERROR</code> state. This state means that eBay has compiled the report for the seller based on the seller’s filter criteria, and the seller can run a <strong>getResultFile</strong> call to download the report.  # noqa: E501
 
         :return: The completion_date of this OrderTask.  # noqa: E501
         :rtype: str
@@ -97,7 +97,7 @@ class OrderTask(object):
     def completion_date(self, completion_date):
         """Sets the completion_date of this OrderTask.
 
-        The timestamp when the task went into the COMPLETED or COMPLETED_WITH_ERROR state. This state means that eBay has compiled the report for the seller based on the seller&rsquo;s filter criteria, and the seller can run a getResultFile call to download the report.  # noqa: E501
+        The timestamp when the task went into the <code>COMPLETED</code> or <code>COMPLETED_WITH_ERROR</code> state. This state means that eBay has compiled the report for the seller based on the seller’s filter criteria, and the seller can run a <strong>getResultFile</strong> call to download the report.  # noqa: E501
 
         :param completion_date: The completion_date of this OrderTask.  # noqa: E501
         :type: str
@@ -222,7 +222,7 @@ class OrderTask(object):
     def status(self):
         """Gets the status of this OrderTask.  # noqa: E501
 
-        The enumeration value that indicates the state of the task that was submitted in the request. See FeedStatusEnum for information. The values COMPLETED and COMPLETED_WITH_ERROR indicate the Order Report file is ready to download. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FeedStatusEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value that indicates the state of the task that was submitted in the request. See <strong>FeedStatusEnum</strong> for information. <p>The values <code>COMPLETED </code>and<code> COMPLETED_WITH_ERROR</code> indicate the Order Report file is ready to download.</p> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FeedStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The status of this OrderTask.  # noqa: E501
         :rtype: str
@@ -233,7 +233,7 @@ class OrderTask(object):
     def status(self, status):
         """Sets the status of this OrderTask.
 
-        The enumeration value that indicates the state of the task that was submitted in the request. See FeedStatusEnum for information. The values COMPLETED and COMPLETED_WITH_ERROR indicate the Order Report file is ready to download. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FeedStatusEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value that indicates the state of the task that was submitted in the request. See <strong>FeedStatusEnum</strong> for information. <p>The values <code>COMPLETED </code>and<code> COMPLETED_WITH_ERROR</code> indicate the Order Report file is ready to download.</p> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FeedStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :param status: The status of this OrderTask.  # noqa: E501
         :type: str

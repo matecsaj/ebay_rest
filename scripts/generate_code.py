@@ -326,10 +326,27 @@ async def generate_marketplace_id_values() -> None:
 async def get_soup_via_link(url: str) -> BeautifulSoup:
     # Get the html at an url and then make soup of it.
 
+    # TODO Determine the common exceptions and then handle then; run the debugger with breakpoints on the bp lines.
+
     # Get the html
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            html_content = await response.text()
+    try:
+        # the header is meant to prevent the exception 'Response payload is not completed'
+        async with aiohttp.ClientSession(headers={'Connection': 'keep-alive'}) as session:
+            try:
+                async with session.get(url) as response:
+                    try:
+                        html_content = await response.text()
+                    except Exception as e:
+                        bp = True
+            except Exception as e:
+                if 'Connection reset by peer' in e:
+                    logging.fatal("The server dropped the connection on the TCP level; it may think we are a "
+                                  "denial-of-service attacker; try again tomorrow.")
+                    exit()
+                else:
+                    bp = True
+    except Exception as e:
+        bp = True
 
     # Parse the html content
     return BeautifulSoup(html_content, "html.parser")
@@ -712,9 +729,10 @@ class Contracts:
 
         for link in soup.find_all('a', href=lambda href: href and 'overview.html' in href):
             path = link.get('href')
-            if path.split('/')[6] == 'static':  # filter atypical links
+            path = path.replace('/static/', '/')   # help dup. filter, remove a redundant part that is sometimes present
+            if not re.search("/v\d/", path):    # skip the experimental libraries because few people can use them
                 overview_link = urljoin(developer_url, path)
-                if overview_link not in overview_links:  # filter redundant links
+                if overview_link not in overview_links:  # skip duplicate links
                     overview_links.append(overview_link)
 
         # safety check

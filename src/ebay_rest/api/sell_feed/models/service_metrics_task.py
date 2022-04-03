@@ -81,7 +81,7 @@ class ServiceMetricsTask(object):
     def completion_date(self):
         """Gets the completion_date of this ServiceMetricsTask.  # noqa: E501
 
-        The timestamp when the customer service metrics task went into the COMPLETED or COMPLETED_WITH_ERROR state. This field is only returned if the status is one of the two completed values. This state means that eBay has compiled the report for the seller based on the seller&rsquo;s filter criteria, and the seller can run a getResultFile call to download the report.  # noqa: E501
+        The timestamp when the customer service metrics task went into the <code>COMPLETED</code> or <code>COMPLETED_WITH_ERROR</code> state. This field is only returned if the status is one of the two completed values. This state means that eBay has compiled the report for the seller based on the seller’s filter criteria, and the seller can run a <strong>getResultFile</strong> call to download the report.  # noqa: E501
 
         :return: The completion_date of this ServiceMetricsTask.  # noqa: E501
         :rtype: str
@@ -92,7 +92,7 @@ class ServiceMetricsTask(object):
     def completion_date(self, completion_date):
         """Sets the completion_date of this ServiceMetricsTask.
 
-        The timestamp when the customer service metrics task went into the COMPLETED or COMPLETED_WITH_ERROR state. This field is only returned if the status is one of the two completed values. This state means that eBay has compiled the report for the seller based on the seller&rsquo;s filter criteria, and the seller can run a getResultFile call to download the report.  # noqa: E501
+        The timestamp when the customer service metrics task went into the <code>COMPLETED</code> or <code>COMPLETED_WITH_ERROR</code> state. This field is only returned if the status is one of the two completed values. This state means that eBay has compiled the report for the seller based on the seller’s filter criteria, and the seller can run a <strong>getResultFile</strong> call to download the report.  # noqa: E501
 
         :param completion_date: The completion_date of this ServiceMetricsTask.  # noqa: E501
         :type: str
@@ -127,7 +127,7 @@ class ServiceMetricsTask(object):
     def detail_href(self):
         """Gets the detail_href of this ServiceMetricsTask.  # noqa: E501
 
-        The relative getCustomerServiceMetricTask call URI path to retrieve the corresponding task.  # noqa: E501
+        The relative <strong>getCustomerServiceMetricTask</strong> call URI path to retrieve the corresponding task.  # noqa: E501
 
         :return: The detail_href of this ServiceMetricsTask.  # noqa: E501
         :rtype: str
@@ -138,7 +138,7 @@ class ServiceMetricsTask(object):
     def detail_href(self, detail_href):
         """Sets the detail_href of this ServiceMetricsTask.
 
-        The relative getCustomerServiceMetricTask call URI path to retrieve the corresponding task.  # noqa: E501
+        The relative <strong>getCustomerServiceMetricTask</strong> call URI path to retrieve the corresponding task.  # noqa: E501
 
         :param detail_href: The detail_href of this ServiceMetricsTask.  # noqa: E501
         :type: str
@@ -194,7 +194,7 @@ class ServiceMetricsTask(object):
     def schema_version(self):
         """Gets the schema_version of this ServiceMetricsTask.  # noqa: E501
 
-        The schema version number of the file format. If omitted, the default value is used. Default value: 1.0  # noqa: E501
+        The schema version number of the file format. If omitted, the default value is used. <p><b>Default value: </b><code>1.0</code><p>  # noqa: E501
 
         :return: The schema_version of this ServiceMetricsTask.  # noqa: E501
         :rtype: str
@@ -205,7 +205,7 @@ class ServiceMetricsTask(object):
     def schema_version(self, schema_version):
         """Sets the schema_version of this ServiceMetricsTask.
 
-        The schema version number of the file format. If omitted, the default value is used. Default value: 1.0  # noqa: E501
+        The schema version number of the file format. If omitted, the default value is used. <p><b>Default value: </b><code>1.0</code><p>  # noqa: E501
 
         :param schema_version: The schema_version of this ServiceMetricsTask.  # noqa: E501
         :type: str
@@ -217,7 +217,7 @@ class ServiceMetricsTask(object):
     def status(self):
         """Gets the status of this ServiceMetricsTask.  # noqa: E501
 
-        An enumeration value that indicates the state of the task. See FeedStatusEnum for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FeedStatusEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value that indicates the state of the task. See <strong>FeedStatusEnum</strong> for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FeedStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The status of this ServiceMetricsTask.  # noqa: E501
         :rtype: str
@@ -228,7 +228,7 @@ class ServiceMetricsTask(object):
     def status(self, status):
         """Sets the status of this ServiceMetricsTask.
 
-        An enumeration value that indicates the state of the task. See FeedStatusEnum for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FeedStatusEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value that indicates the state of the task. See <strong>FeedStatusEnum</strong> for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FeedStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :param status: The status of this ServiceMetricsTask.  # noqa: E501
         :type: str

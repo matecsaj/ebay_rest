@@ -71,7 +71,7 @@ class ScheduleTemplateResponse(object):
     def feed_type(self):
         """Gets the feed_type of this ScheduleTemplateResponse.  # noqa: E501
 
-        The feed type of the schedule template. Note: When calling createSchedule and updateSchedule methods you must match the feed type specified by the schedule template (this feedType).  # noqa: E501
+        The feed type of the schedule template. <p> <span class=\"tablenote\"><strong>Note:</strong> When calling <strong>createSchedule</strong> and <strong>updateSchedule</strong> methods you must match the feed type specified by the schedule template (this feedType).</span></p>  # noqa: E501
 
         :return: The feed_type of this ScheduleTemplateResponse.  # noqa: E501
         :rtype: str
@@ -82,7 +82,7 @@ class ScheduleTemplateResponse(object):
     def feed_type(self, feed_type):
         """Sets the feed_type of this ScheduleTemplateResponse.
 
-        The feed type of the schedule template. Note: When calling createSchedule and updateSchedule methods you must match the feed type specified by the schedule template (this feedType).  # noqa: E501
+        The feed type of the schedule template. <p> <span class=\"tablenote\"><strong>Note:</strong> When calling <strong>createSchedule</strong> and <strong>updateSchedule</strong> methods you must match the feed type specified by the schedule template (this feedType).</span></p>  # noqa: E501
 
         :param feed_type: The feed_type of this ScheduleTemplateResponse.  # noqa: E501
         :type: str
@@ -94,7 +94,7 @@ class ScheduleTemplateResponse(object):
     def frequency(self):
         """Gets the frequency of this ScheduleTemplateResponse.  # noqa: E501
 
-        This field specifies how often the schedule is generated. If set to HALF_HOUR or ONE_HOUR, you cannot set a preferredTriggerHour using createSchedule or updateSchedule. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FrequencyEnum'>eBay API documentation</a>  # noqa: E501
+        This field specifies how often the schedule is generated. If set to <code>HALF_HOUR</code> or <code>ONE_HOUR</code>, you cannot set a <strong>preferredTriggerHour</strong> using <strong>createSchedule</strong> or <strong>updateSchedule</strong>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FrequencyEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The frequency of this ScheduleTemplateResponse.  # noqa: E501
         :rtype: str
@@ -105,7 +105,7 @@ class ScheduleTemplateResponse(object):
     def frequency(self, frequency):
         """Sets the frequency of this ScheduleTemplateResponse.
 
-        This field specifies how often the schedule is generated. If set to HALF_HOUR or ONE_HOUR, you cannot set a preferredTriggerHour using createSchedule or updateSchedule. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FrequencyEnum'>eBay API documentation</a>  # noqa: E501
+        This field specifies how often the schedule is generated. If set to <code>HALF_HOUR</code> or <code>ONE_HOUR</code>, you cannot set a <strong>preferredTriggerHour</strong> using <strong>createSchedule</strong> or <strong>updateSchedule</strong>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FrequencyEnum'>eBay API documentation</a>  # noqa: E501
 
         :param frequency: The frequency of this ScheduleTemplateResponse.  # noqa: E501
         :type: str
@@ -163,7 +163,7 @@ class ScheduleTemplateResponse(object):
     def status(self):
         """Gets the status of this ScheduleTemplateResponse.  # noqa: E501
 
-        The present status of the template. You cannot create or modify a schedule using a template with an INACTIVE status. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:StatusEnum'>eBay API documentation</a>  # noqa: E501
+        The present status of the template. You cannot create or modify a schedule using a template with an <code>INACTIVE</code> status.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:StatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The status of this ScheduleTemplateResponse.  # noqa: E501
         :rtype: str
@@ -174,7 +174,7 @@ class ScheduleTemplateResponse(object):
     def status(self, status):
         """Sets the status of this ScheduleTemplateResponse.
 
-        The present status of the template. You cannot create or modify a schedule using a template with an INACTIVE status. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:StatusEnum'>eBay API documentation</a>  # noqa: E501
+        The present status of the template. You cannot create or modify a schedule using a template with an <code>INACTIVE</code> status.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:StatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :param status: The status of this ScheduleTemplateResponse.  # noqa: E501
         :type: str

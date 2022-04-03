@@ -81,7 +81,7 @@ class Task(object):
     def completion_date(self):
         """Gets the completion_date of this Task.  # noqa: E501
 
-        The timestamp when the task went into the COMPLETED or COMPLETED_WITH_ERROR state. This state means that eBay has compiled the report for the seller based on the seller&rsquo;s filter criteria, and the seller can run a getResultFile call to download the report.  # noqa: E501
+        The timestamp when the task went into the <code>COMPLETED</code> or <code>COMPLETED_WITH_ERROR</code> state. This state means that eBay has compiled the report for the seller based on the seller’s filter criteria, and the seller can run a <strong>getResultFile</strong> call to download the report.  # noqa: E501
 
         :return: The completion_date of this Task.  # noqa: E501
         :rtype: str
@@ -92,7 +92,7 @@ class Task(object):
     def completion_date(self, completion_date):
         """Sets the completion_date of this Task.
 
-        The timestamp when the task went into the COMPLETED or COMPLETED_WITH_ERROR state. This state means that eBay has compiled the report for the seller based on the seller&rsquo;s filter criteria, and the seller can run a getResultFile call to download the report.  # noqa: E501
+        The timestamp when the task went into the <code>COMPLETED</code> or <code>COMPLETED_WITH_ERROR</code> state. This state means that eBay has compiled the report for the seller based on the seller’s filter criteria, and the seller can run a <strong>getResultFile</strong> call to download the report.  # noqa: E501
 
         :param completion_date: The completion_date of this Task.  # noqa: E501
         :type: str
@@ -127,7 +127,7 @@ class Task(object):
     def detail_href(self):
         """Gets the detail_href of this Task.  # noqa: E501
 
-        The path to the call URI used to retrieve the task. This field points to the GetOrderTask URI if the task is for LMS_ORDER_REPORT or will be null if this task is for LMS_ORDER_ACK.  # noqa: E501
+        The path to the call URI used to retrieve the task. This field points to the GetOrderTask URI if the task is for <code>LMS_ORDER_REPORT</code> or will be null if this task is for <code>LMS_ORDER_ACK</code>.  # noqa: E501
 
         :return: The detail_href of this Task.  # noqa: E501
         :rtype: str
@@ -138,7 +138,7 @@ class Task(object):
     def detail_href(self, detail_href):
         """Sets the detail_href of this Task.
 
-        The path to the call URI used to retrieve the task. This field points to the GetOrderTask URI if the task is for LMS_ORDER_REPORT or will be null if this task is for LMS_ORDER_ACK.  # noqa: E501
+        The path to the call URI used to retrieve the task. This field points to the GetOrderTask URI if the task is for <code>LMS_ORDER_REPORT</code> or will be null if this task is for <code>LMS_ORDER_ACK</code>.  # noqa: E501
 
         :param detail_href: The detail_href of this Task.  # noqa: E501
         :type: str
@@ -196,7 +196,7 @@ class Task(object):
     def status(self):
         """Gets the status of this Task.  # noqa: E501
 
-        The enumeration value that indicates the state of the task that was submitted in the request. See FeedStatusEnum for information. The values COMPLETED and COMPLETED_WITH_ERROR indicate the Order Report file is ready to download. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FeedStatusEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value that indicates the state of the task that was submitted in the request. See <strong>FeedStatusEnum</strong> for information. <p>The values <code>COMPLETED </code>and<code> COMPLETED_WITH_ERROR</code> indicate the Order Report file is ready to download.</p> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FeedStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The status of this Task.  # noqa: E501
         :rtype: str
@@ -207,7 +207,7 @@ class Task(object):
     def status(self, status):
         """Sets the status of this Task.
 
-        The enumeration value that indicates the state of the task that was submitted in the request. See FeedStatusEnum for information. The values COMPLETED and COMPLETED_WITH_ERROR indicate the Order Report file is ready to download. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FeedStatusEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value that indicates the state of the task that was submitted in the request. See <strong>FeedStatusEnum</strong> for information. <p>The values <code>COMPLETED </code>and<code> COMPLETED_WITH_ERROR</code> indicate the Order Report file is ready to download.</p> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:FeedStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :param status: The status of this Task.  # noqa: E501
         :type: str

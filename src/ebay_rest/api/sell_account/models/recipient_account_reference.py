@@ -51,7 +51,7 @@ class RecipientAccountReference(object):
     def reference_id(self):
         """Gets the reference_id of this RecipientAccountReference.  # noqa: E501
 
-        <span class=\"tablenote\"><b>Note</b>: DO NOT USE THIS FIELD. eBay now controls all electronic payment methods available for a marketplace, and a seller never has to specify any electronic payment methods, including PayPal. </span><br/><br/>Contains the PayPal email address of the recipient (seller) if <b>referenceType</b> is set to <code>PAYPAL_EMAIL</code>.  # noqa: E501
+        <span class=\"tablenote\"><b>Note</b>: DO NOT USE THIS FIELD. eBay now controls all electronic payment methods available for a marketplace, and a seller never has to specify any electronic payment methods.</span>  # noqa: E501
 
         :return: The reference_id of this RecipientAccountReference.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class RecipientAccountReference(object):
     def reference_id(self, reference_id):
         """Sets the reference_id of this RecipientAccountReference.
 
-        <span class=\"tablenote\"><b>Note</b>: DO NOT USE THIS FIELD. eBay now controls all electronic payment methods available for a marketplace, and a seller never has to specify any electronic payment methods, including PayPal. </span><br/><br/>Contains the PayPal email address of the recipient (seller) if <b>referenceType</b> is set to <code>PAYPAL_EMAIL</code>.  # noqa: E501
+        <span class=\"tablenote\"><b>Note</b>: DO NOT USE THIS FIELD. eBay now controls all electronic payment methods available for a marketplace, and a seller never has to specify any electronic payment methods.</span>  # noqa: E501
 
         :param reference_id: The reference_id of this RecipientAccountReference.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class RecipientAccountReference(object):
     def reference_type(self):
         """Gets the reference_type of this RecipientAccountReference.  # noqa: E501
 
-        <span class=\"tablenote\"><b>Note</b>: DO NOT USE THIS FIELD. eBay now controls all electronic payment methods available for a marketplace, and a seller never has to specify any electronic payment methods, including PayPal. </span><br/><br/>This field's value indicates the type of account where payment will be received. Currently, the only supported value is PAYPAL_EMAIL. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:RecipientAccountReferenceTypeEnum'>eBay API documentation</a>  # noqa: E501
+        <span class=\"tablenote\"><b>Note</b>: DO NOT USE THIS FIELD. eBay now controls all electronic payment methods available for a marketplace, and a seller never has to specify any electronic payment methods.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:RecipientAccountReferenceTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The reference_type of this RecipientAccountReference.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class RecipientAccountReference(object):
     def reference_type(self, reference_type):
         """Sets the reference_type of this RecipientAccountReference.
 
-        <span class=\"tablenote\"><b>Note</b>: DO NOT USE THIS FIELD. eBay now controls all electronic payment methods available for a marketplace, and a seller never has to specify any electronic payment methods, including PayPal. </span><br/><br/>This field's value indicates the type of account where payment will be received. Currently, the only supported value is PAYPAL_EMAIL. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:RecipientAccountReferenceTypeEnum'>eBay API documentation</a>  # noqa: E501
+        <span class=\"tablenote\"><b>Note</b>: DO NOT USE THIS FIELD. eBay now controls all electronic payment methods available for a marketplace, and a seller never has to specify any electronic payment methods.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:RecipientAccountReferenceTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param reference_type: The reference_type of this RecipientAccountReference.  # noqa: E501
         :type: str

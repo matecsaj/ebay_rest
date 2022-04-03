@@ -86,7 +86,7 @@ class CreateUserScheduleRequest(object):
     def feed_type(self):
         """Gets the feed_type of this CreateUserScheduleRequest.  # noqa: E501
 
-        The name of the feed type for the created schedule. Match the feed_type from the schedule template associated with this schedule.  # noqa: E501
+        The name of the feed type for the created schedule. Match the <strong>feed_type</strong> from the schedule template associated with this schedule.  # noqa: E501
 
         :return: The feed_type of this CreateUserScheduleRequest.  # noqa: E501
         :rtype: str
@@ -97,7 +97,7 @@ class CreateUserScheduleRequest(object):
     def feed_type(self, feed_type):
         """Sets the feed_type of this CreateUserScheduleRequest.
 
-        The name of the feed type for the created schedule. Match the feed_type from the schedule template associated with this schedule.  # noqa: E501
+        The name of the feed type for the created schedule. Match the <strong>feed_type</strong> from the schedule template associated with this schedule.  # noqa: E501
 
         :param feed_type: The feed_type of this CreateUserScheduleRequest.  # noqa: E501
         :type: str
@@ -109,7 +109,7 @@ class CreateUserScheduleRequest(object):
     def preferred_trigger_day_of_month(self):
         """Gets the preferred_trigger_day_of_month of this CreateUserScheduleRequest.  # noqa: E501
 
-        The preferred day of the month to trigger the schedule. This field can be used with preferredTriggerHour for monthly schedules. The last day of the month is used for numbers larger than the actual number of days in the month. This field is available as specified by the template (scheduleTemplateId). The template can specify this field as optional or required, and optionally provides a default value. Minimum: 1 Maximum: 31  # noqa: E501
+        The preferred day of the month to trigger the schedule. This field can be used with <strong>preferredTriggerHour</strong> for monthly schedules. The last day of the month is used for numbers larger than the actual number of days in the month. <br /><br />This field is available as specified by the template (<strong>scheduleTemplateId</strong>). The template can specify this field as optional or required, and optionally provides a default value.<br /><br /><b>Minimum: </b>1<br /><br /><b>Maximum: </b>31  # noqa: E501
 
         :return: The preferred_trigger_day_of_month of this CreateUserScheduleRequest.  # noqa: E501
         :rtype: int
@@ -120,7 +120,7 @@ class CreateUserScheduleRequest(object):
     def preferred_trigger_day_of_month(self, preferred_trigger_day_of_month):
         """Sets the preferred_trigger_day_of_month of this CreateUserScheduleRequest.
 
-        The preferred day of the month to trigger the schedule. This field can be used with preferredTriggerHour for monthly schedules. The last day of the month is used for numbers larger than the actual number of days in the month. This field is available as specified by the template (scheduleTemplateId). The template can specify this field as optional or required, and optionally provides a default value. Minimum: 1 Maximum: 31  # noqa: E501
+        The preferred day of the month to trigger the schedule. This field can be used with <strong>preferredTriggerHour</strong> for monthly schedules. The last day of the month is used for numbers larger than the actual number of days in the month. <br /><br />This field is available as specified by the template (<strong>scheduleTemplateId</strong>). The template can specify this field as optional or required, and optionally provides a default value.<br /><br /><b>Minimum: </b>1<br /><br /><b>Maximum: </b>31  # noqa: E501
 
         :param preferred_trigger_day_of_month: The preferred_trigger_day_of_month of this CreateUserScheduleRequest.  # noqa: E501
         :type: int
@@ -132,7 +132,7 @@ class CreateUserScheduleRequest(object):
     def preferred_trigger_day_of_week(self):
         """Gets the preferred_trigger_day_of_week of this CreateUserScheduleRequest.  # noqa: E501
 
-        The preferred day of the week to trigger the schedule. This field can be used with preferredTriggerHour for weekly schedules. This field is available as specified by the template (scheduleTemplateId). The template can specify this field as optional or required, and optionally provides a default value. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:DayOfWeekEnum'>eBay API documentation</a>  # noqa: E501
+        The preferred day of the week to trigger the schedule. This field can be used with <strong>preferredTriggerHour</strong> for weekly schedules. <br /><br />This field is available as specified by the template (<strong>scheduleTemplateId</strong>). The template can specify this field as optional or required, and optionally provides a default value. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:DayOfWeekEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The preferred_trigger_day_of_week of this CreateUserScheduleRequest.  # noqa: E501
         :rtype: str
@@ -143,7 +143,7 @@ class CreateUserScheduleRequest(object):
     def preferred_trigger_day_of_week(self, preferred_trigger_day_of_week):
         """Sets the preferred_trigger_day_of_week of this CreateUserScheduleRequest.
 
-        The preferred day of the week to trigger the schedule. This field can be used with preferredTriggerHour for weekly schedules. This field is available as specified by the template (scheduleTemplateId). The template can specify this field as optional or required, and optionally provides a default value. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:DayOfWeekEnum'>eBay API documentation</a>  # noqa: E501
+        The preferred day of the week to trigger the schedule. This field can be used with <strong>preferredTriggerHour</strong> for weekly schedules. <br /><br />This field is available as specified by the template (<strong>scheduleTemplateId</strong>). The template can specify this field as optional or required, and optionally provides a default value. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:DayOfWeekEnum'>eBay API documentation</a>  # noqa: E501
 
         :param preferred_trigger_day_of_week: The preferred_trigger_day_of_week of this CreateUserScheduleRequest.  # noqa: E501
         :type: str
@@ -155,7 +155,7 @@ class CreateUserScheduleRequest(object):
     def preferred_trigger_hour(self):
         """Gets the preferred_trigger_hour of this CreateUserScheduleRequest.  # noqa: E501
 
-        The preferred two-digit hour of the day to trigger the schedule. This field is available as specified by the template (scheduleTemplateId). The template can specify this field as optional or required, and optionally provides a default value. Format: UTC hhZ For example, the following represents 11:00 am UTC: 11Z  # noqa: E501
+        The preferred two-digit hour of the day to trigger the schedule. <br /><br />This field is available as specified by the template (<strong>scheduleTemplateId</strong>). The template can specify this field as optional or required, and optionally provides a default value.<br /><br /><b>Format:</b> UTC <code>hhZ</code><br /><br />For example, the following represents 11:00 am UTC:<code> 11Z</code>  # noqa: E501
 
         :return: The preferred_trigger_hour of this CreateUserScheduleRequest.  # noqa: E501
         :rtype: str
@@ -166,7 +166,7 @@ class CreateUserScheduleRequest(object):
     def preferred_trigger_hour(self, preferred_trigger_hour):
         """Sets the preferred_trigger_hour of this CreateUserScheduleRequest.
 
-        The preferred two-digit hour of the day to trigger the schedule. This field is available as specified by the template (scheduleTemplateId). The template can specify this field as optional or required, and optionally provides a default value. Format: UTC hhZ For example, the following represents 11:00 am UTC: 11Z  # noqa: E501
+        The preferred two-digit hour of the day to trigger the schedule. <br /><br />This field is available as specified by the template (<strong>scheduleTemplateId</strong>). The template can specify this field as optional or required, and optionally provides a default value.<br /><br /><b>Format:</b> UTC <code>hhZ</code><br /><br />For example, the following represents 11:00 am UTC:<code> 11Z</code>  # noqa: E501
 
         :param preferred_trigger_hour: The preferred_trigger_hour of this CreateUserScheduleRequest.  # noqa: E501
         :type: str
@@ -178,7 +178,7 @@ class CreateUserScheduleRequest(object):
     def schedule_end_date(self):
         """Gets the schedule_end_date of this CreateUserScheduleRequest.  # noqa: E501
 
-        The timestamp on which the report generation (subscription) ends. After this date, the schedule status becomes INACTIVE. Use this field, if available, to end the schedule in the future. This value must be later than scheduleStartDate (if supplied). This field is available as specified by the template (scheduleTemplateId). The template can specify this field as optional or required, and optionally provides a default value. Format: UTC yyyy-MM-ddTHHZ For example, the following represents UTC October 10, 2021 at 10:00 AM: 2021-10-10T10Z  # noqa: E501
+        The timestamp on which the report generation (subscription) ends. After this date, the schedule status becomes <code>INACTIVE</code>. <br /><br />Use this field, if available, to end the schedule in the future. This value must be later than <strong>scheduleStartDate</strong> (if supplied). This field is available as specified by the template (<strong>scheduleTemplateId</strong>). The template can specify this field as optional or required, and optionally provides a default value.<br /><br /><b>Format:</b> UTC <code>yyyy-MM-dd<strong>T</strong>HH<strong>Z</strong></code><br /><br />For example, the following represents UTC October 10, 2021 at 10:00 AM:<br /><code>2021-10-10T10Z</code>  # noqa: E501
 
         :return: The schedule_end_date of this CreateUserScheduleRequest.  # noqa: E501
         :rtype: str
@@ -189,7 +189,7 @@ class CreateUserScheduleRequest(object):
     def schedule_end_date(self, schedule_end_date):
         """Sets the schedule_end_date of this CreateUserScheduleRequest.
 
-        The timestamp on which the report generation (subscription) ends. After this date, the schedule status becomes INACTIVE. Use this field, if available, to end the schedule in the future. This value must be later than scheduleStartDate (if supplied). This field is available as specified by the template (scheduleTemplateId). The template can specify this field as optional or required, and optionally provides a default value. Format: UTC yyyy-MM-ddTHHZ For example, the following represents UTC October 10, 2021 at 10:00 AM: 2021-10-10T10Z  # noqa: E501
+        The timestamp on which the report generation (subscription) ends. After this date, the schedule status becomes <code>INACTIVE</code>. <br /><br />Use this field, if available, to end the schedule in the future. This value must be later than <strong>scheduleStartDate</strong> (if supplied). This field is available as specified by the template (<strong>scheduleTemplateId</strong>). The template can specify this field as optional or required, and optionally provides a default value.<br /><br /><b>Format:</b> UTC <code>yyyy-MM-dd<strong>T</strong>HH<strong>Z</strong></code><br /><br />For example, the following represents UTC October 10, 2021 at 10:00 AM:<br /><code>2021-10-10T10Z</code>  # noqa: E501
 
         :param schedule_end_date: The schedule_end_date of this CreateUserScheduleRequest.  # noqa: E501
         :type: str
@@ -224,7 +224,7 @@ class CreateUserScheduleRequest(object):
     def schedule_start_date(self):
         """Gets the schedule_start_date of this CreateUserScheduleRequest.  # noqa: E501
 
-        The timestamp to start generating the report. After this timestamp, the schedule status becomes active until either the scheduleEndDate occurs or the scheduleTemplateId becomes inactive. Use this field, if available, to start the schedule in the future but before the scheduleEndDate (if supplied). This field is available as specified by the template (scheduleTemplateId). The template can specify this field as optional or required, and optionally provides a default value. Format: UTC yyyy-MM-ddTHHZ For example, the following represents a schedule start date of UTC October 01, 2020 at 12:00 PM: 2020-01-01T12Z  # noqa: E501
+        The timestamp to start generating the report. After this timestamp, the schedule status becomes active until either the <strong>scheduleEndDate</strong> occurs or the <strong>scheduleTemplateId</strong> becomes inactive. <br /><br />Use this field, if available, to start the schedule in the future but before the <strong>scheduleEndDate</strong> (if supplied). This field is available as specified by the template <strong>(scheduleTemplateId)</strong>.  The template can specify this field as optional or required, and optionally provides a default value.<br /><br /><b>Format:</b> UTC <code>yyyy-MM-dd<strong>T</strong>HH<strong>Z</strong></code><br /><br />For example, the following represents a schedule start date of UTC October 01, 2020 at 12:00 PM:<br /><code> 2020-01-01T12Z</code>  # noqa: E501
 
         :return: The schedule_start_date of this CreateUserScheduleRequest.  # noqa: E501
         :rtype: str
@@ -235,7 +235,7 @@ class CreateUserScheduleRequest(object):
     def schedule_start_date(self, schedule_start_date):
         """Sets the schedule_start_date of this CreateUserScheduleRequest.
 
-        The timestamp to start generating the report. After this timestamp, the schedule status becomes active until either the scheduleEndDate occurs or the scheduleTemplateId becomes inactive. Use this field, if available, to start the schedule in the future but before the scheduleEndDate (if supplied). This field is available as specified by the template (scheduleTemplateId). The template can specify this field as optional or required, and optionally provides a default value. Format: UTC yyyy-MM-ddTHHZ For example, the following represents a schedule start date of UTC October 01, 2020 at 12:00 PM: 2020-01-01T12Z  # noqa: E501
+        The timestamp to start generating the report. After this timestamp, the schedule status becomes active until either the <strong>scheduleEndDate</strong> occurs or the <strong>scheduleTemplateId</strong> becomes inactive. <br /><br />Use this field, if available, to start the schedule in the future but before the <strong>scheduleEndDate</strong> (if supplied). This field is available as specified by the template <strong>(scheduleTemplateId)</strong>.  The template can specify this field as optional or required, and optionally provides a default value.<br /><br /><b>Format:</b> UTC <code>yyyy-MM-dd<strong>T</strong>HH<strong>Z</strong></code><br /><br />For example, the following represents a schedule start date of UTC October 01, 2020 at 12:00 PM:<br /><code> 2020-01-01T12Z</code>  # noqa: E501
 
         :param schedule_start_date: The schedule_start_date of this CreateUserScheduleRequest.  # noqa: E501
         :type: str
@@ -247,7 +247,7 @@ class CreateUserScheduleRequest(object):
     def schedule_template_id(self):
         """Gets the schedule_template_id of this CreateUserScheduleRequest.  # noqa: E501
 
-        The ID of the template associated with the schedule ID. You can get this ID from the documentation or by calling the getScheduleTemplates method. This method requires a schedule template ID that is ACTIVE.  # noqa: E501
+        The ID of the template associated with the schedule ID. You can get this ID from the documentation or by calling the <strong>getScheduleTemplates</strong> method. This method requires a schedule template ID that is <code>ACTIVE</code>.  # noqa: E501
 
         :return: The schedule_template_id of this CreateUserScheduleRequest.  # noqa: E501
         :rtype: str
@@ -258,7 +258,7 @@ class CreateUserScheduleRequest(object):
     def schedule_template_id(self, schedule_template_id):
         """Sets the schedule_template_id of this CreateUserScheduleRequest.
 
-        The ID of the template associated with the schedule ID. You can get this ID from the documentation or by calling the getScheduleTemplates method. This method requires a schedule template ID that is ACTIVE.  # noqa: E501
+        The ID of the template associated with the schedule ID. You can get this ID from the documentation or by calling the <strong>getScheduleTemplates</strong> method. This method requires a schedule template ID that is <code>ACTIVE</code>.  # noqa: E501
 
         :param schedule_template_id: The schedule_template_id of this CreateUserScheduleRequest.  # noqa: E501
         :type: str
@@ -270,7 +270,7 @@ class CreateUserScheduleRequest(object):
     def schema_version(self):
         """Gets the schema_version of this CreateUserScheduleRequest.  # noqa: E501
 
-        The schema version of the schedule feedType. This field is required if the feedType has a schema version. This field is available as specified by the template (scheduleTemplateId). The template can specify this field as optional or required, and optionally provides a default value.  # noqa: E501
+        The schema version of the schedule feedType. This field is required if the <strong>feedType</strong> has a schema version.<br /><br />This field is available as specified by the template (<strong>scheduleTemplateId</strong>). The template can specify this field as optional or required, and optionally provides a default value.  # noqa: E501
 
         :return: The schema_version of this CreateUserScheduleRequest.  # noqa: E501
         :rtype: str
@@ -281,7 +281,7 @@ class CreateUserScheduleRequest(object):
     def schema_version(self, schema_version):
         """Sets the schema_version of this CreateUserScheduleRequest.
 
-        The schema version of the schedule feedType. This field is required if the feedType has a schema version. This field is available as specified by the template (scheduleTemplateId). The template can specify this field as optional or required, and optionally provides a default value.  # noqa: E501
+        The schema version of the schedule feedType. This field is required if the <strong>feedType</strong> has a schema version.<br /><br />This field is available as specified by the template (<strong>scheduleTemplateId</strong>). The template can specify this field as optional or required, and optionally provides a default value.  # noqa: E501
 
         :param schema_version: The schema_version of this CreateUserScheduleRequest.  # noqa: E501
         :type: str

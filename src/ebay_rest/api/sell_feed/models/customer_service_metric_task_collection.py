@@ -99,7 +99,7 @@ class CustomerServiceMetricTaskCollection(object):
     def limit(self):
         """Gets the limit of this CustomerServiceMetricTaskCollection.  # noqa: E501
 
-        The value of the limit parameter submitted in the request, which is the maximum number of tasks to return per page, from the result set. A result set is the complete set of tasks returned by the method. Note: Even though this parameter is not required to be submitted in the request, the parameter defaults to 10 if omitted. Note: If this is the last or only page of the result set, the page may contain fewer tasks than the limit value. To determine the number of pages in a result set, divide the total value (total number of tasks matching input criteria) by this limit value, and then round up to the next integer. For example, if the total value was 120 (120 total tasks) and the limit value was 50 (show 50 tasks per page), the total number of pages in the result set is three, so the seller would have to make three separate getCustomerServiceMetricTasks calls to view all tasks matching the input criteria.  # noqa: E501
+        The value of the <strong>limit</strong> parameter submitted in the request, which is the maximum number of tasks to return per page, from the result set. A result set is the complete set of tasks returned by the method. <p> <span class=\"tablenote\"><strong>Note:</strong> Even though this parameter is not required to be submitted in the request, the parameter defaults to 10 if omitted.</span></p><p> <span class=\"tablenote\"><strong>Note:</strong> If this is the last or only page of the result set, the page may contain fewer tasks than the limit value. To determine the number of pages in a result set, divide the total value (total number of tasks matching input criteria) by this limit value, and then round up to the next integer. For example, if the <strong>total</strong> value was <code>120</code> (120 total tasks) and the <strong>limit</strong> value was <code>50</code> (show 50 tasks per page), the total number of pages in the result set is three, so the seller would have to make three separate <strong>getCustomerServiceMetricTasks</strong> calls to view all tasks matching the input criteria.</span></p>  # noqa: E501
 
         :return: The limit of this CustomerServiceMetricTaskCollection.  # noqa: E501
         :rtype: int
@@ -110,7 +110,7 @@ class CustomerServiceMetricTaskCollection(object):
     def limit(self, limit):
         """Sets the limit of this CustomerServiceMetricTaskCollection.
 
-        The value of the limit parameter submitted in the request, which is the maximum number of tasks to return per page, from the result set. A result set is the complete set of tasks returned by the method. Note: Even though this parameter is not required to be submitted in the request, the parameter defaults to 10 if omitted. Note: If this is the last or only page of the result set, the page may contain fewer tasks than the limit value. To determine the number of pages in a result set, divide the total value (total number of tasks matching input criteria) by this limit value, and then round up to the next integer. For example, if the total value was 120 (120 total tasks) and the limit value was 50 (show 50 tasks per page), the total number of pages in the result set is three, so the seller would have to make three separate getCustomerServiceMetricTasks calls to view all tasks matching the input criteria.  # noqa: E501
+        The value of the <strong>limit</strong> parameter submitted in the request, which is the maximum number of tasks to return per page, from the result set. A result set is the complete set of tasks returned by the method. <p> <span class=\"tablenote\"><strong>Note:</strong> Even though this parameter is not required to be submitted in the request, the parameter defaults to 10 if omitted.</span></p><p> <span class=\"tablenote\"><strong>Note:</strong> If this is the last or only page of the result set, the page may contain fewer tasks than the limit value. To determine the number of pages in a result set, divide the total value (total number of tasks matching input criteria) by this limit value, and then round up to the next integer. For example, if the <strong>total</strong> value was <code>120</code> (120 total tasks) and the <strong>limit</strong> value was <code>50</code> (show 50 tasks per page), the total number of pages in the result set is three, so the seller would have to make three separate <strong>getCustomerServiceMetricTasks</strong> calls to view all tasks matching the input criteria.</span></p>  # noqa: E501
 
         :param limit: The limit of this CustomerServiceMetricTaskCollection.  # noqa: E501
         :type: int
@@ -145,7 +145,7 @@ class CustomerServiceMetricTaskCollection(object):
     def offset(self):
         """Gets the offset of this CustomerServiceMetricTaskCollection.  # noqa: E501
 
-        The number of results skipped in the result set before returning the first result. This value can be set in the request with the offset query parameter. Note: The items in a paginated result set use a zero-based list where the first item in the list has an offset of 0.  # noqa: E501
+        The number of results skipped in the result set before returning the first result. This value can be set in the request with the <b>offset</b> query parameter. <p class=\"tablenote\"><strong>Note: </strong>The items in a paginated result set use a zero-based list where the first item in the list has an offset of <code>0</code>.</p>  # noqa: E501
 
         :return: The offset of this CustomerServiceMetricTaskCollection.  # noqa: E501
         :rtype: int
@@ -156,7 +156,7 @@ class CustomerServiceMetricTaskCollection(object):
     def offset(self, offset):
         """Sets the offset of this CustomerServiceMetricTaskCollection.
 
-        The number of results skipped in the result set before returning the first result. This value can be set in the request with the offset query parameter. Note: The items in a paginated result set use a zero-based list where the first item in the list has an offset of 0.  # noqa: E501
+        The number of results skipped in the result set before returning the first result. This value can be set in the request with the <b>offset</b> query parameter. <p class=\"tablenote\"><strong>Note: </strong>The items in a paginated result set use a zero-based list where the first item in the list has an offset of <code>0</code>.</p>  # noqa: E501
 
         :param offset: The offset of this CustomerServiceMetricTaskCollection.  # noqa: E501
         :type: int

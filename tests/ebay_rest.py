@@ -429,9 +429,9 @@ class APISandboxSingleSiteTests(unittest.TestCase):
                 if 'record' in record:
                     task_ids.add(record['record']['task_id'])
                 elif 'total' in record:
-                    self.assertEquals(record['total']['records_yielded'],
-                                      record['total']['records_available'],
-                                      'We missed some data - narrow the search!')
+                    self.assertEqual(record['total']['records_yielded'],
+                                     record['total']['records_available'],
+                                     'We missed some data - narrow the search!')
                 else:
                     self.fail(f'unexpected record {record}')
         except Error as error:

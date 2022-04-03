@@ -61,7 +61,7 @@ class CreateInventoryTaskRequest(object):
     def schema_version(self):
         """Gets the schema_version of this CreateInventoryTaskRequest.  # noqa: E501
 
-        The schemaVersion/version number of the file format (use the schema version of the API to which you are programming): LMS Version Details / Schema Version File Exchange Schema Version  # noqa: E501
+        The schemaVersion/version number of the file format (use the schema version of the API to which you are programming):<ul><li><a href=\"/api-docs/sell/static/lms-migration/lms-to-feed-version-details-schema-version.html\" target=\"_blank\">LMS Version Details / Schema Version</a></li><li><a href=\"/api-docs/sell/static/file-exchange-migration/fx-schema-version.html\" target=\"_blank\">File Exchange Schema Version</a></li></ul>  # noqa: E501
 
         :return: The schema_version of this CreateInventoryTaskRequest.  # noqa: E501
         :rtype: str
@@ -72,7 +72,7 @@ class CreateInventoryTaskRequest(object):
     def schema_version(self, schema_version):
         """Sets the schema_version of this CreateInventoryTaskRequest.
 
-        The schemaVersion/version number of the file format (use the schema version of the API to which you are programming): LMS Version Details / Schema Version File Exchange Schema Version  # noqa: E501
+        The schemaVersion/version number of the file format (use the schema version of the API to which you are programming):<ul><li><a href=\"/api-docs/sell/static/lms-migration/lms-to-feed-version-details-schema-version.html\" target=\"_blank\">LMS Version Details / Schema Version</a></li><li><a href=\"/api-docs/sell/static/file-exchange-migration/fx-schema-version.html\" target=\"_blank\">File Exchange Schema Version</a></li></ul>  # noqa: E501
 
         :param schema_version: The schema_version of this CreateInventoryTaskRequest.  # noqa: E501
         :type: str
@@ -84,7 +84,7 @@ class CreateInventoryTaskRequest(object):
     def feed_type(self):
         """Gets the feed_type of this CreateInventoryTaskRequest.  # noqa: E501
 
-        The feed type associated with the inventory task you are about to create. Use a feedType that is available for your API. Presently, only one feed type is available: LMS_ACTIVE_INVENTORY_REPORT  # noqa: E501
+        The feed type associated with the inventory task you are about to create. Use a <strong>feedType</strong> that is available for your API. Presently, only one feed type is available:<ul><li><code>LMS_ACTIVE_INVENTORY_REPORT</code></li></ul><br/><br/>See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#merchant-data-reports-download-feed-types\" target=\"_blank\">Report download feed types</a> for more information.  # noqa: E501
 
         :return: The feed_type of this CreateInventoryTaskRequest.  # noqa: E501
         :rtype: str
@@ -95,7 +95,7 @@ class CreateInventoryTaskRequest(object):
     def feed_type(self, feed_type):
         """Sets the feed_type of this CreateInventoryTaskRequest.
 
-        The feed type associated with the inventory task you are about to create. Use a feedType that is available for your API. Presently, only one feed type is available: LMS_ACTIVE_INVENTORY_REPORT  # noqa: E501
+        The feed type associated with the inventory task you are about to create. Use a <strong>feedType</strong> that is available for your API. Presently, only one feed type is available:<ul><li><code>LMS_ACTIVE_INVENTORY_REPORT</code></li></ul><br/><br/>See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#merchant-data-reports-download-feed-types\" target=\"_blank\">Report download feed types</a> for more information.  # noqa: E501
 
         :param feed_type: The feed_type of this CreateInventoryTaskRequest.  # noqa: E501
         :type: str
@@ -128,7 +128,7 @@ class CreateInventoryTaskRequest(object):
     def inventory_file_template(self):
         """Gets the inventory_file_template of this CreateInventoryTaskRequest.  # noqa: E501
 
-        The inventory file template used to return specific types of inventory tasks. Presently not applicable for LMS_ACTIVE_INVENTORY_REPORT. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:InventoryFileTemplateEnum'>eBay API documentation</a>  # noqa: E501
+        The inventory file template used to return specific types of inventory tasks. Presently not applicable for <code>LMS_ACTIVE_INVENTORY_REPORT</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:InventoryFileTemplateEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The inventory_file_template of this CreateInventoryTaskRequest.  # noqa: E501
         :rtype: str
@@ -139,7 +139,7 @@ class CreateInventoryTaskRequest(object):
     def inventory_file_template(self, inventory_file_template):
         """Sets the inventory_file_template of this CreateInventoryTaskRequest.
 
-        The inventory file template used to return specific types of inventory tasks. Presently not applicable for LMS_ACTIVE_INVENTORY_REPORT. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:InventoryFileTemplateEnum'>eBay API documentation</a>  # noqa: E501
+        The inventory file template used to return specific types of inventory tasks. Presently not applicable for <code>LMS_ACTIVE_INVENTORY_REPORT</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:InventoryFileTemplateEnum'>eBay API documentation</a>  # noqa: E501
 
         :param inventory_file_template: The inventory_file_template of this CreateInventoryTaskRequest.  # noqa: E501
         :type: str

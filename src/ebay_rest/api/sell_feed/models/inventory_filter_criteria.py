@@ -103,7 +103,7 @@ class InventoryFilterCriteria(object):
     def listing_format(self):
         """Gets the listing_format of this InventoryFilterCriteria.  # noqa: E501
 
-        The type of buying option for the order. Supports LMS_ACTIVE_INVENTORY_REPORT. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:ListingFormatEnum'>eBay API documentation</a>  # noqa: E501
+        The type of buying option for the order. Supports <code>LMS_ACTIVE_INVENTORY_REPORT</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:ListingFormatEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The listing_format of this InventoryFilterCriteria.  # noqa: E501
         :rtype: str
@@ -114,7 +114,7 @@ class InventoryFilterCriteria(object):
     def listing_format(self, listing_format):
         """Sets the listing_format of this InventoryFilterCriteria.
 
-        The type of buying option for the order. Supports LMS_ACTIVE_INVENTORY_REPORT. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:ListingFormatEnum'>eBay API documentation</a>  # noqa: E501
+        The type of buying option for the order. Supports <code>LMS_ACTIVE_INVENTORY_REPORT</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:ListingFormatEnum'>eBay API documentation</a>  # noqa: E501
 
         :param listing_format: The listing_format of this InventoryFilterCriteria.  # noqa: E501
         :type: str
@@ -126,7 +126,7 @@ class InventoryFilterCriteria(object):
     def listing_status(self):
         """Gets the listing_status of this InventoryFilterCriteria.  # noqa: E501
 
-        The status of the listing (whether the listing was unsold or is active). The UNSOLD value does not apply to LMS_ACTIVE_INVENTORY_REPORT feed types. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:ListingStatusEnum'>eBay API documentation</a>  # noqa: E501
+        The status of the listing (whether the listing was unsold or is active). The <strong>UNSOLD</strong> value does not apply to <code>LMS_ACTIVE_INVENTORY_REPORT</code> feed types. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:ListingStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The listing_status of this InventoryFilterCriteria.  # noqa: E501
         :rtype: str
@@ -137,7 +137,7 @@ class InventoryFilterCriteria(object):
     def listing_status(self, listing_status):
         """Sets the listing_status of this InventoryFilterCriteria.
 
-        The status of the listing (whether the listing was unsold or is active). The UNSOLD value does not apply to LMS_ACTIVE_INVENTORY_REPORT feed types. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:ListingStatusEnum'>eBay API documentation</a>  # noqa: E501
+        The status of the listing (whether the listing was unsold or is active). The <strong>UNSOLD</strong> value does not apply to <code>LMS_ACTIVE_INVENTORY_REPORT</code> feed types. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:ListingStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :param listing_status: The listing_status of this InventoryFilterCriteria.  # noqa: E501
         :type: str

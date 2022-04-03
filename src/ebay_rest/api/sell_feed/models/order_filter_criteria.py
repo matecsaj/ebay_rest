@@ -98,7 +98,7 @@ class OrderFilterCriteria(object):
     def order_status(self):
         """Gets the order_status of this OrderFilterCriteria.  # noqa: E501
 
-        The order status of the orders returned. If the filter is omitted from createOrderTask call, orders that are in both ACTIVE and COMPLETED states are returned. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:OrderStatusEnum'>eBay API documentation</a>  # noqa: E501
+        The order status of the orders returned. If the filter is omitted from createOrderTask call, orders that are in both <code>ACTIVE </code>and<code> COMPLETED</code> states are returned. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:OrderStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The order_status of this OrderFilterCriteria.  # noqa: E501
         :rtype: str
@@ -109,7 +109,7 @@ class OrderFilterCriteria(object):
     def order_status(self, order_status):
         """Sets the order_status of this OrderFilterCriteria.
 
-        The order status of the orders returned. If the filter is omitted from createOrderTask call, orders that are in both ACTIVE and COMPLETED states are returned. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:OrderStatusEnum'>eBay API documentation</a>  # noqa: E501
+        The order status of the orders returned. If the filter is omitted from createOrderTask call, orders that are in both <code>ACTIVE </code>and<code> COMPLETED</code> states are returned. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:OrderStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :param order_status: The order_status of this OrderFilterCriteria.  # noqa: E501
         :type: str

@@ -81,7 +81,7 @@ class FormDataContentDisposition(object):
     def creation_date(self):
         """Gets the creation_date of this FormDataContentDisposition.  # noqa: E501
 
-        The file creation date. Format: UTC yyyy-MM-ddThh:mm:ss.SSSZ For example: Created on September 8, 2019 2019-09-08T00:00:00.000Z  # noqa: E501
+        The file creation date. <br /><br /><b> Format: </b> UTC <code>yyyy-MM-ddThh:mm:ss.SSSZ</code><p><b>For example:</b><p>Created on September 8, 2019</p><p><code>2019-09-08T00:00:00.000Z</code></p>  # noqa: E501
 
         :return: The creation_date of this FormDataContentDisposition.  # noqa: E501
         :rtype: str
@@ -92,7 +92,7 @@ class FormDataContentDisposition(object):
     def creation_date(self, creation_date):
         """Sets the creation_date of this FormDataContentDisposition.
 
-        The file creation date. Format: UTC yyyy-MM-ddThh:mm:ss.SSSZ For example: Created on September 8, 2019 2019-09-08T00:00:00.000Z  # noqa: E501
+        The file creation date. <br /><br /><b> Format: </b> UTC <code>yyyy-MM-ddThh:mm:ss.SSSZ</code><p><b>For example:</b><p>Created on September 8, 2019</p><p><code>2019-09-08T00:00:00.000Z</code></p>  # noqa: E501
 
         :param creation_date: The creation_date of this FormDataContentDisposition.  # noqa: E501
         :type: str
@@ -127,7 +127,7 @@ class FormDataContentDisposition(object):
     def modification_date(self):
         """Gets the modification_date of this FormDataContentDisposition.  # noqa: E501
 
-        The file modified date. Format: UTC yyyy-MM-ddThh:mm:ss.SSSZ For example: Created on September 9, 2019 2019-09-09T00:00:00.000Z  # noqa: E501
+        The file modified date. <br /><br /><b> Format: </b> UTC <code>yyyy-MM-ddThh:mm:ss.SSSZ</code><p><b>For example:</b><p>Created on September 9, 2019</p><p><code>2019-09-09T00:00:00.000Z</code></p>  # noqa: E501
 
         :return: The modification_date of this FormDataContentDisposition.  # noqa: E501
         :rtype: str
@@ -138,7 +138,7 @@ class FormDataContentDisposition(object):
     def modification_date(self, modification_date):
         """Sets the modification_date of this FormDataContentDisposition.
 
-        The file modified date. Format: UTC yyyy-MM-ddThh:mm:ss.SSSZ For example: Created on September 9, 2019 2019-09-09T00:00:00.000Z  # noqa: E501
+        The file modified date. <br /><br /><b> Format: </b> UTC <code>yyyy-MM-ddThh:mm:ss.SSSZ</code><p><b>For example:</b><p>Created on September 9, 2019</p><p><code>2019-09-09T00:00:00.000Z</code></p>  # noqa: E501
 
         :param modification_date: The modification_date of this FormDataContentDisposition.  # noqa: E501
         :type: str
@@ -150,7 +150,7 @@ class FormDataContentDisposition(object):
     def name(self):
         """Gets the name of this FormDataContentDisposition.  # noqa: E501
 
-        A content identifier. The only presently supported name is file.  # noqa: E501
+        A content identifier. The only presently supported name is <code>file</code>.  # noqa: E501
 
         :return: The name of this FormDataContentDisposition.  # noqa: E501
         :rtype: str
@@ -161,7 +161,7 @@ class FormDataContentDisposition(object):
     def name(self, name):
         """Sets the name of this FormDataContentDisposition.
 
-        A content identifier. The only presently supported name is file.  # noqa: E501
+        A content identifier. The only presently supported name is <code>file</code>.  # noqa: E501
 
         :param name: The name of this FormDataContentDisposition.  # noqa: E501
         :type: str
@@ -196,7 +196,7 @@ class FormDataContentDisposition(object):
     def read_date(self):
         """Gets the read_date of this FormDataContentDisposition.  # noqa: E501
 
-        The date you read the file. Format: UTC yyyy-MM-ddThh:mm:ss.SSSZ For example: Created on September 10, 2019 2019-09-10T00:00:00.000Z  # noqa: E501
+        The date you read the file. <br /><br /><b> Format: </b> UTC <code>yyyy-MM-ddThh:mm:ss.SSSZ</code><p><b>For example:</b><p>Created on September 10, 2019</p><p><code>2019-09-10T00:00:00.000Z</code></p>  # noqa: E501
 
         :return: The read_date of this FormDataContentDisposition.  # noqa: E501
         :rtype: str
@@ -207,7 +207,7 @@ class FormDataContentDisposition(object):
     def read_date(self, read_date):
         """Sets the read_date of this FormDataContentDisposition.
 
-        The date you read the file. Format: UTC yyyy-MM-ddThh:mm:ss.SSSZ For example: Created on September 10, 2019 2019-09-10T00:00:00.000Z  # noqa: E501
+        The date you read the file. <br /><br /><b> Format: </b> UTC <code>yyyy-MM-ddThh:mm:ss.SSSZ</code><p><b>For example:</b><p>Created on September 10, 2019</p><p><code>2019-09-10T00:00:00.000Z</code></p>  # noqa: E501
 
         :param read_date: The read_date of this FormDataContentDisposition.  # noqa: E501
         :type: str
@@ -242,7 +242,7 @@ class FormDataContentDisposition(object):
     def type(self):
         """Gets the type of this FormDataContentDisposition.  # noqa: E501
 
-        The file type. The only presently supported type is form-data.  # noqa: E501
+        The file type. The only presently supported type is <code>form-data</code>.  # noqa: E501
 
         :return: The type of this FormDataContentDisposition.  # noqa: E501
         :rtype: str
@@ -253,7 +253,7 @@ class FormDataContentDisposition(object):
     def type(self, type):
         """Sets the type of this FormDataContentDisposition.
 
-        The file type. The only presently supported type is form-data.  # noqa: E501
+        The file type. The only presently supported type is <code>form-data</code>.  # noqa: E501
 
         :param type: The type of this FormDataContentDisposition.  # noqa: E501
         :type: str
