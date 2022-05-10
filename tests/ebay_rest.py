@@ -350,7 +350,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
 
     def test_buying_options(self):
         """ Does buying option filtering work? """
-        options = ['FIXED_PRICE', 'BEST_OFFER']  # on Production 'AUCTION' is also an option
+        options = ['FIXED_PRICE', 'BEST_OFFER']  # on Production 'AUCTION' and 'CLASSIFIED_AD' are also options
         for option in options:
             try:
                 success = None

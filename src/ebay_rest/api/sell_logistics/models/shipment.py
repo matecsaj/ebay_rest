@@ -127,7 +127,7 @@ class Shipment(object):
     def creation_date(self):
         """Gets the creation_date of this Shipment.  # noqa: E501
 
-        The date and time the shipment was created, formatted as an ISO 8601 string, which is based on the 24-hour Coordinated Universal Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[HH]:[MM]:[SS].[SSS]Z Example: 2018-08-20T07:09:00.000Z  # noqa: E501
+        The date and time the shipment was created, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> string, which is based on the 24-hour Coordinated Universal Time (UTC) clock.  <br><br><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[HH]:[MM]:[SS].[SSS]Z</code> <br><b>Example:</b> <code>2018-08-20T07:09:00.000Z</code>  # noqa: E501
 
         :return: The creation_date of this Shipment.  # noqa: E501
         :rtype: str
@@ -138,7 +138,7 @@ class Shipment(object):
     def creation_date(self, creation_date):
         """Sets the creation_date of this Shipment.
 
-        The date and time the shipment was created, formatted as an ISO 8601 string, which is based on the 24-hour Coordinated Universal Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[HH]:[MM]:[SS].[SSS]Z Example: 2018-08-20T07:09:00.000Z  # noqa: E501
+        The date and time the shipment was created, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> string, which is based on the 24-hour Coordinated Universal Time (UTC) clock.  <br><br><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[HH]:[MM]:[SS].[SSS]Z</code> <br><b>Example:</b> <code>2018-08-20T07:09:00.000Z</code>  # noqa: E501
 
         :param creation_date: The creation_date of this Shipment.  # noqa: E501
         :type: str
@@ -173,7 +173,7 @@ class Shipment(object):
     def label_download_url(self):
         """Gets the label_download_url of this Shipment.  # noqa: E501
 
-        The direct URL the seller can use to download an image of the shipping label. By default, the file format is PDF. See downloadLabelFile for requesting different response file formats.  # noqa: E501
+        The direct URL the seller can use to download an image of the shipping label. By default, the file format is PDF. See <a href=\"/api-docs/sell/logistics/resources/shipment/methods/downloadLabelFile\">downloadLabelFile</a> for requesting different response file formats.  # noqa: E501
 
         :return: The label_download_url of this Shipment.  # noqa: E501
         :rtype: str
@@ -184,7 +184,7 @@ class Shipment(object):
     def label_download_url(self, label_download_url):
         """Sets the label_download_url of this Shipment.
 
-        The direct URL the seller can use to download an image of the shipping label. By default, the file format is PDF. See downloadLabelFile for requesting different response file formats.  # noqa: E501
+        The direct URL the seller can use to download an image of the shipping label. By default, the file format is PDF. See <a href=\"/api-docs/sell/logistics/resources/shipment/methods/downloadLabelFile\">downloadLabelFile</a> for requesting different response file formats.  # noqa: E501
 
         :param label_download_url: The label_download_url of this Shipment.  # noqa: E501
         :type: str
@@ -196,7 +196,7 @@ class Shipment(object):
     def label_size(self):
         """Gets the label_size of this Shipment.  # noqa: E501
 
-        The seller's desired label size. The support for multi-sized labels is shipping-carrier specific and if the size requested in the creaateFromShippingQuote call matches a size the carrier supports, the value will be represented here in the shipment. Currently, the only valid value is: 4&quot;x6&quot;  # noqa: E501
+        The seller's desired label size. The support for multi-sized labels is shipping-carrier specific and if the size requested in the <b>creaateFromShippingQuote</b> call matches a size the carrier supports, the value will be represented here in the shipment. <br><br>Currently, the only valid value is: <code>4\"x6\"</code>  # noqa: E501
 
         :return: The label_size of this Shipment.  # noqa: E501
         :rtype: str
@@ -207,7 +207,7 @@ class Shipment(object):
     def label_size(self, label_size):
         """Sets the label_size of this Shipment.
 
-        The seller's desired label size. The support for multi-sized labels is shipping-carrier specific and if the size requested in the creaateFromShippingQuote call matches a size the carrier supports, the value will be represented here in the shipment. Currently, the only valid value is: 4&quot;x6&quot;  # noqa: E501
+        The seller's desired label size. The support for multi-sized labels is shipping-carrier specific and if the size requested in the <b>creaateFromShippingQuote</b> call matches a size the carrier supports, the value will be represented here in the shipment. <br><br>Currently, the only valid value is: <code>4\"x6\"</code>  # noqa: E501
 
         :param label_size: The label_size of this Shipment.  # noqa: E501
         :type: str
@@ -326,7 +326,7 @@ class Shipment(object):
     def shipment_id(self):
         """Gets the shipment_id of this Shipment.  # noqa: E501
 
-        The unique eBay-assigned ID for the shipment. The ID is generated when the shipment is created by a call to createFromShippingQuote.  # noqa: E501
+        The unique eBay-assigned ID for the shipment. The ID is generated when the shipment is created by a call to <b>createFromShippingQuote</b>.  # noqa: E501
 
         :return: The shipment_id of this Shipment.  # noqa: E501
         :rtype: str
@@ -337,7 +337,7 @@ class Shipment(object):
     def shipment_id(self, shipment_id):
         """Sets the shipment_id of this Shipment.
 
-        The unique eBay-assigned ID for the shipment. The ID is generated when the shipment is created by a call to createFromShippingQuote.  # noqa: E501
+        The unique eBay-assigned ID for the shipment. The ID is generated when the shipment is created by a call to <b>createFromShippingQuote</b>.  # noqa: E501
 
         :param shipment_id: The shipment_id of this Shipment.  # noqa: E501
         :type: str

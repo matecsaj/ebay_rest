@@ -61,7 +61,7 @@ class PickupSlot(object):
     def pickup_slot_end_time(self):
         """Gets the pickup_slot_end_time of this PickupSlot.  # noqa: E501
 
-        The date and time the pickup slot ends, formatted as an ISO 8601 string, which is based on the 24-hour Coordinated Universal Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[HH]:[MM]:[SS].[SSS]Z Example: 2018-08-20T07:09:00.000Z  # noqa: E501
+        The date and time the pickup slot ends, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> string, which is based on the 24-hour Coordinated Universal Time (UTC) clock.  <br><br><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[HH]:[MM]:[SS].[SSS]Z</code> <br><b>Example:</b> <code>2018-08-20T07:09:00.000Z</code>  # noqa: E501
 
         :return: The pickup_slot_end_time of this PickupSlot.  # noqa: E501
         :rtype: str
@@ -72,7 +72,7 @@ class PickupSlot(object):
     def pickup_slot_end_time(self, pickup_slot_end_time):
         """Sets the pickup_slot_end_time of this PickupSlot.
 
-        The date and time the pickup slot ends, formatted as an ISO 8601 string, which is based on the 24-hour Coordinated Universal Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[HH]:[MM]:[SS].[SSS]Z Example: 2018-08-20T07:09:00.000Z  # noqa: E501
+        The date and time the pickup slot ends, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> string, which is based on the 24-hour Coordinated Universal Time (UTC) clock.  <br><br><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[HH]:[MM]:[SS].[SSS]Z</code> <br><b>Example:</b> <code>2018-08-20T07:09:00.000Z</code>  # noqa: E501
 
         :param pickup_slot_end_time: The pickup_slot_end_time of this PickupSlot.  # noqa: E501
         :type: str
@@ -84,7 +84,7 @@ class PickupSlot(object):
     def pickup_slot_id(self):
         """Gets the pickup_slot_id of this PickupSlot.  # noqa: E501
 
-        Seller-defined name for the pickup slot.  # noqa: E501
+        Seller-defined name for the pickup slot. <!-- Max characters? -->  # noqa: E501
 
         :return: The pickup_slot_id of this PickupSlot.  # noqa: E501
         :rtype: str
@@ -95,7 +95,7 @@ class PickupSlot(object):
     def pickup_slot_id(self, pickup_slot_id):
         """Sets the pickup_slot_id of this PickupSlot.
 
-        Seller-defined name for the pickup slot.  # noqa: E501
+        Seller-defined name for the pickup slot. <!-- Max characters? -->  # noqa: E501
 
         :param pickup_slot_id: The pickup_slot_id of this PickupSlot.  # noqa: E501
         :type: str
@@ -107,7 +107,7 @@ class PickupSlot(object):
     def pickup_slot_start_time(self):
         """Gets the pickup_slot_start_time of this PickupSlot.  # noqa: E501
 
-        The date and time the pickup slot begins, formatted as an ISO 8601 UTC string.  # noqa: E501
+        The date and time the pickup slot begins, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> UTC string.  # noqa: E501
 
         :return: The pickup_slot_start_time of this PickupSlot.  # noqa: E501
         :rtype: str
@@ -118,7 +118,7 @@ class PickupSlot(object):
     def pickup_slot_start_time(self, pickup_slot_start_time):
         """Sets the pickup_slot_start_time of this PickupSlot.
 
-        The date and time the pickup slot begins, formatted as an ISO 8601 UTC string.  # noqa: E501
+        The date and time the pickup slot begins, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> UTC string.  # noqa: E501
 
         :param pickup_slot_start_time: The pickup_slot_start_time of this PickupSlot.  # noqa: E501
         :type: str
@@ -130,7 +130,7 @@ class PickupSlot(object):
     def pickup_slot_time_zone(self):
         """Gets the pickup_slot_time_zone of this PickupSlot.  # noqa: E501
 
-        The time zone of the pickup location, returned as Time Zone Database ID (also know as an Olson time zone ID).  # noqa: E501
+        The time zone of the pickup location, returned as <a href=\"https://www.iana.org/time-zones\" target=\"_blank\">Time Zone Database</a> ID (also know as an Olson time zone ID).  # noqa: E501
 
         :return: The pickup_slot_time_zone of this PickupSlot.  # noqa: E501
         :rtype: str
@@ -141,7 +141,7 @@ class PickupSlot(object):
     def pickup_slot_time_zone(self, pickup_slot_time_zone):
         """Sets the pickup_slot_time_zone of this PickupSlot.
 
-        The time zone of the pickup location, returned as Time Zone Database ID (also know as an Olson time zone ID).  # noqa: E501
+        The time zone of the pickup location, returned as <a href=\"https://www.iana.org/time-zones\" target=\"_blank\">Time Zone Database</a> ID (also know as an Olson time zone ID).  # noqa: E501
 
         :param pickup_slot_time_zone: The pickup_slot_time_zone of this PickupSlot.  # noqa: E501
         :type: str

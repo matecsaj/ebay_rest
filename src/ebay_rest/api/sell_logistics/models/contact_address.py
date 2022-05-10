@@ -145,7 +145,7 @@ class ContactAddress(object):
     def country_code(self):
         """Gets the country_code of this ContactAddress.  # noqa: E501
 
-        The country of the address, represented as two-letter ISO 3166 country code. For example, US represents the United States and DE represents Germany. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/logistics/types/bas:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
+        The country of the address, represented as two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> country code. For example, <code>US</code> represents the United States and <code>DE</code> represents Germany. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/logistics/types/bas:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The country_code of this ContactAddress.  # noqa: E501
         :rtype: str
@@ -156,7 +156,7 @@ class ContactAddress(object):
     def country_code(self, country_code):
         """Sets the country_code of this ContactAddress.
 
-        The country of the address, represented as two-letter ISO 3166 country code. For example, US represents the United States and DE represents Germany. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/logistics/types/bas:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
+        The country of the address, represented as two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 3166</a> country code. For example, <code>US</code> represents the United States and <code>DE</code> represents Germany. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/logistics/types/bas:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param country_code: The country_code of this ContactAddress.  # noqa: E501
         :type: str

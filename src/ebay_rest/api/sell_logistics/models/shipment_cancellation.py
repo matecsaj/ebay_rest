@@ -51,7 +51,7 @@ class ShipmentCancellation(object):
     def cancellation_requested_date(self):
         """Gets the cancellation_requested_date of this ShipmentCancellation.  # noqa: E501
 
-        The time and date the request was made to cancel the shipment, formatted as an ISO 8601 UTC string.  # noqa: E501
+        The time and date the request was made to cancel the shipment, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> UTC string.  # noqa: E501
 
         :return: The cancellation_requested_date of this ShipmentCancellation.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class ShipmentCancellation(object):
     def cancellation_requested_date(self, cancellation_requested_date):
         """Sets the cancellation_requested_date of this ShipmentCancellation.
 
-        The time and date the request was made to cancel the shipment, formatted as an ISO 8601 UTC string.  # noqa: E501
+        The time and date the request was made to cancel the shipment, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> UTC string.  # noqa: E501
 
         :param cancellation_requested_date: The cancellation_requested_date of this ShipmentCancellation.  # noqa: E501
         :type: str

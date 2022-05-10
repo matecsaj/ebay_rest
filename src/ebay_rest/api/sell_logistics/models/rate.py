@@ -111,7 +111,7 @@ class Rate(object):
     def additional_options(self):
         """Gets the additional_options of this Rate.  # noqa: E501
 
-        Contains service and pricing information for one or more shipping options that are offered by the carrier and can be purchased in addition to the base shipping service provided by this rate. Shipping options can include items such as INSURANCE and SIGNATURE.  # noqa: E501
+        Contains service and pricing information for one or more shipping options that are offered by the carrier and can be purchased in addition to the base shipping service provided by this rate. Shipping options can include items such as <code>INSURANCE</code> and <code>SIGNATURE</code>.  # noqa: E501
 
         :return: The additional_options of this Rate.  # noqa: E501
         :rtype: list[AdditionalOption]
@@ -122,7 +122,7 @@ class Rate(object):
     def additional_options(self, additional_options):
         """Sets the additional_options of this Rate.
 
-        Contains service and pricing information for one or more shipping options that are offered by the carrier and can be purchased in addition to the base shipping service provided by this rate. Shipping options can include items such as INSURANCE and SIGNATURE.  # noqa: E501
+        Contains service and pricing information for one or more shipping options that are offered by the carrier and can be purchased in addition to the base shipping service provided by this rate. Shipping options can include items such as <code>INSURANCE</code> and <code>SIGNATURE</code>.  # noqa: E501
 
         :param additional_options: The additional_options of this Rate.  # noqa: E501
         :type: list[AdditionalOption]
@@ -155,7 +155,7 @@ class Rate(object):
     def destination_time_zone(self):
         """Gets the destination_time_zone of this Rate.  # noqa: E501
 
-        The name of the time zone region, as defined in the IANA Time Zone Database, to which the package is being shipped. Delivery dates are calculated relative to this time zone. Note: This is different from a Coordinated Universal Time (UTC) offset. For example, the America/Los_Angeles time zone identifies a region with the UTC standard time offset of -08:00, but so do several other time zones, including America/Tijuana,America/Dawson, and Pacific/Pitcairn.  # noqa: E501
+        The name of the time zone region, as defined in the <a href=\"http://www.iana.org/time-zones\"  target=\"_blank\">IANA Time Zone Database</a>, to which the package is being shipped.  <br><br>Delivery dates are calculated relative to this time zone.  <br><br><span class=\"tablenote\"><strong>Note:</strong> This is different from a Coordinated Universal Time (UTC) offset. For example, the <i>America/Los_Angeles</i> time zone identifies a region with the UTC standard time offset of <code>-08:00</code>, but so do several other time zones, including <i>America/Tijuana</i>,<i>America/Dawson</i>, and <i>Pacific/Pitcairn</i>.</span>  # noqa: E501
 
         :return: The destination_time_zone of this Rate.  # noqa: E501
         :rtype: str
@@ -166,7 +166,7 @@ class Rate(object):
     def destination_time_zone(self, destination_time_zone):
         """Sets the destination_time_zone of this Rate.
 
-        The name of the time zone region, as defined in the IANA Time Zone Database, to which the package is being shipped. Delivery dates are calculated relative to this time zone. Note: This is different from a Coordinated Universal Time (UTC) offset. For example, the America/Los_Angeles time zone identifies a region with the UTC standard time offset of -08:00, but so do several other time zones, including America/Tijuana,America/Dawson, and Pacific/Pitcairn.  # noqa: E501
+        The name of the time zone region, as defined in the <a href=\"http://www.iana.org/time-zones\"  target=\"_blank\">IANA Time Zone Database</a>, to which the package is being shipped.  <br><br>Delivery dates are calculated relative to this time zone.  <br><br><span class=\"tablenote\"><strong>Note:</strong> This is different from a Coordinated Universal Time (UTC) offset. For example, the <i>America/Los_Angeles</i> time zone identifies a region with the UTC standard time offset of <code>-08:00</code>, but so do several other time zones, including <i>America/Tijuana</i>,<i>America/Dawson</i>, and <i>Pacific/Pitcairn</i>.</span>  # noqa: E501
 
         :param destination_time_zone: The destination_time_zone of this Rate.  # noqa: E501
         :type: str
@@ -178,7 +178,7 @@ class Rate(object):
     def max_estimated_delivery_date(self):
         """Gets the max_estimated_delivery_date of this Rate.  # noqa: E501
 
-        The latest stated date and time the shipment will be delivered at this rate. The time stamp is formatted as an ISO 8601 string, which is based on the 24-hour Coordinated Universal Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[HH]:[MM]:[SS].[SSS]Z Example: 2018-08-20T07:09:00.000Z  # noqa: E501
+        The latest stated date and time the shipment will be delivered at this rate.  <br><br>The time stamp is formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> string, which is based on the 24-hour Coordinated Universal Time (UTC) clock.  <br><br><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[HH]:[MM]:[SS].[SSS]Z</code> <br><b>Example:</b> <code>2018-08-20T07:09:00.000Z</code>  # noqa: E501
 
         :return: The max_estimated_delivery_date of this Rate.  # noqa: E501
         :rtype: str
@@ -189,7 +189,7 @@ class Rate(object):
     def max_estimated_delivery_date(self, max_estimated_delivery_date):
         """Sets the max_estimated_delivery_date of this Rate.
 
-        The latest stated date and time the shipment will be delivered at this rate. The time stamp is formatted as an ISO 8601 string, which is based on the 24-hour Coordinated Universal Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[HH]:[MM]:[SS].[SSS]Z Example: 2018-08-20T07:09:00.000Z  # noqa: E501
+        The latest stated date and time the shipment will be delivered at this rate.  <br><br>The time stamp is formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> string, which is based on the 24-hour Coordinated Universal Time (UTC) clock.  <br><br><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[HH]:[MM]:[SS].[SSS]Z</code> <br><b>Example:</b> <code>2018-08-20T07:09:00.000Z</code>  # noqa: E501
 
         :param max_estimated_delivery_date: The max_estimated_delivery_date of this Rate.  # noqa: E501
         :type: str
@@ -270,7 +270,7 @@ class Rate(object):
     def pickup_type(self):
         """Gets the pickup_type of this Rate.  # noqa: E501
 
-        The type of pickup or drop-off service associated with the pickupSlots time frames. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/logistics/types/api:PickupTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The type of pickup or drop-off service associated with the <b>pickupSlots</b> time frames. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/logistics/types/api:PickupTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The pickup_type of this Rate.  # noqa: E501
         :rtype: str
@@ -281,7 +281,7 @@ class Rate(object):
     def pickup_type(self, pickup_type):
         """Sets the pickup_type of this Rate.
 
-        The type of pickup or drop-off service associated with the pickupSlots time frames. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/logistics/types/api:PickupTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The type of pickup or drop-off service associated with the <b>pickupSlots</b> time frames. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/logistics/types/api:PickupTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param pickup_type: The pickup_type of this Rate.  # noqa: E501
         :type: str
@@ -316,7 +316,7 @@ class Rate(object):
     def rate_recommendation(self):
         """Gets the rate_recommendation of this Rate.  # noqa: E501
 
-        A list of reasons this rate is recommended. Available values are: BUYER_CHOSEN &mdash; The rate meets or exceeds the requirements of the buyer's preferred shipping option. CHEAPEST_ON_TIME &mdash; The rate is the cheapest rate available that will provide delivery within the seller's time frame commitment. EBAY_PLUS_OK &mdash; The rate complies with the shipping requirements of the eBay Plus program. FASTEST_ON_TIME &mdash; The rate has the fastest shipping time, and will provide delivery within the seller's time frame commitment. GUARANTEED_DELIVERY_OK &mdash; The rate complies with the shipping requirements of the eBay Guaranteed Delivery program.  # noqa: E501
+        A list of reasons this rate is recommended. Available values are: <ul> <li><code>BUYER_CHOSEN</code> &mdash; The rate meets or exceeds the requirements of the buyer's preferred shipping option.</li> <li><code>CHEAPEST_ON_TIME</code> &mdash; The rate is the cheapest rate available that will provide delivery within the seller's time frame commitment.</li>  <li><code>EBAY_PLUS_OK</code> &mdash; The rate complies with the shipping requirements of the eBay Plus program.</li> <li><code>FASTEST_ON_TIME</code> &mdash; The rate has the fastest shipping time, and will provide delivery within the seller's time frame commitment.</li> <li><code>GUARANTEED_DELIVERY_OK</code> &mdash; The rate complies with the shipping requirements of the eBay Guaranteed Delivery program.</li></ul>  # noqa: E501
 
         :return: The rate_recommendation of this Rate.  # noqa: E501
         :rtype: list[str]
@@ -327,7 +327,7 @@ class Rate(object):
     def rate_recommendation(self, rate_recommendation):
         """Sets the rate_recommendation of this Rate.
 
-        A list of reasons this rate is recommended. Available values are: BUYER_CHOSEN &mdash; The rate meets or exceeds the requirements of the buyer's preferred shipping option. CHEAPEST_ON_TIME &mdash; The rate is the cheapest rate available that will provide delivery within the seller's time frame commitment. EBAY_PLUS_OK &mdash; The rate complies with the shipping requirements of the eBay Plus program. FASTEST_ON_TIME &mdash; The rate has the fastest shipping time, and will provide delivery within the seller's time frame commitment. GUARANTEED_DELIVERY_OK &mdash; The rate complies with the shipping requirements of the eBay Guaranteed Delivery program.  # noqa: E501
+        A list of reasons this rate is recommended. Available values are: <ul> <li><code>BUYER_CHOSEN</code> &mdash; The rate meets or exceeds the requirements of the buyer's preferred shipping option.</li> <li><code>CHEAPEST_ON_TIME</code> &mdash; The rate is the cheapest rate available that will provide delivery within the seller's time frame commitment.</li>  <li><code>EBAY_PLUS_OK</code> &mdash; The rate complies with the shipping requirements of the eBay Plus program.</li> <li><code>FASTEST_ON_TIME</code> &mdash; The rate has the fastest shipping time, and will provide delivery within the seller's time frame commitment.</li> <li><code>GUARANTEED_DELIVERY_OK</code> &mdash; The rate complies with the shipping requirements of the eBay Guaranteed Delivery program.</li></ul>  # noqa: E501
 
         :param rate_recommendation: The rate_recommendation of this Rate.  # noqa: E501
         :type: list[str]
@@ -339,7 +339,7 @@ class Rate(object):
     def shipping_carrier_code(self):
         """Gets the shipping_carrier_code of this Rate.  # noqa: E501
 
-        The code name of the shipping carrier who will provide the service identified by shippingServiceCode.  # noqa: E501
+        The code name of the shipping carrier who will provide the service identified by <b>shippingServiceCode</b>.  # noqa: E501
 
         :return: The shipping_carrier_code of this Rate.  # noqa: E501
         :rtype: str
@@ -350,7 +350,7 @@ class Rate(object):
     def shipping_carrier_code(self, shipping_carrier_code):
         """Sets the shipping_carrier_code of this Rate.
 
-        The code name of the shipping carrier who will provide the service identified by shippingServiceCode.  # noqa: E501
+        The code name of the shipping carrier who will provide the service identified by <b>shippingServiceCode</b>.  # noqa: E501
 
         :param shipping_carrier_code: The shipping_carrier_code of this Rate.  # noqa: E501
         :type: str
@@ -385,7 +385,7 @@ class Rate(object):
     def shipping_service_code(self):
         """Gets the shipping_service_code of this Rate.  # noqa: E501
 
-        The code name of the shipping service to be provided by the carrier identified by shippingCarrierCode.  # noqa: E501
+        The code name of the shipping service to be provided by the carrier identified by <b>shippingCarrierCode</b>.  # noqa: E501
 
         :return: The shipping_service_code of this Rate.  # noqa: E501
         :rtype: str
@@ -396,7 +396,7 @@ class Rate(object):
     def shipping_service_code(self, shipping_service_code):
         """Sets the shipping_service_code of this Rate.
 
-        The code name of the shipping service to be provided by the carrier identified by shippingCarrierCode.  # noqa: E501
+        The code name of the shipping service to be provided by the carrier identified by <b>shippingCarrierCode</b>.  # noqa: E501
 
         :param shipping_service_code: The shipping_service_code of this Rate.  # noqa: E501
         :type: str

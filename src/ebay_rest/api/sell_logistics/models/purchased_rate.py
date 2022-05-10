@@ -160,7 +160,7 @@ class PurchasedRate(object):
     def destination_time_zone(self):
         """Gets the destination_time_zone of this PurchasedRate.  # noqa: E501
 
-        The time zone of the destination according to Time Zone Database. For example, &quot;America/Los_Angeles&quot;.  # noqa: E501
+        The time zone of the destination according to <a href=\"https://www.iana.org/time-zones\" target=\"_blank\">Time Zone Database</a>. For example, \"America/Los_Angeles\".  # noqa: E501
 
         :return: The destination_time_zone of this PurchasedRate.  # noqa: E501
         :rtype: str
@@ -171,7 +171,7 @@ class PurchasedRate(object):
     def destination_time_zone(self, destination_time_zone):
         """Sets the destination_time_zone of this PurchasedRate.
 
-        The time zone of the destination according to Time Zone Database. For example, &quot;America/Los_Angeles&quot;.  # noqa: E501
+        The time zone of the destination according to <a href=\"https://www.iana.org/time-zones\" target=\"_blank\">Time Zone Database</a>. For example, \"America/Los_Angeles\".  # noqa: E501
 
         :param destination_time_zone: The destination_time_zone of this PurchasedRate.  # noqa: E501
         :type: str
@@ -183,7 +183,7 @@ class PurchasedRate(object):
     def max_estimated_delivery_date(self):
         """Gets the max_estimated_delivery_date of this PurchasedRate.  # noqa: E501
 
-        A string value representing maximum (latest) estimated delivery time, formatted as an ISO 8601 string, which is based on the 24-hour Coordinated Universal Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[HH]:[MM]:[SS].[SSS]Z Example: 2018-08-20T07:09:00.000Z  # noqa: E501
+        A string value representing maximum (latest) estimated delivery time, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> string, which is based on the 24-hour Coordinated Universal Time (UTC) clock.  <br><br><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[HH]:[MM]:[SS].[SSS]Z</code> <br><b>Example:</b> <code>2018-08-20T07:09:00.000Z</code>  # noqa: E501
 
         :return: The max_estimated_delivery_date of this PurchasedRate.  # noqa: E501
         :rtype: str
@@ -194,7 +194,7 @@ class PurchasedRate(object):
     def max_estimated_delivery_date(self, max_estimated_delivery_date):
         """Sets the max_estimated_delivery_date of this PurchasedRate.
 
-        A string value representing maximum (latest) estimated delivery time, formatted as an ISO 8601 string, which is based on the 24-hour Coordinated Universal Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[HH]:[MM]:[SS].[SSS]Z Example: 2018-08-20T07:09:00.000Z  # noqa: E501
+        A string value representing maximum (latest) estimated delivery time, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> string, which is based on the 24-hour Coordinated Universal Time (UTC) clock.  <br><br><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[HH]:[MM]:[SS].[SSS]Z</code> <br><b>Example:</b> <code>2018-08-20T07:09:00.000Z</code>  # noqa: E501
 
         :param max_estimated_delivery_date: The max_estimated_delivery_date of this PurchasedRate.  # noqa: E501
         :type: str
@@ -206,7 +206,7 @@ class PurchasedRate(object):
     def min_estimated_delivery_date(self):
         """Gets the min_estimated_delivery_date of this PurchasedRate.  # noqa: E501
 
-        A string value representing minimum (earliest) estimated delivery time, formatted as an ISO 8601ISO 8601 UTC string.  # noqa: E501
+        A string value representing minimum (earliest) estimated delivery time, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a>ISO 8601</a> UTC string.  # noqa: E501
 
         :return: The min_estimated_delivery_date of this PurchasedRate.  # noqa: E501
         :rtype: str
@@ -217,7 +217,7 @@ class PurchasedRate(object):
     def min_estimated_delivery_date(self, min_estimated_delivery_date):
         """Sets the min_estimated_delivery_date of this PurchasedRate.
 
-        A string value representing minimum (earliest) estimated delivery time, formatted as an ISO 8601ISO 8601 UTC string.  # noqa: E501
+        A string value representing minimum (earliest) estimated delivery time, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a>ISO 8601</a> UTC string.  # noqa: E501
 
         :param min_estimated_delivery_date: The min_estimated_delivery_date of this PurchasedRate.  # noqa: E501
         :type: str
@@ -367,7 +367,7 @@ class PurchasedRate(object):
     def shipping_quote_id(self):
         """Gets the shipping_quote_id of this PurchasedRate.  # noqa: E501
 
-        The unique eBay-generated ID of the shipping quote from which the seller selected a shipping rate (rateId).  # noqa: E501
+        The unique eBay-generated ID of the <i>shipping quote</i> from which the seller selected a shipping rate (<b>rateId</b>).  # noqa: E501
 
         :return: The shipping_quote_id of this PurchasedRate.  # noqa: E501
         :rtype: str
@@ -378,7 +378,7 @@ class PurchasedRate(object):
     def shipping_quote_id(self, shipping_quote_id):
         """Sets the shipping_quote_id of this PurchasedRate.
 
-        The unique eBay-generated ID of the shipping quote from which the seller selected a shipping rate (rateId).  # noqa: E501
+        The unique eBay-generated ID of the <i>shipping quote</i> from which the seller selected a shipping rate (<b>rateId</b>).  # noqa: E501
 
         :param shipping_quote_id: The shipping_quote_id of this PurchasedRate.  # noqa: E501
         :type: str

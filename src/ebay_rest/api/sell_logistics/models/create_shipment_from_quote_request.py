@@ -71,7 +71,7 @@ class CreateShipmentFromQuoteRequest(object):
     def additional_options(self):
         """Gets the additional_options of this CreateShipmentFromQuoteRequest.  # noqa: E501
 
-        Supply a list of one or more shipping options that the seller wants to purchase for this shipment. The baseShippingCost field that's associated with the selected shipping rate is the cost of the base service offered in the rate. In addition to the base service, sellers can add additional shipping services to the base service. Shipping options include things such as shipping insurance or a recipient's signature upon delivery. The cost of any added services is summed with the base shipping cost to determine the final cost for the shipment. All options added to the shipment must be chosen from the set of shipping options offered with the selected rate.  # noqa: E501
+        Supply a list of one or more shipping options that the seller wants to purchase for this shipment.  <br><br>The <b>baseShippingCost</b> field that's associated with the selected shipping rate is the cost of the base service offered in the rate. In addition to the base service, sellers can add additional shipping services to the base service. Shipping options include things such as shipping insurance or a recipient's signature upon delivery. The cost of any added services is summed with the base shipping cost to determine the final cost for the shipment. All options added to the shipment must be chosen from the set of shipping options offered with the selected rate.  # noqa: E501
 
         :return: The additional_options of this CreateShipmentFromQuoteRequest.  # noqa: E501
         :rtype: list[AdditionalOption]
@@ -82,7 +82,7 @@ class CreateShipmentFromQuoteRequest(object):
     def additional_options(self, additional_options):
         """Sets the additional_options of this CreateShipmentFromQuoteRequest.
 
-        Supply a list of one or more shipping options that the seller wants to purchase for this shipment. The baseShippingCost field that's associated with the selected shipping rate is the cost of the base service offered in the rate. In addition to the base service, sellers can add additional shipping services to the base service. Shipping options include things such as shipping insurance or a recipient's signature upon delivery. The cost of any added services is summed with the base shipping cost to determine the final cost for the shipment. All options added to the shipment must be chosen from the set of shipping options offered with the selected rate.  # noqa: E501
+        Supply a list of one or more shipping options that the seller wants to purchase for this shipment.  <br><br>The <b>baseShippingCost</b> field that's associated with the selected shipping rate is the cost of the base service offered in the rate. In addition to the base service, sellers can add additional shipping services to the base service. Shipping options include things such as shipping insurance or a recipient's signature upon delivery. The cost of any added services is summed with the base shipping cost to determine the final cost for the shipment. All options added to the shipment must be chosen from the set of shipping options offered with the selected rate.  # noqa: E501
 
         :param additional_options: The additional_options of this CreateShipmentFromQuoteRequest.  # noqa: E501
         :type: list[AdditionalOption]
@@ -117,7 +117,7 @@ class CreateShipmentFromQuoteRequest(object):
     def label_size(self):
         """Gets the label_size of this CreateShipmentFromQuoteRequest.  # noqa: E501
 
-        The seller's desired label size. Any supplied value is applied only if the shipping carrier supports multiple label sizes, otherwise the carrier's default label size is used. 4&quot;x6&quot;  # noqa: E501
+        The seller's desired label size. Any supplied value is applied only if the shipping carrier supports multiple label sizes, otherwise the carrier's default label size is used.  <br><brCurrently, the only valid value is: <code>4\"x6\"</code>  # noqa: E501
 
         :return: The label_size of this CreateShipmentFromQuoteRequest.  # noqa: E501
         :rtype: str
@@ -128,7 +128,7 @@ class CreateShipmentFromQuoteRequest(object):
     def label_size(self, label_size):
         """Sets the label_size of this CreateShipmentFromQuoteRequest.
 
-        The seller's desired label size. Any supplied value is applied only if the shipping carrier supports multiple label sizes, otherwise the carrier's default label size is used. 4&quot;x6&quot;  # noqa: E501
+        The seller's desired label size. Any supplied value is applied only if the shipping carrier supports multiple label sizes, otherwise the carrier's default label size is used.  <br><brCurrently, the only valid value is: <code>4\"x6\"</code>  # noqa: E501
 
         :param label_size: The label_size of this CreateShipmentFromQuoteRequest.  # noqa: E501
         :type: str
@@ -140,7 +140,7 @@ class CreateShipmentFromQuoteRequest(object):
     def rate_id(self):
         """Gets the rate_id of this CreateShipmentFromQuoteRequest.  # noqa: E501
 
-        The eBay-assigned ID of the shipping rate that the seller selected for the shipment. This value is generated by a call to createShippingQuote and is returned in the rates.rateId field.  # noqa: E501
+        The eBay-assigned ID of the shipping rate that the seller selected for the shipment. This value is generated by a call to <b>createShippingQuote</b> and is returned in the <b>rates.rateId</b> field.  # noqa: E501
 
         :return: The rate_id of this CreateShipmentFromQuoteRequest.  # noqa: E501
         :rtype: str
@@ -151,7 +151,7 @@ class CreateShipmentFromQuoteRequest(object):
     def rate_id(self, rate_id):
         """Sets the rate_id of this CreateShipmentFromQuoteRequest.
 
-        The eBay-assigned ID of the shipping rate that the seller selected for the shipment. This value is generated by a call to createShippingQuote and is returned in the rates.rateId field.  # noqa: E501
+        The eBay-assigned ID of the shipping rate that the seller selected for the shipment. This value is generated by a call to <b>createShippingQuote</b> and is returned in the <b>rates.rateId</b> field.  # noqa: E501
 
         :param rate_id: The rate_id of this CreateShipmentFromQuoteRequest.  # noqa: E501
         :type: str
@@ -184,7 +184,7 @@ class CreateShipmentFromQuoteRequest(object):
     def shipping_quote_id(self):
         """Gets the shipping_quote_id of this CreateShipmentFromQuoteRequest.  # noqa: E501
 
-        The unique eBay-assigned ID of the shipping quote that was generated by a call to createShippingQuote.  # noqa: E501
+        The unique eBay-assigned ID of the shipping quote that was generated by a call to <b>createShippingQuote</b>.  # noqa: E501
 
         :return: The shipping_quote_id of this CreateShipmentFromQuoteRequest.  # noqa: E501
         :rtype: str
@@ -195,7 +195,7 @@ class CreateShipmentFromQuoteRequest(object):
     def shipping_quote_id(self, shipping_quote_id):
         """Sets the shipping_quote_id of this CreateShipmentFromQuoteRequest.
 
-        The unique eBay-assigned ID of the shipping quote that was generated by a call to createShippingQuote.  # noqa: E501
+        The unique eBay-assigned ID of the shipping quote that was generated by a call to <b>createShippingQuote</b>.  # noqa: E501
 
         :param shipping_quote_id: The shipping_quote_id of this CreateShipmentFromQuoteRequest.  # noqa: E501
         :type: str

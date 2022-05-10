@@ -51,7 +51,7 @@ class Weight(object):
     def unit(self):
         """Gets the unit of this Weight.  # noqa: E501
 
-        The unit of measurement used to specify the weight of a shipping package. Both the unit and value fields are required if the weight container is used. If the English system of measurement is being used, the applicable values for weight units are POUND and OUNCE. If the metric system of measurement is being used, the applicable values for weight units are KILOGRAM and GRAM. The metric system is used by most countries outside of the US. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/logistics/types/api:WeightUnitOfMeasureEnum'>eBay API documentation</a>  # noqa: E501
+        The unit of measurement used to specify the weight of a shipping package. Both the <strong>unit</strong> and <strong>value</strong> fields are required if the <strong>weight</strong> container is used. If the English system of measurement is being used, the applicable values for weight units are <code>POUND</code> and <code>OUNCE</CODE>. If the metric system of measurement is being used, the applicable values for weight units are <code>KILOGRAM</code> and <code>GRAM</code>. The metric system is used by most countries outside of the US. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/logistics/types/api:WeightUnitOfMeasureEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The unit of this Weight.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class Weight(object):
     def unit(self, unit):
         """Sets the unit of this Weight.
 
-        The unit of measurement used to specify the weight of a shipping package. Both the unit and value fields are required if the weight container is used. If the English system of measurement is being used, the applicable values for weight units are POUND and OUNCE. If the metric system of measurement is being used, the applicable values for weight units are KILOGRAM and GRAM. The metric system is used by most countries outside of the US. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/logistics/types/api:WeightUnitOfMeasureEnum'>eBay API documentation</a>  # noqa: E501
+        The unit of measurement used to specify the weight of a shipping package. Both the <strong>unit</strong> and <strong>value</strong> fields are required if the <strong>weight</strong> container is used. If the English system of measurement is being used, the applicable values for weight units are <code>POUND</code> and <code>OUNCE</CODE>. If the metric system of measurement is being used, the applicable values for weight units are <code>KILOGRAM</code> and <code>GRAM</code>. The metric system is used by most countries outside of the US. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/logistics/types/api:WeightUnitOfMeasureEnum'>eBay API documentation</a>  # noqa: E501
 
         :param unit: The unit of this Weight.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class Weight(object):
     def value(self):
         """Gets the value of this Weight.  # noqa: E501
 
-        The numeric value of the weight of the package, as measured by the value of unit.  # noqa: E501
+        The numeric value of the weight of the package, as measured by the value of <b>unit</b>.  # noqa: E501
 
         :return: The value of this Weight.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class Weight(object):
     def value(self, value):
         """Sets the value of this Weight.
 
-        The numeric value of the weight of the package, as measured by the value of unit.  # noqa: E501
+        The numeric value of the weight of the package, as measured by the value of <b>unit</b>.  # noqa: E501
 
         :param value: The value of this Weight.  # noqa: E501
         :type: str

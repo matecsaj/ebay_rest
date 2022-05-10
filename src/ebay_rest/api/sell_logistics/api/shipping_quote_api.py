@@ -32,45 +32,47 @@ class ShippingQuoteApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def create_shipping_quote(self, body, **kwargs):  # noqa: E501
+    def create_shipping_quote(self, body, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """create_shipping_quote  # noqa: E501
 
-        The createShippingQuote method returns a shipping quote that contains a list of live &quot;rates.&quot; Each rate represents an offer made by a shipping carrier for a specific service and each offer has a live quote for the base service cost. Rates have a time window in which they are &quot;live,&quot; and rates expire when their purchase window ends. If offered by the carrier, rates can include shipping options (and their associated prices), and users can add any offered shipping option to the base service should they desire. Also, depending on the services required, rates can also include pickup and delivery windows. Each rate is for a single package and is based on the following information: The shipping origin The shipping destination The package size (weight and dimensions) Rates are identified by a unique eBay-assigned rateId and rates are based on price points, pickup and delivery time frames, and other user requirements. Because each rate offered must be compliant with the eBay shipping program, all rates reflect eBay-negotiated prices. The various rates returned in a shipping quote offer the user a choice from which they can choose a shipping service that best fits their needs. Select the rate for your shipment and using the associated rateId, call cerateFromShippingQuote to create a shipment and generate a shipping label that you can use to ship the package.  # noqa: E501
+        The <b>createShippingQuote</b> method returns a <i>shipping quote </i> that contains a list of live \"rates.\"  <br><br>Each rate represents an offer made by a shipping carrier for a specific service and each offer has a live quote for the base service cost. Rates have a time window in which they are \"live,\" and rates expire when their purchase window ends. If offered by the carrier, rates can include shipping options (and their associated prices), and users can add any offered shipping option to the base service should they desire.  Also, depending on the services required, rates can also include pickup and delivery windows.  <br><br>Each rate is for a single package and is based on the following information: <ul><li>The shipping origin</li> <li>The shipping destination</li> <li>The package size (weight and dimensions)</li></ul>  Rates are identified by a unique eBay-assigned <b>rateId</b> and rates are based on price points, pickup and delivery time frames, and other user requirements. Because each rate offered must be compliant with the eBay shipping program, all rates reflect eBay-negotiated prices.  <br><br>The various rates returned in a shipping quote offer the user a choice from which they can choose a shipping service that best fits their needs. Select the rate for your shipment and using the associated <b>rateId</b>, call <b>createFromShippingQuote</b> to create a shipment and generate a shipping label that you can use to ship the package.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_shipping_quote(body, async_req=True)
+        >>> thread = api.create_shipping_quote(body, x_ebay_c_marketplace_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param ShippingQuoteRequest body: The request object for createShippingQuote. (required)
+        :param ShippingQuoteRequest body: The request object for <b>createShippingQuote</b>. (required)
+        :param str x_ebay_c_marketplace_id: This header parameter specifies the eBay marketplace for the shipping quote that is being created. For a list of valid values, refer to the section <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">Marketplace ID Values</a> in the <b>Using eBay RESTful APIs</b> guide. (required)
         :return: ShippingQuote
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.create_shipping_quote_with_http_info(body, **kwargs)  # noqa: E501
+            return self.create_shipping_quote_with_http_info(body, x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         else:
-            (data) = self.create_shipping_quote_with_http_info(body, **kwargs)  # noqa: E501
+            (data) = self.create_shipping_quote_with_http_info(body, x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
             return data
 
-    def create_shipping_quote_with_http_info(self, body, **kwargs):  # noqa: E501
+    def create_shipping_quote_with_http_info(self, body, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """create_shipping_quote  # noqa: E501
 
-        The createShippingQuote method returns a shipping quote that contains a list of live &quot;rates.&quot; Each rate represents an offer made by a shipping carrier for a specific service and each offer has a live quote for the base service cost. Rates have a time window in which they are &quot;live,&quot; and rates expire when their purchase window ends. If offered by the carrier, rates can include shipping options (and their associated prices), and users can add any offered shipping option to the base service should they desire. Also, depending on the services required, rates can also include pickup and delivery windows. Each rate is for a single package and is based on the following information: The shipping origin The shipping destination The package size (weight and dimensions) Rates are identified by a unique eBay-assigned rateId and rates are based on price points, pickup and delivery time frames, and other user requirements. Because each rate offered must be compliant with the eBay shipping program, all rates reflect eBay-negotiated prices. The various rates returned in a shipping quote offer the user a choice from which they can choose a shipping service that best fits their needs. Select the rate for your shipment and using the associated rateId, call cerateFromShippingQuote to create a shipment and generate a shipping label that you can use to ship the package.  # noqa: E501
+        The <b>createShippingQuote</b> method returns a <i>shipping quote </i> that contains a list of live \"rates.\"  <br><br>Each rate represents an offer made by a shipping carrier for a specific service and each offer has a live quote for the base service cost. Rates have a time window in which they are \"live,\" and rates expire when their purchase window ends. If offered by the carrier, rates can include shipping options (and their associated prices), and users can add any offered shipping option to the base service should they desire.  Also, depending on the services required, rates can also include pickup and delivery windows.  <br><br>Each rate is for a single package and is based on the following information: <ul><li>The shipping origin</li> <li>The shipping destination</li> <li>The package size (weight and dimensions)</li></ul>  Rates are identified by a unique eBay-assigned <b>rateId</b> and rates are based on price points, pickup and delivery time frames, and other user requirements. Because each rate offered must be compliant with the eBay shipping program, all rates reflect eBay-negotiated prices.  <br><br>The various rates returned in a shipping quote offer the user a choice from which they can choose a shipping service that best fits their needs. Select the rate for your shipment and using the associated <b>rateId</b>, call <b>createFromShippingQuote</b> to create a shipment and generate a shipping label that you can use to ship the package.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_shipping_quote_with_http_info(body, async_req=True)
+        >>> thread = api.create_shipping_quote_with_http_info(body, x_ebay_c_marketplace_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param ShippingQuoteRequest body: The request object for createShippingQuote. (required)
+        :param ShippingQuoteRequest body: The request object for <b>createShippingQuote</b>. (required)
+        :param str x_ebay_c_marketplace_id: This header parameter specifies the eBay marketplace for the shipping quote that is being created. For a list of valid values, refer to the section <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">Marketplace ID Values</a> in the <b>Using eBay RESTful APIs</b> guide. (required)
         :return: ShippingQuote
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['body']  # noqa: E501
+        all_params = ['body', 'x_ebay_c_marketplace_id']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -89,6 +91,10 @@ class ShippingQuoteApi(object):
         if ('body' not in params or
                 params['body'] is None):
             raise ValueError("Missing the required parameter `body` when calling `create_shipping_quote`")  # noqa: E501
+        # verify the required parameter 'x_ebay_c_marketplace_id' is set
+        if ('x_ebay_c_marketplace_id' not in params or
+                params['x_ebay_c_marketplace_id'] is None):
+            raise ValueError("Missing the required parameter `x_ebay_c_marketplace_id` when calling `create_shipping_quote`")  # noqa: E501
 
         collection_formats = {}
 
@@ -97,6 +103,8 @@ class ShippingQuoteApi(object):
         query_params = []
 
         header_params = {}
+        if 'x_ebay_c_marketplace_id' in params:
+            header_params['X-EBAY-C-MARKETPLACE-ID'] = params['x_ebay_c_marketplace_id']  # noqa: E501
 
         form_params = []
         local_var_files = {}
@@ -134,14 +142,14 @@ class ShippingQuoteApi(object):
     def get_shipping_quote(self, shipping_quote_id, **kwargs):  # noqa: E501
         """get_shipping_quote  # noqa: E501
 
-        This method retrieves the complete details of the shipping quote associated with the specified shippingQuoteId value. A &quot;shipping quote&quot; pertains to a single specific package and contains a set of shipping &quot;rates&quot; that quote the cost to ship the package by different shipping carriers and services. The quotes are based on the package's origin, destination, and size. Call createShippingQuote to create a shippingQuoteId.  # noqa: E501
+        This method retrieves the complete details of the shipping quote associated with the specified <b>shippingQuoteId</b> value.  <br><br>A \"shipping quote\" pertains to a single specific package and contains a set of shipping \"rates\" that quote the cost to ship the package by different shipping carriers and services. The quotes are based on the package's origin, destination, and size.  <br><br>Call <b>createShippingQuote</b> to create a <b>shippingQuoteId</b>.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_shipping_quote(shipping_quote_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str shipping_quote_id: This path parameter specifies the unique eBay-assigned ID of the shipping quote you want to retrieve. The shippingQuoteId value is generated and returned by a call to createShippingQuote. (required)
+        :param str shipping_quote_id: This path parameter specifies the unique eBay-assigned ID of the shipping quote you want to retrieve. The <b>shippingQuoteId</b> value is generated and returned by a call to <b>createShippingQuote</b>. (required)
         :return: ShippingQuote
                  If the method is called asynchronously,
                  returns the request thread.
@@ -156,14 +164,14 @@ class ShippingQuoteApi(object):
     def get_shipping_quote_with_http_info(self, shipping_quote_id, **kwargs):  # noqa: E501
         """get_shipping_quote  # noqa: E501
 
-        This method retrieves the complete details of the shipping quote associated with the specified shippingQuoteId value. A &quot;shipping quote&quot; pertains to a single specific package and contains a set of shipping &quot;rates&quot; that quote the cost to ship the package by different shipping carriers and services. The quotes are based on the package's origin, destination, and size. Call createShippingQuote to create a shippingQuoteId.  # noqa: E501
+        This method retrieves the complete details of the shipping quote associated with the specified <b>shippingQuoteId</b> value.  <br><br>A \"shipping quote\" pertains to a single specific package and contains a set of shipping \"rates\" that quote the cost to ship the package by different shipping carriers and services. The quotes are based on the package's origin, destination, and size.  <br><br>Call <b>createShippingQuote</b> to create a <b>shippingQuoteId</b>.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_shipping_quote_with_http_info(shipping_quote_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str shipping_quote_id: This path parameter specifies the unique eBay-assigned ID of the shipping quote you want to retrieve. The shippingQuoteId value is generated and returned by a call to createShippingQuote. (required)
+        :param str shipping_quote_id: This path parameter specifies the unique eBay-assigned ID of the shipping quote you want to retrieve. The <b>shippingQuoteId</b> value is generated and returned by a call to <b>createShippingQuote</b>. (required)
         :return: ShippingQuote
                  If the method is called asynchronously,
                  returns the request thread.

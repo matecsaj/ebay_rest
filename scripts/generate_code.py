@@ -1088,10 +1088,13 @@ class Contracts:
     @staticmethod
     async def clean_docstring(docstring: string) -> string:
 
+        # strip HTML
+        docstring = BeautifulSoup(docstring).get_text()
+
         # fix typos
         typo_remedy = (  # pairs of typos found in docstrings and their remedy
             ('AustraliaeBay', 'Australia eBay'),  # noqa: - suppress flake8 compatible linters, misspelling is intended
-            ('cerate', 'create'),  # noqa: - suppress flake8 compatible linters, misspelling is intended
+            ('cerate', 'create'),  # noqa:
             ('distibuted', 'distributed'),  # noqa:
             ('FranceeBay', 'Francee Bay'),  # noqa:
             ('GermanyeBay', 'Germany eBay'),  # noqa:
@@ -1114,10 +1117,6 @@ class Contracts:
         )
         for (typo, remedy) in typo_remedy:
             docstring = docstring.replace(typo, remedy)
-
-        # strip HTML
-        leading_white_space = docstring.split('"""')[0]
-        docstring = leading_white_space + BeautifulSoup(docstring).get_text()
 
         # telling the linter to suppress long line warnings taints the Sphinx generated docs so filter them out
         docstring = docstring.replace('# noqa: E501', "")

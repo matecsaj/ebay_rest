@@ -147,6 +147,12 @@
                 "type_sql": "varchar"
             },
             {
+                "name_python": "item_creation_date",
+                "name_sql": "item_creation_date",
+                "required": false,
+                "type_sql": "timestamp with time zone"
+            },
+            {
                 "name_python": "item_end_date",
                 "name_sql": "item_end_date",
                 "required": false,

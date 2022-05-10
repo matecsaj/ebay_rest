@@ -1,0 +1,30 @@
+# Development Environment
+
+# All instructions presume that you are using a virtual environment and running a terminal in the project's root directory.
+
+# Install dependencies in a new virtual environment.
+# pip install -r requirements_dev.txt
+
+# To upgrade your installed packages.
+# pip install --upgrade -r requirements_dev.txt
+
+# to install a specific version the request library
+# requests==2.22.0
+# to install the latest stable version the request library
+# requests>=2.22.0
+# to install the latest stable version the request library but never 2.23.0
+# requests>=2.22.0, != 2.23.0
+
+# Determine the current combined development and production requirements.
+# pipreqs -- print scr
+
+# For production requirements, see setup.cfg
+
+# Development-specific requirements.
+aiofiles
+aiohttp
+bs4
+build
+pipreqs
+twine
+
