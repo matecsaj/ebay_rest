@@ -18,13 +18,20 @@
 # Determine the current combined development and production requirements.
 # pipreqs -- print scr
 
-# For production requirements, see setup.cfg
+# For production requirements, the following must match what is found in setup.cfg
+certifi
+python_dateutil
+requests
+selenium
+six
+urllib3
 
 # Development-specific requirements.
 aiofiles
 aiohttp
 bs4
 build
+CurrencyConverter
 pipreqs
 twine
 
