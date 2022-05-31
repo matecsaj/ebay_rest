@@ -139,6 +139,7 @@ print(help(Reference))
 
 ## Contributing
 * Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+* Use __slots__ on classes the end-users will run.
 * Follow Uncle Bob's SOLID principles; see a [text description](https://en.wikipedia.org/wiki/SOLID) & [video tutorial](https://www.youtube.com/watch?v=pTB30aXS77U).
 * Note the error number guide documented in the Error class definition. 
 * Please make sure to update unit tests as appropriate.

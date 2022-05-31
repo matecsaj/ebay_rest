@@ -30,6 +30,8 @@ class ApplicationToken:
     This is a facade for the oath module.
     """
 
+    __slots__ = "_lock", "_sandbox", "_application_scopes", "_application_token", "_oauth2api_inst"
+
     def __init__(self,
                  sandbox: bool,
                  client_id: str or None = None,
@@ -121,6 +123,9 @@ class UserToken:
     Initialize, refresh and supply an eBay OAuth ***user*** token.
     This is a facade for the oath module.
     """
+
+    __slots__ = "_lock", "_sandbox", "_user_id", "_user_password", "_user_scopes", "_user_token", "_oauth2api_inst",\
+                "_user_refresh_token", "_user_refresh_token_expiry", "_allow_get_user_consent"
 
     def __init__(self,
                  sandbox: bool,
@@ -377,6 +382,8 @@ class UserToken:
 
 class _OAuthToken(object):
 
+    __slots__ = "access_token", "token_expiry", "refresh_token", "refresh_token_expiry", "error", "token_response"
+
     def __init__(self,
                  error: str or None = None,
                  access_token: str or None = None,
@@ -396,6 +403,7 @@ class _OAuthToken(object):
         self.refresh_token = refresh_token
         self.refresh_token_expiry = refresh_token_expiry
         self.error = error
+        self.token_response = None
 
     def __str__(self) -> str:
         """
@@ -421,6 +429,9 @@ class _OAuthToken(object):
 
 
 class _OAuth2Api:
+
+    __slots__ = "_sandbox", "_client_id", "_client_secret", "_ru_name"
+
     def __init__(self, sandbox: bool, client_id: str, client_secret: str, ru_name: str):
         """Initialize OAuth2Api instance
 

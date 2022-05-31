@@ -15,6 +15,8 @@ class Error(Exception):
     Refrain from altering the error number or text descriptions when re-raising.
     """
 
+    __slots__ = "number", "reason", "detail"
+
     def __init__(self, number: int, reason: str, detail: str = None) -> None:
         """ Instantiate a new Error object.
 

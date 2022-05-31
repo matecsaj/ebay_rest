@@ -79,6 +79,9 @@ class API:
     For an overview of the APIs and more see https://developer.ebay.com/docs.
     """
 
+    __slots__ = "_config_location", "_application", "_user", "_header", "_sandbox", "_marketplace_ids", "_throttle",\
+                "_timeout", "_rates", "_end_user_ctx", "_application_token", "_user_token"
+
     def __init__(self,
                  path: str or None = None,
                  application: str or dict or None = None,

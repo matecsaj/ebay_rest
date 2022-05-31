@@ -20,6 +20,8 @@ class Rates:
     https://developer.ebay.com/api-docs/developer/analytics/resources/rate_limit/methods/getRateLimits
     """
 
+    __slots__ = "_app_id", "_lock", "_refresh_date_time", "_cache"
+
     def __init__(self, app_id) -> None:
         """
         Maintain a set of daily limits for each app_id. Be lazy about it when throttling is not used.
