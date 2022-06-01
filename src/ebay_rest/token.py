@@ -145,12 +145,12 @@ class UserToken:
         :param client_secret (str, optional):
         :param ru_name (str, optional):
 
-        # user credentials, optional if you don't make API calls that need an user token
+        # user credentials, optional if you don't make API calls that need a user token
         :param user_id (str, optional):
         :param user_password (str, optional):
         :param user_scopes (str, optional):
 
-        # user token supply, optional if don't mind a Chrome browser opening when getting a user token
+        # user token supply, optional if you don't mind a Chrome browser opening when getting a user token
         :param user_refresh_token (str, optional):
         :param user_refresh_token_expiry (str, optional):
 

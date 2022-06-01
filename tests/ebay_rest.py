@@ -159,7 +159,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
         f_api = API(application='production_1', user='production_1', header='GB')
 
         # in the local marketplace find items located locally that also ship to foreign
-        # low priced items are targeted because free shipping for them is unlikely
+        # low-priced items are targeted because free shipping for them is unlikely
         # black items are targeted because they are plentiful, and the q parameter is mandatory
         try:
             filter_ = f'deliveryCountry:{f_country},itemLocationCountry:{d_country},price:[1..2],' \
@@ -193,7 +193,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
                             elif d_shipping > f_shipping:
                                 tally -= 1  # very rare, put a break point here find trouble
                             else:
-                                tally = tally  # flat rate world wide shipping is possible
+                                tally = tally  # flat rate worldwide shipping is possible
                         else:
                             pass  # self.fail(f'For {item_id} both shipping costs can not be found.')
                     else:
@@ -263,7 +263,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
 
 
 class APISandboxSingleSiteTests(unittest.TestCase):
-    """" API tests that can be done on a single marketplace and in the sandbox. """
+    """ API tests that can be done on a single marketplace and in the sandbox. """
 
     @classmethod
     def setUpClass(cls):
@@ -386,8 +386,8 @@ class APISandboxSingleSiteTests(unittest.TestCase):
     def test_sell_account(self):
         """
         It is required that the seller be opted in to Business Policies before being able to create live eBay
-        listings through the Inventory API. Sellers can opt-in to Business Policies through My eBay or by using
-        the Account API's optInToProgram call. Similarly, payment, return, and fulfillment listing policies may
+        listings through the Inventory API. Sellers can opt in to Business Policies through My eBay or by using
+        the Account API optInToProgram call. Similarly, payment, return, and fulfillment listing policies may
         be created/managed in My eBay or by using the listing policy calls of the Account API.
         https://developer.ebay.com/api-docs/sell/account/resources/fulfillment_policy/methods/createFulfillmentPolicy
         """
@@ -441,7 +441,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
 
 
 class APIProductionSingleTests(unittest.TestCase):
-    """" API tests that can be done on a single marketplace and must in be in system production. """
+    """ API tests that can be done on a single marketplace and must in be in system production. """
 
     @classmethod
     def setUpClass(cls):
@@ -772,7 +772,7 @@ class APIProductionSingleTests(unittest.TestCase):
         # ensure that a destination is correctly configured
         # Note: The destination should be created and ready to respond with the expected
         # challengeResponse for the endpoint to be registered successfully.
-        # Refer to the Notification API overview for more information.
+        # Refer to the Notification API Overview for more information.
         # https://developer.ebay.com/api-docs/commerce/notification/overview.html
         try:
             result = self._api.commerce_notification_get_destinations()

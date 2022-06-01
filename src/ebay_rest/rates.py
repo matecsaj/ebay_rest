@@ -42,7 +42,7 @@ class Rates:
         Warning, avoid endless recursion, don't merge this with the throttled version of the method.
 
         :param base_path (str, required)
-        :param rate_keys (list(str), required) keys used to lookup a rate
+        :param rate_keys (list(str), required) keys used to look up a rate
         :return: None
         """
         with self._lock:
@@ -56,7 +56,7 @@ class Rates:
         Decrement the remaining count of calls associated with a name.
 
         :param base_path (str, required)
-        :param rate_keys (list(str), required) Strings, keys used to lookup a rate
+        :param rate_keys (list(str), required) Strings, keys used to look up a rate
         :param timeout (float, required) When invoked with the floating-point timeout argument set to a positive val,
         throttle for at most the number of seconds specified by timeout and as below the prorated call limit. A timeout
         argument of -1 specifies an unbounded wait.
@@ -191,7 +191,7 @@ class Rates:
         https://developer.ebay.com/api-docs/developer/analytics/resources/rate_limit/methods/getRateLimits
 
         :param base_path (str)
-        :param rate_keys (list(str() keys used to lookup a rate
+        :param rate_keys (list(str() keys used to look up a rate
         :return rates (dict or None)
         """
         cache = self._cache

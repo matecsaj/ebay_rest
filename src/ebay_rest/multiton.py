@@ -11,7 +11,7 @@ from .error import Error
 class Multiton(object):
     """
     When init parameters match, reuse an old initialized object instead of making a new one.
-    Objects that have not be been reused for an hour will be dropped from the pool.
+    Objects that have not been reused for an hour will be dropped from the pool.
 
     Use this when the cost of object creation is high or there is a big benefit to object sharing.
 
