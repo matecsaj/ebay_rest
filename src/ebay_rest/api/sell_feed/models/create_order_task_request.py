@@ -100,7 +100,7 @@ class CreateOrderTaskRequest(object):
     def schema_version(self):
         """Gets the schema_version of this CreateOrderTaskRequest.  # noqa: E501
 
-        The schema version of the LMS OrderReport. For the <code>LMS_ORDER_REPORT</code> feed type, see the <a href=\"https://developer.ebay.com/devzone/merchant-data/CallRef/OrderReport.html#OrderReport\">OrderReport</a> reference page to see the present schema version. The <b> schemaVersion</b> value is the version number shown at the top of the <b> OrderReport</b> page. <br /><br /><b>Restriction: </b> This value must be 1113 or higher. The OrderReport schema version is updated about every two weeks. All version numbers are odd numbers (even numbers are skipped). For example, the next release version after '1113' is '1115'.  # noqa: E501
+        The schema version of the LMS OrderReport. For the <code>LMS_ORDER_REPORT</code> feed type, see the <a href=\"/devzone/merchant-data/CallRef/OrderReport.html#OrderReport\">OrderReport</a> reference page to see the present schema version. The <b> schemaVersion</b> value is the version number shown at the top of the <b> OrderReport</b> page. <br /><br /><b>Restriction: </b> This value must be 1113 or higher. The OrderReport schema version is updated about every two weeks. All version numbers are odd numbers (even numbers are skipped). For example, the next release version after '1113' is '1115'.  # noqa: E501
 
         :return: The schema_version of this CreateOrderTaskRequest.  # noqa: E501
         :rtype: str
@@ -111,7 +111,7 @@ class CreateOrderTaskRequest(object):
     def schema_version(self, schema_version):
         """Sets the schema_version of this CreateOrderTaskRequest.
 
-        The schema version of the LMS OrderReport. For the <code>LMS_ORDER_REPORT</code> feed type, see the <a href=\"https://developer.ebay.com/devzone/merchant-data/CallRef/OrderReport.html#OrderReport\">OrderReport</a> reference page to see the present schema version. The <b> schemaVersion</b> value is the version number shown at the top of the <b> OrderReport</b> page. <br /><br /><b>Restriction: </b> This value must be 1113 or higher. The OrderReport schema version is updated about every two weeks. All version numbers are odd numbers (even numbers are skipped). For example, the next release version after '1113' is '1115'.  # noqa: E501
+        The schema version of the LMS OrderReport. For the <code>LMS_ORDER_REPORT</code> feed type, see the <a href=\"/devzone/merchant-data/CallRef/OrderReport.html#OrderReport\">OrderReport</a> reference page to see the present schema version. The <b> schemaVersion</b> value is the version number shown at the top of the <b> OrderReport</b> page. <br /><br /><b>Restriction: </b> This value must be 1113 or higher. The OrderReport schema version is updated about every two weeks. All version numbers are odd numbers (even numbers are skipped). For example, the next release version after '1113' is '1115'.  # noqa: E501
 
         :param schema_version: The schema_version of this CreateOrderTaskRequest.  # noqa: E501
         :type: str

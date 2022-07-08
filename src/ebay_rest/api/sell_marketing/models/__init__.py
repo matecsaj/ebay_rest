@@ -58,9 +58,12 @@ from ...sell_marketing.models.funding_strategy import FundingStrategy
 from ...sell_marketing.models.inventory_criterion import InventoryCriterion
 from ...sell_marketing.models.inventory_item import InventoryItem
 from ...sell_marketing.models.inventory_reference import InventoryReference
+from ...sell_marketing.models.item_markdown_status import ItemMarkdownStatus
 from ...sell_marketing.models.item_price_markdown import ItemPriceMarkdown
 from ...sell_marketing.models.item_promotion import ItemPromotion
 from ...sell_marketing.models.item_promotion_response import ItemPromotionResponse
+from ...sell_marketing.models.items_paged_collection import ItemsPagedCollection
+from ...sell_marketing.models.listing_detail import ListingDetail
 from ...sell_marketing.models.metric_metadata import MetricMetadata
 from ...sell_marketing.models.promotion_detail import PromotionDetail
 from ...sell_marketing.models.promotion_report_detail import PromotionReportDetail
