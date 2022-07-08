@@ -12,6 +12,7 @@ from urllib.parse import parse_qs, urlencode
 from requests import codes, post, Response
 from selenium import webdriver  # In README.md note the extra installation steps.
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import WebDriverException
 
@@ -314,13 +315,13 @@ class UserToken:
         try:
             # fill in the username then click continue
             # sometimes a captcha appears, so wait an extra 30-seconds for the user to fill it in
-            WebDriverWait(browser, 10+30).until(lambda x: x.find_element_by_name('userid')).send_keys(self._user_id)
-            WebDriverWait(browser, 10).until(lambda x: x.find_element_by_id('signin-continue-btn')).click()
+            WebDriverWait(browser, 10+30).until(lambda x: x.find_element(By.NAME, 'userid')).send_keys(self._user_id)
+            WebDriverWait(browser, 10).until(lambda x: x.find_element(By.ID, 'signin-continue-btn')).click()
 
             # fill in the password then submit
             sleep(5)    # Why? Perhaps an element I'm not aware of needs to finish rendering.
-            WebDriverWait(browser, 10).until(lambda x: x.find_element_by_name('pass')).send_keys(self._user_password)
-            WebDriverWait(browser, 10).until(lambda x: x.find_element_by_id('sgnBt')).submit()
+            WebDriverWait(browser, 10).until(lambda x: x.find_element(By.NAME, 'pass')).send_keys(self._user_password)
+            WebDriverWait(browser, 10).until(lambda x: x.find_element(By.ID, 'sgnBt')).submit()
 
         except NoSuchElementException:
             raise Error(number=96015, reason="ChromeDriver element not found.", detail="Has eBay's website changed?")
@@ -329,7 +330,7 @@ class UserToken:
 
         # in some countries an "I agree" prompt interjects
         try:
-            element = WebDriverWait(browser, 10).until(lambda x: x.find_element_by_id('submit'))
+            element = WebDriverWait(browser, 10).until(lambda x: x.find_element(By.ID, 'submit'))
         except TimeoutException:
             pass
         else:
@@ -338,7 +339,7 @@ class UserToken:
         # get the result url and then close browser
         # some people enable 2FA, so wait an extra 30-seconds for the user interaction
         try:
-            WebDriverWait(browser, 10+30).until(lambda x: x.find_element_by_id('thnk-wrap'))
+            WebDriverWait(browser, 10+30).until(lambda x: x.find_element(By.ID, 'thnk-wrap'))
         except NoSuchElementException:
             raise Error(number=96017, reason="ChromeDriver element not found.", detail="Has eBay's website changed?")
         except TimeoutException:
