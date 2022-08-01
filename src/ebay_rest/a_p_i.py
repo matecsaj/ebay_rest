@@ -80,7 +80,7 @@ class API:
     """
 
     __slots__ = "_config_location", "_application", "_user", "_header", "_sandbox", "_marketplace_ids", "_throttle",\
-                "_timeout", "_rates", "_end_user_ctx", "_application_token", "_user_token"
+                "_timeout", "_rates", "_end_user_ctx", "_application_token", "_user_token", "_async_req"
 
     def __init__(self,
                  path: str or None = None,
@@ -88,7 +88,8 @@ class API:
                  user: str or dict or None = None,
                  header: str or dict or None = None,
                  throttle: bool or None = False,
-                 timeout: float or None = -1.0) -> None:
+                 timeout: float or None = -1.0,
+                 async_req: bool or None = False) -> None:
         """
         Instantiate an API object, then use it to call hundreds of eBay APIs.
 
@@ -120,6 +121,9 @@ class API:
         throttle for at most the number of seconds specified by timeout and as below the prorated call limit. A timeout
         argument of -1 specifies an unbounded wait. It is forbidden to specify a timeout when the throttle is False.
         Defaults to -1.
+
+        :param
+        async_req (bool, optional) : When True make asynchronous HTTP requests, defaults to False for synchronous.
 
         :return (object) : An API object.
         """
@@ -219,6 +223,13 @@ class API:
             self._timeout = timeout
         if detail:
             raise Error(number=99002, reason="Bad throttling parameters.", detail=detail)
+
+        # check the async_req parameter
+        if async_req not in (True, False):
+            detail = f"Parameter async_req {async_req} must be unspecified, True or False."
+            raise Error(number=99016, reason="Bad async_req parameter.", detail=detail)
+        else:
+            self._async_req = async_req
 
         if self._sandbox:  # The sandbox will not return rates so there is no point to doing throttling.
             self._throttle = False
@@ -716,6 +727,9 @@ class API:
         :param object_error (object, required)
         :return collection (collections)
         """
+        # Swagger defaults to False, only add the key word argument if need be.
+        if self._async_req:
+            kwargs["async_req"] = self._async_req
         try:
             if params:
                 if isinstance(params, tuple):
@@ -739,6 +753,9 @@ class API:
             raise Error(number=99000 + error.status, reason=error.reason, detail=error.body)
 
         else:
+            if self._async_req:     # TODO Wait for the asynchronous HTTP request to finish.
+                detail = f"Don't use async_req=True; the feature is currently incomplete."
+                raise Error(number=99017, reason="Bad async_req parameter.", detail=detail)
             return self._de_swagger(api_response)
 
     def _de_swagger(self, obj: collections):

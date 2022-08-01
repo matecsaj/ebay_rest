@@ -263,13 +263,16 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
 
 
 class APISandboxSingleSiteTests(unittest.TestCase):
-    """ API tests that can be done on a single marketplace and in the sandbox. """
+    """ API tests that can be done on a single marketplace and in the sandbox.
+        Also, try the non-default option of making asynchronous HTTP requests.
+    """
 
     @classmethod
     def setUpClass(cls):
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
         try:
-            cls._api = API(application='sandbox_1', user='sandbox_1', header='US')
+            # TODO Change to async_req=True.
+            cls._api = API(application='sandbox_1', user='sandbox_1', header='US', async_req=False)
         except Error as error:
             cls.number = error.number
             cls.reason = error.reason
