@@ -63,6 +63,12 @@
                 "type_sql": "int"
             },
             {
+                "name_python": "category_id_path",
+                "name_sql": "category_id_path",
+                "required": true,
+                "type_sql": "varchar"
+            },
+            {
                 "name_python": "category_path",
                 "name_sql": "category_path",
                 "required": true,

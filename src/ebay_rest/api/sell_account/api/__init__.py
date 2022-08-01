@@ -3,6 +3,7 @@ from __future__ import absolute_import
 # flake8: noqa
 
 # import apis into api package
+from ...sell_account.api.advertising_eligibility_api import AdvertisingEligibilityApi
 from ...sell_account.api.custom_policy_api import CustomPolicyApi
 from ...sell_account.api.fulfillment_policy_api import FulfillmentPolicyApi
 from ...sell_account.api.kyc_api import KycApi

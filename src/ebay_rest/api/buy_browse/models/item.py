@@ -39,6 +39,7 @@ class Item(object):
         'brand': 'str',
         'buying_options': 'list[str]',
         'category_id': 'str',
+        'category_id_path': 'str',
         'category_path': 'str',
         'color': 'str',
         'condition': 'str',
@@ -116,6 +117,7 @@ class Item(object):
         'brand': 'brand',
         'buying_options': 'buyingOptions',
         'category_id': 'categoryId',
+        'category_id_path': 'categoryIdPath',
         'category_path': 'categoryPath',
         'color': 'color',
         'condition': 'condition',
@@ -181,7 +183,7 @@ class Item(object):
         'watch_count': 'watchCount'
     }
 
-    def __init__(self, additional_images=None, addon_services=None, adult_only=None, age_group=None, authenticity_guarantee=None, authenticity_verification=None, available_coupons=None, bid_count=None, brand=None, buying_options=None, category_id=None, category_path=None, color=None, condition=None, condition_description=None, condition_id=None, current_bid_price=None, description=None, eco_participation_fee=None, eligible_for_inline_checkout=None, enabled_for_guest_checkout=None, energy_efficiency_class=None, epid=None, estimated_availabilities=None, gender=None, gtin=None, image=None, inferred_epid=None, item_affiliate_web_url=None, item_creation_date=None, item_end_date=None, item_id=None, item_location=None, item_web_url=None, legacy_item_id=None, listing_marketplace_id=None, localized_aspects=None, lot_size=None, marketing_price=None, material=None, minimum_price_to_bid=None, mpn=None, pattern=None, payment_methods=None, price=None, price_display_condition=None, primary_item_group=None, primary_product_review_rating=None, priority_listing=None, product=None, product_fiche_web_url=None, qualified_programs=None, quantity_limit_per_buyer=None, reserve_price_met=None, return_terms=None, seller=None, seller_custom_policies=None, seller_item_revision=None, shipping_options=None, ship_to_locations=None, short_description=None, size=None, size_system=None, size_type=None, subtitle=None, taxes=None, title=None, top_rated_buying_experience=None, tyre_label_image_url=None, unique_bidder_count=None, unit_price=None, unit_pricing_measure=None, warnings=None, watch_count=None):  # noqa: E501
+    def __init__(self, additional_images=None, addon_services=None, adult_only=None, age_group=None, authenticity_guarantee=None, authenticity_verification=None, available_coupons=None, bid_count=None, brand=None, buying_options=None, category_id=None, category_id_path=None, category_path=None, color=None, condition=None, condition_description=None, condition_id=None, current_bid_price=None, description=None, eco_participation_fee=None, eligible_for_inline_checkout=None, enabled_for_guest_checkout=None, energy_efficiency_class=None, epid=None, estimated_availabilities=None, gender=None, gtin=None, image=None, inferred_epid=None, item_affiliate_web_url=None, item_creation_date=None, item_end_date=None, item_id=None, item_location=None, item_web_url=None, legacy_item_id=None, listing_marketplace_id=None, localized_aspects=None, lot_size=None, marketing_price=None, material=None, minimum_price_to_bid=None, mpn=None, pattern=None, payment_methods=None, price=None, price_display_condition=None, primary_item_group=None, primary_product_review_rating=None, priority_listing=None, product=None, product_fiche_web_url=None, qualified_programs=None, quantity_limit_per_buyer=None, reserve_price_met=None, return_terms=None, seller=None, seller_custom_policies=None, seller_item_revision=None, shipping_options=None, ship_to_locations=None, short_description=None, size=None, size_system=None, size_type=None, subtitle=None, taxes=None, title=None, top_rated_buying_experience=None, tyre_label_image_url=None, unique_bidder_count=None, unit_price=None, unit_pricing_measure=None, warnings=None, watch_count=None):  # noqa: E501
         """Item - a model defined in Swagger"""  # noqa: E501
         self._additional_images = None
         self._addon_services = None
@@ -194,6 +196,7 @@ class Item(object):
         self._brand = None
         self._buying_options = None
         self._category_id = None
+        self._category_id_path = None
         self._category_path = None
         self._color = None
         self._condition = None
@@ -280,6 +283,8 @@ class Item(object):
             self.buying_options = buying_options
         if category_id is not None:
             self.category_id = category_id
+        if category_id_path is not None:
+            self.category_id_path = category_id_path
         if category_path is not None:
             self.category_path = category_path
         if color is not None:
@@ -655,6 +660,29 @@ class Item(object):
         """
 
         self._category_id = category_id
+
+    @property
+    def category_id_path(self):
+        """Gets the category_id_path of this Item.  # noqa: E501
+
+        The IDs of every category in the item path, separated by pipe characters, starting with the top level parent category.<br /><br />For example, if an item belongs to the top level category Home and Garden (category ID 11700), followed by Home Improvement (159907), Heating, Cooling and Air (69197), and Thermostats (115947), the field would return the value: <code>11700|159907|69197|115947</code>.  # noqa: E501
+
+        :return: The category_id_path of this Item.  # noqa: E501
+        :rtype: str
+        """
+        return self._category_id_path
+
+    @category_id_path.setter
+    def category_id_path(self, category_id_path):
+        """Sets the category_id_path of this Item.
+
+        The IDs of every category in the item path, separated by pipe characters, starting with the top level parent category.<br /><br />For example, if an item belongs to the top level category Home and Garden (category ID 11700), followed by Home Improvement (159907), Heating, Cooling and Air (69197), and Thermostats (115947), the field would return the value: <code>11700|159907|69197|115947</code>.  # noqa: E501
+
+        :param category_id_path: The category_id_path of this Item.  # noqa: E501
+        :type: str
+        """
+
+        self._category_id_path = category_id_path
 
     @property
     def category_path(self):
