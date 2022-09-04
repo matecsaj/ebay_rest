@@ -3,9 +3,12 @@ import copy
 from json import load
 import os
 
+# Local imports
+from .error import Error
 
 # TODO Instead of loading stale .json files get real-time reference info using this
-# https://developer.ebay.com/devzone/xml/docs/reference/ebay/GeteBayDetails.html
+# https://developer.ebay.com/devzone/xml/docs/reference/ebay/GeteBayDetails.html (this link is stale)
+
 
 class Reference:
     """ Caches of reference information sourced from eBay's developer website. """
@@ -49,6 +52,7 @@ class Reference:
         """
         return Reference._get('currency_codes')
 
+    # TODO if nobody complains then permanently delete otherwise fix code_generate.py
     @staticmethod
     def get_item_fields_modified() -> dict:
         """ Get eBay item "response" field information.
@@ -65,8 +69,11 @@ class Reference:
 
         :return item_fields_modified (dict)
         """
-        return Reference._get('item_fields_modified')
+        # return Reference._get('item_fields_modified')
+        reason = 'Deprecated; if you need this, make an issue https://github.com/matecsaj/ebay_rest/issues.'
+        raise Error(number=95001, reason=reason)
 
+    # TODO if nobody complains then permanently delete otherwise fix code_generate.py
     @staticmethod
     def get_item_enums_modified() -> dict:
         """ Get eBay enumeration type definitions and SOME of their values.
@@ -79,7 +86,9 @@ class Reference:
 
         :return enums_modified (dict)
         """
-        return Reference._get('item_enums_modified')
+        # return Reference._get('item_enums_modified')
+        reason = 'Deprecated; if you need this, make an issue https://github.com/matecsaj/ebay_rest/issues.'
+        raise Error(number=95002, reason=reason)
 
     @staticmethod
     def get_global_id_values() -> dict:

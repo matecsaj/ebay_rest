@@ -193,7 +193,7 @@ class FulfillmentPolicy(object):
     def global_shipping(self):
         """Gets the global_shipping of this FulfillmentPolicy.  # noqa: E501
 
-        If returned as <code>true</code>, eBay's Global Shipping Program will be used by the seller to ship items to international locations.  # noqa: E501
+        If returned as <code>true</code>, eBay's Global Shipping Program will be used by the seller to ship items to international locations.<br /><br /><span class=\"tablenote\"><b>Note</b>: On the US marketplace, the <em><b>Global Shipping Program</b></em> is scheduled to be replaced by a new intermediated international shipping program called <em><b>eBay International Shipping</b></em>. US sellers who are opted in to the Global Shipping Program will be automatically opted in to eBay International Shipping when it becomes available to them. All US sellers will be migrated by March 31, 2023. <br /><br />eBay International Shipping is an account level setting, and no field needs to be set in a Fulfillment business policy to enable it. As long as the US seller's account is opted in to eBay International Shipping, this shipping option will be enabled automatically for all listings where international shipping is available. A US seller who is opted in to eBay International Shipping can also specify individual international shipping service options for a Fulfillment business policy.</span>  # noqa: E501
 
         :return: The global_shipping of this FulfillmentPolicy.  # noqa: E501
         :rtype: bool
@@ -204,7 +204,7 @@ class FulfillmentPolicy(object):
     def global_shipping(self, global_shipping):
         """Sets the global_shipping of this FulfillmentPolicy.
 
-        If returned as <code>true</code>, eBay's Global Shipping Program will be used by the seller to ship items to international locations.  # noqa: E501
+        If returned as <code>true</code>, eBay's Global Shipping Program will be used by the seller to ship items to international locations.<br /><br /><span class=\"tablenote\"><b>Note</b>: On the US marketplace, the <em><b>Global Shipping Program</b></em> is scheduled to be replaced by a new intermediated international shipping program called <em><b>eBay International Shipping</b></em>. US sellers who are opted in to the Global Shipping Program will be automatically opted in to eBay International Shipping when it becomes available to them. All US sellers will be migrated by March 31, 2023. <br /><br />eBay International Shipping is an account level setting, and no field needs to be set in a Fulfillment business policy to enable it. As long as the US seller's account is opted in to eBay International Shipping, this shipping option will be enabled automatically for all listings where international shipping is available. A US seller who is opted in to eBay International Shipping can also specify individual international shipping service options for a Fulfillment business policy.</span>  # noqa: E501
 
         :param global_shipping: The global_shipping of this FulfillmentPolicy.  # noqa: E501
         :type: bool

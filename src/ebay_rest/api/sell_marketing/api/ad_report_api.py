@@ -35,7 +35,7 @@ class AdReportApi(object):
     def get_report(self, report_id, **kwargs):  # noqa: E501
         """get_report  # noqa: E501
 
-        This call downloads the report as specified by the <b>report_id</b> path parameter.  <br><br>Call <a href=\"/api-docs/sell/marketing/resources/ad_report_task/methods/createReportTask\" title=\"createReportTask API docs\">createReportTask</a> to schedule and generate a Promoted Listings report. All date values are returned in UTC format (<code>yyyy-MM-ddThh:mm:ss.sssZ</code>).  # noqa: E501
+        This call downloads the report as specified by the <b>report_id</b> path parameter.  <br><br>Call <a href=\"/api-docs/sell/marketing/resources/ad_report_task/methods/createReportTask\" title=\"createReportTask API docs\">createReportTask</a> to schedule and generate a Promoted Listings report. All date values are returned in UTC format (<code>yyyy-MM-ddThh:mm:ss.sssZ</code>).<br/><br/><span class=\"tablenote\"><b>Note:</b> The reporting of some data related to sales and ad-fees may require a 72-hour (<b>maximum</b>) adjustment period which is often referred to as the <i>Reconciliation Period</i>. Such adjustment periods should, on average, be minimal. However, at any given time, the <b>payments</b> tab may be used to view those amounts that have actually been charged.</span>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_report(report_id, async_req=True)
@@ -57,7 +57,7 @@ class AdReportApi(object):
     def get_report_with_http_info(self, report_id, **kwargs):  # noqa: E501
         """get_report  # noqa: E501
 
-        This call downloads the report as specified by the <b>report_id</b> path parameter.  <br><br>Call <a href=\"/api-docs/sell/marketing/resources/ad_report_task/methods/createReportTask\" title=\"createReportTask API docs\">createReportTask</a> to schedule and generate a Promoted Listings report. All date values are returned in UTC format (<code>yyyy-MM-ddThh:mm:ss.sssZ</code>).  # noqa: E501
+        This call downloads the report as specified by the <b>report_id</b> path parameter.  <br><br>Call <a href=\"/api-docs/sell/marketing/resources/ad_report_task/methods/createReportTask\" title=\"createReportTask API docs\">createReportTask</a> to schedule and generate a Promoted Listings report. All date values are returned in UTC format (<code>yyyy-MM-ddThh:mm:ss.sssZ</code>).<br/><br/><span class=\"tablenote\"><b>Note:</b> The reporting of some data related to sales and ad-fees may require a 72-hour (<b>maximum</b>) adjustment period which is often referred to as the <i>Reconciliation Period</i>. Such adjustment periods should, on average, be minimal. However, at any given time, the <b>payments</b> tab may be used to view those amounts that have actually been charged.</span>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_report_with_http_info(report_id, async_req=True)

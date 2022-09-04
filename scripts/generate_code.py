@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 # Run this script from the command-line to get info from https://developer.ebay.com and generate code in the src folder.
 
+# Wait day if this script intermittently fails to load pages from eBay's website.
+# Perhaps making inhumanly frequent requests triggers eBay's DOS protection system.
+
 
 # Standard library imports
 import datetime
@@ -100,24 +103,30 @@ def enum_name_converter(kind: str) -> str:
         logging.debug(f'{kind} does not end in Enum or Type.')
 
 
-async def get_table_via_link(url):
+async def get_table_via_link(url: str) -> list:
+    data = []
     soup = await get_soup_via_link(url)
     # find the rows regarding Response Fields.
     table = soup.find('table')
-    rows = table.find_all('tr')
-    # put the rows into a table of data
-    data = []
-    for row in rows:
-        cols = row.find_all('td')
-        cols = [ele.text.strip() for ele in cols]
-        data.append([ele for ele in cols if ele])  # Get rid of empty values
+    if table:
+        rows = table.find_all('tr')
+        # put the rows into a table of data
+        for row in rows:
+            cols = row.find_all('td')
+            cols = [ele.text.strip() for ele in cols]
+            data.append([ele for ele in cols if ele])  # Get rid of empty values
+    if len(data) == 0:
+        logging.warning(f"No data was extracted from {url}.")
     return data
 
 
 def make_json_file(source: dict or list, name: str) -> None:
-    path = '../src/ebay_rest/references/'
-    with open(path + name + '.json', 'w') as outfile:
-        json.dump(source, outfile, sort_keys=True, indent=4)
+    if len(source) > 0:
+        path = '../src/ebay_rest/references/'
+        with open(path + name + '.json', 'w') as outfile:
+            json.dump(source, outfile, sort_keys=True, indent=4)
+    else:
+        logging.error(f"The json file for {name} should not be empty; not created.")
 
 
 async def get_enumerations(response_fields: List[Tuple[str, str, str, str]]) -> Dict[str, list]:
@@ -218,8 +227,7 @@ async def generate_country_codes() -> None:
     logging.info("Find the eBay's Country Codes.")
 
     # load the target webpage
-    url = 'https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/countrycodetype.html'
-    data = await get_table_via_link(url)
+    data = await get_table_via_link(get_ebay_list_url('CountryCodeType'))
 
     # ignore header, convert to a dict & delete bad values
     dict_ = {}
@@ -239,8 +247,7 @@ async def generate_currency_codes() -> None:
     logging.info("Find the eBay's Currency Codes.")
 
     # load the target webpage
-    url = 'https://developer.ebay.com/devzone/xml/docs/Reference/eBay/types/CurrencyCodeType.html'
-    data = await get_table_via_link(url)
+    data = await get_table_via_link(get_ebay_list_url('CurrencyCodeType'))
 
     # ignore header, convert to a dict & delete bad values
     dict_ = {}
@@ -256,7 +263,6 @@ async def generate_currency_codes() -> None:
         del dict_[key]
 
     make_json_file(dict_, 'currency_codes')
-    return
 
 
 async def generate_global_id_values() -> None:
@@ -284,40 +290,45 @@ async def generate_global_id_values() -> None:
 async def generate_marketplace_id_values() -> None:
     logging.info("Find the eBay's Marketplace ID Values.")
 
+    my_dict = dict()
+
     # load the target webpage
     url = 'https://developer.ebay.com/api-docs/static/rest-request-components.html#marketpl'
     soup = await get_soup_via_link(url)
 
-    # find the rows regarding Response Fields.
-    table = soup.findAll('table')[1]  # the second table is index 1
-    rows = table.find_all('tr')
+    if soup:
+        # find the rows regarding Response Fields.
+        tables = soup.findAll('table')
+        if len(tables) > 1:
+            table = tables[1]   # the second table is index 1
+            rows = table.find_all('tr')
 
-    # put the rows into a table of data
-    data = []
-    for row in rows:
-        cols = row.find_all('td')
-        cols = [ele.text.strip() for ele in cols]
-        data.append([ele for ele in cols if ele])  # Get rid of empty values
+            # put the rows into a table of data
+            data = []
+            for row in rows:
+                cols = row.find_all('td')
+                cols = [ele.text.strip() for ele in cols]
+                data.append([ele for ele in cols if ele])  # Get rid of empty values
 
-    # the header got messed up and is unlikely to change, so hard code it
-    # cols = ['marketplace_id', 'country', 'marketplace_site', 'locale_support']
+            # the header got messed up and is unlikely to change, so hard code it
+            # cols = ['marketplace_id', 'country', 'marketplace_site', 'locale_support']
 
-    # convert to a nested dict
-    my_dict = dict()
-    for datum in data[1:]:
-        [marketplace_id, country, marketplace_site, locale_support] = datum
-        locale_support = locale_support.replace(' ', '')
-        locales = locale_support.split(',')  # convert comma separated locales to a list of strings
-        sites = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|%[0-9a-fA-F][0-9a-fA-F])+',
-                           marketplace_site)
-        comments = re.findall('\\(([^)]*)\\)', marketplace_site)
-        comment_shortage = len(locales) - len(comments)
-        for _ in range(comment_shortage):
-            comments.append('')
-        my_locales = dict()
-        for index, locale in enumerate(locales):
-            my_locales[locale] = [sites[index], comments[index]]
-        my_dict[marketplace_id] = [country, my_locales]
+            # convert to a nested dict
+
+            for datum in data[1:]:
+                [marketplace_id, country, marketplace_site, locale_support] = datum
+                locale_support = locale_support.replace(' ', '')
+                locales = locale_support.split(',')  # convert comma separated locales to a list of strings
+                sites = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|%[0-9a-fA-F][0-9a-fA-F])+',
+                                   marketplace_site)
+                comments = re.findall('\\(([^)]*)\\)', marketplace_site)
+                comment_shortage = len(locales) - len(comments)
+                for _ in range(comment_shortage):
+                    comments.append('')
+                my_locales = dict()
+                for index, locale in enumerate(locales):
+                    my_locales[locale] = [sites[index], comments[index]]
+                my_dict[marketplace_id] = [country, my_locales]
 
     make_json_file(my_dict, 'marketplace_id_values')
     return
@@ -604,12 +615,27 @@ async def generate_references():
     # TODO Clear out any junk that happens to be in the target folder.
 
     await asyncio.gather(
-        generate_containers_and_enums(),
+        # generate_containers_and_enums(),      # TODO if nobody complains then permanently delete otherwise fix it
         generate_country_codes(),
         generate_currency_codes(),
         generate_global_id_values(),
         generate_marketplace_id_values()
     )
+
+
+def get_ebay_list_url(code_type: str) -> str:
+    """
+    Make an url to an ebay "code type" list
+
+    Here is the complete list of possible code types.
+    https://developer.ebay.com/devzone/xml/docs/Reference/eBay/enumindex.html#EnumerationIndex
+
+    If eBay modified the url you need to determine the new pattern;
+    at https://developer.ebay.com/ search for "countrycodetype" and study the result.
+
+    example: https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/countrycodetype.html
+    """
+    return f'https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/{code_type}.html'
 
 
 class Locations:
@@ -653,10 +679,9 @@ class State:
 
 
 async def ensure_cache():
-    # ensure that we have a cache
+    # ensure that we have an empty cache
     if os.path.isdir(Locations.cache_path):
-        # delete_folder_contents(Locations.cache_path)  # TODO flush the cache when we want a fresh start
-        pass
+        Contracts.delete_folder_contents(Locations.cache_path)
     else:
         os.mkdir(Locations.cache_path)
 
@@ -938,10 +963,10 @@ class Contracts:
         for filename in list_dir:
             file_path = os.path.join(path_to_folder, filename)
             if os.path.isfile(file_path) or os.path.islink(file_path):
-                logging.debug("deleting file:", file_path)
+                logging.debug(f"deleting file: {file_path}")
                 os.unlink(file_path)
             elif os.path.isdir(file_path):
-                logging.debug("deleting folder:", file_path)
+                logging.debug(f"deleting folder: {file_path}")
                 shutil.rmtree(file_path)
 
     @staticmethod

@@ -354,7 +354,7 @@ class CreateReportTask(object):
     def report_type(self):
         """Gets the report_type of this CreateReportTask.  # noqa: E501
 
-        The type of report to be generated, such as <code>ACCOUNT_PERFORMANCE_REPORT</code> or <code>CAMPAIGN_PERFORMANCE_REPORT</code>.<br /><br /><b>Maximum:</b> 1 For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The type of report to be generated, such as <code>ACCOUNT_PERFORMANCE_REPORT</code> or <code>CAMPAIGN_PERFORMANCE_REPORT</code>.<br/><br/><span class=\"tablenote\"><b>Note:</b> INVENTORY_PERFORMANCE_REPORT is not currently available; availability date is pending.</span><br /><br /><b>Maximum:</b> 1 For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The report_type of this CreateReportTask.  # noqa: E501
         :rtype: str
@@ -365,7 +365,7 @@ class CreateReportTask(object):
     def report_type(self, report_type):
         """Sets the report_type of this CreateReportTask.
 
-        The type of report to be generated, such as <code>ACCOUNT_PERFORMANCE_REPORT</code> or <code>CAMPAIGN_PERFORMANCE_REPORT</code>.<br /><br /><b>Maximum:</b> 1 For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportTypeEnum'>eBay API documentation</a>  # noqa: E501
+        The type of report to be generated, such as <code>ACCOUNT_PERFORMANCE_REPORT</code> or <code>CAMPAIGN_PERFORMANCE_REPORT</code>.<br/><br/><span class=\"tablenote\"><b>Note:</b> INVENTORY_PERFORMANCE_REPORT is not currently available; availability date is pending.</span><br /><br /><b>Maximum:</b> 1 For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param report_type: The report_type of this CreateReportTask.  # noqa: E501
         :type: str

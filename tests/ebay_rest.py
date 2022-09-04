@@ -842,17 +842,31 @@ class MultitonTests(unittest.TestCase):
 
 class ReferenceTests(unittest.TestCase):
 
-    def test_enum_load(self):
-        self.assertIsNotNone(Reference.get_item_enums_modified(), msg="Failed to load enums.")
+    # deprecated, delete later if nobody complains
+    # def test_enum(self):
+    #    self.assertIsNotNone(Reference.get_item_enums_modified(), msg="Failed to load enums.")
 
-    def test_container_load(self):
-        self.assertIsNotNone(Reference.get_item_fields_modified(), msg="Failed to load containers.")
+    # deprecated, delete later if nobody complains
+    # def test_container(self):
+    #    self.assertIsNotNone(Reference.get_item_fields_modified(), msg="Failed to load containers.")
 
-    def test_global_id_values_load(self):
+    def test_get_application_scopes(self):
+        self.assertIsNotNone(Reference.get_application_scopes(), msg="Failed to load global id values.")
+
+    def test_get_country_codes(self):
+        self.assertIsNotNone(Reference.get_country_codes(), msg="Failed to load global id values.")
+
+    def test_get_currency_codes(self):
+        self.assertIsNotNone(Reference.get_currency_codes(), msg="Failed to load global id values.")
+
+    def test_global_id_values(self):
         self.assertIsNotNone(Reference.get_global_id_values(), msg="Failed to load global id values.")
 
-    def test_marketplace_id_values_load(self):
+    def test_marketplace_id_values(self):
         self.assertIsNotNone(Reference.get_marketplace_id_values(), msg="Failed to load marketplace id values.")
+
+    def test_get_user_scopes(self):
+        self.assertIsNotNone(Reference.get_user_scopes(), msg="Failed to load marketplace id values.")
 
 
 if __name__ == '__main__':

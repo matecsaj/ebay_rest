@@ -169,7 +169,7 @@ class ReportTask(object):
     def date_from(self):
         """Gets the date_from of this ReportTask.  # noqa: E501
 
-        The date defining the start of the timespan covered by the report, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> timestamp.  # noqa: E501
+        The date defining the start of the timespan covered by the report, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html \" title=\"https://www.iso.org \" target=\"_blank\">ISO 8601</a> timestamp.  # noqa: E501
 
         :return: The date_from of this ReportTask.  # noqa: E501
         :rtype: str
@@ -180,7 +180,7 @@ class ReportTask(object):
     def date_from(self, date_from):
         """Sets the date_from of this ReportTask.
 
-        The date defining the start of the timespan covered by the report, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> timestamp.  # noqa: E501
+        The date defining the start of the timespan covered by the report, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html \" title=\"https://www.iso.org \" target=\"_blank\">ISO 8601</a> timestamp.  # noqa: E501
 
         :param date_from: The date_from of this ReportTask.  # noqa: E501
         :type: str
@@ -192,7 +192,7 @@ class ReportTask(object):
     def date_to(self):
         """Gets the date_to of this ReportTask.  # noqa: E501
 
-        The date defining the end of the timespan covered by the report, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> timestamp.  # noqa: E501
+        The date defining the end of the timespan covered by the report, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html \" title=\"https://www.iso.org \" target=\"_blank\">ISO 8601</a> timestamp.  # noqa: E501
 
         :return: The date_to of this ReportTask.  # noqa: E501
         :rtype: str
@@ -203,7 +203,7 @@ class ReportTask(object):
     def date_to(self, date_to):
         """Sets the date_to of this ReportTask.
 
-        The date defining the end of the timespan covered by the report, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> timestamp.  # noqa: E501
+        The date defining the end of the timespan covered by the report, formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html \" title=\"https://www.iso.org \" target=\"_blank\">ISO 8601</a> timestamp.  # noqa: E501
 
         :param date_to: The date_to of this ReportTask.  # noqa: E501
         :type: str
@@ -606,7 +606,7 @@ class ReportTask(object):
     def report_type(self):
         """Gets the report_type of this ReportTask.  # noqa: E501
 
-        Indicates type of report associated with the report task. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportTypeEnum'>eBay API documentation</a>  # noqa: E501
+        Indicates type of report associated with the report task.<br/><br/><span class=\"tablenote\"><b>Note:</b> INVENTORY_PERFORMANCE_REPORT is not currently available; availability date is pending.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The report_type of this ReportTask.  # noqa: E501
         :rtype: str
@@ -617,7 +617,7 @@ class ReportTask(object):
     def report_type(self, report_type):
         """Sets the report_type of this ReportTask.
 
-        Indicates type of report associated with the report task. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportTypeEnum'>eBay API documentation</a>  # noqa: E501
+        Indicates type of report associated with the report task.<br/><br/><span class=\"tablenote\"><b>Note:</b> INVENTORY_PERFORMANCE_REPORT is not currently available; availability date is pending.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/plr:ReportTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param report_type: The report_type of this ReportTask.  # noqa: E501
         :type: str
