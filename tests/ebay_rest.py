@@ -330,17 +330,8 @@ class APISandboxSingleSiteTests(unittest.TestCase):
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
 
     def test_positional_some_kw_some(self):
-        # https://developer.ebay.com/api-docs/commerce/taxonomy/resources/category_tree/methods/getCompatibilityPropertyValues # noqa: E501
-        try:
-            result = self._api.commerce_taxonomy_get_compatibility_property_values('0',
-                                                                                   compatibility_property='Model',
-                                                                                   category_id='33559',
-                                                                                   filter='Year:2018,Make:Honda')
-        except Error as error:
-            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
-        else:
-            msg = "A call with some positional and no kw arguments failed."
-            self.assertTrue('compatibility_property_values' in result, msg=msg)
+        # Redundant, several unit tests call buy_browse_search, so this test case is well covered.
+        pass
 
     def test_try_except_else_api(self):
         """  Test that an exception occurs when expected. """
