@@ -23,8 +23,7 @@ from .multiton import Multiton
 from .reference import Reference
 
 
-@Multiton   # return the same object when the __init__ params are identical
-class ApplicationToken:
+class ApplicationToken(metaclass=Multiton):
     """
     Initialize, refresh and supply an eBay OAuth ***application*** token.
 
@@ -118,8 +117,7 @@ class ApplicationToken:
         self._application_token = token_application
 
 
-@Multiton   # return the same object when the __init__ params are identical
-class UserToken:
+class UserToken(metaclass=Multiton):
     """
     Initialize, refresh and supply an eBay OAuth ***user*** token.
     This is a facade for the oath module.

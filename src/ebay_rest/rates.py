@@ -13,8 +13,7 @@ from .error import Error
 from .multiton import Multiton
 
 
-@Multiton  # return the same object when the __init__ params are identical
-class Rates:
+class Rates(metaclass=Multiton):
     """ Manages call limit and utilization data for an eBay application.
 
     https://developer.ebay.com/api-docs/developer/analytics/resources/rate_limit/methods/getRateLimits

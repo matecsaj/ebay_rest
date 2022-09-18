@@ -4,6 +4,7 @@ import datetime
 from json import loads
 import logging
 import os
+from threading import Lock
 from typing import Callable, Dict, List, Tuple, Union
 
 # Local imports
@@ -72,12 +73,18 @@ from .api.sell_recommendation.rest import ApiException as SellRecommendationExce
 # ANCHOR-er_imports-END"
 
 
-@Multiton  # return the same object when the __init__ params are identical
-class API:
-    """ A wrapper for all of eBay's REST-ful APIs.
+class API(metaclass=Multiton):
+    """
+    A wrapper for all of eBay's REST-ful APIs.
 
     For an overview of the APIs and more see https://developer.ebay.com/docs.
     """
+
+    # TODO Improve efficiency, unique objects could be created in parallel.
+    # Use these to mitigate the duplication risk that Mutition has while treading.
+    _lock_application_token = Lock()
+    _lock_user_token = Lock()
+    _lock_rates = Lock()
 
     __slots__ = "_config_location", "_application", "_user", "_header", "_sandbox", "_marketplace_ids", "_throttle",\
                 "_timeout", "_rates", "_end_user_ctx", "_application_token", "_user_token", "_async_req"
@@ -237,11 +244,12 @@ class API:
             self._timeout = -1.0
             self._rates = None
         else:
-            try:
-                # If sandbox starts return rates, then you will need to add a sandbox param to the Rates constructor.
-                self._rates = Rates(app_id=self._application['app_id'])
-            except Error:
-                raise
+            with API._lock_rates:
+                try:
+                    # If sandbox starts return rates, then you will need to add a sandbox param to the Rates constructor.
+                    self._rates = Rates(app_id=self._application['app_id'])
+                except Error:
+                    raise
 
         # pre-load the multi-purpose header self._end_user_ctx
         equates = list()
@@ -265,39 +273,41 @@ class API:
         else:
             self._end_user_ctx = None
 
-        try:
-            self._application_token = ApplicationToken(
-                self._sandbox,
+        with API._lock_application_token:
+            try:
+                self._application_token = ApplicationToken(
+                    self._sandbox,
 
-                # application/client credentials
-                client_id=self._application['app_id'],
-                client_secret=self._application['cert_id'],
-                ru_name=self._application['redirect_uri']
-            )
-        except Error:
-            raise
+                    # application/client credentials
+                    client_id=self._application['app_id'],
+                    client_secret=self._application['cert_id'],
+                    ru_name=self._application['redirect_uri']
+                )
+            except Error:
+                raise
 
-        try:
-            self._user_token = UserToken(
-                self._sandbox,
+        with API._lock_user_token:
+            try:
+                self._user_token = UserToken(
+                    self._sandbox,
 
-                # application/client credentials
-                client_id=self._application['app_id'],
-                client_secret=self._application['cert_id'],
-                ru_name=self._application['redirect_uri'],
+                    # application/client credentials
+                    client_id=self._application['app_id'],
+                    client_secret=self._application['cert_id'],
+                    ru_name=self._application['redirect_uri'],
 
-                # user credentials
-                user_id=self._user['email_or_username'],
-                user_password=self._user['password'],
-                user_scopes=None if 'scopes' not in self._user else self._user['scopes'],
+                    # user credentials
+                    user_id=self._user['email_or_username'],
+                    user_password=self._user['password'],
+                    user_scopes=None if 'scopes' not in self._user else self._user['scopes'],
 
-                # user token supply
-                user_refresh_token=None if 'refresh_token' not in self._user else self._user['refresh_token'],
-                user_refresh_token_expiry=None if 'refresh_token_expiry' not in self._user else self._user[
-                    'refresh_token_expiry'],
-            )
-        except Error:
-            raise
+                    # user token supply
+                    user_refresh_token=None if 'refresh_token' not in self._user else self._user['refresh_token'],
+                    user_refresh_token_expiry=None if 'refresh_token_expiry' not in self._user else self._user[
+                        'refresh_token_expiry'],
+                )
+            except Error:
+                raise
 
         return
 

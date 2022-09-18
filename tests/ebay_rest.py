@@ -195,7 +195,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
                             else:
                                 tally = tally  # flat rate worldwide shipping is possible
                         else:
-                            pass  # self.fail(f'For {item_id} both shipping costs can not be found.')
+                            pass  # self.fail(f"For {item_id} both shipping costs can not be found.")
                     else:
                         self.fail(f'Item {item_id} is supposed to be located in {d_country}.')
 
@@ -332,9 +332,9 @@ class APISandboxSingleSiteTests(unittest.TestCase):
     def test_positional_some_kw_some(self):
         # https://developer.ebay.com/api-docs/commerce/taxonomy/resources/category_tree/methods/getCompatibilityPropertyValues # noqa: E501
         try:
-            result = self._api.commerce_taxonomy_get_compatibility_property_values(0,
+            result = self._api.commerce_taxonomy_get_compatibility_property_values('0',
                                                                                    compatibility_property='Model',
-                                                                                   category_id=33559,
+                                                                                   category_id='33559',
                                                                                    filter='Year:2018,Make:Honda')
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
@@ -499,7 +499,7 @@ class APIProductionSingleTests(unittest.TestCase):
         # This unique identifier, or key, is used in other Inventory API calls to identify an inventory location.
         length = random.randint(1, 36)
         allowed = string.ascii_letters + string.digits + '_' + '-'  # more might be allowed, eBay's docs are unclear
-        merchant_location_key = ''.join(random.choice(allowed) for i in range(length))
+        merchant_location_key = ''.join(random.choice(allowed) for _i in range(length))
 
         # Create a new inventory location.
         # https://developer.ebay.com/api-docs/sell/inventory/resources/location/methods/createInventoryLocation
@@ -701,7 +701,7 @@ class APIProductionSingleTests(unittest.TestCase):
         # The seller-defined SKU value for the inventory item, unique across the seller's inventory.
         length = random.randint(1, 50)
         allowed = string.ascii_letters + string.digits + '_' + '-'  # more might be allowed, eBay's docs are unclear
-        sku = ''.join(random.choice(allowed) for i in range(length))
+        sku = ''.join(random.choice(allowed) for _i in range(length))
 
         try:
             result = self._api.sell_inventory_create_or_replace_inventory_item(body=body,
@@ -737,7 +737,7 @@ class APIProductionSingleTests(unittest.TestCase):
         # verification_token = "7*******-d***-***c-b***-***********a"
         length = random.randint(32, 80)
         allowed = string.ascii_letters + string.digits + '_' + '-'
-        verification_token = ''.join(random.choice(allowed) for i in range(length))
+        verification_token = ''.join(random.choice(allowed) for _i in range(length))
 
         topic_id = 'MARKETPLACE_ACCOUNT_DELETION'
 
