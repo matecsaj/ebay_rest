@@ -15,3 +15,4 @@ from ...sell_account.api.program_api import ProgramApi
 from ...sell_account.api.rate_table_api import RateTableApi
 from ...sell_account.api.return_policy_api import ReturnPolicyApi
 from ...sell_account.api.sales_tax_api import SalesTaxApi
+from ...sell_account.api.subscription_api import SubscriptionApi

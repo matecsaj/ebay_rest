@@ -51,7 +51,7 @@ class OperatingHours(object):
     def day_of_week_enum(self):
         """Gets the day_of_week_enum of this OperatingHours.  # noqa: E501
 
-        A <strong>dayOfWeekEnum</strong> value is required for each day of the week that the store location has regular operating hours. <br><br>This field is returned if operating hours are defined for the store location. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/api:DayOfWeekEnum'>eBay API documentation</a>  # noqa: E501
+        A <strong>dayOfWeekEnum</strong> value is required for each day of the week that the store location has regular operating hours. <br/><br/>This field is returned if operating hours are defined for the store location. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/api:DayOfWeekEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The day_of_week_enum of this OperatingHours.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class OperatingHours(object):
     def day_of_week_enum(self, day_of_week_enum):
         """Sets the day_of_week_enum of this OperatingHours.
 
-        A <strong>dayOfWeekEnum</strong> value is required for each day of the week that the store location has regular operating hours. <br><br>This field is returned if operating hours are defined for the store location. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/api:DayOfWeekEnum'>eBay API documentation</a>  # noqa: E501
+        A <strong>dayOfWeekEnum</strong> value is required for each day of the week that the store location has regular operating hours. <br/><br/>This field is returned if operating hours are defined for the store location. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/api:DayOfWeekEnum'>eBay API documentation</a>  # noqa: E501
 
         :param day_of_week_enum: The day_of_week_enum of this OperatingHours.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class OperatingHours(object):
     def intervals(self):
         """Gets the intervals of this OperatingHours.  # noqa: E501
 
-        This container is used to define the opening and closing times of a store's working day (defined in the <strong>dayOfWeekEnum</strong> field). An <strong>intervals</strong> container is needed for each day of the week that the store location is open. If a store location closes for lunch (or any other period during the day) and then reopens, multiple <strong>open</strong> and <strong>close</strong> pairs are needed <br><br>This container is returned if operating hours are defined for the store location.  # noqa: E501
+        This container is used to define the opening and closing times of a store's working day (defined in the <strong>dayOfWeekEnum</strong> field). An <strong>intervals</strong> container is needed for each day of the week that the store location is open. If a store location closes for lunch (or any other period during the day) and then reopens, multiple <strong>open</strong> and <strong>close</strong> pairs are needed <br/><br/>This container is returned if operating hours are defined for the store location.  # noqa: E501
 
         :return: The intervals of this OperatingHours.  # noqa: E501
         :rtype: list[Interval]
@@ -85,7 +85,7 @@ class OperatingHours(object):
     def intervals(self, intervals):
         """Sets the intervals of this OperatingHours.
 
-        This container is used to define the opening and closing times of a store's working day (defined in the <strong>dayOfWeekEnum</strong> field). An <strong>intervals</strong> container is needed for each day of the week that the store location is open. If a store location closes for lunch (or any other period during the day) and then reopens, multiple <strong>open</strong> and <strong>close</strong> pairs are needed <br><br>This container is returned if operating hours are defined for the store location.  # noqa: E501
+        This container is used to define the opening and closing times of a store's working day (defined in the <strong>dayOfWeekEnum</strong> field). An <strong>intervals</strong> container is needed for each day of the week that the store location is open. If a store location closes for lunch (or any other period during the day) and then reopens, multiple <strong>open</strong> and <strong>close</strong> pairs are needed <br/><br/>This container is returned if operating hours are defined for the store location.  # noqa: E501
 
         :param intervals: The intervals of this OperatingHours.  # noqa: E501
         :type: list[Interval]

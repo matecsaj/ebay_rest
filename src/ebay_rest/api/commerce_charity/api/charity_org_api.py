@@ -35,7 +35,7 @@ class CharityOrgApi(object):
     def get_charity_org(self, charity_org_id, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """get_charity_org  # noqa: E501
 
-        This call is used to retrieve detailed information about supported charitable organizations. It allows users to retrieve the details for a specific charitable organization using its charity organization ID.<br /><br />The call returns the full details for the charitable organization that matches the specified ID.  # noqa: E501
+        This call is used to retrieve detailed information about supported charitable organizations. It allows users to retrieve the details for a specific charitable organization using its charity organization ID.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_charity_org(charity_org_id, x_ebay_c_marketplace_id, async_req=True)
@@ -58,7 +58,7 @@ class CharityOrgApi(object):
     def get_charity_org_with_http_info(self, charity_org_id, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """get_charity_org  # noqa: E501
 
-        This call is used to retrieve detailed information about supported charitable organizations. It allows users to retrieve the details for a specific charitable organization using its charity organization ID.<br /><br />The call returns the full details for the charitable organization that matches the specified ID.  # noqa: E501
+        This call is used to retrieve detailed information about supported charitable organizations. It allows users to retrieve the details for a specific charitable organization using its charity organization ID.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_charity_org_with_http_info(charity_org_id, x_ebay_c_marketplace_id, async_req=True)
@@ -138,7 +138,7 @@ class CharityOrgApi(object):
     def get_charity_org_by_legacy_id(self, x_ebay_c_marketplace_id, legacy_charity_org_id, **kwargs):  # noqa: E501
         """get_charity_org_by_legacy_id  # noqa: E501
 
-        This call allows users to retrieve the details for a specific charitable organization using its legacy charity ID, which has also been referred to as the charity number, external ID, and PayPal Giving Fund ID. The legacy charity ID is separate from eBay’s generic charity ID.  # noqa: E501
+        <span class=\"tablenote\"><b>Note: </b>The <a href=\"https://developer.ebay.com/api-docs/commerce/charity/resources/charity_org/methods/getCharityOrgByLegacyId\">getCharityOrgByLegacyId</a> method requires a PayPal Giving Fund ID to retrieve an eBay charitable organizaiton, and eBay will no longer support these IDs beginning on January 16, 2023. The alternative to this method is the <a href=\"https://developer.ebay.com/api-docs/commerce/charity/resources/charity_org/methods/getCharityOrg\">getCharityOrg</a> method, and this method requires the eBay-generated ID for a charitable organization.</span><br /><br />This call allows users to retrieve the details for a specific charitable organization using its legacy charity ID, which has also been referred to as the charity number, external ID, and PayPal Giving Fund ID. The legacy charity ID is separate from eBay’s generic charity ID.<br /><br />The call returns the full details for the charitable organization that matches the specified ID.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_charity_org_by_legacy_id(x_ebay_c_marketplace_id, legacy_charity_org_id, async_req=True)
@@ -161,7 +161,7 @@ class CharityOrgApi(object):
     def get_charity_org_by_legacy_id_with_http_info(self, x_ebay_c_marketplace_id, legacy_charity_org_id, **kwargs):  # noqa: E501
         """get_charity_org_by_legacy_id  # noqa: E501
 
-        This call allows users to retrieve the details for a specific charitable organization using its legacy charity ID, which has also been referred to as the charity number, external ID, and PayPal Giving Fund ID. The legacy charity ID is separate from eBay’s generic charity ID.  # noqa: E501
+        <span class=\"tablenote\"><b>Note: </b>The <a href=\"https://developer.ebay.com/api-docs/commerce/charity/resources/charity_org/methods/getCharityOrgByLegacyId\">getCharityOrgByLegacyId</a> method requires a PayPal Giving Fund ID to retrieve an eBay charitable organizaiton, and eBay will no longer support these IDs beginning on January 16, 2023. The alternative to this method is the <a href=\"https://developer.ebay.com/api-docs/commerce/charity/resources/charity_org/methods/getCharityOrg\">getCharityOrg</a> method, and this method requires the eBay-generated ID for a charitable organization.</span><br /><br />This call allows users to retrieve the details for a specific charitable organization using its legacy charity ID, which has also been referred to as the charity number, external ID, and PayPal Giving Fund ID. The legacy charity ID is separate from eBay’s generic charity ID.<br /><br />The call returns the full details for the charitable organization that matches the specified ID.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_charity_org_by_legacy_id_with_http_info(x_ebay_c_marketplace_id, legacy_charity_org_id, async_req=True)

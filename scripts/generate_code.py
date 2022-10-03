@@ -16,7 +16,7 @@ import shutil
 import sys
 import string
 import time
-from typing import Dict, List, Set, Tuple, Union
+from typing import List, Set, Tuple
 
 # Third party imports
 import aiofiles
@@ -46,63 +46,6 @@ async def run(cmd):
         print(f'[stderr]\n{stderr.decode()}')
 
 
-def add_enum(enums: Dict[str, list], new_enum: str) -> None:
-    enums[new_enum] = []
-
-
-def camel_to_snake_case(name: str) -> str:
-    result = name[0].lower()  # play it safe and cover the "upper Camel case" aka "Pascal case" variant too
-    for c in name[1:]:
-        if c in string.ascii_uppercase:
-            result += '_'
-            c = c.lower()
-        result += c
-    return result
-
-
-def change_type_per_full_field(
-        containers: Dict[str, Dict[str, Union[bool, str, List[Dict[str, Union[str, None, bool]]], List[str]]]],
-        full_field: str,
-        new_type: str
-) -> None:
-    """ In a container change sql types when a partial field name matches. """
-
-    found = False
-    for key in containers:
-        container = containers[key]
-        for field in container['fields']:
-            if full_field == field['name_sql']:
-                field['type_sql'] = new_type
-                found = True
-    if not found:
-        logging.debug(f'change_type_per_full_field failed on full_field {full_field} and new_type {new_type}.')
-
-
-def change_type_per_partial_field(
-        containers: Dict[str, Dict[str, Union[bool, str, List[Dict[str, Union[str, None, bool]]], List[str]]]],
-        partial_field: str,
-        new_type: str
-) -> None:
-    """ In a container change sql types when a partial field name matches. """
-
-    found = False
-    for key in containers:
-        container = containers[key]
-        for field in container['fields']:
-            if partial_field in field['name_sql']:
-                field['type_sql'] = new_type
-                found = True
-    if not found:
-        logging.debug(f'change_type_per_partial_field failed on partial_field {partial_field} and new_type {new_type}.')
-
-
-def enum_name_converter(kind: str) -> str:
-    if kind[-4:] in ('Enum', 'Type'):
-        return camel_to_snake_case(kind[:-4])
-    else:
-        logging.debug(f'{kind} does not end in Enum or Type.')
-
-
 async def get_table_via_link(url: str) -> list:
     data = []
     soup = await get_soup_via_link(url)
@@ -120,7 +63,7 @@ async def get_table_via_link(url: str) -> list:
     return data
 
 
-def make_json_file(source: dict or list, name: str) -> None:
+async def make_json_file(source: dict or list, name: str) -> None:
     if len(source) > 0:
         path = '../src/ebay_rest/references/'
         with open(path + name + '.json', 'w') as outfile:
@@ -129,105 +72,11 @@ def make_json_file(source: dict or list, name: str) -> None:
         logging.error(f"The json file for {name} should not be empty; not created.")
 
 
-async def get_enumerations(response_fields: List[Tuple[str, str, str, str]]) -> Dict[str, list]:
-    enums_dict = {}
-    variants = ['ba', 'gct']
-
-    for response_field in response_fields:
-        (name_full, kind, occurrence, description) = response_field
-
-        parts = kind.split()  # if there is an enum, it is always the last word
-        last = parts[-1]
-
-        if last[-4:] in ('Enum', 'Type'):
-
-            enum_name = enum_name_converter(last)
-
-            if enum_name not in enums_dict:
-
-                variant_count = 0
-                data = []
-                while variant_count < len(variants) and not data:
-                    # form the url
-                    url = f'https://developer.ebay.com/api-docs/buy/browse/types/{variants[variant_count]}:{last}'
-
-                    # load the target webpage
-                    soup = await get_soup_via_link(url)
-                    for datum in soup.find_all('div', class_='flex-4 first-column'):
-                        data.append(datum.contents[0])
-                    variant_count += 1
-                if data:
-                    enums_dict[enum_name] = data
-                else:
-                    logging.debug(f'Could not find values for {kind}.')
-
-    return enums_dict
-
-
-async def get_response_fields() -> List[Tuple[str, str, str, str]]:
-    logging.info('Find the Response Fields for the eBay Get Item call.')
-
-    # load the target webpage
-    url = 'https://developer.ebay.com/api-docs/buy/browse/resources/item/methods/getItem'
-    soup = await get_soup_via_link(url)
-
-    # find the rows regarding Response Fields.
-    table = soup.find('table', id='Output-field-definitions-table')
-    table_body = table.find('tbody')
-    rows = table_body.find_all('tr')
-
-    # put the rows into a table of data
-    data = []
-    for row in rows:
-        cols = row.find_all('td')
-        cols = [ele.text.strip() for ele in cols]
-        data.append([ele for ele in cols if ele])  # Get rid of empty values
-
-    # fix a mess caused by description blurbs that contain tables
-    more = True
-    while more:
-        more = False
-        for i, datum in enumerate(data):
-            if len(datum) != 3:
-                # merge and delete the 3rd and following fields
-                post_datum = datum[2:]
-                blurb = ' '.join(post_datum)
-                datum = datum[0:2]
-                # also merge and remove abnormal rows that follow
-                while len(data[i + 1]) != 3 or data[i + 1][0][0].isupper():
-                    post_datum = data.pop(i + 1)
-                    blurb += ' '.join(post_datum)
-                datum.append(blurb)
-                data[i] = datum
-                more = True
-                break  # we must restart the for loop because the enumerated data was altered
-
-    # move the occurrence value to a new column
-    for datum in data:
-        blurb = datum[2]
-        occurrence = ''
-        for option in ('Conditional', 'Always', 'NA'):
-            phrase = f' Occurrence: {option}'
-            if phrase in blurb:
-                occurrence = option
-                blurb = blurb.replace(phrase, '')
-                break
-        assert (occurrence != '')
-        datum[2] = occurrence
-        datum.append(blurb)
-
-    # adhere to Python naming conventions
-    for datum in data:
-        datum[0] = camel_to_snake_case(datum[0])
-
-    return data
-
-
 async def generate_country_codes() -> None:
     logging.info("Find the eBay's Country Codes.")
 
     # load the target webpage
-    data = await get_table_via_link(get_ebay_list_url('CountryCodeType'))
+    data = await get_table_via_link(await get_ebay_list_url('CountryCodeType'))
 
     # ignore header, convert to a dict & delete bad values
     dict_ = {}
@@ -239,15 +88,14 @@ async def generate_country_codes() -> None:
         else:
             logging.debug("Bad value " + bad_value + "no longer needs to be deleted.")
 
-    make_json_file(dict_, 'country_codes')
-    return
+    await make_json_file(dict_, 'country_codes')
 
 
 async def generate_currency_codes() -> None:
     logging.info("Find the eBay's Currency Codes.")
 
     # load the target webpage
-    data = await get_table_via_link(get_ebay_list_url('CurrencyCodeType'))
+    data = await get_table_via_link(await get_ebay_list_url('CurrencyCodeType'))
 
     # ignore header, convert to a dict & delete bad values
     dict_ = {}
@@ -262,7 +110,7 @@ async def generate_currency_codes() -> None:
     for key in to_delete:
         del dict_[key]
 
-    make_json_file(dict_, 'currency_codes')
+    await make_json_file(dict_, 'currency_codes')
 
 
 async def generate_global_id_values() -> None:
@@ -283,8 +131,7 @@ async def generate_global_id_values() -> None:
             my_dict[column] = datum[index]
         dicts.append(my_dict)
 
-    make_json_file(dicts, 'global_id_values')
-    return
+    await make_json_file(dicts, 'global_id_values')
 
 
 async def generate_marketplace_id_values() -> None:
@@ -330,7 +177,7 @@ async def generate_marketplace_id_values() -> None:
                     my_locales[locale] = [sites[index], comments[index]]
                 my_dict[marketplace_id] = [country, my_locales]
 
-    make_json_file(my_dict, 'marketplace_id_values')
+    await make_json_file(my_dict, 'marketplace_id_values')
     return
 
 
@@ -363,247 +210,6 @@ async def get_soup_via_link(url: str) -> BeautifulSoup:
     return BeautifulSoup(html_content, "html.parser")
 
 
-def make_containers(parent_is_array: bool,
-                    parent_container_kind: str,
-                    table_part: str,
-                    table_parent: str,
-                    dot_level: int,
-                    response_fields: List[Tuple[str, str, str, str]]
-                    ) -> Dict[str, Dict[str, Union[bool, str, List[Dict[str, Union[str, None, bool]]], List[str]]]]:
-    containers = {}
-    fields = []
-    children = []
-
-    ebay_to_sql_types = {'boolean': 'bool', 'integer': 'int', 'string': 'varchar'}
-
-    container_name = f'{table_parent}_{table_part}'
-    required_container = parent_is_array
-
-    if parent_is_array:
-
-        if parent_container_kind in ebay_to_sql_types:
-            shape = 'array_of_type'  # array of a single native SQL type
-            array_type_sql = ebay_to_sql_types[parent_container_kind]
-
-        elif parent_container_kind[-4:] in ('Enum', 'Type'):
-            shape = 'array_of_enum'  # array of a single SQL enum type
-            array_type_sql = enum_name_converter(parent_container_kind)
-        else:
-            shape = 'array_of_container'  # array of an eBay container
-            array_type_sql = parent_container_kind
-    else:
-        array_type_sql = None
-        shape = 'container'  # not an array
-
-    i = 0
-    while i < len(response_fields):
-        response_field = response_fields[i]
-        (name_full, kind, occurrence, description) = response_field
-        name_parts = name_full.split('.')
-
-        if 'array of' in kind:
-            is_array = True
-            root_kind = kind.split()[-1]
-        else:
-            is_array = False
-            root_kind = kind
-
-        # If this the start of a container then find its end. A container has a header and fields.
-        if subfield_next(dot_level, i, response_fields):
-            is_container = True
-            j = i + 1
-            while subfield_next(dot_level, j, response_fields):
-                j += 1
-        else:
-            is_container = False
-            j = i
-
-        if is_container or is_array:
-            containers.update(make_containers(parent_is_array=is_array,
-                                              parent_container_kind=root_kind,
-                                              table_part=name_parts[dot_level],
-                                              table_parent=container_name,
-                                              dot_level=dot_level + 1,
-                                              response_fields=response_fields[i + 1:j + 1]))
-            children.append(f"{container_name}_{name_parts[dot_level]}")
-            i = j  # advance to the last item processed
-
-        else:
-            # field placeholders
-            field_success = False
-            required_field = None
-            type_sql = None
-            name_python = None
-            name_sql = None
-
-            if occurrence == 'Always':
-                required_field = True
-            elif occurrence in ('Conditional', 'NA'):
-                required_field = False
-            else:
-                logging.debug(f"Unexpected occurrence value {occurrence}.")
-
-            # Does the field's type directly correspond to an SQL type?
-            if root_kind in ebay_to_sql_types:
-                type_sql = ebay_to_sql_types[kind]
-                name_python = name_parts[dot_level]
-                name_sql = name_python
-                field_success = True
-
-            # Is the field an enumeration?
-            elif root_kind[-4:] in ('Enum', 'Type'):
-                enum_name = enum_name_converter(kind)
-                type_sql = enum_name
-                name_python = name_parts[dot_level]
-                name_sql = name_python
-                field_success = True
-
-            # Is the field a coupon constraint?
-            elif root_kind == 'CouponConstraint':
-                # Is this another enum? Let's play it safe, and treat it like a varchar. TODO double check database
-                # eBay's docs link fails! https://developer.ebay.com/api-docs/buy/browse/types/gct:CouponConstraint
-
-                type_sql = 'varchar'
-                name_python = name_parts[dot_level] + 's'  # make this plural to avoid SQL reserved word problems
-                name_sql = name_python
-                field_success = True
-
-            else:
-                logging.debug(f'Unhandled field {name_full} of type {kind}')
-
-            if field_success:
-                field = {
-                    'name_python': name_python,
-                    'name_sql': name_sql,
-                    'required': required_field,
-                    'type_sql': type_sql,
-                }
-                if most_values_not_none('field', field):
-                    fields.append(field)
-
-        i += 1  # advance to the next field, container or to end-of-list
-
-    container = {
-        'required': required_container,
-        'shape': shape,
-        'array_type_sql': array_type_sql,
-        'fields': fields,
-        'children': children,
-    }
-    if most_values_not_none('container', container):
-        containers[container_name] = container
-
-    return containers
-
-
-def most_values_not_none(name: str, dictionary: Dict[str, str]) -> bool:
-    for key, value in dictionary.items():
-        if key != 'array_type_sql':
-            if value is None:
-                logging.debug(f"In dictionary {name} key {key} should not have value {value}.")
-                return False
-    return True
-
-
-def subfield_next(dot_level: int, i: int, response_fields: List[Tuple[str, str, str, str]]) -> bool:
-    i += 1
-    result = False
-    if i < len(response_fields):
-        if response_fields[i][0].count('.') > dot_level:
-            result = True
-    return result
-
-
-async def generate_containers_and_enums():
-    # True will slowly get a fresh object --- False will quickly reload the last object
-    response_fields = await get_response_fields()
-    enums = await get_enumerations(response_fields)
-    # create containers from the response fields
-    containers = make_containers(parent_is_array=False,
-                                 parent_container_kind='item',
-                                 table_part='item',
-                                 table_parent='ebay',
-                                 dot_level=0,
-                                 response_fields=response_fields)
-    # despite what the ebay documentation says, this field is not always provided
-    found = False
-    for field in containers['ebay_item_shipping_options']['fields']:
-        if field['name_python'] == 'shipping_carrier_code':
-            field['required'] = False
-            found = True
-            break
-    if not found:
-        logging.debug('ebay_item_shipping_options was not found.')
-    # Add a missing enum. To learn why this hack is required, search on 'CouponConstraint' in this python file.
-    # add_enum(enums=enums, field_name='coupon_constraint')  TODO double check database to see if we should change this
-    # SQL types are changed from varchar, when it would improve computational and storage efficiency
-    # change that are possible by a simple partial field name match
-    change_type_per_partial_field(containers, 'rating', 'numeric(1)')
-    change_type_per_partial_field(containers, 'average_rating', 'numeric(2,1)')  # this must be after 'rating'
-    change_type_per_partial_field(containers, '_date', 'timestamp with time zone')
-    change_type_per_partial_field(containers, 'gtin', 'numeric(14,0)')
-    change_type_per_partial_field(containers, 'percentage', 'numeric(4,1)')
-    # change currency values to numeric(16,4)
-    found = False
-    for key in containers:
-        container = containers[key]
-        has_currency = False
-        for field in container['fields']:
-            if field['type_sql'] == 'currency_code':
-                has_currency = True
-                break
-        if has_currency:
-            for field in container['fields']:
-                if 'value' in field['name_sql']:
-                    field['type_sql'] = 'numeric(16,4)'
-                    found = True
-    if not found:
-        logging.debug('No currency values were found.')
-    # change complete field names that are always integers
-    for field_name in ('category_id', 'condition_id', 'identifier_value', 'item_group_id'):
-        change_type_per_full_field(containers, field_name, 'int')
-    change_type_per_full_field(containers, 'legacy_item_id', 'bigint')
-    # change complete field names that would make ideal enums
-    for field_name in ('age_group', 'condition', 'domain', 'energy_efficiency_class', 'gender', 'identifier_type',
-                       'region_id', 'region_name', 'seller_account_type', 'shipping_carrier_code',
-                       'shipping_cost_type', 'size_system', 'subdomain', 'tax_jurisdiction_id', 'trademark_symbol'):
-        change_type_per_full_field(containers, field_name, field_name)
-        add_enum(enums, field_name)
-    # handle generic sounding field names, that would make good enums
-    for (container_name, field_name, new_type) in (
-            ('ebay_item_authenticity_verification', 'description', 'authenticity_verification_description'),
-            ('ebay_item_shipping_options', 'type', 'shipping_option_type'),
-            ('ebay_item_warnings', 'category', 'warning_category')):
-        found = False
-        container = containers[container_name]
-        for field in container['fields']:
-            if field['name_sql'] == field_name:
-                field['type_sql'] = new_type
-                add_enum(enums, new_type)
-                found = True
-                break
-        if not found:
-            message = f'Handle generic sounding field names failed on {container_name}, {field_name} and {new_type}.'
-            logging.debug(message)
-    containers['ebay_item_product_gtins']['array_type_sql'] = 'numeric(14,0)'
-    containers['ebay_item_product_gtins']['shape'] = 'array_of_type'
-    for (container_name, new_enum) in (
-            ('ebay_item_buying_options', 'buying_options'),
-            ('ebay_item_qualified_programs', 'qualified_programs')):
-        containers[container_name]['array_type_sql'] = new_enum
-        containers[container_name]['shape'] = 'array_of_enum'
-        add_enum(enums, new_enum)
-    # safety check
-    for key in containers:
-        if containers[key]['shape'] not in ('container', 'array_of_type', 'array_of_enum', 'array_of_container'):
-            logging.debug(f"Container {key} has unexpected shape {containers[key]['shape']}.")
-
-    make_json_file(containers, 'item_fields_modified')
-    make_json_file(enums, 'item_enums_modified')
-
-    return
-
-
 async def generate_references():
     """
     Generated JSON files for the 'references' directory found in 'src'.
@@ -615,7 +221,6 @@ async def generate_references():
     # TODO Clear out any junk that happens to be in the target folder.
 
     await asyncio.gather(
-        # generate_containers_and_enums(),      # TODO if nobody complains then permanently delete otherwise fix it
         generate_country_codes(),
         generate_currency_codes(),
         generate_global_id_values(),
@@ -623,7 +228,7 @@ async def generate_references():
     )
 
 
-def get_ebay_list_url(code_type: str) -> str:
+async def get_ebay_list_url(code_type: str) -> str:
     """
     Make an url to an ebay "code type" list
 
@@ -661,13 +266,13 @@ class State:
         except OSError:
             self._states = dict()
 
-    def get(self, key: str) -> str or None:
+    async def get(self, key: str) -> str or None:
         if key in self._states:
             return self._states[key]
         else:
             return None
 
-    def set(self, key: str, value: str) -> None:
+    async def set(self, key: str, value: str) -> None:
         self._states[key] = value
         try:
             with open(Locations.state_path_file, 'w') as file_handle:
@@ -681,7 +286,7 @@ class State:
 async def ensure_cache():
     # ensure that we have an empty cache
     if os.path.isdir(Locations.cache_path):
-        Contracts.delete_folder_contents(Locations.cache_path)
+        await Contracts.delete_folder_contents(Locations.cache_path)
     else:
         os.mkdir(Locations.cache_path)
 
@@ -690,8 +295,9 @@ async def ensure_swagger() -> None:
     s = State()  # skip if this was already done less than a day ago
     key = 'tool_date_time'
     dt_format = "%Y-%m-%dT%H:%M:%S.%fZ"
-    if s.get(key) is None or \
-            datetime.datetime.strptime(s.get(key), dt_format) < datetime.datetime.now() - datetime.timedelta(days=1):
+    value = await s.get(key)
+    if value is None or\
+            datetime.datetime.strptime(value, dt_format) < datetime.datetime.now() - datetime.timedelta(days=1):
 
         if sys.platform == 'darwin':  # OS X or MacOS
             logging.info('Install or update the package manager named HomeBrew.')
@@ -721,7 +327,7 @@ async def ensure_swagger() -> None:
             logging.fatal(message)
             sys.exit(message)
 
-        s.set(key, datetime.datetime.now().strftime(dt_format))
+        await s.set(key, datetime.datetime.now().strftime(dt_format))
 
 
 class Contracts:
@@ -736,13 +342,13 @@ class Contracts:
 
     async def process(self):
         [self.category, self.call, self.link_href, self.file_name] = await self.get_contract(self.overview_link)
-        self.name = self.get_api_name()
+        self.name = await self.get_api_name()
         await self.cache_contract()
         await self.patch_contract()
         await self.swagger_codegen()
         await self.patch_generated()
-        self.copy_library()
-        self.fix_imports()
+        await self.copy_library()
+        await self.fix_imports()
 
     @staticmethod
     async def get_overview_links():
@@ -859,7 +465,7 @@ class Contracts:
             assert False, f'Please extend main() for your {sys.platform} platform.'
         await run(command)
 
-    def get_api_name(self):
+    async def get_api_name(self):
         name = f'{self.category}_{self.call}'
         return name
 
@@ -958,7 +564,7 @@ class Contracts:
         return base_path, flow_by_scope, name, operation_id_scopes
 
     @staticmethod
-    def delete_folder_contents(path_to_folder: str):
+    async def delete_folder_contents(path_to_folder: str):
         list_dir = os.listdir(path_to_folder)
         for filename in list_dir:
             file_path = os.path.join(path_to_folder, filename)
@@ -977,17 +583,17 @@ class Contracts:
             if os.path.isdir(file_path):
                 shutil.rmtree(file_path)
 
-    def copy_library(self) -> None:
+    async def copy_library(self) -> None:
         """ Copy the essential parts of the generated eBay library to within the src folder. """
         src = os.path.join(Locations.cache_path, self.name, self.name)
         dst = os.path.join(Locations.target_path, self.name)
         _destination = shutil.copytree(src, dst)
 
-    def fix_imports(self) -> None:
+    async def fix_imports(self) -> None:
         """ The deeper the directory, the more dots are needed to make the correct relative path. """
-        self._fix_imports_recursive(self.name, '..', os.path.join(Locations.target_path, self.name))
+        await self._fix_imports_recursive(self.name, '..', os.path.join(Locations.target_path, self.name))
 
-    def _fix_imports_recursive(self, name: str, dots: str, path: str) -> None:
+    async def _fix_imports_recursive(self, name: str, dots: str, path: str) -> None:
         """ This does the recursive part of fix_imports. """
 
         for (_root, dirs, files) in os.walk(path):
@@ -1014,11 +620,11 @@ class Contracts:
 
             dots += '.'
             for directory in dirs:
-                self._fix_imports_recursive(name, dots, os.path.join(path, directory))
+                await self._fix_imports_recursive(name, dots, os.path.join(path, directory))
 
             break
 
-    def get_requirements(self) -> Set[str]:
+    async def get_requirements(self) -> Set[str]:
         """ Get the library's requirements. """
 
         # compile the set of all unique requirements from the generated library
@@ -1037,12 +643,12 @@ class Contracts:
                     break
         return requirements
 
-    def get_includes(self) -> List[str]:
+    async def get_includes(self) -> List[str]:
         """ Get the includes for a library. """
         includes = list()
         includes.append(f'from .{Locations.target_directory} import {self.name}')
         line = f'from .{Locations.target_directory}.{self.name}.rest import ApiException as ' \
-               f'{self._camel(self.name)}Exception'
+               f'{await self._camel(self.name)}Exception'
         includes.append(line)
         return includes
 
@@ -1114,7 +720,7 @@ class Contracts:
     async def clean_docstring(docstring: string) -> string:
 
         # strip HTML
-        docstring = BeautifulSoup(docstring).get_text()
+        docstring = BeautifulSoup(docstring, features="html.parser").get_text()
 
         # fix typos
         typo_remedy = (  # pairs of typos found in docstrings and their remedy
@@ -1230,10 +836,10 @@ class Contracts:
         code += f"            return self._method_{method_type}(" \
                 f"{name}.Configuration," \
                 f" '{base_path}'," \
-                f" {name}.{self._camel(module)}," \
+                f" {name}.{await self._camel(module)}," \
                 f" {name}.ApiClient," \
                 f" '{method}'," \
-                f" {self._camel(name)}Exception," \
+                f" {await self._camel(name)}Exception," \
                 f" {user_access_token}," \
                 f" {rate},"
         if has_args:
@@ -1254,14 +860,16 @@ class Contracts:
 
         return code
 
-    def remove_duplicates(self, names) -> None:
+    async def remove_duplicates(self, names) -> None:
         """ Deduplicate identical .py files found in all APIs.
         for example when comments are ignored the rest.py files appear identical. """
 
         # build a catalog that includes a hashed file signature
         catalog = []
         for name in names:
-            catalog.extend(self._remove_duplicates_recursive_catalog(name, os.path.join(Locations.target_path, name)))
+            catalog.extend(
+                await self._remove_duplicates_recursive_catalog(name, os.path.join(Locations.target_path, name))
+            )
 
         # count how many times each signature appears
         signature_tally = {}
@@ -1280,7 +888,7 @@ class Contracts:
 
         # TODO apply the DRY principle to the repeaters
 
-    def _remove_duplicates_recursive_catalog(self, name: str, path: str) -> list:
+    async def _remove_duplicates_recursive_catalog(self, name: str, path: str) -> list:
         """ This does the recursive part of cataloging for remove_duplicates. """
 
         catalog = []
@@ -1296,12 +904,12 @@ class Contracts:
                         catalog.append((name, file, target_file, m.digest()))
 
             for directory in dirs:
-                catalog.extend(self._remove_duplicates_recursive_catalog(name, os.path.join(path, directory)))
+                catalog.extend(await self._remove_duplicates_recursive_catalog(name, os.path.join(path, directory)))
 
             return catalog
 
     @staticmethod
-    def _camel(name: str) -> str:
+    async def _camel(name: str) -> str:
         """ Convert a name with underscore separators to upper camel case. """
         camel = ''
         for part in name.split('_'):
@@ -1311,13 +919,13 @@ class Contracts:
 
 class Insert:
 
-    def do(self, requirements, includes, methods):
-        self.insert_requirements(requirements)
-        self.insert_includes(includes)
-        self.insert_methods(methods)
+    async def do(self, requirements, includes, methods):
+        await self.insert_requirements(requirements)
+        await self.insert_includes(includes)
+        await self.insert_methods(methods)
 
     @staticmethod
-    def insert_requirements(requirements):
+    async def insert_requirements(requirements):
         """ Merge the required libraries into the master. """
         requirements = list(requirements)
         requirements.sort()
@@ -1328,19 +936,23 @@ class Insert:
         # TODO Finish this and don't repeat things that are required for other reasons.
         # self._put_anchored_lines(target_file=self.file_setup, anchor='setup.cfg', insert_lines=insert_lines)
 
-    def insert_includes(self, includes):
+    async def insert_includes(self, includes):
         """ Insert the includes for all libraries. """
         insert_lines = '\n'.join(includes) + '\n'
-        self._put_anchored_lines(target_file=Locations.file_ebay_rest, anchor='er_imports', insert_lines=insert_lines)
+        await self._put_anchored_lines(
+            target_file=Locations.file_ebay_rest,
+            anchor='er_imports',
+            insert_lines=insert_lines
+        )
 
-    def insert_methods(self, methods: str) -> None:
+    async def insert_methods(self, methods: str) -> None:
         """ Make all the python methods and insert them where needed. """
 
         methods = "\n" + methods
-        self._put_anchored_lines(target_file=Locations.file_ebay_rest, anchor='er_methods', insert_lines=methods)
+        await self._put_anchored_lines(target_file=Locations.file_ebay_rest, anchor='er_methods', insert_lines=methods)
 
     @staticmethod
-    def _put_anchored_lines(target_file: str, anchor: str, insert_lines: str) -> None:
+    async def _put_anchored_lines(target_file: str, anchor: str, insert_lines: str) -> None:
         """ In the file replace what is between anchors with new lines of code. """
 
         if os.path.isfile(target_file):
@@ -1379,9 +991,12 @@ async def process_overview_link(overview_link):
     c = Contracts(overview_link)
     await c.process()
     name = c.name
-    requirement = c.get_requirements()
-    include = c.get_includes()
-    method = await c.get_methods()
+    requirement_task = asyncio.create_task(c.get_requirements())
+    include_task = asyncio.create_task(c.get_includes())
+    method_task = asyncio.create_task(c.get_methods())
+    requirement = await requirement_task
+    include = await include_task
+    method = await method_task
     return include, method, name, requirement
 
 
@@ -1422,8 +1037,8 @@ async def generate_apis():
         requirements.update(requirement)
         includes.extend(include)
         methods += method
-    Insert().do(requirements, includes, methods)
-    # p.remove_duplicates(names)     # uncomment the method call when work on it resumes
+    await Insert().do(requirements, includes, methods)
+    # p.remove_duplicates(names)     # TODO uncomment the method call when work on it resumes
 
 
 async def main() -> None:

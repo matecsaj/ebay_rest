@@ -833,14 +833,6 @@ class MultitonTests(unittest.TestCase):
 
 class ReferenceTests(unittest.TestCase):
 
-    # deprecated, delete later if nobody complains
-    # def test_enum(self):
-    #    self.assertIsNotNone(Reference.get_item_enums_modified(), msg="Failed to load enums.")
-
-    # deprecated, delete later if nobody complains
-    # def test_container(self):
-    #    self.assertIsNotNone(Reference.get_item_fields_modified(), msg="Failed to load containers.")
-
     def test_get_application_scopes(self):
         self.assertIsNotNone(Reference.get_application_scopes(), msg="Failed to load global id values.")
 

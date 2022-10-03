@@ -122,7 +122,7 @@ class LocationResponse(object):
     def next(self):
         """Gets the next of this LocationResponse.  # noqa: E501
 
-        The URI for the following page of results. This value is returned only if there is an additional page of results to display from the result set. <br><br><b>Max length</b>: 2048  # noqa: E501
+        The URI for the following page of results. This value is returned only if there is an additional page of results to display from the result set. <br/><br/><b>Max length</b>: 2048  # noqa: E501
 
         :return: The next of this LocationResponse.  # noqa: E501
         :rtype: str
@@ -133,7 +133,7 @@ class LocationResponse(object):
     def next(self, next):
         """Sets the next of this LocationResponse.
 
-        The URI for the following page of results. This value is returned only if there is an additional page of results to display from the result set. <br><br><b>Max length</b>: 2048  # noqa: E501
+        The URI for the following page of results. This value is returned only if there is an additional page of results to display from the result set. <br/><br/><b>Max length</b>: 2048  # noqa: E501
 
         :param next: The next of this LocationResponse.  # noqa: E501
         :type: str
@@ -168,7 +168,7 @@ class LocationResponse(object):
     def prev(self):
         """Gets the prev of this LocationResponse.  # noqa: E501
 
-        The URI for the preceding page of results. This value is returned only if there is a previous page of results to display from the result set. <br><br><b>Max length</b>: 2048  # noqa: E501
+        The URI for the preceding page of results. This value is returned only if there is a previous page of results to display from the result set. <br/><br/><b>Max length</b>: 2048  # noqa: E501
 
         :return: The prev of this LocationResponse.  # noqa: E501
         :rtype: str
@@ -179,7 +179,7 @@ class LocationResponse(object):
     def prev(self, prev):
         """Sets the prev of this LocationResponse.
 
-        The URI for the preceding page of results. This value is returned only if there is a previous page of results to display from the result set. <br><br><b>Max length</b>: 2048  # noqa: E501
+        The URI for the preceding page of results. This value is returned only if there is a previous page of results to display from the result set. <br/><br/><b>Max length</b>: 2048  # noqa: E501
 
         :param prev: The prev of this LocationResponse.  # noqa: E501
         :type: str
@@ -191,7 +191,7 @@ class LocationResponse(object):
     def total(self):
         """Gets the total of this LocationResponse.  # noqa: E501
 
-        The total number of items retrieved in the result set.  <br><br>If no items are found, this field is returned with a value of <code>0</code>.  # noqa: E501
+        The total number of items retrieved in the result set.  <br/><br/>If no items are found, this field is returned with a value of <code>0</code>.  # noqa: E501
 
         :return: The total of this LocationResponse.  # noqa: E501
         :rtype: int
@@ -202,7 +202,7 @@ class LocationResponse(object):
     def total(self, total):
         """Sets the total of this LocationResponse.
 
-        The total number of items retrieved in the result set.  <br><br>If no items are found, this field is returned with a value of <code>0</code>.  # noqa: E501
+        The total number of items retrieved in the result set.  <br/><br/>If no items are found, this field is returned with a value of <code>0</code>.  # noqa: E501
 
         :param total: The total of this LocationResponse.  # noqa: E501
         :type: int

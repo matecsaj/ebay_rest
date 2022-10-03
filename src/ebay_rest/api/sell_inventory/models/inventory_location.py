@@ -76,7 +76,7 @@ class InventoryLocation(object):
     def location_additional_information(self):
         """Gets the location_additional_information of this InventoryLocation.  # noqa: E501
 
-        This text field is used by the merchant to provide/update additional information about an inventory location. Whatever text is passed in this field will replace the current text string defined for this field. If the text will not change, the same text should be passed in once again. <br><br><b>Max length</b>: 256  # noqa: E501
+        This text field is used by the merchant to provide/update additional information about an inventory location. Whatever text is passed in this field will replace the current text string defined for this field. If the text will not change, the same text should be passed in once again. <br/><br/><b>Max length</b>: 256  # noqa: E501
 
         :return: The location_additional_information of this InventoryLocation.  # noqa: E501
         :rtype: str
@@ -87,7 +87,7 @@ class InventoryLocation(object):
     def location_additional_information(self, location_additional_information):
         """Sets the location_additional_information of this InventoryLocation.
 
-        This text field is used by the merchant to provide/update additional information about an inventory location. Whatever text is passed in this field will replace the current text string defined for this field. If the text will not change, the same text should be passed in once again. <br><br><b>Max length</b>: 256  # noqa: E501
+        This text field is used by the merchant to provide/update additional information about an inventory location. Whatever text is passed in this field will replace the current text string defined for this field. If the text will not change, the same text should be passed in once again. <br/><br/><b>Max length</b>: 256  # noqa: E501
 
         :param location_additional_information: The location_additional_information of this InventoryLocation.  # noqa: E501
         :type: str
@@ -99,7 +99,7 @@ class InventoryLocation(object):
     def location_instructions(self):
         """Gets the location_instructions of this InventoryLocation.  # noqa: E501
 
-        This text field is generally used by the merchant to provide/update special pickup instructions for a store inventory location. Although this field is optional, it is recommended that merchants provide this field to create a pleasant and easy pickup experience for In-Store Pickup and Click and Collect orders. If this field is not included in the call request payload, eBay will use the default pickup instructions contained in the merchant's profile (if available). Whatever text is passed in this field will replace the current text string defined for this field. If the text will not change, the same text should be passed in once again. <br><br><b>Max length</b>: 1000  # noqa: E501
+        This text field is generally used by the merchant to provide/update special pickup instructions for a store inventory location. Although this field is optional, it is recommended that merchants provide this field to create a pleasant and easy pickup experience for In-Store Pickup and Click and Collect orders. If this field is not included in the call request payload, eBay will use the default pickup instructions contained in the merchant's profile (if available). Whatever text is passed in this field will replace the current text string defined for this field. If the text will not change, the same text should be passed in once again. <br/><br/><b>Max length</b>: 1000  # noqa: E501
 
         :return: The location_instructions of this InventoryLocation.  # noqa: E501
         :rtype: str
@@ -110,7 +110,7 @@ class InventoryLocation(object):
     def location_instructions(self, location_instructions):
         """Sets the location_instructions of this InventoryLocation.
 
-        This text field is generally used by the merchant to provide/update special pickup instructions for a store inventory location. Although this field is optional, it is recommended that merchants provide this field to create a pleasant and easy pickup experience for In-Store Pickup and Click and Collect orders. If this field is not included in the call request payload, eBay will use the default pickup instructions contained in the merchant's profile (if available). Whatever text is passed in this field will replace the current text string defined for this field. If the text will not change, the same text should be passed in once again. <br><br><b>Max length</b>: 1000  # noqa: E501
+        This text field is generally used by the merchant to provide/update special pickup instructions for a store inventory location. Although this field is optional, it is recommended that merchants provide this field to create a pleasant and easy pickup experience for In-Store Pickup and Click and Collect orders. If this field is not included in the call request payload, eBay will use the default pickup instructions contained in the merchant's profile (if available). Whatever text is passed in this field will replace the current text string defined for this field. If the text will not change, the same text should be passed in once again. <br/><br/><b>Max length</b>: 1000  # noqa: E501
 
         :param location_instructions: The location_instructions of this InventoryLocation.  # noqa: E501
         :type: str
@@ -122,7 +122,7 @@ class InventoryLocation(object):
     def location_web_url(self):
         """Gets the location_web_url of this InventoryLocation.  # noqa: E501
 
-        This text field is used by the merchant to provide/update the Website address (URL) associated with the inventory location. The URL that is passed in this field will replace any other URL that may be defined for this field. <br><br><b>Max length</b>: 512  # noqa: E501
+        This text field is used by the merchant to provide/update the Website address (URL) associated with the inventory location. The URL that is passed in this field will replace any other URL that may be defined for this field. <br/><br/><b>Max length</b>: 512  # noqa: E501
 
         :return: The location_web_url of this InventoryLocation.  # noqa: E501
         :rtype: str
@@ -133,7 +133,7 @@ class InventoryLocation(object):
     def location_web_url(self, location_web_url):
         """Sets the location_web_url of this InventoryLocation.
 
-        This text field is used by the merchant to provide/update the Website address (URL) associated with the inventory location. The URL that is passed in this field will replace any other URL that may be defined for this field. <br><br><b>Max length</b>: 512  # noqa: E501
+        This text field is used by the merchant to provide/update the Website address (URL) associated with the inventory location. The URL that is passed in this field will replace any other URL that may be defined for this field. <br/><br/><b>Max length</b>: 512  # noqa: E501
 
         :param location_web_url: The location_web_url of this InventoryLocation.  # noqa: E501
         :type: str
@@ -191,7 +191,7 @@ class InventoryLocation(object):
     def phone(self):
         """Gets the phone of this InventoryLocation.  # noqa: E501
 
-        This text field is used by the merchant to provide/update the phone number for the inventory location. The phone number that is passed in this field will replace any other phone number that may be defined for this field. <br><br><b>Max length</b>: 36  # noqa: E501
+        This text field is used by the merchant to provide/update the phone number for the inventory location. The phone number that is passed in this field will replace any other phone number that may be defined for this field. <br/><br/><b>Max length</b>: 36  # noqa: E501
 
         :return: The phone of this InventoryLocation.  # noqa: E501
         :rtype: str
@@ -202,7 +202,7 @@ class InventoryLocation(object):
     def phone(self, phone):
         """Sets the phone of this InventoryLocation.
 
-        This text field is used by the merchant to provide/update the phone number for the inventory location. The phone number that is passed in this field will replace any other phone number that may be defined for this field. <br><br><b>Max length</b>: 36  # noqa: E501
+        This text field is used by the merchant to provide/update the phone number for the inventory location. The phone number that is passed in this field will replace any other phone number that may be defined for this field. <br/><br/><b>Max length</b>: 36  # noqa: E501
 
         :param phone: The phone of this InventoryLocation.  # noqa: E501
         :type: str

@@ -51,7 +51,7 @@ class SpecialHours(object):
     def _date(self):
         """Gets the _date of this SpecialHours.  # noqa: E501
 
-        A <strong>date</strong> value is required for each specific date that the store location has special operating hours.  <br><br>The timestamp is formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> string, which is based on the 24-hour Coordinated Universal Time (UTC) clock.  <br><br><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br><b>Example:</b> <code>2018-08-04T07:09:00.000Z</code> <br><br>This field is returned if set for the store location.  # noqa: E501
+        A <strong>date</strong> value is required for each specific date that the store location has special operating hours.  <br/><br/>The timestamp is formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> string, which is based on the 24-hour Coordinated Universal Time (UTC) clock.  <br/><br/><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br/><b>Example:</b> <code>2018-08-04T07:09:00.000Z</code> <br/><br/>This field is returned if set for the store location.  # noqa: E501
 
         :return: The _date of this SpecialHours.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class SpecialHours(object):
     def _date(self, _date):
         """Sets the _date of this SpecialHours.
 
-        A <strong>date</strong> value is required for each specific date that the store location has special operating hours.  <br><br>The timestamp is formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> string, which is based on the 24-hour Coordinated Universal Time (UTC) clock.  <br><br><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br><b>Example:</b> <code>2018-08-04T07:09:00.000Z</code> <br><br>This field is returned if set for the store location.  # noqa: E501
+        A <strong>date</strong> value is required for each specific date that the store location has special operating hours.  <br/><br/>The timestamp is formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> string, which is based on the 24-hour Coordinated Universal Time (UTC) clock.  <br/><br/><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br/><b>Example:</b> <code>2018-08-04T07:09:00.000Z</code> <br/><br/>This field is returned if set for the store location.  # noqa: E501
 
         :param _date: The _date of this SpecialHours.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class SpecialHours(object):
     def intervals(self):
         """Gets the intervals of this SpecialHours.  # noqa: E501
 
-        This container is used to define the opening and closing times of a store on a specific date (defined in the <strong>date</strong> field). An <strong>intervals</strong> container is needed for each specific date that the store has special operating hours. These special operating hours on the specific date override the normal operating hours for the specific day of the week. If a store location closes for lunch (or any other period during the day) and then reopens, multiple <strong>open</strong> and <strong>close</strong> pairs are needed. <br><br>This container is returned if set for the store location.  # noqa: E501
+        This container is used to define the opening and closing times of a store on a specific date (defined in the <strong>date</strong> field). An <strong>intervals</strong> container is needed for each specific date that the store has special operating hours. These special operating hours on the specific date override the normal operating hours for the specific day of the week. If a store location closes for lunch (or any other period during the day) and then reopens, multiple <strong>open</strong> and <strong>close</strong> pairs are needed. <br/><br/>This container is returned if set for the store location.  # noqa: E501
 
         :return: The intervals of this SpecialHours.  # noqa: E501
         :rtype: list[Interval]
@@ -85,7 +85,7 @@ class SpecialHours(object):
     def intervals(self, intervals):
         """Sets the intervals of this SpecialHours.
 
-        This container is used to define the opening and closing times of a store on a specific date (defined in the <strong>date</strong> field). An <strong>intervals</strong> container is needed for each specific date that the store has special operating hours. These special operating hours on the specific date override the normal operating hours for the specific day of the week. If a store location closes for lunch (or any other period during the day) and then reopens, multiple <strong>open</strong> and <strong>close</strong> pairs are needed. <br><br>This container is returned if set for the store location.  # noqa: E501
+        This container is used to define the opening and closing times of a store on a specific date (defined in the <strong>date</strong> field). An <strong>intervals</strong> container is needed for each specific date that the store has special operating hours. These special operating hours on the specific date override the normal operating hours for the specific day of the week. If a store location closes for lunch (or any other period during the day) and then reopens, multiple <strong>open</strong> and <strong>close</strong> pairs are needed. <br/><br/>This container is returned if set for the store location.  # noqa: E501
 
         :param intervals: The intervals of this SpecialHours.  # noqa: E501
         :type: list[Interval]
