@@ -11,10 +11,10 @@ from urllib.parse import parse_qs, urlencode
 # 3rd party library imports
 from requests import codes, post, Response
 from selenium import webdriver  # In README.md note the extra installation steps.
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, WebDriverException
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.common.exceptions import WebDriverException
 
 # Local imports
 from .date_time import DateTime
@@ -302,8 +302,10 @@ class UserToken(metaclass=Multiton):
         """
 
         # open browser
+        options = Options()
+        options.add_argument("--headless")      # comment out this line when debugging or to complete a captcha
         try:
-            browser = webdriver.Chrome()
+            browser = webdriver.Chrome(options=options)
         except WebDriverException as exc:
             raise Error(number=96014, reason="ChromeDriver instantiation failure.", detail=exc.msg)
 
