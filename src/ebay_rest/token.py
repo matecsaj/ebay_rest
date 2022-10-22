@@ -303,7 +303,7 @@ class UserToken(metaclass=Multiton):
 
         # open browser
         options = Options()
-        options.add_argument("--headless")      # comment out this line when debugging or to complete a captcha
+        # options.add_argument("--headless")      # TODO Put this back in after adding a captcha solver.
         try:
             browser = webdriver.Chrome(options=options)
         except WebDriverException as exc:

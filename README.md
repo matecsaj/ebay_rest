@@ -107,6 +107,8 @@ print(help(Reference))
 
 **A:** Reusing the result of the browser pop-up is possible. After running your program, check your terminal/console or [info level logger](https://docs.python.org/3.7/library/logging.html).
 
+[Headless operation is in the works](https://github.com/matecsaj/ebay_rest/issues/56); contributions are welcome.
+
 ##
 **Q:** Why is eBay giving an "Internal Error" or "Internal Server Error"? 
 
