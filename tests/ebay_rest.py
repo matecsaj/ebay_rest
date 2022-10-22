@@ -601,8 +601,8 @@ class APIProductionSingleTests(unittest.TestCase):
                     {
                         "availabilityType": "AvailabilityTypeEnum : [IN_STOCK,OUT_OF_STOCK,SHIP_TO_STORE]",
                         "fulfillmentTime": {
-                            "unit": "TimeDurationUnitEnum : [YEAR,MONTH,DAY,HOUR,CALENDAR_DAY,BUSINESS_DAY,MINUTE,SECOND,MILLISECOND]",
-                            # noqa: E501
+                            "unit": "TimeDurationUnitEnum : [YEAR,MONTH,DAY,HOUR,CALENDAR_DAY,"
+                                    "BUSINESS_DAY,MINUTE,SECOND,MILLISECOND]",
                             "value": "integer"
                         },
                         "merchantLocationKey": "string",
@@ -613,7 +613,8 @@ class APIProductionSingleTests(unittest.TestCase):
                     "availabilityDistributions": [
                         {
                             "fulfillmentTime": {
-                                "unit": "TimeDurationUnitEnum : [YEAR,MONTH,DAY,HOUR,CALENDAR_DAY,BUSINESS_DAY,MINUTE,SECOND,MILLISECOND]",
+                                "unit": "TimeDurationUnitEnum : [YEAR,MONTH,DAY,HOUR,"
+                                        "CALENDAR_DAY,BUSINESS_DAY,MINUTE,SECOND,MILLISECOND]",
                                 # noqa: E501
                                 "value": "integer"
                             },
@@ -624,7 +625,11 @@ class APIProductionSingleTests(unittest.TestCase):
                     "quantity": "integer"
                 }
             },
-            "condition": "ConditionEnum : [NEW,LIKE_NEW,NEW_OTHER,NEW_WITH_DEFECTS,MANUFACTURER_REFURBISHED,CERTIFIED_REFURBISHED,EXCELLENT_REFURBISHED,VERY_GOOD_REFURBISHED,GOOD_REFURBISHED,SELLER_REFURBISHED,USED_EXCELLENT,USED_VERY_GOOD,USED_GOOD,USED_ACCEPTABLE,FOR_PARTS_OR_NOT_WORKING]",
+            "condition": "ConditionEnum : [NEW,LIKE_NEW,NEW_OTHER,"
+                         "NEW_WITH_DEFECTS,MANUFACTURER_REFURBISHED,"
+                         "CERTIFIED_REFURBISHED,EXCELLENT_REFURBISHED,"
+                         "VERY_GOOD_REFURBISHED,GOOD_REFURBISHED,SELLER_REFURBISHED,"
+                         "USED_EXCELLENT,USED_VERY_GOOD,USED_GOOD,USED_ACCEPTABLE,FOR_PARTS_OR_NOT_WORKING]",
             # noqa: E501
             "conditionDescription": "string",
             "packageWeightAndSize": {
@@ -634,8 +639,16 @@ class APIProductionSingleTests(unittest.TestCase):
                     "unit": "LengthUnitOfMeasureEnum : [INCH,FEET,CENTIMETER,METER]",
                     "width": "number"
                 },
-                "packageType": "PackageTypeEnum : [LETTER,BULKY_GOODS,CARAVAN,CARS,EUROPALLET,EXPANDABLE_TOUGH_BAGS,EXTRA_LARGE_PACK,FURNITURE,INDUSTRY_VEHICLES,LARGE_CANADA_POSTBOX,LARGE_CANADA_POST_BUBBLE_MAILER,LARGE_ENVELOPE,MAILING_BOX,MEDIUM_CANADA_POST_BOX,MEDIUM_CANADA_POST_BUBBLE_MAILER,MOTORBIKES,ONE_WAY_PALLET,PACKAGE_THICK_ENVELOPE,PADDED_BAGS,PARCEL_OR_PADDED_ENVELOPE,ROLL,SMALL_CANADA_POST_BOX,SMALL_CANADA_POST_BUBBLE_MAILER,TOUGH_BAGS,UPS_LETTER,USPS_FLAT_RATE_ENVELOPE,USPS_LARGE_PACK,VERY_LARGE_PACK,WINE_PAK]",
-                # noqa: E501
+                "packageType": "PackageTypeEnum : [LETTER,BULKY_GOODS,CARAVAN,CARS,"    
+                               "EUROPALLET,EXPANDABLE_TOUGH_BAGS,EXTRA_LARGE_PACK,"     # noqa: E501
+                               "FURNITURE,INDUSTRY_VEHICLES,LARGE_CANADA_POSTBOX,"
+                               "LARGE_CANADA_POST_BUBBLE_MAILER,LARGE_ENVELOPE,"
+                               "MAILING_BOX,MEDIUM_CANADA_POST_BOX,MEDIUM_CANADA_POST_BUBBLE_MAILER,"
+                               "MOTORBIKES,ONE_WAY_PALLET,PACKAGE_THICK_ENVELOPE,PADDED_BAGS,"
+                               "PARCEL_OR_PADDED_ENVELOPE,ROLL,SMALL_CANADA_POST_BOX,SMALL_CANADA_POST_BUBBLE_MAILER,"
+                               "TOUGH_BAGS,UPS_LETTER,USPS_FLAT_RATE_ENVELOPE,USPS_LARGE_PACK,VERY_LARGE_PACK,"
+                               "WINE_PAK]",
+
                 "weight": {
                     "unit": "WeightUnitOfMeasureEnum : [POUND,KILOGRAM,OUNCE,GRAM]",
                     "value": "number"
@@ -703,6 +716,41 @@ class APIProductionSingleTests(unittest.TestCase):
 
         else:
             tp = True
+
+    @unittest.skip  # TODO Finish the unit test and then attempt to relocate it to the APISandboxSingleSiteTests class.
+    def test_file_upload(self):
+        """
+        Test uploading a file. Relevant eBay documentation:
+        https://developer.ebay.com/api-docs/sell/feed/resources/task/methods/createTask
+        https://developer.ebay.com/api-docs/sell/feed/resources/task/methods/uploadFile.
+        """
+        body = {
+            "feedType": "LMS_ORDER_ACK",    # TODO Is this the correct feed type for use with sell_feed_upload_file?.
+            "schemaVersion": "1.0"
+        }
+        try:
+            self._api.sell_feed_create_task(body=body)
+        except Error as error:
+            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+        else:
+            # TODO Somehow, get the task id from the sell_feed_create_task response header. Example from the header.
+            # location:https://api.ebay.com/sell/feed/v1/task/task-11-1271150479
+            # As of 2022-10-22, the Swagger code generated from eBay's OpenAPI contract doesn't support this.
+            task_id = 'task-11-1271150479'
+
+            file_name = 'test_file_upload.json'
+
+            # TODO Somehow pass along the path and file name for the file to be uploaded.
+            path_and_file_name = self._config_location = os.path.join(os.getcwd(), 'test_file_upload.json')
+            # Lines like "local_var_files = {}" are found in src/ebay_rest/api/sell_feed/api/task_api.py
+            # Instead of an empty dictionary, how do we make this happen?
+            local_var_files = {'filename', path_and_file_name}
+            # As of 2022-10-22, the Swagger code generated from eBay's OpenAPI contract doesn't support this.
+
+            try:
+                self._api.sell_feed_upload_file(task_id=task_id, file_name=file_name)
+            except Error as error:
+                self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
 
     @unittest.skip  # TODO finish it
     def test_marketplace_account_deletion(self):
