@@ -168,7 +168,7 @@ class ListingDetail(object):
     def inventory_reference_type(self):
         """Gets the inventory_reference_type of this ListingDetail.  # noqa: E501
 
-        Indicates the type of the <b>inventoryReferenceId</b>, which can be either an individual item or a multi-SKU item (<code>INVENTORY_ITEM</code> and <code>INVENTORY_ITEM_GROUP</code>, respectively).  <br><br><b>Note:</b> This value is not currently returned in the response.  # noqa: E501
+        Indicates the type of the <b>inventoryReferenceId</b>, which can be either a single-SKU or a multi-SKU listing (<code>INVENTORY_ITEM</code> and <code>INVENTORY_ITEM_GROUP</code>, respectively).  <br><br><b>Note:</b> This value is not currently returned in the response.  # noqa: E501
 
         :return: The inventory_reference_type of this ListingDetail.  # noqa: E501
         :rtype: str
@@ -179,7 +179,7 @@ class ListingDetail(object):
     def inventory_reference_type(self, inventory_reference_type):
         """Sets the inventory_reference_type of this ListingDetail.
 
-        Indicates the type of the <b>inventoryReferenceId</b>, which can be either an individual item or a multi-SKU item (<code>INVENTORY_ITEM</code> and <code>INVENTORY_ITEM_GROUP</code>, respectively).  <br><br><b>Note:</b> This value is not currently returned in the response.  # noqa: E501
+        Indicates the type of the <b>inventoryReferenceId</b>, which can be either a single-SKU or a multi-SKU listing (<code>INVENTORY_ITEM</code> and <code>INVENTORY_ITEM_GROUP</code>, respectively).  <br><br><b>Note:</b> This value is not currently returned in the response.  # noqa: E501
 
         :param inventory_reference_type: The inventory_reference_type of this ListingDetail.  # noqa: E501
         :type: str

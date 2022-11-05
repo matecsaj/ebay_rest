@@ -51,7 +51,7 @@ class AspectDistribution(object):
     def aspect_value_distributions(self):
         """Gets the aspect_value_distributions of this AspectDistribution.  # noqa: E501
 
-        Contains information about one or more values of the category aspect identified by localizedAspectName.  # noqa: E501
+        Contains information about one or more values of the category aspect identified by <b>localizedAspectName</b>.   # noqa: E501
 
         :return: The aspect_value_distributions of this AspectDistribution.  # noqa: E501
         :rtype: list[AspectValueDistribution]
@@ -62,7 +62,7 @@ class AspectDistribution(object):
     def aspect_value_distributions(self, aspect_value_distributions):
         """Sets the aspect_value_distributions of this AspectDistribution.
 
-        Contains information about one or more values of the category aspect identified by localizedAspectName.  # noqa: E501
+        Contains information about one or more values of the category aspect identified by <b>localizedAspectName</b>.   # noqa: E501
 
         :param aspect_value_distributions: The aspect_value_distributions of this AspectDistribution.  # noqa: E501
         :type: list[AspectValueDistribution]
@@ -74,7 +74,7 @@ class AspectDistribution(object):
     def localized_aspect_name(self):
         """Gets the localized_aspect_name of this AspectDistribution.  # noqa: E501
 
-        The localized name of an aspect that is associated with the category identified by dominantCategoryId.  # noqa: E501
+        The localized name of an aspect that is associated with the category identified by <b>dominantCategoryId</b>.  # noqa: E501
 
         :return: The localized_aspect_name of this AspectDistribution.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class AspectDistribution(object):
     def localized_aspect_name(self, localized_aspect_name):
         """Sets the localized_aspect_name of this AspectDistribution.
 
-        The localized name of an aspect that is associated with the category identified by dominantCategoryId.  # noqa: E501
+        The localized name of an aspect that is associated with the category identified by <b>dominantCategoryId</b>.  # noqa: E501
 
         :param localized_aspect_name: The localized_aspect_name of this AspectDistribution.  # noqa: E501
         :type: str

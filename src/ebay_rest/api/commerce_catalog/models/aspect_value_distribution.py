@@ -56,7 +56,7 @@ class AspectValueDistribution(object):
     def localized_aspect_value(self):
         """Gets the localized_aspect_value of this AspectValueDistribution.  # noqa: E501
 
-        The localized value of the category aspect identified by refinement.aspectDistributions.localizedAspectName.  # noqa: E501
+        The localized value of the category aspect identified by <b>refinement.aspectDistributions.localizedAspectName</b>.  # noqa: E501
 
         :return: The localized_aspect_value of this AspectValueDistribution.  # noqa: E501
         :rtype: str
@@ -67,7 +67,7 @@ class AspectValueDistribution(object):
     def localized_aspect_value(self, localized_aspect_value):
         """Sets the localized_aspect_value of this AspectValueDistribution.
 
-        The localized value of the category aspect identified by refinement.aspectDistributions.localizedAspectName.  # noqa: E501
+        The localized value of the category aspect identified by <b>refinement.aspectDistributions.localizedAspectName</b>.  # noqa: E501
 
         :param localized_aspect_value: The localized_aspect_value of this AspectValueDistribution.  # noqa: E501
         :type: str
@@ -79,7 +79,7 @@ class AspectValueDistribution(object):
     def match_count(self):
         """Gets the match_count of this AspectValueDistribution.  # noqa: E501
 
-        The number of times the value of localizedAspectValue has been used for eBay product listings. By comparing this quantity to the matchCount for other values of the same aspect, you can present a histogram of the values to sellers, who can use that information to select which aspect value is most appropriate for their product. You can then include the user-selected value in the the search call's aspect_filter parameter to refine your search.  # noqa: E501
+        The number of times the value of <b>localizedAspectValue</b> has been used for eBay product listings. By comparing this quantity to the <b>matchCount</b> for other values of the same aspect, you can present a histogram of the values to sellers, who can use that information to select which aspect value is most appropriate for their product. You can then include the user-selected value in the the <b>search</b> call's <b>aspect_filter</b> parameter to refine your search.  # noqa: E501
 
         :return: The match_count of this AspectValueDistribution.  # noqa: E501
         :rtype: int
@@ -90,7 +90,7 @@ class AspectValueDistribution(object):
     def match_count(self, match_count):
         """Sets the match_count of this AspectValueDistribution.
 
-        The number of times the value of localizedAspectValue has been used for eBay product listings. By comparing this quantity to the matchCount for other values of the same aspect, you can present a histogram of the values to sellers, who can use that information to select which aspect value is most appropriate for their product. You can then include the user-selected value in the the search call's aspect_filter parameter to refine your search.  # noqa: E501
+        The number of times the value of <b>localizedAspectValue</b> has been used for eBay product listings. By comparing this quantity to the <b>matchCount</b> for other values of the same aspect, you can present a histogram of the values to sellers, who can use that information to select which aspect value is most appropriate for their product. You can then include the user-selected value in the the <b>search</b> call's <b>aspect_filter</b> parameter to refine your search.  # noqa: E501
 
         :param match_count: The match_count of this AspectValueDistribution.  # noqa: E501
         :type: int
@@ -102,7 +102,7 @@ class AspectValueDistribution(object):
     def refinement_href(self):
         """Gets the refinement_href of this AspectValueDistribution.  # noqa: E501
 
-        A HATEOAS reference that further refines the search with this particular localizedAspectValue.  # noqa: E501
+        A HATEOAS reference that further refines the search with this particular <b>localizedAspectValue</b>.  # noqa: E501
 
         :return: The refinement_href of this AspectValueDistribution.  # noqa: E501
         :rtype: str
@@ -113,7 +113,7 @@ class AspectValueDistribution(object):
     def refinement_href(self, refinement_href):
         """Sets the refinement_href of this AspectValueDistribution.
 
-        A HATEOAS reference that further refines the search with this particular localizedAspectValue.  # noqa: E501
+        A HATEOAS reference that further refines the search with this particular <b>localizedAspectValue</b>.  # noqa: E501
 
         :param refinement_href: The refinement_href of this AspectValueDistribution.  # noqa: E501
         :type: str

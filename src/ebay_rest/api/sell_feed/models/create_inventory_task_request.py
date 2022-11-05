@@ -30,23 +30,20 @@ class CreateInventoryTaskRequest(object):
     swagger_types = {
         'schema_version': 'str',
         'feed_type': 'str',
-        'filter_criteria': 'InventoryFilterCriteria',
-        'inventory_file_template': 'str'
+        'filter_criteria': 'InventoryFilterCriteria'
     }
 
     attribute_map = {
         'schema_version': 'schemaVersion',
         'feed_type': 'feedType',
-        'filter_criteria': 'filterCriteria',
-        'inventory_file_template': 'inventoryFileTemplate'
+        'filter_criteria': 'filterCriteria'
     }
 
-    def __init__(self, schema_version=None, feed_type=None, filter_criteria=None, inventory_file_template=None):  # noqa: E501
+    def __init__(self, schema_version=None, feed_type=None, filter_criteria=None):  # noqa: E501
         """CreateInventoryTaskRequest - a model defined in Swagger"""  # noqa: E501
         self._schema_version = None
         self._feed_type = None
         self._filter_criteria = None
-        self._inventory_file_template = None
         self.discriminator = None
         if schema_version is not None:
             self.schema_version = schema_version
@@ -54,8 +51,6 @@ class CreateInventoryTaskRequest(object):
             self.feed_type = feed_type
         if filter_criteria is not None:
             self.filter_criteria = filter_criteria
-        if inventory_file_template is not None:
-            self.inventory_file_template = inventory_file_template
 
     @property
     def schema_version(self):
@@ -84,7 +79,7 @@ class CreateInventoryTaskRequest(object):
     def feed_type(self):
         """Gets the feed_type of this CreateInventoryTaskRequest.  # noqa: E501
 
-        The feed type associated with the inventory task you are about to create. Use a <strong>feedType</strong> that is available for your API. Presently, only one feed type is available:<ul><li><code>LMS_ACTIVE_INVENTORY_REPORT</code></li></ul><br/><br/>See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#merchant-data-reports-download-feed-types\" target=\"_blank\">Report download feed types</a> for more information.  # noqa: E501
+        The feed type associated with the inventory task you are about to create. Use a <strong>feedType</strong> that is available for your API. Presently, only one feed type is available:<ul><li><code>LMS_ACTIVE_INVENTORY_REPORT</code></li></ul><br/>See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#merchant-data-reports-download-feed-types\" target=\"_blank\">Report download feed types</a> for more information.  # noqa: E501
 
         :return: The feed_type of this CreateInventoryTaskRequest.  # noqa: E501
         :rtype: str
@@ -95,7 +90,7 @@ class CreateInventoryTaskRequest(object):
     def feed_type(self, feed_type):
         """Sets the feed_type of this CreateInventoryTaskRequest.
 
-        The feed type associated with the inventory task you are about to create. Use a <strong>feedType</strong> that is available for your API. Presently, only one feed type is available:<ul><li><code>LMS_ACTIVE_INVENTORY_REPORT</code></li></ul><br/><br/>See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#merchant-data-reports-download-feed-types\" target=\"_blank\">Report download feed types</a> for more information.  # noqa: E501
+        The feed type associated with the inventory task you are about to create. Use a <strong>feedType</strong> that is available for your API. Presently, only one feed type is available:<ul><li><code>LMS_ACTIVE_INVENTORY_REPORT</code></li></ul><br/>See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#merchant-data-reports-download-feed-types\" target=\"_blank\">Report download feed types</a> for more information.  # noqa: E501
 
         :param feed_type: The feed_type of this CreateInventoryTaskRequest.  # noqa: E501
         :type: str
@@ -123,29 +118,6 @@ class CreateInventoryTaskRequest(object):
         """
 
         self._filter_criteria = filter_criteria
-
-    @property
-    def inventory_file_template(self):
-        """Gets the inventory_file_template of this CreateInventoryTaskRequest.  # noqa: E501
-
-        The inventory file template used to return specific types of inventory tasks. Presently not applicable for <code>LMS_ACTIVE_INVENTORY_REPORT</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:InventoryFileTemplateEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The inventory_file_template of this CreateInventoryTaskRequest.  # noqa: E501
-        :rtype: str
-        """
-        return self._inventory_file_template
-
-    @inventory_file_template.setter
-    def inventory_file_template(self, inventory_file_template):
-        """Sets the inventory_file_template of this CreateInventoryTaskRequest.
-
-        The inventory file template used to return specific types of inventory tasks. Presently not applicable for <code>LMS_ACTIVE_INVENTORY_REPORT</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:InventoryFileTemplateEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param inventory_file_template: The inventory_file_template of this CreateInventoryTaskRequest.  # noqa: E501
-        :type: str
-        """
-
-        self._inventory_file_template = inventory_file_template
 
     def to_dict(self):
         """Returns the model properties as a dict"""

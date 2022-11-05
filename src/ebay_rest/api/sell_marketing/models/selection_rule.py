@@ -117,7 +117,7 @@ class SelectionRule(object):
     def category_scope(self):
         """Gets the category_scope of this SelectionRule.  # noqa: E501
 
-        The enumeration values returned in this field indicate if the category IDs in the corresponding categoryIds array are identifiers for eBay categories or for a seller's eBay store categories. This field is always returned if one or more category IDs are used as a filter. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/sme:CategoryScopeEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration values returned in this field indicate if the category IDs in the corresponding categoryIds array are identifiers for eBay categories or for a seller's eBay store categories. This field is always returned if one or more category IDs are used as a filter. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:CategoryScopeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The category_scope of this SelectionRule.  # noqa: E501
         :rtype: str
@@ -128,7 +128,7 @@ class SelectionRule(object):
     def category_scope(self, category_scope):
         """Sets the category_scope of this SelectionRule.
 
-        The enumeration values returned in this field indicate if the category IDs in the corresponding categoryIds array are identifiers for eBay categories or for a seller's eBay store categories. This field is always returned if one or more category IDs are used as a filter. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/sme:CategoryScopeEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration values returned in this field indicate if the category IDs in the corresponding categoryIds array are identifiers for eBay categories or for a seller's eBay store categories. This field is always returned if one or more category IDs are used as a filter. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:CategoryScopeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param category_scope: The category_scope of this SelectionRule.  # noqa: E501
         :type: str

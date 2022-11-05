@@ -36,8 +36,7 @@ class InventoryTask(object):
         'schema_version': 'str',
         'detail_href': 'str',
         'upload_summary': 'UploadSummary',
-        'filter_criteria': 'InventoryFilterCriteria',
-        'inventory_file_template': 'str'
+        'filter_criteria': 'InventoryFilterCriteria'
     }
 
     attribute_map = {
@@ -49,11 +48,10 @@ class InventoryTask(object):
         'schema_version': 'schemaVersion',
         'detail_href': 'detailHref',
         'upload_summary': 'uploadSummary',
-        'filter_criteria': 'filterCriteria',
-        'inventory_file_template': 'inventoryFileTemplate'
+        'filter_criteria': 'filterCriteria'
     }
 
-    def __init__(self, task_id=None, status=None, feed_type=None, creation_date=None, completion_date=None, schema_version=None, detail_href=None, upload_summary=None, filter_criteria=None, inventory_file_template=None):  # noqa: E501
+    def __init__(self, task_id=None, status=None, feed_type=None, creation_date=None, completion_date=None, schema_version=None, detail_href=None, upload_summary=None, filter_criteria=None):  # noqa: E501
         """InventoryTask - a model defined in Swagger"""  # noqa: E501
         self._task_id = None
         self._status = None
@@ -64,7 +62,6 @@ class InventoryTask(object):
         self._detail_href = None
         self._upload_summary = None
         self._filter_criteria = None
-        self._inventory_file_template = None
         self.discriminator = None
         if task_id is not None:
             self.task_id = task_id
@@ -84,8 +81,6 @@ class InventoryTask(object):
             self.upload_summary = upload_summary
         if filter_criteria is not None:
             self.filter_criteria = filter_criteria
-        if inventory_file_template is not None:
-            self.inventory_file_template = inventory_file_template
 
     @property
     def task_id(self):
@@ -289,29 +284,6 @@ class InventoryTask(object):
         """
 
         self._filter_criteria = filter_criteria
-
-    @property
-    def inventory_file_template(self):
-        """Gets the inventory_file_template of this InventoryTask.  # noqa: E501
-
-        The inventory file template used to return specific types of inventory tasks, if set in the <strong>createInventoryTask</strong> method. This field does not apply to <code>LMS_ACTIVE_INVENTORY_REPORT</code> feed types. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:InventoryFileTemplateEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The inventory_file_template of this InventoryTask.  # noqa: E501
-        :rtype: str
-        """
-        return self._inventory_file_template
-
-    @inventory_file_template.setter
-    def inventory_file_template(self, inventory_file_template):
-        """Sets the inventory_file_template of this InventoryTask.
-
-        The inventory file template used to return specific types of inventory tasks, if set in the <strong>createInventoryTask</strong> method. This field does not apply to <code>LMS_ACTIVE_INVENTORY_REPORT</code> feed types. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:InventoryFileTemplateEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param inventory_file_template: The inventory_file_template of this InventoryTask.  # noqa: E501
-        :type: str
-        """
-
-        self._inventory_file_template = inventory_file_template
 
     def to_dict(self):
         """Returns the model properties as a dict"""

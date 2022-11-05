@@ -61,7 +61,7 @@ class InternationalReturnOverrideType(object):
     def return_method(self):
         """Gets the return_method of this InternationalReturnOverrideType.  # noqa: E501
 
-        This field sets/indicates if the seller offers replacement or exchange items to the buyer in the case of an international return. The buyer must be willing to accept a replacement or exchange item; otherwise, the seller will need to issue a refund for a return. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ReturnMethodEnum'>eBay API documentation</a>  # noqa: E501
+        This field sets/indicates if the seller offers replacement items to the buyer in the case of an international return. The buyer must be willing to accept a replacement item; otherwise, the seller will need to issue a refund for a return. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ReturnMethodEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The return_method of this InternationalReturnOverrideType.  # noqa: E501
         :rtype: str
@@ -72,7 +72,7 @@ class InternationalReturnOverrideType(object):
     def return_method(self, return_method):
         """Sets the return_method of this InternationalReturnOverrideType.
 
-        This field sets/indicates if the seller offers replacement or exchange items to the buyer in the case of an international return. The buyer must be willing to accept a replacement or exchange item; otherwise, the seller will need to issue a refund for a return. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ReturnMethodEnum'>eBay API documentation</a>  # noqa: E501
+        This field sets/indicates if the seller offers replacement items to the buyer in the case of an international return. The buyer must be willing to accept a replacement item; otherwise, the seller will need to issue a refund for a return. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ReturnMethodEnum'>eBay API documentation</a>  # noqa: E501
 
         :param return_method: The return_method of this InternationalReturnOverrideType.  # noqa: E501
         :type: str

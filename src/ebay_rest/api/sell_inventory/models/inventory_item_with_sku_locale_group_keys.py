@@ -171,7 +171,7 @@ class InventoryItemWithSkuLocaleGroupKeys(object):
     def locale(self):
         """Gets the locale of this InventoryItemWithSkuLocaleGroupKeys.  # noqa: E501
 
-        This field is for future use only. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:LocaleEnum'>eBay API documentation</a>  # noqa: E501
+        This field returns the natural language that was provided in the field values of the request payload (i.e., en_AU, en_GB or de_DE). For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:LocaleEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The locale of this InventoryItemWithSkuLocaleGroupKeys.  # noqa: E501
         :rtype: str
@@ -182,7 +182,7 @@ class InventoryItemWithSkuLocaleGroupKeys(object):
     def locale(self, locale):
         """Sets the locale of this InventoryItemWithSkuLocaleGroupKeys.
 
-        This field is for future use only. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:LocaleEnum'>eBay API documentation</a>  # noqa: E501
+        This field returns the natural language that was provided in the field values of the request payload (i.e., en_AU, en_GB or de_DE). For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:LocaleEnum'>eBay API documentation</a>  # noqa: E501
 
         :param locale: The locale of this InventoryItemWithSkuLocaleGroupKeys.  # noqa: E501
         :type: str

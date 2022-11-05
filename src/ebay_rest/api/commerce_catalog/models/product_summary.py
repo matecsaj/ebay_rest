@@ -106,7 +106,7 @@ class ProductSummary(object):
     def additional_images(self):
         """Gets the additional_images of this ProductSummary.  # noqa: E501
 
-        Contains information about additional images associated with this product. For the primary image, see the image container.  # noqa: E501
+        Contains information about additional images associated with this product. For the primary image, see the <b>image</b> container.  # noqa: E501
 
         :return: The additional_images of this ProductSummary.  # noqa: E501
         :rtype: list[Image]
@@ -117,7 +117,7 @@ class ProductSummary(object):
     def additional_images(self, additional_images):
         """Sets the additional_images of this ProductSummary.
 
-        Contains information about additional images associated with this product. For the primary image, see the image container.  # noqa: E501
+        Contains information about additional images associated with this product. For the primary image, see the <b>image</b> container.  # noqa: E501
 
         :param additional_images: The additional_images of this ProductSummary.  # noqa: E501
         :type: list[Image]
@@ -221,7 +221,7 @@ class ProductSummary(object):
     def gtin(self):
         """Gets the gtin of this ProductSummary.  # noqa: E501
 
-        A list of all GTINs that identify this product. This includes all of the values returned in the ean, isbn, and upc fields.  # noqa: E501
+        A list of all GTINs that identify this product. This includes all of the values returned in the <b>ean</b>, <b>isbn</b>, and <b>upc</b> fields.  # noqa: E501
 
         :return: The gtin of this ProductSummary.  # noqa: E501
         :rtype: list[str]
@@ -232,7 +232,7 @@ class ProductSummary(object):
     def gtin(self, gtin):
         """Sets the gtin of this ProductSummary.
 
-        A list of all GTINs that identify this product. This includes all of the values returned in the ean, isbn, and upc fields.  # noqa: E501
+        A list of all GTINs that identify this product. This includes all of the values returned in the <b>ean</b>, <b>isbn</b>, and <b>upc</b> fields.  # noqa: E501
 
         :param gtin: The gtin of this ProductSummary.  # noqa: E501
         :type: list[str]
@@ -311,7 +311,7 @@ class ProductSummary(object):
     def product_href(self):
         """Gets the product_href of this ProductSummary.  # noqa: E501
 
-        The URI of the getProduct call request that retrieves this product's details.  # noqa: E501
+        The URI of the <b>getProduct</b> call request that retrieves this product's details.  # noqa: E501
 
         :return: The product_href of this ProductSummary.  # noqa: E501
         :rtype: str
@@ -322,7 +322,7 @@ class ProductSummary(object):
     def product_href(self, product_href):
         """Sets the product_href of this ProductSummary.
 
-        The URI of the getProduct call request that retrieves this product's details.  # noqa: E501
+        The URI of the <b>getProduct</b> call request that retrieves this product's details.  # noqa: E501
 
         :param product_href: The product_href of this ProductSummary.  # noqa: E501
         :type: str

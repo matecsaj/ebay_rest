@@ -51,7 +51,7 @@ class Refinement(object):
     def aspect_distributions(self):
         """Gets the aspect_distributions of this Refinement.  # noqa: E501
 
-        Contains information about one or more aspects that are associated with the category identified by dominantCategoryId.  # noqa: E501
+        Contains information about one or more aspects that are associated with the category identified by <b>dominantCategoryId</b>.  # noqa: E501
 
         :return: The aspect_distributions of this Refinement.  # noqa: E501
         :rtype: list[AspectDistribution]
@@ -62,7 +62,7 @@ class Refinement(object):
     def aspect_distributions(self, aspect_distributions):
         """Sets the aspect_distributions of this Refinement.
 
-        Contains information about one or more aspects that are associated with the category identified by dominantCategoryId.  # noqa: E501
+        Contains information about one or more aspects that are associated with the category identified by <b>dominantCategoryId</b>.  # noqa: E501
 
         :param aspect_distributions: The aspect_distributions of this Refinement.  # noqa: E501
         :type: list[AspectDistribution]

@@ -128,7 +128,7 @@ class CreateKeywordRequest(object):
     def match_type(self):
         """Gets the match_type of this CreateKeywordRequest.  # noqa: E501
 
-        A field that defines the match type for the keyword.<br /><br /><span class=\"tablenote\"><span style=\"color:#004680\"><strong>Note:</strong></span> Broad matching of keywords is currently only supported in the AU marketplace.</span><br /><b>Valid Values:</b><ul><li><code>BROAD</code></li><li><code>EXACT</code></li><li><code>PHRASE</code></li></ul> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:MatchTypeEnum'>eBay API documentation</a>  # noqa: E501
+        A field that defines the match type for the keyword.<br /><br /><b>Valid Values:</b><ul><li><code>BROAD</code></li><li><code>EXACT</code></li><li><code>PHRASE</code></li></ul> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:MatchTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The match_type of this CreateKeywordRequest.  # noqa: E501
         :rtype: str
@@ -139,7 +139,7 @@ class CreateKeywordRequest(object):
     def match_type(self, match_type):
         """Sets the match_type of this CreateKeywordRequest.
 
-        A field that defines the match type for the keyword.<br /><br /><span class=\"tablenote\"><span style=\"color:#004680\"><strong>Note:</strong></span> Broad matching of keywords is currently only supported in the AU marketplace.</span><br /><b>Valid Values:</b><ul><li><code>BROAD</code></li><li><code>EXACT</code></li><li><code>PHRASE</code></li></ul> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:MatchTypeEnum'>eBay API documentation</a>  # noqa: E501
+        A field that defines the match type for the keyword.<br /><br /><b>Valid Values:</b><ul><li><code>BROAD</code></li><li><code>EXACT</code></li><li><code>PHRASE</code></li></ul> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:MatchTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param match_type: The match_type of this CreateKeywordRequest.  # noqa: E501
         :type: str

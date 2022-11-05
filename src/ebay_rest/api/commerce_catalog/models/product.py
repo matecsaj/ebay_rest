@@ -121,7 +121,7 @@ class Product(object):
     def additional_images(self):
         """Gets the additional_images of this Product.  # noqa: E501
 
-        Contains information about additional images associated with this product. For the primary image, see the image container.  # noqa: E501
+        Contains information about  additional images associated with this product. For the primary image, see the <b>image</b> container.  # noqa: E501
 
         :return: The additional_images of this Product.  # noqa: E501
         :rtype: list[Image]
@@ -132,7 +132,7 @@ class Product(object):
     def additional_images(self, additional_images):
         """Sets the additional_images of this Product.
 
-        Contains information about additional images associated with this product. For the primary image, see the image container.  # noqa: E501
+        Contains information about  additional images associated with this product. For the primary image, see the <b>image</b> container.  # noqa: E501
 
         :param additional_images: The additional_images of this Product.  # noqa: E501
         :type: list[Image]
@@ -303,7 +303,7 @@ class Product(object):
     def isbn(self):
         """Gets the isbn of this Product.  # noqa: E501
 
-        A list of all International Standard Book Numbers (ISBNs) that identify this product.  # noqa: E501
+        A list of all International Standard Book Numbers (ISBNs) that identify this product.   # noqa: E501
 
         :return: The isbn of this Product.  # noqa: E501
         :rtype: list[str]
@@ -314,7 +314,7 @@ class Product(object):
     def isbn(self, isbn):
         """Sets the isbn of this Product.
 
-        A list of all International Standard Book Numbers (ISBNs) that identify this product.  # noqa: E501
+        A list of all International Standard Book Numbers (ISBNs) that identify this product.   # noqa: E501
 
         :param isbn: The isbn of this Product.  # noqa: E501
         :type: list[str]
@@ -349,7 +349,7 @@ class Product(object):
     def other_applicable_category_ids(self):
         """Gets the other_applicable_category_ids of this Product.  # noqa: E501
 
-        A list of category IDs (other than the value of primaryCategoryId) for all the leaf categories to which this product might belong.  # noqa: E501
+        A list of category IDs (other than the value of <b>primaryCategoryId</b>) for all the leaf categories to which this product might belong.  # noqa: E501
 
         :return: The other_applicable_category_ids of this Product.  # noqa: E501
         :rtype: list[str]
@@ -360,7 +360,7 @@ class Product(object):
     def other_applicable_category_ids(self, other_applicable_category_ids):
         """Sets the other_applicable_category_ids of this Product.
 
-        A list of category IDs (other than the value of primaryCategoryId) for all the leaf categories to which this product might belong.  # noqa: E501
+        A list of category IDs (other than the value of <b>primaryCategoryId</b>) for all the leaf categories to which this product might belong.  # noqa: E501
 
         :param other_applicable_category_ids: The other_applicable_category_ids of this Product.  # noqa: E501
         :type: list[str]
@@ -372,7 +372,7 @@ class Product(object):
     def primary_category_id(self):
         """Gets the primary_category_id of this Product.  # noqa: E501
 
-        The identifier of the leaf category that eBay recommends using to list this product, based on previous listings of similar products. Products in the eBay catalog are not automatically associated with any particular category, but using an inappropriate category can make it difficult for prospective buyers to find the product. For other possible categories that might be used, see otherApplicableCategoryIds.  # noqa: E501
+        The identifier of the leaf category that eBay recommends using to list this product, based on previous listings of similar products. Products in the eBay catalog are not automatically associated with any particular category, but using an inappropriate category can make it difficult for prospective buyers to find the product. For other possible categories that might be used, see <b>otherApplicableCategoryIds</b>.  # noqa: E501
 
         :return: The primary_category_id of this Product.  # noqa: E501
         :rtype: str
@@ -383,7 +383,7 @@ class Product(object):
     def primary_category_id(self, primary_category_id):
         """Sets the primary_category_id of this Product.
 
-        The identifier of the leaf category that eBay recommends using to list this product, based on previous listings of similar products. Products in the eBay catalog are not automatically associated with any particular category, but using an inappropriate category can make it difficult for prospective buyers to find the product. For other possible categories that might be used, see otherApplicableCategoryIds.  # noqa: E501
+        The identifier of the leaf category that eBay recommends using to list this product, based on previous listings of similar products. Products in the eBay catalog are not automatically associated with any particular category, but using an inappropriate category can make it difficult for prospective buyers to find the product. For other possible categories that might be used, see <b>otherApplicableCategoryIds</b>.  # noqa: E501
 
         :param primary_category_id: The primary_category_id of this Product.  # noqa: E501
         :type: str

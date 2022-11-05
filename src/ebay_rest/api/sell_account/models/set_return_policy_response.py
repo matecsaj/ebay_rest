@@ -252,7 +252,7 @@ class SetReturnPolicyResponse(object):
     def refund_method(self):
         """Gets the refund_method of this SetReturnPolicyResponse.  # noqa: E501
 
-        This value indicates the refund method that will be used by the seller for buyer returns. In most cases, buyers will get their money back for returns, but for sellers who offer the 'Click and Collect' and 'Buy Online, Pick up in Store' option, the seller is able to offer a store/merchandise credit in addition to the 'money back' option. The buyer recieving money back for a return is always an option available to the buyer, even if this field is set to <code>MERCHANDISE_CREDIT</code>, or if this field is not returned at all. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:RefundMethodEnum'>eBay API documentation</a>  # noqa: E501
+        If a seller indicates that they will accept buyer returns, this value will be <code>MONEY_BACK</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:RefundMethodEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The refund_method of this SetReturnPolicyResponse.  # noqa: E501
         :rtype: str
@@ -263,7 +263,7 @@ class SetReturnPolicyResponse(object):
     def refund_method(self, refund_method):
         """Sets the refund_method of this SetReturnPolicyResponse.
 
-        This value indicates the refund method that will be used by the seller for buyer returns. In most cases, buyers will get their money back for returns, but for sellers who offer the 'Click and Collect' and 'Buy Online, Pick up in Store' option, the seller is able to offer a store/merchandise credit in addition to the 'money back' option. The buyer recieving money back for a return is always an option available to the buyer, even if this field is set to <code>MERCHANDISE_CREDIT</code>, or if this field is not returned at all. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:RefundMethodEnum'>eBay API documentation</a>  # noqa: E501
+        If a seller indicates that they will accept buyer returns, this value will be <code>MONEY_BACK</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:RefundMethodEnum'>eBay API documentation</a>  # noqa: E501
 
         :param refund_method: The refund_method of this SetReturnPolicyResponse.  # noqa: E501
         :type: str
@@ -321,7 +321,7 @@ class SetReturnPolicyResponse(object):
     def return_method(self):
         """Gets the return_method of this SetReturnPolicyResponse.  # noqa: E501
 
-        This field will be returned if the seller is willing and able to offer an alternative return method other than 'money back', such as an exchange or replacement item. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ReturnMethodEnum'>eBay API documentation</a>  # noqa: E501
+        This field will be returned if the seller is willing and able to offer a replacement item as an alternative to 'Money Back'. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ReturnMethodEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The return_method of this SetReturnPolicyResponse.  # noqa: E501
         :rtype: str
@@ -332,7 +332,7 @@ class SetReturnPolicyResponse(object):
     def return_method(self, return_method):
         """Sets the return_method of this SetReturnPolicyResponse.
 
-        This field will be returned if the seller is willing and able to offer an alternative return method other than 'money back', such as an exchange or replacement item. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ReturnMethodEnum'>eBay API documentation</a>  # noqa: E501
+        This field will be returned if the seller is willing and able to offer a replacement item as an alternative to 'Money Back'. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ReturnMethodEnum'>eBay API documentation</a>  # noqa: E501
 
         :param return_method: The return_method of this SetReturnPolicyResponse.  # noqa: E501
         :type: str

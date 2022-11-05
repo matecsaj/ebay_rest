@@ -247,7 +247,7 @@ class ReturnPolicy(object):
     def refund_method(self):
         """Gets the refund_method of this ReturnPolicy.  # noqa: E501
 
-        This value indicates the refund method that will be used by the seller for buyer returns. In most cases, this value is going to be <code>MONEY_BACK</code>, except for 'Click and Collect' and 'Buy Online, Pick up in Store' orders where the seller is able to offer a store/merchandise credit in addition to the 'money back' option. The buyer recieving money back for a return is always an option available to the buyer, even if this field returns <code>MERCHANDISE_CREDIT</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:RefundMethodEnum'>eBay API documentation</a>  # noqa: E501
+        If a seller indicates that they will accept buyer returns, this value will be set to <code>MONEY_BACK</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:RefundMethodEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The refund_method of this ReturnPolicy.  # noqa: E501
         :rtype: str
@@ -258,7 +258,7 @@ class ReturnPolicy(object):
     def refund_method(self, refund_method):
         """Sets the refund_method of this ReturnPolicy.
 
-        This value indicates the refund method that will be used by the seller for buyer returns. In most cases, this value is going to be <code>MONEY_BACK</code>, except for 'Click and Collect' and 'Buy Online, Pick up in Store' orders where the seller is able to offer a store/merchandise credit in addition to the 'money back' option. The buyer recieving money back for a return is always an option available to the buyer, even if this field returns <code>MERCHANDISE_CREDIT</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:RefundMethodEnum'>eBay API documentation</a>  # noqa: E501
+        If a seller indicates that they will accept buyer returns, this value will be set to <code>MONEY_BACK</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:RefundMethodEnum'>eBay API documentation</a>  # noqa: E501
 
         :param refund_method: The refund_method of this ReturnPolicy.  # noqa: E501
         :type: str
@@ -316,7 +316,7 @@ class ReturnPolicy(object):
     def return_method(self):
         """Gets the return_method of this ReturnPolicy.  # noqa: E501
 
-        This field is only returned if the seller wants to offer an alternative return method other than 'money back', such as an exchange or replacement item. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ReturnMethodEnum'>eBay API documentation</a>  # noqa: E501
+        This field is only returned if the seller is willing to offer a replacement item as an alternative to 'Money Back'. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ReturnMethodEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The return_method of this ReturnPolicy.  # noqa: E501
         :rtype: str
@@ -327,7 +327,7 @@ class ReturnPolicy(object):
     def return_method(self, return_method):
         """Sets the return_method of this ReturnPolicy.
 
-        This field is only returned if the seller wants to offer an alternative return method other than 'money back', such as an exchange or replacement item. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ReturnMethodEnum'>eBay API documentation</a>  # noqa: E501
+        This field is only returned if the seller is willing to offer a replacement item as an alternative to 'Money Back'. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/account/types/api:ReturnMethodEnum'>eBay API documentation</a>  # noqa: E501
 
         :param return_method: The return_method of this ReturnPolicy.  # noqa: E501
         :type: str
@@ -383,7 +383,7 @@ class ReturnPolicy(object):
     def returns_accepted(self):
         """Gets the returns_accepted of this ReturnPolicy.  # noqa: E501
 
-        If this field is returned as <code>true</code>, the seller accepts returns. <br/><br/><span class=\"tablenote\"><strong>Note:</strong>Top-Rated sellers must accept item returns and the <b>handlingTime</b> should be set to zero days or one day for a listing to receive a Top-Rated Plus badge on the View Item or search result pages. For more information on eBay's Top-Rated seller program, see <a href=\"https://pages.ebay.com/help/sell/top-rated.html\">Becoming a Top Rated Seller and qualifying for Top Rated Plus benefits</a>.</span>  # noqa: E501
+        If this field is returned as <code>true</code>, the seller accepts returns. <br/><br/><span class=\"tablenote\"><strong>Note:</strong>Top-Rated sellers must accept item returns and the <b>handlingTime</b> should be set to zero days or one day for a listing to receive a Top-Rated Plus badge on the View Item or search result pages. For more information on eBay's Top-Rated seller program, see <a href=\"https://pages.ebay.com/help/sell/top-rated.html \">Becoming a Top Rated Seller and qualifying for Top Rated Plus benefits</a>.</span>  # noqa: E501
 
         :return: The returns_accepted of this ReturnPolicy.  # noqa: E501
         :rtype: bool
@@ -394,7 +394,7 @@ class ReturnPolicy(object):
     def returns_accepted(self, returns_accepted):
         """Sets the returns_accepted of this ReturnPolicy.
 
-        If this field is returned as <code>true</code>, the seller accepts returns. <br/><br/><span class=\"tablenote\"><strong>Note:</strong>Top-Rated sellers must accept item returns and the <b>handlingTime</b> should be set to zero days or one day for a listing to receive a Top-Rated Plus badge on the View Item or search result pages. For more information on eBay's Top-Rated seller program, see <a href=\"https://pages.ebay.com/help/sell/top-rated.html\">Becoming a Top Rated Seller and qualifying for Top Rated Plus benefits</a>.</span>  # noqa: E501
+        If this field is returned as <code>true</code>, the seller accepts returns. <br/><br/><span class=\"tablenote\"><strong>Note:</strong>Top-Rated sellers must accept item returns and the <b>handlingTime</b> should be set to zero days or one day for a listing to receive a Top-Rated Plus badge on the View Item or search result pages. For more information on eBay's Top-Rated seller program, see <a href=\"https://pages.ebay.com/help/sell/top-rated.html \">Becoming a Top Rated Seller and qualifying for Top Rated Plus benefits</a>.</span>  # noqa: E501
 
         :param returns_accepted: The returns_accepted of this ReturnPolicy.  # noqa: E501
         :type: bool
