@@ -1827,10 +1827,10 @@ class API(metaclass=Multiton):
     def developer_analytics_get_rate_limits(self, **kwargs):  # noqa: E501
         """get_rate_limits  
 
-        This method retrieves the call limit and utilization data for an application. The data is retrieved for all RESTful APIs and resources. The response from getRateLimits includes a list of the applicable resources and the "call limit", or quota, that is set for each resource. In addition to quota information, the response also includes the number of remaining calls available before the limit is reached, the time remaining before the quota resets, and the length of the "time window" to which the quota applies. By default, this method returns utilization data for all RESTful API resources. Use the api_name and api_context query parameters to filter the response to only the desired APIs. For more on call limits, see Compatible Application Check.  
+        This method retrieves the call limit and utilization data for an application. The data is retrieved for all RESTful APIs and the legacy Trading API.  The response from getRateLimits includes a list of the applicable resources and the \"call limit\", or quota, that is set for each resource. In addition to quota information, the response also includes the number of remaining calls available before the limit is reached, the time remaining before the quota resets, and the length of the \"time window\" to which the quota applies.  By default, this method returns utilization data for all RESTful API and the legacy Trading API resources. Use the api_name and api_context query parameters to filter the response to only the desired APIs.  For more on call limits, see Compatible Application Check.  
 
-        :param str api_context: This optional query parameter filters the result to include only the specified API context. Acceptable values for the parameter are buy, sell, commerce, and developer.
-        :param str api_name: This optional query parameter filters the result to include only the APIs specified. Example values are browse for the Buy APIs context, inventory for the Sell APIs context, and taxonomy for the Commerce APIs context.
+        :param str api_context: This optional query parameter filters the result to include only the specified API context. Valid values: buysell commercedevelopertradingapi
+        :param str api_name: This optional query parameter filters the result to include only the APIs specified. Example values:  browse for the Buy APIs inventory for the Sell APIs taxonomy for the Commerce APIs context tradingapi for the Trading APIs
         :return: RateLimitsResponse
         """
         try:
@@ -1841,10 +1841,10 @@ class API(metaclass=Multiton):
     def developer_analytics_get_user_rate_limits(self, **kwargs):  # noqa: E501
         """get_user_rate_limits  
 
-        This method retrieves the call limit and utilization data for an application user. The call-limit data is returned for all RESTful APIs and resources that limit calls on a per-user basis. The response from getUserRateLimits includes a list of the applicable resources and the "call limit", or quota, that is set for each resource. In addition to quota information, the response also includes the number of remaining calls available before the limit is reached, the time remaining before the quota resets, and the length of the "time window" to which the quota applies. By default, this method returns utilization data for all RESTful API resources that limit request access by user. Use the api_name and api_context query parameters to filter the response to only the desired APIs. For more on call limits, see Compatible Application Check.  
+        This method retrieves the call limit and utilization data for an application user. The call-limit data is returned for all RESTful APIs and the legacy Trading API that limit calls on a per-user basis.  The response from getUserRateLimits includes a list of the applicable resources and the \"call limit\", or quota, that is set for each resource. In addition to quota information, the response also includes the number of remaining calls available before the limit is reached, the time remaining before the quota resets, and the length of the \"time window\" to which the quota applies.  By default, this method returns utilization data for all RESTful APIs resources and the legacy Trading API calls that limit request access by user. Use the api_name and api_context query parameters to filter the response to only the desired APIs.  For more on call limits, see Compatible Application Check.  
 
-        :param str api_context: This optional query parameter filters the result to include only the specified API context. Acceptable values for the parameter are buy, sell, commerce, and developer.
-        :param str api_name: This optional query parameter filters the result to include only the APIs specified. Example values are browse for the Buy APIs context, inventory for the Sell APIs context, and taxonomy for the Commerce APIs context.
+        :param str api_context: This optional query parameter filters the result to include only the specified API context. Valid values: buy sell commerce developer tradingapi
+        :param str api_name: This optional query parameter filters the result to include only the APIs specified. Example values: browse for the Buy APIs inventory for the Sell APIs taxonomy for the Commerce APIs tradingapi for the Trading APIs
         :return: RateLimitsResponse
         """
         try:
@@ -1914,6 +1914,19 @@ class API(metaclass=Multiton):
         """
         try:
             return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.AdvertisingEligibilityApi, sell_account.ApiClient, 'get_advertising_eligibility', SellAccountException, True, ['sell.account', 'advertising_eligibility'], x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+        except Error:
+            raise
+
+    def sell_account_get_sales_tax_jurisdictions(self, country_code, **kwargs):  # noqa: E501
+        """get_sales_tax_jurisdictions  
+
+        This method retrieves all the sales tax jurisdictions for the country that you specify in the countryCode path parameter. Countries with valid sales tax jurisdictions are Canada and the US.  The response from this call tells you the jurisdictions for which a seller can configure tax tables. Although setting up tax tables is optional, you can use the createOrReplaceSalesTax in the Account API call to configure the tax tables for the jurisdictions you sell to.  
+
+        :param str country_code: This path parameter specifies the two-letter ISO 3166 country code for the country whose jurisdictions you want to retrieve. eBay provides sales tax jurisdiction information for Canada and the United States.Valid values for this path parameter are CA and US. (required)
+        :return: SalesTaxJurisdictions
+        """
+        try:
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.CountryApi, sell_account.ApiClient, 'get_sales_tax_jurisdictions', SellAccountException, False, ['sell.account', 'country'], country_code, **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2063,6 +2076,100 @@ class API(metaclass=Multiton):
         """
         try:
             return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.KycApi, sell_account.ApiClient, 'get_kyc', SellAccountException, True, ['sell.account', 'kyc'], None, **kwargs)  # noqa: E501
+        except Error:
+            raise
+
+    def sell_account_create_inventory_location(self, body, merchant_location_key, **kwargs):  # noqa: E501
+        """create_inventory_location  
+
+        Use this call to create a new inventory location. In order to create and publish an offer (and create an eBay listing), a seller must have at least one inventory location, as every offer must be associated with a location.Upon first creating an inventory location, only a seller-defined location identifier and a physical location is required, and once set, these values can not be changed. The unique identifier value (merchantLocationKey) is passed in at the end of the call URI. This merchantLocationKey value will be used in other Inventory Location calls to identify the inventory location to perform an action against.At this time, location types are either warehouse or store. Warehouse locations are used for traditional shipping, and store locations are generally used by US merchants selling products through the In-Store Pickup program, or used by UK, Australian, and German merchants selling products through the Click and Collect program. A full address is required for store inventory locations. However, for warehouse inventory locations, a full street address is not needed, but the city, state/province, and country of the location must be provided. Note that all inventory locations are \"enabled\" by default when they are created, and you must specifically disable them (by passing in a value of DISABLED in the merchantLocationStatus field) if you want them to be set to the disabled state. The seller's inventory cannot be loaded to inventory locations in the disabled state. In addition to the authorization header, which is required for all eBay REST API calls, the following table includes another request header that is mandatory for the createInventoryLocation call, and two other request headers that are optional:   Header Description Required? Applicable Values   Accept Describes the response encoding, as required by the caller. Currently, the interfaces require payloads formatted in JSON, and JSON is the default. No application/json   Content-Language Use this header to control the language that is used for any returned errors or warnings in the call response. No en-US   Content-Type The MIME type of the body of the request. Must be JSON. Yes application/json  Unless one or more errors and/or warnings occur with the call, there is no response payload for this call. A successful call will return an HTTP status value of 204 No Content.  
+
+        :param InventoryLocationFull body: Inventory Location details (required)
+        :param str merchant_location_key: A unique, merchant-defined key (ID) for an inventory location. This unique identifier, or key, is used in other Inventory API calls to identify an inventory location. Max length: 36 (required)
+        :return: None
+        """
+        try:
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.LocationApi, sell_account.ApiClient, 'create_inventory_location', SellAccountException, True, ['sell.account', 'location'], (body, merchant_location_key), **kwargs)  # noqa: E501
+        except Error:
+            raise
+
+    def sell_account_delete_inventory_location(self, merchant_location_key, **kwargs):  # noqa: E501
+        """delete_inventory_location  
+
+        This call deletes the inventory location that is specified in the merchantLocationKey path parameter. Note that deleting a location will not affect any active eBay listings associated with the deleted location, but the seller will not be able modify the offers associated with the inventory location once it is deleted.The authorization HTTP header is the only required request header for this call. Unless one or more errors and/or warnings occur with the call, there is no response payload for this call. A successful call will return an HTTP status value of 200 OK.  
+
+        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in at the end of the call URI to indicate the inventory location to be deleted. Max length: 36 (required)
+        :return: None
+        """
+        try:
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.LocationApi, sell_account.ApiClient, 'delete_inventory_location', SellAccountException, True, ['sell.account', 'location'], merchant_location_key, **kwargs)  # noqa: E501
+        except Error:
+            raise
+
+    def sell_account_disable_inventory_location(self, merchant_location_key, **kwargs):  # noqa: E501
+        """disable_inventory_location  
+
+        This call disables the inventory location that is specified in the merchantLocationKey path parameter. Sellers can not load/modify inventory to disabled inventory locations. Note that disabling an inventory location will not affect any active eBay listings associated with the disabled location, but the seller will not be able modify the offers associated with a disabled inventory location.The authorization HTTP header is the only required request header for this call.A successful call will return an HTTP status value of 200 OK.  
+
+        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in through the call URI to disable the specified inventory location. Max length: 36 (required)
+        :return: object
+        """
+        try:
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.LocationApi, sell_account.ApiClient, 'disable_inventory_location', SellAccountException, True, ['sell.account', 'location'], merchant_location_key, **kwargs)  # noqa: E501
+        except Error:
+            raise
+
+    def sell_account_enable_inventory_location(self, merchant_location_key, **kwargs):  # noqa: E501
+        """enable_inventory_location  
+
+        This call enables a disabled inventory location that is specified in the merchantLocationKey path parameter. Once a disabled inventory location is enabled, sellers can start loading/modifying inventory to that inventory location. The authorization HTTP header is the only required request header for this call.A successful call will return an HTTP status value of 200 OK.  
+
+        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in through the call URI to specify the disabled inventory location to enable. Max length: 36 (required)
+        :return: object
+        """
+        try:
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.LocationApi, sell_account.ApiClient, 'enable_inventory_location', SellAccountException, True, ['sell.account', 'location'], merchant_location_key, **kwargs)  # noqa: E501
+        except Error:
+            raise
+
+    def sell_account_get_inventory_location(self, merchant_location_key, **kwargs):  # noqa: E501
+        """get_inventory_location  
+
+        This call retrieves all defined details of the inventory location that is specified by the merchantLocationKey path parameter. The authorization HTTP header is the only required request header for this call. A successful call will return an HTTP status value of 200 OK.  
+
+        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in at the end of the call URI to specify the inventory location to retrieve. Max length: 36 (required)
+        :return: InventoryLocationResponse
+        """
+        try:
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.LocationApi, sell_account.ApiClient, 'get_inventory_location', SellAccountException, True, ['sell.account', 'location'], merchant_location_key, **kwargs)  # noqa: E501
+        except Error:
+            raise
+
+    def sell_account_get_inventory_locations(self, **kwargs):  # noqa: E501
+        """get_inventory_locations  
+
+        This call retrieves all defined details for every inventory location associated with the seller's account. There are no required parameters for this call and no request payload. However, there are two optional query parameters, limit and offset. The limit query parameter sets the maximum number of inventory locations returned on one page of data, and the offset query parameter specifies the page of data to return. These query parameters are discussed more in the URI parameters table below. The authorization HTTP header is the only required request header for this call. A successful call will return an HTTP status value of 200 OK.  
+
+        :param str limit: The value passed in this query parameter sets the maximum number of records to return per page of data. Although this field is a string, the value passed in this field should be a positive integer value. If this query parameter is not set, up to 100 records will be returned on each page of results.  Min: 1
+        :param str offset: Specifies the number of locations to skip in the result set before returning the first location in the paginated response.  Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
+        :return: LocationResponse
+        """
+        try:
+            return self._method_paged(sell_account.Configuration, '/sell/account/v1', sell_account.LocationApi, sell_account.ApiClient, 'get_inventory_locations', SellAccountException, True, ['sell.account', 'location'], None, **kwargs)  # noqa: E501
+        except Error:
+            raise
+
+    def sell_account_update_inventory_location(self, body, merchant_location_key, **kwargs):  # noqa: E501
+        """update_inventory_location  
+
+        Use this call to update non-physical location details for an existing inventory location. Specify the inventory location you want to update using the merchantLocationKey path parameter. You can update the following text-based fields: name, phone, locationWebUrl, locationInstructions and locationAdditionalInformation. Whatever text is passed in for these fields in an updateInventoryLocation call will replace the current text strings defined for these fields. For store inventory locations, the operating hours and/or the special hours can also be updated.  The merchant location key, the physical location of the store, and its geo-location coordinates can not be updated with an updateInventoryLocation call In addition to the authorization header, which is required for all eBay REST API calls, the following table includes another request header that is mandatory for the updateInventoryLocation call, and two other request headers that are optional:   Header Description Required? Applicable Values   Accept Describes the response encoding, as required by the caller. Currently, the interfaces require payloads formatted in JSON, and JSON is the default. No application/json   Content-Language Use this header to control the language that is used for any returned errors or warnings in the call response. No en-US   Content-Type The MIME type of the body of the request. Must be JSON. Yes application/json  Unless one or more errors and/or warnings occurs with the call, there is no response payload for this call. A successful call will return an HTTP status value of 204 No Content.  
+
+        :param InventoryLocation body: The inventory location details to be updated (other than the address and geo co-ordinates). (required)
+        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in the call URI to indicate the inventory location to be updated. Max length: 36 (required)
+        :return: None
+        """
+        try:
+            return self._method_single(sell_account.Configuration, '/sell/account/v1', sell_account.LocationApi, sell_account.ApiClient, 'update_inventory_location', SellAccountException, True, ['sell.account', 'location'], (body, merchant_location_key), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -2932,7 +3039,7 @@ class API(metaclass=Multiton):
 
         Use this call to retrieve the contents of an order based on its unique identifier, orderId. This value was returned in the  getOrders call's orders.orderId field when you searched for orders by creation date, modification date, or fulfillment status. Include the optional fieldGroups query parameter set to TAX_BREAKDOWN to return a breakdown of the taxes and fees.  The returned Order object contains information you can use to create and process fulfillments, including:  Information about the buyer and seller Information about the order's line items  The plans for packaging, addressing and shipping the order The status of payment, packaging, addressing, and shipping the order A summary of monetary amounts specific to the order such as pricing, payments, and shipping costs A summary of applied taxes and fees, and optionally a breakdown of each   
 
-        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the getOrders method in the orders.orderId field. Note: A new order ID format was introduced to all eBay APIs (legacy and REST) in June 2019. In REST APIs that return Order IDs, including the Fulfillment API, all order IDs are returned in the new format, but the getOrder method will accept both the legacy and new format order ID. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers will be automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support.  (required)
+        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the getOrders method in the orders.orderId field. (required)
         :param str field_groups: The response type associated with the order. The only presently supported value is TAX_BREAKDOWN. This type returns a breakdown of tax and fee values associated with the order.
         :return: Order
         """
@@ -2950,7 +3057,7 @@ class API(metaclass=Multiton):
         :param str filter: One or more comma-separated criteria for narrowing down the collection of orders returned by this call. These criteria correspond to specific fields in the response payload. Multiple filter criteria combine to further restrict the results.  Note: Currently, filter returns data from only the last 90 days. If the orderIds parameter is included in the request, the filter parameter will be ignored.  The available criteria are as follows:  creationdate The time period during which qualifying orders were created (the orders.creationDate field). In the URI, this is expressed as a starting timestamp, with or without an ending timestamp (in brackets). The timestamps are in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock.For example:  creationdate:[2016-02-21T08:25:43.511Z..] identifies orders created on or after the given timestamp. creationdate:[2016-02-21T08:25:43.511Z..2016-04-21T08:25:43.511Z] identifies orders created between the given timestamps, inclusive.   lastmodifieddate The time period during which qualifying orders were last modified (the orders.modifiedDate field).  In the URI, this is expressed as a starting timestamp, with or without an ending timestamp (in brackets). The timestamps are in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock.For example:  lastmodifieddate:[2016-05-15T08:25:43.511Z..] identifies orders modified on or after the given timestamp. lastmodifieddate:[2016-05-15T08:25:43.511Z..2016-05-31T08:25:43.511Z] identifies orders modified between the given timestamps, inclusive.  Note: If creationdate and lastmodifieddate are both included, only creationdate is used.  orderfulfillmentstatus The degree to which qualifying orders have been shipped (the orders.orderFulfillmentStatus field). In the URI, this is expressed as one of the following value combinations:  orderfulfillmentstatus:{NOT_STARTED|IN_PROGRESS} specifies orders for which no shipping fulfillments have been started, plus orders for which at least one shipping fulfillment has been started but not completed. orderfulfillmentstatus:{FULFILLED|IN_PROGRESS} specifies orders for which all shipping fulfillments have been completed, plus orders for which at least one shipping fulfillment has been started but not completed.  Note: The values NOT_STARTED, IN_PROGRESS, and FULFILLED can be used in various combinations, but only the combinations shown here are currently supported.   Here is an example of a getOrders call using all of these filters:  GET https://api.ebay.com/sell/v1/order?filter=creationdate:%5B2016-03-21T08:25:43.511Z..2016-04-21T08:25:43.511Z%5D,lastmodifieddate:%5B2016-05-15T08:25:43.511Z..%5D,orderfulfillmentstatus:%7BNOT_STARTED%7CIN_PROGRESS%7D  Note: This call requires that certain special characters in the URI query string be percent-encoded:      [ = %5B       ] = %5D       { = %7B       | = %7C       } = %7D  This query filter example uses these codes. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/fulfillment/types/api:FilterField
         :param str limit: The number of orders to return per page of the result set. Use this parameter in conjunction with the offset parameter to control the pagination of the output. For example, if offset is set to 10 and limit is set to 10, the call retrieves orders 11 thru 20 from the result set.  If a limit is not set, the limit defaults to 50 and returns up to 50 orders. If a requested limit is more than 200, the call fails and returns an error. Note: This feature employs a zero-based list, where the first item in the list has an offset of 0. If the orderIds parameter is included in the request, this parameter will be ignored.  Maximum: 200  Default: 50
         :param str offset: Specifies the number of orders to skip in the result set before returning the first order in the paginated response.  Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
-        :param str order_ids: A comma-separated list of the unique identifiers of the orders to retrieve (maximum 50). If one or more order ID values are specified through the orderIds query parameter, all other query parameters will be ignored. Note: A new order ID format was introduced to all eBay APIs (legacy and REST) in June 2019. In REST APIs that return Order IDs, including the Fulfillment API, all order IDs are returned in the new format, but the getOrders method will accept both the legacy and new format order ID. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers will be automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support. 
+        :param str order_ids: A comma-separated list of the unique identifiers of the orders to retrieve (maximum 50). If one or more order ID values are specified through the orderIds query parameter, all other query parameters will be ignored.
         :return: OrderSearchPagedCollection
         """
         try:
@@ -3002,7 +3109,7 @@ class API(metaclass=Multiton):
     def sell_fulfillment_contest_payment_dispute(self, payment_dispute_id, **kwargs):  # noqa: E501
         """Contest Payment Dispute  
 
-        This method is used if the seller wishes to contest a payment dispute initiated by the buyer. The unique identifier of the payment dispute is passed in as a path parameter, and unique identifiers for payment disputes can be retrieved with the getPaymentDisputeSummaries method.Note: Before contesting a payment dispute, the seller must upload all evidence files using the addEvidence and updateEvidence methods. Once the seller has officially contested the dispute (using contestPaymentDispute), the addEvidence and updateEvidence methods can no longer be used. In the evidenceRequests array of the getPaymentDispute response, eBay prompts the seller with the type of evidence file(s) that will be needed to contest the payment dispute.If a seller decides to contest a payment dispute, that seller should be prepared to provide evidential documents such as proof of delivery, proof of authentication, or other documents. The type of evidential documents that the seller will provide will depend on why the buyer initiated the payment dispute.The revision field in the request payload is required, and the returnAddress field should be supplied if the seller is expecting the buyer to return the item. See the Request Payload section for more information on these fields.  
+        This method is used if the seller wishes to contest a payment dispute initiated by the buyer. The unique identifier of the payment dispute is passed in as a path parameter, and unique identifiers for payment disputes can be retrieved with the getPaymentDisputeSummaries method.Note: Before contesting a payment dispute, the seller must upload all supporting files using the addEvidence and updateEvidence methods. Once the seller has officially contested the dispute (using contestPaymentDispute), the addEvidence and updateEvidence methods can no longer be used. In the evidenceRequests array of the getPaymentDispute response, eBay prompts the seller with the type of supporting file(s) that will be needed to contest the payment dispute.If a seller decides to contest a payment dispute, that seller should be prepared to provide supporting documents such as proof of delivery, proof of authentication, or other documents. The type of supporting documents that the seller will provide will depend on why the buyer filed the payment dispute.The revision field in the request payload is required, and the returnAddress field should be supplied if the seller is expecting the buyer to return the item. See the Request Payload section for more information on these fields.  
 
         :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed into the call URI to identify the payment dispute for which the user plans to contest. This identifier is automatically created by eBay once the payment dispute comes into the eBay system. The unique identifier for payment disputes is returned in the paymentDisputeId field in the getPaymentDisputeSummaries response.This path parameter is required, and the actual identifier value is passed in right after the payment_dispute resource. See the Resource URI above. (required)
         :param ContestPaymentDisputeRequest body:
@@ -3059,7 +3166,7 @@ class API(metaclass=Multiton):
 
         This method is used retrieve one or more payment disputes filed against the seller. These payment disputes can be open or recently closed. The following filter types are available in the request payload to control the payment disputes that are returned:Dispute filed against a specific order (order_id parameter is used)Dispute(s) filed by a specific buyer (buyer_username parameter is used)Dispute(s) filed within a specific date range (open_date_from and/or open_date_to parameters are used)Disputes in a specific state (payment_dispute_status parameter is used)More than one of these filter types can be used together. See the request payload request fields for more information about how each filter is used.If none of the filters are used, all open and recently closed payment disputes are returned.Pagination is also available. See the limit and offset fields for more information on how pagination is used for this method.  
 
-        :param str order_id: This filter is used if the seller wishes to retrieve one or more payment disputes filed against a specific order. It is possible that there can be more than one dispute filed against an order if the order has multiple line items. If this filter is used, any other filters are ignored.Note: The order identifier passed into this field must be an Order ID in the new format. The legacy APIs still support the old and new order ID format to identify orders, but only the new order ID format is supported in REST-based APIs. eBay rolled out a new Order ID format in June 2019.
+        :param str order_id: This filter is used if the seller wishes to retrieve one or more payment disputes filed against a specific order. It is possible that there can be more than one dispute filed against an order if the order has multiple line items. If this filter is used, any other filters are ignored.
         :param str buyer_username: This filter is used if the seller wishes to retrieve one or more payment disputes opened by a specific seller. The string that is passed in to this query parameter is the eBay user ID of the buyer.
         :param str open_date_from: The open_date_from and/or open_date_to date filters are used if the seller wishes to retrieve payment disputes opened within a specific date range. A maximum date range that may be set with the open_date_from and/or open_date_to filters is 90 days. These date filters use the ISO-8601 24-hour date and time format, and time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu.The open_date_from field sets the beginning date of the date range, and can be set as far back as 18 months from the present time. If a open_date_from field is used, but a open_date_to field is not used, the open_date_to value will default to 90 days after the date specified in the open_date_from field, or to the present time if less than 90 days in the past.The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.
         :param str open_date_to: The open_date_from and/or open_date_to date filters are used if the seller wishes to retrieve payment disputes opened within a specific date range. A maximum date range that may be set with the open_date_from and/or open_date_to filters is 90 days. These date filters use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu.The open_date_to field sets the ending date of the date range, and can be set up to 90 days from the date set in the open_date_from field. The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.
@@ -3106,7 +3213,7 @@ class API(metaclass=Multiton):
         When you group an order's line items into one or more packages, each package requires a corresponding plan for handling, addressing, and shipping; this is a shipping fulfillment. For each package, execute this call once to generate a shipping fulfillment associated with that package.  Note: A single line item in an order can consist of multiple units of a purchased item, and one unit can consist of multiple parts or components. Although these components might be provided by the manufacturer in separate packaging, the seller must include all components of a given line item in the same package. Before using this call for a given package, you must determine which line items are in the package. If the package has been shipped, you should provide the date of shipment in the request. If not provided, it will default to the current date and time.  
 
         :param ShippingFulfillmentDetails body: fulfillment payload (required)
-        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the getOrders method in the orders.orderId field. Note: A new order ID format was introduced to all eBay APIs (legacy and REST) in June 2019. In REST APIs that return Order IDs, including the Fulfillment API, all order IDs are returned in the new format, but the createShippingFulfillment method will accept both the legacy and new format order ID. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers will be automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support.  (required)
+        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the getOrders method in the orders.orderId field. (required)
         :return: object
         """
         try:
@@ -3120,7 +3227,7 @@ class API(metaclass=Multiton):
         Use this call to retrieve the contents of a fulfillment based on its unique identifier, fulfillmentId (combined with the associated order's orderId). The fulfillmentId value was originally generated by the createShippingFulfillment call, and is returned by the getShippingFulfillments call in the members.fulfillmentId field.  
 
         :param str fulfillment_id: The unique identifier of the fulfillment. This eBay-generated value was created by the Create Shipping Fulfillment call, and returned by the getShippingFulfillments call in the fulfillments.fulfillmentId field; for example, 9405509699937003457459. (required)
-        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the getOrders method in the orders.orderId field. Note: A new order ID format was introduced to all eBay APIs (legacy and REST) in June 2019. In REST APIs that return Order IDs, including the Fulfillment API, all order IDs are returned in the new format, but the getShippingFulfillment method will accept both the legacy and new format order ID. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers will be automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support.  (required)
+        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the getOrders method in the orders.orderId field. (required)
         :return: ShippingFulfillment
         """
         try:
@@ -3133,7 +3240,7 @@ class API(metaclass=Multiton):
 
         Use this call to retrieve the contents of all fulfillments currently defined for a specified order based on the order's unique identifier, orderId. This value is returned in the getOrders call's members.orderId field when you search for orders by creation date or shipment status.  
 
-        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the getOrders method in the orders.orderId field. Note: A new order ID format was introduced to all eBay APIs (legacy and REST) in June 2019. In REST APIs that return Order IDs, including the Fulfillment API, all order IDs are returned in the new format, but the getShippingFulfillments method will accept both the legacy and new format order ID. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers will be automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support.  (required)
+        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the getOrders method in the orders.orderId field. (required)
         :return: ShippingFulfillmentPagedCollection
         """
         try:

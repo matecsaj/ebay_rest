@@ -321,7 +321,7 @@ class Order(object):
     def legacy_order_id(self):
         """Gets the legacy_order_id of this Order.  # noqa: E501
 
-        The unique identifier of the order in legacy format, as traditionally used by the Trading API (and other legacy APIs). Both the <b>orderId</b> field and this field are always returned. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> In June 2019, Order IDs in REST APIs transitioned to a new format. For the Trading and other legacy APIs, by using version control/compatibility level, users have the option of using the older legacy order ID format, or they can migrate to the new order ID format, which is the same order ID format being used by REST APIs. Although users of the Trading API (and other legacy APIs) can now transition to the new order ID format, this <strong>legacyOrderId</strong> field will still return order IDs in the old format to distinguish between the old and new order IDs.</span>  # noqa: E501
+        The unique identifier of the order in legacy format, as traditionally used by the Trading API (and other legacy APIs). Both the <b>orderId</b> field and this field are always returned.  # noqa: E501
 
         :return: The legacy_order_id of this Order.  # noqa: E501
         :rtype: str
@@ -332,7 +332,7 @@ class Order(object):
     def legacy_order_id(self, legacy_order_id):
         """Sets the legacy_order_id of this Order.
 
-        The unique identifier of the order in legacy format, as traditionally used by the Trading API (and other legacy APIs). Both the <b>orderId</b> field and this field are always returned. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> In June 2019, Order IDs in REST APIs transitioned to a new format. For the Trading and other legacy APIs, by using version control/compatibility level, users have the option of using the older legacy order ID format, or they can migrate to the new order ID format, which is the same order ID format being used by REST APIs. Although users of the Trading API (and other legacy APIs) can now transition to the new order ID format, this <strong>legacyOrderId</strong> field will still return order IDs in the old format to distinguish between the old and new order IDs.</span>  # noqa: E501
+        The unique identifier of the order in legacy format, as traditionally used by the Trading API (and other legacy APIs). Both the <b>orderId</b> field and this field are always returned.  # noqa: E501
 
         :param legacy_order_id: The legacy_order_id of this Order.  # noqa: E501
         :type: str
@@ -390,7 +390,7 @@ class Order(object):
     def order_id(self):
         """Gets the order_id of this Order.  # noqa: E501
 
-        The unique identifier of the order. Both the <b>legacyOrderId</b> field (traditionally used by Trading and other legacy APIS) and this field are always returned.  <br/><br/><span class=\"tablenote\"><strong>Note:</strong> In June 2019, Order IDs in REST APIs transitioned to a new format. For the Trading and other legacy APIs, by using version control/compatibility level, users have the option of using the older legacy order ID format, or they can migrate to the new order ID format, which is the same order ID format being used by REST APIs. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers are automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support.</span>  # noqa: E501
+        The unique identifier of the order. Both the <b>legacyOrderId</b> field (traditionally used by Trading and other legacy APIS) and this field are always returned.  # noqa: E501
 
         :return: The order_id of this Order.  # noqa: E501
         :rtype: str
@@ -401,7 +401,7 @@ class Order(object):
     def order_id(self, order_id):
         """Sets the order_id of this Order.
 
-        The unique identifier of the order. Both the <b>legacyOrderId</b> field (traditionally used by Trading and other legacy APIS) and this field are always returned.  <br/><br/><span class=\"tablenote\"><strong>Note:</strong> In June 2019, Order IDs in REST APIs transitioned to a new format. For the Trading and other legacy APIs, by using version control/compatibility level, users have the option of using the older legacy order ID format, or they can migrate to the new order ID format, which is the same order ID format being used by REST APIs. The new format is a non-parsable string, globally unique across all eBay marketplaces, and consistent for both single line item and multiple line item orders. These order identifiers are automatically generated after buyer payment, and unlike in the past, instead of just being known and exposed to the seller, these unique order identifiers will also be known and used/referenced by the buyer and eBay customer support.</span>  # noqa: E501
+        The unique identifier of the order. Both the <b>legacyOrderId</b> field (traditionally used by Trading and other legacy APIS) and this field are always returned.  # noqa: E501
 
         :param order_id: The order_id of this Order.  # noqa: E501
         :type: str

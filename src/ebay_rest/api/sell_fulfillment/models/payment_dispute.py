@@ -362,7 +362,7 @@ class PaymentDispute(object):
     def order_id(self):
         """Gets the order_id of this PaymentDispute.  # noqa: E501
 
-        This is the unique identifier of the order involved in the payment dispute. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> eBay rolled out a new Order ID format in June 2019. The legacy APIs still support the old and new order ID format to identify orders, but only the new order ID format is returned in REST-based API responses. </span>  # noqa: E501
+        This is the unique identifier of the order involved in the payment dispute.  # noqa: E501
 
         :return: The order_id of this PaymentDispute.  # noqa: E501
         :rtype: str
@@ -373,7 +373,7 @@ class PaymentDispute(object):
     def order_id(self, order_id):
         """Sets the order_id of this PaymentDispute.
 
-        This is the unique identifier of the order involved in the payment dispute. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> eBay rolled out a new Order ID format in June 2019. The legacy APIs still support the old and new order ID format to identify orders, but only the new order ID format is returned in REST-based API responses. </span>  # noqa: E501
+        This is the unique identifier of the order involved in the payment dispute.  # noqa: E501
 
         :param order_id: The order_id of this PaymentDispute.  # noqa: E501
         :type: str

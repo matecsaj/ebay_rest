@@ -51,7 +51,7 @@ class RegionSet(object):
     def region_excluded(self):
         """Gets the region_excluded of this RegionSet.  # noqa: E501
 
-        An array of one or more <b>regionName</b> values that specify the areas to where a seller does not ship. A <b>regionExcluded</b> list should only be set in the top-level <b>shipToLocations</b> container and not within the <b>shippingServices.shipToLocations</b> container used to specify which shipping regions are serviced by each available shipping service option. <p>Many sellers are willing to ship to many international locations, but they may want to exclude some world regions or some countries as places they are willing to ship to.<br/><br/>This array will be returned as empty if no shipping regions are excluded with the fulfillment business policy.  # noqa: E501
+        An array of one or more <b>regionName</b> values that specify the areas to where a seller does not ship. A <b>regionExcluded</b> list should only be set in the top-level <b>shipToLocations</b> container and not within the <b>shippingServices.shipToLocations</b> container used to specify which shipping regions are serviced by each available shipping service option. <p>Many sellers are willing to ship to many international locations, but they may want to exclude some world regions or some countries as places they are willing to ship to.<br/><br/>This array will be returned as empty if no shipping regions are excluded with the fulfillment business policy.<br /> <br /><span class=\"tablenote\"><b>Note: </b> The <b>regionExcluded</b> array is not applicable for motor vehicle business policies on the US, CA, or UK marketplaces. If this array is used in a <b>createFulfillmentPolicy</b> or <b>updateFulfillmentPolicy</b> request, it will be ignored.</span>  # noqa: E501
 
         :return: The region_excluded of this RegionSet.  # noqa: E501
         :rtype: list[Region]
@@ -62,7 +62,7 @@ class RegionSet(object):
     def region_excluded(self, region_excluded):
         """Sets the region_excluded of this RegionSet.
 
-        An array of one or more <b>regionName</b> values that specify the areas to where a seller does not ship. A <b>regionExcluded</b> list should only be set in the top-level <b>shipToLocations</b> container and not within the <b>shippingServices.shipToLocations</b> container used to specify which shipping regions are serviced by each available shipping service option. <p>Many sellers are willing to ship to many international locations, but they may want to exclude some world regions or some countries as places they are willing to ship to.<br/><br/>This array will be returned as empty if no shipping regions are excluded with the fulfillment business policy.  # noqa: E501
+        An array of one or more <b>regionName</b> values that specify the areas to where a seller does not ship. A <b>regionExcluded</b> list should only be set in the top-level <b>shipToLocations</b> container and not within the <b>shippingServices.shipToLocations</b> container used to specify which shipping regions are serviced by each available shipping service option. <p>Many sellers are willing to ship to many international locations, but they may want to exclude some world regions or some countries as places they are willing to ship to.<br/><br/>This array will be returned as empty if no shipping regions are excluded with the fulfillment business policy.<br /> <br /><span class=\"tablenote\"><b>Note: </b> The <b>regionExcluded</b> array is not applicable for motor vehicle business policies on the US, CA, or UK marketplaces. If this array is used in a <b>createFulfillmentPolicy</b> or <b>updateFulfillmentPolicy</b> request, it will be ignored.</span>  # noqa: E501
 
         :param region_excluded: The region_excluded of this RegionSet.  # noqa: E501
         :type: list[Region]
@@ -74,7 +74,7 @@ class RegionSet(object):
     def region_included(self):
         """Gets the region_included of this RegionSet.  # noqa: E501
 
-        An array of one or more <b>regionName</b> fields that specify the areas to where a seller ships. <br><br>Each eBay marketplace supports its own set of allowable shipping locations.  # noqa: E501
+        An array of one or more <b>regionName</b> fields that specify the areas to where a seller ships. <br />Each eBay marketplace supports its own set of allowable shipping locations.<br /> <br /><span class=\"tablenote\"><b>Note: </b> The <b>regionIncluded</b> array is not applicable for motor vehicle business policies on the US, CA, or UK marketplaces. If this array is used in a <b>createFulfillmentPolicy</b> or <b>updateFulfillmentPolicy</b> request, it will be ignored.</span>  # noqa: E501
 
         :return: The region_included of this RegionSet.  # noqa: E501
         :rtype: list[Region]
@@ -85,7 +85,7 @@ class RegionSet(object):
     def region_included(self, region_included):
         """Sets the region_included of this RegionSet.
 
-        An array of one or more <b>regionName</b> fields that specify the areas to where a seller ships. <br><br>Each eBay marketplace supports its own set of allowable shipping locations.  # noqa: E501
+        An array of one or more <b>regionName</b> fields that specify the areas to where a seller ships. <br />Each eBay marketplace supports its own set of allowable shipping locations.<br /> <br /><span class=\"tablenote\"><b>Note: </b> The <b>regionIncluded</b> array is not applicable for motor vehicle business policies on the US, CA, or UK marketplaces. If this array is used in a <b>createFulfillmentPolicy</b> or <b>updateFulfillmentPolicy</b> request, it will be ignored.</span>  # noqa: E501
 
         :param region_included: The region_included of this RegionSet.  # noqa: E501
         :type: list[Region]

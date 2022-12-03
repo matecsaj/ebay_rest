@@ -3,7 +3,7 @@
 """
     Progress to Rate Limit API
 
-    The <b>Analytics API</b> retrieves call-limit data and the quotas that are set for the RESTful APIs and their associated resources.  <br><br>Responses from calls made to <b>getRateLimits</b> and <b>getUerRateLimits</b> include a list of the applicable resources and the \"call limit\", or quota, that is set for each resource. In addition to quota information, the response also includes the number of remaining calls available before the limit is reached, the time remaining before the quota resets, and the length of the \"time window\" to which the quota applies.  <br><br>The <b>getRateLimits</b> and <b>getUserRateLimits</b> methods retrieve call-limit information for either an application or user, respectively, and each method must be called with an appropriate OAuth token. That is, <b>getRateLimites</b> requires an access token generated with a client credentials grant and <b>getUserRateLimites</b> requires requires an access token generated with an authorization code grant. For more information, see <a href=\"/api-docs/static/oauth-tokens.html\">OAuth tokens</a>.  <br><br>Users can analyze the response data to see whether or not a limit might be reached, and from that determine if any action needs to be taken (such as programmatically throttling their request rate). For more on call limits, see <a href=\"https://developer.ebay.com/support/app-check\" target=\"_blank\">Compatible Application Check</a>.  # noqa: E501
+    The <b>Analytics API</b> retrieves call-limit data and the quotas that are set for the RESTful APIs and the legacy Trading API.  <br><br>Responses from calls made to <b>getRateLimits</b> and <b>getUerRateLimits</b> include a list of the applicable resources and the \"call limit\", or quota, that is set for each resource. In addition to quota information, the response also includes the number of remaining calls available before the limit is reached, the time remaining before the quota resets, and the length of the \"time window\" to which the quota applies.  <br><br>The <b>getRateLimits</b> and <b>getUserRateLimits</b> methods retrieve call-limit information for either an application or user, respectively, and each method must be called with an appropriate OAuth token. That is, <b>getRateLimites</b> requires an access token generated with a client credentials grant and <b>getUserRateLimites</b> requires an access token generated with an authorization code grant. For more information, see <a href=\"/api-docs/static/oauth-tokens.html\">OAuth tokens</a>.  <br><br>Users can analyze the response data to see whether or not a limit might be reached, and from that determine if any action needs to be taken (such as programmatically throttling their request rate). For more on call limits, see <a href=\"https://developer.ebay.com/support/app-check\" target=\"_blank\">Compatible Application Check</a>.  # noqa: E501
 
     OpenAPI spec version: v1_beta.0.0
     
@@ -61,7 +61,7 @@ class RateLimit(object):
     def api_context(self):
         """Gets the api_context of this RateLimit.  # noqa: E501
 
-        The context of the API for which rate-limit data is returned. For example buy, sell, commerce, or developer.  # noqa: E501
+        The context of the API for which rate-limit data is returned. For example <code>buy</code>, <code>sell</code>, <code>commerce</code>, <code>developer</code> or <code>tradingapi</code>.  # noqa: E501
 
         :return: The api_context of this RateLimit.  # noqa: E501
         :rtype: str
@@ -72,7 +72,7 @@ class RateLimit(object):
     def api_context(self, api_context):
         """Sets the api_context of this RateLimit.
 
-        The context of the API for which rate-limit data is returned. For example buy, sell, commerce, or developer.  # noqa: E501
+        The context of the API for which rate-limit data is returned. For example <code>buy</code>, <code>sell</code>, <code>commerce</code>, <code>developer</code> or <code>tradingapi</code>.  # noqa: E501
 
         :param api_context: The api_context of this RateLimit.  # noqa: E501
         :type: str
@@ -84,7 +84,7 @@ class RateLimit(object):
     def api_name(self):
         """Gets the api_name of this RateLimit.  # noqa: E501
 
-        The name of the API for which rate-limit data is returned. For example browse for the Buy API, inventory for the Sell API, or taxonomy for the Commerce API.  # noqa: E501
+        The name of the API for which rate-limit data is returned. For example <code>browse</code> for the Buy API, <code>inventory</code> for the Sell API, <code>taxonomy</code> for the Commerce API, or <code>tradingapi</code> for Trading API.  # noqa: E501
 
         :return: The api_name of this RateLimit.  # noqa: E501
         :rtype: str
@@ -95,7 +95,7 @@ class RateLimit(object):
     def api_name(self, api_name):
         """Sets the api_name of this RateLimit.
 
-        The name of the API for which rate-limit data is returned. For example browse for the Buy API, inventory for the Sell API, or taxonomy for the Commerce API.  # noqa: E501
+        The name of the API for which rate-limit data is returned. For example <code>browse</code> for the Buy API, <code>inventory</code> for the Sell API, <code>taxonomy</code> for the Commerce API, or <code>tradingapi</code> for Trading API.  # noqa: E501
 
         :param api_name: The api_name of this RateLimit.  # noqa: E501
         :type: str
@@ -107,7 +107,7 @@ class RateLimit(object):
     def api_version(self):
         """Gets the api_version of this RateLimit.  # noqa: E501
 
-        The version of the API for which rate-limit data is returned. For example v1 or v2.  # noqa: E501
+        The version of the API for which rate-limit data is returned. For example <code>v1</code> or <code>v2</code>.  # noqa: E501
 
         :return: The api_version of this RateLimit.  # noqa: E501
         :rtype: str
@@ -118,7 +118,7 @@ class RateLimit(object):
     def api_version(self, api_version):
         """Sets the api_version of this RateLimit.
 
-        The version of the API for which rate-limit data is returned. For example v1 or v2.  # noqa: E501
+        The version of the API for which rate-limit data is returned. For example <code>v1</code> or <code>v2</code>.  # noqa: E501
 
         :param api_version: The api_version of this RateLimit.  # noqa: E501
         :type: str
@@ -130,7 +130,7 @@ class RateLimit(object):
     def resources(self):
         """Gets the resources of this RateLimit.  # noqa: E501
 
-        A list of the methods for which rate-limit data is returned. For example item for the Feed API, getOrder for the Fulfillment API, and getProduct for the Catalog API.  # noqa: E501
+        A list of the methods for which rate-limit data is returned. For example <code>item</code> for the Feed API, <code>getOrder</code> for the Fulfillment API, <code>getProduct</code> for the Catalog API, <code>AddItems</code> for the Trading API.  # noqa: E501
 
         :return: The resources of this RateLimit.  # noqa: E501
         :rtype: list[Resource]
@@ -141,7 +141,7 @@ class RateLimit(object):
     def resources(self, resources):
         """Sets the resources of this RateLimit.
 
-        A list of the methods for which rate-limit data is returned. For example item for the Feed API, getOrder for the Fulfillment API, and getProduct for the Catalog API.  # noqa: E501
+        A list of the methods for which rate-limit data is returned. For example <code>item</code> for the Feed API, <code>getOrder</code> for the Fulfillment API, <code>getProduct</code> for the Catalog API, <code>AddItems</code> for the Trading API.  # noqa: E501
 
         :param resources: The resources of this RateLimit.  # noqa: E501
         :type: list[Resource]

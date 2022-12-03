@@ -4,9 +4,11 @@ from __future__ import absolute_import
 
 # import apis into api package
 from ...sell_account.api.advertising_eligibility_api import AdvertisingEligibilityApi
+from ...sell_account.api.country_api import CountryApi
 from ...sell_account.api.custom_policy_api import CustomPolicyApi
 from ...sell_account.api.fulfillment_policy_api import FulfillmentPolicyApi
 from ...sell_account.api.kyc_api import KycApi
+from ...sell_account.api.location_api import LocationApi
 from ...sell_account.api.onboarding_api import OnboardingApi
 from ...sell_account.api.payment_policy_api import PaymentPolicyApi
 from ...sell_account.api.payments_program_api import PaymentsProgramApi
