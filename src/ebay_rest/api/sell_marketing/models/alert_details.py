@@ -28,7 +28,7 @@ class AlertDetails(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'dimension': 'Dimension',
+        'dimension': 'AlertDimension',
         'aspect': 'Aspect'
     }
 
@@ -53,7 +53,7 @@ class AlertDetails(object):
 
 
         :return: The dimension of this AlertDetails.  # noqa: E501
-        :rtype: Dimension
+        :rtype: AlertDimension
         """
         return self._dimension
 
@@ -63,7 +63,7 @@ class AlertDetails(object):
 
 
         :param dimension: The dimension of this AlertDetails.  # noqa: E501
-        :type: Dimension
+        :type: AlertDimension
         """
 
         self._dimension = dimension

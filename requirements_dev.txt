@@ -27,11 +27,15 @@ six
 urllib3
 
 # Development-specific requirements.
+# For generate_code.py.
 aiofiles
 aiohttp
 bs4
-build
 CurrencyConverter
+# For releasing to PyPI.
+build
 pipreqs
+setuptools
 twine
+wheel
 

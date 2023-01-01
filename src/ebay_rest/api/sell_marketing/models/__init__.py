@@ -30,6 +30,7 @@ from ...sell_marketing.models.additional_info_data import AdditionalInfoData
 from ...sell_marketing.models.ads import Ads
 from ...sell_marketing.models.alert import Alert
 from ...sell_marketing.models.alert_details import AlertDetails
+from ...sell_marketing.models.alert_dimension import AlertDimension
 from ...sell_marketing.models.amount import Amount
 from ...sell_marketing.models.aspect import Aspect
 from ...sell_marketing.models.base_response import BaseResponse

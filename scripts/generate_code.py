@@ -6,7 +6,6 @@
 
 
 # Standard library imports
-import datetime
 import hashlib
 import json
 import logging
@@ -289,45 +288,12 @@ async def ensure_cache():
         await Contracts.delete_folder_contents(Locations.cache_path)
     else:
         os.mkdir(Locations.cache_path)
-
-
-async def ensure_swagger() -> None:
-    s = State()  # skip if this was already done less than a day ago
-    key = 'tool_date_time'
-    dt_format = "%Y-%m-%dT%H:%M:%S.%fZ"
-    value = await s.get(key)
-    if value is None or\
-            datetime.datetime.strptime(value, dt_format) < datetime.datetime.now() - datetime.timedelta(days=1):
-
-        if sys.platform == 'darwin':  # OS X or MacOS
-            logging.info('Install or update the package manager named HomeBrew.')
-            await run('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
-
-            if os.path.isfile('/usr/local/bin/swagger-codegen'):
-                logging.info('Upgrade the code generator from Swagger. https://swagger.io/')
-                await run('brew upgrade swagger-codegen')
-            else:
-                logging.info('Install the code generator from Swagger. https://swagger.io/')
-                await run('brew install swagger-codegen')
-
-            logging.info('Test the generator installation by invoking its help screen.')
-            await run('/usr/local/bin/swagger-codegen -h')
-        elif sys.platform == 'linux':  # Linux platform
-            # Don't install packages without user interaction.
-            if not os.path.isfile('swagger-codegen-cli.jar'):
-                await run(
-                    'wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/'
-                    + 'swagger-codegen-cli/3.0.26/swagger-codegen-cli-3.0.26.jar '
-                    + '-O swagger-codegen-cli.jar'
-                )
-            logging.info('Test the generator installation by invoking its help screen.')
-            await run('java -jar swagger-codegen-cli.jar -h')
-        else:
-            message = f'Please extend install_tools() for your {sys.platform} platform.'
-            logging.fatal(message)
-            sys.exit(message)
-
-        await s.set(key, datetime.datetime.now().strftime(dt_format))
+    # warn developers that they should not edit the files in the cache
+    readme = "# READ ME\n"
+    readme += "Don't change the contents of this folder directly; instead, edit and run scripts/generate_code.py"
+    path_file = os.path.abspath(os.path.join(Locations.cache_path, 'README.md'))
+    with open(path_file, 'w') as file_handle:
+        file_handle.write(readme)
 
 
 class Contracts:
@@ -1012,7 +978,6 @@ async def generate_apis():
     """
     await asyncio.gather(
         ensure_cache(),
-        ensure_swagger(),
         Contracts.purge_existing()
     )
 
@@ -1046,7 +1011,7 @@ async def main() -> None:
 
     # while debugging, it is handy to change the log level from INFO to DEBUG
     logging.basicConfig(format='%(asctime)s %(levelname)s %(filename)s %(lineno)d %(funcName)s: %(message)s',
-                        level=logging.DEBUG)
+                        level=logging.INFO)
 
     await asyncio.gather(generate_apis(), generate_references())
     logging.info(f'Run time was {int(time.time() - start)} seconds.')
