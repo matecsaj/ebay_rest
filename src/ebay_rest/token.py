@@ -372,9 +372,7 @@ class UserToken(metaclass=Multiton):
                                                            self._user_scopes)
 
         if user_token.access_token is None:
-            reason = 'user_token.access_token is None.' \
-                     ' In ebay_rest.json, check refresh_token and refresh_token_expiry.'
-            raise Error(number=96011, reason=reason)
+            raise Error(number=96011, reason=user_token.token_response['error_description'])
         if len(user_token.access_token) == 0:
             raise Error(number=96012, reason='user_token.access_token is of length zero.')
 

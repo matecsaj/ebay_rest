@@ -51,7 +51,7 @@ class GeoCoordinates(object):
     def latitude(self):
         """Gets the latitude of this GeoCoordinates.  # noqa: E501
 
-        The latitude (North-South) component of the geographic coordinate. This field is required if a <strong>geoCoordinates</strong> container is used. <br/><br/>This field is returned if geographical coordinates are set for the inventory location.  # noqa: E501
+        The latitude (North-South) component of the geographic coordinate. This field is required if a <strong>geoCoordinates</strong> container is used. <br/><br/>This field is returned if geographical coordinates are set for the inventory location.<br/><br/>For In-Store Pickup inventory, geographical coordinates are required.  # noqa: E501
 
         :return: The latitude of this GeoCoordinates.  # noqa: E501
         :rtype: float
@@ -62,7 +62,7 @@ class GeoCoordinates(object):
     def latitude(self, latitude):
         """Sets the latitude of this GeoCoordinates.
 
-        The latitude (North-South) component of the geographic coordinate. This field is required if a <strong>geoCoordinates</strong> container is used. <br/><br/>This field is returned if geographical coordinates are set for the inventory location.  # noqa: E501
+        The latitude (North-South) component of the geographic coordinate. This field is required if a <strong>geoCoordinates</strong> container is used. <br/><br/>This field is returned if geographical coordinates are set for the inventory location.<br/><br/>For In-Store Pickup inventory, geographical coordinates are required.  # noqa: E501
 
         :param latitude: The latitude of this GeoCoordinates.  # noqa: E501
         :type: float
@@ -74,7 +74,7 @@ class GeoCoordinates(object):
     def longitude(self):
         """Gets the longitude of this GeoCoordinates.  # noqa: E501
 
-        The longitude (East-West) component of the geographic coordinate. This field is required if a <strong>geoCoordinates</strong> container is used. <br/><br/>This field is returned if geographical coordinates are set for the inventory location.  # noqa: E501
+        The longitude (East-West) component of the geographic coordinate. This field is required if a <strong>geoCoordinates</strong> container is used. <br/><br/>This field is returned if geographical coordinates are set for the inventory location.<br/><br/>For In-Store Pickup inventory, geographical coordinates are required.  # noqa: E501
 
         :return: The longitude of this GeoCoordinates.  # noqa: E501
         :rtype: float
@@ -85,7 +85,7 @@ class GeoCoordinates(object):
     def longitude(self, longitude):
         """Sets the longitude of this GeoCoordinates.
 
-        The longitude (East-West) component of the geographic coordinate. This field is required if a <strong>geoCoordinates</strong> container is used. <br/><br/>This field is returned if geographical coordinates are set for the inventory location.  # noqa: E501
+        The longitude (East-West) component of the geographic coordinate. This field is required if a <strong>geoCoordinates</strong> container is used. <br/><br/>This field is returned if geographical coordinates are set for the inventory location.<br/><br/>For In-Store Pickup inventory, geographical coordinates are required.  # noqa: E501
 
         :param longitude: The longitude of this GeoCoordinates.  # noqa: E501
         :type: float
