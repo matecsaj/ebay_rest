@@ -354,9 +354,9 @@ class API(metaclass=Multiton):
         elif parameter is None:
             if config_contents:
                 if section in config_contents:
-                    sections = config_contents['applications'].keys()
+                    sections = config_contents[section].keys()
                     if len(sections) == 1:
-                        result = config_contents['applications'][sections[0]]
+                        result = config_contents[section][tuple(sections)[0]]
                     else:
                         detail = "Perhaps parameter " + param_name + " should be one of " + ", ".join(sections) + "."
                 else:
