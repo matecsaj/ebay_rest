@@ -618,3 +618,117 @@ class _OAuth2Api:
                 token.error += ': ' + content[key]
 
         return token
+
+
+class KeyPairToken(metaclass=Multiton):
+    """An eBay private/public key pair created using
+    the eBay Key Management API.
+    Digital signature credentials are optional if you don't make API
+    calls that need a public/private key pair.
+    """
+
+    __slots__ = (
+        "_lock", "_sandbox", "_creation_time", "_expiration_time", "_jwe",
+        "_private_key", "_public_key", "_signing_key_cipher", "_signing_key_id"
+    )
+
+    def __init__(self,
+                 sandbox: bool,
+                 creation_time: int or None = None,
+                 expiration_time: int or None = None,
+                 jwe: str or None = None,
+                 private_key: str or None = None,
+                 public_key: str or None = None,
+                 signing_key_cipher: str or None = None,
+                 signing_key_id: str or None = None) -> None:
+        """
+
+        :param sandbox (bool, required): The system to use, True for Sandbox/Testing and False for Production.
+
+        # eBay key pair details
+        :param creation_time (int, optional):
+        :param expiration_time (int, optional):
+        :param jwe (str, optional):
+        :param private_key (str, optional):
+        :param public_key (str, optional):
+        :param signing_key_cipher (str, optional):
+        :param signing_key_id (str, optional):
+        :return: None (None)
+        """
+        self._lock = Lock()
+        # The Multiton decorator wraps this initializer with a thread lock; it is safe to skip using self._lock.
+        self._sandbox = sandbox
+        self._creation_time = DateTime.from_string(creation_time) if creation_time else None
+        self._expiration_time = DateTime.from_string(expiration_time) if expiration_time else None
+        self._jwe = jwe
+        self._private_key = private_key
+        self._public_key = public_key
+        self._signing_key_cipher = signing_key_cipher
+        self._signing_key_id = signing_key_id
+
+    def _ensure_key_pair(self, api) -> None:
+        """
+        Ensures a valid key pair is available.
+
+        :param api (API): A valid API instance that can be used to make
+            a KeyManagementAPI call
+        :return None (None)
+
+        - If the key is out of date, create a new key pair.
+        - If all details are provided, do nothing (assume the key pair is OK).
+        - If the private key and the signing key ID are provided but details
+          are not complete, load the key info.
+        """
+
+        complete = (
+            self._creation_time and self._expiration_time and self._jwe
+            and self._private_key and self._public_key
+            and self._signing_key_cipher and self._signing_key_id
+        )
+
+        in_date = (
+            self._expiration_time and (
+                (DateTime.now() - timedelta(seconds=90)) > self._expiration_time
+            )
+        )
+
+        if not in_date:
+            # An expired key must be replaced
+            self._create_key_pair()
+
+        elif complete:
+            # If the in-date key is complete, do nothing
+            return
+
+        elif self._private_key and self._signing_key_id:
+            # We can reload the key as long as we have the private key
+            # and the signing key ID
+            self._get_signing_key()
+            if (DateTime.now() - timedelta(seconds=90)) > self._expiration_time:
+                # If the loaded key is out of date, generate a new key pair
+                self._create_key_pair()
+
+        else:
+            # We have to generate a new key
+            self._create_key_pair()
+
+    def _get_signing_key(self, api) -> None:
+        """
+        Use the eBay Key Pair Management API to load an existing eBay
+        public/private key pair.
+
+        :param api (API): A valid API instance that can be used to make
+            a KeyManagementAPI call
+        :return None (None)
+        """
+
+    def _create_key_pair(self, api) -> None:
+        """
+        Use the eBay Key Pair Management API to generate a new eBay
+        public/private key pair
+
+        :param api (API): A valid API instance that can be used to make
+            a KeyManagementAPI call
+        :return None (None)
+        """
+

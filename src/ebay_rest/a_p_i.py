@@ -12,7 +12,7 @@ from .error import Error
 from .multiton import Multiton
 from .rates import Rates
 from .reference import Reference
-from .token import ApplicationToken, UserToken
+from .token import ApplicationToken, UserToken, KeyPairToken
 
 # Don't edit the anchors or in-between; instead, edit and run scripts/generate_code.py.
 # ANCHOR-er_imports-START"
@@ -88,10 +88,14 @@ class API(metaclass=Multiton):
     # Use these to mitigate the duplication risk that Mutition has while treading.
     _lock_application_token = Lock()
     _lock_user_token = Lock()
+    _lock_key_pair_token = Lock()
     _lock_rates = Lock()
 
-    __slots__ = "_config_location", "_application", "_user", "_header", "_sandbox", "_marketplace_ids", "_throttle",\
-                "_timeout", "_rates", "_end_user_ctx", "_application_token", "_user_token", "_async_req"
+    __slots__ = (
+        "_config_location", "_application", "_user", "_header", "_key_pair", "_sandbox",
+        "_marketplace_ids", "_throttle", "_timeout", "_rates", "_end_user_ctx",
+        "_application_token", "_user_token", "_key_pair_token", "_async_req"
+    )
 
     def __init__(self,
                  path: str or None = None,
@@ -100,6 +104,7 @@ class API(metaclass=Multiton):
                  header: str or dict or None = None,
                  throttle: bool or None = False,
                  timeout: float or None = -1.0,
+                 key_pair: str or dict or None = None,
                  async_req: bool or None = False) -> None:
         """
         Instantiate an API object, then use it to call hundreds of eBay APIs.
@@ -132,6 +137,12 @@ class API(metaclass=Multiton):
         throttle for at most the number of seconds specified by timeout and as below the prorated call limit. A timeout
         argument of -1 specifies an unbounded wait. It is forbidden to specify a timeout when the throttle is False.
         Defaults to -1.
+
+        :param
+        key_pair (str or dict, optional) :
+        Supply the name of the desired eBay public/private key pair record in ebay_rest.json or a dict with
+        the key pair details.
+        Can omit when ebay_rest.json contains only one record.
 
         :param
         async_req (bool, optional) : When True make asynchronous HTTP requests, defaults to False for synchronous.
@@ -170,6 +181,11 @@ class API(metaclass=Multiton):
             self._header = self._process_config_section(config_contents, 'headers', header)
         except Error:
             raise
+        try:
+            self._key_pair = self._process_config_section(
+                config_contents, 'key_pair', key_pair, mandatory=False)
+        except Error:
+            raise
 
         # check the application keys and values
         # True if the dictionary key is required and False when optional.
@@ -185,6 +201,17 @@ class API(metaclass=Multiton):
                      ('scopes', False), ('refresh_token', False), ('refresh_token_expiry', False)]
         try:
             self._check_keys(self._user, user_keys, 'user')
+        except Error:
+            raise
+
+        # check the key pair keys and values
+        key_pair_keys = [
+            ('creation_time', False), ('expiration_time', False),
+            ('jwe', False), ('private_key', False), ('public_key', False),
+            ('signing_key_cipher', False), ('signing_key_id', False)
+        ]
+        try:
+            self._check_keys(self._key_pair, key_pair_keys, 'key_pair')
         except Error:
             raise
 
@@ -313,12 +340,28 @@ class API(metaclass=Multiton):
             except Error:
                 raise
 
+        with API._lock_key_pair_token:
+            try:
+                self._key_pair_token = KeyPairToken(
+                    self._sandbox,
+                    creation_time=self._key_pair.get('creation_time', None),
+                    expiration_time=self._key_pair.get('expiration_time', None),
+                    jwe=self._key_pair.get('jwe', None),
+                    private_key=self._key_pair.get('private_key', None),
+                    public_key=self._key_pair.get('public_key', None),
+                    signing_key_cipher=self._key_pair.get('signing_key_cipher', None),
+                    signing_key_id=self._key_pair.get('signing_key_id', None)
+                )
+            except Error:
+                raise
+
         return
 
     @staticmethod
     def _process_config_section(config_contents: dict,
                                 section: str,
-                                parameter: str or dict or None
+                                parameter: str or dict or None,
+                                mandatory: bool = True,
                                 ) -> dict or None:
         """
         Get a configuration section from the parameter or the loaded config file.
@@ -326,6 +369,7 @@ class API(metaclass=Multiton):
         :param config_contents (dict, required)
         :param section (str, required)
         :param parameter (str or dict or None, required)
+        :param mandatory (bool, optional)
         :return result (dict or None)
         """
         result = None
@@ -370,7 +414,10 @@ class API(metaclass=Multiton):
                      + str(type(parameter)) + "."
 
         if result is None:
-            raise Error(number=99003, reason="Get configuration for " + param_name + " problem.", detail=detail)
+            if mandatory:
+                raise Error(number=99003, reason="Get configuration for " + param_name + " problem.", detail=detail)
+            else:
+                return {}
         else:
             # delete blank lines, to eliminate subsequent blank line checks
             to_delete = []
