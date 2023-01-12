@@ -94,7 +94,8 @@ class API(metaclass=Multiton):
     __slots__ = (
         "_config_location", "_application", "_user", "_header", "_key_pair", "_sandbox",
         "_marketplace_ids", "_throttle", "_timeout", "_rates", "_end_user_ctx",
-        "_application_token", "_user_token", "_key_pair_token", "_async_req"
+        "_application_token", "_user_token", "_key_pair_token", "_async_req",
+        "_use_digital_signatures"
     )
 
     def __init__(self,
@@ -105,7 +106,8 @@ class API(metaclass=Multiton):
                  throttle: bool or None = False,
                  timeout: float or None = -1.0,
                  key_pair: str or dict or None = None,
-                 async_req: bool or None = False) -> None:
+                 use_digital_signatures: bool or None = False,
+                 async_req: bool or None = False,) -> None:
         """
         Instantiate an API object, then use it to call hundreds of eBay APIs.
 
@@ -143,6 +145,9 @@ class API(metaclass=Multiton):
         Supply the name of the desired eBay public/private key pair record in ebay_rest.json or a dict with
         the key pair details.
         Can omit when ebay_rest.json contains only one record.
+
+        :param
+        use_digital_signatures (bool, optional): Use eBay digital signatures
 
         :param
         async_req (bool, optional) : When True make asynchronous HTTP requests, defaults to False for synchronous.
@@ -183,9 +188,10 @@ class API(metaclass=Multiton):
             raise
         try:
             self._key_pair = self._process_config_section(
-                config_contents, 'key_pair', key_pair, mandatory=False)
+                config_contents, 'key_pairs', key_pair, mandatory=False)
         except Error:
             raise
+        self._use_digital_signatures = use_digital_signatures
 
         # check the application keys and values
         # True if the dictionary key is required and False when optional.
@@ -343,7 +349,6 @@ class API(metaclass=Multiton):
         with API._lock_key_pair_token:
             try:
                 self._key_pair_token = KeyPairToken(
-                    self._sandbox,
                     creation_time=self._key_pair.get('creation_time', None),
                     expiration_time=self._key_pair.get('expiration_time', None),
                     jwe=self._key_pair.get('jwe', None),
@@ -691,6 +696,12 @@ class API(metaclass=Multiton):
                 configuration.access_token = self._application_token.get()
         except Error:
             raise
+
+        # Load key pair for digital signature
+        if self._use_digital_signatures:
+            self._key_pair_token._ensure_key_pair(self)
+            configuration.api_key['key_pair'] = self._key_pair_token.key_dict()
+            self._header['x-ebay-enforce-signature'] = 'true'
 
         # Configure the host endpoint
         if self._sandbox:

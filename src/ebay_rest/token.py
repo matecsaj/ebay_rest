@@ -628,12 +628,11 @@ class KeyPairToken(metaclass=Multiton):
     """
 
     __slots__ = (
-        "_lock", "_sandbox", "_creation_time", "_expiration_time", "_jwe",
+        "_lock", "_creation_time", "_expiration_time", "_jwe",
         "_private_key", "_public_key", "_signing_key_cipher", "_signing_key_id"
     )
 
     def __init__(self,
-                 sandbox: bool,
                  creation_time: int or None = None,
                  expiration_time: int or None = None,
                  jwe: str or None = None,
@@ -642,9 +641,6 @@ class KeyPairToken(metaclass=Multiton):
                  signing_key_cipher: str or None = None,
                  signing_key_id: str or None = None) -> None:
         """
-
-        :param sandbox (bool, required): The system to use, True for Sandbox/Testing and False for Production.
-
         # eBay key pair details
         :param creation_time (int, optional):
         :param expiration_time (int, optional):
@@ -657,7 +653,6 @@ class KeyPairToken(metaclass=Multiton):
         """
         self._lock = Lock()
         # The Multiton decorator wraps this initializer with a thread lock; it is safe to skip using self._lock.
-        self._sandbox = sandbox
         self._creation_time = DateTime.from_string(creation_time) if creation_time else None
         self._expiration_time = DateTime.from_string(expiration_time) if expiration_time else None
         self._jwe = jwe
@@ -665,6 +660,12 @@ class KeyPairToken(metaclass=Multiton):
         self._public_key = public_key
         self._signing_key_cipher = signing_key_cipher
         self._signing_key_id = signing_key_id
+
+    def key_dict(self):
+        return {
+            'jwe': self._jwe,
+            'private_key': self._private_key
+        }
 
     def _ensure_key_pair(self, api) -> None:
         """
@@ -692,7 +693,7 @@ class KeyPairToken(metaclass=Multiton):
             )
         )
 
-        if not in_date:
+        if self._expiration_time and not in_date:
             # An expired key must be replaced
             self._create_key_pair()
 
@@ -703,14 +704,14 @@ class KeyPairToken(metaclass=Multiton):
         elif self._private_key and self._signing_key_id:
             # We can reload the key as long as we have the private key
             # and the signing key ID
-            self._get_signing_key()
+            self._get_signing_key(api)
             if (DateTime.now() - timedelta(seconds=90)) > self._expiration_time:
                 # If the loaded key is out of date, generate a new key pair
-                self._create_key_pair()
+                self._create_key_pair(api)
 
         else:
             # We have to generate a new key
-            self._create_key_pair()
+            self._create_key_pair(api)
 
     def _get_signing_key(self, api) -> None:
         """
@@ -721,6 +722,10 @@ class KeyPairToken(metaclass=Multiton):
             a KeyManagementAPI call
         :return None (None)
         """
+        key = api.developer_key_management_get_signing_key(
+            signing_key_id=self._signing_key_id
+        )
+        self._save_key(key)
 
     def _create_key_pair(self, api) -> None:
         """
@@ -731,4 +736,25 @@ class KeyPairToken(metaclass=Multiton):
             a KeyManagementAPI call
         :return None (None)
         """
+        raise ValueError('Key creation disabled')  # TODO FIXME
+        from ebay_rest.api.developer_key_management import CreateSigningKeyRequest
+        body = CreateSigningKeyRequest(signing_key_cipher = 'ED25519')
+        key = api.developer_key_management_create_signing_key(body=body)
+        self._save_key(key)
 
+    def _save_key(self, key) -> None:
+        """
+        Save a loaded key dictionary to this KeyPairToken
+        :param key (dict): A dict of key properties
+        """
+        self._creation_time = datetime.fromtimestamp(
+            key['creation_time'], tz=timezone.utc)
+        self._expiration_time = datetime.fromtimestamp(
+            key['expiration_time'], tz=timezone.utc)
+        self._jwe = key['jwe']
+        if key['private_key']:
+            # Only write private key if supplied (i.e. just created)
+            self._private_key = key['private_key']
+        self._public_key = key['public_key']
+        self._signing_key_cipher = key['signing_key_cipher']
+        self._signing_key_id = key['signing_key_id']
