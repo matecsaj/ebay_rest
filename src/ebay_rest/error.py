@@ -34,9 +34,6 @@ class Error(Exception):
         """
         :return message (str)
         """
-        message = 'Error number' + str(self.number) + '.'
-        if self.reason:
-            message = message + ' ' + self.reason
-        if self.detail:
-            message = message + ' ' + self.detail
-        return message
+        message = 'Error number {}. {} {}'.format(
+            self.number, self.reason or '', self.detail or '')
+        return message.rstrip()
