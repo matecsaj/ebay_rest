@@ -1830,7 +1830,7 @@ class API(metaclass=Multiton):
         This method retrieves the call limit and utilization data for an application. The data is retrieved for all RESTful APIs and the legacy Trading API.  The response from getRateLimits includes a list of the applicable resources and the \"call limit\", or quota, that is set for each resource. In addition to quota information, the response also includes the number of remaining calls available before the limit is reached, the time remaining before the quota resets, and the length of the \"time window\" to which the quota applies.  By default, this method returns utilization data for all RESTful API and the legacy Trading API resources. Use the api_name and api_context query parameters to filter the response to only the desired APIs.  For more on call limits, see Compatible Application Check.  
 
         :param str api_context: This optional query parameter filters the result to include only the specified API context. Valid values: buysell commercedevelopertradingapi
-        :param str api_name: This optional query parameter filters the result to include only the APIs specified. Example values:  browse for the Buy APIs inventory for the Sell APIs taxonomy for the Commerce APIs context tradingapi for the Trading APIs
+        :param str api_name: This optional query parameter filters the result to include only the APIs specified. Example values:  browse for the Buy APIs inventory for the Sell APIs taxonomy for the Commerce APIs tradingapi for the Trading APIs
         :return: RateLimitsResponse
         """
         try:

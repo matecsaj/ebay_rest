@@ -10,11 +10,6 @@ from urllib.parse import parse_qs, urlencode
 
 # 3rd party library imports
 from requests import codes, post, Response
-from selenium import webdriver  # In README.md note the extra installation steps.
-from selenium.common.exceptions import NoSuchElementException, TimeoutException, WebDriverException
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 
 # Local imports
 from .date_time import DateTime
@@ -300,68 +295,79 @@ class UserToken(metaclass=Multiton):
         :param sign_in_url (str): The redirect URL for gaining user consent.
         :return code (str): Authorization code.
         """
-
-        # open browser
-        options = Options()
-        # options.add_argument("--headless")      # TODO Put this back in after adding a captcha solver.
         try:
-            browser = webdriver.Chrome(options=options)
-        except WebDriverException as exc:
-            raise Error(number=96014, reason="ChromeDriver instantiation failure.", detail=exc.msg)
-
-        # load the initial page
-        browser.get(sign_in_url)
-
-        try:
-            # fill in the username then click continue
-            # sometimes a captcha appears, so wait an extra 30-seconds for the user to fill it in
-            WebDriverWait(browser, 10+30).until(lambda x: x.find_element(By.NAME, 'userid')).send_keys(self._user_id)
-            WebDriverWait(browser, 10).until(lambda x: x.find_element(By.ID, 'signin-continue-btn')).click()
-
-            # fill in the password then submit
-            sleep(5)    # Why? Perhaps an element I'm not aware of needs to finish rendering.
-            WebDriverWait(browser, 10).until(lambda x: x.find_element(By.NAME, 'pass')).send_keys(self._user_password)
-            WebDriverWait(browser, 10).until(lambda x: x.find_element(By.ID, 'sgnBt')).submit()
-
-        except NoSuchElementException:
-            raise Error(number=96015, reason="ChromeDriver element not found.", detail="Has eBay's website changed?")
-        except TimeoutException:
-            raise Error(number=96016, reason="ChromeDriver timeout.", detail='Slow computer or Internet?')
-
-        # in some countries an "I agree" prompt interjects
-        try:
-            element = WebDriverWait(browser, 10).until(lambda x: x.find_element(By.ID, 'submit'))
-        except TimeoutException:
-            pass
+            from selenium import webdriver
+            from selenium.common.exceptions import NoSuchElementException, TimeoutException, WebDriverException
+            from selenium.webdriver.chrome.options import Options
+            from selenium.webdriver.common.by import By
+            from selenium.webdriver.support.ui import WebDriverWait
+        except ModuleNotFoundError as e:
+            reason = f"Supply an 'eBay user token' or install the COMPLETE variant of ebay_rest. Refer to the README.md at https://github.com/matecsaj/ebay_rest."  # noqa: E501
+            logging.critical(reason)
+            raise Error(number=96019, reason=reason)
         else:
-            element.click()
 
-        # get the result url and then close browser
-        # some people enable 2FA, so wait an extra 30-seconds for the user interaction
-        try:
-            WebDriverWait(browser, 10+30).until(lambda x: x.find_element(By.ID, 'thnk-wrap'))
-        except NoSuchElementException:
-            raise Error(number=96017, reason="ChromeDriver element not found.", detail="Has eBay's website changed?")
-        except TimeoutException:
-            raise Error(number=96018, reason="ChromeDriver timeout.", detail='Slow computer or Internet?')
-        qs = browser.current_url.partition('?')[2]
-        parsed = parse_qs(qs, encoding='utf-8')
-        browser.quit()
+            # open browser
+            options = Options()
+            # options.add_argument("--headless")      # TODO Put this back in after adding a captcha solver.
+            try:
+                browser = webdriver.Chrome(options=options)
+            except WebDriverException as exc:
+                raise Error(number=96014, reason="ChromeDriver instantiation failure.", detail=exc.msg)
 
-        # Check isAuthSuccessful is true, if present
-        is_auth_successful = False
-        if 'isAuthSuccessful' in parsed:
-            if 'true' == parsed['isAuthSuccessful'][0]:
-                is_auth_successful = True
+            # load the initial page
+            browser.get(sign_in_url)
 
-        if is_auth_successful:
-            if 'code' in parsed:
-                return parsed['code'][0]        # recently added [0]
+            try:
+                # fill in the username then click continue
+                # sometimes a captcha appears, so wait an extra 30-seconds for the user to fill it in
+                WebDriverWait(browser, 10+30).until(lambda x: x.find_element(By.NAME, 'userid')).send_keys(self._user_id)   # noqa: E501
+                WebDriverWait(browser, 10).until(lambda x: x.find_element(By.ID, 'signin-continue-btn')).click()
+
+                # fill in the password then submit
+                sleep(5)    # Why? Perhaps an element I'm not aware of needs to finish rendering.
+                WebDriverWait(browser, 10).until(lambda x: x.find_element(By.NAME, 'pass')).send_keys(self._user_password)  # noqa: E501
+                WebDriverWait(browser, 10).until(lambda x: x.find_element(By.ID, 'sgnBt')).submit()
+
+            except NoSuchElementException:
+                raise Error(number=96015, reason="ChromeDriver element not found.", detail="Has eBay's website changed?")   # noqa: E501
+            except TimeoutException:
+                raise Error(number=96016, reason="ChromeDriver timeout.", detail='Slow computer or Internet?')
+
+            # in some countries an "I agree" prompt interjects
+            try:
+                element = WebDriverWait(browser, 10).until(lambda x: x.find_element(By.ID, 'submit'))
+            except TimeoutException:
+                pass
             else:
-                raise Error(number=96009, reason="Unable to obtain code.")
-        else:
-            reason = f"Authorization unsuccessful, check userid & password:{self._user_id} {self._user_password}"
-            raise Error(number=96010, reason=reason)
+                element.click()
+
+            # get the result url and then close browser
+            # some people enable 2FA, so wait an extra 30-seconds for the user interaction
+            try:
+                WebDriverWait(browser, 10+30).until(lambda x: x.find_element(By.ID, 'thnk-wrap'))
+            except NoSuchElementException:
+                raise Error(number=96017, reason="ChromeDriver element not found.", detail="Has eBay's website changed?")   # noqa: E501
+            except TimeoutException:
+                raise Error(number=96018, reason="ChromeDriver timeout.", detail='Slow computer or Internet?')
+            qs = browser.current_url.partition('?')[2]
+            parsed = parse_qs(qs, encoding='utf-8')
+            browser.quit()
+
+            # Check isAuthSuccessful is true, if present
+            is_auth_successful = False
+            if 'isAuthSuccessful' in parsed:
+                if 'true' == parsed['isAuthSuccessful'][0]:
+                    is_auth_successful = True
+
+            if is_auth_successful:
+                if 'code' in parsed:
+                    return parsed['code'][0]        # recently added [0]
+                else:
+                    raise Error(number=96009, reason="Unable to obtain code.")
+            else:
+                reason = f"Authorization unsuccessful, check userid & password:{self._user_id} {self._user_password}"
+                raise Error(number=96010, reason=reason)
 
     def _refresh_user_token(self) -> None:
         """

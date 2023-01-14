@@ -1,20 +1,25 @@
 # ebay_rest
 A Python 3 pip package that wraps eBay’s REST APIs.
 
-## Installation
+## BASIC Installation
+Start with the basic installation of the package. It is easier to install, saves storage and is often enough.
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install ebay_rest.
-
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install ebay_rest.  Substitute pip3 for pip if your computer also has Python 2 installed.
 ```bash
-pip install ebay_rest    # Use pip3 if your computer also has Python 2 installed.
+pip install ebay_rest
 ```
 
-If you are one of the few people who want ebay_rest to get user tokens, do the following.
+## COMPLETE Installation
+The complete installation has an extra ability; it can use browser automation to get what eBay calls a user token.
+
+When installing the library, utilize the 'extra' we named complete.
+```bash
+pip install ebay_rest[complete]
+```
 
 Install [Chrome](https://www.google.ca/chrome/).
-
 ```bash
-pip install selenium    # Use pip3 if your computer also has Python 2 installed.
+pip install selenium
 ```
 
 Install [Webdriver](https://sites.google.com/chromium.org/driver/), aka Chromedriver, for your version of Chrome .
@@ -95,7 +100,7 @@ print(help(Reference))
 * Avoid exhausting memory by making the call within a ["for" loop](https://docs.python.org/3/reference/compound_stmts.html#for).
 
 ##
-**Q:** What should I do when the browser pop-up happens? 
+**Q:** What should I do when the browser automation opens pops a window open on my computer? 
 
 **A:** Watch and be ready to act.
 * At the beginning, you may see a captcha; you need to complete it within 30-seconds.
@@ -103,11 +108,108 @@ print(help(Reference))
 * Otherwise, be patient, give the whole thing up to 2-minutes to complete, the pop-up will close automatically.
 
 ##
-**Q:** Can the browser pop-up be stopped? 
+**Q:** Can the browser automation be stopped? 
 
-**A:** Reusing the result of the browser pop-up is possible. After running your program, check your terminal/console or [info level logger](https://docs.python.org/3.7/library/logging.html).
+**A1:** Quoting a user of this library, "I use ebay_rest for a web server application and don't use [browser automation] to get refresh tokens. I use JS to push people to the right eBay web page when they click an 'authorize' button; they then fill in their login on the eBay site and I pick up the consent token on our 'live' server (the one specified on the eBay token details). The live server then builds a redirect which goes to the machine that actually requested the token originally (all this happens in the browser, including the original eBay redirect, so it all works fine with localhost addresses)."
 
-[Headless operation is in the works](https://github.com/matecsaj/ebay_rest/issues/56); contributions are welcome.
+**A2:** Reusing the result of the browser pop-up is possible. After running your program, check your terminal/console or [info level logger](https://docs.python.org/3.7/library/logging.html) to see your “production_refresh_token” and “refresh_token_expiry”.
+
+When the following are blank, browser automation is used to get refresh tokens.
+```
+    "refresh_token": "",
+    "refresh_token_expiry": ""
+```
+
+Instead, do something like this, with, of course, your token info.
+```
+    "refresh_token": "production_refresh_token",
+    "refresh_token_expiry": "production_token_expiry"
+```
+
+Use of an ebay_rest.json file is optional; the Class initializer accepts relevant keyword parameters.
+```
+        :param application (str or dict, optional) :
+        Supply the name of the desired application record in ebay_rest.json or a dict with application credentials.
+
+        Can omit when ebay_rest.json contains only one application record.
+        :param user (str or dict, optional) :
+        Supply the name of the desired user record in ebay_rest.json or a dict with user credentials.
+        Can omit when ebay_rest.json contains only one user record.
+
+        :param header (str or dict, optional) :
+        Supply the name of the desired header record in ebay_rest.json or a dict with header credentials.
+        Can omit when ebay_rest.json contains only one header record.
+```
+
+Sample code.
+```python
+from ebay_rest import API, Error
+
+application = {
+    "app_id": "placeholder-placeholder-PRD-placeholder-placeholder",
+    "cert_id": "PRD-placeholder-placeholder-placeholder-placeholder-placeholder",
+    "dev_id": "placeholder-placeholder-placeholder-placeholder-placeholder",
+    "redirect_uri": "placeholder-placeholder-placeholder-placeholder"
+}
+
+user = {
+    "email_or_username": "<production-username>",
+    "password": "<production-user-password>",
+    "scopes": [
+        "https://api.ebay.com/oauth/api_scope",
+        "https://api.ebay.com/oauth/api_scope/sell.inventory",
+        "https://api.ebay.com/oauth/api_scope/sell.marketing",
+        "https://api.ebay.com/oauth/api_scope/sell.account",
+        "https://api.ebay.com/oauth/api_scope/sell.fulfillment"
+    ],
+    "refresh_token": "production-refresh_token",
+    "refresh_token_expiry": "production-token_expiry"
+}
+
+header = {
+    "accept_language": "en-US",
+    "affiliate_campaign_id": "",
+    "affiliate_reference_id": "",
+    "content_language": "en-CA",
+    "country": "CA",
+    "currency": "CAD",
+    "device_id": "",
+    "marketplace_id": "EBAY_ENCA",
+    "zip": ""
+}
+
+try:
+    api = API(application=application, user=user, header=header)
+except Error as error:
+    print(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+else:
+    try:
+        print("The five least expensive iPhone things now for sale on-eBay:")        
+        for record in api.buy_browse_search(q='iPhone', sort='price', limit=5):
+            if 'record' not in record:
+                pass    # TODO Refer to non-records, they contain optimization information.
+            else:
+                item = record['record']
+                print(f"item id: {item['item_id']} {item['item_web_url']}")
+    except Error as error:
+        print(f'Error {error.number} is {error.reason} {error.detail}.\n')
+    else:
+        pass
+
+```
+When using eBay's sandbox:
+1. Omit "scopes."
+2. Your credentials will contain 'SBX' instead of 'PRD.'
+
+Output.
+```
+The five least expensive iPhone things now for sale on eBay:
+item id: v1|110551100598|410108380484 http://www.sandbox.ebay.com/itm/Retro-Magnetic-Wallet-Leather-Case-For-Apple-iPhone-13-Pro-Max-12-11-XR-8-Cover-/110551100598?hash=item19bd5becb6:g:aXsAAOSwaiFiyAV9
+item id: v1|110551164737|410108400925 http://www.sandbox.ebay.com/itm/For-iPhone-6-6-7-8-Plus-LCD-Display-Touch-Screen-Replacement-Home-Button-Camera-/110551164737?hash=item19bd5ce741:g:6hcAAOSwE3Ni45Qu
+item id: v1|110551164738|410108400957 http://www.sandbox.ebay.com/itm/For-iPhone-6-6-7-8-Plus-LCD-Display-Touch-Screen-Replacement-Home-Button-Camera-/110551164738?hash=item19bd5ce742:g:4BcAAOSwG8Ni45Ra
+item id: v1|110551164739|410108400989 http://www.sandbox.ebay.com/itm/For-iPhone-6-6-7-8-Plus-LCD-Display-Touch-Screen-Replacement-Home-Button-Camera-/110551164739?hash=item19bd5ce743:g:4CEAAOSwG8Ni45SQ
+```
+
 
 ##
 **Q:** Why is eBay giving an "Internal Error" or "Internal Server Error"? 
