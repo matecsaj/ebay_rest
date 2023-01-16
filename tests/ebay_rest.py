@@ -23,14 +23,15 @@ from currency_converter import CurrencyConverter
 from src.ebay_rest import API, DateTime, Error, Reference
 
 
-# TODO Lines like the following should go. Stop ignoring the warning and remedy the resource leak.
-# warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
-
 class APIBothEnvironmentsSingleSiteTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
+
+    @classmethod
+    def tearDownClass(cls):
+        warnings.filterwarnings(action="default", message="unclosed", category=ResourceWarning)
 
     def test_start(self):  # all initialization options and for each the first and second usage
         for environment in ('production', 'sandbox'):
@@ -73,6 +74,10 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
     def setUpClass(cls):
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
         cls.currency_converter = CurrencyConverter()  # this is slow, so do it once
+
+    @classmethod
+    def tearDownClass(cls):
+        warnings.filterwarnings(action="default", message="unclosed", category=ResourceWarning)
 
     def test_credentials_from_dicts(self):
         """ set credentials via dicts """
@@ -280,6 +285,10 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         else:
             cls.number = None
 
+    @classmethod
+    def tearDownClass(cls):
+        warnings.filterwarnings(action="default", message="unclosed", category=ResourceWarning)
+
     def setUp(self):
         if self.number is not None:
             self.fail(f'Error {self.number} is {self.reason}  {self.detail}.\n')
@@ -335,12 +344,16 @@ class APISandboxSingleSiteTests(unittest.TestCase):
 
     def test_try_except_else_api(self):
         """  Test that an exception occurs when expected. """
+        # TODO Remedy the resource problem and then remove all lines in this file containing warnings.filterwarnings.
+        warnings.filterwarnings(action="default", message="unclosed", category=ResourceWarning)
         try:
             self._api.buy_browse_get_item(item_id='invalid')
         except Error as error:
             self.assertIsNotNone(f'Error {error.number} is {error.reason} with detail {error.detail}.')
         else:
             self.assertIsNotNone(None, msg="Failed to raise an exception.")
+        finally:
+            warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
 
     def test_buying_options(self):
         """ Does buying option filtering work? """
@@ -448,6 +461,10 @@ class APIProductionSingleTests(unittest.TestCase):
             cls.detail = error.detail
         else:
             cls.number = None
+
+    @classmethod
+    def tearDownClass(cls):
+        warnings.filterwarnings(action="default", message="unclosed", category=ResourceWarning)
 
     def setUp(self):
         if self.number is not None:
@@ -639,8 +656,8 @@ class APIProductionSingleTests(unittest.TestCase):
                     "unit": "LengthUnitOfMeasureEnum : [INCH,FEET,CENTIMETER,METER]",
                     "width": "number"
                 },
-                "packageType": "PackageTypeEnum : [LETTER,BULKY_GOODS,CARAVAN,CARS,"    
-                               "EUROPALLET,EXPANDABLE_TOUGH_BAGS,EXTRA_LARGE_PACK,"     # noqa: E501
+                "packageType": "PackageTypeEnum : [LETTER,BULKY_GOODS,CARAVAN,CARS,"
+                               "EUROPALLET,EXPANDABLE_TOUGH_BAGS,EXTRA_LARGE_PACK,"  # noqa: E501
                                "FURNITURE,INDUSTRY_VEHICLES,LARGE_CANADA_POSTBOX,"
                                "LARGE_CANADA_POST_BUBBLE_MAILER,LARGE_ENVELOPE,"
                                "MAILING_BOX,MEDIUM_CANADA_POST_BOX,MEDIUM_CANADA_POST_BUBBLE_MAILER,"
@@ -708,14 +725,11 @@ class APIProductionSingleTests(unittest.TestCase):
         sku = ''.join(random.choice(allowed) for _i in range(length))
 
         try:
-            result = self._api.sell_inventory_create_or_replace_inventory_item(body=body,
-                                                                               content_language=content_language,
-                                                                               sku=sku)
+            self._api.sell_inventory_create_or_replace_inventory_item(body=body,
+                                                                      content_language=content_language,
+                                                                      sku=sku)
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
-
-        else:
-            tp = True
 
     @unittest.skip  # TODO Finish the unit test and then attempt to relocate it to the APISandboxSingleSiteTests class.
     def test_file_upload(self):
@@ -725,7 +739,7 @@ class APIProductionSingleTests(unittest.TestCase):
         https://developer.ebay.com/api-docs/sell/feed/resources/task/methods/uploadFile.
         """
         body = {
-            "feedType": "LMS_ORDER_ACK",    # TODO Is this the correct feed type for use with sell_feed_upload_file?.
+            "feedType": "LMS_ORDER_ACK",  # TODO Is this the correct feed type for use with sell_feed_upload_file?.
             "schemaVersion": "1.0"
         }
         try:
@@ -745,7 +759,7 @@ class APIProductionSingleTests(unittest.TestCase):
             # Lines like "local_var_files = {}" are found in src/ebay_rest/api/sell_feed/api/task_api.py
             # Instead of an empty dictionary, how do we make this happen?
             local_var_files = {'filename', path_and_file_name}
-            # As of 2022-10-22, the Swagger code generated from eBay's OpenAPI contract doesn't support this.
+            # The Swagger code generated from eBay's OpenAPI contract doesn't support this. Checked on 2022-10-22.
 
             try:
                 self._api.sell_feed_upload_file(task_id=task_id, file_name=file_name)
@@ -834,9 +848,9 @@ class APIProductionSingleTests(unittest.TestCase):
                 except Error as error:
                     self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
                 else:
-                    todo = True
+                    pass  # TODO
             else:
-                todo = True
+                pass  # TODO
 
         # ensure subscribed
         # TODO
