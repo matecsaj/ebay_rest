@@ -1,5 +1,5 @@
 # Standard library imports
-from base64 import b64encode
+from base64 import b64encode, b64decode
 from datetime import datetime, timedelta, timezone
 from json import loads
 import logging
@@ -7,6 +7,7 @@ from threading import Lock
 from time import sleep
 from typing import List
 from urllib.parse import parse_qs, urlencode
+from cryptography.hazmat.primitives.serialization import load_der_private_key
 
 # 3rd party library imports
 from requests import codes, post, Response
@@ -662,9 +663,11 @@ class KeyPairToken(metaclass=Multiton):
         self._signing_key_id = signing_key_id
 
     def key_dict(self):
+        """Get the public and private key ready for a request"""
+        pk = load_der_private_key(b64decode(self._private_key), password=None)
         return {
             'jwe': self._jwe,
-            'private_key': self._private_key
+            'private_key': pk
         }
 
     def _ensure_key_pair(self, api) -> None:

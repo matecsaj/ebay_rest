@@ -420,6 +420,30 @@ class Contracts:
                 async with aiofiles.open(file_location, mode='w') as f:
                     await f.write(data)
 
+        # Patch in code for Digital Signatures
+        file_location = os.path.join(Locations.cache_path, self.name, self.name, 'rest.py')
+        try:
+            async with aiofiles.open(file_location, mode='r') as f:
+                data = await f.read()
+        except FileNotFoundError:
+            logging.error(f"Can't open {file_location}.")
+        else:
+            # Add a new import
+            target = "from six.moves.urllib.parse import urlencode"
+            new_code = "\nfrom ebay_rest.digital_signatures import signed_request  # ebay_rest patch"
+            data = data.replace(target, target + new_code, 1)
+            # Save key_pair to RESTClientObject
+            target = "# https pool manager"
+            new_code = "\n        self.key_pair = configuration.api_key.get('key_pair', None)  # ebay_rest patch"
+            data = data.replace(target, target + new_code, 1)
+            # Replace all pool manager calls with wrapped call
+            target = "r = self.pool_manager.request("
+            replace_code = "r = signed_request(self.pool_manager, self.key_pair,"
+            data = data.replace(target, replace_code)
+            async with aiofiles.open(file_location, mode='w') as f:
+                await f.write(data)
+
+
     async def swagger_codegen(self):
         source = os.path.join(Locations.cache_path, self.file_name)
         command = f' generate -l python -o {Locations.cache_path}/{self.name} -DpackageName={self.name} -i {source}'

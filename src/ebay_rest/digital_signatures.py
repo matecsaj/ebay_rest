@@ -10,11 +10,7 @@ def signed_request(pool_manager, key_pair, method, url, *args, **kwargs):
     and calls it with the same arguments after adding a digital
     signature (if requested).
     """
-    print('sign_request')
-    print(f'{pool_manager=}\n{key_pair=}\n{method=}\n{url=}')
-    print(f'{args=}\n{kwargs=}')
     headers = kwargs.pop('headers')
-    print('headers: ', headers)
     if 'x-ebay-enforce-signature' not in headers:
         return pool_manager.request(method, url, headers=headers, **kwargs)
 
@@ -40,7 +36,8 @@ def signed_request(pool_manager, key_pair, method, url, *args, **kwargs):
         '@path': url_parts.path,
         '@authority': url_parts.netloc
     })
-    # Query not in the eBay example?
+
+    # Query not currently required?
     #if url_parts.query:
         #signature_fields['query'] = f'?{url_parts.query}'
 
@@ -49,16 +46,19 @@ def signed_request(pool_manager, key_pair, method, url, *args, **kwargs):
     signature_input = f'({covered_components});created={created_time}'
     headers['Signature-Input'] = f'sig1={signature_input}'
 
-    # Create signature base
+    # Create signature base to be signed
     signature_parameters = [
         f'"{key}": {value}' for key, value in signature_fields.items()
     ]
     signature_parameters.append(f'"@signature-params": {signature_input}')
     signature_base = '\n'.join(signature_parameters)
 
-    print('signature_input:\n', signature_input, '\n\n')
-    print('signature_base:\b', signature_base, '\n\n')
+    # Create signature by signing signature base with private key
+    signature = base64.b64encode(
+        key_pair['private_key'].sign(signature_base.encode('utf-8'))
+    ).decode('ascii')
 
-    print('final headers: ', headers)
+    # Create Signature header from signature
+    headers['Signature'] = f'sig1=:{signature}:'
 
     return pool_manager.request(method, url, headers=headers, **kwargs)
