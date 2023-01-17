@@ -689,13 +689,13 @@ class KeyPairToken(metaclass=Multiton):
 
         in_date = (
             self._expiration_time and (
-                (DateTime.now() - timedelta(seconds=90)) > self._expiration_time
+                (DateTime.now() - timedelta(seconds=90)) < self._expiration_time
             )
         )
 
         if self._expiration_time and not in_date:
             # An expired key must be replaced
-            self._create_key_pair()
+            self._create_key_pair(api)
 
         elif complete:
             # If the in-date key is complete, do nothing

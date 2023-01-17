@@ -698,10 +698,12 @@ class API(metaclass=Multiton):
             raise
 
         # Load key pair for digital signature
-        if self._use_digital_signatures:
+        use_digital_signatures = (
+            self._use_digital_signatures and 'key_management' not in base_path
+        )
+        if use_digital_signatures:
             self._key_pair_token._ensure_key_pair(self)
             configuration.api_key['key_pair'] = self._key_pair_token.key_dict()
-            self._header['x-ebay-enforce-signature'] = 'true'
 
         # Configure the host endpoint
         if self._sandbox:
@@ -728,6 +730,11 @@ class API(metaclass=Multiton):
 
         # Authorization
         # Do nothing because the Swagger generated code handles it.
+
+        # Digital signatures
+        # Add 'x-ebay-enforce-signature', and then the rest is handled in the modified Swagger code.
+        if use_digital_signatures:
+            api_instance.api_client.default_headers['x-ebay-enforce-signature'] = 'true'
 
         # Content-Language
         if self._header['content_language']:
