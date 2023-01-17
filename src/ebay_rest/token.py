@@ -670,6 +670,51 @@ class KeyPairToken(metaclass=Multiton):
             'private_key': pk
         }
 
+    def _current_key_sufficient(self) -> bool:
+        """Check if the current key pair is sufficient to call get_signing_key.
+
+        Returns True if so, else False
+
+        :return bool
+        """
+        return self._private_key and self._signing_key_id
+
+    def _current_key_in_date(self) -> bool or None:
+        """Check if the current key pair has a date and, if it does, if
+        the key pair is in date.
+        Returns True if the key has an expiry date and is in date.
+        Returns False if the key has and expiry date and is expired.
+        Returns None if the key has no expiry date.
+
+        :return bool
+        """
+        if not self._expiration_time:
+            return None
+        return (
+            (DateTime.now() - timedelta(seconds=90)) < self._expiration_time
+        )
+
+    def _has_valid_key(self, api) -> None:
+        """
+        Check we have enough information to request a new key pair.
+        Load the new key pair, and check it is valid.
+
+        :param api (API): A valid API instance that can be used to make
+            a KeyManagementAPI call
+        :return dict
+        """
+
+        if not self._current_key_sufficient():
+            return False
+
+        self._get_signing_key(api)
+
+        if not self._current_key_in_date:
+            # An expired key must be replaced
+            return False
+
+        return True
+
     def _ensure_key_pair(self, api) -> None:
         """
         Ensures a valid key pair is available.
@@ -704,7 +749,7 @@ class KeyPairToken(metaclass=Multiton):
             # If the in-date key is complete, do nothing
             return
 
-        elif self._private_key and self._signing_key_id:
+        elif self._current_key_sufficient():
             # We can reload the key as long as we have the private key
             # and the signing key ID
             self._get_signing_key(api)
@@ -739,11 +784,26 @@ class KeyPairToken(metaclass=Multiton):
             a KeyManagementAPI call
         :return None (None)
         """
-        raise ValueError('Key creation disabled')  # TODO FIXME
         from ebay_rest.api.developer_key_management import CreateSigningKeyRequest
         body = CreateSigningKeyRequest(signing_key_cipher = 'ED25519')
         key = api.developer_key_management_create_signing_key(body=body)
         self._save_key(key)
+
+    def _load_key(self) -> dict:
+        """
+        Load the saved key dictionary.
+        """
+        creation_time = DateTime.to_string(self._creation_time)
+        expiration_time = DateTime.to_string(self._expiration_time)
+        return {
+            'creation_time': creation_time,
+            'expiration_time': expiration_time,
+            'jwe': self._jwe,
+            'private_key': self._private_key,
+            'public_key': self._public_key,
+            'signing_key_cipher': self._signing_key_cipher,
+            'signing_key_id': self._signing_key_id
+        }
 
     def _save_key(self, key) -> None:
         """

@@ -900,6 +900,28 @@ class API(metaclass=Multiton):
             logging.debug("Unexpected object of type " + type(obj) + ".")
             return obj  # something needs to be returned, hopefully it is useful as is
 
+    def get_digital_signature_key(self, create_new=False):
+        """Load the details of the current public/private key pair suitable for
+        entering into ebay_rest.json or as an API parameter.
+
+        If create_new is True, creates a new public/private key pair if
+        (and only if) required. Otherwise, if no private key is supplied,
+        return an error.
+        """
+        if not self._use_digital_signatures:
+            raise ValueError(
+                'Digital Signatures not enabled (set digital_signatures=True '
+                + 'when creating API instance)'
+            )
+
+        if not self._key_pair_token._has_valid_key(self):
+            if create_new:
+                self._key_pair_token._create_key_pair(self)
+            else:
+                raise ValueError('Need to create new key pair')
+        key = self._key_pair_token._load_key()
+        return key
+
     # Don't edit the anchors or in-between; instead, edit and run scripts/generate_code.py.
     # ANCHOR-er_methods-START"
 
