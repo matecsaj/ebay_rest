@@ -19,7 +19,6 @@ def signed_request(pool_manager, key_pair, method, url, *args, **kwargs):
 
     # If we have a body, we need to add a Content-Digest field
     if 'body' in kwargs:
-        print('body: ', body)
         content = kwargs['body']
         h = hashlib.sha256(content).digest()
         content_digest = f'sha-256=:{base64.b64encode(h)}:'

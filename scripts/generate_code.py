@@ -437,8 +437,11 @@ class Contracts:
             new_code = "\n        self.key_pair = configuration.api_key.get('key_pair', None)  # ebay_rest patch"
             data = data.replace(target, target + new_code, 1)
             # Replace all pool manager calls with wrapped call
-            target = "r = self.pool_manager.request("
-            replace_code = "r = signed_request(self.pool_manager, self.key_pair,"
+            target = "r = self.pool_manager.request(\n"
+            replace_code = "r = signed_request(self.pool_manager, self.key_pair,  # ebay_rest patch\n"
+            data = data.replace(target, replace_code)
+            target = "r = self.pool_manager.request(method, url,\n"
+            replace_code = "r = signed_request(self.pool_manager, self.key_pair, method, url,  # ebay_rest patch\n"
             data = data.replace(target, replace_code)
             async with aiofiles.open(file_location, mode='w') as f:
                 await f.write(data)
