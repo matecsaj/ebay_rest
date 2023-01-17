@@ -204,12 +204,18 @@ When using eBay's sandbox:
 Output.
 ```
 The five least expensive iPhone things now for sale on eBay:
-item id: v1|110551100598|410108380484 http://www.sandbox.ebay.com/itm/Retro-Magnetic-Wallet-Leather-Case-For-Apple-iPhone-13-Pro-Max-12-11-XR-8-Cover-/110551100598?hash=item19bd5becb6:g:aXsAAOSwaiFiyAV9
-item id: v1|110551164737|410108400925 http://www.sandbox.ebay.com/itm/For-iPhone-6-6-7-8-Plus-LCD-Display-Touch-Screen-Replacement-Home-Button-Camera-/110551164737?hash=item19bd5ce741:g:6hcAAOSwE3Ni45Qu
-item id: v1|110551164738|410108400957 http://www.sandbox.ebay.com/itm/For-iPhone-6-6-7-8-Plus-LCD-Display-Touch-Screen-Replacement-Home-Button-Camera-/110551164738?hash=item19bd5ce742:g:4BcAAOSwG8Ni45Ra
-item id: v1|110551164739|410108400989 http://www.sandbox.ebay.com/itm/For-iPhone-6-6-7-8-Plus-LCD-Display-Touch-Screen-Replacement-Home-Button-Camera-/110551164739?hash=item19bd5ce743:g:4CEAAOSwG8Ni45SQ
+item id: v1|110551100598|410108380484 https://www.sandbox.ebay.com/itm/Retro-Magnetic-Wallet-Leather-Case-For-Apple-iPhone-13-Pro-Max-12-11-XR-8-Cover-/110551100598?hash=item19bd5becb6:g:aXsAAOSwaiFiyAV9
+item id: v1|110551164737|410108400925 https://www.sandbox.ebay.com/itm/For-iPhone-6-6-7-8-Plus-LCD-Display-Touch-Screen-Replacement-Home-Button-Camera-/110551164737?hash=item19bd5ce741:g:6hcAAOSwE3Ni45Qu
+item id: v1|110551164738|410108400957 https://www.sandbox.ebay.com/itm/For-iPhone-6-6-7-8-Plus-LCD-Display-Touch-Screen-Replacement-Home-Button-Camera-/110551164738?hash=item19bd5ce742:g:4BcAAOSwG8Ni45Ra
+item id: v1|110551164739|410108400989 https://www.sandbox.ebay.com/itm/For-iPhone-6-6-7-8-Plus-LCD-Display-Touch-Screen-Replacement-Home-Button-Camera-/110551164739?hash=item19bd5ce743:g:4CEAAOSwG8Ni45SQ
 ```
 
+Note that the “production_refresh_token” and “refresh_token_expiry” are dumped to the log file. 
+
+That happens in this file https://github.com/matecsaj/ebay_rest/blob/main/src/ebay_rest/token.py, where the following line is located.
+message = f'Edit to your ebay_rest.json file to avoid the browser pop-up.\n'
+
+If your project uses log-level info or higher, the info will appear in your log. Alternately, put a breakpoint after the line of code, and cut-paste the values.
 
 ##
 **Q:** Why is eBay giving an "Internal Error" or "Internal Server Error"? 
@@ -270,7 +276,7 @@ brew install swagger-codegen
 sudo apt-get install swagger-codegen
 ```
 5. In the test directory, copy "ebay_rest_sample.json" to "ebay_rest.json" and follow the instructions in the file.
-6. Follow the earlier instructions about installing Chome and chromedriver.
+6. Follow the earlier instructions about installing Chrome and chromedriver.
 
 Development Steps:
 * Watch for README.md files in directories; they contain warnings about generated code and perhaps other things.
