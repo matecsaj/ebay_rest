@@ -22,7 +22,7 @@ import certifi
 # python 2 and python 3 compatibility library
 import six
 from six.moves.urllib.parse import urlencode
-from ebay_rest.digital_signatures import signed_request  # ebay_rest patch
+from ...digital_signatures import signed_request  # ebay_rest patch
 
 try:
     import urllib3

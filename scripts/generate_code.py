@@ -430,7 +430,7 @@ class Contracts:
         else:
             # Add a new import
             target = "from six.moves.urllib.parse import urlencode"
-            new_code = "\nfrom ebay_rest.digital_signatures import signed_request  # ebay_rest patch"
+            new_code = "\nfrom ...digital_signatures import signed_request  # ebay_rest patch"
             data = data.replace(target, target + new_code, 1)
             # Save key_pair to RESTClientObject
             target = "# https pool manager"
