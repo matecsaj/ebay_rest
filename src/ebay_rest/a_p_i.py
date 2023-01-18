@@ -910,8 +910,8 @@ class API(metaclass=Multiton):
         """
         if not self._use_digital_signatures:
             raise Error(
-                number=95001,
-                reason='Digital Signatures not enabled'
+                number=99018,
+                reason='Digital Signatures not enabled',
                 detail='Set digital_signatures=True when creating API instance'
             )
 
@@ -920,8 +920,8 @@ class API(metaclass=Multiton):
                 self._key_pair_token._create_key_pair(self)
             else:
                 raise Error(
-                    number=95002,
-                    reason='New key pair needed'
+                    number=99019,
+                    reason='New key pair needed',
                     detail='get_digital_signature_key parameter create_new '
                         + 'parameter must be True'
                 )

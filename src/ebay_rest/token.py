@@ -661,6 +661,14 @@ class KeyPairToken(metaclass=Multiton):
         self._public_key = public_key
         self._signing_key_cipher = signing_key_cipher
         self._signing_key_id = signing_key_id
+        if self._signing_key_cipher:
+            self._signing_key_cipher = self._signing_key_cipher.upper()
+            if self._signing_key_cipher != 'ED25519':
+                raise Error(
+                    number=96020,
+                    reason='Digital Signatures key pair invalid cipher',
+                    detail='Only the ED25519 cipher is supported by ebay_rest'
+                )
 
     def key_dict(self):
         """Get the public and private key ready for a request"""
