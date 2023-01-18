@@ -106,7 +106,7 @@ class API(metaclass=Multiton):
                  throttle: bool or None = False,
                  timeout: float or None = -1.0,
                  key_pair: str or dict or None = None,
-                 use_digital_signatures: bool or None = False,
+                 digital_signatures: bool or None = False,
                  async_req: bool or None = False,) -> None:
         """
         Instantiate an API object, then use it to call hundreds of eBay APIs.
@@ -147,7 +147,7 @@ class API(metaclass=Multiton):
         Can omit when ebay_rest.json contains only one record.
 
         :param
-        use_digital_signatures (bool, optional): Use eBay digital signatures
+        digital_signatures (bool, optional): Use eBay digital signatures
 
         :param
         async_req (bool, optional) : When True make asynchronous HTTP requests, defaults to False for synchronous.
@@ -191,7 +191,7 @@ class API(metaclass=Multiton):
                 config_contents, 'key_pairs', key_pair, mandatory=False)
         except Error:
             raise
-        self._use_digital_signatures = use_digital_signatures
+        self._use_digital_signatures = digital_signatures
 
         # check the application keys and values
         # True if the dictionary key is required and False when optional.
