@@ -13,6 +13,7 @@ from cryptography.hazmat.primitives.serialization import load_der_private_key
 from requests import codes, post, Response
 
 # Local imports
+from .api.developer_key_management import CreateSigningKeyRequest
 from .date_time import DateTime
 from .error import Error
 from .multiton import Multiton
@@ -792,7 +793,6 @@ class KeyPairToken(metaclass=Multiton):
             a KeyManagementAPI call
         :return None (None)
         """
-        from ebay_rest.api.developer_key_management import CreateSigningKeyRequest
         body = CreateSigningKeyRequest(signing_key_cipher = 'ED25519')
         key = api.developer_key_management_create_signing_key(body=body)
         self._save_key(key)
