@@ -56,7 +56,7 @@ class PayoutInstrument(object):
     def account_last_four_digits(self):
         """Gets the account_last_four_digits of this PayoutInstrument.  # noqa: E501
 
-        This value is the last four digits of the account that the seller uses to receive the payout. This may be the last four digits of a bank account or of a payment processor account such as Payoneer.  # noqa: E501
+        This value is the last four digits of the account that the seller uses to receive the payout. This may be the last four digits of a bank account, a debit card, or a payment processor account such as Payoneer.  # noqa: E501
 
         :return: The account_last_four_digits of this PayoutInstrument.  # noqa: E501
         :rtype: str
@@ -67,7 +67,7 @@ class PayoutInstrument(object):
     def account_last_four_digits(self, account_last_four_digits):
         """Sets the account_last_four_digits of this PayoutInstrument.
 
-        This value is the last four digits of the account that the seller uses to receive the payout. This may be the last four digits of a bank account or of a payment processor account such as Payoneer.  # noqa: E501
+        This value is the last four digits of the account that the seller uses to receive the payout. This may be the last four digits of a bank account, a debit card, or a payment processor account such as Payoneer.  # noqa: E501
 
         :param account_last_four_digits: The account_last_four_digits of this PayoutInstrument.  # noqa: E501
         :type: str
@@ -79,7 +79,7 @@ class PayoutInstrument(object):
     def instrument_type(self):
         """Gets the instrument_type of this PayoutInstrument.  # noqa: E501
 
-        This value indicates the type of account that received the payout. The value returned in this field is <code>BANK</code> if the payout is going to a seller's bank account. Alternatively, the value can be the name of a digital wallet provider or payment processor such as <code>PAYONEER</code>.  # noqa: E501
+        This value indicates the type of account that received the payout. The value returned in this field may be:<br><ul><li><code>BANK</code>: indicates that the payout was made to a seller's bank account.</li><li><code>CARD</code>: indicates that the payout went to a seller's debit card</li><li>The name of a digital wallet provider or payment processor (e.g., <code>PAYONEER</code>)</li></ul>  # noqa: E501
 
         :return: The instrument_type of this PayoutInstrument.  # noqa: E501
         :rtype: str
@@ -90,7 +90,7 @@ class PayoutInstrument(object):
     def instrument_type(self, instrument_type):
         """Sets the instrument_type of this PayoutInstrument.
 
-        This value indicates the type of account that received the payout. The value returned in this field is <code>BANK</code> if the payout is going to a seller's bank account. Alternatively, the value can be the name of a digital wallet provider or payment processor such as <code>PAYONEER</code>.  # noqa: E501
+        This value indicates the type of account that received the payout. The value returned in this field may be:<br><ul><li><code>BANK</code>: indicates that the payout was made to a seller's bank account.</li><li><code>CARD</code>: indicates that the payout went to a seller's debit card</li><li>The name of a digital wallet provider or payment processor (e.g., <code>PAYONEER</code>)</li></ul>  # noqa: E501
 
         :param instrument_type: The instrument_type of this PayoutInstrument.  # noqa: E501
         :type: str
@@ -102,7 +102,7 @@ class PayoutInstrument(object):
     def nickname(self):
         """Gets the nickname of this PayoutInstrument.  # noqa: E501
 
-        If the payout instrument type is a bank, this value is a seller-provided nickname that the seller uses to represent the bank account that receives the payout. If the payout instrument is a provider of digital wallet or payment processing services, the value returned is the name of the service provider (for example, 'PAYONEER').  # noqa: E501
+        When <b>instrumentType</b> returns <code>BANK</code>, this value is the seller-provided nickname that the seller uses to represent the bank account that receives the payout.<br><br>When <b>instrumentType</b> returns <code>CARD</code>, this value is the debit card network for the debit card that receives the payout.<br><br>When <b>instrumentType</b> returns a provider of digital wallet or payment processing services, the value returned is the name of the service provider (e.g., <code>PAYONEER</code>).  # noqa: E501
 
         :return: The nickname of this PayoutInstrument.  # noqa: E501
         :rtype: str
@@ -113,7 +113,7 @@ class PayoutInstrument(object):
     def nickname(self, nickname):
         """Sets the nickname of this PayoutInstrument.
 
-        If the payout instrument type is a bank, this value is a seller-provided nickname that the seller uses to represent the bank account that receives the payout. If the payout instrument is a provider of digital wallet or payment processing services, the value returned is the name of the service provider (for example, 'PAYONEER').  # noqa: E501
+        When <b>instrumentType</b> returns <code>BANK</code>, this value is the seller-provided nickname that the seller uses to represent the bank account that receives the payout.<br><br>When <b>instrumentType</b> returns <code>CARD</code>, this value is the debit card network for the debit card that receives the payout.<br><br>When <b>instrumentType</b> returns a provider of digital wallet or payment processing services, the value returned is the name of the service provider (e.g., <code>PAYONEER</code>).  # noqa: E501
 
         :param nickname: The nickname of this PayoutInstrument.  # noqa: E501
         :type: str

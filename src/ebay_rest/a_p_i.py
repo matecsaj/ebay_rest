@@ -12,7 +12,7 @@ from .error import Error
 from .multiton import Multiton
 from .rates import Rates
 from .reference import Reference
-from .token import ApplicationToken, UserToken
+from .token import ApplicationToken, UserToken, KeyPairToken
 
 # Don't edit the anchors or in-between; instead, edit and run scripts/generate_code.py.
 # ANCHOR-er_imports-START"
@@ -88,10 +88,15 @@ class API(metaclass=Multiton):
     # Use these to mitigate the duplication risk that Mutition has while treading.
     _lock_application_token = Lock()
     _lock_user_token = Lock()
+    _lock_key_pair_token = Lock()
     _lock_rates = Lock()
 
-    __slots__ = "_config_location", "_application", "_user", "_header", "_sandbox", "_marketplace_ids", "_throttle",\
-                "_timeout", "_rates", "_end_user_ctx", "_application_token", "_user_token", "_async_req"
+    __slots__ = (
+        "_config_location", "_application", "_user", "_header", "_key_pair", "_sandbox",
+        "_marketplace_ids", "_throttle", "_timeout", "_rates", "_end_user_ctx",
+        "_application_token", "_user_token", "_key_pair_token", "_async_req",
+        "_use_digital_signatures"
+    )
 
     def __init__(self,
                  path: str or None = None,
@@ -100,7 +105,9 @@ class API(metaclass=Multiton):
                  header: str or dict or None = None,
                  throttle: bool or None = False,
                  timeout: float or None = -1.0,
-                 async_req: bool or None = False) -> None:
+                 key_pair: str or dict or None = None,
+                 digital_signatures: bool or None = False,
+                 async_req: bool or None = False,) -> None:
         """
         Instantiate an API object, then use it to call hundreds of eBay APIs.
 
@@ -132,6 +139,15 @@ class API(metaclass=Multiton):
         throttle for at most the number of seconds specified by timeout and as below the prorated call limit. A timeout
         argument of -1 specifies an unbounded wait. It is forbidden to specify a timeout when the throttle is False.
         Defaults to -1.
+
+        :param
+        key_pair (str or dict, optional) :
+        Supply the name of the desired eBay public/private key pair record in ebay_rest.json or a dict with
+        the key pair details.
+        Can omit when ebay_rest.json contains only one record.
+
+        :param
+        digital_signatures (bool, optional): Use eBay digital signatures
 
         :param
         async_req (bool, optional) : When True make asynchronous HTTP requests, defaults to False for synchronous.
@@ -170,6 +186,12 @@ class API(metaclass=Multiton):
             self._header = self._process_config_section(config_contents, 'headers', header)
         except Error:
             raise
+        try:
+            self._key_pair = self._process_config_section(
+                config_contents, 'key_pairs', key_pair, mandatory=False)
+        except Error:
+            raise
+        self._use_digital_signatures = digital_signatures
 
         # check the application keys and values
         # True if the dictionary key is required and False when optional.
@@ -185,6 +207,17 @@ class API(metaclass=Multiton):
                      ('scopes', False), ('refresh_token', False), ('refresh_token_expiry', False)]
         try:
             self._check_keys(self._user, user_keys, 'user')
+        except Error:
+            raise
+
+        # check the key pair keys and values
+        key_pair_keys = [
+            ('creation_time', False), ('expiration_time', False),
+            ('jwe', False), ('private_key', False), ('public_key', False),
+            ('signing_key_cipher', False), ('signing_key_id', False)
+        ]
+        try:
+            self._check_keys(self._key_pair, key_pair_keys, 'key_pair')
         except Error:
             raise
 
@@ -313,12 +346,27 @@ class API(metaclass=Multiton):
             except Error:
                 raise
 
+        with API._lock_key_pair_token:
+            try:
+                self._key_pair_token = KeyPairToken(
+                    creation_time=self._key_pair.get('creation_time', None),
+                    expiration_time=self._key_pair.get('expiration_time', None),
+                    jwe=self._key_pair.get('jwe', None),
+                    private_key=self._key_pair.get('private_key', None),
+                    public_key=self._key_pair.get('public_key', None),
+                    signing_key_cipher=self._key_pair.get('signing_key_cipher', None),
+                    signing_key_id=self._key_pair.get('signing_key_id', None)
+                )
+            except Error:
+                raise
+
         return
 
     @staticmethod
     def _process_config_section(config_contents: dict,
                                 section: str,
-                                parameter: str or dict or None
+                                parameter: str or dict or None,
+                                mandatory: bool = True,
                                 ) -> dict or None:
         """
         Get a configuration section from the parameter or the loaded config file.
@@ -326,6 +374,7 @@ class API(metaclass=Multiton):
         :param config_contents (dict, required)
         :param section (str, required)
         :param parameter (str or dict or None, required)
+        :param mandatory (bool, optional)
         :return result (dict or None)
         """
         result = None
@@ -370,7 +419,10 @@ class API(metaclass=Multiton):
                      + str(type(parameter)) + "."
 
         if result is None:
-            raise Error(number=99003, reason="Get configuration for " + param_name + " problem.", detail=detail)
+            if mandatory:
+                raise Error(number=99003, reason="Get configuration for " + param_name + " problem.", detail=detail)
+            else:
+                return {}
         else:
             # delete blank lines, to eliminate subsequent blank line checks
             to_delete = []
@@ -645,6 +697,14 @@ class API(metaclass=Multiton):
         except Error:
             raise
 
+        # Load key pair for digital signature
+        use_digital_signatures = (
+            self._use_digital_signatures and 'key_management' not in base_path
+        )
+        if use_digital_signatures:
+            self._key_pair_token._ensure_key_pair(self)
+            configuration.api_key['key_pair'] = self._key_pair_token.key_dict()
+
         # Configure the host endpoint
         if self._sandbox:
             configuration.host = configuration.host.replace('.ebay.com',
@@ -670,6 +730,11 @@ class API(metaclass=Multiton):
 
         # Authorization
         # Do nothing because the Swagger generated code handles it.
+
+        # Digital signatures
+        # Add 'x-ebay-enforce-signature', and then the rest is handled in the modified Swagger code.
+        if use_digital_signatures:
+            api_instance.api_client.default_headers['x-ebay-enforce-signature'] = 'true'
 
         # Content-Language
         if self._header['content_language']:
@@ -834,6 +899,34 @@ class API(metaclass=Multiton):
         else:
             logging.debug("Unexpected object of type " + type(obj) + ".")
             return obj  # something needs to be returned, hopefully it is useful as is
+
+    def get_digital_signature_key(self, create_new=False):
+        """Load the details of the current public/private key pair suitable for
+        entering into ebay_rest.json or as an API parameter.
+
+        If create_new is True, creates a new public/private key pair if
+        (and only if) required. Otherwise, if no private key is supplied,
+        return an error.
+        """
+        if not self._use_digital_signatures:
+            raise Error(
+                number=99018,
+                reason='Digital Signatures not enabled',
+                detail='Set digital_signatures=True when creating API instance'
+            )
+
+        if not self._key_pair_token._has_valid_key(self):
+            if create_new:
+                self._key_pair_token._create_key_pair(self)
+            else:
+                raise Error(
+                    number=99019,
+                    reason='New key pair needed',
+                    detail='get_digital_signature_key parameter create_new '
+                        + 'parameter must be True'
+                )
+        key = self._key_pair_token._load_key()
+        return key
 
     # Don't edit the anchors or in-between; instead, edit and run scripts/generate_code.py.
     # ANCHOR-er_methods-START"
@@ -1372,20 +1465,6 @@ class API(metaclass=Multiton):
         """
         try:
             return self._method_single(commerce_charity.Configuration, '/commerce/charity/v1', commerce_charity.CharityOrgApi, commerce_charity.ApiClient, 'get_charity_org', CommerceCharityException, False, ['commerce.charity', 'charity_org'], (charity_org_id, x_ebay_c_marketplace_id), **kwargs)  # noqa: E501
-        except Error:
-            raise
-
-    def commerce_charity_get_charity_org_by_legacy_id(self, x_ebay_c_marketplace_id, legacy_charity_org_id, **kwargs):  # noqa: E501
-        """get_charity_org_by_legacy_id  
-
-        Note: The getCharityOrgByLegacyId method requires a PayPal Giving Fund ID to retrieve an eBay charitable organizaiton, and eBay will no longer support these IDs beginning on January 16, 2023. The alternative to this method is the getCharityOrg method, and this method requires the eBay-generated ID for a charitable organization.This call allows users to retrieve the details for a specific charitable organization using its legacy charity ID, which has also been referred to as the charity number, external ID, and PayPal Giving Fund ID. The legacy charity ID is separate from eBay’s generic charity ID.The call returns the full details for the charitable organization that matches the specified ID.  
-
-        :param str x_ebay_c_marketplace_id: A header used to specify the eBay marketplace ID.Valid Values: EBAY_GB and EBAY_US (required)
-        :param str legacy_charity_org_id: The legacy ID of the charitable organization.Note: The legacy charity ID is the identifier assigned to an organization upon registration with the PayPal Giving Fund (PPGF). It has also been referred to as the external ID/charity number. (required)
-        :return: CharityOrg
-        """
-        try:
-            return self._method_single(commerce_charity.Configuration, '/commerce/charity/v1', commerce_charity.CharityOrgApi, commerce_charity.ApiClient, 'get_charity_org_by_legacy_id', CommerceCharityException, False, ['commerce.charity', 'charity_org'], (x_ebay_c_marketplace_id, legacy_charity_org_id), **kwargs)  # noqa: E501
         except Error:
             raise
 
@@ -3009,8 +3088,8 @@ class API(metaclass=Multiton):
         Important! Due to EU & UK Payments regulatory requirements, an additional security verification via Digital Signatures is required for certain API calls that are made on behalf of EU/UK sellers, including all Finances API methods. Please refer to Digital Signatures for APIs to learn more on the impacted APIs and the process to create signatures to be included in the HTTP payload.The getTransactions method allows a seller to retrieve information about one or more of their monetary transactions.Note: For a complete list of transaction types, refer to TransactionTypeEnum.Numerous input filters are available which can be used individualy or combined to refine the data that are returned. For example:SALE transactions for August 15, 2022;RETURN transactions for the month of January, 2021;Transactions currently in a transactionStatus equal to FUNDS_ON_HOLD.Refer to the filter field for additional information about each filter and its use.Pagination and sort query parameters are also provided that allow users to further control how monetary transactions are displayed in the response.If no monetary transactions match the input criteria, an http status code of 204 No Content is returned with no response payload.  
 
         :param str x_ebay_c_marketplace_id: This header identifies the seller's eBay marketplace. It is required for all marketplaces outside of the US. See HTTP request headers for the marketplace ID values.
-        :param str filter: Numerous filters are available for the getTransactions method, and these filters are discussed below. One or more of these filter types can be used. If none of these filters are used, all monetary transactions from the last 90 days are returned:transactionDate: search for monetary transactions that occurred within a specific range of dates.Note: All dates must be input using UTC format (YYYY-MM-DDTHH:MM:SS.SSSZ) and should be adjusted accordingly for the local timezone of the user.Below is the proper syntax to use if filtering by a date range: https://apiz.ebay.com/sell/finances/v1/transaction?filter=transactionDate:[2018-10-23T00:00:01.000Z..2018-11-09T00:00:01.000Z]Alternatively, the user could omit the ending date, and the date range would include the starting date and up to 90 days past that date, or the current date if the starting date is less than 90 days in the past. transactionType: search for a specific type of monetary transaction. The supported transactionType values are as follows:SALE: a sales order. REFUND: a refund to the buyer after an order cancellation or return.CREDIT: a credit issued by eBay to the seller's account.DISPUTE: a monetary transaction associated with a payment dispute between buyer and seller.NON_SALE_CHARGE: a monetary transaction involving a seller transferring money to eBay for the balance of a charge for NON_SALE_CHARGE transactions (transactions that contain non-transactional seller fees). These can include a one-time payment, monthly/yearly subscription fees charged monthly, NRC charges, and fee credits.SHIPPING_LABEL: a monetary transaction where eBay is billing the seller for an eBay shipping label. Note that the shipping label functionality will initially only be available to a select number of sellers.TRANSFER: A transfer is a monetary transaction where eBay is billing the seller for reimbursement of a charge. An example of a transfer is a seller reimbursing eBay for a buyer refund.ADJUSTMENT: An adjustment is a monetary transaction where eBay is crediting or debiting the seller's account.WITHDRAWAL: A withdrawal is a monetary transaction where the seller requests an on-demand payout from eBay.Note: On-demand payout is not available for sellers who are already on a daily payout schedule. In order to initiate an on-demand payout, a seller must be on a weekly, bi-weekly, or monthly payout schedule.LOAN_REPAYMENT: A monetary transaction related to the repayment of an outstanding loan balance for approved participants enrolled in the eBay Seller Capital financing program.Note: eBay Seller Capital financing is only available in select marketplaces. Refer to Marketplace availability for eBay Seller Capital funding program for current marketplace eligibility.Below is the proper syntax to use if filtering by a monetary transaction type: https://apiz.ebay.com/sell/finances/v1/transaction?filter=transactionType:{SALE}transactionStatus: this filter type is only applicable for sales orders, and allows the user to filter seller payouts in a particular state.  The supported transactionStatus values are as follows:PAYOUT: this indicates that the proceeds from the corresponding sales order has been paid out to the seller's account.FUNDS_PROCESSING: this indicates that the funds for the corresponding monetary transaction are currently being processed.FUNDS_AVAILABLE_FOR_PAYOUT: this indicates that the proceeds from the corresponding sales order are available for a seller payout, but processing has not yet begun.FUNDS_ON_HOLD: this indicates that the proceeds from the corresponding sales order are currently being held by eBay, and are not yet available for a seller payout.COMPLETED: this indicates that the funds for the corresponding TRANSFER monetary transaction have transferred and the transaction has completed.FAILED: this indicates the process has failed for the corresponding TRANSFER monetary transaction. Below is the proper syntax to use if filtering by transaction status: https://apiz.ebay.com/sell/finances/v1/transaction?filter=transactionStatus:{PAYOUT}buyerUsername: the eBay user ID of the buyer involved in the monetary transaction. Only monetary transactions involving this buyer are returned. Below is the proper syntax to use if filtering by a specific eBay buyer: https://apiz.ebay.com/sell/finances/v1/transaction?filter=buyerUsername:{buyer1234} salesRecordReference: the unique Selling Manager identifier of the order involved in the monetary transaction. Only monetary transactions involving this Selling Manager Sales Record ID are returned. Below is the proper syntax to use if filtering by a specific Selling Manager Sales Record ID: https://apiz.ebay.com/sell/finances/v1/transaction?filter=salesRecordReference:{123}Note: For all orders originating after February 1, 2020, a value of 0 will be returned in the salesRecordReference field. So, this filter will only be useful to retrieve orders than occurred before this date. payoutId: the unique identifier of a seller payout. This value is auto-generated by eBay once the seller payout is set to be processed. Only monetary transactions involving this Payout ID are returned. Below is the proper syntax to use if filtering by a specific Payout ID: https://apiz.ebay.com/sell/finances/v1/transaction?filter=payoutId:{5********8} transactionId: the unique identifier of a monetary transaction. For a sales order, the orderId filter should be used instead. Only the monetary transaction defined by the identifier is returned.Note: This filter cannot be used alone; the transactionType must also be specified when filtering by transaction ID.Below is the proper syntax to use if filtering by a specific transaction ID: https://apiz.ebay.com/sell/finances/v1/transaction?filter=transactionId:{0*-0***0-3***3}&filter=transactionType:{SALE} orderId: the unique identifier of a sales order. For any other monetary transaction, the transactionId filter should be used instead. Only the sales order defined by the identifier is returned. Below is the proper syntax to use if filtering by a specific order ID: https://apiz.ebay.com/sell/finances/v1/transaction?filter=orderId:{0*-0***0-3***3}  For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:FilterField
-        :param str limit: The number of monetary transactions to return per page of the result set. Use this parameter in conjunction with the offset parameter to control the pagination of the output.  For example, if offset is set to 10 and limit is set to 10, the method retrieves monetary transactions 11 thru 20 from the result set.  Note: This feature employs a zero-based list, where the first item in the list has an offset of 0. If an orderId, transactionId, or payoutId filter is included in the request, any limit value will be ignored.  Maximum: 1000  Default: 20
+        :param str filter: Numerous filters are available for the getTransactions method, and these filters are discussed below. One or more of these filter types can be used. If none of these filters are used, all monetary transactions from the last 90 days are returned:transactionDate: search for monetary transactions that occurred within a specific range of dates.Note: All dates must be input using UTC format (YYYY-MM-DDTHH:MM:SS.SSSZ) and should be adjusted accordingly for the local timezone of the user.Below is the proper syntax to use if filtering by a date range: https://apiz.ebay.com/sell/finances/v1/transaction?filter=transactionDate:[2018-10-23T00:00:01.000Z..2018-11-09T00:00:01.000Z]Alternatively, the user could omit the ending date, and the date range would include the starting date and up to 90 days past that date, or the current date if the starting date is less than 90 days in the past. transactionType: search for a specific type of monetary transaction. The supported transactionType values are as follows:SALE: a sales order. REFUND: a refund to the buyer after an order cancellation or return.CREDIT: a credit issued by eBay to the seller's account.DISPUTE: a monetary transaction associated with a payment dispute between buyer and seller.NON_SALE_CHARGE: a monetary transaction involving a seller transferring money to eBay for the balance of a charge for NON_SALE_CHARGE transactions (transactions that contain non-transactional seller fees). These can include a one-time payment, monthly/yearly subscription fees charged monthly, NRC charges, and fee credits.SHIPPING_LABEL: a monetary transaction where eBay is billing the seller for an eBay shipping label. Note that the shipping label functionality will initially only be available to a select number of sellers.TRANSFER: A transfer is a monetary transaction where eBay is billing the seller for reimbursement of a charge. An example of a transfer is a seller reimbursing eBay for a buyer refund.ADJUSTMENT: An adjustment is a monetary transaction where eBay is crediting or debiting the seller's account.WITHDRAWAL: A withdrawal is a monetary transaction where the seller requests an on-demand payout from eBay.Note: On-demand payout is not available for sellers who are already on a daily payout schedule. In order to initiate an on-demand payout, a seller must be on a weekly, bi-weekly, or monthly payout schedule.LOAN_REPAYMENT: A monetary transaction related to the repayment of an outstanding loan balance for approved participants enrolled in the eBay Seller Capital financing program.Note: eBay Seller Capital financing is only available in select marketplaces. Refer to Marketplace availability for eBay Seller Capital funding program for current marketplace eligibility.Below is the proper syntax to use if filtering by a monetary transaction type: https://apiz.ebay.com/sell/finances/v1/transaction?filter=transactionType:{SALE}transactionStatus: this filter type is only applicable for sales orders, and allows the user to filter seller payouts in a particular state.  The supported transactionStatus values are as follows:PAYOUT: this indicates that the proceeds from the corresponding sales order has been paid out to the seller's account.FUNDS_PROCESSING: this indicates that the funds for the corresponding monetary transaction are currently being processed.FUNDS_AVAILABLE_FOR_PAYOUT: this indicates that the proceeds from the corresponding sales order are available for a seller payout, but processing has not yet begun.FUNDS_ON_HOLD: this indicates that the proceeds from the corresponding sales order are currently being held by eBay, and are not yet available for a seller payout.COMPLETED: this indicates that the funds for the corresponding TRANSFER monetary transaction have transferred and the transaction has completed.FAILED: this indicates the process has failed for the corresponding TRANSFER monetary transaction. Below is the proper syntax to use if filtering by transaction status: https://apiz.ebay.com/sell/finances/v1/transaction?filter=transactionStatus:{PAYOUT}buyerUsername: the eBay user ID of the buyer involved in the monetary transaction. Only monetary transactions involving this buyer are returned. Below is the proper syntax to use if filtering by a specific eBay buyer: https://apiz.ebay.com/sell/finances/v1/transaction?filter=buyerUsername:{buyer1234} salesRecordReference: the unique Selling Manager identifier of the order involved in the monetary transaction. Only monetary transactions involving this Selling Manager Sales Record ID are returned. Below is the proper syntax to use if filtering by a specific Selling Manager Sales Record ID: https://apiz.ebay.com/sell/finances/v1/transaction?filter=salesRecordReference:{123}Note: For all orders originating after February 1, 2020, a value of 0 will be returned in the salesRecordReference field. So, this filter will only be useful to retrieve orders than occurred before this date. payoutId: the unique identifier of a seller payout. This value is auto-generated by eBay once the seller payout is set to be processed. Only monetary transactions involving this Payout ID are returned. Below is the proper syntax to use if filtering by a specific Payout ID: https://apiz.ebay.com/sell/finances/v1/transaction?filter=payoutId:{5********8} transactionId: the unique identifier of a monetary transaction. For a sales order, the orderId filter should be used instead. Only the monetary transaction defined by the identifier is returned.Note: This filter cannot be used alone; the transactionType must also be specified when filtering by transaction ID.Below is the proper syntax to use if filtering by a specific transaction ID: https://apiz.ebay.com/sell/finances/v1/transaction?filter=transactionId:{0*-0***0-3***3}&filter=transactionType:{SALE} orderId: the unique identifier of a sales order. Only monetary transaction(s) associated with this orderId value are returned.For any other monetary transaction, the transactionId filter should be used instead.Below is the proper syntax to use if filtering by a specific order ID:https://apiz.ebay.com/sell/finances/v1/transaction?filter=orderId:{0*-0***0-3***3}  For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:FilterField
+        :param str limit: The number of monetary transactions to return per page of the result set. Use this parameter in conjunction with the offset parameter to control the pagination of the output.  For example, if offset is set to 10 and limit is set to 10, the method retrieves monetary transactions 11 thru 20 from the result set.  Note: This feature employs a zero-based list, where the first item in the list has an offset of 0.  Maximum: 1000  Default: 20
         :param str offset: This integer value indicates the actual position that the first monetary transaction returned on the current page has in the results set. So, if you wanted to view the 11th monetary transaction of the result set, you would set the offset value in the request to 10. In the request, you can use the offset parameter in conjunction with the limit parameter to control the pagination of the output. For example, if offset is set to 30 and limit is set to 10, the method retrieves transactions 31 thru 40 from the resulting collection of transactions.  Note: This feature employs a zero-based list, where the first item in the list has an offset of 0.Default: 0 (zero)
         :param str sort: Sorting is not yet available for the getTransactions method. By default, monetary transactions that match the input criteria are sorted in descending order according to the transaction date. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:SortField
         :return: Transactions

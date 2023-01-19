@@ -79,5 +79,15 @@
             "marketplace_id": "EBAY_US",
             "zip": "20500"
         }
+    },
+    "key_pairs": {
+        "production_1": {
+            "private_key": "placeholder-placeholder-placeholder-placeholder-placeholder-plac",
+            "signing_key_id": "placeholder-placeholder-placeholder-"
+        },
+        "sandbox_1": {
+            "private_key": "placeholder-placeholder-placeholder-placeholder-placeholder-plac",
+            "signing_key_id": "placeholder-placeholder-placeholder-"
+        }
     }
 }

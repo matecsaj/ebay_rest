@@ -384,7 +384,7 @@ class TransactionSummaryResponse(object):
     def credit_count(self):
         """Gets the credit_count of this TransactionSummaryResponse.  # noqa: E501
 
-        This integer value indicates the total number of the seller's sales and/or credits that match the input criteria. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> Unless the <b>transactionType</b> filter is used in the request to retrieve a specific type of monetary transaction (sale, buyer refund, or seller credit), the <b>creditCount</b> and <b>creditAmount</b> fields account for both order sales and seller credits (the count and value is not distinguished between the two monetary transaction types).</span><br><br>This field is generally returned, even if <code>0</code>, but it will not be returned if a <strong>transactionType</strong> filter is used, and its value is set to either <code>REFUND</code>, <code>DISPUTE</code>, or <code>SHIPPING_LABEL</code>.  # noqa: E501
+        This integer value indicates the total number of the seller's sales and/or credits that match the input criteria. <br><br><span class=\"tablenote\"><strong>Note:</strong> Unless the <b>transactionType</b> filter is used in the request to retrieve a specific type of monetary transaction (sale, buyer refund, or seller credit), the <b>creditCount</b> and <b>creditAmount</b> fields account for both order sales and seller credits (the count and value is not distinguished between the two monetary transaction types).</span><br><br>This field is generally returned, even if <code>0</code>, but it will not be returned if a <strong>transactionType</strong> filter is used, and its value is set to either <code>REFUND</code>, <code>DISPUTE</code>, or <code>SHIPPING_LABEL</code>.  # noqa: E501
 
         :return: The credit_count of this TransactionSummaryResponse.  # noqa: E501
         :rtype: int
@@ -395,7 +395,7 @@ class TransactionSummaryResponse(object):
     def credit_count(self, credit_count):
         """Sets the credit_count of this TransactionSummaryResponse.
 
-        This integer value indicates the total number of the seller's sales and/or credits that match the input criteria. <br/><br/><span class=\"tablenote\"><strong>Note:</strong> Unless the <b>transactionType</b> filter is used in the request to retrieve a specific type of monetary transaction (sale, buyer refund, or seller credit), the <b>creditCount</b> and <b>creditAmount</b> fields account for both order sales and seller credits (the count and value is not distinguished between the two monetary transaction types).</span><br><br>This field is generally returned, even if <code>0</code>, but it will not be returned if a <strong>transactionType</strong> filter is used, and its value is set to either <code>REFUND</code>, <code>DISPUTE</code>, or <code>SHIPPING_LABEL</code>.  # noqa: E501
+        This integer value indicates the total number of the seller's sales and/or credits that match the input criteria. <br><br><span class=\"tablenote\"><strong>Note:</strong> Unless the <b>transactionType</b> filter is used in the request to retrieve a specific type of monetary transaction (sale, buyer refund, or seller credit), the <b>creditCount</b> and <b>creditAmount</b> fields account for both order sales and seller credits (the count and value is not distinguished between the two monetary transaction types).</span><br><br>This field is generally returned, even if <code>0</code>, but it will not be returned if a <strong>transactionType</strong> filter is used, and its value is set to either <code>REFUND</code>, <code>DISPUTE</code>, or <code>SHIPPING_LABEL</code>.  # noqa: E501
 
         :param credit_count: The credit_count of this TransactionSummaryResponse.  # noqa: E501
         :type: int
@@ -495,7 +495,7 @@ class TransactionSummaryResponse(object):
     def loan_repayment_booking_entry(self):
         """Gets the loan_repayment_booking_entry of this TransactionSummaryResponse.  # noqa: E501
 
-        The enumeration value indicates whether the <code>loanRepaymentAmount</code> is a <code>DEBIT</code> against, or a <code>CREDIT</code> to, the sellers's account.<br/><br/>For most <code>loanRepaymentAmount</code> transactions, <code>loanRepaymentBookingEntry</code> will be <b>DEBIT</b>. However, if a loan repayment transaction is reversed, that transaction will be shown as a <b>CREDIT</b>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value indicates whether the <code>loanRepaymentAmount</code> is a <code>DEBIT</code> against, or a <code>CREDIT</code> to, the sellers's account.<br><br>For most <code>loanRepaymentAmount</code> transactions, <code>loanRepaymentBookingEntry</code> will be <b>DEBIT</b>. However, if a loan repayment transaction is reversed, that transaction will be shown as a <b>CREDIT</b>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The loan_repayment_booking_entry of this TransactionSummaryResponse.  # noqa: E501
         :rtype: str
@@ -506,7 +506,7 @@ class TransactionSummaryResponse(object):
     def loan_repayment_booking_entry(self, loan_repayment_booking_entry):
         """Sets the loan_repayment_booking_entry of this TransactionSummaryResponse.
 
-        The enumeration value indicates whether the <code>loanRepaymentAmount</code> is a <code>DEBIT</code> against, or a <code>CREDIT</code> to, the sellers's account.<br/><br/>For most <code>loanRepaymentAmount</code> transactions, <code>loanRepaymentBookingEntry</code> will be <b>DEBIT</b>. However, if a loan repayment transaction is reversed, that transaction will be shown as a <b>CREDIT</b>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value indicates whether the <code>loanRepaymentAmount</code> is a <code>DEBIT</code> against, or a <code>CREDIT</code> to, the sellers's account.<br><br>For most <code>loanRepaymentAmount</code> transactions, <code>loanRepaymentBookingEntry</code> will be <b>DEBIT</b>. However, if a loan repayment transaction is reversed, that transaction will be shown as a <b>CREDIT</b>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :param loan_repayment_booking_entry: The loan_repayment_booking_entry of this TransactionSummaryResponse.  # noqa: E501
         :type: str
@@ -518,7 +518,7 @@ class TransactionSummaryResponse(object):
     def loan_repayment_count(self):
         """Gets the loan_repayment_count of this TransactionSummaryResponse.  # noqa: E501
 
-        This integer value indicates the total number of <code>LOAN_REPAYMENT</code> transactions (i.e., <code>DEBIT</code> and <code>CREDIT</code>,) that match the input criteria.<br/><br/>This field is generally returned even if it equals <b>0</b>. However it will not be returned if a <code>transactionType</code> filter is used and its value has been set to any enumeration value other than <code>LOAN_REPAYMENT</code>.  # noqa: E501
+        This integer value indicates the total number of <code>LOAN_REPAYMENT</code> transactions (i.e., <code>DEBIT</code> and <code>CREDIT</code>,) that match the input criteria.<br><br>This field is generally returned even if it equals <b>0</b>. However it will not be returned if a <code>transactionType</code> filter is used and its value has been set to any enumeration value other than <code>LOAN_REPAYMENT</code>.  # noqa: E501
 
         :return: The loan_repayment_count of this TransactionSummaryResponse.  # noqa: E501
         :rtype: int
@@ -529,7 +529,7 @@ class TransactionSummaryResponse(object):
     def loan_repayment_count(self, loan_repayment_count):
         """Sets the loan_repayment_count of this TransactionSummaryResponse.
 
-        This integer value indicates the total number of <code>LOAN_REPAYMENT</code> transactions (i.e., <code>DEBIT</code> and <code>CREDIT</code>,) that match the input criteria.<br/><br/>This field is generally returned even if it equals <b>0</b>. However it will not be returned if a <code>transactionType</code> filter is used and its value has been set to any enumeration value other than <code>LOAN_REPAYMENT</code>.  # noqa: E501
+        This integer value indicates the total number of <code>LOAN_REPAYMENT</code> transactions (i.e., <code>DEBIT</code> and <code>CREDIT</code>,) that match the input criteria.<br><br>This field is generally returned even if it equals <b>0</b>. However it will not be returned if a <code>transactionType</code> filter is used and its value has been set to any enumeration value other than <code>LOAN_REPAYMENT</code>.  # noqa: E501
 
         :param loan_repayment_count: The loan_repayment_count of this TransactionSummaryResponse.  # noqa: E501
         :type: int

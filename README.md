@@ -139,6 +139,10 @@ Use of an ebay_rest.json file is optional; the Class initializer accepts relevan
         :param header (str or dict, optional) :
         Supply the name of the desired header record in ebay_rest.json or a dict with header credentials.
         Can omit when ebay_rest.json contains only one header record.
+
+        :param key_pair (str or dict, optional) :
+        Supply the name of the desired key_pair record in ebay_rest.json or a dict with key_pair credentials.
+        Can omit when ebay_rest.json contains only one key_pair record. This section is fully optional.
 ```
 
 Sample code.
@@ -176,6 +180,11 @@ header = {
     "device_id": "",
     "marketplace_id": "EBAY_ENCA",
     "zip": ""
+}
+
+key_pair = {
+    "private_key": "placeholder-placeholder-placeholder-placeholder-placeholder-plac",
+    "signing_key_id": "placeholder-placeholder-placeholder-"
 }
 
 try:
@@ -218,13 +227,58 @@ message = f'Edit to your ebay_rest.json file to avoid the browser pop-up.\n'
 If your project uses log-level info or higher, the info will appear in your log. Alternately, put a breakpoint after the line of code, and cut-paste the values.
 
 ##
+**Q:** How do I use ebay_rest with [eBay Digital Signatures](https://developer.ebay.com/develop/guides/digital-signatures-for-apis)?
+
+**A:** In the words of eBay, "Due to regulatory requirements applicable to our EU/UK sellers, for certain APIs, developers need to add digital signatures to the respective HTTP call". These calls are (currently) all calls in the Finances API, issueRefund in the Fulfillment API, and some calls in 'traditional' APIs not handled by ebay_rest.
+
+In order to use Digital Signatures, the API instance must be passed the parameter `digital_signatures` set to `True` at initialization. The optional parameter `key_pair` should also be set, as for application, user and header, to either the name of a `key_pairs` section (in the ebay_rest.json file) or a dict. An example using a dict parameter:
+```
+# application, user and header set as in previous examples
+
+key_pair = {
+    "private_key": "placeholder-placeholder-placeholder-placeholder-placeholder-plac",
+    "signing_key_id": "placeholder-placeholder-placeholder-"
+}
+
+api = API(application=application, user=user, header=header, key_pair=key_pair, digital_signatures=True)
+```
+Digital signatures will now be applied to _all_ calls made using this API instance _except_ calls to the Developer Key Management API. This API is used to create
+and obtain the public/private key pairs used to apply digital signatures. You should keep your private key secure.
+The full set of options in the key_pair parameter or for an entry in the key_pairs section in ebay_rest is:
+```
+{
+    'creation_time': '2023-01-01T00:00:00.000Z',
+    'expiration_time': '2026-01-01T00:00:00.000Z',
+    'jwe': 'placeholder-placeholder-placeholder',
+    'private_key': 'placeholder-placeholder-placeholder-placeholder-placeholder-plac',
+    'public_key': 'placeholder-placeholder-placeholder-placeholder-placeholder-',
+    'signing_key_cipher': 'ED25519',
+    'signing_key_id': 'placeholder-placeholder-placeholder-'
+}
+```
+If at least the 'private_key', 'jwe' and 'expiration_time' values are supplied, and the key is in date according to the supplied expiration_time, it will be used. However, only the private key value and signing_key_id are required to use an existing key; a getSigningKey call will be made from the KeyManagement API to load the remaining details and check the expiration date. Note that only the ED25519 cipher is supported by ebay_rest.
+
+WARNING There is no way to delete key pairs from an eBay account and it is probably not a good idea to create a large number of key pairs. The new key pair can be extracted from the API instance as described in the the next question.
+
+##
+**Q:** How do I get an eBay Digital Signatures public/private key pair?
+
+**A:** A new public/private key pair can be obtained using the `get_digital_signature_key` method on an `API` instance, e.g.
+```
+key = API.get_digital_signature_key(create_new=True)
+```
+The API must have been initialized with `digital_signatures=True`. If there is a current valid key pair (either from ebay_rest.json or from a key_pair parameter), the key pair will be returned, otherwise an error will be raised. If (and only if) required, a new key pair will be created when the `create_new` parameter is set to `True`. For `create_new=False`, an error will be raised if no valid key pair has been supplied to ebay_rest.
+
+The retrieved key should then be kept somewhere secure and reused for subsequent calls. It not *not* possible to recover a lost private key as eBay does not store the private key after key generation. Keeping the private_key and the signing_key_id is sufficient to recover the key and only these fields need to be added to ebay_rest.json or the key_pair parameter.
+
+##
 **Q:** Why is eBay giving an "Internal Error" or "Internal Server Error"? 
 
 **A:** Rapidly repeating an API call with the same parameter values can trigger this.
 ##
-**Q:** Parallelism, is it safe to do [treading](https://docs.python.org/3/library/threading.html) or [multiprocessing](https://docs.python.org/3/library/multiprocessing.html)?
+**Q:** Parallelism, is it safe to do [threading](https://docs.python.org/3/library/threading.html) or [multiprocessing](https://docs.python.org/3/library/multiprocessing.html)?
 
-**A:** Yes, for treading. Multiprocessing is unknown, [help wanted](https://github.com/matecsaj/ebay_rest/issues/20).
+**A:** Yes, for threading. Multiprocessing is unknown, [help wanted](https://github.com/matecsaj/ebay_rest/issues/20).
 ##
 **Q:** How to optimize API calls?
 

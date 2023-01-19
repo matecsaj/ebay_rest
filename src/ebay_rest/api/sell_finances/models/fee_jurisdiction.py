@@ -51,7 +51,7 @@ class FeeJurisdiction(object):
     def region_name(self):
         """Gets the region_name of this FeeJurisdiction.  # noqa: E501
 
-        String value that indicates the name of the region to which a region-specific fee applies.<br/><br/>The set of valid <b>regionName</b> values that may be returned is determined by the <b>regionType</b> value.<br/><br/><span class=\"tablenote\"><strong>Note:</strong> Currently, supported <b>regionName</b> values that may be returned are standard two-character country or state codes.<br/><br/>Typical examples include:<ul><li><b>MX</b> [Mexico]</li><li><b>IN</b> [India]</li><li><b>US</b> [United States]</li><li>CA [California]</li><li>VT [Vermont]</li><li>ME [Maine]</li></ul></span>  # noqa: E501
+        String value that indicates the name of the region to which a region-specific fee applies.<br><br>The set of valid <b>regionName</b> values that may be returned is determined by the <b>regionType</b> value.<br><br><span class=\"tablenote\"><strong>Note:</strong> Currently, supported <b>regionName</b> values that may be returned are standard two-character country or state codes.<br><br>Typical examples include:<ul><li><b>MX</b> [Mexico]</li><li><b>IN</b> [India]</li><li><b>US</b> [United States]</li><li>CA [California]</li><li>VT [Vermont]</li><li>ME [Maine]</li></ul></span>  # noqa: E501
 
         :return: The region_name of this FeeJurisdiction.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class FeeJurisdiction(object):
     def region_name(self, region_name):
         """Sets the region_name of this FeeJurisdiction.
 
-        String value that indicates the name of the region to which a region-specific fee applies.<br/><br/>The set of valid <b>regionName</b> values that may be returned is determined by the <b>regionType</b> value.<br/><br/><span class=\"tablenote\"><strong>Note:</strong> Currently, supported <b>regionName</b> values that may be returned are standard two-character country or state codes.<br/><br/>Typical examples include:<ul><li><b>MX</b> [Mexico]</li><li><b>IN</b> [India]</li><li><b>US</b> [United States]</li><li>CA [California]</li><li>VT [Vermont]</li><li>ME [Maine]</li></ul></span>  # noqa: E501
+        String value that indicates the name of the region to which a region-specific fee applies.<br><br>The set of valid <b>regionName</b> values that may be returned is determined by the <b>regionType</b> value.<br><br><span class=\"tablenote\"><strong>Note:</strong> Currently, supported <b>regionName</b> values that may be returned are standard two-character country or state codes.<br><br>Typical examples include:<ul><li><b>MX</b> [Mexico]</li><li><b>IN</b> [India]</li><li><b>US</b> [United States]</li><li>CA [California]</li><li>VT [Vermont]</li><li>ME [Maine]</li></ul></span>  # noqa: E501
 
         :param region_name: The region_name of this FeeJurisdiction.  # noqa: E501
         :type: str

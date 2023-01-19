@@ -289,7 +289,7 @@ class Transaction(object):
     def order_line_items(self):
         """Gets the order_line_items of this Transaction.  # noqa: E501
 
-        This array shows the fees that are deducted from a seller payout for each line item in an order.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> In some cases, a transaction fee might be returned asynchronously from the associated order. In such cases, you can determine the order to which the fee applies by examining the referenceID value of the fee, which should match the ID of the order.  # noqa: E501
+        This array shows the fees that are deducted from a seller payout for each line item in an order.<br><br><span class=\"tablenote\"><strong>Note:</strong> In some cases, a transaction fee might be returned asynchronously from the associated order. In such cases, you can determine the order to which the fee applies by examining the referenceID value of the fee, which should match the ID of the order.  # noqa: E501
 
         :return: The order_line_items of this Transaction.  # noqa: E501
         :rtype: list[OrderLineItem]
@@ -300,7 +300,7 @@ class Transaction(object):
     def order_line_items(self, order_line_items):
         """Sets the order_line_items of this Transaction.
 
-        This array shows the fees that are deducted from a seller payout for each line item in an order.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> In some cases, a transaction fee might be returned asynchronously from the associated order. In such cases, you can determine the order to which the fee applies by examining the referenceID value of the fee, which should match the ID of the order.  # noqa: E501
+        This array shows the fees that are deducted from a seller payout for each line item in an order.<br><br><span class=\"tablenote\"><strong>Note:</strong> In some cases, a transaction fee might be returned asynchronously from the associated order. In such cases, you can determine the order to which the fee applies by examining the referenceID value of the fee, which should match the ID of the order.  # noqa: E501
 
         :param order_line_items: The order_line_items of this Transaction.  # noqa: E501
         :type: list[OrderLineItem]
@@ -381,7 +381,7 @@ class Transaction(object):
     def sales_record_reference(self):
         """Gets the sales_record_reference of this Transaction.  # noqa: E501
 
-        The Sales Record Number associated with a sales order. Sales Record Numbers are Selling Manager/Selling Manager Pro identifiers that are created at order checkout.<br/><br/><span class=\"tablenote\"><strong>Note:</strong> For all orders originating after February 1, 2020, a value of <code>0</code> will be returned in this field. The Sales Record Number field has also been removed from Seller Hub. Instead of <strong>salesRecordReference</strong>, depend on <strong>orderId</strong> instead as the identifier of the order. The <strong>salesRecordReference</strong> field has been scheduled for deprecation, and a date for when this field will no longer be returned at all will be announced soon.</span>  # noqa: E501
+        The Sales Record Number associated with a sales order. Sales Record Numbers are Selling Manager/Selling Manager Pro identifiers that are created at order checkout.<br><br><span class=\"tablenote\"><strong>Note:</strong> For all orders originating after February 1, 2020, a value of <code>0</code> will be returned in this field. The Sales Record Number field has also been removed from Seller Hub. Instead of <strong>salesRecordReference</strong>, depend on <strong>orderId</strong> instead as the identifier of the order. The <strong>salesRecordReference</strong> field has been scheduled for deprecation, and a date for when this field will no longer be returned at all will be announced soon.</span>  # noqa: E501
 
         :return: The sales_record_reference of this Transaction.  # noqa: E501
         :rtype: str
@@ -392,7 +392,7 @@ class Transaction(object):
     def sales_record_reference(self, sales_record_reference):
         """Sets the sales_record_reference of this Transaction.
 
-        The Sales Record Number associated with a sales order. Sales Record Numbers are Selling Manager/Selling Manager Pro identifiers that are created at order checkout.<br/><br/><span class=\"tablenote\"><strong>Note:</strong> For all orders originating after February 1, 2020, a value of <code>0</code> will be returned in this field. The Sales Record Number field has also been removed from Seller Hub. Instead of <strong>salesRecordReference</strong>, depend on <strong>orderId</strong> instead as the identifier of the order. The <strong>salesRecordReference</strong> field has been scheduled for deprecation, and a date for when this field will no longer be returned at all will be announced soon.</span>  # noqa: E501
+        The Sales Record Number associated with a sales order. Sales Record Numbers are Selling Manager/Selling Manager Pro identifiers that are created at order checkout.<br><br><span class=\"tablenote\"><strong>Note:</strong> For all orders originating after February 1, 2020, a value of <code>0</code> will be returned in this field. The Sales Record Number field has also been removed from Seller Hub. Instead of <strong>salesRecordReference</strong>, depend on <strong>orderId</strong> instead as the identifier of the order. The <strong>salesRecordReference</strong> field has been scheduled for deprecation, and a date for when this field will no longer be returned at all will be announced soon.</span>  # noqa: E501
 
         :param sales_record_reference: The sales_record_reference of this Transaction.  # noqa: E501
         :type: str
@@ -492,7 +492,7 @@ class Transaction(object):
     def transaction_memo(self):
         """Gets the transaction_memo of this Transaction.  # noqa: E501
 
-        This field provides more details on shipping label transactions and transactions where the funds are being held by eBay. For shipping label transactions, the <b>transactionMemo</b> gives details about a purchase, a refund, or a price adjustment to the cost of the shipping label. For on-hold transactions, the <b>transactionMemo</b> provides information on the reason for the hold or when the hold will be released (e.g., \"Funds on hold. Estimated release on Jun 1\").<br/><br/>This field is only returned if applicable/available.  # noqa: E501
+        This field provides more details on shipping label transactions and transactions where the funds are being held by eBay. For shipping label transactions, the <b>transactionMemo</b> gives details about a purchase, a refund, or a price adjustment to the cost of the shipping label. For on-hold transactions, the <b>transactionMemo</b> provides information on the reason for the hold or when the hold will be released (e.g., \"Funds on hold. Estimated release on Jun 1\").<br><br>This field is only returned if applicable/available.  # noqa: E501
 
         :return: The transaction_memo of this Transaction.  # noqa: E501
         :rtype: str
@@ -503,7 +503,7 @@ class Transaction(object):
     def transaction_memo(self, transaction_memo):
         """Sets the transaction_memo of this Transaction.
 
-        This field provides more details on shipping label transactions and transactions where the funds are being held by eBay. For shipping label transactions, the <b>transactionMemo</b> gives details about a purchase, a refund, or a price adjustment to the cost of the shipping label. For on-hold transactions, the <b>transactionMemo</b> provides information on the reason for the hold or when the hold will be released (e.g., \"Funds on hold. Estimated release on Jun 1\").<br/><br/>This field is only returned if applicable/available.  # noqa: E501
+        This field provides more details on shipping label transactions and transactions where the funds are being held by eBay. For shipping label transactions, the <b>transactionMemo</b> gives details about a purchase, a refund, or a price adjustment to the cost of the shipping label. For on-hold transactions, the <b>transactionMemo</b> provides information on the reason for the hold or when the hold will be released (e.g., \"Funds on hold. Estimated release on Jun 1\").<br><br>This field is only returned if applicable/available.  # noqa: E501
 
         :param transaction_memo: The transaction_memo of this Transaction.  # noqa: E501
         :type: str

@@ -1,5 +1,5 @@
 # Standard library imports
-from base64 import b64encode
+from base64 import b64encode, b64decode
 from datetime import datetime, timedelta, timezone
 from json import loads
 import logging
@@ -7,11 +7,13 @@ from threading import Lock
 from time import sleep
 from typing import List
 from urllib.parse import parse_qs, urlencode
+from cryptography.hazmat.primitives.serialization import load_der_private_key
 
 # 3rd party library imports
 from requests import codes, post, Response
 
 # Local imports
+from .api.developer_key_management import CreateSigningKeyRequest
 from .date_time import DateTime
 from .error import Error
 from .multiton import Multiton
@@ -618,3 +620,217 @@ class _OAuth2Api:
                 token.error += ': ' + content[key]
 
         return token
+
+
+class KeyPairToken(metaclass=Multiton):
+    """An eBay private/public key pair created using
+    the eBay Key Management API.
+    Digital signature credentials are optional if you don't make API
+    calls that need a public/private key pair.
+    """
+
+    __slots__ = (
+        "_lock", "_creation_time", "_expiration_time", "_jwe",
+        "_private_key", "_public_key", "_signing_key_cipher", "_signing_key_id"
+    )
+
+    def __init__(self,
+                 creation_time: int or None = None,
+                 expiration_time: int or None = None,
+                 jwe: str or None = None,
+                 private_key: str or None = None,
+                 public_key: str or None = None,
+                 signing_key_cipher: str or None = None,
+                 signing_key_id: str or None = None) -> None:
+        """
+        # eBay key pair details
+        :param creation_time (int, optional):
+        :param expiration_time (int, optional):
+        :param jwe (str, optional):
+        :param private_key (str, optional):
+        :param public_key (str, optional):
+        :param signing_key_cipher (str, optional):
+        :param signing_key_id (str, optional):
+        :return: None (None)
+        """
+        self._lock = Lock()
+        # The Multiton decorator wraps this initializer with a thread lock; it is safe to skip using self._lock.
+        self._creation_time = DateTime.from_string(creation_time) if creation_time else None
+        self._expiration_time = DateTime.from_string(expiration_time) if expiration_time else None
+        self._jwe = jwe
+        self._private_key = private_key
+        self._public_key = public_key
+        self._signing_key_cipher = signing_key_cipher
+        self._signing_key_id = signing_key_id
+        if self._signing_key_cipher:
+            self._signing_key_cipher = self._signing_key_cipher.upper()
+            if self._signing_key_cipher != 'ED25519':
+                raise Error(
+                    number=96020,
+                    reason='Digital Signatures key pair invalid cipher',
+                    detail='Only the ED25519 cipher is supported by ebay_rest'
+                )
+
+    def key_dict(self):
+        """Get the public and private key ready for a request"""
+        pk = load_der_private_key(b64decode(self._private_key), password=None)
+        return {
+            'jwe': self._jwe,
+            'private_key': pk
+        }
+
+    def _current_key_sufficient(self) -> bool:
+        """Check if the current key pair is sufficient to call get_signing_key.
+
+        Returns True if so, else False
+
+        :return bool
+        """
+        return self._private_key and self._signing_key_id
+
+    def _current_key_in_date(self) -> bool or None:
+        """Check if the current key pair has a date and, if it does, if
+        the key pair is in date.
+        Returns True if the key has an expiry date and is in date.
+        Returns False if the key has and expiry date and is expired.
+        Returns None if the key has no expiry date.
+
+        :return bool
+        """
+        if not self._expiration_time:
+            return None
+        return (
+            (DateTime.now() - timedelta(seconds=90)) < self._expiration_time
+        )
+
+    def _has_valid_key(self, api) -> None:
+        """
+        Check we have enough information to request a new key pair.
+        Load the new key pair, and check it is valid.
+
+        :param api (API): A valid API instance that can be used to make
+            a KeyManagementAPI call
+        :return dict
+        """
+
+        if not self._current_key_sufficient():
+            return False
+
+        self._get_signing_key(api)
+
+        if not self._current_key_in_date:
+            # An expired key must be replaced
+            return False
+
+        return True
+
+    def _ensure_key_pair(self, api) -> None:
+        """
+        Ensures a valid key pair is available.
+
+        :param api (API): A valid API instance that can be used to make
+            a KeyManagementAPI call
+        :return None (None)
+
+        - If the key is out of date, create a new key pair.
+        - If the necessary details for making an API call and the expiration
+            time are provided, do nothing (assume the key pair is OK).
+        - If the private key and the signing key ID are provided but details
+          are not complete, load the key info.
+        """
+
+        in_date = (
+            self._expiration_time and (
+                (DateTime.now() - timedelta(seconds=90)) < self._expiration_time
+            )
+        )
+
+        if self._expiration_time and not in_date:
+            # An expired key must be replaced
+            self._create_key_pair(api)
+
+        elif self.expiration_time and self.jwe and self.private_key:
+            # If we have enough information to try an API call plus the
+            # (in date) expiration time, assume the details are valid
+            return
+
+        elif self._current_key_sufficient():
+            # We can reload the key as long as we have the private key
+            # and the signing key ID
+            self._get_signing_key(api)
+            if (DateTime.now() - timedelta(seconds=90)) > self._expiration_time:
+                # If the loaded key is out of date, raise an error
+                self._create_key_pair(api)
+                raise Error(
+                    number=96021,
+                    reason='Expired key pair',
+                    detail='Key {} is expired'.format(self._signing_key_id)
+                )
+
+        else:
+            # Raise an error if no good key pair provided
+            raise Error(
+                number=96022,
+                reason='No valid key pair',
+                detail='Generate a new key pair'
+            )
+
+    def _get_signing_key(self, api) -> None:
+        """
+        Use the eBay Key Pair Management API to load an existing eBay
+        public/private key pair.
+
+        :param api (API): A valid API instance that can be used to make
+            a KeyManagementAPI call
+        :return None (None)
+        """
+        key = api.developer_key_management_get_signing_key(
+            signing_key_id=self._signing_key_id
+        )
+        self._save_key(key)
+
+    def _create_key_pair(self, api) -> None:
+        """
+        Use the eBay Key Pair Management API to generate a new eBay
+        public/private key pair
+
+        :param api (API): A valid API instance that can be used to make
+            a KeyManagementAPI call
+        :return None (None)
+        """
+        body = CreateSigningKeyRequest(signing_key_cipher = 'ED25519')
+        key = api.developer_key_management_create_signing_key(body=body)
+        self._save_key(key)
+
+    def _load_key(self) -> dict:
+        """
+        Load the saved key dictionary.
+        """
+        creation_time = DateTime.to_string(self._creation_time)
+        expiration_time = DateTime.to_string(self._expiration_time)
+        return {
+            'creation_time': creation_time,
+            'expiration_time': expiration_time,
+            'jwe': self._jwe,
+            'private_key': self._private_key,
+            'public_key': self._public_key,
+            'signing_key_cipher': self._signing_key_cipher,
+            'signing_key_id': self._signing_key_id
+        }
+
+    def _save_key(self, key) -> None:
+        """
+        Save a loaded key dictionary to this KeyPairToken
+        :param key (dict): A dict of key properties
+        """
+        self._creation_time = datetime.fromtimestamp(
+            key['creation_time'], tz=timezone.utc)
+        self._expiration_time = datetime.fromtimestamp(
+            key['expiration_time'], tz=timezone.utc)
+        self._jwe = key['jwe']
+        if key['private_key']:
+            # Only write private key if supplied (i.e. just created)
+            self._private_key = key['private_key']
+        self._public_key = key['public_key']
+        self._signing_key_cipher = key['signing_key_cipher']
+        self._signing_key_id = key['signing_key_id']
