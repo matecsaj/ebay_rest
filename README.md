@@ -231,7 +231,7 @@ If your project uses log-level info or higher, the info will appear in your log.
 
 **A:** In the words of eBay, "Due to regulatory requirements applicable to our EU/UK sellers, for certain APIs, developers need to add digital signatures to the respective HTTP call". These calls are (currently) all calls in the Finances API, issueRefund in the Fulfillment API, and some calls in 'traditional' APIs not handled by ebay_rest.
 
-In order to use Digital Signatures, the API instance must be passed the parameter `digital_signatures` set to `True` at initialization. The optional parameter `key_pair` can also be set, as for application, user and header, to either the name of a `key_pairs` section or a dict. An example using a dict parameter:
+In order to use Digital Signatures, the API instance must be passed the parameter `digital_signatures` set to `True` at initialization. The optional parameter `key_pair` should also be set, as for application, user and header, to either the name of a `key_pairs` section (in the ebay_rest.json file) or a dict. An example using a dict parameter:
 ```
 # application, user and header set as in previous examples
 
@@ -256,24 +256,20 @@ The full set of options in the key_pair parameter or for an entry in the key_pai
     'signing_key_id': 'placeholder-placeholder-placeholder-'
 }
 ```
-If all details are supplied and the key is in date according to the supplied expiration_time, it will be used. However, only the private key value and signing_key_id are required to use an existing key; a getSigningKey call will be made from the KeyManagement API to load the remaining details and check the expiration date. Note that only the ED25519 cipher is supported by ebay_rest.
+If at least the 'private_key', 'jwe' and 'expiration_time' values are supplied, and the key is in date according to the supplied expiration_time, it will be used. However, only the private key value and signing_key_id are required to use an existing key; a getSigningKey call will be made from the KeyManagement API to load the remaining details and check the expiration date. Note that only the ED25519 cipher is supported by ebay_rest.
 
-WARNING - if the key has insufficient parameters (does not have both the private key and the signing_key_id) or it is expired then the code will generate a new private/public key pair. There is no way to delete key pairs from an eBay account and it is probably not a good idea to create a large number of key pairs. The new key pair can be extracted from the API instance as described in the the next question.
-
-Summary: you SHOULD ordinarily supply at least a private_key and signing_key_id to avoid creating many public/private key pairs on eBay.
+WARNING There is no way to delete key pairs from an eBay account and it is probably not a good idea to create a large number of key pairs. The new key pair can be extracted from the API instance as described in the the next question.
 
 ##
 **Q:** How do I get an eBay Digital Signatures public/private key pair?
 
 **A:** A new public/private key pair can be obtained using the `get_digital_signature_key` method on an `API` instance, e.g.
 ```
-key = API.get_digital_signature_key()
-```
-The API must have been initialized with `digital_signatures=True`. If there is a current valid key pair (either from ebay_rest.json, a key_pair parameter, or from making an API call which has created a key pair), the key pair will be returned, otherwise an error will be raised. To obtain a new key pair if (and only if) required, set the `create_new` parameter to `True` e.g.
-```
 key = API.get_digital_signature_key(create_new=True)
 ```
-This key should then be kept somewhere secure and reused for subsequent calls. It not *not* possible to recover a lost private key as eBay does not store the private key after key generation. Keeping the private_key and the signing_key_id is sufficient to recover the key and only these fields need to be added to ebay_rest.json or the key_pair parameter.
+The API must have been initialized with `digital_signatures=True`. If there is a current valid key pair (either from ebay_rest.json or from a key_pair parameter), the key pair will be returned, otherwise an error will be raised. If (and only if) required, a new key pair will be created when the `create_new` parameter is set to `True`. For `create_new=False`, an error will be raised if no valid key pair has been supplied to ebay_rest.
+
+The retrieved key should then be kept somewhere secure and reused for subsequent calls. It not *not* possible to recover a lost private key as eBay does not store the private key after key generation. Keeping the private_key and the signing_key_id is sufficient to recover the key and only these fields need to be added to ebay_rest.json or the key_pair parameter.
 
 ##
 **Q:** Why is eBay giving an "Internal Error" or "Internal Server Error"? 

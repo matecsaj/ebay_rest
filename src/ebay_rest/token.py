@@ -733,16 +733,11 @@ class KeyPairToken(metaclass=Multiton):
         :return None (None)
 
         - If the key is out of date, create a new key pair.
-        - If all details are provided, do nothing (assume the key pair is OK).
+        - If the necessary details for making an API call and the expiration
+            time are provided, do nothing (assume the key pair is OK).
         - If the private key and the signing key ID are provided but details
           are not complete, load the key info.
         """
-
-        complete = (
-            self._creation_time and self._expiration_time and self._jwe
-            and self._private_key and self._public_key
-            and self._signing_key_cipher and self._signing_key_id
-        )
 
         in_date = (
             self._expiration_time and (
@@ -754,8 +749,9 @@ class KeyPairToken(metaclass=Multiton):
             # An expired key must be replaced
             self._create_key_pair(api)
 
-        elif complete:
-            # If the in-date key is complete, do nothing
+        elif self.expiration_time and self.jwe and self.private_key:
+            # If we have enough information to try an API call plus the
+            # (in date) expiration time, assume the details are valid
             return
 
         elif self._current_key_sufficient():
@@ -763,12 +759,21 @@ class KeyPairToken(metaclass=Multiton):
             # and the signing key ID
             self._get_signing_key(api)
             if (DateTime.now() - timedelta(seconds=90)) > self._expiration_time:
-                # If the loaded key is out of date, generate a new key pair
+                # If the loaded key is out of date, raise an error
                 self._create_key_pair(api)
+                raise Error(
+                    number=96021,
+                    reason='Expired key pair',
+                    detail='Key {} is expired'.format(self._signing_key_id)
+                )
 
         else:
-            # We have to generate a new key
-            self._create_key_pair(api)
+            # Raise an error if no good key pair provided
+            raise Error(
+                number=96022,
+                reason='No valid key pair',
+                detail='Generate a new key pair'
+            )
 
     def _get_signing_key(self, api) -> None:
         """
