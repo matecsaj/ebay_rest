@@ -749,7 +749,7 @@ class KeyPairToken(metaclass=Multiton):
             # An expired key must be replaced
             self._create_key_pair(api)
 
-        elif self.expiration_time and self.jwe and self.private_key:
+        elif self._expiration_time and self._jwe and self._private_key:
             # If we have enough information to try an API call plus the
             # (in date) expiration time, assume the details are valid
             return
