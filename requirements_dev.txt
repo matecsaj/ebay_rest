@@ -20,6 +20,7 @@
 
 # For production requirements, the following must match what is found in setup.cfg
 certifi
+cryptography
 python_dateutil
 requests
 selenium

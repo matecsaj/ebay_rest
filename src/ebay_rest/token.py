@@ -120,8 +120,8 @@ class UserToken(metaclass=Multiton):
     This is a facade for the oath module.
     """
 
-    __slots__ = "_lock", "_sandbox", "_user_id", "_user_password", "_user_scopes", "_user_token", "_oauth2api_inst",\
-                "_user_refresh_token", "_user_refresh_token_expiry", "_allow_get_user_consent"
+    __slots__ = "_lock", "_sandbox", "_user_id", "_user_password", "_user_scopes", "_user_token", "_oauth2api_inst", \
+        "_user_refresh_token", "_user_refresh_token_expiry", "_allow_get_user_consent"
 
     def __init__(self,
                  sandbox: bool,
@@ -303,7 +303,7 @@ class UserToken(metaclass=Multiton):
             from selenium.webdriver.chrome.options import Options
             from selenium.webdriver.common.by import By
             from selenium.webdriver.support.ui import WebDriverWait
-        except ModuleNotFoundError as e:
+        except ModuleNotFoundError:
             reason = f"Supply an 'eBay user token' or install the COMPLETE variant of ebay_rest. Refer to the README.md at https://github.com/matecsaj/ebay_rest."  # noqa: E501
             logging.critical(reason)
             raise Error(number=96019, reason=reason)
@@ -323,16 +323,17 @@ class UserToken(metaclass=Multiton):
             try:
                 # fill in the username then click continue
                 # sometimes a captcha appears, so wait an extra 30-seconds for the user to fill it in
-                WebDriverWait(browser, 10+30).until(lambda x: x.find_element(By.NAME, 'userid')).send_keys(self._user_id)   # noqa: E501
+                WebDriverWait(browser, 10 + 30).until(lambda x: x.find_element(By.NAME, 'userid')).send_keys(self._user_id)  # noqa: E501
                 WebDriverWait(browser, 10).until(lambda x: x.find_element(By.ID, 'signin-continue-btn')).click()
 
                 # fill in the password then submit
-                sleep(5)    # Why? Perhaps an element I'm not aware of needs to finish rendering.
+                sleep(5)  # Why? Perhaps an element I'm not aware of needs to finish rendering.
                 WebDriverWait(browser, 10).until(lambda x: x.find_element(By.NAME, 'pass')).send_keys(self._user_password)  # noqa: E501
                 WebDriverWait(browser, 10).until(lambda x: x.find_element(By.ID, 'sgnBt')).submit()
 
             except NoSuchElementException:
-                raise Error(number=96015, reason="ChromeDriver element not found.", detail="Has eBay's website changed?")   # noqa: E501
+                raise Error(number=96015, reason="ChromeDriver element not found.",
+                            detail="Has eBay's website changed?")
             except TimeoutException:
                 raise Error(number=96016, reason="ChromeDriver timeout.", detail='Slow computer or Internet?')
 
@@ -347,9 +348,10 @@ class UserToken(metaclass=Multiton):
             # get the result url and then close browser
             # some people enable 2FA, so wait an extra 30-seconds for the user interaction
             try:
-                WebDriverWait(browser, 10+30).until(lambda x: x.find_element(By.ID, 'thnk-wrap'))
+                WebDriverWait(browser, 10 + 30).until(lambda x: x.find_element(By.ID, 'thnk-wrap'))
             except NoSuchElementException:
-                raise Error(number=96017, reason="ChromeDriver element not found.", detail="Has eBay's website changed?")   # noqa: E501
+                raise Error(number=96017, reason="ChromeDriver element not found.",
+                            detail="Has eBay's website changed?")
             except TimeoutException:
                 raise Error(number=96018, reason="ChromeDriver timeout.", detail='Slow computer or Internet?')
             qs = browser.current_url.partition('?')[2]
@@ -364,7 +366,7 @@ class UserToken(metaclass=Multiton):
 
             if is_auth_successful:
                 if 'code' in parsed:
-                    return parsed['code'][0]        # recently added [0]
+                    return parsed['code'][0]  # recently added [0]
                 else:
                     raise Error(number=96009, reason="Unable to obtain code.")
             else:
@@ -388,7 +390,6 @@ class UserToken(metaclass=Multiton):
 
 
 class _OAuthToken(object):
-
     __slots__ = "access_token", "token_expiry", "refresh_token", "refresh_token_expiry", "error", "token_response"
 
     def __init__(self,
@@ -436,7 +437,6 @@ class _OAuthToken(object):
 
 
 class _OAuth2Api:
-
     __slots__ = "_sandbox", "_client_id", "_client_secret", "_ru_name"
 
     def __init__(self, sandbox: bool, client_id: str, client_secret: str, ru_name: str):
@@ -511,9 +511,9 @@ class _OAuth2Api:
         if resp.status_code == codes.ok:
             token.refresh_token = content['refresh_token']
             token.refresh_token_expiry = (
-                datetime.utcnow()
-                + timedelta(seconds=int(content['refresh_token_expires_in']))
-                - timedelta(minutes=5)
+                    datetime.utcnow()
+                    + timedelta(seconds=int(content['refresh_token_expires_in']))
+                    - timedelta(minutes=5)
             )
 
         return self._finish(resp, token, content)
@@ -553,8 +553,8 @@ class _OAuth2Api:
         """
         b64_encoded_credential = b64encode((self._client_id + ':' + self._client_secret).encode())
         headers = {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Basic ' + b64_encoded_credential.decode()
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + b64_encoded_credential.decode()
         }
         return headers
 
@@ -564,9 +564,9 @@ class _OAuth2Api:
         :return body (dict)
         """
         body = {
-                'grant_type': 'client_credentials',
-                'redirect_uri': self._ru_name,
-                'scope': ' '.join(scopes)
+            'grant_type': 'client_credentials',
+            'redirect_uri': self._ru_name,
+            'scope': ' '.join(scopes)
         }
         return body
 
@@ -580,9 +580,9 @@ class _OAuth2Api:
         if refresh_token is None:
             raise Error(number=96013, reason="credential object does not contain refresh_token and/or scopes")
         body = {
-                'grant_type': 'refresh_token',
-                'refresh_token': refresh_token,
-                'scope': ' '.join(scopes)
+            'grant_type': 'refresh_token',
+            'refresh_token': refresh_token,
+            'scope': ' '.join(scopes)
         }
         return body
 
@@ -592,9 +592,9 @@ class _OAuth2Api:
         :return body (dict):
         """
         body = {
-                'grant_type': 'authorization_code',
-                'redirect_uri': self._ru_name,
-                'code': code
+            'grant_type': 'authorization_code',
+            'redirect_uri': self._ru_name,
+            'code': code
         }
         return body
 
@@ -609,9 +609,9 @@ class _OAuth2Api:
         if resp.status_code == codes.ok:
             token.access_token = content['access_token']
             token.token_expiry = (
-                datetime.utcnow()
-                + timedelta(seconds=int(content['expires_in']))
-                - timedelta(minutes=5)
+                    datetime.utcnow()
+                    + timedelta(seconds=int(content['expires_in']))
+                    - timedelta(minutes=5)
             )
         else:
             token.error = str(resp.status_code)
@@ -697,13 +697,12 @@ class KeyPairToken(metaclass=Multiton):
 
         :return bool
         """
-        if not self._expiration_time:
+        if self._expiration_time:
+            return (DateTime.now() - timedelta(seconds=90)) < self._expiration_time
+        else:
             return None
-        return (
-            (DateTime.now() - timedelta(seconds=90)) < self._expiration_time
-        )
 
-    def _has_valid_key(self, api) -> None:
+    def _has_valid_key(self, api) -> bool:
         """
         Check we have enough information to request a new key pair.
         Load the new key pair, and check it is valid.
@@ -739,11 +738,7 @@ class KeyPairToken(metaclass=Multiton):
           are not complete, load the key info.
         """
 
-        in_date = (
-            self._expiration_time and (
-                (DateTime.now() - timedelta(seconds=90)) < self._expiration_time
-            )
-        )
+        in_date = (self._expiration_time and ((DateTime.now() - timedelta(seconds=90)) < self._expiration_time))
 
         if self._expiration_time and not in_date:
             # An expired key must be replaced
@@ -784,10 +779,16 @@ class KeyPairToken(metaclass=Multiton):
             a KeyManagementAPI call
         :return None (None)
         """
-        key = api.developer_key_management_get_signing_key(
-            signing_key_id=self._signing_key_id
-        )
-        self._save_key(key)
+        try:
+            key = api.developer_key_management_get_signing_key(signing_key_id=self._signing_key_id)
+        except Error:
+            raise Error(
+                number=96023,
+                reason='Key pair not found',
+                detail='Key {} not found'.format(self._signing_key_id)
+            )
+        else:
+            self._save_key(key)
 
     def _create_key_pair(self, api) -> None:
         """
@@ -798,9 +799,17 @@ class KeyPairToken(metaclass=Multiton):
             a KeyManagementAPI call
         :return None (None)
         """
-        body = CreateSigningKeyRequest(signing_key_cipher = 'ED25519')
-        key = api.developer_key_management_create_signing_key(body=body)
-        self._save_key(key)
+        body = CreateSigningKeyRequest(signing_key_cipher='ED25519')
+        try:
+            key = api.developer_key_management_create_signing_key(body=body)
+        except Error as e:
+            raise Error(
+                    number=96024,
+                    reason='Failed to create key pair',
+                    detail='Failed to create key pair: {}'.format(e)
+                )
+        else:
+            self._save_key(key)
 
     def _load_key(self) -> dict:
         """

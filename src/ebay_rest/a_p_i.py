@@ -283,12 +283,12 @@ class API(metaclass=Multiton):
         else:
             with API._lock_rates:
                 try:
-                    # If sandbox starts return rates, then you will need to add a sandbox param to the Rates constructor.
+                    # If sandbox starts return rates, you will need to add a sandbox param to the Rates constructor.
                     self._rates = Rates(app_id=self._application['app_id'])
                 except Error:
                     raise
 
-        # pre-load the multi-purpose header self._end_user_ctx
+        # preload the multipurpose header self._end_user_ctx
         equates = list()
         if 'affiliate_campaign_id' in self._header:
             if len(self._header['affiliate_campaign_id']) > 0:
@@ -709,7 +709,7 @@ class API(metaclass=Multiton):
         if self._sandbox:
             configuration.host = configuration.host.replace('.ebay.com',
                                                             '.sandbox.ebay.com')
-        # check for host has flaws and then then compensate
+        # check for flawed host and if so compensate
         if '{basePath}' in configuration.host:
             configuration.host = configuration.host.replace('{basePath}', base_path)
         else:
@@ -828,9 +828,12 @@ class API(metaclass=Multiton):
                 else:
                     api_response = swagger_method()
 
-        except object_error as error:
+        except object_error as e:
             # error.status will be 100 to 599, see https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
-            raise Error(number=99000 + error.status, reason=error.reason, detail=error.body)
+            raise Error(number=99000 + e.status, reason=e.reason, detail=e.body)
+
+        except DeveloperKeyManagementException as e:
+            raise Error(number=99018, reason="A Digital Signature problem.", detail=f"{e}")
 
         else:
             if self._async_req:     # TODO Wait for the asynchronous HTTP request to finish.
@@ -922,8 +925,7 @@ class API(metaclass=Multiton):
                 raise Error(
                     number=99019,
                     reason='New key pair needed',
-                    detail='get_digital_signature_key parameter create_new '
-                        + 'parameter must be True'
+                    detail='get_digital_signature_key parameter create_new parameter must be True'
                 )
         key = self._key_pair_token._load_key()
         return key

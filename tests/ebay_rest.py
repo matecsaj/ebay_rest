@@ -874,21 +874,27 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.sandbox = True
-        cls.application = 'sandbox_1' if cls.sandbox else 'production_1'
-        cls.user = 'sandbox_1' if cls.sandbox else 'production_1'
-        cls.key_pair = 'sandbox_1' if cls.sandbox else 'production_1'
+        sandbox = True
+        application = 'sandbox_1' if sandbox else 'production_1'
+        user = 'sandbox_1' if sandbox else 'production_1'
+        key_pair = 'sandbox_1' if sandbox else 'production_1'
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
-        cls._api = API(
-            application=cls.application, user=cls.user, header='US',
-            key_pair=cls.key_pair, digital_signatures=True
+        _api = API(
+            application=application, user=user, header='US',
+            key_pair=key_pair, digital_signatures=True
         )
-        cls.original_private_key = cls._api._key_pair_token._private_key
-        cls.original_signing_key_id = cls._api._key_pair_token._signing_key_id
-        if not (cls.original_private_key and cls.original_signing_key_id):
-            raise ValueError(
-                'Need a private key and signing_key_id for '
-                + 'Digital Signatures tests')
+        original_private_key = _api._key_pair_token._private_key
+        original_signing_key_id = _api._key_pair_token._signing_key_id
+        if original_private_key and original_signing_key_id:
+            cls.key_fail = None
+        else:
+            cls.key_fail = 'Need a private key and signing_key_id for Digital Signatures tests'
+        # retain only what the class methods need
+        cls.application = application
+        cls._api = _api
+        cls.original_private_key = original_private_key
+        cls.original_signing_key_id = original_signing_key_id
+        cls.user = user
 
     @classmethod
     def tearDownClass(cls):
@@ -897,6 +903,8 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
     def setUp(self):
         # Reset private key
         self._api._key_pair_token._private_key = self.original_private_key
+        if self.key_fail is not None:
+            self.fail(self.key_fail)
 
     def test_001_get_signing_key(self):
         """Check that we can load all the remaining key information
@@ -908,9 +916,13 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
         }
         api = API(application=self.application, user=self.user, header='US',
                   key_pair=key_pair, digital_signatures=True)
-        key = api.get_digital_signature_key(create_new=False)
-        self.assertEqual(key['private_key'], self.original_private_key)
-        self.assertEqual(key['signing_key_id'], self.original_signing_key_id)
+        try:
+            key = api.get_digital_signature_key(create_new=False)
+        except Error as error:
+            self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
+        else:
+            self.assertEqual(key['private_key'], self.original_private_key)
+            self.assertEqual(key['signing_key_id'], self.original_signing_key_id)
 
     def test_002_make_call_with_signature(self):
         """Check that we can make a call using the Digital Signature"""
@@ -920,23 +932,23 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
             self.assertTrue('credit_count' in result)
-        # Break the private key and try again
-        # This is an example key from draft-ietf-httpbis-message-signatures-15
-        self._api._key_pair_token._private_key = (
-            'MC4CAQAwBQYDK2VwBCIEIJ+DYvh6SEqVTm50DFtMDoQikTmiCqirVv9mWG9qfSnF'
-        )
-        try:
-            self._api.sell_finances_get_transaction_summary(filter="transactionStatus:{PAYOUT}")
-        except Error as error:
-            self.assertEqual(error.number, 99403)
-            # Check for eBay 'Signature validation failed' error
-            ebay_error = loads(error.detail.decode('utf-8'))
-            signature_validation_failed = (215120, 215121, 215122)
-            self.assertTrue(
-                ebay_error['errors'][0]['errorId'] in signature_validation_failed
+            # Break the private key and try again
+            # This is an example key from draft-ietf-httpbis-message-signatures-15
+            self._api._key_pair_token._private_key = (
+                'MC4CAQAwBQYDK2VwBCIEIJ+DYvh6SEqVTm50DFtMDoQikTmiCqirVv9mWG9qfSnF'
             )
-        else:
-            self.fail('Did not fail with invalid private key!')
+            try:
+                self._api.sell_finances_get_transaction_summary(filter="transactionStatus:{PAYOUT}")
+            except Error as error:
+                self.assertEqual(error.number, 99403)
+                # Check for eBay 'Signature validation failed' error
+                ebay_error = loads(error.detail).decode('utf-8')
+                signature_validation_failed = (215120, 215121, 215122)
+                self.assertTrue(
+                    ebay_error['errors'][0]['errorId'] in signature_validation_failed
+                )
+            else:
+                self.fail('Did not fail with invalid private key!')
 
     # This test permanently creates a new public/private key pair which cannot
     # be removed, hence it is skipped by default.
@@ -946,7 +958,7 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
         self._api._key_pair_token._private_key = None
         self._api._key_pair_token._signing_key_id = None
         with self.assertRaises(Error):
-            key = self._api.get_digital_signature_key(create_new=False)
+            key = self._api.get_digital_signature_key(create_new=False)     # TODO given the next line this redundant?
         key = self._api.get_digital_signature_key(create_new=True)
         self.assertTrue(key['private_key'])
         self.assertNotEqual(key['private_key'], self.original_private_key)
@@ -956,6 +968,7 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
             self.assertTrue('credit_count' in result)
+
 
 class DateTimeTests(unittest.TestCase):
 
@@ -978,7 +991,7 @@ class MultitonTests(unittest.TestCase):
         """ Documentation from the wrapped class should be returned instead of Multiton. """
         doc_string = API.__doc__
         self.assertTrue('Multiton' not in doc_string and 'API' in doc_string,
-                        msg="Double-check functools.update_wrapper in multition.py.")
+                        msg="Double-check functools.update_wrapper in multiton.py.")
 
 
 class ReferenceTests(unittest.TestCase):

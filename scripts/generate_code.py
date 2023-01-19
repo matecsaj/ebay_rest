@@ -446,7 +446,6 @@ class Contracts:
             async with aiofiles.open(file_location, mode='w') as f:
                 await f.write(data)
 
-
     async def swagger_codegen(self):
         source = os.path.join(Locations.cache_path, self.file_name)
         command = f' generate -l python -o {Locations.cache_path}/{self.name} -DpackageName={self.name} -i {source}'

@@ -4,7 +4,7 @@ import time
 import urllib.parse
 
 
-def signed_request(pool_manager, key_pair, method, url, *args, **kwargs):
+def signed_request(pool_manager, key_pair, method, url, *_args, **kwargs):
     """If x-ebay-enforce_signature has been set, add digital signature.
     This function replaces the normal pool_manager.request function,
     and calls it with the same arguments after adding a digital
@@ -36,9 +36,9 @@ def signed_request(pool_manager, key_pair, method, url, *args, **kwargs):
         '@authority': url_parts.netloc
     })
 
-    # Query not currently required?
-    #if url_parts.query:
-        #signature_fields['query'] = f'?{url_parts.query}'
+    # TODO Query not currently required?
+    # if url_parts.query:
+    #     signature_fields['query'] = f'?{url_parts.query}'
 
     # Create Signature-Input header showing what components are included
     covered_components = ' '.join(f'"{key}"' for key in signature_fields)
