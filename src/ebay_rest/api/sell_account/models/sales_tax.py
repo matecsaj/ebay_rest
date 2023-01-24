@@ -84,7 +84,7 @@ class SalesTax(object):
     def sales_tax_jurisdiction_id(self):
         """Gets the sales_tax_jurisdiction_id of this SalesTax.  # noqa: E501
 
-        A unique ID that identifies the sales tax jurisdiction to which the salest tax rate applies (for example, a state within the United States).  # noqa: E501
+        A unique ID that identifies the sales tax jurisdiction to which the sales tax rate applies (for example, a state within the United States).  # noqa: E501
 
         :return: The sales_tax_jurisdiction_id of this SalesTax.  # noqa: E501
         :rtype: str
@@ -95,7 +95,7 @@ class SalesTax(object):
     def sales_tax_jurisdiction_id(self, sales_tax_jurisdiction_id):
         """Sets the sales_tax_jurisdiction_id of this SalesTax.
 
-        A unique ID that identifies the sales tax jurisdiction to which the salest tax rate applies (for example, a state within the United States).  # noqa: E501
+        A unique ID that identifies the sales tax jurisdiction to which the sales tax rate applies (for example, a state within the United States).  # noqa: E501
 
         :param sales_tax_jurisdiction_id: The sales_tax_jurisdiction_id of this SalesTax.  # noqa: E501
         :type: str

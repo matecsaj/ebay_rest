@@ -34,6 +34,8 @@ class ShippingOption(object):
         'option_type': 'str',
         'package_handling_cost': 'Amount',
         'rate_table_id': 'str',
+        'shipping_discount_profile_id': 'str',
+        'shipping_promotion_offered': 'bool',
         'shipping_services': 'list[ShippingService]'
     }
 
@@ -44,10 +46,12 @@ class ShippingOption(object):
         'option_type': 'optionType',
         'package_handling_cost': 'packageHandlingCost',
         'rate_table_id': 'rateTableId',
+        'shipping_discount_profile_id': 'shippingDiscountProfileId',
+        'shipping_promotion_offered': 'shippingPromotionOffered',
         'shipping_services': 'shippingServices'
     }
 
-    def __init__(self, cost_type=None, insurance_fee=None, insurance_offered=None, option_type=None, package_handling_cost=None, rate_table_id=None, shipping_services=None):  # noqa: E501
+    def __init__(self, cost_type=None, insurance_fee=None, insurance_offered=None, option_type=None, package_handling_cost=None, rate_table_id=None, shipping_discount_profile_id=None, shipping_promotion_offered=None, shipping_services=None):  # noqa: E501
         """ShippingOption - a model defined in Swagger"""  # noqa: E501
         self._cost_type = None
         self._insurance_fee = None
@@ -55,6 +59,8 @@ class ShippingOption(object):
         self._option_type = None
         self._package_handling_cost = None
         self._rate_table_id = None
+        self._shipping_discount_profile_id = None
+        self._shipping_promotion_offered = None
         self._shipping_services = None
         self.discriminator = None
         if cost_type is not None:
@@ -69,6 +75,10 @@ class ShippingOption(object):
             self.package_handling_cost = package_handling_cost
         if rate_table_id is not None:
             self.rate_table_id = rate_table_id
+        if shipping_discount_profile_id is not None:
+            self.shipping_discount_profile_id = shipping_discount_profile_id
+        if shipping_promotion_offered is not None:
+            self.shipping_promotion_offered = shipping_promotion_offered
         if shipping_services is not None:
             self.shipping_services = shipping_services
 
@@ -205,6 +215,52 @@ class ShippingOption(object):
         """
 
         self._rate_table_id = rate_table_id
+
+    @property
+    def shipping_discount_profile_id(self):
+        """Gets the shipping_discount_profile_id of this ShippingOption.  # noqa: E501
+
+        This field is the unique identifier of a seller's domestic or international shipping discount profile. If a buyer satisfies the requirements of the discount rule, this buyer will receive a shipping discount for the order. <br /><br />The seller can create and manage shipping discount profiles using (Get/Set) <b>ShippingDiscountProfiles</b> calls in the <b>Trading API</b> or through the <b>Shipping Preferences</b> in <b>My eBay</b>. <br/><br/><span class=\"tablenote\"><b>Note: </b>Initially, shipping discount profiles in the <b>Account API</b> will <i>not</i> be available to all sellers.</span>  # noqa: E501
+
+        :return: The shipping_discount_profile_id of this ShippingOption.  # noqa: E501
+        :rtype: str
+        """
+        return self._shipping_discount_profile_id
+
+    @shipping_discount_profile_id.setter
+    def shipping_discount_profile_id(self, shipping_discount_profile_id):
+        """Sets the shipping_discount_profile_id of this ShippingOption.
+
+        This field is the unique identifier of a seller's domestic or international shipping discount profile. If a buyer satisfies the requirements of the discount rule, this buyer will receive a shipping discount for the order. <br /><br />The seller can create and manage shipping discount profiles using (Get/Set) <b>ShippingDiscountProfiles</b> calls in the <b>Trading API</b> or through the <b>Shipping Preferences</b> in <b>My eBay</b>. <br/><br/><span class=\"tablenote\"><b>Note: </b>Initially, shipping discount profiles in the <b>Account API</b> will <i>not</i> be available to all sellers.</span>  # noqa: E501
+
+        :param shipping_discount_profile_id: The shipping_discount_profile_id of this ShippingOption.  # noqa: E501
+        :type: str
+        """
+
+        self._shipping_discount_profile_id = shipping_discount_profile_id
+
+    @property
+    def shipping_promotion_offered(self):
+        """Gets the shipping_promotion_offered of this ShippingOption.  # noqa: E501
+
+        This boolean indicates whether or not the seller has set up a promotional shipping discount that will be available to buyers who satisfy the requirements of the shipping discount rule. <br/><br/>The seller can create and manage shipping promotional discounts using (Get/Set) <b>ShippingDiscountProfiles</b> calls in the <b>Trading API</b> or through the <b>Shipping Preferences</b> in <b>My eBay</b>. <br/><br/><span class=\"tablenote\"><b>Note: </b>Initially, shipping discount profiles in the <b>Account API</b> will <i>not</i> be available to all sellers.</span>  # noqa: E501
+
+        :return: The shipping_promotion_offered of this ShippingOption.  # noqa: E501
+        :rtype: bool
+        """
+        return self._shipping_promotion_offered
+
+    @shipping_promotion_offered.setter
+    def shipping_promotion_offered(self, shipping_promotion_offered):
+        """Sets the shipping_promotion_offered of this ShippingOption.
+
+        This boolean indicates whether or not the seller has set up a promotional shipping discount that will be available to buyers who satisfy the requirements of the shipping discount rule. <br/><br/>The seller can create and manage shipping promotional discounts using (Get/Set) <b>ShippingDiscountProfiles</b> calls in the <b>Trading API</b> or through the <b>Shipping Preferences</b> in <b>My eBay</b>. <br/><br/><span class=\"tablenote\"><b>Note: </b>Initially, shipping discount profiles in the <b>Account API</b> will <i>not</i> be available to all sellers.</span>  # noqa: E501
+
+        :param shipping_promotion_offered: The shipping_promotion_offered of this ShippingOption.  # noqa: E501
+        :type: bool
+        """
+
+        self._shipping_promotion_offered = shipping_promotion_offered
 
     @property
     def shipping_services(self):
