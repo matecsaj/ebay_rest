@@ -20,8 +20,9 @@ def signed_request(pool_manager, key_pair, method, url, *_args, **kwargs):
     # If we have a body, we need to add a Content-Digest field
     if 'body' in kwargs:
         content = kwargs['body']
-        h = hashlib.sha256(content).digest()
-        content_digest = f'sha-256=:{base64.b64encode(h)}:'
+        h = hashlib.sha256(content.encode('utf-8')).digest()
+        b64_hash = base64.b64encode(h).decode('utf-8')
+        content_digest = f'sha-256=:{b64_hash}:'
         headers['Content-Digest'] = content_digest
         signature_fields = {'content-digest': content_digest}
     else:
