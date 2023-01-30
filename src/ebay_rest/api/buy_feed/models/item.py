@@ -913,7 +913,7 @@ class Item(object):
     def item_end_date(self):
         """Gets the item_end_date of this Item.  # noqa: E501
 
-        A timestamp indicating when the item's sale period will end based on its start date and duration. For Good 'Til Cancelled items, no value is returned in this column. <br /><br /><b> Format: </b> UTC (yyyy-MM-ddThh:mm:ss.sssZ).  # noqa: E501
+        A timestamp indicating when the item's sale period will end based on its start date and duration. For Good 'Til Cancelled items, no value is returned in this column. <br><br><b> Format: </b> UTC <code>yyyy-MM-ddThh:mm:ss.sssZ</code>  # noqa: E501
 
         :return: The item_end_date of this Item.  # noqa: E501
         :rtype: str
@@ -924,7 +924,7 @@ class Item(object):
     def item_end_date(self, item_end_date):
         """Sets the item_end_date of this Item.
 
-        A timestamp indicating when the item's sale period will end based on its start date and duration. For Good 'Til Cancelled items, no value is returned in this column. <br /><br /><b> Format: </b> UTC (yyyy-MM-ddThh:mm:ss.sssZ).  # noqa: E501
+        A timestamp indicating when the item's sale period will end based on its start date and duration. For Good 'Til Cancelled items, no value is returned in this column. <br><br><b> Format: </b> UTC <code>yyyy-MM-ddThh:mm:ss.sssZ</code>  # noqa: E501
 
         :param item_end_date: The item_end_date of this Item.  # noqa: E501
         :type: str
@@ -2109,7 +2109,7 @@ class Item(object):
     def priority_listing_payload(self):
         """Gets the priority_listing_payload of this Item.  # noqa: E501
 
-        EPN (eBay Partner Network) publishers append this value to their affiliate tracking URL when using an EPN tracking link to track changes that occur to Priority Listing items. <br /><br /><b>Example:</b><code>amdata=enc%3AAQAFAAAAkB1DmsmXf%2BqZ%2BCEMGdebW6oR75GCMdBmc4MCQ%2FCEPqgKHbT0jdWhPwfY5LdUs6HTaP0eBlwKE7Smy2eDslewF7l3xjwWxjqwzNAnsYgxn2PiGkTKbiQSQytFUiymdtANpk1qOnBOoMGMK%2BWsji7jYlvySSs9o9s24TxD6RqWZpNrltzOU7mfnv3H40SZ3YESzg%3D%3D</code><br/><br />See <a  href=\"https://developer.ebay.com/api-docs/buy/static/ref-epn-link.html\">Creating an EPN Tracking Link</a> for information on EPN tracking links.  # noqa: E501
+        EPN (eBay Partner Network) publishers append this value to their affiliate tracking URL when using an EPN tracking link to track changes that occur to Priority Listing items. <br /><br /><b>Example:</b><code>amdata=enc%3AAQAFAAAAkB1DmsmXf%2BqZ%2BCEMGdebW6oR75GCMdBmc4MCQ%2FCEPqgKHbT0jdWhPwfY5LdUs6HTaP0eBlwKE7Smy2eDslewF7l3xjwWxjqwzNAnsYgxn2PiGkTKbiQSQytFUiymdtANpk1qOnBOoMGMK%2BWsji7jYlvySSs9o9s24TxD6RqWZpNrltzOU7mfnv3H40SZ3YESzg%3D%3D</code><br/><br />See <a  href=\"https://developer.ebay.com/api-docs/buy/static/ref-epn-link.html \">Creating an EPN Tracking Link</a> for information on EPN tracking links.  # noqa: E501
 
         :return: The priority_listing_payload of this Item.  # noqa: E501
         :rtype: str
@@ -2120,7 +2120,7 @@ class Item(object):
     def priority_listing_payload(self, priority_listing_payload):
         """Sets the priority_listing_payload of this Item.
 
-        EPN (eBay Partner Network) publishers append this value to their affiliate tracking URL when using an EPN tracking link to track changes that occur to Priority Listing items. <br /><br /><b>Example:</b><code>amdata=enc%3AAQAFAAAAkB1DmsmXf%2BqZ%2BCEMGdebW6oR75GCMdBmc4MCQ%2FCEPqgKHbT0jdWhPwfY5LdUs6HTaP0eBlwKE7Smy2eDslewF7l3xjwWxjqwzNAnsYgxn2PiGkTKbiQSQytFUiymdtANpk1qOnBOoMGMK%2BWsji7jYlvySSs9o9s24TxD6RqWZpNrltzOU7mfnv3H40SZ3YESzg%3D%3D</code><br/><br />See <a  href=\"https://developer.ebay.com/api-docs/buy/static/ref-epn-link.html\">Creating an EPN Tracking Link</a> for information on EPN tracking links.  # noqa: E501
+        EPN (eBay Partner Network) publishers append this value to their affiliate tracking URL when using an EPN tracking link to track changes that occur to Priority Listing items. <br /><br /><b>Example:</b><code>amdata=enc%3AAQAFAAAAkB1DmsmXf%2BqZ%2BCEMGdebW6oR75GCMdBmc4MCQ%2FCEPqgKHbT0jdWhPwfY5LdUs6HTaP0eBlwKE7Smy2eDslewF7l3xjwWxjqwzNAnsYgxn2PiGkTKbiQSQytFUiymdtANpk1qOnBOoMGMK%2BWsji7jYlvySSs9o9s24TxD6RqWZpNrltzOU7mfnv3H40SZ3YESzg%3D%3D</code><br/><br />See <a  href=\"https://developer.ebay.com/api-docs/buy/static/ref-epn-link.html \">Creating an EPN Tracking Link</a> for information on EPN tracking links.  # noqa: E501
 
         :param priority_listing_payload: The priority_listing_payload of this Item.  # noqa: E501
         :type: str
@@ -2132,7 +2132,7 @@ class Item(object):
     def item_creation_date(self):
         """Gets the item_creation_date of this Item.  # noqa: E501
 
-        A timestamp indicating when the item was created. The format is UTC (<code>yyyy-MM-ddThh:mm:ss.sssZ</code>).  # noqa: E501
+        A timestamp indicating when the item was created. <br><br><b> Format: </b> UTC <code>yyyy-MM-ddThh:mm:ss.sssZ</code>  # noqa: E501
 
         :return: The item_creation_date of this Item.  # noqa: E501
         :rtype: str
@@ -2143,7 +2143,7 @@ class Item(object):
     def item_creation_date(self, item_creation_date):
         """Sets the item_creation_date of this Item.
 
-        A timestamp indicating when the item was created. The format is UTC (<code>yyyy-MM-ddThh:mm:ss.sssZ</code>).  # noqa: E501
+        A timestamp indicating when the item was created. <br><br><b> Format: </b> UTC <code>yyyy-MM-ddThh:mm:ss.sssZ</code>  # noqa: E501
 
         :param item_creation_date: The item_creation_date of this Item.  # noqa: E501
         :type: str

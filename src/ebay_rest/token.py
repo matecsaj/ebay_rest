@@ -174,11 +174,20 @@ class UserToken(metaclass=Multiton):
         self._allow_get_user_consent = True
         if user_refresh_token is not None:
             if user_refresh_token_expiry is not None:
+                self._user_refresh_token_expiry = DateTime.from_string(user_refresh_token_expiry)
+                user_refresh_token_expiry = DateTime.from_string(user_refresh_token_expiry)
+                if user_refresh_token_expiry <= DateTime.now():
+                    raise Error(
+                        number=96025,
+                        reason="The supplied user refresh token has an expired date.",
+                        detail=f'Supplied {user_refresh_token_expiry}. Now {DateTime.now()}.'
+                    )
+
                 self._allow_get_user_consent = False
                 if self._user_scopes is None:
                     self._determine_user_scopes()
                 try:
-                    self._user_refresh_token_expiry = DateTime.from_string(user_refresh_token_expiry)
+                    self._user_refresh_token_expiry = user_refresh_token_expiry
                 except Error as error:
                     raise Error(number=96003, reason='user_refresh_token_expiry value error', detail=error.reason)
                 try:

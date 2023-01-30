@@ -951,7 +951,7 @@ class ItemSnapshot(object):
     def item_end_date(self):
         """Gets the item_end_date of this ItemSnapshot.  # noqa: E501
 
-        A timestamp indicating when the item's sale period will end based on its start date and duration. For Good 'Tail Cancelled items, no value is returned in this column. <br /><br /><b> Format: </b> UTC (yyyy-MM-ddThh:mm:ss.sssZ).  # noqa: E501
+        A timestamp indicating when the item's sale period will end based on its start date and duration. For Good 'Tail Cancelled items, no value is returned in this column. <br><br><b> Format: </b> UTC <code>yyyy-MM-ddThh:mm:ss.sssZ</code>  # noqa: E501
 
         :return: The item_end_date of this ItemSnapshot.  # noqa: E501
         :rtype: str
@@ -962,7 +962,7 @@ class ItemSnapshot(object):
     def item_end_date(self, item_end_date):
         """Sets the item_end_date of this ItemSnapshot.
 
-        A timestamp indicating when the item's sale period will end based on its start date and duration. For Good 'Tail Cancelled items, no value is returned in this column. <br /><br /><b> Format: </b> UTC (yyyy-MM-ddThh:mm:ss.sssZ).  # noqa: E501
+        A timestamp indicating when the item's sale period will end based on its start date and duration. For Good 'Tail Cancelled items, no value is returned in this column. <br><br><b> Format: </b> UTC <code>yyyy-MM-ddThh:mm:ss.sssZ</code>  # noqa: E501
 
         :param item_end_date: The item_end_date of this ItemSnapshot.  # noqa: E501
         :type: str
@@ -1158,7 +1158,7 @@ class ItemSnapshot(object):
     def item_snapshot_date(self):
         """Gets the item_snapshot_date of this ItemSnapshot.  # noqa: E501
 
-        This timestamp denotes the date and time the changes for that item were picked up and added to the snapshot feed file. <br /><br />For example, let's say you have a snapshot feed file and also ran the <b> getItem</b> method. When you compare the same item information from the two sources, you see that the price in the <b> getItem</b> method response is different from the price in the snapshot feed file. By knowing the date and time you submitted the <b> getItem</b> method, you can use the <b> itemSnapshotDate</b> data to determine which price is the most current for this item.  # noqa: E501
+        This timestamp denotes the date and time the changes for that item were picked up and added to the snapshot feed file. <br /><br />For example, let's say you have a snapshot feed file and also ran the <b> getItem</b> method. When you compare the same item information from the two sources, you see that the price in the <b> getItem</b> method response is different from the price in the snapshot feed file. By knowing the date and time you submitted the <b> getItem</b> method, you can use the <b> itemSnapshotDate</b> data to determine which price is the most current for this item. <br><br><b> Format: </b> UTC <code>yyyy-MM-ddThh:mm:ss.sssZ</code>  # noqa: E501
 
         :return: The item_snapshot_date of this ItemSnapshot.  # noqa: E501
         :rtype: str
@@ -1169,7 +1169,7 @@ class ItemSnapshot(object):
     def item_snapshot_date(self, item_snapshot_date):
         """Sets the item_snapshot_date of this ItemSnapshot.
 
-        This timestamp denotes the date and time the changes for that item were picked up and added to the snapshot feed file. <br /><br />For example, let's say you have a snapshot feed file and also ran the <b> getItem</b> method. When you compare the same item information from the two sources, you see that the price in the <b> getItem</b> method response is different from the price in the snapshot feed file. By knowing the date and time you submitted the <b> getItem</b> method, you can use the <b> itemSnapshotDate</b> data to determine which price is the most current for this item.  # noqa: E501
+        This timestamp denotes the date and time the changes for that item were picked up and added to the snapshot feed file. <br /><br />For example, let's say you have a snapshot feed file and also ran the <b> getItem</b> method. When you compare the same item information from the two sources, you see that the price in the <b> getItem</b> method response is different from the price in the snapshot feed file. By knowing the date and time you submitted the <b> getItem</b> method, you can use the <b> itemSnapshotDate</b> data to determine which price is the most current for this item. <br><br><b> Format: </b> UTC <code>yyyy-MM-ddThh:mm:ss.sssZ</code>  # noqa: E501
 
         :param item_snapshot_date: The item_snapshot_date of this ItemSnapshot.  # noqa: E501
         :type: str
@@ -1825,7 +1825,7 @@ class ItemSnapshot(object):
     def item_creation_date(self):
         """Gets the item_creation_date of this ItemSnapshot.  # noqa: E501
 
-        A timestamp indicating when the item was created. The format is UTC (<code>yyyy-MM-ddThh:mm:ss.sssZ</code>).  # noqa: E501
+        A timestamp indicating when the item was created. <br><br><b> Format: </b> UTC <code>yyyy-MM-ddThh:mm:ss.sssZ</code>  # noqa: E501
 
         :return: The item_creation_date of this ItemSnapshot.  # noqa: E501
         :rtype: str
@@ -1836,7 +1836,7 @@ class ItemSnapshot(object):
     def item_creation_date(self, item_creation_date):
         """Sets the item_creation_date of this ItemSnapshot.
 
-        A timestamp indicating when the item was created. The format is UTC (<code>yyyy-MM-ddThh:mm:ss.sssZ</code>).  # noqa: E501
+        A timestamp indicating when the item was created. <br><br><b> Format: </b> UTC <code>yyyy-MM-ddThh:mm:ss.sssZ</code>  # noqa: E501
 
         :param item_creation_date: The item_creation_date of this ItemSnapshot.  # noqa: E501
         :type: str
@@ -2538,7 +2538,7 @@ class ItemSnapshot(object):
     def coupon_expiration_date(self):
         """Gets the coupon_expiration_date of this ItemSnapshot.  # noqa: E501
 
-        The expiration date for the coupon.  # noqa: E501
+        The expiration date for the coupon. <br><br><b> Format: </b> UTC <code>yyyy-MM-ddThh:mm:ss.sssZ</code>  # noqa: E501
 
         :return: The coupon_expiration_date of this ItemSnapshot.  # noqa: E501
         :rtype: str
@@ -2549,7 +2549,7 @@ class ItemSnapshot(object):
     def coupon_expiration_date(self, coupon_expiration_date):
         """Sets the coupon_expiration_date of this ItemSnapshot.
 
-        The expiration date for the coupon.  # noqa: E501
+        The expiration date for the coupon. <br><br><b> Format: </b> UTC <code>yyyy-MM-ddThh:mm:ss.sssZ</code>  # noqa: E501
 
         :param coupon_expiration_date: The coupon_expiration_date of this ItemSnapshot.  # noqa: E501
         :type: str

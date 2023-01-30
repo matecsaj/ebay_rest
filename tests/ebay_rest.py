@@ -942,7 +942,7 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
             except Error as error:
                 self.assertEqual(error.number, 99403)
                 # Check for eBay 'Signature validation failed' error
-                ebay_error = loads(error.detail).decode('utf-8')
+                ebay_error = loads(error.detail)
                 signature_validation_failed = (215120, 215121, 215122)
                 self.assertTrue(
                     ebay_error['errors'][0]['errorId'] in signature_validation_failed
@@ -958,7 +958,7 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
         self._api._key_pair_token._private_key = None
         self._api._key_pair_token._signing_key_id = None
         with self.assertRaises(Error):
-            key = self._api.get_digital_signature_key(create_new=False)     # TODO given the next line this redundant?
+            _key = self._api.get_digital_signature_key(create_new=False)
         key = self._api.get_digital_signature_key(create_new=True)
         self.assertTrue(key['private_key'])
         self.assertNotEqual(key['private_key'], self.original_private_key)
