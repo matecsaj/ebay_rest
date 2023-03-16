@@ -373,9 +373,11 @@ class Contracts:
 
     async def patch_contract(self) -> None:
         """ If the contract from eBay has an error then patch it before generating code. """
-        if self.category == 'sell' and self.call == 'fulfillment':
-            await Contracts.patch_contract_sell_fulfillment(self.file_name)
+        # This is no longer needed, ebay fixed the problem, but I'm leaving it here for reference.
+        # if self.category == 'sell' and self.call == 'fulfillment':
+        #     await Contracts.patch_contract_sell_fulfillment(self.file_name)
 
+    # This is no longer needed, ebay fixed the problem, but I'm leaving it here for reference.
     @staticmethod
     async def patch_contract_sell_fulfillment(file_name):
         # In the Sell Fulfillment API, the model 'Address' is returned with attribute 'countryCode'.

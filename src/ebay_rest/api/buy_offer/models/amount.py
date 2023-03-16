@@ -3,7 +3,7 @@
 """
     Buy Offer API
 
-    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />The Buy Offer API enables Partners to place proxy bids for a buyer and retrieve the auctions where the buyer is bidding.  By placing a proxy bid, the buyer is agreeing to purchase the item if they win the auction. </p>   # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units. For information on how to obtain access to this API in production, see the <a href=\"/../api-docs/buy/static/buy-requirements.html\" target=\"_blank\">Buy APIs Requirements</a>.</span><br><br>The Buy Offer API enables Partners to place proxy bids for a buyer and retrieve the auctions where the buyer is bidding.  By placing a proxy bid, the buyer is agreeing to purchase the item if they win the auction.  # noqa: E501
 
     OpenAPI spec version: v1_beta.0.1
     
@@ -51,7 +51,7 @@ class Amount(object):
     def currency(self):
         """Gets the currency of this Amount.  # noqa: E501
 
-        The three-letter ISO 4217 code representing the currency of the amount in the value field. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/offer/types/bas:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+        The three-letter <a href=\"https://www.iso.org/iso-4217-currency-codes.html\" target=\"_blank\">ISO 4217</a> code representing the currency of the amount in the <b> value</b> field.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/offer/types/bas:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The currency of this Amount.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class Amount(object):
     def currency(self, currency):
         """Sets the currency of this Amount.
 
-        The three-letter ISO 4217 code representing the currency of the amount in the value field. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/offer/types/bas:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+        The three-letter <a href=\"https://www.iso.org/iso-4217-currency-codes.html\" target=\"_blank\">ISO 4217</a> code representing the currency of the amount in the <b> value</b> field.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/offer/types/bas:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param currency: The currency of this Amount.  # noqa: E501
         :type: str

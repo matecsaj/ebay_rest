@@ -3,7 +3,7 @@
 """
     Order API
 
-    <span class=\"tablenote\"><b>Note:</b> The Order API (v2) currently only supports the guest payment/checkout flow. If you need to support member payment/checkout flow, use the <a href=\"/api-docs/buy/order_v1/resources/methods\">v1_beta version</a> of the Order API.</span><br /><br /><span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"><img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\"  alt=\"Limited Release\" title=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />The Order API provides interfaces that let shoppers pay for items. It also returns payment and shipping status of the order.  # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> The Order API (v2) currently only supports the guest payment/checkout flow. If you need to support member payment/checkout flow, use the <a href=\"/api-docs/buy/order_v1/resources/methods\">v1_beta version</a> of the Order API.</span><br><br><span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"><img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\"  alt=\"Limited Release\" title=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br><br>The Order API provides interfaces that let shoppers pay for items. It also returns payment and shipping status of the order.  # noqa: E501
 
     OpenAPI spec version: v2.1.0
     
@@ -51,7 +51,7 @@ class LineItemInput(object):
     def item_id(self):
         """Gets the item_id of this LineItemInput.  # noqa: E501
 
-        The unique eBay-assigned identifier of an item. This ID is returned by the <b>Browse</b> and <b>Feed</b> API methods. The ID must be in RESTful item ID format.<br /><br /><b>For example:</b> <code>v1|2**********6|5**********4</code> or <code>v1|1**********9|0</code>.<br /><br />For more information about item IDs for RESTful APIs, see <a href=\"/api-docs/buy/static/api-browse.html#Legacy\">Legacy API compatibility</a>.<br /><br />Each <b>itemId</b> will become a single line item.<br /><br /><b>Maximum:</b>10 per checkout  # noqa: E501
+        The unique eBay-assigned identifier of an item. This ID is returned by the <b>Browse</b> and <b>Feed</b> API methods. The ID must be in RESTful item ID format.<br><br><b>For example:</b> <code>v1|2**********6|5**********4</code> or <code>v1|1**********9|0</code>.<br><br>For more information about item IDs for RESTful APIs, see <a href=\"/api-docs/buy/static/api-browse.html#Legacy\">Legacy API compatibility</a>.<br><br>Each <b>itemId</b> will become a single line item.<br><br><b>Maximum:</b>10 per checkout  # noqa: E501
 
         :return: The item_id of this LineItemInput.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class LineItemInput(object):
     def item_id(self, item_id):
         """Sets the item_id of this LineItemInput.
 
-        The unique eBay-assigned identifier of an item. This ID is returned by the <b>Browse</b> and <b>Feed</b> API methods. The ID must be in RESTful item ID format.<br /><br /><b>For example:</b> <code>v1|2**********6|5**********4</code> or <code>v1|1**********9|0</code>.<br /><br />For more information about item IDs for RESTful APIs, see <a href=\"/api-docs/buy/static/api-browse.html#Legacy\">Legacy API compatibility</a>.<br /><br />Each <b>itemId</b> will become a single line item.<br /><br /><b>Maximum:</b>10 per checkout  # noqa: E501
+        The unique eBay-assigned identifier of an item. This ID is returned by the <b>Browse</b> and <b>Feed</b> API methods. The ID must be in RESTful item ID format.<br><br><b>For example:</b> <code>v1|2**********6|5**********4</code> or <code>v1|1**********9|0</code>.<br><br>For more information about item IDs for RESTful APIs, see <a href=\"/api-docs/buy/static/api-browse.html#Legacy\">Legacy API compatibility</a>.<br><br>Each <b>itemId</b> will become a single line item.<br><br><b>Maximum:</b>10 per checkout  # noqa: E501
 
         :param item_id: The item_id of this LineItemInput.  # noqa: E501
         :type: str

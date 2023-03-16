@@ -102,7 +102,7 @@ class CampaignCriterion(object):
     def selection_rules(self):
         """Gets the selection_rules of this CampaignCriterion.  # noqa: E501
 
-        This container shows all of the rules/inclusion filters used to add listings to the campaign.  # noqa: E501
+        This container shows all of the rules/inclusion filters used to add listings to the campaign. For information on using the contained fields, see <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#Campaign \">Promoted Listing campaigns</a>.  # noqa: E501
 
         :return: The selection_rules of this CampaignCriterion.  # noqa: E501
         :rtype: list[SelectionRule]
@@ -113,7 +113,7 @@ class CampaignCriterion(object):
     def selection_rules(self, selection_rules):
         """Sets the selection_rules of this CampaignCriterion.
 
-        This container shows all of the rules/inclusion filters used to add listings to the campaign.  # noqa: E501
+        This container shows all of the rules/inclusion filters used to add listings to the campaign. For information on using the contained fields, see <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#Campaign \">Promoted Listing campaigns</a>.  # noqa: E501
 
         :param selection_rules: The selection_rules of this CampaignCriterion.  # noqa: E501
         :type: list[SelectionRule]

@@ -71,7 +71,7 @@ class SelectionRule(object):
     def brands(self):
         """Gets the brands of this SelectionRule.  # noqa: E501
 
-        An array of product brands used as an inclusion filter. A product's brand is defined in a listing's item specifics. This array will be returned if  one or more product brands were used as a filter.  # noqa: E501
+        An array of product brands. For more details, see <a href=\"/api-docs/sell/static/marketing/using-the-selectionrules-container.html \">Using the selectionRules container</a>.  # noqa: E501
 
         :return: The brands of this SelectionRule.  # noqa: E501
         :rtype: list[str]
@@ -82,7 +82,7 @@ class SelectionRule(object):
     def brands(self, brands):
         """Sets the brands of this SelectionRule.
 
-        An array of product brands used as an inclusion filter. A product's brand is defined in a listing's item specifics. This array will be returned if  one or more product brands were used as a filter.  # noqa: E501
+        An array of product brands. For more details, see <a href=\"/api-docs/sell/static/marketing/using-the-selectionrules-container.html \">Using the selectionRules container</a>.  # noqa: E501
 
         :param brands: The brands of this SelectionRule.  # noqa: E501
         :type: list[str]
@@ -94,7 +94,7 @@ class SelectionRule(object):
     def category_ids(self):
         """Gets the category_ids of this SelectionRule.  # noqa: E501
 
-        A list of category IDs associated with the listings to be included in the campaign. Ads are created for all the seller's items listed in the specified categories, up to a maximum of 50,000 items. The IDs can be either a list of eBay category IDs (from the site where the item is hosted), or a list of category IDs defined and used by the seller's store. <p><b>eBay Marketplace category IDs</b>  <br>To get a list of marketplace category IDs, do one of the following:</p> <ul><li>Get a list of category IDs for a marketplace by adding <code>/sch/allcategories/all-categories</code> to the marketplace URL when browsing the site. <br>For example: <code> http://www.ebay.com.au/sch/allcategories/all-categories</code> </li><li>Navigate to the desired category on the host site and copy the category ID from the URL.</li>  <li>These options are also available for the US marketplace: <ul><li>See <a href=\"http://pages.ebay.com/sellerinformation/news/categorychanges.html \" target=\"_blank\">Category Changes</a> for the latest list of category IDs.</li><li>Retrieve a list of category IDs using the <a href=\"/api-docs/commerce/taxonomy/resources/methods\">Taxonomy API</a>.</li></ul></li></ul><p><b>Seller store category IDs</b> <br>Because store category IDs are uniquely defined and maintained by each seller, this service cannot provide a list of a seller's IDs. However, sellers can retrieve their store category IDs as follows:</p><ol><li>Go to <b>Seller Hub</b> &gt; <b>Marketing</b>.</li> <li>Click <b>Manage store categories</b>. <br>  A list of your store categories displays.</li> <li>Click the <b>All categories</b> link displayed at the bottom of the list. <br>A complete list of your store categories and their associated store category IDs displays.</li></ol>  # noqa: E501
+        This field contains an array of the associated category ID(s).<br><br>For <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#Promotio \">Item promotions</a>, a single-item array containing the category ID associated with the promotion. Required when used in an Item promotion and either specifying a <b>selectionRules</b> container or when <b>inventoryCriterionType</b> is set to <code>INVENTORY_BY_RULE</code>.<br><br>For <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#Campaign \">Promoted Listing campaigns</a>, an array of category ID(s) associated with the campaign. <br><br>For information on how to get category IDs, see <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#eBay \">eBay Marketplace category IDs</a> and <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#Seller \">Seller store category IDs</a>  # noqa: E501
 
         :return: The category_ids of this SelectionRule.  # noqa: E501
         :rtype: list[str]
@@ -105,7 +105,7 @@ class SelectionRule(object):
     def category_ids(self, category_ids):
         """Sets the category_ids of this SelectionRule.
 
-        A list of category IDs associated with the listings to be included in the campaign. Ads are created for all the seller's items listed in the specified categories, up to a maximum of 50,000 items. The IDs can be either a list of eBay category IDs (from the site where the item is hosted), or a list of category IDs defined and used by the seller's store. <p><b>eBay Marketplace category IDs</b>  <br>To get a list of marketplace category IDs, do one of the following:</p> <ul><li>Get a list of category IDs for a marketplace by adding <code>/sch/allcategories/all-categories</code> to the marketplace URL when browsing the site. <br>For example: <code> http://www.ebay.com.au/sch/allcategories/all-categories</code> </li><li>Navigate to the desired category on the host site and copy the category ID from the URL.</li>  <li>These options are also available for the US marketplace: <ul><li>See <a href=\"http://pages.ebay.com/sellerinformation/news/categorychanges.html \" target=\"_blank\">Category Changes</a> for the latest list of category IDs.</li><li>Retrieve a list of category IDs using the <a href=\"/api-docs/commerce/taxonomy/resources/methods\">Taxonomy API</a>.</li></ul></li></ul><p><b>Seller store category IDs</b> <br>Because store category IDs are uniquely defined and maintained by each seller, this service cannot provide a list of a seller's IDs. However, sellers can retrieve their store category IDs as follows:</p><ol><li>Go to <b>Seller Hub</b> &gt; <b>Marketing</b>.</li> <li>Click <b>Manage store categories</b>. <br>  A list of your store categories displays.</li> <li>Click the <b>All categories</b> link displayed at the bottom of the list. <br>A complete list of your store categories and their associated store category IDs displays.</li></ol>  # noqa: E501
+        This field contains an array of the associated category ID(s).<br><br>For <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#Promotio \">Item promotions</a>, a single-item array containing the category ID associated with the promotion. Required when used in an Item promotion and either specifying a <b>selectionRules</b> container or when <b>inventoryCriterionType</b> is set to <code>INVENTORY_BY_RULE</code>.<br><br>For <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#Campaign \">Promoted Listing campaigns</a>, an array of category ID(s) associated with the campaign. <br><br>For information on how to get category IDs, see <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#eBay \">eBay Marketplace category IDs</a> and <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#Seller \">Seller store category IDs</a>  # noqa: E501
 
         :param category_ids: The category_ids of this SelectionRule.  # noqa: E501
         :type: list[str]
@@ -117,7 +117,7 @@ class SelectionRule(object):
     def category_scope(self):
         """Gets the category_scope of this SelectionRule.  # noqa: E501
 
-        The enumeration values returned in this field indicate if the category IDs in the corresponding categoryIds array are identifiers for eBay categories or for a seller's eBay store categories. This field is always returned if one or more category IDs are used as a filter. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:CategoryScopeEnum'>eBay API documentation</a>  # noqa: E501
+        This enumerated value indicates if the category ID for the item is an identifier for eBay categories or for a seller's eBay store categories. <br><br>For <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#Campaign \">Promoted Listing campaigns</a>, this field includes the type of the category ID for the item(s) to be included in the campaign.<br><br>For <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#Promotio \">Item promotions</a>, this field identifies the scope for the corresponding array as eBay categories or for a seller's eBay store categories. Required when used in an Item promotion and <b>inventoryCriterionType</b> is set to <code>INVENTORY_BY_RULE</code>.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:CategoryScopeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The category_scope of this SelectionRule.  # noqa: E501
         :rtype: str
@@ -128,7 +128,7 @@ class SelectionRule(object):
     def category_scope(self, category_scope):
         """Sets the category_scope of this SelectionRule.
 
-        The enumeration values returned in this field indicate if the category IDs in the corresponding categoryIds array are identifiers for eBay categories or for a seller's eBay store categories. This field is always returned if one or more category IDs are used as a filter. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:CategoryScopeEnum'>eBay API documentation</a>  # noqa: E501
+        This enumerated value indicates if the category ID for the item is an identifier for eBay categories or for a seller's eBay store categories. <br><br>For <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#Campaign \">Promoted Listing campaigns</a>, this field includes the type of the category ID for the item(s) to be included in the campaign.<br><br>For <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#Promotio \">Item promotions</a>, this field identifies the scope for the corresponding array as eBay categories or for a seller's eBay store categories. Required when used in an Item promotion and <b>inventoryCriterionType</b> is set to <code>INVENTORY_BY_RULE</code>.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/pls:CategoryScopeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param category_scope: The category_scope of this SelectionRule.  # noqa: E501
         :type: str
@@ -140,7 +140,7 @@ class SelectionRule(object):
     def listing_condition_ids(self):
         """Gets the listing_condition_ids of this SelectionRule.  # noqa: E501
 
-        A comma-separated list of unique identifiers for the conditions of listings to be included in the campaign. Up to four IDs can be specified.<br /><br />This array is only returned if one or more item condition values are used as a filter.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> Multiple listing condition IDs are mapped to the four valid values listed below. Refer to <a href=\"/api-docs/sell/static/marketing/pl-campaign-flow-pls.html#add-by-rule\" target=\"_blank\">Promoted Listings Standard campaign flow</a> for more details.</span><br /><br /><strong>Valid Values:</strong><ul><li><code>1000</code> = New</li><li><code>2000</code> = Certified Refurbished</li><li><code>2500</code> = Seller Refurbished</li><li><code>3000</code> = Used</li></ul>  # noqa: E501
+        A comma-separated list of unique identifiers for the conditions of listings to be included<br><br>For <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#Campaign \">Promoted Listing campaigns</a>, refer to <a href= \"/api-docs/sell/static/marketing/pl-campaign-flow-pls.html#add-by-rule \">Add items to the PLS campaign</a>. Up to four IDs can be specified.<br><br>For <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#Promotio \">Item promotions</a>, refer to <a href= \"/api-docs/sell/static/metadata/condition-id-values.html \">Item condition ID and name values</a>.  # noqa: E501
 
         :return: The listing_condition_ids of this SelectionRule.  # noqa: E501
         :rtype: list[str]
@@ -151,7 +151,7 @@ class SelectionRule(object):
     def listing_condition_ids(self, listing_condition_ids):
         """Sets the listing_condition_ids of this SelectionRule.
 
-        A comma-separated list of unique identifiers for the conditions of listings to be included in the campaign. Up to four IDs can be specified.<br /><br />This array is only returned if one or more item condition values are used as a filter.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> Multiple listing condition IDs are mapped to the four valid values listed below. Refer to <a href=\"/api-docs/sell/static/marketing/pl-campaign-flow-pls.html#add-by-rule\" target=\"_blank\">Promoted Listings Standard campaign flow</a> for more details.</span><br /><br /><strong>Valid Values:</strong><ul><li><code>1000</code> = New</li><li><code>2000</code> = Certified Refurbished</li><li><code>2500</code> = Seller Refurbished</li><li><code>3000</code> = Used</li></ul>  # noqa: E501
+        A comma-separated list of unique identifiers for the conditions of listings to be included<br><br>For <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#Campaign \">Promoted Listing campaigns</a>, refer to <a href= \"/api-docs/sell/static/marketing/pl-campaign-flow-pls.html#add-by-rule \">Add items to the PLS campaign</a>. Up to four IDs can be specified.<br><br>For <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#Promotio \">Item promotions</a>, refer to <a href= \"/api-docs/sell/static/metadata/condition-id-values.html \">Item condition ID and name values</a>.  # noqa: E501
 
         :param listing_condition_ids: The listing_condition_ids of this SelectionRule.  # noqa: E501
         :type: list[str]

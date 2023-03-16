@@ -3,7 +3,7 @@
 """
     Marketplace Insights API
 
-    <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.  # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units. For information on how to obtain access to this API in production, see the <a href=\"/../api-docs/buy/static/buy-requirements.html\" target=\"_blank\">Buy APIs Requirements</a>.</span>  <p>The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.</p>  # noqa: E501
 
     OpenAPI spec version: v1_beta.2.2
     
@@ -81,7 +81,7 @@ class SalesHistoryPagedCollection(object):
     def href(self):
         """Gets the href of this SalesHistoryPagedCollection.  # noqa: E501
 
-        The URI of the current page of results from the result set.  <br /><br /><b> The following example returns items 1 thru 5 from the list of items found. </b><br /><code>https://api.ebay.com/buy/marketplace_insights/v1_beta/item_sales/search?q=shirt&&limit=5&offset=0</code>  # noqa: E501
+        The URI of the current page of results from the result set.  <br><br><b> The following example returns items 1 thru 5 from the list of items found. </b><br><code>https://api.ebay.com/buy/marketplace_insights/v1_beta/item_sales/search?q=shirt&&limit=5&offset=0</code>  # noqa: E501
 
         :return: The href of this SalesHistoryPagedCollection.  # noqa: E501
         :rtype: str
@@ -92,7 +92,7 @@ class SalesHistoryPagedCollection(object):
     def href(self, href):
         """Sets the href of this SalesHistoryPagedCollection.
 
-        The URI of the current page of results from the result set.  <br /><br /><b> The following example returns items 1 thru 5 from the list of items found. </b><br /><code>https://api.ebay.com/buy/marketplace_insights/v1_beta/item_sales/search?q=shirt&&limit=5&offset=0</code>  # noqa: E501
+        The URI of the current page of results from the result set.  <br><br><b> The following example returns items 1 thru 5 from the list of items found. </b><br><code>https://api.ebay.com/buy/marketplace_insights/v1_beta/item_sales/search?q=shirt&&limit=5&offset=0</code>  # noqa: E501
 
         :param href: The href of this SalesHistoryPagedCollection.  # noqa: E501
         :type: str
@@ -104,7 +104,7 @@ class SalesHistoryPagedCollection(object):
     def item_sales(self):
         """Gets the item_sales of this SalesHistoryPagedCollection.  # noqa: E501
 
-        The type that defines the fields for a paginated result set of the sold items. The response consists of 0 or more sequenced <em> result sets</em> where each result sets has 0 or more items.<br /><br /><span class=\"tablenote\"><b> Note:</b> For items with multiple quantities that might result in multiple transactions, and items with the <code>SELLER_DEFINED_VARIATIONS</code> group type that might result in multiple transactions, only one deduped transaction is returned in the search results.</span>  # noqa: E501
+        The type that defines the fields for a paginated result set of the sold items. The response consists of 0 or more sequenced <em> result sets</em> where each result sets has 0 or more items.<br><br><span class=\"tablenote\"><b> Note:</b> For items with multiple quantities that might result in multiple transactions, and items with the <code>SELLER_DEFINED_VARIATIONS</code> group type that might result in multiple transactions, only one deduped transaction is returned in the search results.</span>  # noqa: E501
 
         :return: The item_sales of this SalesHistoryPagedCollection.  # noqa: E501
         :rtype: list[ItemSales]
@@ -115,7 +115,7 @@ class SalesHistoryPagedCollection(object):
     def item_sales(self, item_sales):
         """Sets the item_sales of this SalesHistoryPagedCollection.
 
-        The type that defines the fields for a paginated result set of the sold items. The response consists of 0 or more sequenced <em> result sets</em> where each result sets has 0 or more items.<br /><br /><span class=\"tablenote\"><b> Note:</b> For items with multiple quantities that might result in multiple transactions, and items with the <code>SELLER_DEFINED_VARIATIONS</code> group type that might result in multiple transactions, only one deduped transaction is returned in the search results.</span>  # noqa: E501
+        The type that defines the fields for a paginated result set of the sold items. The response consists of 0 or more sequenced <em> result sets</em> where each result sets has 0 or more items.<br><br><span class=\"tablenote\"><b> Note:</b> For items with multiple quantities that might result in multiple transactions, and items with the <code>SELLER_DEFINED_VARIATIONS</code> group type that might result in multiple transactions, only one deduped transaction is returned in the search results.</span>  # noqa: E501
 
         :param item_sales: The item_sales of this SalesHistoryPagedCollection.  # noqa: E501
         :type: list[ItemSales]

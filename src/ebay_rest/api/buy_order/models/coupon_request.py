@@ -3,7 +3,7 @@
 """
     Order API
 
-    <span class=\"tablenote\"><b>Note:</b> The Order API (v2) currently only supports the guest payment/checkout flow. If you need to support member payment/checkout flow, use the <a href=\"/api-docs/buy/order_v1/resources/methods\">v1_beta version</a> of the Order API.</span><br /><br /><span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"><img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\"  alt=\"Limited Release\" title=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />The Order API provides interfaces that let shoppers pay for items. It also returns payment and shipping status of the order.  # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> The Order API (v2) currently only supports the guest payment/checkout flow. If you need to support member payment/checkout flow, use the <a href=\"/api-docs/buy/order_v1/resources/methods\">v1_beta version</a> of the Order API.</span><br><br><span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"><img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\"  alt=\"Limited Release\" title=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br><br>The Order API provides interfaces that let shoppers pay for items. It also returns payment and shipping status of the order.  # noqa: E501
 
     OpenAPI spec version: v2.1.0
     
@@ -46,7 +46,7 @@ class CouponRequest(object):
     def redemption_code(self):
         """Gets the redemption_code of this CouponRequest.  # noqa: E501
 
-        The redemption code of the coupon.<br /><br /><b>Maximum:</b> One redemption code per order  # noqa: E501
+        The redemption code of the coupon.<br><br><b>Maximum:</b> One redemption code per order  # noqa: E501
 
         :return: The redemption_code of this CouponRequest.  # noqa: E501
         :rtype: str
@@ -57,7 +57,7 @@ class CouponRequest(object):
     def redemption_code(self, redemption_code):
         """Sets the redemption_code of this CouponRequest.
 
-        The redemption code of the coupon.<br /><br /><b>Maximum:</b> One redemption code per order  # noqa: E501
+        The redemption code of the coupon.<br><br><b>Maximum:</b> One redemption code per order  # noqa: E501
 
         :param redemption_code: The redemption_code of this CouponRequest.  # noqa: E501
         :type: str

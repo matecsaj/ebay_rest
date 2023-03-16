@@ -56,7 +56,7 @@ class CreateInventoryTaskRequest(object):
     def schema_version(self):
         """Gets the schema_version of this CreateInventoryTaskRequest.  # noqa: E501
 
-        The schemaVersion/version number of the file format (use the schema version of the API to which you are programming):<ul><li><a href=\"/api-docs/sell/static/lms-migration/lms-to-feed-version-details-schema-version.html\" target=\"_blank\">LMS Version Details / Schema Version</a></li><li><a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#schema\" target=\"_blank\">Seller Hub feed schema version</a></li></ul>  # noqa: E501
+        The schemaVersion/version number of the file format (use the schema version of the API to which you are programming):<ul><li><a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Version\" target=\"_blank\">Version Details / Schema Version</a></li><li><a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#schema\" target=\"_blank\">Seller Hub feed schema version</a></li></ul>  # noqa: E501
 
         :return: The schema_version of this CreateInventoryTaskRequest.  # noqa: E501
         :rtype: str
@@ -67,7 +67,7 @@ class CreateInventoryTaskRequest(object):
     def schema_version(self, schema_version):
         """Sets the schema_version of this CreateInventoryTaskRequest.
 
-        The schemaVersion/version number of the file format (use the schema version of the API to which you are programming):<ul><li><a href=\"/api-docs/sell/static/lms-migration/lms-to-feed-version-details-schema-version.html\" target=\"_blank\">LMS Version Details / Schema Version</a></li><li><a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#schema\" target=\"_blank\">Seller Hub feed schema version</a></li></ul>  # noqa: E501
+        The schemaVersion/version number of the file format (use the schema version of the API to which you are programming):<ul><li><a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Version\" target=\"_blank\">Version Details / Schema Version</a></li><li><a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#schema\" target=\"_blank\">Seller Hub feed schema version</a></li></ul>  # noqa: E501
 
         :param schema_version: The schema_version of this CreateInventoryTaskRequest.  # noqa: E501
         :type: str

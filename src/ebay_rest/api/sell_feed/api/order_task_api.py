@@ -43,7 +43,6 @@ class OrderTaskApi(object):
 
         :param async_req bool
         :param CreateOrderTaskRequest body: description not needed (required)
-        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. <p> <span class=\"tablenote\"><strong>Note:</strong> This value is case sensitive.</span></p><p>For example:</p><p><code>X-EBAY-C-MARKETPLACE-ID:EBAY_US</code></p><p>This identifies the eBay marketplace that applies to this task. See <a href=\"/api-docs/sell/feed/types/bas:MarketplaceIdEnum\">MarketplaceIdEnum</a>.</p>
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -66,13 +65,12 @@ class OrderTaskApi(object):
 
         :param async_req bool
         :param CreateOrderTaskRequest body: description not needed (required)
-        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. <p> <span class=\"tablenote\"><strong>Note:</strong> This value is case sensitive.</span></p><p>For example:</p><p><code>X-EBAY-C-MARKETPLACE-ID:EBAY_US</code></p><p>This identifies the eBay marketplace that applies to this task. See <a href=\"/api-docs/sell/feed/types/bas:MarketplaceIdEnum\">MarketplaceIdEnum</a>.</p>
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['body', 'x_ebay_c_marketplace_id']  # noqa: E501
+        all_params = ['body']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -99,8 +97,6 @@ class OrderTaskApi(object):
         query_params = []
 
         header_params = {}
-        if 'x_ebay_c_marketplace_id' in params:
-            header_params['X-EBAY-C-MARKETPLACE-ID'] = params['x_ebay_c_marketplace_id']  # noqa: E501
 
         form_params = []
         local_var_files = {}

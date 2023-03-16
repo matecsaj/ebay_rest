@@ -3,7 +3,7 @@
 """
     Order API
 
-    <span class=\"tablenote\"><b>Note:</b> The Order API (v2) currently only supports the guest payment/checkout flow. If you need to support member payment/checkout flow, use the <a href=\"/api-docs/buy/order_v1/resources/methods\">v1_beta version</a> of the Order API.</span><br /><br /><span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"><img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\"  alt=\"Limited Release\" title=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />The Order API provides interfaces that let shoppers pay for items. It also returns payment and shipping status of the order.  # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> The Order API (v2) currently only supports the guest payment/checkout flow. If you need to support member payment/checkout flow, use the <a href=\"/api-docs/buy/order_v1/resources/methods\">v1_beta version</a> of the Order API.</span><br><br><span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"><img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\"  alt=\"Limited Release\" title=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br><br>The Order API provides interfaces that let shoppers pay for items. It also returns payment and shipping status of the order.  # noqa: E501
 
     OpenAPI spec version: v2.1.0
     
@@ -86,7 +86,7 @@ class ShippingAddressImpl(object):
     def address_line1(self):
         """Gets the address_line1 of this ShippingAddressImpl.  # noqa: E501
 
-        The first line of the street address where the item is being shipped.<br /><br /><b>Maximum:</b><ul><li>40 characters for AU, CA, and US marketplaces</li><li>35 characters for DE and GB marketplaces</li><li>50 characters for all other marketplaces</li></ul>  # noqa: E501
+        The first line of the street address where the item is being shipped.<br><br><b>Maximum:</b><ul><li>40 characters for AU, CA, and US marketplaces</li><li>35 characters for DE and GB marketplaces</li><li>50 characters for all other marketplaces</li></ul>  # noqa: E501
 
         :return: The address_line1 of this ShippingAddressImpl.  # noqa: E501
         :rtype: str
@@ -97,7 +97,7 @@ class ShippingAddressImpl(object):
     def address_line1(self, address_line1):
         """Sets the address_line1 of this ShippingAddressImpl.
 
-        The first line of the street address where the item is being shipped.<br /><br /><b>Maximum:</b><ul><li>40 characters for AU, CA, and US marketplaces</li><li>35 characters for DE and GB marketplaces</li><li>50 characters for all other marketplaces</li></ul>  # noqa: E501
+        The first line of the street address where the item is being shipped.<br><br><b>Maximum:</b><ul><li>40 characters for AU, CA, and US marketplaces</li><li>35 characters for DE and GB marketplaces</li><li>50 characters for all other marketplaces</li></ul>  # noqa: E501
 
         :param address_line1: The address_line1 of this ShippingAddressImpl.  # noqa: E501
         :type: str
@@ -109,7 +109,7 @@ class ShippingAddressImpl(object):
     def address_line2(self):
         """Gets the address_line2 of this ShippingAddressImpl.  # noqa: E501
 
-        The second line of the street address where the item is being shipped. This optional field can be used for information such as 'Suite Number' or 'Apt Number'.<br /><br /><b>Maximum:</b><ul><li>40 characters for AU, CA, and US marketplaces</li><li>35 characters for DE and GB marketplaces</li><li>50 characters for all other marketplaces</li></ul>  # noqa: E501
+        The second line of the street address where the item is being shipped. This optional field can be used for information such as 'Suite Number' or 'Apt Number'.<br><br><b>Maximum:</b><ul><li>40 characters for AU, CA, and US marketplaces</li><li>35 characters for DE and GB marketplaces</li><li>50 characters for all other marketplaces</li></ul>  # noqa: E501
 
         :return: The address_line2 of this ShippingAddressImpl.  # noqa: E501
         :rtype: str
@@ -120,7 +120,7 @@ class ShippingAddressImpl(object):
     def address_line2(self, address_line2):
         """Sets the address_line2 of this ShippingAddressImpl.
 
-        The second line of the street address where the item is being shipped. This optional field can be used for information such as 'Suite Number' or 'Apt Number'.<br /><br /><b>Maximum:</b><ul><li>40 characters for AU, CA, and US marketplaces</li><li>35 characters for DE and GB marketplaces</li><li>50 characters for all other marketplaces</li></ul>  # noqa: E501
+        The second line of the street address where the item is being shipped. This optional field can be used for information such as 'Suite Number' or 'Apt Number'.<br><br><b>Maximum:</b><ul><li>40 characters for AU, CA, and US marketplaces</li><li>35 characters for DE and GB marketplaces</li><li>50 characters for all other marketplaces</li></ul>  # noqa: E501
 
         :param address_line2: The address_line2 of this ShippingAddressImpl.  # noqa: E501
         :type: str
@@ -201,7 +201,7 @@ class ShippingAddressImpl(object):
     def phone_number(self):
         """Gets the phone_number of this ShippingAddressImpl.  # noqa: E501
 
-        The phone number of the person receiving the package.<br /><br /><span class=\"tablenote\"><b>Note:</b> It is highly recommended that when entering the phone number you include the country code.<br /><br />For example, if a US phone number is <code>4********4</code>, you would enter <code>+14********4</code>. If you do not include this code, the service will use the country specified in the <b>country</b> field.<br /><br />You can find the country code at <a href=\"https://countrycode.org/\">https://countrycode.org</a>.</span>  # noqa: E501
+        The phone number of the person receiving the package.<br><br><span class=\"tablenote\"><b>Note:</b> It is highly recommended that when entering the phone number you include the country code.<br><br>For example, if a US phone number is <code>4********4</code>, you would enter <code>+14********4</code>. If you do not include this code, the service will use the country specified in the <b>country</b> field.<br><br>You can find the country code at <a href=\"https://countrycode.org/\">https://countrycode.org</a>.</span>  # noqa: E501
 
         :return: The phone_number of this ShippingAddressImpl.  # noqa: E501
         :rtype: str
@@ -212,7 +212,7 @@ class ShippingAddressImpl(object):
     def phone_number(self, phone_number):
         """Sets the phone_number of this ShippingAddressImpl.
 
-        The phone number of the person receiving the package.<br /><br /><span class=\"tablenote\"><b>Note:</b> It is highly recommended that when entering the phone number you include the country code.<br /><br />For example, if a US phone number is <code>4********4</code>, you would enter <code>+14********4</code>. If you do not include this code, the service will use the country specified in the <b>country</b> field.<br /><br />You can find the country code at <a href=\"https://countrycode.org/\">https://countrycode.org</a>.</span>  # noqa: E501
+        The phone number of the person receiving the package.<br><br><span class=\"tablenote\"><b>Note:</b> It is highly recommended that when entering the phone number you include the country code.<br><br>For example, if a US phone number is <code>4********4</code>, you would enter <code>+14********4</code>. If you do not include this code, the service will use the country specified in the <b>country</b> field.<br><br>You can find the country code at <a href=\"https://countrycode.org/\">https://countrycode.org</a>.</span>  # noqa: E501
 
         :param phone_number: The phone_number of this ShippingAddressImpl.  # noqa: E501
         :type: str
@@ -224,7 +224,7 @@ class ShippingAddressImpl(object):
     def postal_code(self):
         """Gets the postal_code of this ShippingAddressImpl.  # noqa: E501
 
-        The postal code of the address where the item is being shipped.<br /><br /><span class=\"tablenote\"><b>Note:</b> This is optional when shipping to EBAY_HK (Hong Kong).</span>  # noqa: E501
+        The postal code of the address where the item is being shipped.<br><br><span class=\"tablenote\"><b>Note:</b> This is optional when shipping to EBAY_HK (Hong Kong).</span>  # noqa: E501
 
         :return: The postal_code of this ShippingAddressImpl.  # noqa: E501
         :rtype: str
@@ -235,7 +235,7 @@ class ShippingAddressImpl(object):
     def postal_code(self, postal_code):
         """Sets the postal_code of this ShippingAddressImpl.
 
-        The postal code of the address where the item is being shipped.<br /><br /><span class=\"tablenote\"><b>Note:</b> This is optional when shipping to EBAY_HK (Hong Kong).</span>  # noqa: E501
+        The postal code of the address where the item is being shipped.<br><br><span class=\"tablenote\"><b>Note:</b> This is optional when shipping to EBAY_HK (Hong Kong).</span>  # noqa: E501
 
         :param postal_code: The postal_code of this ShippingAddressImpl.  # noqa: E501
         :type: str
@@ -268,7 +268,7 @@ class ShippingAddressImpl(object):
     def state_or_province(self):
         """Gets the state_or_province of this ShippingAddressImpl.  # noqa: E501
 
-        The state or province of the address.<br /><br /><span class=\"tablenote\"><b>Note:</b> For the US marketplace, this is a two-character value. For a list of valid values, see <a href=\"https://www.ups.com/worldshiphelp/WS15/ENU/AppHelp/Codes/State_Province_Codes.htm\">US State and Canada Province Codes</a>. </span>  # noqa: E501
+        The state or province of the address.<br><br><span class=\"tablenote\"><b>Note:</b> For the US marketplace, this is a two-character value. For a list of valid values, see <a href=\"https://www.ups.com/worldshiphelp/WS15/ENU/AppHelp/Codes/State_Province_Codes.htm\">US State and Canada Province Codes</a>. </span>  # noqa: E501
 
         :return: The state_or_province of this ShippingAddressImpl.  # noqa: E501
         :rtype: str
@@ -279,7 +279,7 @@ class ShippingAddressImpl(object):
     def state_or_province(self, state_or_province):
         """Sets the state_or_province of this ShippingAddressImpl.
 
-        The state or province of the address.<br /><br /><span class=\"tablenote\"><b>Note:</b> For the US marketplace, this is a two-character value. For a list of valid values, see <a href=\"https://www.ups.com/worldshiphelp/WS15/ENU/AppHelp/Codes/State_Province_Codes.htm\">US State and Canada Province Codes</a>. </span>  # noqa: E501
+        The state or province of the address.<br><br><span class=\"tablenote\"><b>Note:</b> For the US marketplace, this is a two-character value. For a list of valid values, see <a href=\"https://www.ups.com/worldshiphelp/WS15/ENU/AppHelp/Codes/State_Province_Codes.htm\">US State and Canada Province Codes</a>. </span>  # noqa: E501
 
         :param state_or_province: The state_or_province of this ShippingAddressImpl.  # noqa: E501
         :type: str

@@ -3,7 +3,7 @@
 """
     Marketplace Insights API
 
-    <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.  # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units. For information on how to obtain access to this API in production, see the <a href=\"/../api-docs/buy/static/buy-requirements.html\" target=\"_blank\">Buy APIs Requirements</a>.</span>  <p>The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.</p>  # noqa: E501
 
     OpenAPI spec version: v1_beta.2.2
     
@@ -266,7 +266,7 @@ class ItemSales(object):
     def condition(self):
         """Gets the condition of this ItemSales.  # noqa: E501
 
-        The text describing the condition of the item, such as New or Used. For a list of condition names, see <a href=\"https://developer.ebay.com/devzone/finding/callref/enums/conditionIdList.html\" target=\"_blank\">Item Condition IDs and Names</a>.  <br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        The text describing the condition of the item, such as New or Used. For a list of condition names, see <a href=\"https://developer.ebay.com/devzone/finding/callref/enums/conditionIdList.html\" target=\"_blank\">Item Condition IDs and Names</a>.  <br><br>Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :return: The condition of this ItemSales.  # noqa: E501
         :rtype: str
@@ -277,7 +277,7 @@ class ItemSales(object):
     def condition(self, condition):
         """Sets the condition of this ItemSales.
 
-        The text describing the condition of the item, such as New or Used. For a list of condition names, see <a href=\"https://developer.ebay.com/devzone/finding/callref/enums/conditionIdList.html\" target=\"_blank\">Item Condition IDs and Names</a>.  <br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        The text describing the condition of the item, such as New or Used. For a list of condition names, see <a href=\"https://developer.ebay.com/devzone/finding/callref/enums/conditionIdList.html\" target=\"_blank\">Item Condition IDs and Names</a>.  <br><br>Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :param condition: The condition of this ItemSales.  # noqa: E501
         :type: str
@@ -289,7 +289,7 @@ class ItemSales(object):
     def condition_id(self):
         """Gets the condition_id of this ItemSales.  # noqa: E501
 
-        The identifier of the condition of the item. For example, 1000 is the identifier for NEW. For a list of condition names and IDs, see <a href=\"https://developer.ebay.com/devzone/finding/callref/enums/conditionIdList.html\" target=\"_blank\">Item Condition IDs and Names</a>. <br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        The identifier of the condition of the item. For example, 1000 is the identifier for NEW. For a list of condition names and IDs, see <a href=\"https://developer.ebay.com/devzone/finding/callref/enums/conditionIdList.html\" target=\"_blank\">Item Condition IDs and Names</a>. <br><br>Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :return: The condition_id of this ItemSales.  # noqa: E501
         :rtype: str
@@ -300,7 +300,7 @@ class ItemSales(object):
     def condition_id(self, condition_id):
         """Sets the condition_id of this ItemSales.
 
-        The identifier of the condition of the item. For example, 1000 is the identifier for NEW. For a list of condition names and IDs, see <a href=\"https://developer.ebay.com/devzone/finding/callref/enums/conditionIdList.html\" target=\"_blank\">Item Condition IDs and Names</a>. <br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        The identifier of the condition of the item. For example, 1000 is the identifier for NEW. For a list of condition names and IDs, see <a href=\"https://developer.ebay.com/devzone/finding/callref/enums/conditionIdList.html\" target=\"_blank\">Item Condition IDs and Names</a>. <br><br>Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :param condition_id: The condition_id of this ItemSales.  # noqa: E501
         :type: str
@@ -379,7 +379,7 @@ class ItemSales(object):
     def item_group_href(self):
         """Gets the item_group_href of this ItemSales.  # noqa: E501
 
-        The HATEOAS reference of the parent page of the item group. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. <br /> <br /><span class=\"tablenote\"> <b>  Note: </b>This field is returned only for item groups.</span>  # noqa: E501
+        The HATEOAS reference of the parent page of the item group. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. <br> <br><span class=\"tablenote\"> <b>  Note: </b>This field is returned only for item groups.</span>  # noqa: E501
 
         :return: The item_group_href of this ItemSales.  # noqa: E501
         :rtype: str
@@ -390,7 +390,7 @@ class ItemSales(object):
     def item_group_href(self, item_group_href):
         """Sets the item_group_href of this ItemSales.
 
-        The HATEOAS reference of the parent page of the item group. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. <br /> <br /><span class=\"tablenote\"> <b>  Note: </b>This field is returned only for item groups.</span>  # noqa: E501
+        The HATEOAS reference of the parent page of the item group. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. <br> <br><span class=\"tablenote\"> <b>  Note: </b>This field is returned only for item groups.</span>  # noqa: E501
 
         :param item_group_href: The item_group_href of this ItemSales.  # noqa: E501
         :type: str
@@ -402,7 +402,7 @@ class ItemSales(object):
     def item_group_type(self):
         """Gets the item_group_type of this ItemSales.  # noqa: E501
 
-        Indicates the item group type. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. <br /><br />Currently, only the <code>SELLER_DEFINED_VARIATIONS</code> group type is supported and indicates that this is an item group created by the seller.<br /> <br /><span class=\"tablenote\"> <b> Note: </b>This field is returned only for item groups.</span><br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        Indicates the item group type. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. <br><br>Currently, only the <code>SELLER_DEFINED_VARIATIONS</code> group type is supported and indicates that this is an item group created by the seller.<br> <br><span class=\"tablenote\"> <b> Note: </b>This field is returned only for item groups.</span><br><br>Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :return: The item_group_type of this ItemSales.  # noqa: E501
         :rtype: str
@@ -413,7 +413,7 @@ class ItemSales(object):
     def item_group_type(self, item_group_type):
         """Sets the item_group_type of this ItemSales.
 
-        Indicates the item group type. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. <br /><br />Currently, only the <code>SELLER_DEFINED_VARIATIONS</code> group type is supported and indicates that this is an item group created by the seller.<br /> <br /><span class=\"tablenote\"> <b> Note: </b>This field is returned only for item groups.</span><br /><br />Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        Indicates the item group type. An item group is an item that has various aspect differences, such as color, size, storage capacity, etc. <br><br>Currently, only the <code>SELLER_DEFINED_VARIATIONS</code> group type is supported and indicates that this is an item group created by the seller.<br> <br><span class=\"tablenote\"> <b> Note: </b>This field is returned only for item groups.</span><br><br>Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :param item_group_type: The item_group_type of this ItemSales.  # noqa: E501
         :type: str

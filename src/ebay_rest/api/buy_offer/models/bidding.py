@@ -3,7 +3,7 @@
 """
     Buy Offer API
 
-    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />The Buy Offer API enables Partners to place proxy bids for a buyer and retrieve the auctions where the buyer is bidding.  By placing a proxy bid, the buyer is agreeing to purchase the item if they win the auction. </p>   # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units. For information on how to obtain access to this API in production, see the <a href=\"/../api-docs/buy/static/buy-requirements.html\" target=\"_blank\">Buy APIs Requirements</a>.</span><br><br>The Buy Offer API enables Partners to place proxy bids for a buyer and retrieve the auctions where the buyer is bidding.  By placing a proxy bid, the buyer is agreeing to purchase the item if they win the auction.  # noqa: E501
 
     OpenAPI spec version: v1_beta.0.1
     
@@ -109,7 +109,7 @@ class Bidding(object):
     def auction_status(self):
         """Gets the auction_status of this Bidding.  # noqa: E501
 
-        An enumeration value that represents the current state of the auction, such as ACTIVE or ENDED. If this value is ENDED and the value of highBidder is true, this indicates the buyer has won the auction. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/offer/types/api:AuctionStatusEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value that represents the current state of the auction, such as <code>ACTIVE</code> or <code>ENDED</code>. <br><br>If this value is <code>ENDED</code> and the value of <b>highBidder</b> is <code>true</code>, this indicates the buyer has won the auction. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/offer/types/api:AuctionStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The auction_status of this Bidding.  # noqa: E501
         :rtype: str
@@ -120,7 +120,7 @@ class Bidding(object):
     def auction_status(self, auction_status):
         """Sets the auction_status of this Bidding.
 
-        An enumeration value that represents the current state of the auction, such as ACTIVE or ENDED. If this value is ENDED and the value of highBidder is true, this indicates the buyer has won the auction. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/offer/types/api:AuctionStatusEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value that represents the current state of the auction, such as <code>ACTIVE</code> or <code>ENDED</code>. <br><br>If this value is <code>ENDED</code> and the value of <b>highBidder</b> is <code>true</code>, this indicates the buyer has won the auction. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/offer/types/api:AuctionStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :param auction_status: The auction_status of this Bidding.  # noqa: E501
         :type: str
@@ -197,7 +197,7 @@ class Bidding(object):
     def high_bidder(self):
         """Gets the high_bidder of this Bidding.  # noqa: E501
 
-        Indicates if the buyer is the highest bidder. If the value is false, this indicates that either the buyer has not bid on this item or has been out-bid. If this value is true, this indicates the buyer is winning the auction and if the value of auctionStatus is ENDED, this indicates the buyer has won the auction.  # noqa: E501
+        Indicates if the buyer is the highest bidder. <ul> <li>If the value is <code>false</code>, this indicates that either the buyer has not bid on this item or has been out-bid. </li> <li>If this value is <code>true</code>, this indicates the buyer is winning the auction and if the value of <b>auctionStatus</b> is <code>ENDED</code>, this indicates the buyer has won the auction.</ul>  # noqa: E501
 
         :return: The high_bidder of this Bidding.  # noqa: E501
         :rtype: bool
@@ -208,7 +208,7 @@ class Bidding(object):
     def high_bidder(self, high_bidder):
         """Sets the high_bidder of this Bidding.
 
-        Indicates if the buyer is the highest bidder. If the value is false, this indicates that either the buyer has not bid on this item or has been out-bid. If this value is true, this indicates the buyer is winning the auction and if the value of auctionStatus is ENDED, this indicates the buyer has won the auction.  # noqa: E501
+        Indicates if the buyer is the highest bidder. <ul> <li>If the value is <code>false</code>, this indicates that either the buyer has not bid on this item or has been out-bid. </li> <li>If this value is <code>true</code>, this indicates the buyer is winning the auction and if the value of <b>auctionStatus</b> is <code>ENDED</code>, this indicates the buyer has won the auction.</ul>  # noqa: E501
 
         :param high_bidder: The high_bidder of this Bidding.  # noqa: E501
         :type: bool
@@ -243,7 +243,7 @@ class Bidding(object):
     def reserve_price_met(self):
         """Gets the reserve_price_met of this Bidding.  # noqa: E501
 
-        This indicates if the reserve price of the item has been met. A reserve price is set by the seller and is the minimum amount the seller is willing to sell the item for. If the highest bid is not equal to or higher than the reserve price when the auction ends, the listing ends and the item is not sold. Note: This is returned only for auctions that have a reserve price.  # noqa: E501
+        This indicates if the reserve price of the item has been met. A reserve price is set by the seller and is the minimum amount the seller is willing to sell the item for. <p>If the highest bid is not equal to or higher than the reserve price when the auction ends, the listing ends and the item is not sold.</p> <p><b>Note: </b>This is returned only for auctions that have a reserve price.</p>  # noqa: E501
 
         :return: The reserve_price_met of this Bidding.  # noqa: E501
         :rtype: bool
@@ -254,7 +254,7 @@ class Bidding(object):
     def reserve_price_met(self, reserve_price_met):
         """Sets the reserve_price_met of this Bidding.
 
-        This indicates if the reserve price of the item has been met. A reserve price is set by the seller and is the minimum amount the seller is willing to sell the item for. If the highest bid is not equal to or higher than the reserve price when the auction ends, the listing ends and the item is not sold. Note: This is returned only for auctions that have a reserve price.  # noqa: E501
+        This indicates if the reserve price of the item has been met. A reserve price is set by the seller and is the minimum amount the seller is willing to sell the item for. <p>If the highest bid is not equal to or higher than the reserve price when the auction ends, the listing ends and the item is not sold.</p> <p><b>Note: </b>This is returned only for auctions that have a reserve price.</p>  # noqa: E501
 
         :param reserve_price_met: The reserve_price_met of this Bidding.  # noqa: E501
         :type: bool
@@ -266,7 +266,7 @@ class Bidding(object):
     def suggested_bid_amounts(self):
         """Gets the suggested_bid_amounts of this Bidding.  # noqa: E501
 
-        The suggested bid amount for the next bid. Note: These are generated suggestions and do not guarantee the buyer will win the bid. This means these suggestions do not take into account the max bid amount of other bidders. The buyer can be outbid even if they submit the highest suggested bid.  # noqa: E501
+        The suggested bid amount for the next bid. <b>Note: </b>These are generated suggestions and do not guarantee the buyer will win the bid. This means these suggestions do not take into account the max bid amount of other bidders. The buyer can be outbid even if they submit the highest suggested bid.  # noqa: E501
 
         :return: The suggested_bid_amounts of this Bidding.  # noqa: E501
         :rtype: list[Amount]
@@ -277,7 +277,7 @@ class Bidding(object):
     def suggested_bid_amounts(self, suggested_bid_amounts):
         """Sets the suggested_bid_amounts of this Bidding.
 
-        The suggested bid amount for the next bid. Note: These are generated suggestions and do not guarantee the buyer will win the bid. This means these suggestions do not take into account the max bid amount of other bidders. The buyer can be outbid even if they submit the highest suggested bid.  # noqa: E501
+        The suggested bid amount for the next bid. <b>Note: </b>These are generated suggestions and do not guarantee the buyer will win the bid. This means these suggestions do not take into account the max bid amount of other bidders. The buyer can be outbid even if they submit the highest suggested bid.  # noqa: E501
 
         :param suggested_bid_amounts: The suggested_bid_amounts of this Bidding.  # noqa: E501
         :type: list[Amount]

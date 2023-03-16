@@ -158,7 +158,7 @@ class RuleCriteria(object):
     def selection_rules(self):
         """Gets the selection_rules of this RuleCriteria.  # noqa: E501
 
-        The container for the rules that select the items to include in a promotion.  <br><br><i>Required if </i> <b>inventoryCriterionType</b> is set to <code>INVENTORY_BY_RULE</code>.  # noqa: E501
+        The container for the rules that select the items to include in a promotion.  <br><br><i>Required if </i> <b>inventoryCriterionType</b> is set to <code>INVENTORY_BY_RULE</code>. <br><br>For information on using the contained fields, see <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#Promotio \">Item promotions</a>.  # noqa: E501
 
         :return: The selection_rules of this RuleCriteria.  # noqa: E501
         :rtype: list[SelectionRule]
@@ -169,7 +169,7 @@ class RuleCriteria(object):
     def selection_rules(self, selection_rules):
         """Sets the selection_rules of this RuleCriteria.
 
-        The container for the rules that select the items to include in a promotion.  <br><br><i>Required if </i> <b>inventoryCriterionType</b> is set to <code>INVENTORY_BY_RULE</code>.  # noqa: E501
+        The container for the rules that select the items to include in a promotion.  <br><br><i>Required if </i> <b>inventoryCriterionType</b> is set to <code>INVENTORY_BY_RULE</code>. <br><br>For information on using the contained fields, see <a href= \"/api-docs/sell/static/marketing/using-the-selectionrules-container.html#Promotio \">Item promotions</a>.  # noqa: E501
 
         :param selection_rules: The selection_rules of this RuleCriteria.  # noqa: E501
         :type: list[SelectionRule]
