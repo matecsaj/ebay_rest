@@ -335,6 +335,7 @@ Development Steps:
 * Watch for README.md files in directories; they contain warnings about generated code and perhaps other things.
 * Do test driven development; while adding features or fixing bugs, modify /test/ebay_rest.py and run it.
 * Periodically run /script/generate_code.py to get the latest API information from eBay and generate code.
+* Content-dependent unit tests can randomly fail; eBay's sandbox resets daily, so retry tomorrow.
 
 Release Steps 
 1. in the root directory of the project, run CLI commands
