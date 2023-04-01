@@ -112,6 +112,7 @@
     "PLN": "This value is a 3-digit code for a Polish zloty, a currency used in Poland. This is the value that should be passed in the Item.Currency field by the seller when listing an item on the eBay Poland site (Site ID 212).",
     "PYG": "This value is a 3-digit code for a Paraguayan guarani, a currency used in Paraguay.",
     "QAR": "This value is a 3-digit code for a Qatari riyal, a currency used in Qatar.",
+    "RON": "This value is a 3-digit code for the new Romanian leu, a currency used in Romania.",
     "RUB": "This value is a 3-digit code for a Russian rouble, a currency used in Russia, Abkhazia, and South Ossetia. This value replace the old 3-digit code for the Russian rouble, 'RUR'.",
     "RWF": "This value is a 3-digit code for a Rwandan franc, a currency used in Rwanda.",
     "SAR": "This value is a 3-digit code for a Saudi riyal, a currency used in Saudi Arabia.",

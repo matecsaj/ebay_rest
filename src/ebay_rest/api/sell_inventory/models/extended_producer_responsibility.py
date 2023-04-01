@@ -28,131 +28,39 @@ class ExtendedProducerResponsibility(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'eco_participation_fee': 'Amount',
         'producer_product_id': 'str',
-        'product_package_id': 'str',
-        'shipment_package_id': 'str',
         'product_documentation_id': 'str',
-        'eco_participation_fee': 'Amount'
+        'product_package_id': 'str',
+        'shipment_package_id': 'str'
     }
 
     attribute_map = {
+        'eco_participation_fee': 'ecoParticipationFee',
         'producer_product_id': 'producerProductId',
-        'product_package_id': 'productPackageId',
-        'shipment_package_id': 'shipmentPackageId',
         'product_documentation_id': 'productDocumentationId',
-        'eco_participation_fee': 'ecoParticipationFee'
+        'product_package_id': 'productPackageId',
+        'shipment_package_id': 'shipmentPackageId'
     }
 
-    def __init__(self, producer_product_id=None, product_package_id=None, shipment_package_id=None, product_documentation_id=None, eco_participation_fee=None):  # noqa: E501
+    def __init__(self, eco_participation_fee=None, producer_product_id=None, product_documentation_id=None, product_package_id=None, shipment_package_id=None):  # noqa: E501
         """ExtendedProducerResponsibility - a model defined in Swagger"""  # noqa: E501
+        self._eco_participation_fee = None
         self._producer_product_id = None
+        self._product_documentation_id = None
         self._product_package_id = None
         self._shipment_package_id = None
-        self._product_documentation_id = None
-        self._eco_participation_fee = None
         self.discriminator = None
+        if eco_participation_fee is not None:
+            self.eco_participation_fee = eco_participation_fee
         if producer_product_id is not None:
             self.producer_product_id = producer_product_id
+        if product_documentation_id is not None:
+            self.product_documentation_id = product_documentation_id
         if product_package_id is not None:
             self.product_package_id = product_package_id
         if shipment_package_id is not None:
             self.shipment_package_id = shipment_package_id
-        if product_documentation_id is not None:
-            self.product_documentation_id = product_documentation_id
-        if eco_participation_fee is not None:
-            self.eco_participation_fee = eco_participation_fee
-
-    @property
-    def producer_product_id(self):
-        """Gets the producer_product_id of this ExtendedProducerResponsibility.  # noqa: E501
-
-        This ID is the Unique Identifier of the producer related to the item. For instance, if the seller is selling a cell phone, it is the ID related to the cell phone.  # noqa: E501
-
-        :return: The producer_product_id of this ExtendedProducerResponsibility.  # noqa: E501
-        :rtype: str
-        """
-        return self._producer_product_id
-
-    @producer_product_id.setter
-    def producer_product_id(self, producer_product_id):
-        """Sets the producer_product_id of this ExtendedProducerResponsibility.
-
-        This ID is the Unique Identifier of the producer related to the item. For instance, if the seller is selling a cell phone, it is the ID related to the cell phone.  # noqa: E501
-
-        :param producer_product_id: The producer_product_id of this ExtendedProducerResponsibility.  # noqa: E501
-        :type: str
-        """
-
-        self._producer_product_id = producer_product_id
-
-    @property
-    def product_package_id(self):
-        """Gets the product_package_id of this ExtendedProducerResponsibility.  # noqa: E501
-
-        The Unique ID of the producer of any packaging related to the product added by the seller. This does not include package in which the product is shipped (see <strong>ShipmentPackageID</strong>). For instance, if the seller adds bubble wrap, it is the ID related to the bubble wrap.   # noqa: E501
-
-        :return: The product_package_id of this ExtendedProducerResponsibility.  # noqa: E501
-        :rtype: str
-        """
-        return self._product_package_id
-
-    @product_package_id.setter
-    def product_package_id(self, product_package_id):
-        """Sets the product_package_id of this ExtendedProducerResponsibility.
-
-        The Unique ID of the producer of any packaging related to the product added by the seller. This does not include package in which the product is shipped (see <strong>ShipmentPackageID</strong>). For instance, if the seller adds bubble wrap, it is the ID related to the bubble wrap.   # noqa: E501
-
-        :param product_package_id: The product_package_id of this ExtendedProducerResponsibility.  # noqa: E501
-        :type: str
-        """
-
-        self._product_package_id = product_package_id
-
-    @property
-    def shipment_package_id(self):
-        """Gets the shipment_package_id of this ExtendedProducerResponsibility.  # noqa: E501
-
-        This ID is the Unique Identifier of the producer of any packaging used by the seller to ship the item. This does not include non-shipping packaging added to the product (see <strong>ProductPackageID</strong>). This ID is required when the seller uses packaging to ship the item. For instance, if the seller uses a different box to ship the item, it is the ID related to the box.  # noqa: E501
-
-        :return: The shipment_package_id of this ExtendedProducerResponsibility.  # noqa: E501
-        :rtype: str
-        """
-        return self._shipment_package_id
-
-    @shipment_package_id.setter
-    def shipment_package_id(self, shipment_package_id):
-        """Sets the shipment_package_id of this ExtendedProducerResponsibility.
-
-        This ID is the Unique Identifier of the producer of any packaging used by the seller to ship the item. This does not include non-shipping packaging added to the product (see <strong>ProductPackageID</strong>). This ID is required when the seller uses packaging to ship the item. For instance, if the seller uses a different box to ship the item, it is the ID related to the box.  # noqa: E501
-
-        :param shipment_package_id: The shipment_package_id of this ExtendedProducerResponsibility.  # noqa: E501
-        :type: str
-        """
-
-        self._shipment_package_id = shipment_package_id
-
-    @property
-    def product_documentation_id(self):
-        """Gets the product_documentation_id of this ExtendedProducerResponsibility.  # noqa: E501
-
-        This ID is the Unique Identifier of the producer of any paper added to the parcel of the item by the seller. For example, this ID concerns any notice, leaflet, or paper that the seller adds to a cell phone parcel.  # noqa: E501
-
-        :return: The product_documentation_id of this ExtendedProducerResponsibility.  # noqa: E501
-        :rtype: str
-        """
-        return self._product_documentation_id
-
-    @product_documentation_id.setter
-    def product_documentation_id(self, product_documentation_id):
-        """Sets the product_documentation_id of this ExtendedProducerResponsibility.
-
-        This ID is the Unique Identifier of the producer of any paper added to the parcel of the item by the seller. For example, this ID concerns any notice, leaflet, or paper that the seller adds to a cell phone parcel.  # noqa: E501
-
-        :param product_documentation_id: The product_documentation_id of this ExtendedProducerResponsibility.  # noqa: E501
-        :type: str
-        """
-
-        self._product_documentation_id = product_documentation_id
 
     @property
     def eco_participation_fee(self):
@@ -174,6 +82,98 @@ class ExtendedProducerResponsibility(object):
         """
 
         self._eco_participation_fee = eco_participation_fee
+
+    @property
+    def producer_product_id(self):
+        """Gets the producer_product_id of this ExtendedProducerResponsibility.  # noqa: E501
+
+        <span class=\"tablenote\"><strong>Note:</strong> <strong>DO NOT USE THIS FIELD</strong>. Extended Producer Responsibility IDs will no longer be set at the listing level. Instead, sellers will provide these IDs at the account level when applicable/required. There are no current plans to support these IDs at the account level through an API, so sellers must provide and update these IDs through their eBay account.</span><br>This ID is the Unique Identifier of the producer related to the item. For instance, if the seller is selling a cell phone, it is the ID related to the cell phone.  # noqa: E501
+
+        :return: The producer_product_id of this ExtendedProducerResponsibility.  # noqa: E501
+        :rtype: str
+        """
+        return self._producer_product_id
+
+    @producer_product_id.setter
+    def producer_product_id(self, producer_product_id):
+        """Sets the producer_product_id of this ExtendedProducerResponsibility.
+
+        <span class=\"tablenote\"><strong>Note:</strong> <strong>DO NOT USE THIS FIELD</strong>. Extended Producer Responsibility IDs will no longer be set at the listing level. Instead, sellers will provide these IDs at the account level when applicable/required. There are no current plans to support these IDs at the account level through an API, so sellers must provide and update these IDs through their eBay account.</span><br>This ID is the Unique Identifier of the producer related to the item. For instance, if the seller is selling a cell phone, it is the ID related to the cell phone.  # noqa: E501
+
+        :param producer_product_id: The producer_product_id of this ExtendedProducerResponsibility.  # noqa: E501
+        :type: str
+        """
+
+        self._producer_product_id = producer_product_id
+
+    @property
+    def product_documentation_id(self):
+        """Gets the product_documentation_id of this ExtendedProducerResponsibility.  # noqa: E501
+
+        <span class=\"tablenote\"><strong>Note:</strong> <strong>DO NOT USE THIS FIELD</strong>. Extended Producer Responsibility IDs will no longer be set at the listing level. Instead, sellers will provide these IDs at the account level when applicable/required. There are no current plans to support these IDs at the account level through an API, so sellers must provide and update these IDs through their eBay account.</span><br>This ID is the Unique Identifier of the producer of any paper added to the parcel of the item by the seller. For example, this ID concerns any notice, leaflet, or paper that the seller adds to a cell phone parcel.  # noqa: E501
+
+        :return: The product_documentation_id of this ExtendedProducerResponsibility.  # noqa: E501
+        :rtype: str
+        """
+        return self._product_documentation_id
+
+    @product_documentation_id.setter
+    def product_documentation_id(self, product_documentation_id):
+        """Sets the product_documentation_id of this ExtendedProducerResponsibility.
+
+        <span class=\"tablenote\"><strong>Note:</strong> <strong>DO NOT USE THIS FIELD</strong>. Extended Producer Responsibility IDs will no longer be set at the listing level. Instead, sellers will provide these IDs at the account level when applicable/required. There are no current plans to support these IDs at the account level through an API, so sellers must provide and update these IDs through their eBay account.</span><br>This ID is the Unique Identifier of the producer of any paper added to the parcel of the item by the seller. For example, this ID concerns any notice, leaflet, or paper that the seller adds to a cell phone parcel.  # noqa: E501
+
+        :param product_documentation_id: The product_documentation_id of this ExtendedProducerResponsibility.  # noqa: E501
+        :type: str
+        """
+
+        self._product_documentation_id = product_documentation_id
+
+    @property
+    def product_package_id(self):
+        """Gets the product_package_id of this ExtendedProducerResponsibility.  # noqa: E501
+
+        <span class=\"tablenote\"><strong>Note:</strong> <strong>DO NOT USE THIS FIELD</strong>. Extended Producer Responsibility IDs will no longer be set at the listing level. Instead, sellers will provide these IDs at the account level when applicable/required. There are no current plans to support these IDs at the account level through an API, so sellers must provide and update these IDs through their eBay account.</span><br>The Unique ID of the producer of any packaging related to the product added by the seller. This does not include package in which the product is shipped (see <strong>ShipmentPackageID</strong>). For instance, if the seller adds bubble wrap, it is the ID related to the bubble wrap.   # noqa: E501
+
+        :return: The product_package_id of this ExtendedProducerResponsibility.  # noqa: E501
+        :rtype: str
+        """
+        return self._product_package_id
+
+    @product_package_id.setter
+    def product_package_id(self, product_package_id):
+        """Sets the product_package_id of this ExtendedProducerResponsibility.
+
+        <span class=\"tablenote\"><strong>Note:</strong> <strong>DO NOT USE THIS FIELD</strong>. Extended Producer Responsibility IDs will no longer be set at the listing level. Instead, sellers will provide these IDs at the account level when applicable/required. There are no current plans to support these IDs at the account level through an API, so sellers must provide and update these IDs through their eBay account.</span><br>The Unique ID of the producer of any packaging related to the product added by the seller. This does not include package in which the product is shipped (see <strong>ShipmentPackageID</strong>). For instance, if the seller adds bubble wrap, it is the ID related to the bubble wrap.   # noqa: E501
+
+        :param product_package_id: The product_package_id of this ExtendedProducerResponsibility.  # noqa: E501
+        :type: str
+        """
+
+        self._product_package_id = product_package_id
+
+    @property
+    def shipment_package_id(self):
+        """Gets the shipment_package_id of this ExtendedProducerResponsibility.  # noqa: E501
+
+        <span class=\"tablenote\"><strong>Note:</strong> <strong>DO NOT USE THIS FIELD</strong>. Extended Producer Responsibility IDs will no longer be set at the listing level. Instead, sellers will provide these IDs at the account level when applicable/required. There are no current plans to support these IDs at the account level through an API, so sellers must provide and update these IDs through their eBay account.</span><br>This ID is the Unique Identifier of the producer of any packaging used by the seller to ship the item. This does not include non-shipping packaging added to the product (see <strong>ProductPackageID</strong>). This ID is required when the seller uses packaging to ship the item. For instance, if the seller uses a different box to ship the item, it is the ID related to the box.  # noqa: E501
+
+        :return: The shipment_package_id of this ExtendedProducerResponsibility.  # noqa: E501
+        :rtype: str
+        """
+        return self._shipment_package_id
+
+    @shipment_package_id.setter
+    def shipment_package_id(self, shipment_package_id):
+        """Sets the shipment_package_id of this ExtendedProducerResponsibility.
+
+        <span class=\"tablenote\"><strong>Note:</strong> <strong>DO NOT USE THIS FIELD</strong>. Extended Producer Responsibility IDs will no longer be set at the listing level. Instead, sellers will provide these IDs at the account level when applicable/required. There are no current plans to support these IDs at the account level through an API, so sellers must provide and update these IDs through their eBay account.</span><br>This ID is the Unique Identifier of the producer of any packaging used by the seller to ship the item. This does not include non-shipping packaging added to the product (see <strong>ProductPackageID</strong>). This ID is required when the seller uses packaging to ship the item. For instance, if the seller uses a different box to ship the item, it is the ID related to the box.  # noqa: E501
+
+        :param shipment_package_id: The shipment_package_id of this ExtendedProducerResponsibility.  # noqa: E501
+        :type: str
+        """
+
+        self._shipment_package_id = shipment_package_id
 
     def to_dict(self):
         """Returns the model properties as a dict"""

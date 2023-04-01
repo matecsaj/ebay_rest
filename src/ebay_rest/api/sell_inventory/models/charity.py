@@ -51,7 +51,7 @@ class Charity(object):
     def charity_id(self):
         """Gets the charity_id of this Charity.  # noqa: E501
 
-        The eBay-assigned unique identifier of the charitable organization that will receive a percentage of the sales proceeds. The charitable organization must be reqistered with the PayPal Giving Fund in order to receive sales proceeds through eBay listings.<br><br>This field is conditionally required if a seller is planning on donating a percentage of the sale proceeds to a charitable organization.<br><br>The eBay-assigned unique identifier of a charitable organization can be found using the <strong>GetCharities</strong> call of the Trading API. In the <strong>GetCharities</strong> call response, this unique identifier is shown in the <strong>id</strong> attribute of the <strong>Charity</strong> container.  # noqa: E501
+        The eBay-assigned unique identifier of the charitable organization that will receive a percentage of the sales proceeds. The charitable organization must be reqistered with the PayPal Giving Fund in order to receive sales proceeds through eBay listings.<br><br>This field is conditionally required if a seller is planning on donating a percentage of the sale proceeds to a charitable organization.<br><br>The eBay-assigned unique identifier of a charitable organization can be found using the <strong>getCharityOrgs</strong> method of the Charity API. In the <strong>getCharityOrgs</strong> response, this unique identifier is shown in the <a href=\"/api-docs/commerce/charity/resources/charity_org/methods/getCharityOrgs#response.charityOrgs.charityOrgId\" target=\"_blank\">charityOrgId</a> field.  # noqa: E501
 
         :return: The charity_id of this Charity.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class Charity(object):
     def charity_id(self, charity_id):
         """Sets the charity_id of this Charity.
 
-        The eBay-assigned unique identifier of the charitable organization that will receive a percentage of the sales proceeds. The charitable organization must be reqistered with the PayPal Giving Fund in order to receive sales proceeds through eBay listings.<br><br>This field is conditionally required if a seller is planning on donating a percentage of the sale proceeds to a charitable organization.<br><br>The eBay-assigned unique identifier of a charitable organization can be found using the <strong>GetCharities</strong> call of the Trading API. In the <strong>GetCharities</strong> call response, this unique identifier is shown in the <strong>id</strong> attribute of the <strong>Charity</strong> container.  # noqa: E501
+        The eBay-assigned unique identifier of the charitable organization that will receive a percentage of the sales proceeds. The charitable organization must be reqistered with the PayPal Giving Fund in order to receive sales proceeds through eBay listings.<br><br>This field is conditionally required if a seller is planning on donating a percentage of the sale proceeds to a charitable organization.<br><br>The eBay-assigned unique identifier of a charitable organization can be found using the <strong>getCharityOrgs</strong> method of the Charity API. In the <strong>getCharityOrgs</strong> response, this unique identifier is shown in the <a href=\"/api-docs/commerce/charity/resources/charity_org/methods/getCharityOrgs#response.charityOrgs.charityOrgId\" target=\"_blank\">charityOrgId</a> field.  # noqa: E501
 
         :param charity_id: The charity_id of this Charity.  # noqa: E501
         :type: str
