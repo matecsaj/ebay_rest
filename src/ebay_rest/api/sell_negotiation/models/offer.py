@@ -101,7 +101,7 @@ class Offer(object):
     def allow_counter_offer(self):
         """Gets the allow_counter_offer of this Offer.  # noqa: E501
 
-        If set to true, the buyer is allowed to make a counter-offer to the seller's offer.  # noqa: E501
+        If set to <code>true</code>, the buyer is allowed to make a counter-offer to the seller's offer.  # noqa: E501
 
         :return: The allow_counter_offer of this Offer.  # noqa: E501
         :rtype: bool
@@ -112,7 +112,7 @@ class Offer(object):
     def allow_counter_offer(self, allow_counter_offer):
         """Sets the allow_counter_offer of this Offer.
 
-        If set to true, the buyer is allowed to make a counter-offer to the seller's offer.  # noqa: E501
+        If set to <code>true</code>, the buyer is allowed to make a counter-offer to the seller's offer.  # noqa: E501
 
         :param allow_counter_offer: The allow_counter_offer of this Offer.  # noqa: E501
         :type: bool
@@ -145,7 +145,7 @@ class Offer(object):
     def creation_date(self):
         """Gets the creation_date of this Offer.  # noqa: E501
 
-        The date and time when the seller's offer was created. The returned timestamp is formatted as an ISO 8601 string, which is based on the 24-hour Coordinated Universal Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2018-08-20T07:09:00.000Z  # noqa: E501
+        The date and time when the seller's offer was created.  <br><br>The returned timestamp is formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> string, which is based on the 24-hour Coordinated Universal Time (UTC) clock.  <br><br><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br><b>Example:</b> <code>2018-08-20T07:09:00.000Z</code>  # noqa: E501
 
         :return: The creation_date of this Offer.  # noqa: E501
         :rtype: str
@@ -156,7 +156,7 @@ class Offer(object):
     def creation_date(self, creation_date):
         """Sets the creation_date of this Offer.
 
-        The date and time when the seller's offer was created. The returned timestamp is formatted as an ISO 8601 string, which is based on the 24-hour Coordinated Universal Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z Example: 2018-08-20T07:09:00.000Z  # noqa: E501
+        The date and time when the seller's offer was created.  <br><br>The returned timestamp is formatted as an <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\" title=\"https://www.iso.org\" target=\"_blank\">ISO 8601</a> string, which is based on the 24-hour Coordinated Universal Time (UTC) clock.  <br><br><b>Format:</b> <code>[YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].[sss]Z</code> <br><b>Example:</b> <code>2018-08-20T07:09:00.000Z</code>  # noqa: E501
 
         :param creation_date: The creation_date of this Offer.  # noqa: E501
         :type: str
@@ -168,7 +168,7 @@ class Offer(object):
     def initiated_by(self):
         """Gets the initiated_by of this Offer.  # noqa: E501
 
-        The eBay UserName of the user (seller) who initiated the offer.  # noqa: E501
+        The eBay <b>UserName</b> of the user (seller) who initiated the offer.  # noqa: E501
 
         :return: The initiated_by of this Offer.  # noqa: E501
         :rtype: str
@@ -179,7 +179,7 @@ class Offer(object):
     def initiated_by(self, initiated_by):
         """Sets the initiated_by of this Offer.
 
-        The eBay UserName of the user (seller) who initiated the offer.  # noqa: E501
+        The eBay <b>UserName</b> of the user (seller) who initiated the offer.  # noqa: E501
 
         :param initiated_by: The initiated_by of this Offer.  # noqa: E501
         :type: str
@@ -191,7 +191,7 @@ class Offer(object):
     def last_modified_date(self):
         """Gets the last_modified_date of this Offer.  # noqa: E501
 
-        The date and time when the offer was last modified. The returned timestamp is formatted as an ISO 8601 string.  # noqa: E501
+        The date and time when the offer was last modified.  <br><br>The returned timestamp is formatted as an <a href=\"http://www.iso.org/iso/home/standards/iso8601.htm\" target=\"_blank\">ISO 8601</a> string.  # noqa: E501
 
         :return: The last_modified_date of this Offer.  # noqa: E501
         :rtype: str
@@ -202,7 +202,7 @@ class Offer(object):
     def last_modified_date(self, last_modified_date):
         """Sets the last_modified_date of this Offer.
 
-        The date and time when the offer was last modified. The returned timestamp is formatted as an ISO 8601 string.  # noqa: E501
+        The date and time when the offer was last modified.  <br><br>The returned timestamp is formatted as an <a href=\"http://www.iso.org/iso/home/standards/iso8601.htm\" target=\"_blank\">ISO 8601</a> string.  # noqa: E501
 
         :param last_modified_date: The last_modified_date of this Offer.  # noqa: E501
         :type: str
@@ -214,7 +214,7 @@ class Offer(object):
     def message(self):
         """Gets the message of this Offer.  # noqa: E501
 
-        A seller-defined message related to the offer being made. This message is sent to the list of &quot;interested&quot; buyers along with the offer message from eBay.  # noqa: E501
+        A seller-defined message related to the offer being made. This message is sent to the list of \"interested\" buyers along with the offer message from eBay.  # noqa: E501
 
         :return: The message of this Offer.  # noqa: E501
         :rtype: str
@@ -225,7 +225,7 @@ class Offer(object):
     def message(self, message):
         """Sets the message of this Offer.
 
-        A seller-defined message related to the offer being made. This message is sent to the list of &quot;interested&quot; buyers along with the offer message from eBay.  # noqa: E501
+        A seller-defined message related to the offer being made. This message is sent to the list of \"interested\" buyers along with the offer message from eBay.  # noqa: E501
 
         :param message: The message of this Offer.  # noqa: E501
         :type: str
@@ -258,7 +258,7 @@ class Offer(object):
     def offered_items(self):
         """Gets the offered_items of this Offer.  # noqa: E501
 
-        The list of items associated with the offer. Currently, the offer list is restricted to a single offer.  # noqa: E501
+        The list of items associated with the offer. <br><br>Currently, the offer list is restricted to a single offer.  # noqa: E501
 
         :return: The offered_items of this Offer.  # noqa: E501
         :rtype: list[OfferedItem]
@@ -269,7 +269,7 @@ class Offer(object):
     def offered_items(self, offered_items):
         """Sets the offered_items of this Offer.
 
-        The list of items associated with the offer. Currently, the offer list is restricted to a single offer.  # noqa: E501
+        The list of items associated with the offer. <br><br>Currently, the offer list is restricted to a single offer.  # noqa: E501
 
         :param offered_items: The offered_items of this Offer.  # noqa: E501
         :type: list[OfferedItem]
@@ -304,7 +304,7 @@ class Offer(object):
     def offer_status(self):
         """Gets the offer_status of this Offer.  # noqa: E501
 
-        The current state, or status, of an offer. Status states include PENDING, COUNTERED, ACCEPTED, and DECLINED. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/negotiation/types/api:OfferStatusEnum'>eBay API documentation</a>  # noqa: E501
+        The current state, or status, of an offer.  <br><br>Status states include <code>PENDING</code>, <code>COUNTERED</code>, <code>ACCEPTED</code>, and <code>DECLINED</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/negotiation/types/api:OfferStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The offer_status of this Offer.  # noqa: E501
         :rtype: str
@@ -315,7 +315,7 @@ class Offer(object):
     def offer_status(self, offer_status):
         """Sets the offer_status of this Offer.
 
-        The current state, or status, of an offer. Status states include PENDING, COUNTERED, ACCEPTED, and DECLINED. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/negotiation/types/api:OfferStatusEnum'>eBay API documentation</a>  # noqa: E501
+        The current state, or status, of an offer.  <br><br>Status states include <code>PENDING</code>, <code>COUNTERED</code>, <code>ACCEPTED</code>, and <code>DECLINED</code>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/negotiation/types/api:OfferStatusEnum'>eBay API documentation</a>  # noqa: E501
 
         :param offer_status: The offer_status of this Offer.  # noqa: E501
         :type: str

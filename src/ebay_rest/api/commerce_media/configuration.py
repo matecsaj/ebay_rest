@@ -46,7 +46,7 @@ class Configuration(six.with_metaclass(TypeWithDefault, object)):
     def __init__(self):
         """Constructor"""
         # Default Base url
-        self.host = "https://apim.ebay.com/commerce/media/v1_beta"
+        self.host = "https://apim.ebay.com{basePath}"
         # Temp file folder for downloading files
         self.temp_folder_path = None
 
@@ -231,7 +231,7 @@ class Configuration(six.with_metaclass(TypeWithDefault, object)):
         :return: The Auth Settings information dict.
         """
         return {
-            'Authorization Code':
+            'api_auth':
                 {
                     'type': 'oauth2',
                     'in': 'header',

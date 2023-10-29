@@ -32,16 +32,17 @@ class VideoApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def create_video(self, **kwargs):  # noqa: E501
+    def create_video(self, content_type, **kwargs):  # noqa: E501
         """create_video  # noqa: E501
 
         This method creates a video. When using this method, specify the <b>title</b>, <b>size</b>, and <b>classification</b> of the video to be created. <b>Description</b> is an optional field for this method.<br /><br /><span class=\"tablenote\"><span style=\"color:#478415\"><strong>Tip:</strong></span> See <a href=\"https://www.ebay.com/help/selling/listings/creating-managing-listings/add-video-to-listing?id=5272#section3\" target=\"_blank\">Adding a video to your listing</a> in the eBay Seller Center for details about video formatting requirements and restrictions, or visit the relevant eBay site help pages for the region in which the listings will be posted.</span><br /><br />When a video is successfully created, the method returns the HTTP Status Code <code>201 Created.</code>The method also returns the location response header containing the <b>video ID</b>, which you can use to retrieve the video.<br /><br /><span class=\"tablenote\"><span style=\"color:#004680\"><strong>Note:</strong></span> There is no ability to edit metadata on videos at this time. There is also no method to delete videos.</span><br /><br />To upload a created video, use the <a href=\" /api-docs/commerce/media/resources/video/methods/uploadVideo\" target=\"_blank\">uploadVideo</a> method.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_video(async_req=True)
+        >>> thread = api.create_video(content_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param CreateVideoRequest body:
         :return: None
                  If the method is called asynchronously,
@@ -49,28 +50,29 @@ class VideoApi(object):
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.create_video_with_http_info(**kwargs)  # noqa: E501
+            return self.create_video_with_http_info(content_type, **kwargs)  # noqa: E501
         else:
-            (data) = self.create_video_with_http_info(**kwargs)  # noqa: E501
+            (data) = self.create_video_with_http_info(content_type, **kwargs)  # noqa: E501
             return data
 
-    def create_video_with_http_info(self, **kwargs):  # noqa: E501
+    def create_video_with_http_info(self, content_type, **kwargs):  # noqa: E501
         """create_video  # noqa: E501
 
         This method creates a video. When using this method, specify the <b>title</b>, <b>size</b>, and <b>classification</b> of the video to be created. <b>Description</b> is an optional field for this method.<br /><br /><span class=\"tablenote\"><span style=\"color:#478415\"><strong>Tip:</strong></span> See <a href=\"https://www.ebay.com/help/selling/listings/creating-managing-listings/add-video-to-listing?id=5272#section3\" target=\"_blank\">Adding a video to your listing</a> in the eBay Seller Center for details about video formatting requirements and restrictions, or visit the relevant eBay site help pages for the region in which the listings will be posted.</span><br /><br />When a video is successfully created, the method returns the HTTP Status Code <code>201 Created.</code>The method also returns the location response header containing the <b>video ID</b>, which you can use to retrieve the video.<br /><br /><span class=\"tablenote\"><span style=\"color:#004680\"><strong>Note:</strong></span> There is no ability to edit metadata on videos at this time. There is also no method to delete videos.</span><br /><br />To upload a created video, use the <a href=\" /api-docs/commerce/media/resources/video/methods/uploadVideo\" target=\"_blank\">uploadVideo</a> method.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_video_with_http_info(async_req=True)
+        >>> thread = api.create_video_with_http_info(content_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param CreateVideoRequest body:
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['body']  # noqa: E501
+        all_params = ['content_type', 'body']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -85,6 +87,10 @@ class VideoApi(object):
                 )
             params[key] = val
         del params['kwargs']
+        # verify the required parameter 'content_type' is set
+        if ('content_type' not in params or
+                params['content_type'] is None):
+            raise ValueError("Missing the required parameter `content_type` when calling `create_video`")  # noqa: E501
 
         collection_formats = {}
 
@@ -93,6 +99,8 @@ class VideoApi(object):
         query_params = []
 
         header_params = {}
+        if 'content_type' in params:
+            header_params['Content-Type'] = params['content_type']  # noqa: E501
 
         form_params = []
         local_var_files = {}
@@ -102,10 +110,10 @@ class VideoApi(object):
             body_params = params['body']
         # HTTP header `Content-Type`
         header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['*/*'])  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['Authorization Code']  # noqa: E501
+        auth_settings = ['api_auth']  # noqa: E501
 
         return self.api_client.call_api(
             '/video', 'POST',
@@ -200,7 +208,7 @@ class VideoApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['Authorization Code']  # noqa: E501
+        auth_settings = ['api_auth']  # noqa: E501
 
         return self.api_client.call_api(
             '/video/{video_id}', 'GET',
@@ -312,10 +320,10 @@ class VideoApi(object):
             body_params = params['body']
         # HTTP header `Content-Type`
         header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['*/*'])  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['Authorization Code']  # noqa: E501
+        auth_settings = ['api_auth']  # noqa: E501
 
         return self.api_client.call_api(
             '/video/{video_id}/upload', 'POST',

@@ -35,7 +35,7 @@ class BiddingApi(object):
     def get_bidding(self, item_id, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """get_bidding  # noqa: E501
 
-        This method retrieves the bidding details that are specific to the buyer of the specified auction. This must be an auction where the buyer has already placed a bid. <br><br>To retrieve the bidding information you use a <a href=\"/api-docs/static/oauth-tokens.html\">user access token</a> and pass in the item ID of the auction. You can also retrieve general bidding details about the auction, such as minimum bid price and the count of unique bidders, using the <a href=\"/api-docs/buy/browse/resources/methods\">Browse API</a> <b>getItem</b> method.<h3><b>Restrictions </b></h3> <p> For a list of supported sites and other restrictions, see <a href=\"/api-docs/buy/offer/overview.html#API\">API Restrictions</a>.</p>  # noqa: E501
+        This method retrieves the bidding details that are specific to the buyer of the specified auction. This must be an auction where the buyer has already placed a bid. <br><br>To retrieve the bidding information you use a <a href=\"/api-docs/static/oauth-tokens.html\">user access token</a> and pass in the item ID of the auction. You can also retrieve general bidding details about the auction, such as minimum bid price and the count of unique bidders, using the <a href=\"/api-docs/buy/browse/resources/methods\">Browse API</a> <b>getItem</b> method.    <h3><b>Restrictions </b></h3> <p> For a list of supported sites and other restrictions, see <a href=\"/api-docs/buy/offer/overview.html#API\">API Restrictions</a>.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_bidding(item_id, x_ebay_c_marketplace_id, async_req=True)
@@ -58,7 +58,7 @@ class BiddingApi(object):
     def get_bidding_with_http_info(self, item_id, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """get_bidding  # noqa: E501
 
-        This method retrieves the bidding details that are specific to the buyer of the specified auction. This must be an auction where the buyer has already placed a bid. <br><br>To retrieve the bidding information you use a <a href=\"/api-docs/static/oauth-tokens.html\">user access token</a> and pass in the item ID of the auction. You can also retrieve general bidding details about the auction, such as minimum bid price and the count of unique bidders, using the <a href=\"/api-docs/buy/browse/resources/methods\">Browse API</a> <b>getItem</b> method.<h3><b>Restrictions </b></h3> <p> For a list of supported sites and other restrictions, see <a href=\"/api-docs/buy/offer/overview.html#API\">API Restrictions</a>.</p>  # noqa: E501
+        This method retrieves the bidding details that are specific to the buyer of the specified auction. This must be an auction where the buyer has already placed a bid. <br><br>To retrieve the bidding information you use a <a href=\"/api-docs/static/oauth-tokens.html\">user access token</a> and pass in the item ID of the auction. You can also retrieve general bidding details about the auction, such as minimum bid price and the count of unique bidders, using the <a href=\"/api-docs/buy/browse/resources/methods\">Browse API</a> <b>getItem</b> method.    <h3><b>Restrictions </b></h3> <p> For a list of supported sites and other restrictions, see <a href=\"/api-docs/buy/offer/overview.html#API\">API Restrictions</a>.</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_bidding_with_http_info(item_id, x_ebay_c_marketplace_id, async_req=True)
@@ -135,17 +135,18 @@ class BiddingApi(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def place_proxy_bid(self, x_ebay_c_marketplace_id, item_id, **kwargs):  # noqa: E501
+    def place_proxy_bid(self, x_ebay_c_marketplace_id, content_type, item_id, **kwargs):  # noqa: E501
         """place_proxy_bid  # noqa: E501
 
         This method uses a <a href=\"/api-docs/static/oauth-qref-auth-code-grant.html\">user access token</a> to place a proxy bid for the buyer on a specific auction item. The item must offer <code>AUCTION</code> as one of the <b> buyingOptions</b>. <br><br>To place a bid, you pass in the item ID of the auction as a URI parameter and the buyer's maximum bid amount (<b>maxAmount </b>) in the payload.   By placing a proxy bid, the buyer is agreeing to purchase the item if they win the auction. <p>After this bid is placed, if someone else outbids the buyer a bid, eBay automatically bids again for the buyer up to the amount of their maximum bid. When the bid exceeds the buyer's maximum bid, eBay will notify them that they have been outbid.</p> <p>To find auctions, you can use the <a href=\"/api-docs/buy/browse/resources/item_summary/methods/search\">Browse API to search</a> for items and use a filter to return only auction items. For example: <br><br>   <code>/buy/browse/v1/item_summary/search?q=iphone&filter=buyingOptions:{AUCTION}</code> </p><h3><b>Restrictions </b></h3> <p> For a list of supported sites and other restrictions, see <a href=\"/api-docs/buy/offer/overview.html#API\">API Restrictions</a>.</p>   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.place_proxy_bid(x_ebay_c_marketplace_id, item_id, async_req=True)
+        >>> thread = api.place_proxy_bid(x_ebay_c_marketplace_id, content_type, item_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the buyer is based. <b>Note: </b> This value is case sensitive.<br><br> For example: <br>&nbsp;&nbsp;<code>X-EBAY-C-MARKETPLACE-ID = EBAY_US</code>  <br><br> For a list of supported sites see, <a href=\"/api-docs/buy/offer/overview.html#API\">API Restrictions</a>. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str item_id: The eBay RESTful identifier of an item you want to bid on. This ID is returned by the <b> Browse</b> and <b> Feed</b> API methods.  <br><br> <b>RESTful Item ID Example: </b><code>v1|2**********2|0</code> <br><br>For more information about item ID for RESTful APIs, see the <a href=\"/api-docs/buy/static/api-browse.html#Legacy\">Legacy API compatibility</a> section of the <i>Buy APIs Overview</i>. (required)
         :param PlaceProxyBidRequest body:
         :return: PlaceProxyBidResponse
@@ -154,22 +155,23 @@ class BiddingApi(object):
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.place_proxy_bid_with_http_info(x_ebay_c_marketplace_id, item_id, **kwargs)  # noqa: E501
+            return self.place_proxy_bid_with_http_info(x_ebay_c_marketplace_id, content_type, item_id, **kwargs)  # noqa: E501
         else:
-            (data) = self.place_proxy_bid_with_http_info(x_ebay_c_marketplace_id, item_id, **kwargs)  # noqa: E501
+            (data) = self.place_proxy_bid_with_http_info(x_ebay_c_marketplace_id, content_type, item_id, **kwargs)  # noqa: E501
             return data
 
-    def place_proxy_bid_with_http_info(self, x_ebay_c_marketplace_id, item_id, **kwargs):  # noqa: E501
+    def place_proxy_bid_with_http_info(self, x_ebay_c_marketplace_id, content_type, item_id, **kwargs):  # noqa: E501
         """place_proxy_bid  # noqa: E501
 
         This method uses a <a href=\"/api-docs/static/oauth-qref-auth-code-grant.html\">user access token</a> to place a proxy bid for the buyer on a specific auction item. The item must offer <code>AUCTION</code> as one of the <b> buyingOptions</b>. <br><br>To place a bid, you pass in the item ID of the auction as a URI parameter and the buyer's maximum bid amount (<b>maxAmount </b>) in the payload.   By placing a proxy bid, the buyer is agreeing to purchase the item if they win the auction. <p>After this bid is placed, if someone else outbids the buyer a bid, eBay automatically bids again for the buyer up to the amount of their maximum bid. When the bid exceeds the buyer's maximum bid, eBay will notify them that they have been outbid.</p> <p>To find auctions, you can use the <a href=\"/api-docs/buy/browse/resources/item_summary/methods/search\">Browse API to search</a> for items and use a filter to return only auction items. For example: <br><br>   <code>/buy/browse/v1/item_summary/search?q=iphone&filter=buyingOptions:{AUCTION}</code> </p><h3><b>Restrictions </b></h3> <p> For a list of supported sites and other restrictions, see <a href=\"/api-docs/buy/offer/overview.html#API\">API Restrictions</a>.</p>   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.place_proxy_bid_with_http_info(x_ebay_c_marketplace_id, item_id, async_req=True)
+        >>> thread = api.place_proxy_bid_with_http_info(x_ebay_c_marketplace_id, content_type, item_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the buyer is based. <b>Note: </b> This value is case sensitive.<br><br> For example: <br>&nbsp;&nbsp;<code>X-EBAY-C-MARKETPLACE-ID = EBAY_US</code>  <br><br> For a list of supported sites see, <a href=\"/api-docs/buy/offer/overview.html#API\">API Restrictions</a>. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str item_id: The eBay RESTful identifier of an item you want to bid on. This ID is returned by the <b> Browse</b> and <b> Feed</b> API methods.  <br><br> <b>RESTful Item ID Example: </b><code>v1|2**********2|0</code> <br><br>For more information about item ID for RESTful APIs, see the <a href=\"/api-docs/buy/static/api-browse.html#Legacy\">Legacy API compatibility</a> section of the <i>Buy APIs Overview</i>. (required)
         :param PlaceProxyBidRequest body:
         :return: PlaceProxyBidResponse
@@ -177,7 +179,7 @@ class BiddingApi(object):
                  returns the request thread.
         """
 
-        all_params = ['x_ebay_c_marketplace_id', 'item_id', 'body']  # noqa: E501
+        all_params = ['x_ebay_c_marketplace_id', 'content_type', 'item_id', 'body']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -196,6 +198,10 @@ class BiddingApi(object):
         if ('x_ebay_c_marketplace_id' not in params or
                 params['x_ebay_c_marketplace_id'] is None):
             raise ValueError("Missing the required parameter `x_ebay_c_marketplace_id` when calling `place_proxy_bid`")  # noqa: E501
+        # verify the required parameter 'content_type' is set
+        if ('content_type' not in params or
+                params['content_type'] is None):
+            raise ValueError("Missing the required parameter `content_type` when calling `place_proxy_bid`")  # noqa: E501
         # verify the required parameter 'item_id' is set
         if ('item_id' not in params or
                 params['item_id'] is None):
@@ -212,6 +218,8 @@ class BiddingApi(object):
         header_params = {}
         if 'x_ebay_c_marketplace_id' in params:
             header_params['X-EBAY-C-MARKETPLACE-ID'] = params['x_ebay_c_marketplace_id']  # noqa: E501
+        if 'content_type' in params:
+            header_params['Content-Type'] = params['content_type']  # noqa: E501
 
         form_params = []
         local_var_files = {}

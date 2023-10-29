@@ -3,7 +3,7 @@
 """
     Marketplace Insights API
 
-    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units. For information on how to obtain access to this API in production, see the <a href=\"/../api-docs/buy/static/buy-requirements.html\" target=\"_blank\">Buy APIs Requirements</a>.</span>  <p>The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.</p>  # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"/api-docs/static/versioning.html#limited \" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units. For information on how to obtain access to this API in production, see the <a href=\"/../api-docs/buy/static/buy-requirements.html\" target=\"_blank\">Buy APIs Requirements</a>.</span>  <p>The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.</p>  # noqa: E501
 
     OpenAPI spec version: v1_beta.2.2
     
@@ -240,7 +240,7 @@ class SalesHistoryPagedCollection(object):
     def total(self):
         """Gets the total of this SalesHistoryPagedCollection.  # noqa: E501
 
-        The total number of items retrieved in the result set.  <br><br>If no items are found, this field is returned with a value of <code>0</code>.  # noqa: E501
+        The total number of items retrieved in the result set.<br><br>If no items are found, this field is returned with a value of <code>0</code>.<br><br><span class=\"tablenote\"><b>Note:</b> <code>total</code> is just an indicator of the number of listings for a given query. It could vary based on the number of listings with variations included in the result. It is strongly recommended that <code>total</code> not be used in pagination use cases. Instead, use <a href=\"/api-docs/buy/marketplace-insights/resources/item_sales/methods/search#response.next \"> next</a> to determine the results on the next page.</span>  # noqa: E501
 
         :return: The total of this SalesHistoryPagedCollection.  # noqa: E501
         :rtype: int
@@ -251,7 +251,7 @@ class SalesHistoryPagedCollection(object):
     def total(self, total):
         """Sets the total of this SalesHistoryPagedCollection.
 
-        The total number of items retrieved in the result set.  <br><br>If no items are found, this field is returned with a value of <code>0</code>.  # noqa: E501
+        The total number of items retrieved in the result set.<br><br>If no items are found, this field is returned with a value of <code>0</code>.<br><br><span class=\"tablenote\"><b>Note:</b> <code>total</code> is just an indicator of the number of listings for a given query. It could vary based on the number of listings with variations included in the result. It is strongly recommended that <code>total</code> not be used in pagination use cases. Instead, use <a href=\"/api-docs/buy/marketplace-insights/resources/item_sales/methods/search#response.next \"> next</a> to determine the results on the next page.</span>  # noqa: E501
 
         :param total: The total of this SalesHistoryPagedCollection.  # noqa: E501
         :type: int

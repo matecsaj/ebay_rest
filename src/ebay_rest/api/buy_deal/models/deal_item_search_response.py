@@ -3,7 +3,7 @@
 """
     Deal API
 
-    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />This API allows third-party developers to search for and retrieve details about eBay deals and events, as well as the items associated with those deals and events.  # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units. For information on how to obtain access to this API in production, see the <a href=\"/../api-docs/buy/static/buy-requirements.html\" target=\"_blank\">Buy APIs Requirements</a>.</span><br /><br />This API allows third-party developers to search for and retrieve details about eBay deals and events, as well as the items associated with those deals and events.  # noqa: E501
 
     OpenAPI spec version: v1.3.0
     
@@ -122,7 +122,7 @@ class DealItemSearchResponse(object):
     def limit(self):
         """Gets the limit of this DealItemSearchResponse.  # noqa: E501
 
-        The maximum number of items, from the current result set, returned on a single page. Default: 20  # noqa: E501
+        The maximum number of items, from the current result set, returned on a single page.<br /><br /><b>Default:</b> <code>20</code>  # noqa: E501
 
         :return: The limit of this DealItemSearchResponse.  # noqa: E501
         :rtype: int
@@ -133,7 +133,7 @@ class DealItemSearchResponse(object):
     def limit(self, limit):
         """Sets the limit of this DealItemSearchResponse.
 
-        The maximum number of items, from the current result set, returned on a single page. Default: 20  # noqa: E501
+        The maximum number of items, from the current result set, returned on a single page.<br /><br /><b>Default:</b> <code>20</code>  # noqa: E501
 
         :param limit: The limit of this DealItemSearchResponse.  # noqa: E501
         :type: int
@@ -168,7 +168,7 @@ class DealItemSearchResponse(object):
     def offset(self):
         """Gets the offset of this DealItemSearchResponse.  # noqa: E501
 
-        The number of items that will be skipped in the result set. This is used with the limit field to control the pagination of the output. For example, if the offset is set to 0 and the limit is set to 10, the method will retrieve items 1 through 10 from the list of items returned. If the offset is set to 10 and the limit is set to 10, the method will retrieve items 11 through 20 from the list of items returned. Default: 0  # noqa: E501
+        The number of items that will be skipped in the result set. This is used with the <b>limit</b> field to control the pagination of the output.<br /><br />For example, if the <b>offset</b> is set to <code>0</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 1 through 10 from the list of items returned. If the <b>offset</b> is set to <code>10</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 11 through 20 from the list of items returned.<br /><br /><b>Default:</b> <code>0</code>  # noqa: E501
 
         :return: The offset of this DealItemSearchResponse.  # noqa: E501
         :rtype: int
@@ -179,7 +179,7 @@ class DealItemSearchResponse(object):
     def offset(self, offset):
         """Sets the offset of this DealItemSearchResponse.
 
-        The number of items that will be skipped in the result set. This is used with the limit field to control the pagination of the output. For example, if the offset is set to 0 and the limit is set to 10, the method will retrieve items 1 through 10 from the list of items returned. If the offset is set to 10 and the limit is set to 10, the method will retrieve items 11 through 20 from the list of items returned. Default: 0  # noqa: E501
+        The number of items that will be skipped in the result set. This is used with the <b>limit</b> field to control the pagination of the output.<br /><br />For example, if the <b>offset</b> is set to <code>0</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 1 through 10 from the list of items returned. If the <b>offset</b> is set to <code>10</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 11 through 20 from the list of items returned.<br /><br /><b>Default:</b> <code>0</code>  # noqa: E501
 
         :param offset: The offset of this DealItemSearchResponse.  # noqa: E501
         :type: int

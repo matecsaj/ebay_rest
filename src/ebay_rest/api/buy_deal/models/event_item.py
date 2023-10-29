@@ -3,7 +3,7 @@
 """
     Deal API
 
-    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />This API allows third-party developers to search for and retrieve details about eBay deals and events, as well as the items associated with those deals and events.  # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units. For information on how to obtain access to this API in production, see the <a href=\"/../api-docs/buy/static/buy-requirements.html\" target=\"_blank\">Buy APIs Requirements</a>.</span><br /><br />This API allows third-party developers to search for and retrieve details about eBay deals and events, as well as the items associated with those deals and events.  # noqa: E501
 
     OpenAPI spec version: v1.3.0
     
@@ -295,7 +295,7 @@ class EventItem(object):
     def item_group_id(self):
         """Gets the item_group_id of this EventItem.  # noqa: E501
 
-        The unique identifier for the event item group. This is the parent item ID for the seller-defined variations. Note: This field is returned for multiple-SKU items.  # noqa: E501
+        The unique identifier for the event item group. This is the parent item ID for the seller-defined variations.<br /><br /><span class=\"tablenote\"><b>Note: </b>This field is returned for multiple-SKU items.</span>  # noqa: E501
 
         :return: The item_group_id of this EventItem.  # noqa: E501
         :rtype: str
@@ -306,7 +306,7 @@ class EventItem(object):
     def item_group_id(self, item_group_id):
         """Sets the item_group_id of this EventItem.
 
-        The unique identifier for the event item group. This is the parent item ID for the seller-defined variations. Note: This field is returned for multiple-SKU items.  # noqa: E501
+        The unique identifier for the event item group. This is the parent item ID for the seller-defined variations.<br /><br /><span class=\"tablenote\"><b>Note: </b>This field is returned for multiple-SKU items.</span>  # noqa: E501
 
         :param item_group_id: The item_group_id of this EventItem.  # noqa: E501
         :type: str
@@ -341,7 +341,7 @@ class EventItem(object):
     def item_id(self):
         """Gets the item_id of this EventItem.  # noqa: E501
 
-        The unique identifier for the event item. Note: This field is only returned for single-SKU items.  # noqa: E501
+        The unique identifier for the event item.<br /><br /><span class=\"tablenote\"><b>Note: </b>This field is only returned for single-SKU items.</span>  # noqa: E501
 
         :return: The item_id of this EventItem.  # noqa: E501
         :rtype: str
@@ -352,7 +352,7 @@ class EventItem(object):
     def item_id(self, item_id):
         """Sets the item_id of this EventItem.
 
-        The unique identifier for the event item. Note: This field is only returned for single-SKU items.  # noqa: E501
+        The unique identifier for the event item.<br /><br /><span class=\"tablenote\"><b>Note: </b>This field is only returned for single-SKU items.</span>  # noqa: E501
 
         :param item_id: The item_id of this EventItem.  # noqa: E501
         :type: str
@@ -542,7 +542,7 @@ class EventItem(object):
     def unit_pricing_measure(self):
         """Gets the unit_pricing_measure of this EventItem.  # noqa: E501
 
-        The designation used to specify the quantity of the event item, such as size, weight, volume, and count. This helps buyers compare prices. For example, the following tells the buyer that the item is 7.99 per 100 grams. &quot;unitPricingMeasure&quot;: &quot;100g&quot;, &quot;unitPrice&quot;: { &nbsp;&nbsp;&quot;value&quot;: &quot;7.99&quot;, &nbsp;&nbsp;&quot;currency&quot;: &quot;GBP&quot;  # noqa: E501
+        The designation used to specify the quantity of the event item, such as size, weight, volume, and count. This helps buyers compare prices. <br /><br />For example, the following tells the buyer that the item is 7.99 per 100 grams. <br /><br /><code>\"unitPricingMeasure\": \"100g\",<br /> \"unitPrice\": {<br />&nbsp;&nbsp;\"value\": \"7.99\",<br />&nbsp;&nbsp;\"currency\": \"GBP\"</code>  # noqa: E501
 
         :return: The unit_pricing_measure of this EventItem.  # noqa: E501
         :rtype: str
@@ -553,7 +553,7 @@ class EventItem(object):
     def unit_pricing_measure(self, unit_pricing_measure):
         """Sets the unit_pricing_measure of this EventItem.
 
-        The designation used to specify the quantity of the event item, such as size, weight, volume, and count. This helps buyers compare prices. For example, the following tells the buyer that the item is 7.99 per 100 grams. &quot;unitPricingMeasure&quot;: &quot;100g&quot;, &quot;unitPrice&quot;: { &nbsp;&nbsp;&quot;value&quot;: &quot;7.99&quot;, &nbsp;&nbsp;&quot;currency&quot;: &quot;GBP&quot;  # noqa: E501
+        The designation used to specify the quantity of the event item, such as size, weight, volume, and count. This helps buyers compare prices. <br /><br />For example, the following tells the buyer that the item is 7.99 per 100 grams. <br /><br /><code>\"unitPricingMeasure\": \"100g\",<br /> \"unitPrice\": {<br />&nbsp;&nbsp;\"value\": \"7.99\",<br />&nbsp;&nbsp;\"currency\": \"GBP\"</code>  # noqa: E501
 
         :param unit_pricing_measure: The unit_pricing_measure of this EventItem.  # noqa: E501
         :type: str

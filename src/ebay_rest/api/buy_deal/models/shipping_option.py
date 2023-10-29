@@ -3,7 +3,7 @@
 """
     Deal API
 
-    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />This API allows third-party developers to search for and retrieve details about eBay deals and events, as well as the items associated with those deals and events.  # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units. For information on how to obtain access to this API in production, see the <a href=\"/../api-docs/buy/static/buy-requirements.html\" target=\"_blank\">Buy APIs Requirements</a>.</span><br /><br />This API allows third-party developers to search for and retrieve details about eBay deals and events, as well as the items associated with those deals and events.  # noqa: E501
 
     OpenAPI spec version: v1.3.0
     
@@ -72,7 +72,7 @@ class ShippingOption(object):
     def shipping_cost_type(self):
         """Gets the shipping_cost_type of this ShippingOption.  # noqa: E501
 
-        The class of the shipping cost. Valid Values: FIXED or CALCULATED Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        The class of the shipping cost. <br /><br /><b> Valid Values: </b> <code>FIXED</code> or <code>CALCULATED</code> <br /><br />Code so that your app gracefully handles any future changes to this list.   # noqa: E501
 
         :return: The shipping_cost_type of this ShippingOption.  # noqa: E501
         :rtype: str
@@ -83,7 +83,7 @@ class ShippingOption(object):
     def shipping_cost_type(self, shipping_cost_type):
         """Sets the shipping_cost_type of this ShippingOption.
 
-        The class of the shipping cost. Valid Values: FIXED or CALCULATED Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        The class of the shipping cost. <br /><br /><b> Valid Values: </b> <code>FIXED</code> or <code>CALCULATED</code> <br /><br />Code so that your app gracefully handles any future changes to this list.   # noqa: E501
 
         :param shipping_cost_type: The shipping_cost_type of this ShippingOption.  # noqa: E501
         :type: str

@@ -32,47 +32,49 @@ class CustomerServiceMetricTaskApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def create_customer_service_metric_task(self, body, accept_language, **kwargs):  # noqa: E501
+    def create_customer_service_metric_task(self, body, accept_language, content_type, **kwargs):  # noqa: E501
         """create_customer_service_metric_task  # noqa: E501
 
         <p>Use this method to create a customer service metrics download task with filter criteria for the customer service metrics report. When using this method, specify the <strong>feedType</strong> and <strong>filterCriteria</strong> including both <strong>evaluationMarketplaceId</strong> and <strong>customerServiceMetricType</strong> for the report. The method returns the location response header containing the call URI to use with <strong>getCustomerServiceMetricTask</strong> to retrieve status and details on the task.</p><p>Only CURRENT Customer Service Metrics reports can be generated with the Sell Feed API. PROJECTED reports are not supported at this time. See the <a href=\"/api-docs/sell/analytics/resources/customer_service_metric/methods/getCustomerServiceMetric\">getCustomerServiceMetric</a> method document in the Analytics API for more information about these two types of reports.</p><p><span class=\"tablenote\"><strong>Note:</strong> Before calling this API, retrieve the summary of the seller's performance and rating for the customer service metric by calling <strong>getCustomerServiceMetric</strong> (part of the <a href=\"/api-docs/sell/analytics/resources/methods\">Analytics API</a>). You can then populate the create task request fields with the values from the response. This technique eliminates failed tasks that request a report for a <strong>customerServiceMetricType</strong> and <strong>evaluationMarketplaceId</strong> that are without evaluation.</span></p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_customer_service_metric_task(body, accept_language, async_req=True)
+        >>> thread = api.create_customer_service_metric_task(body, accept_language, content_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param CreateServiceMetricsTaskRequest body: Request payload containing version, feedType, and optional filterCriteria. (required)
-        :param str accept_language: Use this header to specify the natural language in which the authenticated user desires the response. (required)
+        :param str accept_language: Use this header to specify the natural language in which the authenticated user desires the response. For example, <code>en-US</code> for English or <code>de-DE</code> for German. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.create_customer_service_metric_task_with_http_info(body, accept_language, **kwargs)  # noqa: E501
+            return self.create_customer_service_metric_task_with_http_info(body, accept_language, content_type, **kwargs)  # noqa: E501
         else:
-            (data) = self.create_customer_service_metric_task_with_http_info(body, accept_language, **kwargs)  # noqa: E501
+            (data) = self.create_customer_service_metric_task_with_http_info(body, accept_language, content_type, **kwargs)  # noqa: E501
             return data
 
-    def create_customer_service_metric_task_with_http_info(self, body, accept_language, **kwargs):  # noqa: E501
+    def create_customer_service_metric_task_with_http_info(self, body, accept_language, content_type, **kwargs):  # noqa: E501
         """create_customer_service_metric_task  # noqa: E501
 
         <p>Use this method to create a customer service metrics download task with filter criteria for the customer service metrics report. When using this method, specify the <strong>feedType</strong> and <strong>filterCriteria</strong> including both <strong>evaluationMarketplaceId</strong> and <strong>customerServiceMetricType</strong> for the report. The method returns the location response header containing the call URI to use with <strong>getCustomerServiceMetricTask</strong> to retrieve status and details on the task.</p><p>Only CURRENT Customer Service Metrics reports can be generated with the Sell Feed API. PROJECTED reports are not supported at this time. See the <a href=\"/api-docs/sell/analytics/resources/customer_service_metric/methods/getCustomerServiceMetric\">getCustomerServiceMetric</a> method document in the Analytics API for more information about these two types of reports.</p><p><span class=\"tablenote\"><strong>Note:</strong> Before calling this API, retrieve the summary of the seller's performance and rating for the customer service metric by calling <strong>getCustomerServiceMetric</strong> (part of the <a href=\"/api-docs/sell/analytics/resources/methods\">Analytics API</a>). You can then populate the create task request fields with the values from the response. This technique eliminates failed tasks that request a report for a <strong>customerServiceMetricType</strong> and <strong>evaluationMarketplaceId</strong> that are without evaluation.</span></p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_customer_service_metric_task_with_http_info(body, accept_language, async_req=True)
+        >>> thread = api.create_customer_service_metric_task_with_http_info(body, accept_language, content_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param CreateServiceMetricsTaskRequest body: Request payload containing version, feedType, and optional filterCriteria. (required)
-        :param str accept_language: Use this header to specify the natural language in which the authenticated user desires the response. (required)
+        :param str accept_language: Use this header to specify the natural language in which the authenticated user desires the response. For example, <code>en-US</code> for English or <code>de-DE</code> for German. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['body', 'accept_language']  # noqa: E501
+        all_params = ['body', 'accept_language', 'content_type']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -95,6 +97,10 @@ class CustomerServiceMetricTaskApi(object):
         if ('accept_language' not in params or
                 params['accept_language'] is None):
             raise ValueError("Missing the required parameter `accept_language` when calling `create_customer_service_metric_task`")  # noqa: E501
+        # verify the required parameter 'content_type' is set
+        if ('content_type' not in params or
+                params['content_type'] is None):
+            raise ValueError("Missing the required parameter `content_type` when calling `create_customer_service_metric_task`")  # noqa: E501
 
         collection_formats = {}
 
@@ -104,7 +110,9 @@ class CustomerServiceMetricTaskApi(object):
 
         header_params = {}
         if 'accept_language' in params:
-            header_params['accept-language'] = params['accept_language']  # noqa: E501
+            header_params['Accept-Language'] = params['accept_language']  # noqa: E501
+        if 'content_type' in params:
+            header_params['Content-Type'] = params['content_type']  # noqa: E501
 
         form_params = []
         local_var_files = {}

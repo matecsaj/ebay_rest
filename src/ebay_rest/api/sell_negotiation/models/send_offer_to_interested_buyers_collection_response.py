@@ -46,7 +46,7 @@ class SendOfferToInterestedBuyersCollectionResponse(object):
     def offers(self):
         """Gets the offers of this SendOfferToInterestedBuyersCollectionResponse.  # noqa: E501
 
-        The offers container returns a list of the offers sent to buyers who have shown an interest in listings included in the offer.  # noqa: E501
+        The <b>offers</b> container returns a list of the offers sent to buyers who have shown an interest in listings included in the offer.  # noqa: E501
 
         :return: The offers of this SendOfferToInterestedBuyersCollectionResponse.  # noqa: E501
         :rtype: list[Offer]
@@ -57,7 +57,7 @@ class SendOfferToInterestedBuyersCollectionResponse(object):
     def offers(self, offers):
         """Sets the offers of this SendOfferToInterestedBuyersCollectionResponse.
 
-        The offers container returns a list of the offers sent to buyers who have shown an interest in listings included in the offer.  # noqa: E501
+        The <b>offers</b> container returns a list of the offers sent to buyers who have shown an interest in listings included in the offer.  # noqa: E501
 
         :param offers: The offers of this SendOfferToInterestedBuyersCollectionResponse.  # noqa: E501
         :type: list[Offer]

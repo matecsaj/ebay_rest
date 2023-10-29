@@ -106,15 +106,6 @@
             ]
         }
     ],
-    "EBAY_IN": [
-        "India",
-        {
-            "en-GB": [
-                "https://www.ebay.in",
-                ""
-            ]
-        }
-    ],
     "EBAY_IT": [
         "Italy",
         {
@@ -124,7 +115,7 @@
             ]
         }
     ],
-    "EBAY_MOTORS_US": [
+    "EBAY_MOTORS": [
         "United States",
         {
             "en-US": [
@@ -172,17 +163,8 @@
     "EBAY_SG": [
         "Singapore",
         {
-            "en-US": [
+            "en_US": [
                 "https://www.ebay.com.sg",
-                ""
-            ]
-        }
-    ],
-    "EBAY_TH": [
-        "Thailand",
-        {
-            "th-TH": [
-                "https://info.ebay.co.th",
                 ""
             ]
         }
@@ -201,15 +183,6 @@
         {
             "en-US": [
                 "https://www.ebay.com",
-                ""
-            ]
-        }
-    ],
-    "EBAY_VN": [
-        "Vietnam",
-        {
-            "en-US": [
-                "https://www.ebay.vn",
                 ""
             ]
         }

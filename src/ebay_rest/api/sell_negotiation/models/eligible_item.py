@@ -46,7 +46,7 @@ class EligibleItem(object):
     def listing_id(self):
         """Gets the listing_id of this EligibleItem.  # noqa: E501
 
-        The unique eBay-assigned ID for an eBay listing. A listingId is assigned by eBay when a seller creates a listing with the Trading API.  # noqa: E501
+        The unique eBay-assigned ID for an eBay listing.  <br><br>A <b>listingId</b> is assigned by eBay when a seller creates a listing with the Trading API.  # noqa: E501
 
         :return: The listing_id of this EligibleItem.  # noqa: E501
         :rtype: str
@@ -57,7 +57,7 @@ class EligibleItem(object):
     def listing_id(self, listing_id):
         """Sets the listing_id of this EligibleItem.
 
-        The unique eBay-assigned ID for an eBay listing. A listingId is assigned by eBay when a seller creates a listing with the Trading API.  # noqa: E501
+        The unique eBay-assigned ID for an eBay listing.  <br><br>A <b>listingId</b> is assigned by eBay when a seller creates a listing with the Trading API.  # noqa: E501
 
         :param listing_id: The listing_id of this EligibleItem.  # noqa: E501
         :type: str

@@ -3,7 +3,7 @@
 """
     Deal API
 
-    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />This API allows third-party developers to search for and retrieve details about eBay deals and events, as well as the items associated with those deals and events.  # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units. For information on how to obtain access to this API in production, see the <a href=\"/../api-docs/buy/static/buy-requirements.html\" target=\"_blank\">Buy APIs Requirements</a>.</span><br /><br />This API allows third-party developers to search for and retrieve details about eBay deals and events, as well as the items associated with those deals and events.  # noqa: E501
 
     OpenAPI spec version: v1.3.0
     
@@ -82,7 +82,7 @@ class MarketingPrice(object):
     def discount_percentage(self):
         """Gets the discount_percentage of this MarketingPrice.  # noqa: E501
 
-        The percentage of the seller discount based on the value returned in the originalPrice field.  # noqa: E501
+        The percentage of the seller discount based on the value returned in the <b>originalPrice</b> field.  # noqa: E501
 
         :return: The discount_percentage of this MarketingPrice.  # noqa: E501
         :rtype: str
@@ -93,7 +93,7 @@ class MarketingPrice(object):
     def discount_percentage(self, discount_percentage):
         """Sets the discount_percentage of this MarketingPrice.
 
-        The percentage of the seller discount based on the value returned in the originalPrice field.  # noqa: E501
+        The percentage of the seller discount based on the value returned in the <b>originalPrice</b> field.  # noqa: E501
 
         :param discount_percentage: The discount_percentage of this MarketingPrice.  # noqa: E501
         :type: str
@@ -126,7 +126,7 @@ class MarketingPrice(object):
     def price_treatment(self):
         """Gets the price_treatment of this MarketingPrice.  # noqa: E501
 
-        The pricing treatment (discount) that was applied to the price of the item. Note: The pricing treatment affects how and where the discounted price can be displayed. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/deal/types/api:PriceTreatmentEnum'>eBay API documentation</a>  # noqa: E501
+        The pricing treatment (discount) that was applied to the price of the item. <br /><br /><span class=\"tablenote\"><b>Note: </b> The pricing treatment affects how and where the discounted price can be displayed.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/deal/types/api:PriceTreatmentEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The price_treatment of this MarketingPrice.  # noqa: E501
         :rtype: str
@@ -137,7 +137,7 @@ class MarketingPrice(object):
     def price_treatment(self, price_treatment):
         """Sets the price_treatment of this MarketingPrice.
 
-        The pricing treatment (discount) that was applied to the price of the item. Note: The pricing treatment affects how and where the discounted price can be displayed. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/deal/types/api:PriceTreatmentEnum'>eBay API documentation</a>  # noqa: E501
+        The pricing treatment (discount) that was applied to the price of the item. <br /><br /><span class=\"tablenote\"><b>Note: </b> The pricing treatment affects how and where the discounted price can be displayed.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/deal/types/api:PriceTreatmentEnum'>eBay API documentation</a>  # noqa: E501
 
         :param price_treatment: The price_treatment of this MarketingPrice.  # noqa: E501
         :type: str

@@ -61,7 +61,7 @@ class CreateOffersRequest(object):
     def allow_counter_offer(self):
         """Gets the allow_counter_offer of this CreateOffersRequest.  # noqa: E501
 
-        If set to true, the buyer is allowed to make a counter-offer to the seller's offer. Note: Currently, you must set this field to false; counter-offers are not supported in this release. Default: false  # noqa: E501
+        If set to <code>true</code>, the buyer is allowed to make a counter-offer to the seller's offer.  <br><br><span class=\"tablenote\"><b>Note:</b> Currently, you must set this field to <code>false</code>; counter-offers are not supported in this release.</span>  <br><br><b>Default:</b> <code>false</code>  # noqa: E501
 
         :return: The allow_counter_offer of this CreateOffersRequest.  # noqa: E501
         :rtype: bool
@@ -72,7 +72,7 @@ class CreateOffersRequest(object):
     def allow_counter_offer(self, allow_counter_offer):
         """Sets the allow_counter_offer of this CreateOffersRequest.
 
-        If set to true, the buyer is allowed to make a counter-offer to the seller's offer. Note: Currently, you must set this field to false; counter-offers are not supported in this release. Default: false  # noqa: E501
+        If set to <code>true</code>, the buyer is allowed to make a counter-offer to the seller's offer.  <br><br><span class=\"tablenote\"><b>Note:</b> Currently, you must set this field to <code>false</code>; counter-offers are not supported in this release.</span>  <br><br><b>Default:</b> <code>false</code>  # noqa: E501
 
         :param allow_counter_offer: The allow_counter_offer of this CreateOffersRequest.  # noqa: E501
         :type: bool
@@ -84,7 +84,7 @@ class CreateOffersRequest(object):
     def message(self):
         """Gets the message of this CreateOffersRequest.  # noqa: E501
 
-        A seller-defined message related to the offer being made. This message is sent to the list of &quot;interested&quot; buyers. To increase the conversion rate of the offers a seller makes to buyers, eBay recommends you always add a customized message to your offers. Maximum length: 2,000 characters  # noqa: E501
+        A seller-defined message related to the offer being made.  <br><br>This message is sent to the list of \"interested\" buyers.  <br><br>To increase the conversion rate of the offers a seller makes to buyers, eBay recommends you always add a customized message to your offers.  <br><br><b>Maximum length:</b> 2,000 characters  # noqa: E501
 
         :return: The message of this CreateOffersRequest.  # noqa: E501
         :rtype: str
@@ -95,7 +95,7 @@ class CreateOffersRequest(object):
     def message(self, message):
         """Sets the message of this CreateOffersRequest.
 
-        A seller-defined message related to the offer being made. This message is sent to the list of &quot;interested&quot; buyers. To increase the conversion rate of the offers a seller makes to buyers, eBay recommends you always add a customized message to your offers. Maximum length: 2,000 characters  # noqa: E501
+        A seller-defined message related to the offer being made.  <br><br>This message is sent to the list of \"interested\" buyers.  <br><br>To increase the conversion rate of the offers a seller makes to buyers, eBay recommends you always add a customized message to your offers.  <br><br><b>Maximum length:</b> 2,000 characters  # noqa: E501
 
         :param message: The message of this CreateOffersRequest.  # noqa: E501
         :type: str
@@ -128,7 +128,7 @@ class CreateOffersRequest(object):
     def offered_items(self):
         """Gets the offered_items of this CreateOffersRequest.  # noqa: E501
 
-        An array of objects where each object contains the details of an offer and the ID of the listing on which the offer is being made. Note that the service does not currently support the creation of multiple offers with a single call to sendOfferToInterestedBuyer. With this, each request can target only one listing at a time and you must populate this array with a single element that contains the details of one offer.  # noqa: E501
+        An array of objects where each object contains the details of an offer and the ID of the listing on which the offer is being made.  <br><br>Note that the service does not currently support the creation of multiple offers with a single call to <b>sendOfferToInterestedBuyer</b>. With this, each request can target only one listing at a time and you must populate this array with a single element that contains the details of one offer.  # noqa: E501
 
         :return: The offered_items of this CreateOffersRequest.  # noqa: E501
         :rtype: list[OfferedItem]
@@ -139,7 +139,7 @@ class CreateOffersRequest(object):
     def offered_items(self, offered_items):
         """Sets the offered_items of this CreateOffersRequest.
 
-        An array of objects where each object contains the details of an offer and the ID of the listing on which the offer is being made. Note that the service does not currently support the creation of multiple offers with a single call to sendOfferToInterestedBuyer. With this, each request can target only one listing at a time and you must populate this array with a single element that contains the details of one offer.  # noqa: E501
+        An array of objects where each object contains the details of an offer and the ID of the listing on which the offer is being made.  <br><br>Note that the service does not currently support the creation of multiple offers with a single call to <b>sendOfferToInterestedBuyer</b>. With this, each request can target only one listing at a time and you must populate this array with a single element that contains the details of one offer.  # noqa: E501
 
         :param offered_items: The offered_items of this CreateOffersRequest.  # noqa: E501
         :type: list[OfferedItem]

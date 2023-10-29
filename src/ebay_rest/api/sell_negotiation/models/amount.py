@@ -51,7 +51,7 @@ class Amount(object):
     def currency(self):
         """Gets the currency of this Amount.  # noqa: E501
 
-        The base currency applied to the value field to establish a monetary amount. The currency is represented as a 3-letter ISO4217 currency code. For example, the code for the Canadian Dollar is CAD. Default: The default currency of the eBay marketplace that hosts the listing. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/negotiation/types/bas:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+        The base currency applied to the <b>value</b> field to establish a monetary amount.  <br><br>The currency is represented as a 3-letter <a href=\"http://www.currency-iso.org/en/home/tables/table-a1.html\" title=\"www.currency-iso.org\" target=\"_blank\">ISO4217</a> currency code. For example, the code for the Canadian Dollar is <code>CAD</code>.  <br><br><b>Default:</b> The default currency of the eBay marketplace that hosts the listing. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/negotiation/types/bas:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The currency of this Amount.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class Amount(object):
     def currency(self, currency):
         """Sets the currency of this Amount.
 
-        The base currency applied to the value field to establish a monetary amount. The currency is represented as a 3-letter ISO4217 currency code. For example, the code for the Canadian Dollar is CAD. Default: The default currency of the eBay marketplace that hosts the listing. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/negotiation/types/bas:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+        The base currency applied to the <b>value</b> field to establish a monetary amount.  <br><br>The currency is represented as a 3-letter <a href=\"http://www.currency-iso.org/en/home/tables/table-a1.html\" title=\"www.currency-iso.org\" target=\"_blank\">ISO4217</a> currency code. For example, the code for the Canadian Dollar is <code>CAD</code>.  <br><br><b>Default:</b> The default currency of the eBay marketplace that hosts the listing. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/negotiation/types/bas:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param currency: The currency of this Amount.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class Amount(object):
     def value(self):
         """Gets the value of this Amount.  # noqa: E501
 
-        The monetary amount in the specified currency.  # noqa: E501
+        The monetary amount in the specified <b>currency</b>.  # noqa: E501
 
         :return: The value of this Amount.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class Amount(object):
     def value(self, value):
         """Sets the value of this Amount.
 
-        The monetary amount in the specified currency.  # noqa: E501
+        The monetary amount in the specified <b>currency</b>.  # noqa: E501
 
         :param value: The value of this Amount.  # noqa: E501
         :type: str

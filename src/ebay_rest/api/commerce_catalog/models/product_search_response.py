@@ -173,7 +173,7 @@ class ProductSearchResponse(object):
     def prev(self):
         """Gets the prev of this ProductSearchResponse.  # noqa: E501
 
-        This field is reserved for internal or future use.  !-- <i>Not returned if</i> the currently returned result set is the first set of product records from the current collection of matching products. This field contains the <b>search</b> call URI for the previous result set. For example, the following URI returns products 21 thru 30 from the collection of products: <br /><br /> <code><i>path</i>/product_summary/search?limit=10&offset=20</code> <br /><br />  <span class=\"tablenote\"><strong>Note:</strong> This feature employs a zero-based list, where the first product in the list has an offset of <code>0</code>.</span> >  # noqa: E501
+        This field is reserved for internal or future use.  <!-- <i>Not returned if</i> the currently returned result set is the first set of product records from the current collection of matching products. This field contains the <b>search</b> call URI for the previous result set. For example, the following URI returns products 21 thru 30 from the collection of products: <br /><br /> <code><i>path</i>/product_summary/search?limit=10&offset=20</code> <br /><br />  <span class=\"tablenote\"><strong>Note:</strong> This feature employs a zero-based list, where the first product in the list has an offset of <code>0</code>.</span> -->  # noqa: E501
 
         :return: The prev of this ProductSearchResponse.  # noqa: E501
         :rtype: str
@@ -184,7 +184,7 @@ class ProductSearchResponse(object):
     def prev(self, prev):
         """Sets the prev of this ProductSearchResponse.
 
-        This field is reserved for internal or future use.  !-- <i>Not returned if</i> the currently returned result set is the first set of product records from the current collection of matching products. This field contains the <b>search</b> call URI for the previous result set. For example, the following URI returns products 21 thru 30 from the collection of products: <br /><br /> <code><i>path</i>/product_summary/search?limit=10&offset=20</code> <br /><br />  <span class=\"tablenote\"><strong>Note:</strong> This feature employs a zero-based list, where the first product in the list has an offset of <code>0</code>.</span> >  # noqa: E501
+        This field is reserved for internal or future use.  <!-- <i>Not returned if</i> the currently returned result set is the first set of product records from the current collection of matching products. This field contains the <b>search</b> call URI for the previous result set. For example, the following URI returns products 21 thru 30 from the collection of products: <br /><br /> <code><i>path</i>/product_summary/search?limit=10&offset=20</code> <br /><br />  <span class=\"tablenote\"><strong>Note:</strong> This feature employs a zero-based list, where the first product in the list has an offset of <code>0</code>.</span> -->  # noqa: E501
 
         :param prev: The prev of this ProductSearchResponse.  # noqa: E501
         :type: str
@@ -240,7 +240,7 @@ class ProductSearchResponse(object):
     def total(self):
         """Gets the total of this ProductSearchResponse.  # noqa: E501
 
-        This field is reserved for internal or future use. <!-- The total number of product records in the returned collection of matched products. >  # noqa: E501
+        This field is reserved for internal or future use. <!-- The total number of product records in the returned collection of matched products. -->  # noqa: E501
 
         :return: The total of this ProductSearchResponse.  # noqa: E501
         :rtype: int
@@ -251,7 +251,7 @@ class ProductSearchResponse(object):
     def total(self, total):
         """Sets the total of this ProductSearchResponse.
 
-        This field is reserved for internal or future use. <!-- The total number of product records in the returned collection of matched products. >  # noqa: E501
+        This field is reserved for internal or future use. <!-- The total number of product records in the returned collection of matched products. -->  # noqa: E501
 
         :param total: The total of this ProductSearchResponse.  # noqa: E501
         :type: int

@@ -35,16 +35,16 @@ class OfferApi(object):
     def find_eligible_items(self, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """find_eligible_items  # noqa: E501
 
-        This method evaluates a seller's current listings and returns the set of IDs that are eligible for a seller-initiated discount offer to a buyer. A listing ID is returned only when one or more buyers have shown an &quot;interest&quot; in the listing. If any buyers have shown interest in a listing, the seller can initiate a &quot;negotiation&quot; with them by calling sendOfferToInterestedBuyers, which sends all interested buyers a message that offers the listing at a discount. For details about how to create seller offers to buyers, see Sending offers to buyers.  # noqa: E501
+        This method evaluates a seller's current listings and returns the set of IDs that are eligible for a seller-initiated discount offer to a buyer.  <br><br>A listing ID is returned only when one or more buyers have shown an \"interest\" in the listing.  <br><br>If any buyers have shown interest in a listing, the seller can initiate a \"negotiation\" with them by calling <a href=\"/api-docs/sell/negotiation/resources/offer/methods/sendOfferToInterestedBuyers\">sendOfferToInterestedBuyers</a>, which sends all interested buyers a message that offers the listing at a discount.  <br><br>For details about how to create seller offers to buyers, see <a href=\"/api-docs/sell/static/marketing/offers-to-buyers.html\" title=\"Selling Integration Guide\">Sending offers to buyers</a>.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.find_eligible_items(x_ebay_c_marketplace_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str x_ebay_c_marketplace_id: The eBay marketplace on which you want to search for eligible listings. For a complete list of supported marketplaces, see Negotiation API requirements and restrictions. (required)
-        :param str limit: This query parameter specifies the maximum number of items to return from the result set on a page in the paginated response. Minimum: 1 &nbsp; &nbsp;Maximum: 200 Default: 10
-        :param str offset: This query parameter specifies the number of results to skip in the result set before returning the first result in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 results from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
+        :param str x_ebay_c_marketplace_id: The eBay marketplace on which you want to search for eligible listings. <br><br>For a complete list of supported marketplaces, see <a href=\"/api-docs/sell/negotiation/overview.html#requirements\" title=\"Negotiation API Overview\">Negotiation API requirements and restrictions</a>. (required)
+        :param str limit: This query parameter specifies the maximum number of items to return from the result set on a page in the paginated response. <p><b>Minimum:</b> 1 &nbsp; &nbsp;<b>Maximum:</b> 200 <br><b>Default: </b>10</p>
+        :param str offset: This query parameter specifies the number of results to skip in the result set before returning the first result in the paginated response.  <br><br>Combine <b>offset</b> with the <b>limit</b> query parameter to control the items returned in the response. For example, if you supply an <b>offset</b> of <code>0</code> and a <b>limit</b> of <code>10</code>, the first page of the response contains the first 10 results from the complete list of items retrieved by the call. If <b>offset</b> is <code>10</code> and <b>limit</b> is <code>20</code>, the first page of the response contains items 11-30 from the complete result set. <br><br><b>Default:</b> 0
         :return: PagedEligibleItemCollection
                  If the method is called asynchronously,
                  returns the request thread.
@@ -59,16 +59,16 @@ class OfferApi(object):
     def find_eligible_items_with_http_info(self, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """find_eligible_items  # noqa: E501
 
-        This method evaluates a seller's current listings and returns the set of IDs that are eligible for a seller-initiated discount offer to a buyer. A listing ID is returned only when one or more buyers have shown an &quot;interest&quot; in the listing. If any buyers have shown interest in a listing, the seller can initiate a &quot;negotiation&quot; with them by calling sendOfferToInterestedBuyers, which sends all interested buyers a message that offers the listing at a discount. For details about how to create seller offers to buyers, see Sending offers to buyers.  # noqa: E501
+        This method evaluates a seller's current listings and returns the set of IDs that are eligible for a seller-initiated discount offer to a buyer.  <br><br>A listing ID is returned only when one or more buyers have shown an \"interest\" in the listing.  <br><br>If any buyers have shown interest in a listing, the seller can initiate a \"negotiation\" with them by calling <a href=\"/api-docs/sell/negotiation/resources/offer/methods/sendOfferToInterestedBuyers\">sendOfferToInterestedBuyers</a>, which sends all interested buyers a message that offers the listing at a discount.  <br><br>For details about how to create seller offers to buyers, see <a href=\"/api-docs/sell/static/marketing/offers-to-buyers.html\" title=\"Selling Integration Guide\">Sending offers to buyers</a>.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.find_eligible_items_with_http_info(x_ebay_c_marketplace_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str x_ebay_c_marketplace_id: The eBay marketplace on which you want to search for eligible listings. For a complete list of supported marketplaces, see Negotiation API requirements and restrictions. (required)
-        :param str limit: This query parameter specifies the maximum number of items to return from the result set on a page in the paginated response. Minimum: 1 &nbsp; &nbsp;Maximum: 200 Default: 10
-        :param str offset: This query parameter specifies the number of results to skip in the result set before returning the first result in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 results from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
+        :param str x_ebay_c_marketplace_id: The eBay marketplace on which you want to search for eligible listings. <br><br>For a complete list of supported marketplaces, see <a href=\"/api-docs/sell/negotiation/overview.html#requirements\" title=\"Negotiation API Overview\">Negotiation API requirements and restrictions</a>. (required)
+        :param str limit: This query parameter specifies the maximum number of items to return from the result set on a page in the paginated response. <p><b>Minimum:</b> 1 &nbsp; &nbsp;<b>Maximum:</b> 200 <br><b>Default: </b>10</p>
+        :param str offset: This query parameter specifies the number of results to skip in the result set before returning the first result in the paginated response.  <br><br>Combine <b>offset</b> with the <b>limit</b> query parameter to control the items returned in the response. For example, if you supply an <b>offset</b> of <code>0</code> and a <b>limit</b> of <code>10</code>, the first page of the response contains the first 10 results from the complete list of items retrieved by the call. If <b>offset</b> is <code>10</code> and <b>limit</b> is <code>20</code>, the first page of the response contains items 11-30 from the complete result set. <br><br><b>Default:</b> 0
         :return: PagedEligibleItemCollection
                  If the method is called asynchronously,
                  returns the request thread.
@@ -135,17 +135,18 @@ class OfferApi(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def send_offer_to_interested_buyers(self, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
+    def send_offer_to_interested_buyers(self, x_ebay_c_marketplace_id, content_type, **kwargs):  # noqa: E501
         """send_offer_to_interested_buyers  # noqa: E501
 
-        This method sends eligible buyers offers to purchase items in a listing at a discount. When a buyer has shown interest in a listing, they become &quot;eligible&quot; to receive a seller-initiated offer to purchase the item(s). Sellers use findEligibleItems to get the set of listings that have interested buyers. If a listing has interested buyers, sellers can use this method (sendOfferToInterestedBuyers) to send an offer to the buyers who are interested in the listing. The offer gives buyers the ability to purchase the associated listings at a discounted price. For details about how to create seller offers to buyers, see Sending offers to buyers.  # noqa: E501
+        This method sends eligible buyers offers to purchase items in a listing at a discount.  <br><br>When a buyer has shown <i>interest</i> in a listing, they become \"eligible\" to receive a seller-initiated offer to purchase the item(s).  <br><br>Sellers use <a href=\"/api-docs/sell/negotiation/resources/offer/methods/findEligibleItems\">findEligibleItems</a> to get the set of listings that have interested buyers. If a listing has interested buyers, sellers can use this method (<b>sendOfferToInterestedBuyers</b>) to send an offer to the buyers who are interested in the listing. The offer gives buyers the ability to purchase the associated listings at a discounted price.  <br><br>For details about how to create seller offers to buyers, see <a href=\"/api-docs/sell/static/marketing/offers-to-buyers.html\" title=\"Selling Integration Guide\">Sending offers to buyers</a>.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.send_offer_to_interested_buyers(x_ebay_c_marketplace_id, async_req=True)
+        >>> thread = api.send_offer_to_interested_buyers(x_ebay_c_marketplace_id, content_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str x_ebay_c_marketplace_id: The eBay marketplace on which your listings with &quot;eligible&quot; buyers appear. For a complete list of supported marketplaces, see Negotiation API requirements and restrictions. (required)
+        :param str x_ebay_c_marketplace_id: The eBay marketplace on which your listings with \"eligible\" buyers appear.  <br><br>For a complete list of supported marketplaces, see <a href=\"/api-docs/sell/negotiation/overview.html#requirements\" title=\"Negotiation API Overview\">Negotiation API requirements and restrictions</a>. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param CreateOffersRequest body: Send offer to eligible items request.
         :return: SendOfferToInterestedBuyersCollectionResponse
                  If the method is called asynchronously,
@@ -153,29 +154,30 @@ class OfferApi(object):
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.send_offer_to_interested_buyers_with_http_info(x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+            return self.send_offer_to_interested_buyers_with_http_info(x_ebay_c_marketplace_id, content_type, **kwargs)  # noqa: E501
         else:
-            (data) = self.send_offer_to_interested_buyers_with_http_info(x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
+            (data) = self.send_offer_to_interested_buyers_with_http_info(x_ebay_c_marketplace_id, content_type, **kwargs)  # noqa: E501
             return data
 
-    def send_offer_to_interested_buyers_with_http_info(self, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
+    def send_offer_to_interested_buyers_with_http_info(self, x_ebay_c_marketplace_id, content_type, **kwargs):  # noqa: E501
         """send_offer_to_interested_buyers  # noqa: E501
 
-        This method sends eligible buyers offers to purchase items in a listing at a discount. When a buyer has shown interest in a listing, they become &quot;eligible&quot; to receive a seller-initiated offer to purchase the item(s). Sellers use findEligibleItems to get the set of listings that have interested buyers. If a listing has interested buyers, sellers can use this method (sendOfferToInterestedBuyers) to send an offer to the buyers who are interested in the listing. The offer gives buyers the ability to purchase the associated listings at a discounted price. For details about how to create seller offers to buyers, see Sending offers to buyers.  # noqa: E501
+        This method sends eligible buyers offers to purchase items in a listing at a discount.  <br><br>When a buyer has shown <i>interest</i> in a listing, they become \"eligible\" to receive a seller-initiated offer to purchase the item(s).  <br><br>Sellers use <a href=\"/api-docs/sell/negotiation/resources/offer/methods/findEligibleItems\">findEligibleItems</a> to get the set of listings that have interested buyers. If a listing has interested buyers, sellers can use this method (<b>sendOfferToInterestedBuyers</b>) to send an offer to the buyers who are interested in the listing. The offer gives buyers the ability to purchase the associated listings at a discounted price.  <br><br>For details about how to create seller offers to buyers, see <a href=\"/api-docs/sell/static/marketing/offers-to-buyers.html\" title=\"Selling Integration Guide\">Sending offers to buyers</a>.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.send_offer_to_interested_buyers_with_http_info(x_ebay_c_marketplace_id, async_req=True)
+        >>> thread = api.send_offer_to_interested_buyers_with_http_info(x_ebay_c_marketplace_id, content_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str x_ebay_c_marketplace_id: The eBay marketplace on which your listings with &quot;eligible&quot; buyers appear. For a complete list of supported marketplaces, see Negotiation API requirements and restrictions. (required)
+        :param str x_ebay_c_marketplace_id: The eBay marketplace on which your listings with \"eligible\" buyers appear.  <br><br>For a complete list of supported marketplaces, see <a href=\"/api-docs/sell/negotiation/overview.html#requirements\" title=\"Negotiation API Overview\">Negotiation API requirements and restrictions</a>. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param CreateOffersRequest body: Send offer to eligible items request.
         :return: SendOfferToInterestedBuyersCollectionResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['x_ebay_c_marketplace_id', 'body']  # noqa: E501
+        all_params = ['x_ebay_c_marketplace_id', 'content_type', 'body']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -194,6 +196,10 @@ class OfferApi(object):
         if ('x_ebay_c_marketplace_id' not in params or
                 params['x_ebay_c_marketplace_id'] is None):
             raise ValueError("Missing the required parameter `x_ebay_c_marketplace_id` when calling `send_offer_to_interested_buyers`")  # noqa: E501
+        # verify the required parameter 'content_type' is set
+        if ('content_type' not in params or
+                params['content_type'] is None):
+            raise ValueError("Missing the required parameter `content_type` when calling `send_offer_to_interested_buyers`")  # noqa: E501
 
         collection_formats = {}
 
@@ -204,6 +210,8 @@ class OfferApi(object):
         header_params = {}
         if 'x_ebay_c_marketplace_id' in params:
             header_params['X-EBAY-C-MARKETPLACE-ID'] = params['x_ebay_c_marketplace_id']  # noqa: E501
+        if 'content_type' in params:
+            header_params['Content-Type'] = params['content_type']  # noqa: E501
 
         form_params = []
         local_var_files = {}

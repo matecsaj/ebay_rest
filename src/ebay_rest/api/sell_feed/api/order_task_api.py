@@ -32,45 +32,47 @@ class OrderTaskApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def create_order_task(self, body, **kwargs):  # noqa: E501
+    def create_order_task(self, body, content_type, **kwargs):  # noqa: E501
         """create_order_task  # noqa: E501
 
         This method creates an order download task with filter criteria for the order report. When using this method, specify the <b> feedType</b>, <b> schemaVersion</b>, and <b> filterCriteria</b> for the report. The method returns the <b> location</b> response header containing the getOrderTask call URI to retrieve the order task you just created. The URL includes the eBay-assigned task ID, which you can use to reference the order task. <br /><br />To retrieve the status of the task, use the <b> getOrderTask</b> method to retrieve a single task ID or the <b>getOrderTasks</b> method to retrieve multiple order task IDs.<p> <span class=\"tablenote\"><strong>Note:</strong> The scope depends on the feed type. An error message results when an unsupported scope or feed type is specified.</span></p><p>The following list contains this method's authorization scope and its corresponding feed type:<ul><li>https://api.ebay.com/oauth/api_scope/sell.fulfillment: LMS_ORDER_REPORT</li></ul> </p><p>For details about how this method is used, see <a href=\"/api-docs/sell/static/feed/general-feed-tasks.html\">General feed types</a> in the Selling Integration Guide. <p> <span class=\"tablenote\"><strong>Note:</strong> At this time, the <strong>createOrderTask</strong> method only supports order creation date filters and not modified order date filters. Do not include the <strong>modifiedDateRange</strong> filter in your request payload.</span></p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_order_task(body, async_req=True)
+        >>> thread = api.create_order_task(body, content_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param CreateOrderTaskRequest body: description not needed (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.create_order_task_with_http_info(body, **kwargs)  # noqa: E501
+            return self.create_order_task_with_http_info(body, content_type, **kwargs)  # noqa: E501
         else:
-            (data) = self.create_order_task_with_http_info(body, **kwargs)  # noqa: E501
+            (data) = self.create_order_task_with_http_info(body, content_type, **kwargs)  # noqa: E501
             return data
 
-    def create_order_task_with_http_info(self, body, **kwargs):  # noqa: E501
+    def create_order_task_with_http_info(self, body, content_type, **kwargs):  # noqa: E501
         """create_order_task  # noqa: E501
 
         This method creates an order download task with filter criteria for the order report. When using this method, specify the <b> feedType</b>, <b> schemaVersion</b>, and <b> filterCriteria</b> for the report. The method returns the <b> location</b> response header containing the getOrderTask call URI to retrieve the order task you just created. The URL includes the eBay-assigned task ID, which you can use to reference the order task. <br /><br />To retrieve the status of the task, use the <b> getOrderTask</b> method to retrieve a single task ID or the <b>getOrderTasks</b> method to retrieve multiple order task IDs.<p> <span class=\"tablenote\"><strong>Note:</strong> The scope depends on the feed type. An error message results when an unsupported scope or feed type is specified.</span></p><p>The following list contains this method's authorization scope and its corresponding feed type:<ul><li>https://api.ebay.com/oauth/api_scope/sell.fulfillment: LMS_ORDER_REPORT</li></ul> </p><p>For details about how this method is used, see <a href=\"/api-docs/sell/static/feed/general-feed-tasks.html\">General feed types</a> in the Selling Integration Guide. <p> <span class=\"tablenote\"><strong>Note:</strong> At this time, the <strong>createOrderTask</strong> method only supports order creation date filters and not modified order date filters. Do not include the <strong>modifiedDateRange</strong> filter in your request payload.</span></p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_order_task_with_http_info(body, async_req=True)
+        >>> thread = api.create_order_task_with_http_info(body, content_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param CreateOrderTaskRequest body: description not needed (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['body']  # noqa: E501
+        all_params = ['body', 'content_type']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -89,6 +91,10 @@ class OrderTaskApi(object):
         if ('body' not in params or
                 params['body'] is None):
             raise ValueError("Missing the required parameter `body` when calling `create_order_task`")  # noqa: E501
+        # verify the required parameter 'content_type' is set
+        if ('content_type' not in params or
+                params['content_type'] is None):
+            raise ValueError("Missing the required parameter `content_type` when calling `create_order_task`")  # noqa: E501
 
         collection_formats = {}
 
@@ -97,6 +103,8 @@ class OrderTaskApi(object):
         query_params = []
 
         header_params = {}
+        if 'content_type' in params:
+            header_params['Content-Type'] = params['content_type']  # noqa: E501
 
         form_params = []
         local_var_files = {}

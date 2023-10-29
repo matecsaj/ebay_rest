@@ -32,45 +32,47 @@ class InventoryTaskApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def create_inventory_task(self, body, **kwargs):  # noqa: E501
+    def create_inventory_task(self, body, content_type, **kwargs):  # noqa: E501
         """create_inventory_task  # noqa: E501
 
         This method creates an inventory-related download task for a specified feed type with optional filter criteria. When using this method, specify the <strong>feedType</strong>. <br/><br/>This method returns the location response header containing the <strong>getInventoryTask</strong> call URI to retrieve the inventory task you just created. The URL includes the eBay-assigned task ID, which you can use to reference the inventory task.<br/><br/>To retrieve the status of the task, use the <strong>getInventoryTask</strong> method to retrieve a single task ID or the <strong>getInventoryTasks</strong> method to retrieve multiple task IDs.<p> <span class=\"tablenote\"><strong>Note:</strong> The scope depends on the feed type. An error message results when an unsupported scope or feed type is specified.</span></p>Presently, this method supports Active Inventory Report. The <strong>ActiveInventoryReport</strong> returns a report that contains price and quantity information for all of the active listings for a specific seller. A seller can use this information to maintain their inventory on eBay.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_inventory_task(body, async_req=True)
+        >>> thread = api.create_inventory_task(body, content_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param CreateInventoryTaskRequest body: The request payload containing the version, feedType, and optional filterCriteria. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.create_inventory_task_with_http_info(body, **kwargs)  # noqa: E501
+            return self.create_inventory_task_with_http_info(body, content_type, **kwargs)  # noqa: E501
         else:
-            (data) = self.create_inventory_task_with_http_info(body, **kwargs)  # noqa: E501
+            (data) = self.create_inventory_task_with_http_info(body, content_type, **kwargs)  # noqa: E501
             return data
 
-    def create_inventory_task_with_http_info(self, body, **kwargs):  # noqa: E501
+    def create_inventory_task_with_http_info(self, body, content_type, **kwargs):  # noqa: E501
         """create_inventory_task  # noqa: E501
 
         This method creates an inventory-related download task for a specified feed type with optional filter criteria. When using this method, specify the <strong>feedType</strong>. <br/><br/>This method returns the location response header containing the <strong>getInventoryTask</strong> call URI to retrieve the inventory task you just created. The URL includes the eBay-assigned task ID, which you can use to reference the inventory task.<br/><br/>To retrieve the status of the task, use the <strong>getInventoryTask</strong> method to retrieve a single task ID or the <strong>getInventoryTasks</strong> method to retrieve multiple task IDs.<p> <span class=\"tablenote\"><strong>Note:</strong> The scope depends on the feed type. An error message results when an unsupported scope or feed type is specified.</span></p>Presently, this method supports Active Inventory Report. The <strong>ActiveInventoryReport</strong> returns a report that contains price and quantity information for all of the active listings for a specific seller. A seller can use this information to maintain their inventory on eBay.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_inventory_task_with_http_info(body, async_req=True)
+        >>> thread = api.create_inventory_task_with_http_info(body, content_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param CreateInventoryTaskRequest body: The request payload containing the version, feedType, and optional filterCriteria. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['body']  # noqa: E501
+        all_params = ['body', 'content_type']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -89,6 +91,10 @@ class InventoryTaskApi(object):
         if ('body' not in params or
                 params['body'] is None):
             raise ValueError("Missing the required parameter `body` when calling `create_inventory_task`")  # noqa: E501
+        # verify the required parameter 'content_type' is set
+        if ('content_type' not in params or
+                params['content_type'] is None):
+            raise ValueError("Missing the required parameter `content_type` when calling `create_inventory_task`")  # noqa: E501
 
         collection_formats = {}
 
@@ -97,6 +103,8 @@ class InventoryTaskApi(object):
         query_params = []
 
         header_params = {}
+        if 'content_type' in params:
+            header_params['Content-Type'] = params['content_type']  # noqa: E501
 
         form_params = []
         local_var_files = {}

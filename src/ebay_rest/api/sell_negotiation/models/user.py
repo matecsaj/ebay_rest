@@ -46,7 +46,7 @@ class User(object):
     def masked_username(self):
         """Gets the masked_username of this User.  # noqa: E501
 
-        The masked user name is a user name that has certain characters hidden for privacy of the user.  # noqa: E501
+        The masked user name is a user name that has certain characters hidden for privacy of the user.<!-- This field is populated only when the full user name cannot be used.-->  # noqa: E501
 
         :return: The masked_username of this User.  # noqa: E501
         :rtype: str
@@ -57,7 +57,7 @@ class User(object):
     def masked_username(self, masked_username):
         """Sets the masked_username of this User.
 
-        The masked user name is a user name that has certain characters hidden for privacy of the user.  # noqa: E501
+        The masked user name is a user name that has certain characters hidden for privacy of the user.<!-- This field is populated only when the full user name cannot be used.-->  # noqa: E501
 
         :param masked_username: The masked_username of this User.  # noqa: E501
         :type: str

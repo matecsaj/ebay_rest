@@ -32,45 +32,47 @@ class RegisterApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def register_client(self, body, **kwargs):  # noqa: E501
+    def register_client(self, body, content_type, **kwargs):  # noqa: E501
         """register_client  # noqa: E501
 
         <span class=\"tablenote\"><b>Note:</b> The Client Registration API is not intended for use by developers who have previously registered for a Developer Account on the eBay platform.</span><br/>This call registers a new third party financial application with eBay.<br/><br/><div class=\"msgbox_important\"><p class=\"msgbox_importantInDiv\" data-mc-autonum=\"&lt;b&gt;&lt;span style=&quot;color: #dd1e31;&quot; class=&quot;mcFormatColor&quot;&gt;Important! &lt;/span&gt;&lt;/b&gt;\"><span class=\"autonumber\"><span><b><span style=\"color: #dd1e31;\" class=\"mcFormatColor\">Important!</span></b></span></span> When calling the <b>registerClient</b> method, Third Party Providers (TPPs) are required to pass their valid eIDAS certificate to eBay via Mutual Transport Layer Security (MTLS) handshake <i>Certificate Request</i> messages.</p></div><br/>A successful call returns an HTTP status code of <b>201 Created</b> and the response payload.<h4>Registering multiple applications</h4>A regulated third party provider (identified by a unique <i>organizationIdentifier</i>) may register up to 15 different applications with eBay provided the unique <a href=\"#request.software_id \">software_id</a> for each application is passed in at the time of registration.<br/><br/>Each <b>registerClient</b> call that passes in a unique <a href=\"#request.software_id \">software_id</a> will generate new <a href=\"#response.client_id \">client_id</a> and <a href=\"#response.client_secret \">client_secret</a> keypairs.<br/><br/>If a third party provider calls <b>registerClient</b> using a previously registered <a href=\"#request.software_id \">software_id</a>, the existing <a href=\"#response.client_id \">client_id</a> and <a href=\"#response.client_secret \">client_secret</a> keypairs are returned.<br/><br/><span class=\"tablenote\"><b>Note:</b> For additional information about using an <i>organizationIdentifier</i>, refer to the following sections of <a href=\"https://www.etsi.org/deliver/etsi_ts/119400_119499/119495/01.05.01_60/ts_119495v010501p.pdf \" target=\"_blank \">ETSI Technical Specification 119 495</a><ul><li>Section 5.2.1: Authorization Number or other recognized identifier for Open Banking;</li><li>Section 5.4: Profile Requirements for Digital Signatures.</li></ul></span>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.register_client(body, async_req=True)
+        >>> thread = api.register_client(body, content_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param ClientSettings body: This container stores information about the third party provider's financial application that is being registered. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: ClientDetails
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.register_client_with_http_info(body, **kwargs)  # noqa: E501
+            return self.register_client_with_http_info(body, content_type, **kwargs)  # noqa: E501
         else:
-            (data) = self.register_client_with_http_info(body, **kwargs)  # noqa: E501
+            (data) = self.register_client_with_http_info(body, content_type, **kwargs)  # noqa: E501
             return data
 
-    def register_client_with_http_info(self, body, **kwargs):  # noqa: E501
+    def register_client_with_http_info(self, body, content_type, **kwargs):  # noqa: E501
         """register_client  # noqa: E501
 
         <span class=\"tablenote\"><b>Note:</b> The Client Registration API is not intended for use by developers who have previously registered for a Developer Account on the eBay platform.</span><br/>This call registers a new third party financial application with eBay.<br/><br/><div class=\"msgbox_important\"><p class=\"msgbox_importantInDiv\" data-mc-autonum=\"&lt;b&gt;&lt;span style=&quot;color: #dd1e31;&quot; class=&quot;mcFormatColor&quot;&gt;Important! &lt;/span&gt;&lt;/b&gt;\"><span class=\"autonumber\"><span><b><span style=\"color: #dd1e31;\" class=\"mcFormatColor\">Important!</span></b></span></span> When calling the <b>registerClient</b> method, Third Party Providers (TPPs) are required to pass their valid eIDAS certificate to eBay via Mutual Transport Layer Security (MTLS) handshake <i>Certificate Request</i> messages.</p></div><br/>A successful call returns an HTTP status code of <b>201 Created</b> and the response payload.<h4>Registering multiple applications</h4>A regulated third party provider (identified by a unique <i>organizationIdentifier</i>) may register up to 15 different applications with eBay provided the unique <a href=\"#request.software_id \">software_id</a> for each application is passed in at the time of registration.<br/><br/>Each <b>registerClient</b> call that passes in a unique <a href=\"#request.software_id \">software_id</a> will generate new <a href=\"#response.client_id \">client_id</a> and <a href=\"#response.client_secret \">client_secret</a> keypairs.<br/><br/>If a third party provider calls <b>registerClient</b> using a previously registered <a href=\"#request.software_id \">software_id</a>, the existing <a href=\"#response.client_id \">client_id</a> and <a href=\"#response.client_secret \">client_secret</a> keypairs are returned.<br/><br/><span class=\"tablenote\"><b>Note:</b> For additional information about using an <i>organizationIdentifier</i>, refer to the following sections of <a href=\"https://www.etsi.org/deliver/etsi_ts/119400_119499/119495/01.05.01_60/ts_119495v010501p.pdf \" target=\"_blank \">ETSI Technical Specification 119 495</a><ul><li>Section 5.2.1: Authorization Number or other recognized identifier for Open Banking;</li><li>Section 5.4: Profile Requirements for Digital Signatures.</li></ul></span>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.register_client_with_http_info(body, async_req=True)
+        >>> thread = api.register_client_with_http_info(body, content_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param ClientSettings body: This container stores information about the third party provider's financial application that is being registered. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: ClientDetails
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['body']  # noqa: E501
+        all_params = ['body', 'content_type']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -89,6 +91,10 @@ class RegisterApi(object):
         if ('body' not in params or
                 params['body'] is None):
             raise ValueError("Missing the required parameter `body` when calling `register_client`")  # noqa: E501
+        # verify the required parameter 'content_type' is set
+        if ('content_type' not in params or
+                params['content_type'] is None):
+            raise ValueError("Missing the required parameter `content_type` when calling `register_client`")  # noqa: E501
 
         collection_formats = {}
 
@@ -97,6 +103,8 @@ class RegisterApi(object):
         query_params = []
 
         header_params = {}
+        if 'content_type' in params:
+            header_params['Content-Type'] = params['content_type']  # noqa: E501
 
         form_params = []
         local_var_files = {}

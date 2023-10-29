@@ -15,6 +15,8 @@ from __future__ import absolute_import
 
 # import models into model package
 from ...commerce_media.models.create_video_request import CreateVideoRequest
+from ...commerce_media.models.error import Error
+from ...commerce_media.models.error_parameter import ErrorParameter
 from ...commerce_media.models.image import Image
 from ...commerce_media.models.input_stream import InputStream
 from ...commerce_media.models.moderation import Moderation

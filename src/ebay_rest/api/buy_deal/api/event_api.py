@@ -3,7 +3,7 @@
 """
     Deal API
 
-    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units.</span><br /><br />This API allows third-party developers to search for and retrieve details about eBay deals and events, as well as the items associated with those deals and events.  # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units. For information on how to obtain access to this API in production, see the <a href=\"/../api-docs/buy/static/buy-requirements.html\" target=\"_blank\">Buy APIs Requirements</a>.</span><br /><br />This API allows third-party developers to search for and retrieve details about eBay deals and events, as well as the items associated with those deals and events.  # noqa: E501
 
     OpenAPI spec version: v1.3.0
     
@@ -35,15 +35,16 @@ class EventApi(object):
     def get_event(self, x_ebay_c_marketplace_id, event_id, **kwargs):  # noqa: E501
         """get_event  # noqa: E501
 
-        This method retrieves the details for an eBay event. The result set contains detailed information associated with the specified event ID, such as applicable coupons, start and end dates, and event terms. Request headers This method uses the X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, Request headers in the Buying Integration Guide. Restrictions This method can return a maximum of 10,000 items. For a list of supported sites and other restrictions, see API Restrictions. eBay Partner Network: In order to receive a commission for your sales, you must use the URL returned in the itemAffiliateWebUrl field to forward your buyer to the ebay.com site.  # noqa: E501
+        <p>This method retrieves the details for an eBay event. The result set contains detailed information associated with the specified event ID, such as applicable coupons, start and end dates, and event terms. <p> <h3><b> Request headers</b></h3> This method uses the  <b>X-EBAY-C-ENDUSERCTX</b> request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, <a href=\"/api-docs/buy/static/api-browse.html#Headers\">Request headers</a> in the Buying Integration Guide.      <h3><b>Restrictions </b></h3> <p>This method can return a maximum of 10,000 items. For a list of supported sites and other restrictions, see <a href=\"/api-docs/buy/browse/overview.html#API\">API Restrictions</a>.</p>    <span class=\"tablenote\"><b>eBay Partner Network: </b> In order to receive a commission for your sales, you must use the URL returned in the <code>itemAffiliateWebUrl</code> field to forward your buyer to the ebay.com site. </span>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_event(x_ebay_c_marketplace_id, event_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str x_ebay_c_marketplace_id: A header used to specify the eBay marketplace ID. (required)
+        :param str x_ebay_c_marketplace_id: This header identifies the eBay marketplace.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl \" target=\"_blank \">HTTP request headers</a> for the marketplace ID values. (required)
         :param str event_id: The unique identifier for the eBay event. (required)
+        :param str x_ebay_c_enduserctx: This header is needed to support revenue sharing for eBay Partner Network and to improve the accuracy of shipping and delivery time estimations.<br>For additional information, refer to <a href=\"/api-docs/buy/static/api-browse.html#Headers\" target=\"_blank \">Use request headers</a>.
         :return: Event
                  If the method is called asynchronously,
                  returns the request thread.
@@ -58,21 +59,22 @@ class EventApi(object):
     def get_event_with_http_info(self, x_ebay_c_marketplace_id, event_id, **kwargs):  # noqa: E501
         """get_event  # noqa: E501
 
-        This method retrieves the details for an eBay event. The result set contains detailed information associated with the specified event ID, such as applicable coupons, start and end dates, and event terms. Request headers This method uses the X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, Request headers in the Buying Integration Guide. Restrictions This method can return a maximum of 10,000 items. For a list of supported sites and other restrictions, see API Restrictions. eBay Partner Network: In order to receive a commission for your sales, you must use the URL returned in the itemAffiliateWebUrl field to forward your buyer to the ebay.com site.  # noqa: E501
+        <p>This method retrieves the details for an eBay event. The result set contains detailed information associated with the specified event ID, such as applicable coupons, start and end dates, and event terms. <p> <h3><b> Request headers</b></h3> This method uses the  <b>X-EBAY-C-ENDUSERCTX</b> request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, <a href=\"/api-docs/buy/static/api-browse.html#Headers\">Request headers</a> in the Buying Integration Guide.      <h3><b>Restrictions </b></h3> <p>This method can return a maximum of 10,000 items. For a list of supported sites and other restrictions, see <a href=\"/api-docs/buy/browse/overview.html#API\">API Restrictions</a>.</p>    <span class=\"tablenote\"><b>eBay Partner Network: </b> In order to receive a commission for your sales, you must use the URL returned in the <code>itemAffiliateWebUrl</code> field to forward your buyer to the ebay.com site. </span>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_event_with_http_info(x_ebay_c_marketplace_id, event_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str x_ebay_c_marketplace_id: A header used to specify the eBay marketplace ID. (required)
+        :param str x_ebay_c_marketplace_id: This header identifies the eBay marketplace.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl \" target=\"_blank \">HTTP request headers</a> for the marketplace ID values. (required)
         :param str event_id: The unique identifier for the eBay event. (required)
+        :param str x_ebay_c_enduserctx: This header is needed to support revenue sharing for eBay Partner Network and to improve the accuracy of shipping and delivery time estimations.<br>For additional information, refer to <a href=\"/api-docs/buy/static/api-browse.html#Headers\" target=\"_blank \">Use request headers</a>.
         :return: Event
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['x_ebay_c_marketplace_id', 'event_id']  # noqa: E501
+        all_params = ['x_ebay_c_marketplace_id', 'event_id', 'x_ebay_c_enduserctx']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -107,6 +109,8 @@ class EventApi(object):
         header_params = {}
         if 'x_ebay_c_marketplace_id' in params:
             header_params['X-EBAY-C-MARKETPLACE-ID'] = params['x_ebay_c_marketplace_id']  # noqa: E501
+        if 'x_ebay_c_enduserctx' in params:
+            header_params['X-EBAY-C-ENDUSERCTX'] = params['x_ebay_c_enduserctx']  # noqa: E501
 
         form_params = []
         local_var_files = {}
@@ -138,16 +142,17 @@ class EventApi(object):
     def get_events(self, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """get_events  # noqa: E501
 
-        This method returns paginated results containing all eBay events for the specified marketplace. Request headers This method uses the X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, Request headers in the Buying Integration Guide. Restrictions This method can return a maximum of 10,000 items. For a list of supported sites and other restrictions, see API Restrictions. eBay Partner Network: In order to receive a commission for your sales, you must use the URL returned in the itemAffiliateWebUrl field to forward your buyer to the ebay.com site.  # noqa: E501
+        <p>This method returns paginated results containing all eBay events for the specified marketplace.</p>  <h3><b> Request headers</b></h3> This method uses the  <b>X-EBAY-C-ENDUSERCTX</b> request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, <a href=\"/api-docs/buy/static/api-browse.html#Headers\">Request headers</a> in the Buying Integration Guide.      <h3><b>Restrictions </b></h3> <p>This method can return a maximum of 10,000 items. For a list of supported sites and other restrictions, see <a href=\"/api-docs/buy/browse/overview.html#API\">API Restrictions</a>.</p>    <span class=\"tablenote\"><b>eBay Partner Network: </b> In order to receive a commission for your sales, you must use the URL returned in the <code>itemAffiliateWebUrl</code> field to forward your buyer to the ebay.com site. </span>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_events(x_ebay_c_marketplace_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str x_ebay_c_marketplace_id: A header used to specify the eBay marketplace ID. (required)
-        :param str limit: The maximum number of items, from the current result set, returned on a single page. Default: 20 Maximum Value: 100
-        :param str offset: The number of items that will be skipped in the result set. This is used with the limit field to control the pagination of the output. For example, if the offset is set to 0 and the limit is set to 10, the method will retrieve items 1 through 10 from the list of items returned. If the offset is set to 10 and the limit is set to 10, the method will retrieve items 11 through 20 from the list of items returned. Default: 0
+        :param str x_ebay_c_marketplace_id: This header identifies the eBay marketplace.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl \" target=\"_blank \">HTTP request headers</a> for the marketplace ID values. (required)
+        :param str limit: The maximum number of items, from the current result set, returned on a single page.<br /><br /><b>Default:</b> <code>20</code><br /><br /><b>Maximum Value:</b> <code>100</code>
+        :param str offset: The number of items that will be skipped in the result set. This is used with the <b>limit</b> field to control the pagination of the output.<br /><br />For example, if the <b>offset</b> is set to <code>0</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 1 through 10 from the list of items returned. If the <b>offset</b> is set to <code>10</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 11 through 20 from the list of items returned.<br /><br /><b>Default:</b> <code>0</code>
+        :param str x_ebay_c_enduserctx: This header is needed to support revenue sharing for eBay Partner Network and to improve the accuracy of shipping and delivery time estimations.<br>For additional information, refer to <a href=\"/api-docs/buy/static/api-browse.html#Headers\" target=\"_blank \">Use request headers</a>.
         :return: EventSearchResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -162,22 +167,23 @@ class EventApi(object):
     def get_events_with_http_info(self, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """get_events  # noqa: E501
 
-        This method returns paginated results containing all eBay events for the specified marketplace. Request headers This method uses the X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, Request headers in the Buying Integration Guide. Restrictions This method can return a maximum of 10,000 items. For a list of supported sites and other restrictions, see API Restrictions. eBay Partner Network: In order to receive a commission for your sales, you must use the URL returned in the itemAffiliateWebUrl field to forward your buyer to the ebay.com site.  # noqa: E501
+        <p>This method returns paginated results containing all eBay events for the specified marketplace.</p>  <h3><b> Request headers</b></h3> This method uses the  <b>X-EBAY-C-ENDUSERCTX</b> request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, <a href=\"/api-docs/buy/static/api-browse.html#Headers\">Request headers</a> in the Buying Integration Guide.      <h3><b>Restrictions </b></h3> <p>This method can return a maximum of 10,000 items. For a list of supported sites and other restrictions, see <a href=\"/api-docs/buy/browse/overview.html#API\">API Restrictions</a>.</p>    <span class=\"tablenote\"><b>eBay Partner Network: </b> In order to receive a commission for your sales, you must use the URL returned in the <code>itemAffiliateWebUrl</code> field to forward your buyer to the ebay.com site. </span>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_events_with_http_info(x_ebay_c_marketplace_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str x_ebay_c_marketplace_id: A header used to specify the eBay marketplace ID. (required)
-        :param str limit: The maximum number of items, from the current result set, returned on a single page. Default: 20 Maximum Value: 100
-        :param str offset: The number of items that will be skipped in the result set. This is used with the limit field to control the pagination of the output. For example, if the offset is set to 0 and the limit is set to 10, the method will retrieve items 1 through 10 from the list of items returned. If the offset is set to 10 and the limit is set to 10, the method will retrieve items 11 through 20 from the list of items returned. Default: 0
+        :param str x_ebay_c_marketplace_id: This header identifies the eBay marketplace.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl \" target=\"_blank \">HTTP request headers</a> for the marketplace ID values. (required)
+        :param str limit: The maximum number of items, from the current result set, returned on a single page.<br /><br /><b>Default:</b> <code>20</code><br /><br /><b>Maximum Value:</b> <code>100</code>
+        :param str offset: The number of items that will be skipped in the result set. This is used with the <b>limit</b> field to control the pagination of the output.<br /><br />For example, if the <b>offset</b> is set to <code>0</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 1 through 10 from the list of items returned. If the <b>offset</b> is set to <code>10</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 11 through 20 from the list of items returned.<br /><br /><b>Default:</b> <code>0</code>
+        :param str x_ebay_c_enduserctx: This header is needed to support revenue sharing for eBay Partner Network and to improve the accuracy of shipping and delivery time estimations.<br>For additional information, refer to <a href=\"/api-docs/buy/static/api-browse.html#Headers\" target=\"_blank \">Use request headers</a>.
         :return: EventSearchResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['x_ebay_c_marketplace_id', 'limit', 'offset']  # noqa: E501
+        all_params = ['x_ebay_c_marketplace_id', 'limit', 'offset', 'x_ebay_c_enduserctx']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -210,6 +216,8 @@ class EventApi(object):
         header_params = {}
         if 'x_ebay_c_marketplace_id' in params:
             header_params['X-EBAY-C-MARKETPLACE-ID'] = params['x_ebay_c_marketplace_id']  # noqa: E501
+        if 'x_ebay_c_enduserctx' in params:
+            header_params['X-EBAY-C-ENDUSERCTX'] = params['x_ebay_c_enduserctx']  # noqa: E501
 
         form_params = []
         local_var_files = {}

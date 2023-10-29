@@ -32,45 +32,47 @@ class LanguageApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def translate(self, body, **kwargs):  # noqa: E501
+    def translate(self, body, content_type, **kwargs):  # noqa: E501
         """translate  # noqa: E501
 
         This method translates listing title and listing description text from one language into another. For a full list of supported language translations, see the table in the <a href=\"/api-docs/commerce/translation/overview.html\">API Overview</a> page.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.translate(body, async_req=True)
+        >>> thread = api.translate(body, content_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param TranslateRequest body: (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: TranslateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.translate_with_http_info(body, **kwargs)  # noqa: E501
+            return self.translate_with_http_info(body, content_type, **kwargs)  # noqa: E501
         else:
-            (data) = self.translate_with_http_info(body, **kwargs)  # noqa: E501
+            (data) = self.translate_with_http_info(body, content_type, **kwargs)  # noqa: E501
             return data
 
-    def translate_with_http_info(self, body, **kwargs):  # noqa: E501
+    def translate_with_http_info(self, body, content_type, **kwargs):  # noqa: E501
         """translate  # noqa: E501
 
         This method translates listing title and listing description text from one language into another. For a full list of supported language translations, see the table in the <a href=\"/api-docs/commerce/translation/overview.html\">API Overview</a> page.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.translate_with_http_info(body, async_req=True)
+        >>> thread = api.translate_with_http_info(body, content_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param TranslateRequest body: (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: TranslateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['body']  # noqa: E501
+        all_params = ['body', 'content_type']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -89,6 +91,10 @@ class LanguageApi(object):
         if ('body' not in params or
                 params['body'] is None):
             raise ValueError("Missing the required parameter `body` when calling `translate`")  # noqa: E501
+        # verify the required parameter 'content_type' is set
+        if ('content_type' not in params or
+                params['content_type'] is None):
+            raise ValueError("Missing the required parameter `content_type` when calling `translate`")  # noqa: E501
 
         collection_formats = {}
 
@@ -97,6 +103,8 @@ class LanguageApi(object):
         query_params = []
 
         header_params = {}
+        if 'content_type' in params:
+            header_params['Content-Type'] = params['content_type']  # noqa: E501
 
         form_params = []
         local_var_files = {}

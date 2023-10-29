@@ -25,14 +25,6 @@ from src.ebay_rest import API, DateTime, Error, Reference
 
 class APIBothEnvironmentsSingleSiteTests(unittest.TestCase):
 
-    @classmethod
-    def setUpClass(cls):
-        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
-
-    @classmethod
-    def tearDownClass(cls):
-        warnings.filterwarnings(action="default", message="unclosed", category=ResourceWarning)
-
     def test_start(self):  # all initialization options and for each the first and second usage
         for environment in ('production', 'sandbox'):
             for (throttle, timeout) in ((False, None), (True, None), (True, 60.0)):
@@ -72,12 +64,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
         cls.currency_converter = CurrencyConverter()  # this is slow, so do it once
-
-    @classmethod
-    def tearDownClass(cls):
-        warnings.filterwarnings(action="default", message="unclosed", category=ResourceWarning)
 
     def test_credentials_from_dicts(self):
         """ set credentials via dicts """
@@ -274,7 +261,6 @@ class APISandboxSingleSiteTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
         try:
             # TODO Change to async_req=True.
             cls._api = API(application='sandbox_1', user='sandbox_1', header='US', async_req=False)
@@ -284,10 +270,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
             cls.detail = error.detail
         else:
             cls.number = None
-
-    @classmethod
-    def tearDownClass(cls):
-        warnings.filterwarnings(action="default", message="unclosed", category=ResourceWarning)
+        cls.marketplace_id = cls._api._header['marketplace_id']
 
     def setUp(self):
         if self.number is not None:
@@ -310,7 +293,8 @@ class APISandboxSingleSiteTests(unittest.TestCase):
     def test_positional_none_kw_none(self):
         """ Try a call with no positional arguments and no keyword arguments. """
         try:
-            result = self._api.sell_compliance_get_listing_violations_summary()
+            result = self._api.sell_compliance_get_listing_violations_summary(
+                                                                     x_ebay_c_marketplace_id=self.marketplace_id)
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
@@ -344,16 +328,12 @@ class APISandboxSingleSiteTests(unittest.TestCase):
 
     def test_try_except_else_api(self):
         """  Test that an exception occurs when expected. """
-        # TODO Remedy the resource problem and then remove all lines in this file containing warnings.filterwarnings.
-        warnings.filterwarnings(action="default", message="unclosed", category=ResourceWarning)
         try:
             self._api.buy_browse_get_item(item_id='invalid')
         except Error as error:
             self.assertIsNotNone(f'Error {error.number} is {error.reason} with detail {error.detail}.')
         else:
             self.assertIsNotNone(None, msg="Failed to raise an exception.")
-        finally:
-            warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
 
     def test_buying_options(self):
         """ Does buying option filtering work? """
@@ -384,7 +364,8 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         https://developer.ebay.com/api-docs/sell/finances/resources/transaction/methods/getTransactionSummary
         """
         try:
-            result = self._api.sell_finances_get_transaction_summary(filter="transactionStatus:{PAYOUT}")
+            result = self._api.sell_finances_get_transaction_summary(filter="transactionStatus:{PAYOUT}",
+                                                                     x_ebay_c_marketplace_id=self.marketplace_id)
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
@@ -400,7 +381,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         """
         body = {"programType": "SELLING_POLICY_MANAGEMENT"}
         try:
-            self._api.sell_account_opt_in_to_program(body=body)
+            self._api.sell_account_opt_in_to_program(content_type='application/json', body=body)
         except Error as error:
             # Opting in more than once triggers an already exists error.
             # Any other error is considered to be a unit test failure.
@@ -452,7 +433,6 @@ class APIProductionSingleTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
         try:
             cls._api = API(application='production_1', user='production_1', header='US')
         except Error as error:
@@ -461,10 +441,6 @@ class APIProductionSingleTests(unittest.TestCase):
             cls.detail = error.detail
         else:
             cls.number = None
-
-    @classmethod
-    def tearDownClass(cls):
-        warnings.filterwarnings(action="default", message="unclosed", category=ResourceWarning)
 
     def setUp(self):
         if self.number is not None:
@@ -580,7 +556,9 @@ class APIProductionSingleTests(unittest.TestCase):
             ]
         }
         try:
-            self._api.sell_inventory_create_inventory_location(body=body, merchant_location_key=merchant_location_key)
+            self._api.sell_inventory_create_inventory_location(content_type='application/json',
+                                                               body=body,
+                                                               merchant_location_key=merchant_location_key)
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
 
@@ -727,6 +705,7 @@ class APIProductionSingleTests(unittest.TestCase):
         try:
             self._api.sell_inventory_create_or_replace_inventory_item(body=body,
                                                                       content_language=content_language,
+                                                                      content_type='application/json',
                                                                       sku=sku)
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
@@ -878,7 +857,6 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
         application = 'sandbox_1' if sandbox else 'production_1'
         user = 'sandbox_1' if sandbox else 'production_1'
         key_pair = 'sandbox_1' if sandbox else 'production_1'
-        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
         _api = API(
             application=application, user=user, header='US',
             key_pair=key_pair, digital_signatures=True
@@ -895,10 +873,7 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
         cls.original_private_key = original_private_key
         cls.original_signing_key_id = original_signing_key_id
         cls.user = user
-
-    @classmethod
-    def tearDownClass(cls):
-        warnings.filterwarnings(action="default", message="unclosed", category=ResourceWarning)
+        cls.marketplace_id = _api._header['marketplace_id']
 
     def setUp(self):
         # Reset private key
@@ -927,7 +902,8 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
     def test_002_make_call_with_signature(self):
         """Check that we can make a call using the Digital Signature"""
         try:
-            result = self._api.sell_finances_get_transaction_summary(filter="transactionStatus:{PAYOUT}")
+            result = self._api.sell_finances_get_transaction_summary(filter="transactionStatus:{PAYOUT}",
+                                                                     x_ebay_c_marketplace_id=self.marketplace_id)
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
@@ -938,7 +914,8 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
                 'MC4CAQAwBQYDK2VwBCIEIJ+DYvh6SEqVTm50DFtMDoQikTmiCqirVv9mWG9qfSnF'
             )
             try:
-                self._api.sell_finances_get_transaction_summary(filter="transactionStatus:{PAYOUT}")
+                self._api.sell_finances_get_transaction_summary(filter="transactionStatus:{PAYOUT}",
+                                                                x_ebay_c_marketplace_id=self.marketplace_id)
             except Error as error:
                 self.assertEqual(error.number, 99403)
                 # Check for eBay 'Signature validation failed' error

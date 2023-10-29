@@ -3,7 +3,7 @@
 """
     Marketplace Insights API
 
-    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"https://developer.ebay.com/api-docs/static/versioning.html#limited\" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units. For information on how to obtain access to this API in production, see the <a href=\"/../api-docs/buy/static/buy-requirements.html\" target=\"_blank\">Buy APIs Requirements</a>.</span>  <p>The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.</p>  # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> This is a <a href=\"/api-docs/static/versioning.html#limited \" target=\"_blank\"> <img src=\"/cms/img/docs/partners-api.svg\" class=\"legend-icon partners-icon\" title=\"Limited Release\"  alt=\"Limited Release\" />(Limited Release)</a> API available only to select developers approved by business units. For information on how to obtain access to this API in production, see the <a href=\"/../api-docs/buy/static/buy-requirements.html\" target=\"_blank\">Buy APIs Requirements</a>.</span>  <p>The Marketplace Insights API provides the ability to search for sold items on eBay by keyword, GTIN, category, and product and returns the of sales history of those items.</p>  # noqa: E501
 
     OpenAPI spec version: v1_beta.2.2
     
@@ -61,7 +61,7 @@ class ConvertedAmount(object):
     def converted_from_currency(self):
         """Gets the converted_from_currency of this ConvertedAmount.  # noqa: E501
 
-        A three-letter <a href=\"https://en.wikipedia.org/wiki/ISO_4217\">ISO 4217</a> code that indicates the currency of the amount in the <b> convertedFromValue</b> field. This value represents the pre-conversion currency. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/marketplace_insights/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+        A three-letter <a href=\"https://en.wikipedia.org/wiki/ISO_4217 \">ISO 4217</a> code that indicates the currency of the amount in the <b> convertedFromValue</b> field. This value represents the pre-conversion currency. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/marketplace_insights/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The converted_from_currency of this ConvertedAmount.  # noqa: E501
         :rtype: str
@@ -72,7 +72,7 @@ class ConvertedAmount(object):
     def converted_from_currency(self, converted_from_currency):
         """Sets the converted_from_currency of this ConvertedAmount.
 
-        A three-letter <a href=\"https://en.wikipedia.org/wiki/ISO_4217\">ISO 4217</a> code that indicates the currency of the amount in the <b> convertedFromValue</b> field. This value represents the pre-conversion currency. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/marketplace_insights/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
+        A three-letter <a href=\"https://en.wikipedia.org/wiki/ISO_4217 \">ISO 4217</a> code that indicates the currency of the amount in the <b> convertedFromValue</b> field. This value represents the pre-conversion currency. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/buy/marketplace_insights/types/ba:CurrencyCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param converted_from_currency: The converted_from_currency of this ConvertedAmount.  # noqa: E501
         :type: str

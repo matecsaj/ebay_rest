@@ -43,7 +43,7 @@ class ProductApi(object):
 
         :param async_req bool
         :param str epid: The ePID of the product being requested. This value can be discovered by issuing the <b>search</b> method and examining the value of the <b>productSummaries.epid</b> field for the desired returned product summary. (required)
-        :param str x_ebay_c_marketplace_id: This method also uses the <code>X-EBAY-C-MARKETPLACE-ID</code> header to identify the seller's eBay marketplace. It is required for all marketplaces except EBAY_US, which is the default. <b>Note:</b> This method is limited to <code>EBAY_US</code>, <code>EBAY_AU</code>, <code>EBAY_CA</code>, and <code>EBAY_GB</code> values.
+        :param str x_ebay_c_marketplace_id: This method also uses the <code>X-EBAY-C-MARKETPLACE-ID</code> header to identify the seller's eBay marketplace. It is required for all <a href=\"/api-docs/commerce/catalog/overview.html#supported-marketplaces\" target=\"_blank\">supported marketplaces</a>, except EBAY_US, which is the default.
         :return: Product
                  If the method is called asynchronously,
                  returns the request thread.
@@ -66,7 +66,7 @@ class ProductApi(object):
 
         :param async_req bool
         :param str epid: The ePID of the product being requested. This value can be discovered by issuing the <b>search</b> method and examining the value of the <b>productSummaries.epid</b> field for the desired returned product summary. (required)
-        :param str x_ebay_c_marketplace_id: This method also uses the <code>X-EBAY-C-MARKETPLACE-ID</code> header to identify the seller's eBay marketplace. It is required for all marketplaces except EBAY_US, which is the default. <b>Note:</b> This method is limited to <code>EBAY_US</code>, <code>EBAY_AU</code>, <code>EBAY_CA</code>, and <code>EBAY_GB</code> values.
+        :param str x_ebay_c_marketplace_id: This method also uses the <code>X-EBAY-C-MARKETPLACE-ID</code> header to identify the seller's eBay marketplace. It is required for all <a href=\"/api-docs/commerce/catalog/overview.html#supported-marketplaces\" target=\"_blank\">supported marketplaces</a>, except EBAY_US, which is the default.
         :return: Product
                  If the method is called asynchronously,
                  returns the request thread.

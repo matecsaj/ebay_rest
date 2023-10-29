@@ -450,7 +450,16 @@ class Contracts:
 
     async def swagger_codegen(self):
         source = os.path.join(Locations.cache_path, self.file_name)
-        command = f' generate -l python -o {Locations.cache_path}/{self.name} -DpackageName={self.name} -i {source}'
+        destination = f"{Locations.cache_path}/{self.name}"
+
+        # The generator will warn if there is no .swagger-codegen-ignore file
+        if not os.path.isdir(destination):
+            os.mkdir(destination)
+        path_file = os.path.abspath(os.path.join(Locations.cache_path, '.swagger-codegen-ignore'))
+        with open(path_file, 'w') as file_handle:
+            file_handle.write('')
+
+        command = f' generate -l python -o {destination} -DpackageName={self.name} -i {source}'
         if sys.platform == 'darwin':  # OS X or MacOS
             command = '/usr/local/bin/swagger-codegen' + command
         elif sys.platform == 'linux':  # Linux
@@ -1039,7 +1048,7 @@ async def main() -> None:
 
     # while debugging, it is handy to change the log level from INFO to DEBUG
     logging.basicConfig(format='%(asctime)s %(levelname)s %(filename)s %(lineno)d %(funcName)s: %(message)s',
-                        level=logging.INFO)
+                        level=logging.WARNING)
 
     await asyncio.gather(generate_apis(), generate_references())
     logging.info(f'Run time was {int(time.time() - start)} seconds.')

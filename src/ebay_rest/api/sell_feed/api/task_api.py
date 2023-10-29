@@ -32,47 +32,49 @@ class TaskApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def create_task(self, body, **kwargs):  # noqa: E501
+    def create_task(self, body, x_ebay_c_marketplace_id, content_type, **kwargs):  # noqa: E501
         """create_task  # noqa: E501
 
         This method creates an upload task or a download task without filter criteria. When using this method, specify the <b> feedType</b> and the feed file <b> schemaVersion</b>. The feed type specified sets the task as a download or an upload task.  <p>For details about the upload and download flows, see <a href=\"/api-docs/sell/static/orders/generating-and-retrieving-order-reports.html\">Working with Order Feeds</a> in the Selling Integration Guide.</p><p> <span class=\"tablenote\"><strong>Note:</strong> The scope depends on the feed type. An error message results when an unsupported scope or feed type is specified.</span></p><p>The following list contains this method's authorization scopes and their corresponding feed types:</p><ul><li>https://api.ebay.com/oauth/api_scope/sell.inventory: See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Availabl\" target=\"_blank\">LMS FeedTypes</a></li><li>https://api.ebay.com/oauth/api_scope/sell.fulfillment: LMS_ORDER_ACK (specify for upload tasks). Also see <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Availabl\" target=\"_blank\">LMS FeedTypes</a></li><li>https://api.ebay.com/oauth/api_scope/sell.marketing: None*</li><li>https://api.ebay.com/oauth/api_scope/commerce.catalog.readonly: None*</li></ul><p>* Reserved for future release</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_task(body, async_req=True)
+        >>> thread = api.create_task(body, x_ebay_c_marketplace_id, content_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param CreateTaskRequest body: description not needed (required)
-        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. <p> <span class=\"tablenote\"><strong>Note:</strong> This value is case sensitive.</span></p><p>For example:</p><p><code>X-EBAY-C-MARKETPLACE-ID:EBAY_US</code></p><p>This identifies the eBay marketplace that applies to this task. See <a href=\"/api-docs/sell/feed/types/bas:MarketplaceIdEnum\">MarketplaceIdEnum</a>.</p>
+        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. <p> <span class=\"tablenote\"><strong>Note:</strong> This value is case sensitive.</span></p><p>For example:</p><p><code>X-EBAY-C-MARKETPLACE-ID:EBAY_US</code></p><p>This identifies the eBay marketplace that applies to this task. See <a href=\"/api-docs/sell/feed/types/bas:MarketplaceIdEnum\">MarketplaceIdEnum</a>.</p> (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.create_task_with_http_info(body, **kwargs)  # noqa: E501
+            return self.create_task_with_http_info(body, x_ebay_c_marketplace_id, content_type, **kwargs)  # noqa: E501
         else:
-            (data) = self.create_task_with_http_info(body, **kwargs)  # noqa: E501
+            (data) = self.create_task_with_http_info(body, x_ebay_c_marketplace_id, content_type, **kwargs)  # noqa: E501
             return data
 
-    def create_task_with_http_info(self, body, **kwargs):  # noqa: E501
+    def create_task_with_http_info(self, body, x_ebay_c_marketplace_id, content_type, **kwargs):  # noqa: E501
         """create_task  # noqa: E501
 
         This method creates an upload task or a download task without filter criteria. When using this method, specify the <b> feedType</b> and the feed file <b> schemaVersion</b>. The feed type specified sets the task as a download or an upload task.  <p>For details about the upload and download flows, see <a href=\"/api-docs/sell/static/orders/generating-and-retrieving-order-reports.html\">Working with Order Feeds</a> in the Selling Integration Guide.</p><p> <span class=\"tablenote\"><strong>Note:</strong> The scope depends on the feed type. An error message results when an unsupported scope or feed type is specified.</span></p><p>The following list contains this method's authorization scopes and their corresponding feed types:</p><ul><li>https://api.ebay.com/oauth/api_scope/sell.inventory: See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Availabl\" target=\"_blank\">LMS FeedTypes</a></li><li>https://api.ebay.com/oauth/api_scope/sell.fulfillment: LMS_ORDER_ACK (specify for upload tasks). Also see <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Availabl\" target=\"_blank\">LMS FeedTypes</a></li><li>https://api.ebay.com/oauth/api_scope/sell.marketing: None*</li><li>https://api.ebay.com/oauth/api_scope/commerce.catalog.readonly: None*</li></ul><p>* Reserved for future release</p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_task_with_http_info(body, async_req=True)
+        >>> thread = api.create_task_with_http_info(body, x_ebay_c_marketplace_id, content_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param CreateTaskRequest body: description not needed (required)
-        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. <p> <span class=\"tablenote\"><strong>Note:</strong> This value is case sensitive.</span></p><p>For example:</p><p><code>X-EBAY-C-MARKETPLACE-ID:EBAY_US</code></p><p>This identifies the eBay marketplace that applies to this task. See <a href=\"/api-docs/sell/feed/types/bas:MarketplaceIdEnum\">MarketplaceIdEnum</a>.</p>
+        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. <p> <span class=\"tablenote\"><strong>Note:</strong> This value is case sensitive.</span></p><p>For example:</p><p><code>X-EBAY-C-MARKETPLACE-ID:EBAY_US</code></p><p>This identifies the eBay marketplace that applies to this task. See <a href=\"/api-docs/sell/feed/types/bas:MarketplaceIdEnum\">MarketplaceIdEnum</a>.</p> (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['body', 'x_ebay_c_marketplace_id']  # noqa: E501
+        all_params = ['body', 'x_ebay_c_marketplace_id', 'content_type']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -91,6 +93,14 @@ class TaskApi(object):
         if ('body' not in params or
                 params['body'] is None):
             raise ValueError("Missing the required parameter `body` when calling `create_task`")  # noqa: E501
+        # verify the required parameter 'x_ebay_c_marketplace_id' is set
+        if ('x_ebay_c_marketplace_id' not in params or
+                params['x_ebay_c_marketplace_id'] is None):
+            raise ValueError("Missing the required parameter `x_ebay_c_marketplace_id` when calling `create_task`")  # noqa: E501
+        # verify the required parameter 'content_type' is set
+        if ('content_type' not in params or
+                params['content_type'] is None):
+            raise ValueError("Missing the required parameter `content_type` when calling `create_task`")  # noqa: E501
 
         collection_formats = {}
 
@@ -101,6 +111,8 @@ class TaskApi(object):
         header_params = {}
         if 'x_ebay_c_marketplace_id' in params:
             header_params['X-EBAY-C-MARKETPLACE-ID'] = params['x_ebay_c_marketplace_id']  # noqa: E501
+        if 'content_type' in params:
+            header_params['Content-Type'] = params['content_type']  # noqa: E501
 
         form_params = []
         local_var_files = {}
@@ -527,16 +539,17 @@ class TaskApi(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def upload_file(self, task_id, **kwargs):  # noqa: E501
+    def upload_file(self, content_type, task_id, **kwargs):  # noqa: E501
         """upload_file  # noqa: E501
 
         This method associates the specified file with the specified task ID and uploads the input file. After the file has been uploaded, the processing of the file begins. <br /><br />Reports often take time to generate and it's common for this method to return an HTTP status of 202, which indicates the report is being generated. Use the <b> getTask</b> with the task ID or <b> getTasks</b> to determine the status of a report. <br /><br />The status flow is <code>QUEUED</code> &gt; <code>IN_PROCESS</code> &gt; <code>COMPLETED</code> or <code>COMPLETED_WITH_ERROR</code>. When the status is <code>COMPLETED</code> or <code>COMPLETED_WITH_ERROR</code>, this indicates the file has been processed and the order report can be downloaded. If there are errors, they will be indicated in the report file. <br /><br />For details of how this method is used in the upload flow, see <a href=\"/api-docs/sell/static/orders/generating-and-retrieving-order-reports.html\">Working with Order Feeds</a> in the Selling Integration Guide. <p><span class=\"tablenote\"><strong>Note:</strong> This method applies to all Seller Hub feed types and LMS feed types except <code>LMS_ORDER_REPORT</code> and <code>LMS_ACTIVE_INVENTORY_REPORT</code>. See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Availabl\" target=\"_blank\">LMS feed types</a> and <a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#availabl\" target=\"_blank\">Seller Hub feed types</a>.</span></p><p> <span class=\"tablenote\"><b>Note:</b> You must use a <strong>Content-Type</strong> header with its value set to \"<strong>multipart/form-data</strong>\". See <a href=\"/api-docs/sell/feed/resources/task/methods/uploadFile#h2-samples\">Samples</a> for information.</span></p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.upload_file(task_id, async_req=True)
+        >>> thread = api.upload_file(content_type, task_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>multipart/form-data</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str task_id: The task_id associated with the file that will be uploaded. This ID was generated when the specified task was created. (required)
         :param str creation_date:
         :param str file_name:
@@ -552,21 +565,22 @@ class TaskApi(object):
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.upload_file_with_http_info(task_id, **kwargs)  # noqa: E501
+            return self.upload_file_with_http_info(content_type, task_id, **kwargs)  # noqa: E501
         else:
-            (data) = self.upload_file_with_http_info(task_id, **kwargs)  # noqa: E501
+            (data) = self.upload_file_with_http_info(content_type, task_id, **kwargs)  # noqa: E501
             return data
 
-    def upload_file_with_http_info(self, task_id, **kwargs):  # noqa: E501
+    def upload_file_with_http_info(self, content_type, task_id, **kwargs):  # noqa: E501
         """upload_file  # noqa: E501
 
         This method associates the specified file with the specified task ID and uploads the input file. After the file has been uploaded, the processing of the file begins. <br /><br />Reports often take time to generate and it's common for this method to return an HTTP status of 202, which indicates the report is being generated. Use the <b> getTask</b> with the task ID or <b> getTasks</b> to determine the status of a report. <br /><br />The status flow is <code>QUEUED</code> &gt; <code>IN_PROCESS</code> &gt; <code>COMPLETED</code> or <code>COMPLETED_WITH_ERROR</code>. When the status is <code>COMPLETED</code> or <code>COMPLETED_WITH_ERROR</code>, this indicates the file has been processed and the order report can be downloaded. If there are errors, they will be indicated in the report file. <br /><br />For details of how this method is used in the upload flow, see <a href=\"/api-docs/sell/static/orders/generating-and-retrieving-order-reports.html\">Working with Order Feeds</a> in the Selling Integration Guide. <p><span class=\"tablenote\"><strong>Note:</strong> This method applies to all Seller Hub feed types and LMS feed types except <code>LMS_ORDER_REPORT</code> and <code>LMS_ACTIVE_INVENTORY_REPORT</code>. See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Availabl\" target=\"_blank\">LMS feed types</a> and <a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#availabl\" target=\"_blank\">Seller Hub feed types</a>.</span></p><p> <span class=\"tablenote\"><b>Note:</b> You must use a <strong>Content-Type</strong> header with its value set to \"<strong>multipart/form-data</strong>\". See <a href=\"/api-docs/sell/feed/resources/task/methods/uploadFile#h2-samples\">Samples</a> for information.</span></p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.upload_file_with_http_info(task_id, async_req=True)
+        >>> thread = api.upload_file_with_http_info(content_type, task_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>multipart/form-data</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str task_id: The task_id associated with the file that will be uploaded. This ID was generated when the specified task was created. (required)
         :param str creation_date:
         :param str file_name:
@@ -581,7 +595,7 @@ class TaskApi(object):
                  returns the request thread.
         """
 
-        all_params = ['task_id', 'creation_date', 'file_name', 'modification_date', 'name', 'parameters', 'read_date', 'size', 'type']  # noqa: E501
+        all_params = ['content_type', 'task_id', 'creation_date', 'file_name', 'modification_date', 'name', 'parameters', 'read_date', 'size', 'type']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -596,6 +610,10 @@ class TaskApi(object):
                 )
             params[key] = val
         del params['kwargs']
+        # verify the required parameter 'content_type' is set
+        if ('content_type' not in params or
+                params['content_type'] is None):
+            raise ValueError("Missing the required parameter `content_type` when calling `upload_file`")  # noqa: E501
         # verify the required parameter 'task_id' is set
         if ('task_id' not in params or
                 params['task_id'] is None):
@@ -610,6 +628,8 @@ class TaskApi(object):
         query_params = []
 
         header_params = {}
+        if 'content_type' in params:
+            header_params['Content-Type'] = params['content_type']  # noqa: E501
 
         form_params = []
         local_var_files = {}

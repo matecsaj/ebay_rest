@@ -31,7 +31,6 @@ class Multiton(type):
     """
     _instances = list()
 
-    # TODO Is it possible to improve the implementation with @functools.lru_cache()?
     def __call__(cls, *args, **kwargs):
         return_object = None
         d_t = datetime.datetime.now()

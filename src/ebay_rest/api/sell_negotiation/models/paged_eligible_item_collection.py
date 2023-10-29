@@ -76,7 +76,7 @@ class PagedEligibleItemCollection(object):
     def eligible_items(self):
         """Gets the eligible_items of this PagedEligibleItemCollection.  # noqa: E501
 
-        A list of items that are eligible for a seller-initiated offer to a buyer. Each element in the list contains the listing ID of a listed item. These IDs represent the listings for which buyers have shown an interest.  # noqa: E501
+        A list of items that are eligible for a seller-initiated offer to a buyer.  <br><br>Each element in the list contains the listing ID<!-- <i>or</i> the SKU value--> of a listed item. These IDs represent the listings for which buyers have shown an interest.  # noqa: E501
 
         :return: The eligible_items of this PagedEligibleItemCollection.  # noqa: E501
         :rtype: list[EligibleItem]
@@ -87,7 +87,7 @@ class PagedEligibleItemCollection(object):
     def eligible_items(self, eligible_items):
         """Sets the eligible_items of this PagedEligibleItemCollection.
 
-        A list of items that are eligible for a seller-initiated offer to a buyer. Each element in the list contains the listing ID of a listed item. These IDs represent the listings for which buyers have shown an interest.  # noqa: E501
+        A list of items that are eligible for a seller-initiated offer to a buyer.  <br><br>Each element in the list contains the listing ID<!-- <i>or</i> the SKU value--> of a listed item. These IDs represent the listings for which buyers have shown an interest.  # noqa: E501
 
         :param eligible_items: The eligible_items of this PagedEligibleItemCollection.  # noqa: E501
         :type: list[EligibleItem]
@@ -122,7 +122,7 @@ class PagedEligibleItemCollection(object):
     def limit(self):
         """Gets the limit of this PagedEligibleItemCollection.  # noqa: E501
 
-        The number of items returned on a single page from the result set. This value can be set in the request with the limit query parameter.  # noqa: E501
+        The number of items returned on a single page from the result set. This value can be set in the request with the <b>limit</b> query parameter.  # noqa: E501
 
         :return: The limit of this PagedEligibleItemCollection.  # noqa: E501
         :rtype: int
@@ -133,7 +133,7 @@ class PagedEligibleItemCollection(object):
     def limit(self, limit):
         """Sets the limit of this PagedEligibleItemCollection.
 
-        The number of items returned on a single page from the result set. This value can be set in the request with the limit query parameter.  # noqa: E501
+        The number of items returned on a single page from the result set. This value can be set in the request with the <b>limit</b> query parameter.  # noqa: E501
 
         :param limit: The limit of this PagedEligibleItemCollection.  # noqa: E501
         :type: int
@@ -145,7 +145,7 @@ class PagedEligibleItemCollection(object):
     def next(self):
         """Gets the next of this PagedEligibleItemCollection.  # noqa: E501
 
-        The URI for the following page of results. This value is returned only if there is an additional page of results to display from the result set. Max length: 2048  # noqa: E501
+        The URI for the following page of results. This value is returned only if there is an additional page of results to display from the result set. <br><br><b>Max length</b>: 2048  # noqa: E501
 
         :return: The next of this PagedEligibleItemCollection.  # noqa: E501
         :rtype: str
@@ -156,7 +156,7 @@ class PagedEligibleItemCollection(object):
     def next(self, next):
         """Sets the next of this PagedEligibleItemCollection.
 
-        The URI for the following page of results. This value is returned only if there is an additional page of results to display from the result set. Max length: 2048  # noqa: E501
+        The URI for the following page of results. This value is returned only if there is an additional page of results to display from the result set. <br><br><b>Max length</b>: 2048  # noqa: E501
 
         :param next: The next of this PagedEligibleItemCollection.  # noqa: E501
         :type: str
@@ -168,7 +168,7 @@ class PagedEligibleItemCollection(object):
     def offset(self):
         """Gets the offset of this PagedEligibleItemCollection.  # noqa: E501
 
-        The number of results skipped in the result set before listing the first returned result. This value can be set in the request with the offset query parameter. Note: The items in a paginated result set use a zero-based list where the first item in the list has an offset of 0.  # noqa: E501
+        The number of results skipped in the result set before listing the first returned result. This value can be set in the request with the <b>offset</b> query parameter. <p class=\"tablenote\"><strong>Note: </strong>The items in a paginated result set use a zero-based list where the first item in the list has an offset of <code>0</code>.</p>  # noqa: E501
 
         :return: The offset of this PagedEligibleItemCollection.  # noqa: E501
         :rtype: int
@@ -179,7 +179,7 @@ class PagedEligibleItemCollection(object):
     def offset(self, offset):
         """Sets the offset of this PagedEligibleItemCollection.
 
-        The number of results skipped in the result set before listing the first returned result. This value can be set in the request with the offset query parameter. Note: The items in a paginated result set use a zero-based list where the first item in the list has an offset of 0.  # noqa: E501
+        The number of results skipped in the result set before listing the first returned result. This value can be set in the request with the <b>offset</b> query parameter. <p class=\"tablenote\"><strong>Note: </strong>The items in a paginated result set use a zero-based list where the first item in the list has an offset of <code>0</code>.</p>  # noqa: E501
 
         :param offset: The offset of this PagedEligibleItemCollection.  # noqa: E501
         :type: int
@@ -191,7 +191,7 @@ class PagedEligibleItemCollection(object):
     def prev(self):
         """Gets the prev of this PagedEligibleItemCollection.  # noqa: E501
 
-        The URI for the preceding page of results. This value is returned only if there is a previous page of results to display from the result set. Max length: 2048  # noqa: E501
+        The URI for the preceding page of results. This value is returned only if there is a previous page of results to display from the result set. <br><br><b>Max length</b>: 2048  # noqa: E501
 
         :return: The prev of this PagedEligibleItemCollection.  # noqa: E501
         :rtype: str
@@ -202,7 +202,7 @@ class PagedEligibleItemCollection(object):
     def prev(self, prev):
         """Sets the prev of this PagedEligibleItemCollection.
 
-        The URI for the preceding page of results. This value is returned only if there is a previous page of results to display from the result set. Max length: 2048  # noqa: E501
+        The URI for the preceding page of results. This value is returned only if there is a previous page of results to display from the result set. <br><br><b>Max length</b>: 2048  # noqa: E501
 
         :param prev: The prev of this PagedEligibleItemCollection.  # noqa: E501
         :type: str
@@ -214,7 +214,7 @@ class PagedEligibleItemCollection(object):
     def total(self):
         """Gets the total of this PagedEligibleItemCollection.  # noqa: E501
 
-        The total number of items retrieved in the result set. If no items match the search criteria, the server returns the HTTP status code 204 No Content.  # noqa: E501
+        The total number of items retrieved in the result set.  <br><br>If no items match the search criteria, the server returns the HTTP status code <br><code>204 No Content</code>.  # noqa: E501
 
         :return: The total of this PagedEligibleItemCollection.  # noqa: E501
         :rtype: int
@@ -225,7 +225,7 @@ class PagedEligibleItemCollection(object):
     def total(self, total):
         """Sets the total of this PagedEligibleItemCollection.
 
-        The total number of items retrieved in the result set. If no items match the search criteria, the server returns the HTTP status code 204 No Content.  # noqa: E501
+        The total number of items retrieved in the result set.  <br><br>If no items match the search criteria, the server returns the HTTP status code <br><code>204 No Content</code>.  # noqa: E501
 
         :param total: The total of this PagedEligibleItemCollection.  # noqa: E501
         :type: int
