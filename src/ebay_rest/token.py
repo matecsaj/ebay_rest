@@ -810,7 +810,7 @@ class KeyPairToken(metaclass=Multiton):
         """
         body = CreateSigningKeyRequest(signing_key_cipher='ED25519')
         try:
-            key = api.developer_key_management_create_signing_key(body=body)
+            key = api.developer_key_management_create_signing_key(content_type='application/json', body=body)
         except Error as e:
             raise Error(
                     number=96024,
