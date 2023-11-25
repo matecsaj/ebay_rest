@@ -46,7 +46,7 @@ class InventoryFilterCriteria(object):
     def listing_format(self):
         """Gets the listing_format of this InventoryFilterCriteria.  # noqa: E501
 
-        The type of buying option for the order. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:ListingFormatEnum'>eBay API documentation</a>  # noqa: E501
+        The listing format for the ActiveInventoryReport being created. Supported types are:<br><ul><li><code>AUCTION</code></li><li><code>FIXED_PRICE</code></li></ul> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:ListingFormatEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The listing_format of this InventoryFilterCriteria.  # noqa: E501
         :rtype: str
@@ -57,7 +57,7 @@ class InventoryFilterCriteria(object):
     def listing_format(self, listing_format):
         """Sets the listing_format of this InventoryFilterCriteria.
 
-        The type of buying option for the order. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:ListingFormatEnum'>eBay API documentation</a>  # noqa: E501
+        The listing format for the ActiveInventoryReport being created. Supported types are:<br><ul><li><code>AUCTION</code></li><li><code>FIXED_PRICE</code></li></ul> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:ListingFormatEnum'>eBay API documentation</a>  # noqa: E501
 
         :param listing_format: The listing_format of this InventoryFilterCriteria.  # noqa: E501
         :type: str

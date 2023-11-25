@@ -51,7 +51,7 @@ class Region(object):
     def region_name(self):
         """Gets the region_name of this Region.  # noqa: E501
 
-        A string that indicates the name of a region, as defined by eBay. A \"region\" can be either a 'world region' (e.g., the \"Middle East\" or \"Southeast Asia\"), a country (represented with a two-letter country code), a state or province (represented with a two-letter code), or a special domestic region within a country. <br><br>The <b>GeteBayDetails</b> call in the Trading API can be used to retrieve the world regions and special domestic regions within a specific country. To get these enumeration values, call <b>GeteBayDetails</b> with the <b>DetailName</b> value set to <b>ExcludeShippingLocationDetails</b>.  # noqa: E501
+        A string that indicates the name of a region, as defined by eBay. A \"region\" can be either a 'world region' (e.g., the \"Middle East\" or \"Southeast Asia\"), a country (represented with a two-letter country code), a state or province (represented with a two-letter code), or a special domestic region within a country. <br><br>The <a href=\"/devzone/xml/docs/reference/ebay/GeteBayDetails.html\">GeteBayDetails</a> call in the Trading API can be used to retrieve the world regions and special domestic regions within a specific country. To get these enumeration values, call <b>GeteBayDetails</b> with the <b>DetailName</b> value set to <b>ExcludeShippingLocationDetails</b>.  # noqa: E501
 
         :return: The region_name of this Region.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class Region(object):
     def region_name(self, region_name):
         """Sets the region_name of this Region.
 
-        A string that indicates the name of a region, as defined by eBay. A \"region\" can be either a 'world region' (e.g., the \"Middle East\" or \"Southeast Asia\"), a country (represented with a two-letter country code), a state or province (represented with a two-letter code), or a special domestic region within a country. <br><br>The <b>GeteBayDetails</b> call in the Trading API can be used to retrieve the world regions and special domestic regions within a specific country. To get these enumeration values, call <b>GeteBayDetails</b> with the <b>DetailName</b> value set to <b>ExcludeShippingLocationDetails</b>.  # noqa: E501
+        A string that indicates the name of a region, as defined by eBay. A \"region\" can be either a 'world region' (e.g., the \"Middle East\" or \"Southeast Asia\"), a country (represented with a two-letter country code), a state or province (represented with a two-letter code), or a special domestic region within a country. <br><br>The <a href=\"/devzone/xml/docs/reference/ebay/GeteBayDetails.html\">GeteBayDetails</a> call in the Trading API can be used to retrieve the world regions and special domestic regions within a specific country. To get these enumeration values, call <b>GeteBayDetails</b> with the <b>DetailName</b> value set to <b>ExcludeShippingLocationDetails</b>.  # noqa: E501
 
         :param region_name: The region_name of this Region.  # noqa: E501
         :type: str

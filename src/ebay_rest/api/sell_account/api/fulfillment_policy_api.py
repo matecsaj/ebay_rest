@@ -149,7 +149,7 @@ class FulfillmentPolicyApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy to delete. (required)
+        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy to delete.<br><br> This ID can be retrieved for a fulfillment policy by using the <a href=\"/api-docs/sell/account/resources/fulfillment_policy/methods/getFulfillmentPolicies\" target=\"_blank \">getFulfillmentPolicies</a> method. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -171,7 +171,7 @@ class FulfillmentPolicyApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy to delete. (required)
+        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy to delete.<br><br> This ID can be retrieved for a fulfillment policy by using the <a href=\"/api-docs/sell/account/resources/fulfillment_policy/methods/getFulfillmentPolicies\" target=\"_blank \">getFulfillmentPolicies</a> method. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -335,7 +335,7 @@ class FulfillmentPolicyApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy you want to retrieve. (required)
+        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy you want to retrieve.<br><br> This ID can be retrieved for a fulfillment policy by using the <a href=\"/api-docs/sell/account/resources/fulfillment_policy/methods/getFulfillmentPolicies\" target=\"_blank \">getFulfillmentPolicies</a> method. (required)
         :return: FulfillmentPolicy
                  If the method is called asynchronously,
                  returns the request thread.
@@ -357,7 +357,7 @@ class FulfillmentPolicyApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy you want to retrieve. (required)
+        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy you want to retrieve.<br><br> This ID can be retrieved for a fulfillment policy by using the <a href=\"/api-docs/sell/account/resources/fulfillment_policy/methods/getFulfillmentPolicies\" target=\"_blank \">getFulfillmentPolicies</a> method. (required)
         :return: FulfillmentPolicy
                  If the method is called asynchronously,
                  returns the request thread.
@@ -431,7 +431,7 @@ class FulfillmentPolicyApi(object):
 
         :param async_req bool
         :param str marketplace_id: This query parameter specifies the eBay marketplace of the policy you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
-        :param str name: This query parameter specifies the seller-defined name of the fulfillment policy you want to retrieve. (required)
+        :param str name: This query parameter specifies the seller-defined name of the fulfillment policy you want to retrieve.<br><br>This value can be retrieved for a fulfillment policy by using the <a href=\"/api-docs/sell/account/resources/fulfillment_policy/methods/getFulfillmentPolicies\" target=\"_blank \">getFulfillmentPolicies</a> method. (required)
         :return: FulfillmentPolicy
                  If the method is called asynchronously,
                  returns the request thread.
@@ -454,7 +454,7 @@ class FulfillmentPolicyApi(object):
 
         :param async_req bool
         :param str marketplace_id: This query parameter specifies the eBay marketplace of the policy you want to retrieve. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/account/types/ba:MarketplaceIdEnum (required)
-        :param str name: This query parameter specifies the seller-defined name of the fulfillment policy you want to retrieve. (required)
+        :param str name: This query parameter specifies the seller-defined name of the fulfillment policy you want to retrieve.<br><br>This value can be retrieved for a fulfillment policy by using the <a href=\"/api-docs/sell/account/resources/fulfillment_policy/methods/getFulfillmentPolicies\" target=\"_blank \">getFulfillmentPolicies</a> method. (required)
         :return: FulfillmentPolicy
                  If the method is called asynchronously,
                  returns the request thread.
@@ -535,7 +535,7 @@ class FulfillmentPolicyApi(object):
         :param async_req bool
         :param FulfillmentPolicyRequest body: Fulfillment policy request (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy you want to update. (required)
+        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy you want to update.<br><br>This ID can be retrieved for a specific fulfillment policy by using the <a href=\"/api-docs/sell/account/resources/fulfillment_policy/methods/getFulfillmentPolicies\" target=\"_blank \">getFulfillmentPolicies</a> method. (required)
         :return: SetFulfillmentPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -559,7 +559,7 @@ class FulfillmentPolicyApi(object):
         :param async_req bool
         :param FulfillmentPolicyRequest body: Fulfillment policy request (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy you want to update. (required)
+        :param str fulfillment_policy_id: This path parameter specifies the ID of the fulfillment policy you want to update.<br><br>This ID can be retrieved for a specific fulfillment policy by using the <a href=\"/api-docs/sell/account/resources/fulfillment_policy/methods/getFulfillmentPolicies\" target=\"_blank \">getFulfillmentPolicies</a> method. (required)
         :return: SetFulfillmentPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.

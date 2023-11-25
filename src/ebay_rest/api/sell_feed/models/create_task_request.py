@@ -51,7 +51,7 @@ class CreateTaskRequest(object):
     def feed_type(self):
         """Gets the feed_type of this CreateTaskRequest.  # noqa: E501
 
-        The feed type associated with the task. Only use a <strong>feedType</strong> that is available for your API. Available feed types:<ul><li><a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#trading-upload-feed-types\" target=\"_blank\">Inventory upload feed types</a></li><li><a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#merchant-data-upload-feed-types\" target=\"_blank\">Fulfillment upload feed types</a></li><li><a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#availabl\" target=\"_blank\">Seller Hub feed types</a></li></ul>  # noqa: E501
+        The feed type associated with the task. Available feed types:<br><ul><li><a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#trading-upload-feed-types\" target=\"_blank\">Inventory upload feed types</a></li><li><a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#merchant-data-upload-feed-types\" target=\"_blank\">Fulfillment upload feed types</a></li><li><a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#availabl\" target=\"_blank\">Seller Hub feed types</a></li></ul>  # noqa: E501
 
         :return: The feed_type of this CreateTaskRequest.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class CreateTaskRequest(object):
     def feed_type(self, feed_type):
         """Sets the feed_type of this CreateTaskRequest.
 
-        The feed type associated with the task. Only use a <strong>feedType</strong> that is available for your API. Available feed types:<ul><li><a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#trading-upload-feed-types\" target=\"_blank\">Inventory upload feed types</a></li><li><a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#merchant-data-upload-feed-types\" target=\"_blank\">Fulfillment upload feed types</a></li><li><a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#availabl\" target=\"_blank\">Seller Hub feed types</a></li></ul>  # noqa: E501
+        The feed type associated with the task. Available feed types:<br><ul><li><a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#trading-upload-feed-types\" target=\"_blank\">Inventory upload feed types</a></li><li><a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#merchant-data-upload-feed-types\" target=\"_blank\">Fulfillment upload feed types</a></li><li><a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#availabl\" target=\"_blank\">Seller Hub feed types</a></li></ul>  # noqa: E501
 
         :param feed_type: The feed_type of this CreateTaskRequest.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class CreateTaskRequest(object):
     def schema_version(self):
         """Gets the schema_version of this CreateTaskRequest.  # noqa: E501
 
-        The schemaVersion/version number of the file format (use the schema version of the API to which you are programming):<ul><li><a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Version\" target=\"_blank\">Version Details / Schema Version</a></li><li><a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#schema\" target=\"_blank\">Seller Hub feed schema version</a></li></ul>  # noqa: E501
+        The schemaVersion/version number of the file format:<br><ul><li><a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Version\" target=\"_blank\">Version Details / Schema Version</a></li><li><a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#schema\" target=\"_blank\">Seller Hub feed schema version</a></li></ul>  # noqa: E501
 
         :return: The schema_version of this CreateTaskRequest.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class CreateTaskRequest(object):
     def schema_version(self, schema_version):
         """Sets the schema_version of this CreateTaskRequest.
 
-        The schemaVersion/version number of the file format (use the schema version of the API to which you are programming):<ul><li><a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Version\" target=\"_blank\">Version Details / Schema Version</a></li><li><a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#schema\" target=\"_blank\">Seller Hub feed schema version</a></li></ul>  # noqa: E501
+        The schemaVersion/version number of the file format:<br><ul><li><a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Version\" target=\"_blank\">Version Details / Schema Version</a></li><li><a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#schema\" target=\"_blank\">Seller Hub feed schema version</a></li></ul>  # noqa: E501
 
         :param schema_version: The schema_version of this CreateTaskRequest.  # noqa: E501
         :type: str

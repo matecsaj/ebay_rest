@@ -149,7 +149,7 @@ class CustomPolicyApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str policy_types: This query parameter specifies the type of custom policies to be returned.<br><br>Multiple policy types may be requested in a single call by providing a comma-delimited set of all policy types to be returned.<br><br><span class=\"tablenote\"><strong>Note:</strong> Omitting this query parameter from a request will also return policies of all policy types.</span><br><br>Two Custom Policy types are supported: <ul><li>Product Compliance (PRODUCT_COMPLIANCE)</li> <li>Takeback (TAKE_BACK)</li></ul>
+        :param str policy_types: This query parameter specifies the type of custom policies to be returned.<br><br>Multiple policy types may be requested in a single call by providing a comma-delimited set of all policy types to be returned.<br><br><span class=\"tablenote\"><strong>Note:</strong> Omitting this query parameter from a request will also return policies of all policy types.</span><br> See the <a href=\"/api-docs/sell/account/types/api:CustomPolicyTypeEnum\" target=\"_blank \">CustomPolicyTypeEnum</a> type for a list of supported values.
         :return: CustomPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -171,7 +171,7 @@ class CustomPolicyApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str policy_types: This query parameter specifies the type of custom policies to be returned.<br><br>Multiple policy types may be requested in a single call by providing a comma-delimited set of all policy types to be returned.<br><br><span class=\"tablenote\"><strong>Note:</strong> Omitting this query parameter from a request will also return policies of all policy types.</span><br><br>Two Custom Policy types are supported: <ul><li>Product Compliance (PRODUCT_COMPLIANCE)</li> <li>Takeback (TAKE_BACK)</li></ul>
+        :param str policy_types: This query parameter specifies the type of custom policies to be returned.<br><br>Multiple policy types may be requested in a single call by providing a comma-delimited set of all policy types to be returned.<br><br><span class=\"tablenote\"><strong>Note:</strong> Omitting this query parameter from a request will also return policies of all policy types.</span><br> See the <a href=\"/api-docs/sell/account/types/api:CustomPolicyTypeEnum\" target=\"_blank \">CustomPolicyTypeEnum</a> type for a list of supported values.
         :return: CustomPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -240,7 +240,7 @@ class CustomPolicyApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str custom_policy_id: This path parameter is the unique custom policy identifier for the policy to be returned.<br><br><span class=\"tablenote\"><strong>Note:</strong> This value is automatically assigned by the system when the policy is created.</span> (required)
+        :param str custom_policy_id: This path parameter is the unique identifier of the custom policy to retrieve.<br><br> This ID can be retrieved for a custom policy by using the <a href=\"/api-docs/sell/account/resources/custom_policy/methods/getCustomPolicies\" target=\"_blank \">getCustomPolicies</a> method. (required)
         :return: CustomPolicy
                  If the method is called asynchronously,
                  returns the request thread.
@@ -262,7 +262,7 @@ class CustomPolicyApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str custom_policy_id: This path parameter is the unique custom policy identifier for the policy to be returned.<br><br><span class=\"tablenote\"><strong>Note:</strong> This value is automatically assigned by the system when the policy is created.</span> (required)
+        :param str custom_policy_id: This path parameter is the unique identifier of the custom policy to retrieve.<br><br> This ID can be retrieved for a custom policy by using the <a href=\"/api-docs/sell/account/resources/custom_policy/methods/getCustomPolicies\" target=\"_blank \">getCustomPolicies</a> method. (required)
         :return: CustomPolicy
                  If the method is called asynchronously,
                  returns the request thread.
@@ -337,7 +337,7 @@ class CustomPolicyApi(object):
         :param async_req bool
         :param CustomPolicyRequest body: Request to update a current custom policy. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str custom_policy_id: This path parameter is the unique custom policy identifier for the policy to be returned.<br><br><span class=\"tablenote\"><strong>Note:</strong> This value is automatically assigned by the system when the policy is created.</span> (required)
+        :param str custom_policy_id: This path parameter is the unique identifier of the custom policy to retrieve.<br><br> This ID can be retrieved for a custom policy by using the <a href=\"/api-docs/sell/account/resources/custom_policy/methods/getCustomPolicies\" target=\"_blank \">getCustomPolicies</a> method. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -361,7 +361,7 @@ class CustomPolicyApi(object):
         :param async_req bool
         :param CustomPolicyRequest body: Request to update a current custom policy. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str custom_policy_id: This path parameter is the unique custom policy identifier for the policy to be returned.<br><br><span class=\"tablenote\"><strong>Note:</strong> This value is automatically assigned by the system when the policy is created.</span> (required)
+        :param str custom_policy_id: This path parameter is the unique identifier of the custom policy to retrieve.<br><br> This ID can be retrieved for a custom policy by using the <a href=\"/api-docs/sell/account/resources/custom_policy/methods/getCustomPolicies\" target=\"_blank \">getCustomPolicies</a> method. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.

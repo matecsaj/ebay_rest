@@ -183,7 +183,7 @@ class ShippingOption(object):
     def guaranteed_delivery(self):
         """Gets the guaranteed_delivery of this ShippingOption.  # noqa: E501
 
-        Indicates if the seller has committed to shipping the item with eBay Guaranteed Delivery. With eBay Guaranteed Delivery, the  seller is committed to getting the line item to the buyer within 4 business days or less. See the <a href=\"https://www.ebay.com/help/buying/shipping-delivery/buying-items-ebay-guaranteed-delivery?id=4641 \">Buying items with eBay Guaranteed Delivery</a> help topic for more details about eBay Guaranteed Delivery.  # noqa: E501
+        Although this field is still returned, it can be ignored since eBay Guaranteed Delivery is no longer a supported feature on any marketplace. This field may get removed from the schema in the future.  # noqa: E501
 
         :return: The guaranteed_delivery of this ShippingOption.  # noqa: E501
         :rtype: bool
@@ -194,7 +194,7 @@ class ShippingOption(object):
     def guaranteed_delivery(self, guaranteed_delivery):
         """Sets the guaranteed_delivery of this ShippingOption.
 
-        Indicates if the seller has committed to shipping the item with eBay Guaranteed Delivery. With eBay Guaranteed Delivery, the  seller is committed to getting the line item to the buyer within 4 business days or less. See the <a href=\"https://www.ebay.com/help/buying/shipping-delivery/buying-items-ebay-guaranteed-delivery?id=4641 \">Buying items with eBay Guaranteed Delivery</a> help topic for more details about eBay Guaranteed Delivery.  # noqa: E501
+        Although this field is still returned, it can be ignored since eBay Guaranteed Delivery is no longer a supported feature on any marketplace. This field may get removed from the schema in the future.  # noqa: E501
 
         :param guaranteed_delivery: The guaranteed_delivery of this ShippingOption.  # noqa: E501
         :type: bool

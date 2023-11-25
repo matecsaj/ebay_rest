@@ -42,8 +42,8 @@ class AdvertisingEligibilityApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str x_ebay_c_marketplace_id: The unique identifier of the eBay marketplace for which the seller eligibility status shall be checked.<br /><br /><span class=\"tablenote\"><b>Note:</b> This value is case-sensitive.</span> (required)
-        :param str program_types: A comma-separated list of eBay advertising programs.<br /><br /><span class=\"tablenote\"><b>Tip:</b> See the <a href=\"/api-docs/sell/account/types/plser:AdvertisingProgramEnum\"> AdvertisingProgramEnum</a> type for possible values.</span><br /><br />If no programs are specified, the results will be returned for all programs.
+        :param str x_ebay_c_marketplace_id: The unique identifier of the eBay marketplace for which the seller eligibility status shall be checked. This header is required or the call will fail.<br><br>See the <a href=\"/api-docs/sell/account/types/ba:MarketplaceIdEnum \" target=\"_blank \">MarketplaceIdEnum</a> type for the supported marketplace ID values. (required)
+        :param str program_types: A comma-separated list of eBay advertising programs for which eligibility status will be returned.<br><br> See the <a href=\"/api-docs/sell/account/types/plser:AdvertisingProgramEnum\" target=\"_blank\"> AdvertisingProgramEnum</a> type for a list of supported values.<br><br>If no programs are specified, the results will be returned for all programs.
         :return: SellerEligibilityMultiProgramResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -65,8 +65,8 @@ class AdvertisingEligibilityApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str x_ebay_c_marketplace_id: The unique identifier of the eBay marketplace for which the seller eligibility status shall be checked.<br /><br /><span class=\"tablenote\"><b>Note:</b> This value is case-sensitive.</span> (required)
-        :param str program_types: A comma-separated list of eBay advertising programs.<br /><br /><span class=\"tablenote\"><b>Tip:</b> See the <a href=\"/api-docs/sell/account/types/plser:AdvertisingProgramEnum\"> AdvertisingProgramEnum</a> type for possible values.</span><br /><br />If no programs are specified, the results will be returned for all programs.
+        :param str x_ebay_c_marketplace_id: The unique identifier of the eBay marketplace for which the seller eligibility status shall be checked. This header is required or the call will fail.<br><br>See the <a href=\"/api-docs/sell/account/types/ba:MarketplaceIdEnum \" target=\"_blank \">MarketplaceIdEnum</a> type for the supported marketplace ID values. (required)
+        :param str program_types: A comma-separated list of eBay advertising programs for which eligibility status will be returned.<br><br> See the <a href=\"/api-docs/sell/account/types/plser:AdvertisingProgramEnum\" target=\"_blank\"> AdvertisingProgramEnum</a> type for a list of supported values.<br><br>If no programs are specified, the results will be returned for all programs.
         :return: SellerEligibilityMultiProgramResponse
                  If the method is called asynchronously,
                  returns the request thread.

@@ -56,7 +56,7 @@ class CreateOrderTaskRequest(object):
     def feed_type(self):
         """Gets the feed_type of this CreateOrderTaskRequest.  # noqa: E501
 
-        The feed type associated with the task. The only presently supported value is <code>LMS_ORDER_REPORT</code>. See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#merchant-data-reports-download-feed-types\" target=\"_blank\">Report download feed types</a> for more information.  # noqa: E501
+        The feed type associated with the task. The only presently supported value is <code>LMS_ORDER_REPORT</code>.<br><br>See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#merchant-data-reports-download-feed-types\" target=\"_blank\">Report download feed types</a> for more information.  # noqa: E501
 
         :return: The feed_type of this CreateOrderTaskRequest.  # noqa: E501
         :rtype: str
@@ -67,7 +67,7 @@ class CreateOrderTaskRequest(object):
     def feed_type(self, feed_type):
         """Sets the feed_type of this CreateOrderTaskRequest.
 
-        The feed type associated with the task. The only presently supported value is <code>LMS_ORDER_REPORT</code>. See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#merchant-data-reports-download-feed-types\" target=\"_blank\">Report download feed types</a> for more information.  # noqa: E501
+        The feed type associated with the task. The only presently supported value is <code>LMS_ORDER_REPORT</code>.<br><br>See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#merchant-data-reports-download-feed-types\" target=\"_blank\">Report download feed types</a> for more information.  # noqa: E501
 
         :param feed_type: The feed_type of this CreateOrderTaskRequest.  # noqa: E501
         :type: str

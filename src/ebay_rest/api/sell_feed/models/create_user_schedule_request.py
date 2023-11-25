@@ -86,7 +86,7 @@ class CreateUserScheduleRequest(object):
     def feed_type(self):
         """Gets the feed_type of this CreateUserScheduleRequest.  # noqa: E501
 
-        The name of the feed type for the created schedule. Match the <strong>feed_type</strong> from the schedule template associated with this schedule.  # noqa: E501
+        The name of the feed type for the created schedule.<br><br> Use the <a href=\"/api-docs/sell/feed/resources/schedule/methods/getScheduleTemplates\">getScheduleTemplates</a> method to retrieve the feed type of a schedule template.<br><br><span class=\"tablenote\"><b>Note:</b> Schedules are currently only available for <code>LMS_ORDER_REPORT</code>.</span>  # noqa: E501
 
         :return: The feed_type of this CreateUserScheduleRequest.  # noqa: E501
         :rtype: str
@@ -97,7 +97,7 @@ class CreateUserScheduleRequest(object):
     def feed_type(self, feed_type):
         """Sets the feed_type of this CreateUserScheduleRequest.
 
-        The name of the feed type for the created schedule. Match the <strong>feed_type</strong> from the schedule template associated with this schedule.  # noqa: E501
+        The name of the feed type for the created schedule.<br><br> Use the <a href=\"/api-docs/sell/feed/resources/schedule/methods/getScheduleTemplates\">getScheduleTemplates</a> method to retrieve the feed type of a schedule template.<br><br><span class=\"tablenote\"><b>Note:</b> Schedules are currently only available for <code>LMS_ORDER_REPORT</code>.</span>  # noqa: E501
 
         :param feed_type: The feed_type of this CreateUserScheduleRequest.  # noqa: E501
         :type: str
@@ -224,7 +224,7 @@ class CreateUserScheduleRequest(object):
     def schedule_start_date(self):
         """Gets the schedule_start_date of this CreateUserScheduleRequest.  # noqa: E501
 
-        The timestamp to start generating the report. After this timestamp, the schedule status becomes active until either the <strong>scheduleEndDate</strong> occurs or the <strong>scheduleTemplateId</strong> becomes inactive. <br /><br />Use this field, if available, to start the schedule in the future but before the <strong>scheduleEndDate</strong> (if supplied). This field is available as specified by the template <strong>(scheduleTemplateId)</strong>.  The template can specify this field as optional or required, and optionally provides a default value.<br /><br /><b>Format:</b> UTC <code>yyyy-MM-dd<strong>T</strong>HH<strong>Z</strong></code><br /><br />For example, the following represents a schedule start date of UTC October 01, 2020 at 12:00 PM:<br /><code> 2020-01-01T12Z</code>  # noqa: E501
+        The timestamp to start generating the report. After this timestamp, the schedule status becomes active until either the <strong>scheduleEndDate</strong> occurs or the <strong>scheduleTemplateId</strong> becomes inactive. <br /><br />Use this field, if available, to start the schedule in the future but before the <strong>scheduleEndDate</strong> (if supplied). This field is available as specified by the template <strong>(scheduleTemplateId)</strong>. The template can specify this field as optional or required, and optionally provides a default value.<br /><br /><b>Format:</b> UTC <code>yyyy-MM-dd<strong>T</strong>HH<strong>Z</strong></code><br /><br />For example, the following represents a schedule start date of UTC October 01, 2020 at 12:00 PM:<br /><code> 2020-01-01T12Z</code>  # noqa: E501
 
         :return: The schedule_start_date of this CreateUserScheduleRequest.  # noqa: E501
         :rtype: str
@@ -235,7 +235,7 @@ class CreateUserScheduleRequest(object):
     def schedule_start_date(self, schedule_start_date):
         """Sets the schedule_start_date of this CreateUserScheduleRequest.
 
-        The timestamp to start generating the report. After this timestamp, the schedule status becomes active until either the <strong>scheduleEndDate</strong> occurs or the <strong>scheduleTemplateId</strong> becomes inactive. <br /><br />Use this field, if available, to start the schedule in the future but before the <strong>scheduleEndDate</strong> (if supplied). This field is available as specified by the template <strong>(scheduleTemplateId)</strong>.  The template can specify this field as optional or required, and optionally provides a default value.<br /><br /><b>Format:</b> UTC <code>yyyy-MM-dd<strong>T</strong>HH<strong>Z</strong></code><br /><br />For example, the following represents a schedule start date of UTC October 01, 2020 at 12:00 PM:<br /><code> 2020-01-01T12Z</code>  # noqa: E501
+        The timestamp to start generating the report. After this timestamp, the schedule status becomes active until either the <strong>scheduleEndDate</strong> occurs or the <strong>scheduleTemplateId</strong> becomes inactive. <br /><br />Use this field, if available, to start the schedule in the future but before the <strong>scheduleEndDate</strong> (if supplied). This field is available as specified by the template <strong>(scheduleTemplateId)</strong>. The template can specify this field as optional or required, and optionally provides a default value.<br /><br /><b>Format:</b> UTC <code>yyyy-MM-dd<strong>T</strong>HH<strong>Z</strong></code><br /><br />For example, the following represents a schedule start date of UTC October 01, 2020 at 12:00 PM:<br /><code> 2020-01-01T12Z</code>  # noqa: E501
 
         :param schedule_start_date: The schedule_start_date of this CreateUserScheduleRequest.  # noqa: E501
         :type: str
@@ -247,7 +247,7 @@ class CreateUserScheduleRequest(object):
     def schedule_template_id(self):
         """Gets the schedule_template_id of this CreateUserScheduleRequest.  # noqa: E501
 
-        The ID of the template associated with the schedule ID. You can get this ID from the documentation or by calling the <strong>getScheduleTemplates</strong> method. This method requires a schedule template ID that is <code>ACTIVE</code>.  # noqa: E501
+        The unique identifier of the template to be used for this schedule. <br><br>Use the <a href=\"/api-docs/sell/feed/resources/schedule/methods/getScheduleTemplates\">getScheduleTemplates</a> method to retrieve the schedule template ID. This method requires a schedule template ID that is <code>ACTIVE</code>.<br><br><span class=\"tablenote\"><b>Note:</b> Schedules are currently only available for <code>LMS_ORDER_REPORT</code>.</span>  # noqa: E501
 
         :return: The schedule_template_id of this CreateUserScheduleRequest.  # noqa: E501
         :rtype: str
@@ -258,7 +258,7 @@ class CreateUserScheduleRequest(object):
     def schedule_template_id(self, schedule_template_id):
         """Sets the schedule_template_id of this CreateUserScheduleRequest.
 
-        The ID of the template associated with the schedule ID. You can get this ID from the documentation or by calling the <strong>getScheduleTemplates</strong> method. This method requires a schedule template ID that is <code>ACTIVE</code>.  # noqa: E501
+        The unique identifier of the template to be used for this schedule. <br><br>Use the <a href=\"/api-docs/sell/feed/resources/schedule/methods/getScheduleTemplates\">getScheduleTemplates</a> method to retrieve the schedule template ID. This method requires a schedule template ID that is <code>ACTIVE</code>.<br><br><span class=\"tablenote\"><b>Note:</b> Schedules are currently only available for <code>LMS_ORDER_REPORT</code>.</span>  # noqa: E501
 
         :param schedule_template_id: The schedule_template_id of this CreateUserScheduleRequest.  # noqa: E501
         :type: str
@@ -270,7 +270,7 @@ class CreateUserScheduleRequest(object):
     def schema_version(self):
         """Gets the schema_version of this CreateUserScheduleRequest.  # noqa: E501
 
-        The schema version of the schedule feedType. This field is required if the <strong>feedType</strong> has a schema version.<br /><br />This field is available as specified by the template (<strong>scheduleTemplateId</strong>). The template can specify this field as optional or required, and optionally provides a default value.  # noqa: E501
+        The schema version of a schedule.  # noqa: E501
 
         :return: The schema_version of this CreateUserScheduleRequest.  # noqa: E501
         :rtype: str
@@ -281,7 +281,7 @@ class CreateUserScheduleRequest(object):
     def schema_version(self, schema_version):
         """Sets the schema_version of this CreateUserScheduleRequest.
 
-        The schema version of the schedule feedType. This field is required if the <strong>feedType</strong> has a schema version.<br /><br />This field is available as specified by the template (<strong>scheduleTemplateId</strong>). The template can specify this field as optional or required, and optionally provides a default value.  # noqa: E501
+        The schema version of a schedule.  # noqa: E501
 
         :param schema_version: The schema_version of this CreateUserScheduleRequest.  # noqa: E501
         :type: str

@@ -28,58 +28,35 @@ class CreateInventoryTaskRequest(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'schema_version': 'str',
         'feed_type': 'str',
-        'filter_criteria': 'InventoryFilterCriteria'
+        'filter_criteria': 'InventoryFilterCriteria',
+        'schema_version': 'str'
     }
 
     attribute_map = {
-        'schema_version': 'schemaVersion',
         'feed_type': 'feedType',
-        'filter_criteria': 'filterCriteria'
+        'filter_criteria': 'filterCriteria',
+        'schema_version': 'schemaVersion'
     }
 
-    def __init__(self, schema_version=None, feed_type=None, filter_criteria=None):  # noqa: E501
+    def __init__(self, feed_type=None, filter_criteria=None, schema_version=None):  # noqa: E501
         """CreateInventoryTaskRequest - a model defined in Swagger"""  # noqa: E501
-        self._schema_version = None
         self._feed_type = None
         self._filter_criteria = None
+        self._schema_version = None
         self.discriminator = None
-        if schema_version is not None:
-            self.schema_version = schema_version
         if feed_type is not None:
             self.feed_type = feed_type
         if filter_criteria is not None:
             self.filter_criteria = filter_criteria
-
-    @property
-    def schema_version(self):
-        """Gets the schema_version of this CreateInventoryTaskRequest.  # noqa: E501
-
-        The schemaVersion/version number of the file format (use the schema version of the API to which you are programming):<ul><li><a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Version\" target=\"_blank\">Version Details / Schema Version</a></li><li><a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#schema\" target=\"_blank\">Seller Hub feed schema version</a></li></ul>  # noqa: E501
-
-        :return: The schema_version of this CreateInventoryTaskRequest.  # noqa: E501
-        :rtype: str
-        """
-        return self._schema_version
-
-    @schema_version.setter
-    def schema_version(self, schema_version):
-        """Sets the schema_version of this CreateInventoryTaskRequest.
-
-        The schemaVersion/version number of the file format (use the schema version of the API to which you are programming):<ul><li><a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Version\" target=\"_blank\">Version Details / Schema Version</a></li><li><a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#schema\" target=\"_blank\">Seller Hub feed schema version</a></li></ul>  # noqa: E501
-
-        :param schema_version: The schema_version of this CreateInventoryTaskRequest.  # noqa: E501
-        :type: str
-        """
-
-        self._schema_version = schema_version
+        if schema_version is not None:
+            self.schema_version = schema_version
 
     @property
     def feed_type(self):
         """Gets the feed_type of this CreateInventoryTaskRequest.  # noqa: E501
 
-        The feed type associated with the inventory task you are about to create. Use a <strong>feedType</strong> that is available for your API. Presently, only one feed type is available:<ul><li><code>LMS_ACTIVE_INVENTORY_REPORT</code></li></ul><br/>See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#merchant-data-reports-download-feed-types\" target=\"_blank\">Report download feed types</a> for more information.  # noqa: E501
+        The feed type associated with the inventory task you are about to create. Presently, only one feed type is available:<br><ul><li><code>LMS_ACTIVE_INVENTORY_REPORT</code></li></ul>See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#merchant-data-reports-download-feed-types\" target=\"_blank\">Report download feed types</a> for more information.  # noqa: E501
 
         :return: The feed_type of this CreateInventoryTaskRequest.  # noqa: E501
         :rtype: str
@@ -90,7 +67,7 @@ class CreateInventoryTaskRequest(object):
     def feed_type(self, feed_type):
         """Sets the feed_type of this CreateInventoryTaskRequest.
 
-        The feed type associated with the inventory task you are about to create. Use a <strong>feedType</strong> that is available for your API. Presently, only one feed type is available:<ul><li><code>LMS_ACTIVE_INVENTORY_REPORT</code></li></ul><br/>See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#merchant-data-reports-download-feed-types\" target=\"_blank\">Report download feed types</a> for more information.  # noqa: E501
+        The feed type associated with the inventory task you are about to create. Presently, only one feed type is available:<br><ul><li><code>LMS_ACTIVE_INVENTORY_REPORT</code></li></ul>See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#merchant-data-reports-download-feed-types\" target=\"_blank\">Report download feed types</a> for more information.  # noqa: E501
 
         :param feed_type: The feed_type of this CreateInventoryTaskRequest.  # noqa: E501
         :type: str
@@ -118,6 +95,29 @@ class CreateInventoryTaskRequest(object):
         """
 
         self._filter_criteria = filter_criteria
+
+    @property
+    def schema_version(self):
+        """Gets the schema_version of this CreateInventoryTaskRequest.  # noqa: E501
+
+        The schema version of the ActiveInventoryReport.<br><br>For the <code>LMS_ACTIVE_INVENTORY_REPORT</code> feed type, see the <a href=\"/devzone/merchant-data/callref/ActiveInventoryReport.html\" target=\"_blank\">ActiveInventoryReport</a> reference page to see the present schema version. The schemaVersion value is the version number shown at the top of the ActiveInventoryReport page.  # noqa: E501
+
+        :return: The schema_version of this CreateInventoryTaskRequest.  # noqa: E501
+        :rtype: str
+        """
+        return self._schema_version
+
+    @schema_version.setter
+    def schema_version(self, schema_version):
+        """Sets the schema_version of this CreateInventoryTaskRequest.
+
+        The schema version of the ActiveInventoryReport.<br><br>For the <code>LMS_ACTIVE_INVENTORY_REPORT</code> feed type, see the <a href=\"/devzone/merchant-data/callref/ActiveInventoryReport.html\" target=\"_blank\">ActiveInventoryReport</a> reference page to see the present schema version. The schemaVersion value is the version number shown at the top of the ActiveInventoryReport page.  # noqa: E501
+
+        :param schema_version: The schema_version of this CreateInventoryTaskRequest.  # noqa: E501
+        :type: str
+        """
+
+        self._schema_version = schema_version
 
     def to_dict(self):
         """Returns the model properties as a dict"""

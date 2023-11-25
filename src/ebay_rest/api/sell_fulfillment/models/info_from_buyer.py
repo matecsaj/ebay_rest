@@ -56,7 +56,7 @@ class InfoFromBuyer(object):
     def content_on_hold(self):
         """Gets the content_on_hold of this InfoFromBuyer.  # noqa: E501
 
-        When this value is <code>true</code> it indicates that the item has been put on hold due to a violation of eBay Policy.  # noqa: E501
+        When the value of this field is <code>true</code> it indicates that the buyer's note regarding the payment dispute (i.e., the <b>buyerProvided.note</b> field,) is on hold. When this is the case, the <b>buyerProvided.note</b> field will not be returned.<br><br>When the value of this field is <code>false</code>, it is not returned.  # noqa: E501
 
         :return: The content_on_hold of this InfoFromBuyer.  # noqa: E501
         :rtype: bool
@@ -67,7 +67,7 @@ class InfoFromBuyer(object):
     def content_on_hold(self, content_on_hold):
         """Sets the content_on_hold of this InfoFromBuyer.
 
-        When this value is <code>true</code> it indicates that the item has been put on hold due to a violation of eBay Policy.  # noqa: E501
+        When the value of this field is <code>true</code> it indicates that the buyer's note regarding the payment dispute (i.e., the <b>buyerProvided.note</b> field,) is on hold. When this is the case, the <b>buyerProvided.note</b> field will not be returned.<br><br>When the value of this field is <code>false</code>, it is not returned.  # noqa: E501
 
         :param content_on_hold: The content_on_hold of this InfoFromBuyer.  # noqa: E501
         :type: bool

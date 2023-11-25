@@ -35,7 +35,7 @@ class OnboardingApi(object):
     def get_payments_program_onboarding(self, marketplace_id, payments_program_type, **kwargs):  # noqa: E501
         """get_payments_program_onboarding  # noqa: E501
 
-        <span class=\"tablenote\"><b>Note:</b> This method is no longer applicable, as all seller accounts globally have been enabled for the new eBay payment and checkout flow.</span><br><br>This method retrieves a seller's onboarding status for a payments program for a specified marketplace. The overall onboarding status of the seller and the status of each onboarding step is returned.  # noqa: E501
+        <span class=\"tablenote\"><b>Note:</b> This method is no longer applicable, as all seller accounts globally have been enabled for the new eBay payment and checkout flow.</span><br>This method retrieves a seller's onboarding status for a payments program for a specified marketplace. The overall onboarding status of the seller and the status of each onboarding step is returned.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_payments_program_onboarding(marketplace_id, payments_program_type, async_req=True)
@@ -58,7 +58,7 @@ class OnboardingApi(object):
     def get_payments_program_onboarding_with_http_info(self, marketplace_id, payments_program_type, **kwargs):  # noqa: E501
         """get_payments_program_onboarding  # noqa: E501
 
-        <span class=\"tablenote\"><b>Note:</b> This method is no longer applicable, as all seller accounts globally have been enabled for the new eBay payment and checkout flow.</span><br><br>This method retrieves a seller's onboarding status for a payments program for a specified marketplace. The overall onboarding status of the seller and the status of each onboarding step is returned.  # noqa: E501
+        <span class=\"tablenote\"><b>Note:</b> This method is no longer applicable, as all seller accounts globally have been enabled for the new eBay payment and checkout flow.</span><br>This method retrieves a seller's onboarding status for a payments program for a specified marketplace. The overall onboarding status of the seller and the status of each onboarding step is returned.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_payments_program_onboarding_with_http_info(marketplace_id, payments_program_type, async_req=True)

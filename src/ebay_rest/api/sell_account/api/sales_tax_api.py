@@ -45,7 +45,7 @@ class SalesTaxApi(object):
         :param SalesTaxBase body: A container that describes the how the sales tax is calculated. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html \" title=\"https://www.iso.org \" target=\"_blank\">ISO 3166</a> code for the country for which you want to create a sales tax table entry. (required)
-        :param str jurisdiction_id: This path parameter specifies the ID of the tax jurisdiction for the table entry you want to create. Retrieve valid jurisdiction IDs using <b>getSalesTaxJurisdictions</b> in the Metadata API. (required)
+        :param str jurisdiction_id: This path parameter specifies the ID of the tax jurisdiction for the table entry you want to create. <br><br> Valid jurisdiction IDs can be retrieved using the <a href=\"/api-docs/sell/metadata/resources/country/methods/getSalesTaxJurisdictions\" target=\"_blank \">getSalesTaxJurisdiction</a> method of the Metadata API. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -70,7 +70,7 @@ class SalesTaxApi(object):
         :param SalesTaxBase body: A container that describes the how the sales tax is calculated. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html \" title=\"https://www.iso.org \" target=\"_blank\">ISO 3166</a> code for the country for which you want to create a sales tax table entry. (required)
-        :param str jurisdiction_id: This path parameter specifies the ID of the tax jurisdiction for the table entry you want to create. Retrieve valid jurisdiction IDs using <b>getSalesTaxJurisdictions</b> in the Metadata API. (required)
+        :param str jurisdiction_id: This path parameter specifies the ID of the tax jurisdiction for the table entry you want to create. <br><br> Valid jurisdiction IDs can be retrieved using the <a href=\"/api-docs/sell/metadata/resources/country/methods/getSalesTaxJurisdictions\" target=\"_blank \">getSalesTaxJurisdiction</a> method of the Metadata API. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -162,7 +162,7 @@ class SalesTaxApi(object):
 
         :param async_req bool
         :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html \" title=\"https://www.iso.org \" target=\"_blank\">ISO 3166</a> code for the country whose sales tax table entry you want to delete. (required)
-        :param str jurisdiction_id: This path parameter specifies the ID of the sales tax jurisdiction whose table entry you want to delete. Retrieve valid jurisdiction IDs using <b>getSalesTaxJurisdictions</b> in the Metadata API. (required)
+        :param str jurisdiction_id: This path parameter specifies the ID of the sales tax jurisdiction whose table entry you want to delete. <br><br> Valid jurisdiction IDs can be retrieved using the <a href=\"/api-docs/sell/metadata/resources/country/methods/getSalesTaxJurisdictions\" target=\"_blank \">getSalesTaxJurisdiction</a> method of the Metadata API. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -185,7 +185,7 @@ class SalesTaxApi(object):
 
         :param async_req bool
         :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html \" title=\"https://www.iso.org \" target=\"_blank\">ISO 3166</a> code for the country whose sales tax table entry you want to delete. (required)
-        :param str jurisdiction_id: This path parameter specifies the ID of the sales tax jurisdiction whose table entry you want to delete. Retrieve valid jurisdiction IDs using <b>getSalesTaxJurisdictions</b> in the Metadata API. (required)
+        :param str jurisdiction_id: This path parameter specifies the ID of the sales tax jurisdiction whose table entry you want to delete. <br><br> Valid jurisdiction IDs can be retrieved using the <a href=\"/api-docs/sell/metadata/resources/country/methods/getSalesTaxJurisdictions\" target=\"_blank \">getSalesTaxJurisdiction</a> method of the Metadata API. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -261,7 +261,7 @@ class SalesTaxApi(object):
 
         :param async_req bool
         :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html \" title=\"https://www.iso.org \" target=\"_blank\">ISO 3166</a> code for the country whose sales tax table you want to retrieve. (required)
-        :param str jurisdiction_id: This path parameter specifies the ID of the sales tax jurisdiction for the tax table entry you want to retrieve. Retrieve valid jurisdiction IDs using <b>getSalesTaxJurisdictions</b> in the Metadata API. (required)
+        :param str jurisdiction_id: This path parameter specifies the ID of the sales tax jurisdiction for the tax table entry you want to retrieve. <br><br> Valid jurisdiction IDs can be retrieved using the <a href=\"/api-docs/sell/metadata/resources/country/methods/getSalesTaxJurisdictions\" target=\"_blank \">getSalesTaxJurisdiction</a> method of the Metadata API. (required)
         :return: SalesTax
                  If the method is called asynchronously,
                  returns the request thread.
@@ -284,7 +284,7 @@ class SalesTaxApi(object):
 
         :param async_req bool
         :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html \" title=\"https://www.iso.org \" target=\"_blank\">ISO 3166</a> code for the country whose sales tax table you want to retrieve. (required)
-        :param str jurisdiction_id: This path parameter specifies the ID of the sales tax jurisdiction for the tax table entry you want to retrieve. Retrieve valid jurisdiction IDs using <b>getSalesTaxJurisdictions</b> in the Metadata API. (required)
+        :param str jurisdiction_id: This path parameter specifies the ID of the sales tax jurisdiction for the tax table entry you want to retrieve. <br><br> Valid jurisdiction IDs can be retrieved using the <a href=\"/api-docs/sell/metadata/resources/country/methods/getSalesTaxJurisdictions\" target=\"_blank \">getSalesTaxJurisdiction</a> method of the Metadata API. (required)
         :return: SalesTax
                  If the method is called asynchronously,
                  returns the request thread.

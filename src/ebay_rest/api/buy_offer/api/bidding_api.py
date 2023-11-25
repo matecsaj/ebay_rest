@@ -146,7 +146,7 @@ class BiddingApi(object):
 
         :param async_req bool
         :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the buyer is based. <b>Note: </b> This value is case sensitive.<br><br> For example: <br>&nbsp;&nbsp;<code>X-EBAY-C-MARKETPLACE-ID = EBAY_US</code>  <br><br> For a list of supported sites see, <a href=\"/api-docs/buy/offer/overview.html#API\">API Restrictions</a>. (required)
-        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. It's value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str item_id: The eBay RESTful identifier of an item you want to bid on. This ID is returned by the <b> Browse</b> and <b> Feed</b> API methods.  <br><br> <b>RESTful Item ID Example: </b><code>v1|2**********2|0</code> <br><br>For more information about item ID for RESTful APIs, see the <a href=\"/api-docs/buy/static/api-browse.html#Legacy\">Legacy API compatibility</a> section of the <i>Buy APIs Overview</i>. (required)
         :param PlaceProxyBidRequest body:
         :return: PlaceProxyBidResponse
@@ -171,7 +171,7 @@ class BiddingApi(object):
 
         :param async_req bool
         :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the buyer is based. <b>Note: </b> This value is case sensitive.<br><br> For example: <br>&nbsp;&nbsp;<code>X-EBAY-C-MARKETPLACE-ID = EBAY_US</code>  <br><br> For a list of supported sites see, <a href=\"/api-docs/buy/offer/overview.html#API\">API Restrictions</a>. (required)
-        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. It's value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str item_id: The eBay RESTful identifier of an item you want to bid on. This ID is returned by the <b> Browse</b> and <b> Feed</b> API methods.  <br><br> <b>RESTful Item ID Example: </b><code>v1|2**********2|0</code> <br><br>For more information about item ID for RESTful APIs, see the <a href=\"/api-docs/buy/static/api-browse.html#Legacy\">Legacy API compatibility</a> section of the <i>Buy APIs Overview</i>. (required)
         :param PlaceProxyBidRequest body:
         :return: PlaceProxyBidResponse

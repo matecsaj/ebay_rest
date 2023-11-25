@@ -56,7 +56,7 @@ class CreateServiceMetricsTaskRequest(object):
     def feed_type(self):
         """Gets the feed_type of this CreateServiceMetricsTaskRequest.  # noqa: E501
 
-        The <strong>feedType</strong> specified for the task. The report lists the transaction details that contribute to the service metrics evaluation. Supported types include:<p><code>CUSTOMER_SERVICE_METRICS_REPORT</code></p>  # noqa: E501
+        The <strong>feedType</strong> specified for the customer service metric task being created. The report lists the transaction details that contribute to the service metrics evaluation. Supported types include:<p><code>CUSTOMER_SERVICE_METRICS_REPORT</code></p>  # noqa: E501
 
         :return: The feed_type of this CreateServiceMetricsTaskRequest.  # noqa: E501
         :rtype: str
@@ -67,7 +67,7 @@ class CreateServiceMetricsTaskRequest(object):
     def feed_type(self, feed_type):
         """Sets the feed_type of this CreateServiceMetricsTaskRequest.
 
-        The <strong>feedType</strong> specified for the task. The report lists the transaction details that contribute to the service metrics evaluation. Supported types include:<p><code>CUSTOMER_SERVICE_METRICS_REPORT</code></p>  # noqa: E501
+        The <strong>feedType</strong> specified for the customer service metric task being created. The report lists the transaction details that contribute to the service metrics evaluation. Supported types include:<p><code>CUSTOMER_SERVICE_METRICS_REPORT</code></p>  # noqa: E501
 
         :param feed_type: The feed_type of this CreateServiceMetricsTaskRequest.  # noqa: E501
         :type: str
@@ -100,7 +100,7 @@ class CreateServiceMetricsTaskRequest(object):
     def schema_version(self):
         """Gets the schema_version of this CreateServiceMetricsTaskRequest.  # noqa: E501
 
-        The version number of the file format. <p><b>Valid value: </b><code>1.0</code><p>  # noqa: E501
+        The version number of the customer service metric.<br><br><span class=\"tablenote\"><b>Note:</b> This field <b>must</b> have a value of <code>1.0</code>.</span>  # noqa: E501
 
         :return: The schema_version of this CreateServiceMetricsTaskRequest.  # noqa: E501
         :rtype: str
@@ -111,7 +111,7 @@ class CreateServiceMetricsTaskRequest(object):
     def schema_version(self, schema_version):
         """Sets the schema_version of this CreateServiceMetricsTaskRequest.
 
-        The version number of the file format. <p><b>Valid value: </b><code>1.0</code><p>  # noqa: E501
+        The version number of the customer service metric.<br><br><span class=\"tablenote\"><b>Note:</b> This field <b>must</b> have a value of <code>1.0</code>.</span>  # noqa: E501
 
         :param schema_version: The schema_version of this CreateServiceMetricsTaskRequest.  # noqa: E501
         :type: str

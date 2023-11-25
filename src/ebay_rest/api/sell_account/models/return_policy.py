@@ -293,7 +293,7 @@ class ReturnPolicy(object):
     def return_instructions(self):
         """Gets the return_instructions of this ReturnPolicy.  # noqa: E501
 
-        This text-based field provides more details on seller-specified return instructions. This field is only returned if set for the return business policy. <p class=\"tablenote\"><span  style=\"color: #dd1e31;\"><b>Important!</b></span> This field is no longer supported on many eBay marketplaces. To see if a marketplace and eBay category does support this field, call <a href=\"/api-docs/sell/metadata/resources/marketplace/methods/getReturnPolicies\">getReturnPolicies</a> method of the <b>Metadata API</b>. Then you will look for the <b>policyDescriptionEnabled</b> field with a value of <code>true</code> for the eBay category.</span></p><br><b>Max length</b>: 5000 (8000 for DE)  # noqa: E501
+        This text-based field provides more details on seller-specified return instructions. This field is only returned if set for the return business policy.<br><p class=\"tablenote\"><span  style=\"color: #dd1e31;\"><b>Important!</b></span> This field is no longer supported on many eBay marketplaces. To see if a marketplace and eBay category does support this field, call <a href=\"/api-docs/sell/metadata/resources/marketplace/methods/getReturnPolicies\">getReturnPolicies</a> method of the <b>Metadata API</b>. Then you will look for the <b>policyDescriptionEnabled</b> field with a value of <code>true</code> for the eBay category.</span></p><br><b>Max length</b>: 5000 (8000 for DE)  # noqa: E501
 
         :return: The return_instructions of this ReturnPolicy.  # noqa: E501
         :rtype: str
@@ -304,7 +304,7 @@ class ReturnPolicy(object):
     def return_instructions(self, return_instructions):
         """Sets the return_instructions of this ReturnPolicy.
 
-        This text-based field provides more details on seller-specified return instructions. This field is only returned if set for the return business policy. <p class=\"tablenote\"><span  style=\"color: #dd1e31;\"><b>Important!</b></span> This field is no longer supported on many eBay marketplaces. To see if a marketplace and eBay category does support this field, call <a href=\"/api-docs/sell/metadata/resources/marketplace/methods/getReturnPolicies\">getReturnPolicies</a> method of the <b>Metadata API</b>. Then you will look for the <b>policyDescriptionEnabled</b> field with a value of <code>true</code> for the eBay category.</span></p><br><b>Max length</b>: 5000 (8000 for DE)  # noqa: E501
+        This text-based field provides more details on seller-specified return instructions. This field is only returned if set for the return business policy.<br><p class=\"tablenote\"><span  style=\"color: #dd1e31;\"><b>Important!</b></span> This field is no longer supported on many eBay marketplaces. To see if a marketplace and eBay category does support this field, call <a href=\"/api-docs/sell/metadata/resources/marketplace/methods/getReturnPolicies\">getReturnPolicies</a> method of the <b>Metadata API</b>. Then you will look for the <b>policyDescriptionEnabled</b> field with a value of <code>true</code> for the eBay category.</span></p><br><b>Max length</b>: 5000 (8000 for DE)  # noqa: E501
 
         :param return_instructions: The return_instructions of this ReturnPolicy.  # noqa: E501
         :type: str

@@ -43,7 +43,7 @@ class TaskApi(object):
 
         :param async_req bool
         :param CreateTaskRequest body: description not needed (required)
-        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. <p> <span class=\"tablenote\"><strong>Note:</strong> This value is case sensitive.</span></p><p>For example:</p><p><code>X-EBAY-C-MARKETPLACE-ID:EBAY_US</code></p><p>This identifies the eBay marketplace that applies to this task. See <a href=\"/api-docs/sell/feed/types/bas:MarketplaceIdEnum\">MarketplaceIdEnum</a>.</p> (required)
+        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. <br><br>For example:<br><br><code>X-EBAY-C-MARKETPLACE-ID:EBAY_US</code><br><br>This identifies the eBay marketplace that applies to this task. See <a href=\"/api-docs/sell/feed/types/bas:MarketplaceIdEnum\">MarketplaceIdEnum</a> for supported values.</p> (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: None
                  If the method is called asynchronously,
@@ -67,7 +67,7 @@ class TaskApi(object):
 
         :param async_req bool
         :param CreateTaskRequest body: description not needed (required)
-        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. <p> <span class=\"tablenote\"><strong>Note:</strong> This value is case sensitive.</span></p><p>For example:</p><p><code>X-EBAY-C-MARKETPLACE-ID:EBAY_US</code></p><p>This identifies the eBay marketplace that applies to this task. See <a href=\"/api-docs/sell/feed/types/bas:MarketplaceIdEnum\">MarketplaceIdEnum</a>.</p> (required)
+        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. <br><br>For example:<br><br><code>X-EBAY-C-MARKETPLACE-ID:EBAY_US</code><br><br>This identifies the eBay marketplace that applies to this task. See <a href=\"/api-docs/sell/feed/types/bas:MarketplaceIdEnum\">MarketplaceIdEnum</a> for supported values.</p> (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: None
                  If the method is called asynchronously,
@@ -153,7 +153,7 @@ class TaskApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str task_id: The task ID associated with the file to be downloaded. (required)
+        :param str task_id: This path parameter is the unique identifier of the task associated with the input file to be downloaded.<br><br>Use the <a href=\"/api-docs/sell/feed/resources/task/methods/getTasks\" target=\"_blank \">getTasks</a> method to retrieve task IDs. (required)
         :return: StreamingOutput
                  If the method is called asynchronously,
                  returns the request thread.
@@ -175,7 +175,7 @@ class TaskApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str task_id: The task ID associated with the file to be downloaded. (required)
+        :param str task_id: This path parameter is the unique identifier of the task associated with the input file to be downloaded.<br><br>Use the <a href=\"/api-docs/sell/feed/resources/task/methods/getTasks\" target=\"_blank \">getTasks</a> method to retrieve task IDs. (required)
         :return: StreamingOutput
                  If the method is called asynchronously,
                  returns the request thread.
@@ -248,7 +248,7 @@ class TaskApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str task_id: The ID of the task associated with the file you want to download. This ID was generated when the task was created. (required)
+        :param str task_id: This path parameter is the unique identifier of the task associated with the file to be downloaded. <br><br>Use the <a href=\"/api-docs/sell/feed/resources/task/methods/getTasks\" target=\"_blank \">getTasks</a> method to retrieve task IDs. (required)
         :return: StreamingOutput
                  If the method is called asynchronously,
                  returns the request thread.
@@ -270,7 +270,7 @@ class TaskApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str task_id: The ID of the task associated with the file you want to download. This ID was generated when the task was created. (required)
+        :param str task_id: This path parameter is the unique identifier of the task associated with the file to be downloaded. <br><br>Use the <a href=\"/api-docs/sell/feed/resources/task/methods/getTasks\" target=\"_blank \">getTasks</a> method to retrieve task IDs. (required)
         :return: StreamingOutput
                  If the method is called asynchronously,
                  returns the request thread.
@@ -343,7 +343,7 @@ class TaskApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str task_id: The ID of the task. This ID was generated when the task was created. (required)
+        :param str task_id: This path parameter is the unique identifier of the task being retrieved.<br><br>Use the <a href=\"/api-docs/sell/feed/resources/task/methods/getTasks\" target=\"_blank \">getTasks</a> method to retrieve task IDs. (required)
         :return: Task
                  If the method is called asynchronously,
                  returns the request thread.
@@ -365,7 +365,7 @@ class TaskApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str task_id: The ID of the task. This ID was generated when the task was created. (required)
+        :param str task_id: This path parameter is the unique identifier of the task being retrieved.<br><br>Use the <a href=\"/api-docs/sell/feed/resources/task/methods/getTasks\" target=\"_blank \">getTasks</a> method to retrieve task IDs. (required)
         :return: Task
                  If the method is called asynchronously,
                  returns the request thread.
@@ -431,7 +431,7 @@ class TaskApi(object):
     def get_tasks(self, **kwargs):  # noqa: E501
         """get_tasks  # noqa: E501
 
-        This method returns the details and status for an array of tasks based on a specified <strong>feed_type</strong> or <strong>scheduledId</strong>. Specifying both <strong>feed_type</strong> and <strong>scheduledId</strong> results in an error. Since schedules are based on feed types, you can specify a schedule (<strong>schedule_id</strong>) that returns the needed <strong>feed_type</strong>.<br /><br />If specifying the <strong>feed_type</strong>, limit which tasks are returned by specifying filters, such as the creation date range or period of time using <strong>look_back_days</strong>. Also, by specifying the <strong>feed_type</strong>, both on-demand and scheduled reports are returned.<br /><br />If specifying a <strong>scheduledId</strong>, the schedule template (that the schedule ID is based on) determines which tasks are returned (see <strong>schedule_id</strong> for additional information). Each <strong>scheduledId</strong> applies to one <strong>feed_type</strong>.   # noqa: E501
+        This method returns the details and status for an array of tasks based on a specified <strong>feed_type</strong> or <strong>schedule_id</strong>. Specifying both <strong>feed_type</strong> and <strong>schedule_id</strong> results in an error. Since schedules are based on feed types, you can specify a schedule (<strong>schedule_id</strong>) that returns the needed <strong>feed_type</strong>.<br /><br />If specifying the <strong>feed_type</strong>, limit which tasks are returned by specifying filters, such as the creation date range or period of time using <strong>look_back_days</strong>. Also, by specifying the <strong>feed_type</strong>, both on-demand and scheduled reports are returned.<br /><br />If specifying a <strong>schedule_id</strong>, the schedule template (that the schedule ID is based on) determines which tasks are returned (see <strong>schedule_id</strong> for additional information). Each <strong>scheduledId</strong> applies to one <strong>feed_type</strong>.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_tasks(async_req=True)
@@ -439,11 +439,11 @@ class TaskApi(object):
 
         :param async_req bool
         :param str date_range: Specifies the range of task creation dates used to filter the results. The results are filtered to include only tasks with a creation date that is equal to this date or is within specified range. Only tasks that are less than 90 days can be retrieved. <p> <span class=\"tablenote\"><strong>Note:</strong> Maximum date range window size is 90 days.</span></p> <br /><b>Valid Format (UTC):</b><code>yyyy-MM-ddThh:mm:ss.SSSZ..yyyy-MM-ddThh:mm:ss.SSSZ </code><br /><br />For example: Tasks created on September 8, 2019<br /> <code>2019-09-08T00:00:00.000Z..2019-09-09T00:00:00.000Z</code>
-        :param str feed_type: The feed type associated with the tasks to be returned. Only use a <strong>feedType</strong> that is available for your API: <ul><li>Order Feeds: <code>LMS_ORDER_ACK, LMS_ORDER_REPORT</code></li><li>Large Merchant Services (LMS) Feeds: See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Availabl\" target=\"_blank\">Available FeedTypes</a></li></ul><br/>Do not use with the <strong>schedule_id</strong> parameter. Since schedules are based on feed types, you can specify a schedule (<strong>schedule_id</strong>) that returns the needed <strong>feed_type</strong>.
+        :param str feed_type: The feed type associated with the tasks to be returned. Only use a <strong>feedType</strong> that is available for your API: <ul><li>Order Feeds: <code>LMS_ORDER_ACK, LMS_ORDER_REPORT</code></li><li>Inventory Upload Feed Types: See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Availabl\" target=\"_blank\">Available FeedTypes</a></li></ul>Do not use with the <strong>schedule_id</strong> parameter. Since schedules are based on feed types, you can specify a schedule (<strong>schedule_id</strong>) that returns the needed <strong>feed_type</strong>.
         :param str limit: The maximum number of tasks that can be returned on each page of the paginated response. Use this parameter in conjunction with the <strong>offset</strong> parameter to control the pagination of the output. <p> <span class=\"tablenote\"><strong>Note:</strong> This feature employs a zero-based list, where the first item in the list has an offset of <code>0</code>.</span></p><p>For example, if <strong>offset</strong> is set to 10 and <strong>limit</strong> is set to 10, the call retrieves tasks 11 thru 20 from the result set.</p><p>If this parameter is omitted, the default value is used. <br /><br /><b>Default: </b> 10 <br /><br /><b>Maximum: </b>500
         :param str look_back_days: The number of previous days in which to search for tasks. Do not use with the <code>date_range</code> parameter. If both <code>date_range</code> and <code>look_back_days</code> are omitted, this parameter's default value is used.  <br /><br /><b>Default: </b> 7 <br /><br /><b>Range: </b> 1-90 (inclusive)
         :param str offset: The number of tasks to skip in the result set before returning the first task in the paginated response. <p>Combine <strong>offset</strong> with the <strong>limit</strong> query parameter to control the items returned in the response. For example, if you supply an <strong>offset</strong> of <code>0</code> and a <strong>limit</strong> of <code>10</code>, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If <strong>offset</strong> is <code>10</code> and <strong>limit</strong> is <code>20</code>, the first page of the response contains items 11-30 from the complete result set. If this query parameter is not set, the default value is used and the first page of records is returned. <br /><br /><b>Default: </b>0
-        :param str schedule_id: The schedule ID associated with the task. A schedule periodically generates a report for the feed type specified by the schedule template (see <strong>scheduleTemplateId</strong> in <strong>createSchedule</strong>). Do not use with the <strong>feed_type</strong> parameter. Since schedules are based on feed types, you can specify a schedule (<strong>schedule_id</strong>) that returns the needed <strong>feed_type</strong>.
+        :param str schedule_id: The unique identifier associated with the tasks being returned. A schedule periodically generates a report for the feed type specified by the schedule template.<br><br><span class=\"tablenote\"><b>Note:</b> Schedules are currently only available for <code>LMS_ORDER_REPORT</code>.</span><br>Do not use with the <strong>feed_type</strong> parameter.
         :return: TaskCollection
                  If the method is called asynchronously,
                  returns the request thread.
@@ -458,7 +458,7 @@ class TaskApi(object):
     def get_tasks_with_http_info(self, **kwargs):  # noqa: E501
         """get_tasks  # noqa: E501
 
-        This method returns the details and status for an array of tasks based on a specified <strong>feed_type</strong> or <strong>scheduledId</strong>. Specifying both <strong>feed_type</strong> and <strong>scheduledId</strong> results in an error. Since schedules are based on feed types, you can specify a schedule (<strong>schedule_id</strong>) that returns the needed <strong>feed_type</strong>.<br /><br />If specifying the <strong>feed_type</strong>, limit which tasks are returned by specifying filters, such as the creation date range or period of time using <strong>look_back_days</strong>. Also, by specifying the <strong>feed_type</strong>, both on-demand and scheduled reports are returned.<br /><br />If specifying a <strong>scheduledId</strong>, the schedule template (that the schedule ID is based on) determines which tasks are returned (see <strong>schedule_id</strong> for additional information). Each <strong>scheduledId</strong> applies to one <strong>feed_type</strong>.   # noqa: E501
+        This method returns the details and status for an array of tasks based on a specified <strong>feed_type</strong> or <strong>schedule_id</strong>. Specifying both <strong>feed_type</strong> and <strong>schedule_id</strong> results in an error. Since schedules are based on feed types, you can specify a schedule (<strong>schedule_id</strong>) that returns the needed <strong>feed_type</strong>.<br /><br />If specifying the <strong>feed_type</strong>, limit which tasks are returned by specifying filters, such as the creation date range or period of time using <strong>look_back_days</strong>. Also, by specifying the <strong>feed_type</strong>, both on-demand and scheduled reports are returned.<br /><br />If specifying a <strong>schedule_id</strong>, the schedule template (that the schedule ID is based on) determines which tasks are returned (see <strong>schedule_id</strong> for additional information). Each <strong>scheduledId</strong> applies to one <strong>feed_type</strong>.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_tasks_with_http_info(async_req=True)
@@ -466,11 +466,11 @@ class TaskApi(object):
 
         :param async_req bool
         :param str date_range: Specifies the range of task creation dates used to filter the results. The results are filtered to include only tasks with a creation date that is equal to this date or is within specified range. Only tasks that are less than 90 days can be retrieved. <p> <span class=\"tablenote\"><strong>Note:</strong> Maximum date range window size is 90 days.</span></p> <br /><b>Valid Format (UTC):</b><code>yyyy-MM-ddThh:mm:ss.SSSZ..yyyy-MM-ddThh:mm:ss.SSSZ </code><br /><br />For example: Tasks created on September 8, 2019<br /> <code>2019-09-08T00:00:00.000Z..2019-09-09T00:00:00.000Z</code>
-        :param str feed_type: The feed type associated with the tasks to be returned. Only use a <strong>feedType</strong> that is available for your API: <ul><li>Order Feeds: <code>LMS_ORDER_ACK, LMS_ORDER_REPORT</code></li><li>Large Merchant Services (LMS) Feeds: See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Availabl\" target=\"_blank\">Available FeedTypes</a></li></ul><br/>Do not use with the <strong>schedule_id</strong> parameter. Since schedules are based on feed types, you can specify a schedule (<strong>schedule_id</strong>) that returns the needed <strong>feed_type</strong>.
+        :param str feed_type: The feed type associated with the tasks to be returned. Only use a <strong>feedType</strong> that is available for your API: <ul><li>Order Feeds: <code>LMS_ORDER_ACK, LMS_ORDER_REPORT</code></li><li>Inventory Upload Feed Types: See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Availabl\" target=\"_blank\">Available FeedTypes</a></li></ul>Do not use with the <strong>schedule_id</strong> parameter. Since schedules are based on feed types, you can specify a schedule (<strong>schedule_id</strong>) that returns the needed <strong>feed_type</strong>.
         :param str limit: The maximum number of tasks that can be returned on each page of the paginated response. Use this parameter in conjunction with the <strong>offset</strong> parameter to control the pagination of the output. <p> <span class=\"tablenote\"><strong>Note:</strong> This feature employs a zero-based list, where the first item in the list has an offset of <code>0</code>.</span></p><p>For example, if <strong>offset</strong> is set to 10 and <strong>limit</strong> is set to 10, the call retrieves tasks 11 thru 20 from the result set.</p><p>If this parameter is omitted, the default value is used. <br /><br /><b>Default: </b> 10 <br /><br /><b>Maximum: </b>500
         :param str look_back_days: The number of previous days in which to search for tasks. Do not use with the <code>date_range</code> parameter. If both <code>date_range</code> and <code>look_back_days</code> are omitted, this parameter's default value is used.  <br /><br /><b>Default: </b> 7 <br /><br /><b>Range: </b> 1-90 (inclusive)
         :param str offset: The number of tasks to skip in the result set before returning the first task in the paginated response. <p>Combine <strong>offset</strong> with the <strong>limit</strong> query parameter to control the items returned in the response. For example, if you supply an <strong>offset</strong> of <code>0</code> and a <strong>limit</strong> of <code>10</code>, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If <strong>offset</strong> is <code>10</code> and <strong>limit</strong> is <code>20</code>, the first page of the response contains items 11-30 from the complete result set. If this query parameter is not set, the default value is used and the first page of records is returned. <br /><br /><b>Default: </b>0
-        :param str schedule_id: The schedule ID associated with the task. A schedule periodically generates a report for the feed type specified by the schedule template (see <strong>scheduleTemplateId</strong> in <strong>createSchedule</strong>). Do not use with the <strong>feed_type</strong> parameter. Since schedules are based on feed types, you can specify a schedule (<strong>schedule_id</strong>) that returns the needed <strong>feed_type</strong>.
+        :param str schedule_id: The unique identifier associated with the tasks being returned. A schedule periodically generates a report for the feed type specified by the schedule template.<br><br><span class=\"tablenote\"><b>Note:</b> Schedules are currently only available for <code>LMS_ORDER_REPORT</code>.</span><br>Do not use with the <strong>feed_type</strong> parameter.
         :return: TaskCollection
                  If the method is called asynchronously,
                  returns the request thread.
@@ -550,7 +550,7 @@ class TaskApi(object):
 
         :param async_req bool
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>multipart/form-data</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str task_id: The task_id associated with the file that will be uploaded. This ID was generated when the specified task was created. (required)
+        :param str task_id: This path parameter is the unique identifier of the task associated with the file that will be uploaded.<br><br>Use the <a href=\"/api-docs/sell/feed/resources/task/methods/getTasks\" target=\"_blank \">getTasks</a> method to retrieve task IDs. (required)
         :param str creation_date:
         :param str file_name:
         :param str modification_date:
@@ -581,7 +581,7 @@ class TaskApi(object):
 
         :param async_req bool
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>multipart/form-data</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str task_id: The task_id associated with the file that will be uploaded. This ID was generated when the specified task was created. (required)
+        :param str task_id: This path parameter is the unique identifier of the task associated with the file that will be uploaded.<br><br>Use the <a href=\"/api-docs/sell/feed/resources/task/methods/getTasks\" target=\"_blank \">getTasks</a> method to retrieve task IDs. (required)
         :param str creation_date:
         :param str file_name:
         :param str modification_date:

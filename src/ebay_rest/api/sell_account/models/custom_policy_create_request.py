@@ -107,7 +107,7 @@ class CustomPolicyCreateRequest(object):
     def name(self):
         """Gets the name of this CustomPolicyCreateRequest.  # noqa: E501
 
-        The seller-defined name for the custom policy. Names must be unique for policies assigned to the same seller and policy type.<br /><span class=\"tablenote\"><strong>Note:</strong> This field is visible only to the seller. </span><br/><br/><b>Max length:</b> 65  # noqa: E501
+        The seller-defined name for the custom policy. Names must be unique for policies assigned to the same seller and policy type.<br><br><span class=\"tablenote\"><strong>Note:</strong> This field is visible only to the seller. </span><br><b>Max length:</b> 65  # noqa: E501
 
         :return: The name of this CustomPolicyCreateRequest.  # noqa: E501
         :rtype: str
@@ -118,7 +118,7 @@ class CustomPolicyCreateRequest(object):
     def name(self, name):
         """Sets the name of this CustomPolicyCreateRequest.
 
-        The seller-defined name for the custom policy. Names must be unique for policies assigned to the same seller and policy type.<br /><span class=\"tablenote\"><strong>Note:</strong> This field is visible only to the seller. </span><br/><br/><b>Max length:</b> 65  # noqa: E501
+        The seller-defined name for the custom policy. Names must be unique for policies assigned to the same seller and policy type.<br><br><span class=\"tablenote\"><strong>Note:</strong> This field is visible only to the seller. </span><br><b>Max length:</b> 65  # noqa: E501
 
         :param name: The name of this CustomPolicyCreateRequest.  # noqa: E501
         :type: str

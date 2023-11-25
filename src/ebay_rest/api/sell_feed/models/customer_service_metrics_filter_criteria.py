@@ -61,7 +61,7 @@ class CustomerServiceMetricsFilterCriteria(object):
     def customer_service_metric_type(self):
         """Gets the customer_service_metric_type of this CustomerServiceMetricsFilterCriteria.  # noqa: E501
 
-        An enumeration value that specifies the customer service metric that eBay tracks to measure seller performance. See <strong>CustomerServiceMetricTypeEnum</strong> for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:CustomerServiceMetricTypeEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value that specifies the customer service metric that eBay tracks to measure seller performance.<br><br>See <a href=\"/api-docs/sell/feed/types/api:CustomerServiceMetricTypeEnum\">CustomerServiceMetricTypeEnum</a> for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:CustomerServiceMetricTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The customer_service_metric_type of this CustomerServiceMetricsFilterCriteria.  # noqa: E501
         :rtype: str
@@ -72,7 +72,7 @@ class CustomerServiceMetricsFilterCriteria(object):
     def customer_service_metric_type(self, customer_service_metric_type):
         """Sets the customer_service_metric_type of this CustomerServiceMetricsFilterCriteria.
 
-        An enumeration value that specifies the customer service metric that eBay tracks to measure seller performance. See <strong>CustomerServiceMetricTypeEnum</strong> for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:CustomerServiceMetricTypeEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value that specifies the customer service metric that eBay tracks to measure seller performance.<br><br>See <a href=\"/api-docs/sell/feed/types/api:CustomerServiceMetricTypeEnum\">CustomerServiceMetricTypeEnum</a> for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/api:CustomerServiceMetricTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param customer_service_metric_type: The customer_service_metric_type of this CustomerServiceMetricsFilterCriteria.  # noqa: E501
         :type: str
@@ -84,7 +84,7 @@ class CustomerServiceMetricsFilterCriteria(object):
     def evaluation_marketplace_id(self):
         """Gets the evaluation_marketplace_id of this CustomerServiceMetricsFilterCriteria.  # noqa: E501
 
-        An enumeration value that specifies the eBay marketplace where the evaluation occurs. See <strong>MarketplaceIdEnum</strong> for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/bas:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value that specifies the eBay marketplace where the evaluation occurs.<br><br>See <a href=\"/api-docs/sell/feed/types/bas:MarketplaceIdEnum\">MarketplaceIdEnum</a> for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/bas:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The evaluation_marketplace_id of this CustomerServiceMetricsFilterCriteria.  # noqa: E501
         :rtype: str
@@ -95,7 +95,7 @@ class CustomerServiceMetricsFilterCriteria(object):
     def evaluation_marketplace_id(self, evaluation_marketplace_id):
         """Sets the evaluation_marketplace_id of this CustomerServiceMetricsFilterCriteria.
 
-        An enumeration value that specifies the eBay marketplace where the evaluation occurs. See <strong>MarketplaceIdEnum</strong> for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/bas:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+        An enumeration value that specifies the eBay marketplace where the evaluation occurs.<br><br>See <a href=\"/api-docs/sell/feed/types/bas:MarketplaceIdEnum\">MarketplaceIdEnum</a> for values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/feed/types/bas:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :param evaluation_marketplace_id: The evaluation_marketplace_id of this CustomerServiceMetricsFilterCriteria.  # noqa: E501
         :type: str

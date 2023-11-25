@@ -122,7 +122,7 @@ class UpdateUserScheduleRequest(object):
     def preferred_trigger_hour(self):
         """Gets the preferred_trigger_hour of this UpdateUserScheduleRequest.  # noqa: E501
 
-        The preferred two-digit hour of the day to trigger the schedule. <br /><br />This field is available as specified by the template (<strong>scheduleTemplateId</strong>). The template can specify this field as optional or required, and optionally provides a default value. <br /><br /><b>Format:</b> UTC <code>hhZ</code><br /><br />For example, the following represents 11:00 am UTC:<code> 11Z</code><br /><br /><b>Minimum: </b><code>00Z</code><b><br /><br /><b>Maximum: </b><code>23Z</code>  # noqa: E501
+        The preferred two-digit hour of the day to trigger the schedule. <br /><br />This field is available as specified by the template (<strong>scheduleTemplateId</strong>). The template can specify this field as optional or required, and optionally provides a default value. <br /><br /><b>Format:</b> UTC <code>hhZ</code><br /><br />For example, the following represents 11:00 am UTC:<code> 11Z</code><br /><br /><b>Minimum: </b><code>00Z</code><br /><br /><b>Maximum:</b> <code>23Z</code>  # noqa: E501
 
         :return: The preferred_trigger_hour of this UpdateUserScheduleRequest.  # noqa: E501
         :rtype: str
@@ -133,7 +133,7 @@ class UpdateUserScheduleRequest(object):
     def preferred_trigger_hour(self, preferred_trigger_hour):
         """Sets the preferred_trigger_hour of this UpdateUserScheduleRequest.
 
-        The preferred two-digit hour of the day to trigger the schedule. <br /><br />This field is available as specified by the template (<strong>scheduleTemplateId</strong>). The template can specify this field as optional or required, and optionally provides a default value. <br /><br /><b>Format:</b> UTC <code>hhZ</code><br /><br />For example, the following represents 11:00 am UTC:<code> 11Z</code><br /><br /><b>Minimum: </b><code>00Z</code><b><br /><br /><b>Maximum: </b><code>23Z</code>  # noqa: E501
+        The preferred two-digit hour of the day to trigger the schedule. <br /><br />This field is available as specified by the template (<strong>scheduleTemplateId</strong>). The template can specify this field as optional or required, and optionally provides a default value. <br /><br /><b>Format:</b> UTC <code>hhZ</code><br /><br />For example, the following represents 11:00 am UTC:<code> 11Z</code><br /><br /><b>Minimum: </b><code>00Z</code><br /><br /><b>Maximum:</b> <code>23Z</code>  # noqa: E501
 
         :param preferred_trigger_hour: The preferred_trigger_hour of this UpdateUserScheduleRequest.  # noqa: E501
         :type: str
@@ -214,7 +214,7 @@ class UpdateUserScheduleRequest(object):
     def schema_version(self):
         """Gets the schema_version of this UpdateUserScheduleRequest.  # noqa: E501
 
-        The schema version of the feedType for the schedule. This field is required if the <strong>feedType</strong> has a schema version. <br /><br />This field is available as specified by the template (<strong>scheduleTemplateId</strong>). The template can specify this field as optional or required, and optionally provides a default value.  # noqa: E501
+        The schema version of a schedule.  # noqa: E501
 
         :return: The schema_version of this UpdateUserScheduleRequest.  # noqa: E501
         :rtype: str
@@ -225,7 +225,7 @@ class UpdateUserScheduleRequest(object):
     def schema_version(self, schema_version):
         """Sets the schema_version of this UpdateUserScheduleRequest.
 
-        The schema version of the feedType for the schedule. This field is required if the <strong>feedType</strong> has a schema version. <br /><br />This field is available as specified by the template (<strong>scheduleTemplateId</strong>). The template can specify this field as optional or required, and optionally provides a default value.  # noqa: E501
+        The schema version of a schedule.  # noqa: E501
 
         :param schema_version: The schema_version of this UpdateUserScheduleRequest.  # noqa: E501
         :type: str
