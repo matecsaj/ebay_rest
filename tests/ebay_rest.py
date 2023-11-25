@@ -294,7 +294,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         """ Try a call with no positional arguments and no keyword arguments. """
         try:
             result = self._api.sell_compliance_get_listing_violations_summary(
-                                                                     x_ebay_c_marketplace_id=self.marketplace_id)
+                x_ebay_c_marketplace_id=self.marketplace_id)
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
@@ -940,7 +940,8 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
         self.assertTrue(key['private_key'])
         self.assertNotEqual(key['private_key'], self.original_private_key)
         try:
-            result = self._api.sell_finances_get_transaction_summary(filter="transactionStatus:{PAYOUT}")
+            result = self._api.sell_finances_get_transaction_summary(filter="transactionStatus:{PAYOUT}",
+                                                                     x_ebay_c_marketplace_id=self.marketplace_id)
         except Error as error:
             self.fail(f'Error {error.number} is {error.reason}  {error.detail}.\n')
         else:
