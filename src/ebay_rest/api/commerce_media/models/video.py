@@ -96,7 +96,7 @@ class Video(object):
     def classification(self):
         """Gets the classification of this Video.  # noqa: E501
 
-        The intended use for this video content. The video’s classification is used to associate the video with a user or seller. Currently, the classification of all videos should be set to <code>ITEM</code>.  # noqa: E501
+        The intended use for this video content. Currently, videos can only be added and associated with eBay listings, so the only supported value is <code>ITEM</code>.  # noqa: E501
 
         :return: The classification of this Video.  # noqa: E501
         :rtype: list[str]
@@ -107,7 +107,7 @@ class Video(object):
     def classification(self, classification):
         """Sets the classification of this Video.
 
-        The intended use for this video content. The video’s classification is used to associate the video with a user or seller. Currently, the classification of all videos should be set to <code>ITEM</code>.  # noqa: E501
+        The intended use for this video content. Currently, videos can only be added and associated with eBay listings, so the only supported value is <code>ITEM</code>.  # noqa: E501
 
         :param classification: The classification of this Video.  # noqa: E501
         :type: list[str]

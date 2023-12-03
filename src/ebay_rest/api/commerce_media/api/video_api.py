@@ -141,7 +141,7 @@ class VideoApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str video_id: The <b>video ID</b> for the video to be retrieved. (required)
+        :param str video_id: The unique identifier of the video to be retrieved. (required)
         :return: Video
                  If the method is called asynchronously,
                  returns the request thread.
@@ -163,7 +163,7 @@ class VideoApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str video_id: The <b>video ID</b> for the video to be retrieved. (required)
+        :param str video_id: The unique identifier of the video to be retrieved. (required)
         :return: Video
                  If the method is called asynchronously,
                  returns the request thread.
@@ -237,7 +237,7 @@ class VideoApi(object):
 
         :param async_req bool
         :param str content_type: Use this header to specify the content type for the upload. The Content-Type should be set to <code>application/octet-stream</code>. (required)
-        :param str video_id: The <b>video ID</b> for the uploaded video. (required)
+        :param str video_id: The unique identifier of the video to be uploaded. (required)
         :param InputStream body: The request payload for this method is the input stream for the video source. The input source must be an .mp4 file of the type MPEG-4 Part 10 or Advanced Video Coding (MPEG-4 AVC).
         :param str content_length: Use this header to specify the content length for the upload. Use Content-Range: bytes {1}-{2}/{3} and Content-Length:{4} headers.<br /><br /><span class=\"tablenote\"><span style=\"color:#004680\"><strong>Note:</strong></span> This header is optional and is only required for <i>resumable</i> uploads (when an upload is interrupted and must be resumed from a certain point).</span>
         :param str content_range: Use this header to specify the content range for the upload. The Content-Range should be of the following bytes ((?:[0-9]+-[0-9]+)|\\\\\\\\*)/([0-9]+|\\\\\\\\*) pattern.<br /><br /><span class=\"tablenote\"><span style=\"color:#004680\"><strong>Note:</strong></span> This header is optional and is only required for <i>resumable</i> uploads (when an upload is interrupted and must be resumed from a certain point).</span>
@@ -263,7 +263,7 @@ class VideoApi(object):
 
         :param async_req bool
         :param str content_type: Use this header to specify the content type for the upload. The Content-Type should be set to <code>application/octet-stream</code>. (required)
-        :param str video_id: The <b>video ID</b> for the uploaded video. (required)
+        :param str video_id: The unique identifier of the video to be uploaded. (required)
         :param InputStream body: The request payload for this method is the input stream for the video source. The input source must be an .mp4 file of the type MPEG-4 Part 10 or Advanced Video Coding (MPEG-4 AVC).
         :param str content_length: Use this header to specify the content length for the upload. Use Content-Range: bytes {1}-{2}/{3} and Content-Length:{4} headers.<br /><br /><span class=\"tablenote\"><span style=\"color:#004680\"><strong>Note:</strong></span> This header is optional and is only required for <i>resumable</i> uploads (when an upload is interrupted and must be resumed from a certain point).</span>
         :param str content_range: Use this header to specify the content range for the upload. The Content-Range should be of the following bytes ((?:[0-9]+-[0-9]+)|\\\\\\\\*)/([0-9]+|\\\\\\\\*) pattern.<br /><br /><span class=\"tablenote\"><span style=\"color:#004680\"><strong>Note:</strong></span> This header is optional and is only required for <i>resumable</i> uploads (when an upload is interrupted and must be resumed from a certain point).</span>

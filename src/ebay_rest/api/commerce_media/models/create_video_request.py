@@ -61,7 +61,7 @@ class CreateVideoRequest(object):
     def classification(self):
         """Gets the classification of this CreateVideoRequest.  # noqa: E501
 
-        The intended use for this video content. The video’s classification is used to associate the video with a user or seller. Currently, the classification of all videos should be set to <code>ITEM</code>.  # noqa: E501
+        The intended use for this video content. Currently, videos can only be added and associated with eBay listings, so the only supported value is <code>ITEM</code>.  # noqa: E501
 
         :return: The classification of this CreateVideoRequest.  # noqa: E501
         :rtype: list[str]
@@ -72,7 +72,7 @@ class CreateVideoRequest(object):
     def classification(self, classification):
         """Sets the classification of this CreateVideoRequest.
 
-        The intended use for this video content. The video’s classification is used to associate the video with a user or seller. Currently, the classification of all videos should be set to <code>ITEM</code>.  # noqa: E501
+        The intended use for this video content. Currently, videos can only be added and associated with eBay listings, so the only supported value is <code>ITEM</code>.  # noqa: E501
 
         :param classification: The classification of this CreateVideoRequest.  # noqa: E501
         :type: list[str]
@@ -107,7 +107,7 @@ class CreateVideoRequest(object):
     def size(self):
         """Gets the size of this CreateVideoRequest.  # noqa: E501
 
-        The size, in bytes, of the video content.  # noqa: E501
+        The size, in bytes, of the video content. <br><br><b>Max:</b> 157,286,400 bytes  # noqa: E501
 
         :return: The size of this CreateVideoRequest.  # noqa: E501
         :rtype: int
@@ -118,7 +118,7 @@ class CreateVideoRequest(object):
     def size(self, size):
         """Sets the size of this CreateVideoRequest.
 
-        The size, in bytes, of the video content.  # noqa: E501
+        The size, in bytes, of the video content. <br><br><b>Max:</b> 157,286,400 bytes  # noqa: E501
 
         :param size: The size of this CreateVideoRequest.  # noqa: E501
         :type: int

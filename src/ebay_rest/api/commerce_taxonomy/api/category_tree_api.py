@@ -130,7 +130,7 @@ class CategoryTreeApi(object):
     def get_category_subtree(self, category_id, category_tree_id, **kwargs):  # noqa: E501
         """Get a Category Subtree  # noqa: E501
 
-        This call retrieves the details of all nodes of the category tree hierarchy (the subtree) below a specified category of a category tree. You identify the tree using the <b>category_tree_id</b> parameter, which was returned by the <b>getDefaultCategoryTreeId</b> call in the <b>categoryTreeId</b> field.<br><br><span class=\"tablenote\"> <strong>Note:</strong> This call can return a very large payload, so you are strongly advised to submit the request with the following HTTP header:<br><br><code>&nbsp;&nbsp;Accept-Encoding: application/gzip</code><br><br>With this header (in addition to the required headers described under <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP Request Headers</a>), the call returns the response with <b>gzip</b> compression. </span>  # noqa: E501
+        This call retrieves the details of all nodes of the category tree hierarchy (the subtree) below a specified category of a category tree. You identify the tree using the <b>category_tree_id</b> parameter, which was returned by the <b>getDefaultCategoryTreeId</b> call in the <b>categoryTreeId</b> field.<br><br><span class=\"tablenote\"> <strong>Note:</strong> This call can return a very large payload, so you are strongly advised to submit the request with the following HTTP header:<br><br><code>&nbsp;&nbsp;Accept-Encoding: gzip</code><br><br>With this header (in addition to the required headers described under <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP Request Headers</a>), the call returns the response with <b>gzip</b> compression. </span>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_category_subtree(category_id, category_tree_id, async_req=True)
@@ -139,7 +139,7 @@ class CategoryTreeApi(object):
         :param async_req bool
         :param str category_id: The unique identifier of the category at the top of the subtree being requested.<br><br><span class=\"tablenote\"><strong>Note:</strong> If the <b>category_id</b> submitted identifies the root node of the tree, this call returns an error. To retrieve the complete tree, use this value with the <b>getCategoryTree</b> call.<br><br>If the <b>category_id</b> submitted identifies a leaf node of the tree, the call response will contain information about only that leaf node, which is a valid subtree.<!-- <br><br> This call also returns an error if <b>category_id</b> identifies a deprecated category. This can occur if you routinely cache your category trees. Use the <b>Get Deprecated Categories and Mapping</b> call to determine which current category should be used in place of the deprecated category, and use the <b>getCategoryTree</b> call to update your cached copy of the tree. --> </span> (required)
         :param str category_tree_id: The unique identifier of the eBay category tree from which a category subtree is being requested. (required)
-        :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to <code>application/gzip</code>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>.
+        :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to <code>gzip</code>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>.
         :return: CategorySubtree
                  If the method is called asynchronously,
                  returns the request thread.
@@ -154,7 +154,7 @@ class CategoryTreeApi(object):
     def get_category_subtree_with_http_info(self, category_id, category_tree_id, **kwargs):  # noqa: E501
         """Get a Category Subtree  # noqa: E501
 
-        This call retrieves the details of all nodes of the category tree hierarchy (the subtree) below a specified category of a category tree. You identify the tree using the <b>category_tree_id</b> parameter, which was returned by the <b>getDefaultCategoryTreeId</b> call in the <b>categoryTreeId</b> field.<br><br><span class=\"tablenote\"> <strong>Note:</strong> This call can return a very large payload, so you are strongly advised to submit the request with the following HTTP header:<br><br><code>&nbsp;&nbsp;Accept-Encoding: application/gzip</code><br><br>With this header (in addition to the required headers described under <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP Request Headers</a>), the call returns the response with <b>gzip</b> compression. </span>  # noqa: E501
+        This call retrieves the details of all nodes of the category tree hierarchy (the subtree) below a specified category of a category tree. You identify the tree using the <b>category_tree_id</b> parameter, which was returned by the <b>getDefaultCategoryTreeId</b> call in the <b>categoryTreeId</b> field.<br><br><span class=\"tablenote\"> <strong>Note:</strong> This call can return a very large payload, so you are strongly advised to submit the request with the following HTTP header:<br><br><code>&nbsp;&nbsp;Accept-Encoding: gzip</code><br><br>With this header (in addition to the required headers described under <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP Request Headers</a>), the call returns the response with <b>gzip</b> compression. </span>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_category_subtree_with_http_info(category_id, category_tree_id, async_req=True)
@@ -163,7 +163,7 @@ class CategoryTreeApi(object):
         :param async_req bool
         :param str category_id: The unique identifier of the category at the top of the subtree being requested.<br><br><span class=\"tablenote\"><strong>Note:</strong> If the <b>category_id</b> submitted identifies the root node of the tree, this call returns an error. To retrieve the complete tree, use this value with the <b>getCategoryTree</b> call.<br><br>If the <b>category_id</b> submitted identifies a leaf node of the tree, the call response will contain information about only that leaf node, which is a valid subtree.<!-- <br><br> This call also returns an error if <b>category_id</b> identifies a deprecated category. This can occur if you routinely cache your category trees. Use the <b>Get Deprecated Categories and Mapping</b> call to determine which current category should be used in place of the deprecated category, and use the <b>getCategoryTree</b> call to update your cached copy of the tree. --> </span> (required)
         :param str category_tree_id: The unique identifier of the eBay category tree from which a category subtree is being requested. (required)
-        :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to <code>application/gzip</code>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>.
+        :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to <code>gzip</code>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>.
         :return: CategorySubtree
                  If the method is called asynchronously,
                  returns the request thread.
@@ -340,7 +340,7 @@ class CategoryTreeApi(object):
     def get_category_tree(self, category_tree_id, **kwargs):  # noqa: E501
         """Get a Category Tree  # noqa: E501
 
-        This call retrieves the complete category tree that is identified by the <b>category_tree_id</b> parameter. The value of <b>category_tree_id</b> was returned by the <b>getDefaultCategoryTreeId</b> call in the <b>categoryTreeId</b> field. The response contains details of all nodes of the specified eBay category tree, as well as the eBay marketplaces that use this category tree.<br><br><span class=\"tablenote\"> <strong>Note:</strong> This call can return a very large payload, so you are strongly advised to submit the request with the following HTTP header:<br><br><code>&nbsp;&nbsp;Accept-Encoding: application/gzip</code><br><br>With this header (in addition to the required headers described under <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP Request Headers</a>), the call returns the response with <b>gzip</b> compression.</span>  # noqa: E501
+        This call retrieves the complete category tree that is identified by the <b>category_tree_id</b> parameter. The value of <b>category_tree_id</b> was returned by the <b>getDefaultCategoryTreeId</b> call in the <b>categoryTreeId</b> field. The response contains details of all nodes of the specified eBay category tree, as well as the eBay marketplaces that use this category tree.<br><br><span class=\"tablenote\"> <strong>Note:</strong> This call can return a very large payload, so you are strongly advised to submit the request with the following HTTP header:<br><br><code>&nbsp;&nbsp;Accept-Encoding: gzip</code><br><br>With this header (in addition to the required headers described under <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP Request Headers</a>), the call returns the response with <b>gzip</b> compression.</span>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_category_tree(category_tree_id, async_req=True)
@@ -348,7 +348,7 @@ class CategoryTreeApi(object):
 
         :param async_req bool
         :param str category_tree_id: The unique identifier of the eBay category tree being requested. (required)
-        :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to <code>application/gzip</code>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>.
+        :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to <code>gzip</code>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>.
         :return: CategoryTree
                  If the method is called asynchronously,
                  returns the request thread.
@@ -363,7 +363,7 @@ class CategoryTreeApi(object):
     def get_category_tree_with_http_info(self, category_tree_id, **kwargs):  # noqa: E501
         """Get a Category Tree  # noqa: E501
 
-        This call retrieves the complete category tree that is identified by the <b>category_tree_id</b> parameter. The value of <b>category_tree_id</b> was returned by the <b>getDefaultCategoryTreeId</b> call in the <b>categoryTreeId</b> field. The response contains details of all nodes of the specified eBay category tree, as well as the eBay marketplaces that use this category tree.<br><br><span class=\"tablenote\"> <strong>Note:</strong> This call can return a very large payload, so you are strongly advised to submit the request with the following HTTP header:<br><br><code>&nbsp;&nbsp;Accept-Encoding: application/gzip</code><br><br>With this header (in addition to the required headers described under <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP Request Headers</a>), the call returns the response with <b>gzip</b> compression.</span>  # noqa: E501
+        This call retrieves the complete category tree that is identified by the <b>category_tree_id</b> parameter. The value of <b>category_tree_id</b> was returned by the <b>getDefaultCategoryTreeId</b> call in the <b>categoryTreeId</b> field. The response contains details of all nodes of the specified eBay category tree, as well as the eBay marketplaces that use this category tree.<br><br><span class=\"tablenote\"> <strong>Note:</strong> This call can return a very large payload, so you are strongly advised to submit the request with the following HTTP header:<br><br><code>&nbsp;&nbsp;Accept-Encoding: gzip</code><br><br>With this header (in addition to the required headers described under <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP Request Headers</a>), the call returns the response with <b>gzip</b> compression.</span>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_category_tree_with_http_info(category_tree_id, async_req=True)
@@ -371,7 +371,7 @@ class CategoryTreeApi(object):
 
         :param async_req bool
         :param str category_tree_id: The unique identifier of the eBay category tree being requested. (required)
-        :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to <code>application/gzip</code>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>.
+        :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to <code>gzip</code>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>.
         :return: CategoryTree
                  If the method is called asynchronously,
                  returns the request thread.
