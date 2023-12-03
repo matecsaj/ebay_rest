@@ -590,7 +590,7 @@ class API(metaclass=Multiton):
             else:
                 kwargs['limit'] = page_limit  # fill pages with as many records as possible
         else:
-            records_desired = None  # the users wants all possible records
+            records_desired = None  # the user wants all possible records
             kwargs['limit'] = page_limit  # fill pages with as many records as possible
 
         try:
@@ -618,6 +618,9 @@ class API(metaclass=Multiton):
             except Error:
                 raise
 
+            if result is None:
+                break
+
             if record_list_key is None:  # if still needed, find the dictionary key to the list of results
                 for key in result:
                     if isinstance(result[key], list):
@@ -639,7 +642,7 @@ class API(metaclass=Multiton):
             # Determine the number of records in the current page.
             records_in_page = 0
             if record_list_key is not None:  # is the record set totally empty?
-                if record_list_key in result:  # is current page is well formed page?
+                if record_list_key in result:  # is the current page a well-formed?
                     if result[record_list_key] is not None:  # does the current page have > zero results?
                         records_in_page = len(result[record_list_key])  # all good, get the record count
 
