@@ -10,13 +10,13 @@ import os
 
 
 class Reference:
-    """ Caches of reference information sourced from eBay's developer website. """
+    """Caches of reference information sourced from eBay's developer website."""
 
     _cache = {}
 
     @staticmethod
     def get_application_scopes() -> dict:
-        """ Get eBay **Client Credential/Code** Grant Type Scopes
+        """Get eBay **Client Credential/Code** Grant Type Scopes
          that might be permitted when minting **Application** tokens.
 
          Dictionary keys are the scopes, and data are descriptions.
@@ -25,11 +25,11 @@ class Reference:
 
         :return application_scopes (dict)
         """
-        return Reference._get('application_scopes')
+        return Reference._get("application_scopes")
 
     @staticmethod
     def get_country_codes() -> dict:
-        """ Get eBay country code information.
+        """Get eBay country code information.
 
         A partial list of ISO 3166 standard two-letter codes that represent countries around the world.
 
@@ -37,11 +37,11 @@ class Reference:
 
         :return country_codes (dict)
         """
-        return Reference._get('country_codes')
+        return Reference._get("country_codes")
 
     @staticmethod
     def get_currency_codes() -> dict:
-        """ Get eBay country code information.
+        """Get eBay country code information.
 
         A partial list of standard 3-digit ISO 4217 currency codes for currency used in countries around the world.
 
@@ -49,11 +49,11 @@ class Reference:
 
         :return currency_codes (dict)
         """
-        return Reference._get('currency_codes')
+        return Reference._get("currency_codes")
 
     @staticmethod
     def get_global_id_values() -> dict:
-        """ Get eBay global id information.
+        """Get eBay global id information.
 
         The Global ID is a unique identifier for combinations of site, language, and territory.
         Global ID values are returned in globalId and are used as input for the X-EBAY-SOA-GLOBAL-ID header.
@@ -65,11 +65,11 @@ class Reference:
 
         :return global_id_values (dict)
         """
-        return Reference._get('global_id_values')
+        return Reference._get("global_id_values")
 
     @staticmethod
     def get_marketplace_id_values() -> dict:
-        """ Get eBay marketplace id information.
+        """Get eBay marketplace id information.
 
         The following table lists the set of supported Marketplace IDs, their associated countries,
         the URLs to the marketplaces, and the locales supported by each marketplace
@@ -78,11 +78,11 @@ class Reference:
 
         :return marketplace_id_values (dict)
         """
-        return Reference._get('marketplace_id_values')
+        return Reference._get("marketplace_id_values")
 
     @staticmethod
     def get_user_scopes() -> dict:
-        """ Get eBay **Authorization Code** Grant Type Scopes
+        """Get eBay **Authorization Code** Grant Type Scopes
         that might be permitted when minting **User Access** tokens.
 
         Dictionary keys are the scopes, and data are descriptions.
@@ -91,7 +91,7 @@ class Reference:
 
         :return user_scopes (dict)
         """
-        return Reference._get('user_scopes')
+        return Reference._get("user_scopes")
 
     @staticmethod
     def _get(name) -> dict:
@@ -105,7 +105,7 @@ class Reference:
             # get the path to this python file, which is also where the data file directory is
             path, _fn = os.path.split(os.path.realpath(__file__))
             # to the path join the data file name and extension
-            path_name = os.path.join(path, 'references', name + '.json')
+            path_name = os.path.join(path, "references", name + ".json")
             with open(path_name) as file_handle:
                 Reference._cache[name] = load(file_handle)
         return copy.deepcopy(Reference._cache[name])

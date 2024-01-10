@@ -14,7 +14,7 @@ from .multiton import Multiton
 
 
 class Rates(metaclass=Multiton):
-    """ Manages call limit and utilization data for an eBay application.
+    """Manages call limit and utilization data for an eBay application.
 
     https://developer.ebay.com/api-docs/developer/analytics/resources/rate_limit/methods/getRateLimits
     """
@@ -28,11 +28,17 @@ class Rates(metaclass=Multiton):
         :param app_id (str, required): eBay keeps a set of daily limits for each app_id.
         :return None (None)
         """
-        self._app_id = app_id    # save because it eases debugging
+        self._app_id = app_id  # save because it eases debugging
 
-        self._lock = threading.Lock()  # secure this lock before updating or reading class variables
-        self._refresh_date_time = None  # the soonest it is advisable to refresh rates data from eBay
-        self._cache = None  # cache of the most recent rates re-organized to expedite lookups
+        self._lock = (
+            threading.Lock()
+        )  # secure this lock before updating or reading class variables
+        self._refresh_date_time = (
+            None  # the soonest it is advisable to refresh rates data from eBay
+        )
+        self._cache = (
+            None  # cache of the most recent rates re-organized to expedite lookups
+        )
 
     def decrement_rate(self, base_path: str, rate_keys: list) -> None:
         """
@@ -47,10 +53,12 @@ class Rates(metaclass=Multiton):
         with self._lock:
             rate_dict = self._find_rate_dict(base_path, rate_keys)
             if rate_dict:
-                if rate_dict['remaining'] > 0:
-                    rate_dict['remaining'] -= 1
+                if rate_dict["remaining"] > 0:
+                    rate_dict["remaining"] -= 1
 
-    def decrement_rate_throttled(self, base_path: str, rate_keys: list, timeout: float) -> None:
+    def decrement_rate_throttled(
+        self, base_path: str, rate_keys: list, timeout: float
+    ) -> None:
         """
         Decrement the remaining count of calls associated with a name.
 
@@ -76,20 +84,21 @@ class Rates(metaclass=Multiton):
             if rate_dict is None:
                 redo = False
             else:
-                limit = rate_dict['limit']
-                reset = rate_dict['reset']
-                time_window = rate_dict['time_window']
+                limit = rate_dict["limit"]
+                reset = rate_dict["reset"]
+                time_window = rate_dict["time_window"]
 
-                delta = abs((DateTime.now() - reset).total_seconds())  # abs covers small clock errors
+                delta = abs(
+                    (DateTime.now() - reset).total_seconds()
+                )  # abs covers small clock errors
                 threshold = ((delta * limit) / time_window) * 0.5
                 if threshold < 1.0:
                     threshold = 1.0  # 1 is as low is it should go, protect against rounding errors
 
-                remaining = rate_dict['remaining']
+                remaining = rate_dict["remaining"]
                 if remaining >= math.ceil(threshold):
-
                     if remaining > 0:
-                        rate_dict['remaining'] = remaining - 1
+                        rate_dict["remaining"] = remaining - 1
                     self._lock.release()
                     redo = False
 
@@ -106,7 +115,9 @@ class Rates(metaclass=Multiton):
                         timeout_remaining = timeout - timeout_used
                         if timeout_remaining <= 0:
                             raise Error(number=97001, reason="Throttle timeout.")
-                        if wait_seconds > timeout_remaining:      # don't wait any longer than the caller wants
+                        if (
+                            wait_seconds > timeout_remaining
+                        ):  # don't wait any longer than the caller wants
                             wait_seconds = timeout_remaining
 
                     self._lock.release()
@@ -141,19 +152,25 @@ class Rates(metaclass=Multiton):
             refresh_date_time = None
 
         else:
-            cache = dict()      # stores the flattened rates records
-            resets = set()      # stores unique reset date-times
+            cache = dict()  # stores the flattened rates records
+            resets = set()  # stores unique reset date-times
             for rate_limit in rate_limits:
-                base_path = '/'.join([rate_limit['api_context'], rate_limit['api_name'], rate_limit['api_version']])
-                base_path = '/' + base_path.lower()
-                for resource in rate_limit['resources']:
-                    if resource['rates']:
-                        if resource['rates'][0]:
-                            if resource['rates'][0]['limit']:
-                                key = base_path + '|' + resource['name']
-                                rates = resource['rates'][0]
-                                reset = DateTime.from_string(rates['reset'])
-                                rates['reset'] = reset
+                base_path = "/".join(
+                    [
+                        rate_limit["api_context"],
+                        rate_limit["api_name"],
+                        rate_limit["api_version"],
+                    ]
+                )
+                base_path = "/" + base_path.lower()
+                for resource in rate_limit["resources"]:
+                    if resource["rates"]:
+                        if resource["rates"][0]:
+                            if resource["rates"][0]["limit"]:
+                                key = base_path + "|" + resource["name"]
+                                rates = resource["rates"][0]
+                                reset = DateTime.from_string(rates["reset"])
+                                rates["reset"] = reset
                                 resets.add(reset)
                                 cache[key] = rates
 
@@ -163,11 +180,13 @@ class Rates(metaclass=Multiton):
             periodic = now + timedelta(minutes=15)
 
             # find the soonest reset
-            soonest_reset = periodic    # safety, just in case they are no useful resets date-times
+            soonest_reset = (
+                periodic  # safety, just in case they are no useful resets date-times
+            )
             resets = list(resets)
             resets.sort()
             for reset in resets:
-                if reset >= now:            # skip when eBay is late to act on a reset
+                if reset >= now:  # skip when eBay is late to act on a reset
                     soonest_reset = reset
                     break
 
@@ -199,7 +218,7 @@ class Rates(metaclass=Multiton):
         else:
             [resource_name_base, resource_name_module] = rate_keys
 
-            key = base_path + '|' + resource_name_base
+            key = base_path + "|" + resource_name_base
 
             cache = self._cache
             if key in cache:
@@ -209,7 +228,7 @@ class Rates(metaclass=Multiton):
                 if key in cache:
                     result = cache[key]
                 else:
-                    logging.debug('Unable to find rates for: ' + key)
+                    logging.debug("Unable to find rates for: " + key)
                     result = None
 
             return result

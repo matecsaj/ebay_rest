@@ -1,7 +1,5 @@
-
-
 class Error(Exception):
-    """ Used to return all exceptions from this package.
+    """Used to return all exceptions from this package.
 
     End user notes:
     When writing exception-handling code, take action based on the error number.
@@ -18,7 +16,7 @@ class Error(Exception):
     __slots__ = "number", "reason", "detail"
 
     def __init__(self, number: int, reason: str, detail: str = None) -> None:
-        """ Instantiate a new Error object.
+        """Instantiate a new Error object.
 
         :param number (int, required) A unique natural number code.
         :param reason (str, required) A short description of the reason.
@@ -34,6 +32,7 @@ class Error(Exception):
         """
         :return message (str)
         """
-        message = 'Error number {}. {} {}'.format(
-            self.number, self.reason or '', self.detail or '')
+        message = "Error number {}. {} {}".format(
+            self.number, self.reason or "", self.detail or ""
+        )
         return message.rstrip()

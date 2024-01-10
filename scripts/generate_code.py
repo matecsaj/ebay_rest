@@ -29,32 +29,32 @@ from urllib.parse import urljoin, urlsplit, urlunsplit
 
 # Globals
 
+
 async def run(cmd):
-    """ Run a command line in a subprocess. """
+    """Run a command line in a subprocess."""
     proc = await asyncio.create_subprocess_shell(
-        cmd,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE)
+        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+    )
 
     stdout, stderr = await proc.communicate()
 
-    print(f'[{cmd!r} exited with {proc.returncode}]')
+    print(f"[{cmd!r} exited with {proc.returncode}]")
     if stdout:
-        print(f'[stdout]\n{stdout.decode()}')
+        print(f"[stdout]\n{stdout.decode()}")
     if stderr:
-        print(f'[stderr]\n{stderr.decode()}')
+        print(f"[stderr]\n{stderr.decode()}")
 
 
 async def get_table_via_link(url: str) -> list:
     data = []
     soup = await get_soup_via_link(url)
     # find the rows regarding Response Fields.
-    table = soup.find('table')
+    table = soup.find("table")
     if table:
-        rows = table.find_all('tr')
+        rows = table.find_all("tr")
         # put the rows into a table of data
         for row in rows:
-            cols = row.find_all('td')
+            cols = row.find_all("td")
             cols = [ele.text.strip() for ele in cols]
             data.append([ele for ele in cols if ele])  # Get rid of empty values
     if len(data) == 0:
@@ -64,8 +64,8 @@ async def get_table_via_link(url: str) -> list:
 
 async def make_json_file(source: dict or list, name: str) -> None:
     if len(source) > 0:
-        path = '../src/ebay_rest/references/'
-        with open(path + name + '.json', 'w') as outfile:
+        path = "../src/ebay_rest/references/"
+        with open(path + name + ".json", "w") as outfile:
             json.dump(source, outfile, sort_keys=True, indent=4)
     else:
         logging.error(f"The json file for {name} should not be empty; not created.")
@@ -75,52 +75,52 @@ async def generate_country_codes() -> None:
     logging.info("Find the eBay's Country Codes.")
 
     # load the target webpage
-    data = await get_table_via_link(await get_ebay_list_url('CountryCodeType'))
+    data = await get_table_via_link(await get_ebay_list_url("CountryCodeType"))
 
     # ignore header, convert to a dict & delete bad values
     dict_ = {}
     for datum in data[1:]:
         dict_[datum[0]] = datum[1]
-    for bad_value in ('CustomCode', 'QM', 'QN', 'QO', 'TP', 'UM', 'YU', 'ZZ'):
+    for bad_value in ("CustomCode", "QM", "QN", "QO", "TP", "UM", "YU", "ZZ"):
         if bad_value in dict_:
             del dict_[bad_value]
         else:
             logging.debug("Bad value " + bad_value + "no longer needs to be deleted.")
 
-    await make_json_file(dict_, 'country_codes')
+    await make_json_file(dict_, "country_codes")
 
 
 async def generate_currency_codes() -> None:
     logging.info("Find the eBay's Currency Codes.")
 
     # load the target webpage
-    data = await get_table_via_link(await get_ebay_list_url('CurrencyCodeType'))
+    data = await get_table_via_link(await get_ebay_list_url("CurrencyCodeType"))
 
     # ignore header, convert to a dict & delete bad values
     dict_ = {}
     for datum in data[1:]:
         dict_[datum[0]] = datum[1]
 
-    bad_values = ('CustomCode',)
+    bad_values = ("CustomCode",)
     to_delete = set()
     for key, value in dict_.items():
-        if key in bad_values or 'replaced' in value:
+        if key in bad_values or "replaced" in value:
             to_delete.add(key)
     for key in to_delete:
         del dict_[key]
 
-    await make_json_file(dict_, 'currency_codes')
+    await make_json_file(dict_, "currency_codes")
 
 
 async def generate_global_id_values() -> None:
     logging.info("Find the eBay's Global ID Values.")
 
     # load the target webpage
-    url = 'https://developer.ebay.com/Devzone/merchandising/docs/CallRef/Enums/GlobalIdList.html'
+    url = "https://developer.ebay.com/Devzone/merchandising/docs/CallRef/Enums/GlobalIdList.html"
     data = await get_table_via_link(url)
 
     # the header got messed up and is unlikely to change, so hard code it
-    cols = ['global_id', 'language', 'territory', 'site_name', 'ebay_site_id']
+    cols = ["global_id", "language", "territory", "site_name", "ebay_site_id"]
 
     # convert to a list of dicts
     dicts = []
@@ -130,7 +130,7 @@ async def generate_global_id_values() -> None:
             my_dict[column] = datum[index]
         dicts.append(my_dict)
 
-    await make_json_file(dicts, 'global_id_values')
+    await make_json_file(dicts, "global_id_values")
 
 
 async def generate_marketplace_id_values() -> None:
@@ -139,20 +139,20 @@ async def generate_marketplace_id_values() -> None:
     my_dict = dict()
 
     # load the target webpage
-    url = 'https://developer.ebay.com/api-docs/static/rest-request-components.html#marketpl'
+    url = "https://developer.ebay.com/api-docs/static/rest-request-components.html#marketpl"
     soup = await get_soup_via_link(url)
 
     if soup:
         # find the rows regarding Response Fields.
-        tables = soup.findAll('table')
+        tables = soup.findAll("table")
         if len(tables) > 1:
-            table = tables[1]   # the second table is index 1
-            rows = table.find_all('tr')
+            table = tables[1]  # the second table is index 1
+            rows = table.find_all("tr")
 
             # put the rows into a table of data
             data = []
             for row in rows:
-                cols = row.find_all('td')
+                cols = row.find_all("td")
                 cols = [ele.text.strip() for ele in cols]
                 data.append([ele for ele in cols if ele])  # Get rid of empty values
 
@@ -163,20 +163,24 @@ async def generate_marketplace_id_values() -> None:
 
             for datum in data[1:]:
                 [marketplace_id, country, marketplace_site, locale_support] = datum
-                locale_support = locale_support.replace(' ', '')
-                locales = locale_support.split(',')  # convert comma separated locales to a list of strings
-                sites = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|%[0-9a-fA-F][0-9a-fA-F])+',
-                                   marketplace_site)
-                comments = re.findall('\\(([^)]*)\\)', marketplace_site)
+                locale_support = locale_support.replace(" ", "")
+                locales = locale_support.split(
+                    ","
+                )  # convert comma separated locales to a list of strings
+                sites = re.findall(
+                    "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|%[0-9a-fA-F][0-9a-fA-F])+",
+                    marketplace_site,
+                )
+                comments = re.findall("\\(([^)]*)\\)", marketplace_site)
                 comment_shortage = len(locales) - len(comments)
                 for _ in range(comment_shortage):
-                    comments.append('')
+                    comments.append("")
                 my_locales = dict()
                 for index, locale in enumerate(locales):
                     my_locales[locale] = [sites[index], comments[index]]
                 my_dict[marketplace_id] = [country, my_locales]
 
-    await make_json_file(my_dict, 'marketplace_id_values')
+    await make_json_file(my_dict, "marketplace_id_values")
     return
 
 
@@ -188,7 +192,9 @@ async def get_soup_via_link(url: str) -> BeautifulSoup:
     # Get the html
     try:
         # the header is meant to prevent the exception 'Response payload is not completed'
-        async with aiohttp.ClientSession(headers={'Connection': 'keep-alive'}) as session:
+        async with aiohttp.ClientSession(
+            headers={"Connection": "keep-alive"}
+        ) as session:
             try:
                 async with session.get(url) as response:
                     try:
@@ -196,9 +202,11 @@ async def get_soup_via_link(url: str) -> BeautifulSoup:
                     except Exception as e:
                         bp = True
             except Exception as e:
-                if 'Connection reset by peer' in e:
-                    logging.fatal("The server dropped the connection on the TCP level; it may think we are a "
-                                  "denial-of-service attacker; try again tomorrow.")
+                if "Connection reset by peer" in e:
+                    logging.fatal(
+                        "The server dropped the connection on the TCP level; it may think we are a "
+                        "denial-of-service attacker; try again tomorrow."
+                    )
                     exit()
                 else:
                     bp = True
@@ -223,7 +231,7 @@ async def generate_references():
         generate_country_codes(),
         generate_currency_codes(),
         generate_global_id_values(),
-        generate_marketplace_id_values()
+        generate_marketplace_id_values(),
     )
 
 
@@ -239,24 +247,24 @@ async def get_ebay_list_url(code_type: str) -> str:
 
     example: https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/countrycodetype.html
     """
-    return f'https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/{code_type}.html'
+    return f"https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/{code_type}.html"
 
 
 class Locations:
-    """ Where things are located in the locale file store. """
+    """Where things are located in the locale file store."""
 
-    target_directory: str = 'api'
-    target_path: str = os.path.abspath('../src/ebay_rest/' + target_directory)
-    cache_path: str = os.path.abspath('./' + target_directory + '_cache')
+    target_directory: str = "api"
+    target_path: str = os.path.abspath("../src/ebay_rest/" + target_directory)
+    cache_path: str = os.path.abspath("./" + target_directory + "_cache")
 
-    state_file: str = 'state.json'
+    state_file: str = "state.json"
     state_path_file: str = os.path.abspath(os.path.join(cache_path, state_file))
 
-    file_ebay_rest = os.path.abspath('../src/ebay_rest/a_p_i.py')
+    file_ebay_rest = os.path.abspath("../src/ebay_rest/a_p_i.py")
 
 
 class State:
-    """ Track the state of progress, even if the program is re-run. """
+    """Track the state of progress, even if the program is re-run."""
 
     def __init__(self) -> None:
         try:
@@ -274,7 +282,7 @@ class State:
     async def set(self, key: str, value: str) -> None:
         self._states[key] = value
         try:
-            with open(Locations.state_path_file, 'w') as file_handle:
+            with open(Locations.state_path_file, "w") as file_handle:
                 json.dump(self._states, file_handle, sort_keys=True, indent=4)
         except OSError:
             message = f"Can't write to {Locations.state_path_file}."
@@ -291,13 +299,12 @@ async def ensure_cache():
     # warn developers that they should not edit the files in the cache
     readme = "# READ ME\n"
     readme += "Don't change the contents of this folder directly; instead, edit and run scripts/generate_code.py"
-    path_file = os.path.abspath(os.path.join(Locations.cache_path, 'README.md'))
-    with open(path_file, 'w') as file_handle:
+    path_file = os.path.abspath(os.path.join(Locations.cache_path, "README.md"))
+    with open(path_file, "w") as file_handle:
         file_handle.write(readme)
 
 
 class Contracts:
-
     def __init__(self, overview_link) -> None:
         self.overview_link = overview_link
         self.category = None
@@ -307,7 +314,12 @@ class Contracts:
         self.name = None
 
     async def process(self):
-        [self.category, self.call, self.link_href, self.file_name] = await self.get_contract(self.overview_link)
+        [
+            self.category,
+            self.call,
+            self.link_href,
+            self.file_name,
+        ] = await self.get_contract(self.overview_link)
         self.name = await self.get_api_name()
         await self.cache_contract()
         await self.patch_contract()
@@ -318,24 +330,32 @@ class Contracts:
 
     @staticmethod
     async def get_overview_links():
-        logging.info('Get a list of links to overview pages; pages contain links to eBay OpenAPI 3 JSON contracts.')
+        logging.info(
+            "Get a list of links to overview pages; pages contain links to eBay OpenAPI 3 JSON contracts."
+        )
 
         overview_links = []
-        developer_url = 'https://developer.ebay.com/'
-        soup = await get_soup_via_link(urljoin(developer_url, 'docs'))
+        developer_url = "https://developer.ebay.com/"
+        soup = await get_soup_via_link(urljoin(developer_url, "docs"))
 
-        for link in soup.find_all('a', href=lambda href: href and 'overview.html' in href):
-            path = link.get('href')
-            path = path.replace('/static/', '/')   # help dup. filter, remove a redundant part that is sometimes present
-            if not re.search("/v\d/", path):    # skip the experimental libraries because few people can use them
+        for link in soup.find_all(
+            "a", href=lambda href: href and "overview.html" in href
+        ):
+            path = link.get("href")
+            path = path.replace(
+                "/static/", "/"
+            )  # help dup. filter, remove a redundant part that is sometimes present
+            if not re.search(
+                "/v\d/", path
+            ):  # skip the experimental libraries because few people can use them
                 overview_link = urljoin(developer_url, path)
                 if overview_link not in overview_links:  # skip duplicate links
                     overview_links.append(overview_link)
 
         # safety check
         count = len(overview_links)
-        logging.info(f'Found {count} links to overview pages.')
-        assert (25 < count < 40), f'Having {count} contract overview links is unexpected!'
+        logging.info(f"Found {count} links to overview pages.")
+        assert 25 < count < 40, f"Having {count} contract overview links is unexpected!"
 
         overview_links.sort()
         return overview_links
@@ -345,7 +365,7 @@ class Contracts:
         async with aiohttp.ClientSession() as session:
             async with session.get(self.link_href) as response:
                 text_content = await response.text()
-        async with aiofiles.open(destination, mode='w') as f:
+        async with aiofiles.open(destination, mode="w") as f:
             await f.write(text_content)
 
     @staticmethod
@@ -353,26 +373,28 @@ class Contracts:
         # find the path to the json contract with the highest version number
         soup = await get_soup_via_link(overview_link)
         paths = []
-        for link in soup.find_all('a', href=lambda href: href and 'oas' in href and '.json' in href):
-            path = link.get('href')
+        for link in soup.find_all(
+            "a", href=lambda href: href and "oas" in href and ".json" in href
+        ):
+            path = link.get("href")
             if path not in paths:
                 paths.append(path)
-        assert (len(paths) > 0), f'{overview_link} should contain a contract!'
+        assert len(paths) > 0, f"{overview_link} should contain a contract!"
         paths.sort()
         path = paths[-1]
         # get parts
-        path_split = path.split('/')
+        path_split = path.split("/")
         url_split = urlsplit(overview_link)
         # make a record from the parts
         category = path_split[-5]
-        call = path_split[-4].replace('-', '_')
-        link_href = urlunsplit((url_split.scheme, url_split.hostname, path, '', ''))
+        call = path_split[-4].replace("-", "_")
+        link_href = urlunsplit((url_split.scheme, url_split.hostname, path, "", ""))
         file_name = path_split[-1]
         contract = [category, call, link_href, file_name]
         return contract
 
     async def patch_contract(self) -> None:
-        """ If the contract from eBay has an error then patch it before generating code. """
+        """If the contract from eBay has an error then patch it before generating code."""
         # This is no longer needed, ebay fixed the problem, but I'm leaving it here for reference.
         # if self.category == 'sell' and self.call == 'fulfillment':
         #     await Contracts.patch_contract_sell_fulfillment(self.file_name)
@@ -384,55 +406,68 @@ class Contracts:
         # However, the JSON specifies 'country' instead, thus Swagger generates the wrong API.
         file_location = os.path.join(Locations.cache_path, file_name)
         try:
-            async with aiofiles.open(file_location, mode='r') as f:
+            async with aiofiles.open(file_location, mode="r") as f:
                 data = await f.read()
         except FileNotFoundError:
             logging.error(f"Can't open {file_location}.")
         else:
             data = json.loads(data)
-            properties = data['components']['schemas']['Address']['properties']
-            if 'country' in properties:
-                properties['countryCode'] = properties.pop('country')  # Warning, alphabetical key order spoiled.
+            properties = data["components"]["schemas"]["Address"]["properties"]
+            if "country" in properties:
+                properties["countryCode"] = properties.pop(
+                    "country"
+                )  # Warning, alphabetical key order spoiled.
                 data = json.dumps(data, sort_keys=True, indent=4)
-                async with aiofiles.open(file_location, mode='w') as f:
+                async with aiofiles.open(file_location, mode="w") as f:
                     await f.write(data)
             else:
-                logging.warning(f'Patching {file_name} is no longer needed.')
+                logging.warning(f"Patching {file_name} is no longer needed.")
 
     async def patch_generated(self) -> None:
-        """ If the generated code has an error then patch it before making use of it. """
+        """If the generated code has an error then patch it before making use of it."""
 
         # API calls that have a return type fail when there is no content. This is because
         # there in attempt to de-serialize an empty string. If there is no content, indicated
         # by a 204 status then don't de-serialize.
-        bad_code = 'if response_type:'
-        file_location = os.path.join(Locations.cache_path, self.name, self.name, 'api_client.py')
+        bad_code = "if response_type:"
+        file_location = os.path.join(
+            Locations.cache_path, self.name, self.name, "api_client.py"
+        )
         try:
-            async with aiofiles.open(file_location, mode='r') as f:
+            async with aiofiles.open(file_location, mode="r") as f:
                 data = await f.read()
         except FileNotFoundError:
             logging.error(f"Can't open {file_location}.")
         else:
             if bad_code not in data:
-                logging.error(f"Maybe for {file_location} the 204 patch is not needed any longer.")
+                logging.error(
+                    f"Maybe for {file_location} the 204 patch is not needed any longer."
+                )
             else:
                 # add a new condition before the colon
-                data = data.replace(bad_code,
-                                    bad_code[:-1] + ' and response_data.status != 204:       # ebay_rest patch')
-                async with aiofiles.open(file_location, mode='w') as f:
+                data = data.replace(
+                    bad_code,
+                    bad_code[:-1]
+                    + " and response_data.status != 204:       # ebay_rest patch",
+                )
+                async with aiofiles.open(file_location, mode="w") as f:
                     await f.write(data)
 
         # Patch in code for Digital Signatures
-        file_location = os.path.join(Locations.cache_path, self.name, self.name, 'rest.py')
+        file_location = os.path.join(
+            Locations.cache_path, self.name, self.name, "rest.py"
+        )
         try:
-            async with aiofiles.open(file_location, mode='r') as f:
+            async with aiofiles.open(file_location, mode="r") as f:
                 data = await f.read()
         except FileNotFoundError:
             logging.error(f"Can't open {file_location}.")
         else:
             # Add a new import
             target = "from six.moves.urllib.parse import urlencode"
-            new_code = "\nfrom ...digital_signatures import signed_request  # ebay_rest patch"
+            new_code = (
+                "\nfrom ...digital_signatures import signed_request  # ebay_rest patch"
+            )
             data = data.replace(target, target + new_code, 1)
             # Save key_pair to RESTClientObject
             target = "# https pool manager"
@@ -445,7 +480,7 @@ class Contracts:
             target = "r = self.pool_manager.request(method, url,\n"
             replace_code = "r = signed_request(self.pool_manager, self.key_pair, method, url,  # ebay_rest patch\n"
             data = data.replace(target, replace_code)
-            async with aiofiles.open(file_location, mode='w') as f:
+            async with aiofiles.open(file_location, mode="w") as f:
                 await f.write(data)
 
     async def swagger_codegen(self):
@@ -455,21 +490,23 @@ class Contracts:
         # The generator will warn if there is no .swagger-codegen-ignore file
         if not os.path.isdir(destination):
             os.mkdir(destination)
-        path_file = os.path.abspath(os.path.join(Locations.cache_path, '.swagger-codegen-ignore'))
-        with open(path_file, 'w') as file_handle:
-            file_handle.write('')
+        path_file = os.path.abspath(
+            os.path.join(Locations.cache_path, ".swagger-codegen-ignore")
+        )
+        with open(path_file, "w") as file_handle:
+            file_handle.write("")
 
-        command = f' generate -l python -o {destination} -DpackageName={self.name} -i {source}'
-        if sys.platform == 'darwin':  # OS X or MacOS
-            command = '/usr/local/bin/swagger-codegen' + command
-        elif sys.platform == 'linux':  # Linux
-            command = 'java -jar swagger-codegen-cli.jar' + command
+        command = f" generate -l python -o {destination} -DpackageName={self.name} -i {source}"
+        if sys.platform == "darwin":  # OS X or MacOS
+            command = "/usr/local/bin/swagger-codegen" + command
+        elif sys.platform == "linux":  # Linux
+            command = "java -jar swagger-codegen-cli.jar" + command
         else:
-            assert False, f'Please extend main() for your {sys.platform} platform.'
+            assert False, f"Please extend main() for your {sys.platform} platform."
         await run(command)
 
     async def get_api_name(self):
-        name = f'{self.category}_{self.call}'
+        name = f"{self.category}_{self.call}"
         return name
 
     async def get_one_base_paths_and_flows(self):
@@ -480,7 +517,7 @@ class Contracts:
         """
         source = os.path.join(Locations.cache_path, self.file_name)
         try:
-            async with aiofiles.open(source, mode='r') as f:
+            async with aiofiles.open(source, mode="r") as f:
                 data = await f.read()
         except FileNotFoundError:
             message = f"Can't open {source}."
@@ -491,79 +528,97 @@ class Contracts:
                 data = json.loads(data)
             except ValueError:
                 message = "Invalid JSON in " + source
-                logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
+                logging.fatal(
+                    message
+                )  # Invalid \escape: line 3407 column 90 (char 262143)
                 sys.exit(message)
             else:
                 # Get the contract's major version number
-                if 'swagger' in data:
-                    (version_major, _version_minor) = data['swagger'].split('.')
-                elif 'openapi' in data:
-                    (version_major, _version_minor, _version_tertiary) = data['openapi'].split('.')
+                if "swagger" in data:
+                    (version_major, _version_minor) = data["swagger"].split(".")
+                elif "openapi" in data:
+                    (version_major, _version_minor, _version_tertiary) = data[
+                        "openapi"
+                    ].split(".")
                 else:
                     message = f"{source} has no OpenAPI version number."
-                    logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
+                    logging.fatal(
+                        message
+                    )  # Invalid \escape: line 3407 column 90 (char 262143)
                     sys.exit(message)
                 # Get base path
-                if version_major == '2':
-                    base_path = data['basePath']
-                elif version_major == '3':
-                    base_path = data['servers'][0]['variables']['basePath']['default']
+                if version_major == "2":
+                    base_path = data["basePath"]
+                elif version_major == "3":
+                    base_path = data["servers"][0]["variables"]["basePath"]["default"]
                 else:
-                    message = f"{source} has unrecognized OpenAPI version {version_major}."
-                    logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
+                    message = (
+                        f"{source} has unrecognized OpenAPI version {version_major}."
+                    )
+                    logging.fatal(
+                        message
+                    )  # Invalid \escape: line 3407 column 90 (char 262143)
                     sys.exit(message)
                 # Get flows for this category_call
-                if version_major == '2':
-                    category_flows = (
-                        data['securityDefinitions']
-                    )
-                elif version_major == '3':
-                    category_flows = (
-                        data['components']['securitySchemes']['api_auth']['flows']
-                    )
+                if version_major == "2":
+                    category_flows = data["securityDefinitions"]
+                elif version_major == "3":
+                    category_flows = data["components"]["securitySchemes"]["api_auth"][
+                        "flows"
+                    ]
                 else:
-                    message = f"{source} has unrecognized OpenAPI version {version_major}."
-                    logging.fatal(message)  # Invalid \escape: line 3407 column 90 (char 262143)
+                    message = (
+                        f"{source} has unrecognized OpenAPI version {version_major}."
+                    )
+                    logging.fatal(
+                        message
+                    )  # Invalid \escape: line 3407 column 90 (char 262143)
                     sys.exit(message)
                 flow_by_scope = {}  # dict of scope: flow type
                 for flow, flow_details in category_flows.items():
-                    for scope in flow_details['scopes']:
-                        if flow == 'Authorization Code':  # needed by version_major 2
-                            value = 'authorizationCode'
-                        elif flow == 'Client Credentials':  # needed by version_major 2
-                            value = 'clientCredentials'
+                    for scope in flow_details["scopes"]:
+                        if flow == "Authorization Code":  # needed by version_major 2
+                            value = "authorizationCode"
+                        elif flow == "Client Credentials":  # needed by version_major 2
+                            value = "clientCredentials"
                         else:
                             value = flow
                         flow_by_scope[scope] = value
                 # Get scope for each individually path-ed call
                 operation_id_scopes = {}
-                for path, path_methods in data['paths'].items():
+                for path, path_methods in data["paths"].items():
                     for method, method_dict in path_methods.items():
-                        if method not in ('get', 'post', 'put', 'delete'):
+                        if method not in ("get", "post", "put", "delete"):
                             # Consider only the HTTP request parts
                             continue
-                        operation_id = method_dict['operationId'].lower()
-                        security_list = method_dict.get('security', [])
+                        operation_id = method_dict["operationId"].lower()
+                        security_list = method_dict.get("security", [])
                         if len(security_list) > 1:
-                            raise ValueError('Expected zero/one security entry per path!')
+                            raise ValueError(
+                                "Expected zero/one security entry per path!"
+                            )
                         elif len(security_list) == 1:
-                            if 'api_auth' in security_list[0]:
-                                security = security_list[0]['api_auth']
-                            elif 'Authorization Code' in security_list[0]:  # needed by version_major 2
-                                security = security_list[0]['Authorization Code']
+                            if "api_auth" in security_list[0]:
+                                security = security_list[0]["api_auth"]
+                            elif (
+                                "Authorization Code" in security_list[0]
+                            ):  # needed by version_major 2
+                                security = security_list[0]["Authorization Code"]
                             else:
-                                raise ValueError("Expected 'api_auth' or 'Authorization Code' in security_list!'")
+                                raise ValueError(
+                                    "Expected 'api_auth' or 'Authorization Code' in security_list!'"
+                                )
                         else:
                             security = None
                         if operation_id in operation_id_scopes:
-                            logging.warning('Duplicate operation!')
+                            logging.warning("Duplicate operation!")
                             logging.warning(path, path_methods)
                             logging.warning(method, method_dict)
-                            raise ValueError('nope')
+                            raise ValueError("nope")
                         operation_id_scopes[operation_id] = security
                 # TODO Get headers parameters
                 # look for this  "in": "header",
-                name = self.category + '_' + self.call
+                name = self.category + "_" + self.call
         return base_path, flow_by_scope, name, operation_id_scopes
 
     @staticmethod
@@ -587,108 +642,114 @@ class Contracts:
                 shutil.rmtree(file_path)
 
     async def copy_library(self) -> None:
-        """ Copy the essential parts of the generated eBay library to within the src folder. """
+        """Copy the essential parts of the generated eBay library to within the src folder."""
         src = os.path.join(Locations.cache_path, self.name, self.name)
         dst = os.path.join(Locations.target_path, self.name)
         _destination = shutil.copytree(src, dst)
 
     async def fix_imports(self) -> None:
-        """ The deeper the directory, the more dots are needed to make the correct relative path. """
-        await self._fix_imports_recursive(self.name, '..', os.path.join(Locations.target_path, self.name))
+        """The deeper the directory, the more dots are needed to make the correct relative path."""
+        await self._fix_imports_recursive(
+            self.name, "..", os.path.join(Locations.target_path, self.name)
+        )
 
     async def _fix_imports_recursive(self, name: str, dots: str, path: str) -> None:
-        """ This does the recursive part of fix_imports. """
+        """This does the recursive part of fix_imports."""
 
-        for (_root, dirs, files) in os.walk(path):
-
+        for _root, dirs, files in os.walk(path):
             swaps = [  # order is crucial, put more specific swaps before less
-                (f'import {name}.models', f'from {dots}{name} import models'),
-                (f'from models', f'from {dots}{name}.models'),
-                (f'import {name}', f'import {dots}{name}'),
-                (f'from {name}', f'from {dots}{name}'),
-                (f'{name}.models', f'models'),
+                (f"import {name}.models", f"from {dots}{name} import models"),
+                (f"from models", f"from {dots}{name}.models"),
+                (f"import {name}", f"import {dots}{name}"),
+                (f"from {name}", f"from {dots}{name}"),
+                (f"{name}.models", f"models"),
             ]
             for file in files:
                 target_file = os.path.join(path, file)
-                new_lines = ''
+                new_lines = ""
                 with open(target_file) as file_handle:
                     for old_line in file_handle:
-                        for (original, replacement) in swaps:
+                        for original, replacement in swaps:
                             if original in old_line:
                                 old_line = old_line.replace(original, replacement)
                                 break  # only the first matching swap should happen
                         new_lines += old_line
-                with open(target_file, 'w') as file_handle:
+                with open(target_file, "w") as file_handle:
                     file_handle.write(new_lines)
 
-            dots += '.'
+            dots += "."
             for directory in dirs:
-                await self._fix_imports_recursive(name, dots, os.path.join(path, directory))
+                await self._fix_imports_recursive(
+                    name, dots, os.path.join(path, directory)
+                )
 
             break
 
     async def get_requirements(self) -> Set[str]:
-        """ Get the library's requirements. """
+        """Get the library's requirements."""
 
         # compile the set of all unique requirements from the generated library
-        start_tag = 'REQUIRES = ['
-        end_tag = ']\n'
+        start_tag = "REQUIRES = ["
+        end_tag = "]\n"
         requirements = set()
-        src = os.path.join(Locations.cache_path, self.name, 'setup.py')
+        src = os.path.join(Locations.cache_path, self.name, "setup.py")
         with open(src) as file:
             for line in file:
                 if line.startswith(start_tag):
-                    line = line.replace(start_tag, '')
-                    line = line.replace(end_tag, '')
-                    parts = line.split(', ')
+                    line = line.replace(start_tag, "")
+                    line = line.replace(end_tag, "")
+                    parts = line.split(", ")
                     for part in parts:
                         requirements.add(part)
                     break
         return requirements
 
     async def get_includes(self) -> List[str]:
-        """ Get the includes for a library. """
+        """Get the includes for a library."""
         includes = list()
-        includes.append(f'from .{Locations.target_directory} import {self.name}')
-        line = f'from .{Locations.target_directory}.{self.name}.rest import ApiException as ' \
-               f'{await self._camel(self.name)}Exception'
+        includes.append(f"from .{Locations.target_directory} import {self.name}")
+        line = (
+            f"from .{Locations.target_directory}.{self.name}.rest import ApiException as "
+            f"{await self._camel(self.name)}Exception"
+        )
         includes.append(line)
         return includes
 
     async def get_methods(self) -> str:
-        """ For a modules, get all code for its methods. """
+        """For a modules, get all code for its methods."""
 
         # catalog the module files that contain all method implementations
         modules = []
-        path = os.path.join(Locations.cache_path, self.name, self.name, 'api')
-        for (root, _dirs, files) in os.walk(path):
+        path = os.path.join(Locations.cache_path, self.name, self.name, "api")
+        for root, _dirs, files in os.walk(path):
             for file in files:
-                if file != '__init__.py':
-                    modules.append((self.name, file.replace('.py', ''), os.path.join(root, file)))
+                if file != "__init__.py":
+                    modules.append(
+                        (self.name, file.replace(".py", ""), os.path.join(root, file))
+                    )
 
         # catalog all methods in all modules
         methods = list()
-        method_marker_part = '_with_http_info'
-        method_marker_whole = method_marker_part + '(self,'
+        method_marker_part = "_with_http_info"
+        method_marker_whole = method_marker_part + "(self,"
         docstring_marker = '"""'
         bad_docstring_markers = (
-            '>>> ',
-            'synchronous',
-            'async_req',
-            'request thread',
+            ">>> ",
+            "synchronous",
+            "async_req",
+            "request thread",
         )
-        for (name, module, path) in modules:
+        for name, module, path in modules:
             step = 0
             with open(path) as file_handle:
                 for line in file_handle:
-
                     if step == 0:  # looking for the next method
                         if method_marker_whole in line:
-                            (method_and_params, _junk) = line.split(')')
-                            (method, params) = method_and_params.split('(')
-                            method = method.replace('    def ', '')
-                            method = method.replace(method_marker_part, '')
-                            params = params.replace('self, ', '')
+                            (method_and_params, _junk) = line.split(")")
+                            (method, params) = method_and_params.split("(")
+                            method = method.replace("    def ", "")
+                            method = method.replace(method_marker_part, "")
+                            params = params.replace("self, ", "")
                             step += 1
 
                     elif step == 1:  # looking for the start of the docstring block
@@ -708,7 +769,9 @@ class Contracts:
                         else:
                             docstring += line
                             docstring = await self.clean_docstring(docstring)
-                            methods.append((name, module, path, method, params, docstring))
+                            methods.append(
+                                (name, module, path, method, params, docstring)
+                            )
                             step = 0
 
         methods.sort()
@@ -721,59 +784,65 @@ class Contracts:
 
     @staticmethod
     async def clean_docstring(docstring: string) -> string:
-
         # strip HTML
         docstring = BeautifulSoup(docstring, features="html.parser").get_text()
 
         # fix typos
         typo_remedy = (  # pairs of typos found in docstrings and their remedy
-            ('AustraliaeBay', 'Australia eBay'),  # noqa: - suppress flake8 compatible linters, misspelling is intended
-            ('cerate', 'create'),  # noqa:
-            ('distibuted', 'distributed'),  # noqa:
-            ('FranceeBay', 'Francee Bay'),  # noqa:
-            ('GermanyeBay', 'Germany eBay'),  # noqa:
-            ('http:', 'https:'),  # noqa:
-            ('identfier', 'identifier'),  # noqa:
-            ('ItalyeBay', 'Italy eBay'),  # noqa:
-            ('Limt', 'Limit'),  # noqa:
-            ('lisitng', 'listing'),  # noqa:
-            ('maketplace', 'marketplace'),  # noqa:
-            ('markeplace', 'marketplace'),  # noqa:
-            ('motorcyles', 'motorcycles'),  # noqa:
-            ('parmeter', 'parameter'),  # noqa:
-            ('publlish', 'publish'),  # noqa:
-            ('qroup', 'group'),  # noqa:
-            ('retrybable', 'retryable'),  # noqa:
-            ('takeback', 'take back'),  # noqa:
-            ('Takeback', 'Take back'),  # noqa:
-            ('theste', 'these'),  # noqa:
-            ('UKeBay', 'UK eBay'),  # noqa:
+            (
+                "AustraliaeBay",
+                "Australia eBay",
+            ),  # noqa: - suppress flake8 compatible linters, misspelling is intended
+            ("cerate", "create"),  # noqa:
+            ("distibuted", "distributed"),  # noqa:
+            ("FranceeBay", "Francee Bay"),  # noqa:
+            ("GermanyeBay", "Germany eBay"),  # noqa:
+            ("http:", "https:"),  # noqa:
+            ("identfier", "identifier"),  # noqa:
+            ("ItalyeBay", "Italy eBay"),  # noqa:
+            ("Limt", "Limit"),  # noqa:
+            ("lisitng", "listing"),  # noqa:
+            ("maketplace", "marketplace"),  # noqa:
+            ("markeplace", "marketplace"),  # noqa:
+            ("motorcyles", "motorcycles"),  # noqa:
+            ("parmeter", "parameter"),  # noqa:
+            ("publlish", "publish"),  # noqa:
+            ("qroup", "group"),  # noqa:
+            ("retrybable", "retryable"),  # noqa:
+            ("takeback", "take back"),  # noqa:
+            ("Takeback", "Take back"),  # noqa:
+            ("theste", "these"),  # noqa:
+            ("UKeBay", "UK eBay"),  # noqa:
         )
-        for (typo, remedy) in typo_remedy:
+        for typo, remedy in typo_remedy:
             docstring = docstring.replace(typo, remedy)
 
         # telling the linter to suppress long line warnings taints the Sphinx generated docs so filter them out
-        docstring = docstring.replace('# noqa: E501', "")
+        docstring = docstring.replace("# noqa: E501", "")
 
         return docstring
 
     async def _make_method(self, method: Tuple[str, str, str, str, str, str]) -> str:
-        """ Return the code for one python method. """
+        """Return the code for one python method."""
 
         (name, module, path, method, params, docstring) = method
-        base_path, flow_by_scope, name, operation_id_scopes = \
-            await self.get_one_base_paths_and_flows()
+        (
+            base_path,
+            flow_by_scope,
+            name,
+            operation_id_scopes,
+        ) = await self.get_one_base_paths_and_flows()
 
-        ignore_long = '  # noqa: E501'  # flake8 compatible linters should not warn about long lines
+        ignore_long = "  # noqa: E501"  # flake8 compatible linters should not warn about long lines
 
         # Fix how the docstring expresses optional parameters then end up in **kwargs
         # catalog all parameters listed in the docstring
         docstring_params = set()
-        for line in docstring.split('\n'):
-            if ':param' in line:
-                for word in line.split(' '):
-                    if word.endswith(':'):
-                        docstring_params.add(word.replace(':', ''))
+        for line in docstring.split("\n"):
+            if ":param" in line:
+                for word in line.split(" "):
+                    if word.endswith(":"):
+                        docstring_params.add(word.replace(":", ""))
                         break
         # determine if any docstring parameters are method parameters
         has_docstring_problem = False
@@ -786,33 +855,35 @@ class Contracts:
             pass  # TODO Do something to make the comments aka docstring handle optional parameters properly
 
         # prepare the method type by testing for 'offset' parameter
-        method_type = 'paged' if (':param str offset' in docstring) else 'single'
+        method_type = "paged" if (":param str offset" in docstring) else "single"
 
         # identify if this is a user_access_token routine
-        operation_id = method.lower().replace('_', '')
+        operation_id = method.lower().replace("_", "")
         scopes = operation_id_scopes[operation_id]
         if not scopes:
             # Assume application keys
-            flows = {'clientCredentials'}
+            flows = {"clientCredentials"}
         else:
             flows = {flow_by_scope[scope] for scope in scopes}
         if len(flows) != 1:
-            if operation_id in ('getitemconditionpolicies',) or module in ('subscription_api',):
+            if operation_id in ("getitemconditionpolicies",) or module in (
+                "subscription_api",
+            ):
                 # This usually uses the client credentials method
-                flows = {'clientCredentials'}
+                flows = {"clientCredentials"}
             else:
-                message = 'Could not identify authorization method!'
+                message = "Could not identify authorization method!"
                 logging.warning(message)
-                logging.warning('method: ', method)
-                logging.warning('scopes: ', scopes)
-                logging.warning('flows: ', flows)
+                logging.warning("method: ", method)
+                logging.warning("scopes: ", scopes)
+                logging.warning("flows: ", flows)
                 raise ValueError(message)
-        auth_method, = flows  # note tuple unpacking of set
-        user_access_token = auth_method == 'authorizationCode'
+        (auth_method,) = flows  # note tuple unpacking of set
+        user_access_token = auth_method == "authorizationCode"
 
         # identify and prep for parameter possibilities
-        stars_kwargs = '**kwargs'
-        params_modified = params.split(', ')
+        stars_kwargs = "**kwargs"
+        params_modified = params.split(", ")
         if len(params_modified) == 0:
             has_args = False
             has_kw = False
@@ -824,29 +895,31 @@ class Contracts:
                 has_kw = False
             if len(params_modified) > 0:
                 has_args = True
-                params_modified = ', '.join(params_modified)
+                params_modified = ", ".join(params_modified)
             else:
                 has_args = False
 
         # Prepare the list of rate lookup information that will be used for throttling.
-        resource_name_base = name.replace('_', '.')
-        resource_name_module = module.replace('_api', '')
+        resource_name_base = name.replace("_", ".")
+        resource_name_module = module.replace("_api", "")
         rate = [resource_name_base, resource_name_module]
 
         code = f"    def {name}_{method}(self, {params}):{ignore_long}\n"
         code += docstring
         code += "        try:\n"
-        code += f"            return self._method_{method_type}(" \
-                f"{name}.Configuration," \
-                f" '{base_path}'," \
-                f" {name}.{await self._camel(module)}," \
-                f" {name}.ApiClient," \
-                f" '{method}'," \
-                f" {await self._camel(name)}Exception," \
-                f" {user_access_token}," \
-                f" {rate},"
+        code += (
+            f"            return self._method_{method_type}("
+            f"{name}.Configuration,"
+            f" '{base_path}',"
+            f" {name}.{await self._camel(module)},"
+            f" {name}.ApiClient,"
+            f" '{method}',"
+            f" {await self._camel(name)}Exception,"
+            f" {user_access_token},"
+            f" {rate},"
+        )
         if has_args:
-            if ',' in params_modified:
+            if "," in params_modified:
                 code += f" ({params_modified}),"
             else:
                 code += f" {params_modified},"
@@ -864,21 +937,23 @@ class Contracts:
         return code
 
     async def remove_duplicates(self, names) -> None:
-        """ Deduplicate identical .py files found in all APIs.
-        for example when comments are ignored the rest.py files appear identical. """
+        """Deduplicate identical .py files found in all APIs.
+        for example when comments are ignored the rest.py files appear identical."""
 
         # build a catalog that includes a hashed file signature
         catalog = []
         for name in names:
             catalog.extend(
-                await self._remove_duplicates_recursive_catalog(name, os.path.join(Locations.target_path, name))
+                await self._remove_duplicates_recursive_catalog(
+                    name, os.path.join(Locations.target_path, name)
+                )
             )
 
         # count how many times each signature appears
         signature_tally = {}
-        for (name, file, path, signature) in catalog:
+        for name, file, path, signature in catalog:
             if signature in signature_tally:
-                signature_tally[signature] = + 1
+                signature_tally[signature] = +1
             else:
                 signature_tally[signature] = 1
 
@@ -892,12 +967,12 @@ class Contracts:
         # TODO apply the DRY principle to the repeaters
 
     async def _remove_duplicates_recursive_catalog(self, name: str, path: str) -> list:
-        """ This does the recursive part of cataloging for remove_duplicates. """
+        """This does the recursive part of cataloging for remove_duplicates."""
 
         catalog = []
-        for (_root, dirs, files) in os.walk(path):
+        for _root, dirs, files in os.walk(path):
             for file in files:
-                if file != '__init__.py' and file.endswith('.py'):
+                if file != "__init__.py" and file.endswith(".py"):
                     target_file = os.path.join(path, file)
                     with open(target_file) as file_handle:
                         code_text = file_handle.read()
@@ -907,21 +982,24 @@ class Contracts:
                         catalog.append((name, file, target_file, m.digest()))
 
             for directory in dirs:
-                catalog.extend(await self._remove_duplicates_recursive_catalog(name, os.path.join(path, directory)))
+                catalog.extend(
+                    await self._remove_duplicates_recursive_catalog(
+                        name, os.path.join(path, directory)
+                    )
+                )
 
             return catalog
 
     @staticmethod
     async def _camel(name: str) -> str:
-        """ Convert a name with underscore separators to upper camel case. """
-        camel = ''
-        for part in name.split('_'):
+        """Convert a name with underscore separators to upper camel case."""
+        camel = ""
+        for part in name.split("_"):
             camel += part.capitalize()
         return camel
 
 
 class Insert:
-
     async def do(self, requirements, includes, methods):
         await self.insert_requirements(requirements)
         await self.insert_includes(includes)
@@ -929,37 +1007,43 @@ class Insert:
 
     @staticmethod
     async def insert_requirements(requirements):
-        """ Merge the required libraries into the master. """
+        """Merge the required libraries into the master."""
         requirements = list(requirements)
         requirements.sort()
         # include these with the other requirements for our package
-        insert_lines = ''
+        insert_lines = ""
         for requirement in requirements:
-            insert_lines += f'    {requirement}\n'
+            insert_lines += f"    {requirement}\n"
         # TODO Finish this and don't repeat things that are required for other reasons.
         # self._put_anchored_lines(target_file=self.file_setup, anchor='setup.cfg', insert_lines=insert_lines)
 
     async def insert_includes(self, includes):
-        """ Insert the includes for all libraries. """
-        insert_lines = '\n'.join(includes) + '\n'
+        """Insert the includes for all libraries."""
+        insert_lines = "\n".join(includes) + "\n"
         await self._put_anchored_lines(
             target_file=Locations.file_ebay_rest,
-            anchor='er_imports',
-            insert_lines=insert_lines
+            anchor="er_imports",
+            insert_lines=insert_lines,
         )
 
     async def insert_methods(self, methods: str) -> None:
-        """ Make all the python methods and insert them where needed. """
+        """Make all the python methods and insert them where needed."""
 
         methods = "\n" + methods
-        await self._put_anchored_lines(target_file=Locations.file_ebay_rest, anchor='er_methods', insert_lines=methods)
+        await self._put_anchored_lines(
+            target_file=Locations.file_ebay_rest,
+            anchor="er_methods",
+            insert_lines=methods,
+        )
 
     @staticmethod
-    async def _put_anchored_lines(target_file: str, anchor: str, insert_lines: str) -> None:
-        """ In the file replace what is between anchors with new lines of code. """
+    async def _put_anchored_lines(
+        target_file: str, anchor: str, insert_lines: str
+    ) -> None:
+        """In the file replace what is between anchors with new lines of code."""
 
         if os.path.isfile(target_file):
-            new_lines = ''
+            new_lines = ""
             start = f"ANCHOR-{anchor}-START"
             end = f"ANCHOR-{anchor}-END"
             start_found = False
@@ -980,11 +1064,13 @@ class Insert:
                         new_lines += old_line
 
             if start_found and end_found:
-                with open(target_file, 'w') as file:
+                with open(target_file, "w") as file:
                     file.write(new_lines)
 
             else:
-                logging.error(f"Can't find proper start or end anchors for {anchor} in {target_file}.")
+                logging.error(
+                    f"Can't find proper start or end anchors for {anchor} in {target_file}."
+                )
         else:
             logging.error(f"Can't find {target_file}")
 
@@ -1013,10 +1099,7 @@ async def generate_apis():
     visit https://developer.ebay.com/api-docs/static/openapi-swagger-codegen.html.
     :return:
     """
-    await asyncio.gather(
-        ensure_cache(),
-        Contracts.purge_existing()
-    )
+    await asyncio.gather(ensure_cache(), Contracts.purge_existing())
 
     limit = 100  # lower to expedite debugging with a reduced data set
     records = list()
@@ -1047,13 +1130,15 @@ async def main() -> None:
     start = time.time()
 
     # while debugging, it is handy to change the log level from INFO to DEBUG
-    logging.basicConfig(format='%(asctime)s %(levelname)s %(filename)s %(lineno)d %(funcName)s: %(message)s',
-                        level=logging.WARNING)
+    logging.basicConfig(
+        format="%(asctime)s %(levelname)s %(filename)s %(lineno)d %(funcName)s: %(message)s",
+        level=logging.WARNING,
+    )
 
     await asyncio.gather(generate_apis(), generate_references())
-    logging.info(f'Run time was {int(time.time() - start)} seconds.')
+    logging.info(f"Run time was {int(time.time() - start)} seconds.")
     return
 
 
 if __name__ == "__main__":
-    asyncio.run(main())     # Python 3.7+
+    asyncio.run(main())  # Python 3.7+

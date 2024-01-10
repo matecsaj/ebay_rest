@@ -31,6 +31,7 @@ urllib3 >= 1.26.0, < 2.0.0
 # For generate_code.py.
 aiofiles
 aiohttp
+black
 bs4
 CurrencyConverter
 # For releasing to PyPI.

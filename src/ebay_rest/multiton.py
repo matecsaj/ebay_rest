@@ -29,18 +29,19 @@ class Multiton(type):
 
     To learn about the Multiton Creation (Anti)Pattern, visit https://en.wikipedia.org/wiki/Multiton_pattern.
     """
+
     _instances = list()
 
     def __call__(cls, *args, **kwargs):
         return_object = None
         d_t = datetime.datetime.now()
-        key = (args, kwargs)    # form a key with all the parameters
+        key = (args, kwargs)  # form a key with all the parameters
 
         # search for a matching old instance
         for instance in Multiton._instances:
-            if instance['key'] == key:
-                instance['touched'] = d_t
-                return_object = instance['object']
+            if instance["key"] == key:
+                instance["touched"] = d_t
+                return_object = instance["object"]
                 break
 
         # if not found then create a new instance
@@ -50,14 +51,16 @@ class Multiton(type):
             except Error:
                 raise
             else:
-                Multiton._instances.append({'key': key, 'object': return_object, 'touched': d_t})
+                Multiton._instances.append(
+                    {"key": key, "object": return_object, "touched": d_t}
+                )
 
         # delete any instances that have not been touched for a while
         # don't panic, if the instance's object is still in use, it will not be garbage collected
         d_t -= datetime.timedelta(hours=1.0)
         to_delete = list()
         for index, instance in enumerate(Multiton._instances):
-            if instance['touched'] < d_t:
+            if instance["touched"] < d_t:
                 to_delete.append(index)
         for index in reversed(to_delete):
             del Multiton._instances[index]

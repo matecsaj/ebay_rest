@@ -6,7 +6,7 @@ from .error import Error
 
 
 class DateTime:
-    """ Helpers for the specific way that eBay does date-time. """
+    """Helpers for the specific way that eBay does date-time."""
 
     _EBAY_DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%fZ"
 
@@ -31,7 +31,7 @@ class DateTime:
 
     @staticmethod
     def to_string(d_t: datetime) -> str:
-        """ convert a python datetime object with eBay's timezone to an Ebay dateTime string
+        """convert a python datetime object with eBay's timezone to an Ebay dateTime string
 
         string YYYY-MM-DDTHH:MM:SS.SSSZ (e.g., 2004-08-04T19:09:02.768Z)
 
@@ -39,18 +39,22 @@ class DateTime:
         :return: datetime (str)
         """
         if not isinstance(d_t, datetime):
-            reason = 'The to_string parameter should be a datetime, not a ' + str(type(d_t)) + '.'
+            reason = (
+                "The to_string parameter should be a datetime, not a "
+                + str(type(d_t))
+                + "."
+            )
             raise Error(number=98001, reason=reason)
         else:
             try:
                 string = d_t.strftime(DateTime._EBAY_DATE_FORMAT)
             except ValueError:
-                raise Error(number=98002, reason='Value Error.')
-            return string[0:10] + 'T' + string[11:23] + 'Z'
+                raise Error(number=98002, reason="Value Error.")
+            return string[0:10] + "T" + string[11:23] + "Z"
 
     @staticmethod
     def from_string(d_t_string: str) -> datetime:
-        """ convert an Ebay dateTime string to a python datetime object with eBay's timezone
+        """convert an Ebay dateTime string to a python datetime object with eBay's timezone
 
         string YYYY-MM-DDTHH:MM:SS.SSSZ (e.g., 2004-08-04T19:09:02.768Z)
 
@@ -58,13 +62,19 @@ class DateTime:
         :return: datetime (datetime)
         """
         if not isinstance(d_t_string, str):
-            reason = 'The from_string parameter should be a string, not a ' + str(type(d_t_string)) + '.'
+            reason = (
+                "The from_string parameter should be a string, not a "
+                + str(type(d_t_string))
+                + "."
+            )
             raise Error(number=98003, reason=reason)
         else:
             try:
                 d_t = datetime.strptime(d_t_string, DateTime._EBAY_DATE_FORMAT)
             except ValueError as error:
-                raise Error(number=98004,
-                            reason='date time string formatting error, should be like 2004-08-04T19:09:02.768Z',
-                            detail=error.args[0])
+                raise Error(
+                    number=98004,
+                    reason="date time string formatting error, should be like 2004-08-04T19:09:02.768Z",
+                    detail=error.args[0],
+                )
             return d_t.replace(tzinfo=timezone.utc)

@@ -343,7 +343,8 @@ Release Steps
    2. (Linux only) sudo apt-get update && sudo apt-get upgrade
    3. python3 -m pip install --upgrade pip
    4. python3 -m pip install --upgrade -r requirements_dev.txt
-   5. pipreqs --print src
+   5. black .
+   6. pipreqs --print src
 2. edit the setup.cfg file
    1. update the section install_requires per the output from pipregs
    2. advance the version number
