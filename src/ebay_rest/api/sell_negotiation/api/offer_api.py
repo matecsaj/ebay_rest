@@ -43,7 +43,7 @@ class OfferApi(object):
 
         :param async_req bool
         :param str x_ebay_c_marketplace_id: The eBay marketplace on which you want to search for eligible listings. <br><br>For a complete list of supported marketplaces, see <a href=\"/api-docs/sell/negotiation/overview.html#requirements\" title=\"Negotiation API Overview\">Negotiation API requirements and restrictions</a>. (required)
-        :param str limit: This query parameter specifies the maximum number of items to return from the result set on a page in the paginated response. <p><b>Minimum:</b> 1 &nbsp; &nbsp;<b>Maximum:</b> 200 <br><b>Default: </b>10</p>
+        :param str limit: This query parameter specifies the maximum number of items to return from the result set on a page in the paginated response.<br><br><b>Minimum:</b> 1<br><br><b>Maximum:</b> 200<br><br><b>Default: </b>10
         :param str offset: This query parameter specifies the number of results to skip in the result set before returning the first result in the paginated response.  <br><br>Combine <b>offset</b> with the <b>limit</b> query parameter to control the items returned in the response. For example, if you supply an <b>offset</b> of <code>0</code> and a <b>limit</b> of <code>10</code>, the first page of the response contains the first 10 results from the complete list of items retrieved by the call. If <b>offset</b> is <code>10</code> and <b>limit</b> is <code>20</code>, the first page of the response contains items 11-30 from the complete result set. <br><br><b>Default:</b> 0
         :return: PagedEligibleItemCollection
                  If the method is called asynchronously,
@@ -67,7 +67,7 @@ class OfferApi(object):
 
         :param async_req bool
         :param str x_ebay_c_marketplace_id: The eBay marketplace on which you want to search for eligible listings. <br><br>For a complete list of supported marketplaces, see <a href=\"/api-docs/sell/negotiation/overview.html#requirements\" title=\"Negotiation API Overview\">Negotiation API requirements and restrictions</a>. (required)
-        :param str limit: This query parameter specifies the maximum number of items to return from the result set on a page in the paginated response. <p><b>Minimum:</b> 1 &nbsp; &nbsp;<b>Maximum:</b> 200 <br><b>Default: </b>10</p>
+        :param str limit: This query parameter specifies the maximum number of items to return from the result set on a page in the paginated response.<br><br><b>Minimum:</b> 1<br><br><b>Maximum:</b> 200<br><br><b>Default: </b>10
         :param str offset: This query parameter specifies the number of results to skip in the result set before returning the first result in the paginated response.  <br><br>Combine <b>offset</b> with the <b>limit</b> query parameter to control the items returned in the response. For example, if you supply an <b>offset</b> of <code>0</code> and a <b>limit</b> of <code>10</code>, the first page of the response contains the first 10 results from the complete list of items retrieved by the call. If <b>offset</b> is <code>10</code> and <b>limit</b> is <code>20</code>, the first page of the response contains items 11-30 from the complete result set. <br><br><b>Default:</b> 0
         :return: PagedEligibleItemCollection
                  If the method is called asynchronously,

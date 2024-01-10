@@ -44,7 +44,7 @@ class ShippingFulfillmentApi(object):
         :param async_req bool
         :param ShippingFulfillmentDetails body: fulfillment payload (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the <b>getOrders</b> method in the <b>orders.orderId</b> field. (required)
+        :param str order_id: This path parameter is used to specify the unique identifier of the order associated with the shipping fulfillment being created.<br><br> Use the <a href=\"/api-docs/sell/fulfillment/resources/order/methods/getOrders\" target=\"_blank \">getOrders</a> method to retrieve order IDs. (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -68,7 +68,7 @@ class ShippingFulfillmentApi(object):
         :param async_req bool
         :param ShippingFulfillmentDetails body: fulfillment payload (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the <b>getOrders</b> method in the <b>orders.orderId</b> field. (required)
+        :param str order_id: This path parameter is used to specify the unique identifier of the order associated with the shipping fulfillment being created.<br><br> Use the <a href=\"/api-docs/sell/fulfillment/resources/order/methods/getOrders\" target=\"_blank \">getOrders</a> method to retrieve order IDs. (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -157,8 +157,8 @@ class ShippingFulfillmentApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str fulfillment_id: The unique identifier of the fulfillment. This eBay-generated value was created by the <b>Create Shipping Fulfillment</b> call, and returned by the <b>getShippingFulfillments</b> call in the <b>fulfillments.fulfillmentId</b> field; for example, <code>9405509699937003457459</code>. (required)
-        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the <b>getOrders</b> method in the <b>orders.orderId</b> field. (required)
+        :param str fulfillment_id: This path parameter is used to specify the unique identifier of the shipping fulfillment being retrieved.<br><br>Use the <a href=\"/api-docs/sell/fulfillment/resources/order/shipping_fulfillment/methods/getShippingFulfillments\" target=\"_blank \">getShippingFulfillments</a> method to retrieved fulfillment IDs. (required)
+        :param str order_id: This path parameter is used to specify the unique identifier of the order associated with the shipping fulfillment being retrieved.<br><br> Use the <a href=\"/api-docs/sell/fulfillment/resources/order/methods/getOrders\" target=\"_blank \">getOrders</a> method to retrieve order IDs. Order ID values are also shown in My eBay/Seller Hub. (required)
         :return: ShippingFulfillment
                  If the method is called asynchronously,
                  returns the request thread.
@@ -180,8 +180,8 @@ class ShippingFulfillmentApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str fulfillment_id: The unique identifier of the fulfillment. This eBay-generated value was created by the <b>Create Shipping Fulfillment</b> call, and returned by the <b>getShippingFulfillments</b> call in the <b>fulfillments.fulfillmentId</b> field; for example, <code>9405509699937003457459</code>. (required)
-        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the <b>getOrders</b> method in the <b>orders.orderId</b> field. (required)
+        :param str fulfillment_id: This path parameter is used to specify the unique identifier of the shipping fulfillment being retrieved.<br><br>Use the <a href=\"/api-docs/sell/fulfillment/resources/order/shipping_fulfillment/methods/getShippingFulfillments\" target=\"_blank \">getShippingFulfillments</a> method to retrieved fulfillment IDs. (required)
+        :param str order_id: This path parameter is used to specify the unique identifier of the order associated with the shipping fulfillment being retrieved.<br><br> Use the <a href=\"/api-docs/sell/fulfillment/resources/order/methods/getOrders\" target=\"_blank \">getOrders</a> method to retrieve order IDs. Order ID values are also shown in My eBay/Seller Hub. (required)
         :return: ShippingFulfillment
                  If the method is called asynchronously,
                  returns the request thread.
@@ -260,7 +260,7 @@ class ShippingFulfillmentApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the <b>getOrders</b> method in the <b>orders.orderId</b> field. (required)
+        :param str order_id: This path parameter is used to specify the unique identifier of the order associated with the shipping fulfillments being retrieved.<br><br>Use the <a href=\"/api-docs/sell/fulfillment/resources/order/methods/getOrders\" target=\"_blank \">getOrders</a> method to retrieve order IDs. Order ID values are also shown in My eBay/Seller Hub. (required)
         :return: ShippingFulfillmentPagedCollection
                  If the method is called asynchronously,
                  returns the request thread.
@@ -282,7 +282,7 @@ class ShippingFulfillmentApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the <b>getOrders</b> method in the <b>orders.orderId</b> field. (required)
+        :param str order_id: This path parameter is used to specify the unique identifier of the order associated with the shipping fulfillments being retrieved.<br><br>Use the <a href=\"/api-docs/sell/fulfillment/resources/order/methods/getOrders\" target=\"_blank \">getOrders</a> method to retrieve order IDs. Order ID values are also shown in My eBay/Seller Hub. (required)
         :return: ShippingFulfillmentPagedCollection
                  If the method is called asynchronously,
                  returns the request thread.

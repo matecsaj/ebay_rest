@@ -2275,7 +2275,7 @@ class API(metaclass=Multiton):
 
         This method provides applications a way to delete a destination.The same destination ID can be used by many destinations.Trying to delete an active destination results in an error. You can disable a subscription, and when the destination is no longer in use, you can delete it.
 
-        :param str destination_id: The unique identifier for the destination. (required)
+        :param str destination_id: The unique identifier of the destination to delete. Only disabled or marked down destinations can be deleted, and enabled destinations cannot be deleted. Use getDestination or getDestinations to see the current status of a destination.  (required)
         :return: None
         """
         try:
@@ -2301,7 +2301,7 @@ class API(metaclass=Multiton):
 
         This method allows applications to fetch the details for a destination. The details include the destination name, status, and configuration, including the endpoint and verification token.
 
-        :param str destination_id: The unique identifier for the destination. (required)
+        :param str destination_id: The unique identifier of the destination to retrieve. Use getDestinations to retrieve destination IDs. (required)
         :return: Destination
         """
         try:
@@ -2325,8 +2325,8 @@ class API(metaclass=Multiton):
 
         This method allows applications to retrieve a paginated collection of destination resources and related details. The details include the destination names, statuses, and configurations, including the endpoints and verification tokens.
 
-        :param str limit: The number of items, from the result set, returned in a single page. Range is from 10-100. If this parameter is omitted, the default value is used.Default: 20Maximum: 100 items per page
-        :param str continuation_token: The continuation token for the next set of results.
+        :param str limit: The maximum number of destinations to return per page from the result set.Min: 10Max: 100Default: 20
+        :param str continuation_token: This string value can be used to return the next page in the result set. The string to use here is returned in the next field of the current page of results.
         :return: DestinationSearchResponse
         """
         try:
@@ -2431,10 +2431,10 @@ class API(metaclass=Multiton):
     ):  # noqa: E501
         """create_subscription_filter
 
-        This method allows applications to create a filter for a subscription. Filters allow applications to only be sent notifications that match a provided criteria. Notifications that do not match this criteria will not be sent to the destination.The filterSchema value must be a valid JSON Schema Core document (version 2012-12 or later). The filterSchema provided must describe the subscription's notification payload such that it supplies valid criteria to filter the subscription's notifications. The user does not need to provide $schema and $id definitions.When a filter is first created, it is not immediately active on the subscription. Newly created filters are in PENDING status until they are reviewed. If a filter is valid, it will move from PENDING status to ENABLED status. You can find the status of a filter using the getSubscriptionFilter method.Note: Only one filter can be in ENABLED (which means active) status on a subscription at a time. If an ENABLED filter is overwritten by a new call to CREATE a filter for the subscription, it stays in ENABLED status until the new PENDING filter becomes the ENABLED filter, and the existing filter then becomes DISABLED.
+        This method allows applications to create a filter for a subscription. Filters allow applications to only be sent notifications that match a provided criteria. Notifications that do not match this criteria will not be sent to the destination.The filterSchema value must be a valid JSON Schema Core document (version 2020-12 or later). The filterSchema provided must describe the subscription's notification payload such that it supplies valid criteria to filter the subscription's notifications. The user does not need to provide $schema and $id definitions.When a filter is first created, it is not immediately active on the subscription. If the request has a valid JSON body, the successful call returns the HTTP status code 201 Created. Newly created filters are in PENDING status until they are reviewed. If a filter is valid, it will move from PENDING status to ENABLED status. You can find the status of a filter using the getSubscriptionFilter method. See Creating a subscription filter for a topic for additional information.Note: Only one filter can be in ENABLED (which means active) status on a subscription at a time. If an ENABLED filter is overwritten by a new call to CREATE a filter for the subscription, it stays in ENABLED status until the new PENDING filter becomes the ENABLED filter, and the existing filter then becomes DISABLED.
 
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str subscription_id: The unique identifier for the subscription. (required)
+        :param str subscription_id: The unique identifier of the subscription for which a filter will be created. (required)
         :param CreateSubscriptionFilterRequest body: The create subscription filter request.
         :return: object
         """
@@ -2461,7 +2461,7 @@ class API(metaclass=Multiton):
 
         This method allows applications to delete a subscription. Subscriptions can be deleted regardless of status.
 
-        :param str subscription_id: The unique identifier for the subscription. (required)
+        :param str subscription_id: The unique identifier of the subscription to delete. Use getSubscriptions to retrieve subscription IDs. (required)
         :return: None
         """
         try:
@@ -2487,8 +2487,8 @@ class API(metaclass=Multiton):
 
         This method allows applications to disable the active filter on a subscription, so that a new subscription filter may be added.Note: Subscription filters in PENDING status can not be disabled. However, a new filter can be created instead with the createSubscriptionFilter method and this new filter will override the PENDING filter.
 
-        :param str subscription_id: The unique identifier for the subscription. (required)
-        :param str filter_id: The unique identifier for the subscription filter. (required)
+        :param str subscription_id: The unique identifier of the subscription associated with the filter to delete. Use getSubscriptions to retrieve subscription IDs. (required)
+        :param str filter_id: The unique identifier of the subscription filter to delete.  Filter ID values, if configured for a subscription, will be shown in the subscriptions.filterId field in getSubscription and getSubscription responses. The filter ID value is also returned in the Location response header when a filter is created with createSubscriptionFilter. (required)
         :return: None
         """
         try:
@@ -2514,7 +2514,7 @@ class API(metaclass=Multiton):
 
         This method disables a subscription, which prevents the subscription from providing notifications. To restart a subscription, call enableSubscription.
 
-        :param str subscription_id: The unique identifier for the subscription. (required)
+        :param str subscription_id: The unique identifier of an enabled subscription that will be disabled. Use getSubscriptions to retrieve subscription IDs. (required)
         :return: None
         """
         try:
@@ -2540,7 +2540,7 @@ class API(metaclass=Multiton):
 
         This method allows applications to enable a disabled subscription. To pause (or disable) an enabled subscription, call disableSubscription.
 
-        :param str subscription_id: The unique identifier for the subscription. (required)
+        :param str subscription_id: The unique identifier of a disabled subscription that will be enabled. Use getSubscriptions to retrieve subscription IDs. (required)
         :return: None
         """
         try:
@@ -2566,7 +2566,7 @@ class API(metaclass=Multiton):
 
         This method allows applications to retrieve subscription details for the specified subscription.Specify the subscription to retrieve using the subscription_id. Use the getSubscriptions method to browse all subscriptions if you do not know the subscription_id.Subscriptions allow applications to express interest in notifications and keep receiving the information relevant to their business.
 
-        :param str subscription_id: The unique identifier for the subscription. (required)
+        :param str subscription_id: The unique identifier of the subscription to retrieve. Use getSubscriptions to retrieve subscription IDs. (required)
         :return: Subscription
         """
         try:
@@ -2592,8 +2592,8 @@ class API(metaclass=Multiton):
 
         This method allows applications to retrieve the filter details for the specified subscription filter.Specify the subscription filter to retrieve by using the subscription_id and the filter_id associated with the subscription filter. The filter_id can be found in the response body for the getSubscription method, if there is a filter applied on the subscription.Filters allow applications to only be sent notifications that match a provided criteria. Notifications that do not match this criteria will not be sent to the destination.
 
-        :param str subscription_id: The unique identifier for the subscription. (required)
-        :param str filter_id: The unique identifier for the subscription filter. (required)
+        :param str subscription_id: The unique identifier of the subscription associated with the filter. Use getSubscriptions to retrieve subscription IDs. (required)
+        :param str filter_id: The unique identifier of the subscription filter.  Filter ID values, if configured for a subscription, will be shown in the subscriptions.filterId field in getSubscription and getSubscription responses. The filter ID value is also returned in the Location response header when a filter is created with createSubscriptionFilter. (required)
         :return: SubscriptionFilter
         """
         try:
@@ -2617,8 +2617,8 @@ class API(metaclass=Multiton):
 
         This method allows applications to retrieve a list of all subscriptions. The list returned is a paginated collection of subscription resources.Subscriptions allow applications to express interest in notifications and keep receiving the information relevant to their business.
 
-        :param str limit: The number of items, from the result set, returned in a single page. Range is from 10-100. If this parameter is omitted, the default value is used.Default: 20Maximum: 100 items per page
-        :param str continuation_token: The continuation token for the next set of results.
+        :param str limit: The maximum number of subscriptions to return per page from the result set.Min: 10Max: 100Default: 20
+        :param str continuation_token: This string value can be used to return the next page in the result set. The string to use here is returned in the next field of the current page of results.
         :return: SubscriptionSearchResponse
         """
         try:
@@ -2644,7 +2644,7 @@ class API(metaclass=Multiton):
 
         This method triggers a mocked test payload that includes a notification ID, publish date, and so on. Use this method to test your subscription end-to-end.You can create the subscription in disabled mode, test it using this method, and when everything is ready, you can enable the subscription (see the enableSubscription method).Note: Use the notificationId to tell the difference between a test payload and a real payload.
 
-        :param str subscription_id: The unique identifier for the subscription. (required)
+        :param str subscription_id: The unique identifier of the subscription to test. Use getSubscriptions to retrieve subscription IDs. (required)
         :return: None
         """
         try:
@@ -2671,7 +2671,7 @@ class API(metaclass=Multiton):
         This method allows applications to update a subscription. Subscriptions allow applications to express interest in notifications and keep receiving the information relevant to their business.Note: This call returns an error if an application is not authorized to subscribe to a topic.You can pause and restart a subscription. See the disableSubscription and enableSubscription methods.
 
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str subscription_id: The unique identifier for the subscription. (required)
+        :param str subscription_id: The unique identifier for the subscription to update. Use getSubscriptions to retrieve subscription IDs. (required)
         :param UpdateSubscriptionRequest body: The create subscription request.
         :return: None
         """
@@ -2696,7 +2696,7 @@ class API(metaclass=Multiton):
 
         This method allows applications to retrieve details for the specified topic. This information includes supported schema versions, formats, and other metadata for the topic.Applications can subscribe to any of the topics for a supported schema version and format, limited by the authorization scopes required to subscribe to the topic.A topic specifies the type of information to be received and the data types associated with an event. An event occurs in the eBay system, such as when a user requests deletion or revokes access for an application. An event is an instance of an event type (topic).Specify the topic to retrieve using the topic_id URI parameter.Note: Use the getTopics method to find a topic if you do not know the topic ID.
 
-        :param str topic_id: The ID of the topic for which to retrieve the details. (required)
+        :param str topic_id: The unique identifier of the notification topic for which the details are retrieved. Use getTopics to retrieve the topic ID. (required)
         :return: Topic
         """
         try:
@@ -2720,8 +2720,8 @@ class API(metaclass=Multiton):
 
         This method returns a paginated collection of all supported topics, along with the details for the topics. This information includes supported schema versions, formats, and other metadata for the topics.Applications can subscribe to any of the topics for a supported schema version and format, limited by the authorization scopes required to subscribe to the topic.A topic specifies the type of information to be received and the data types associated with an event. An event occurs in the eBay system, such as when a user requests deletion or revokes access for an application. An event is an instance of an event type (topic).
 
-        :param str limit: The maximum number of items to return per page from the result set. A result set is the complete set of results returned by the method. Range is from 10-100.If this parameter is omitted, the default value is used.Default: 20Maximum: 100 items per page
-        :param str continuation_token: The token used to access the next set of results.
+        :param str limit: The maximum number of notification topics to return per page from the result set.Min: 10Max: 100Default: 20
+        :param str continuation_token: This string value can be used to return the next page in the result set. The string to use here is returned in the next field of the current page of results.
         :return: TopicSearchResponse
         """
         try:
@@ -2747,7 +2747,7 @@ class API(metaclass=Multiton):
 
         This call returns a complete list of aspects for all of the leaf categories that belong to an eBay marketplace. The eBay marketplace is specified through the category_tree_id URI parameter. Note: A successful call returns a payload as a gzipped JSON file sent as a binary file using the content-type:application/octet-stream in the response. This file may be large (over 100 MB, compressed). Extract the JSON file from the compressed file with a utility that handles .gz or .gzip. The open source Taxonomy SDK can be used to compare the aspect metadata that is returned in this response. The Taxonomy SDK uses this method to surface changes (new, modified, and removed entities) between an updated version of a bulk downloaded file relative to a previous version.
 
-        :param str category_tree_id: The unique identifier of the eBay category tree being requested. (required)
+        :param str category_tree_id: The unique identifier of the eBay category tree. The category tree ID for an eBay marketplace can be retrieved using the getDefaultCategoryTreeId method. (required)
         :return: GetCategoriesAspectResponse
         """
         try:
@@ -2773,8 +2773,8 @@ class API(metaclass=Multiton):
 
         This call retrieves the details of all nodes of the category tree hierarchy (the subtree) below a specified category of a category tree. You identify the tree using the category_tree_id parameter, which was returned by the getDefaultCategoryTreeId call in the categoryTreeId field. Note: This call can return a very large payload, so you are strongly advised to submit the request with the following HTTP header:  Accept-Encoding: gzipWith this header (in addition to the required headers described under HTTP Request Headers), the call returns the response with gzip compression.
 
-        :param str category_id: The unique identifier of the category at the top of the subtree being requested.Note: If the category_id submitted identifies the root node of the tree, this call returns an error. To retrieve the complete tree, use this value with the getCategoryTree call.If the category_id submitted identifies a leaf node of the tree, the call response will contain information about only that leaf node, which is a valid subtree.  (required)
-        :param str category_tree_id: The unique identifier of the eBay category tree from which a category subtree is being requested. (required)
+        :param str category_id: The unique identifier of the category at the top of the subtree being requested. Metadata on this category and all its descendant categories are retrieved.Note: If the category_id submitted identifies a leaf node of the tree, the call response will contain information about only that leaf node, which is a valid subtree.  (required)
+        :param str category_tree_id: The unique identifier of the eBay category tree. The category tree ID for an eBay marketplace can be retrieved using the getDefaultCategoryTreeId method. (required)
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
         :return: CategorySubtree
         """
@@ -2801,7 +2801,7 @@ class API(metaclass=Multiton):
 
         This call returns an array of category tree leaf nodes in the specified category tree that are considered by eBay to most closely correspond to the query string q. Returned with each suggested node is a localized name for that category (based on the Accept-Language header specified for the call), and details about each of the category's ancestor nodes, extending from its immediate parent up to the root of the category tree.You identify the tree using the category_tree_id parameter, which was returned by the getDefaultCategoryTreeId call in the categoryTreeId field. Important: This call is not supported in the Sandbox environment. It will return a response payload in which the categoryName fields contain random or boilerplate text regardless of the query submitted.
 
-        :param str category_tree_id: The unique identifier of the eBay category tree for which suggested nodes are being requested. (required)
+        :param str category_tree_id: The unique identifier of the eBay category tree. The category tree ID for an eBay marketplace can be retrieved using the getDefaultCategoryTreeId method. (required)
         :param str q: A quoted string that describes or characterizes the item being offered for sale. The string format is free form, and can contain any combination of phrases or keywords. eBay will parse the string and return suggested categories for the item. (required)
         :return: CategorySuggestionResponse
         """
@@ -2828,7 +2828,7 @@ class API(metaclass=Multiton):
 
         This call retrieves the complete category tree that is identified by the category_tree_id parameter. The value of category_tree_id was returned by the getDefaultCategoryTreeId call in the categoryTreeId field. The response contains details of all nodes of the specified eBay category tree, as well as the eBay marketplaces that use this category tree. Note: This call can return a very large payload, so you are strongly advised to submit the request with the following HTTP header:  Accept-Encoding: gzipWith this header (in addition to the required headers described under HTTP Request Headers), the call returns the response with gzip compression.
 
-        :param str category_tree_id: The unique identifier of the eBay category tree being requested. (required)
+        :param str category_tree_id: The unique identifier of the eBay category tree. The category tree ID for an eBay marketplace can be retrieved using the getDefaultCategoryTreeId method. (required)
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
         :return: CategoryTree
         """
@@ -2856,7 +2856,7 @@ class API(metaclass=Multiton):
         This call retrieves the compatible vehicle aspects that are used to define a motor vehicle that is compatible with a motor vehicle part or accessory. The values that are retrieved here might include motor vehicle aspects such as 'Make', 'Model', 'Year', 'Engine', and 'Trim', and each of these aspects are localized for the eBay marketplace. The category_tree_id value is passed in as a path parameter, and this value identifies the eBay category tree. The category_id value is passed in as a query parameter, as this parameter is also required. The specified category must be a category that supports parts compatibility. At this time, this operation only supports parts and accessories listings for cars, trucks, and motorcycles (not boats, power sports, or any other vehicle types). Only the following eBay marketplaces support parts compatibility:eBay US (Motors and non-Motors categories)eBay Canada (Motors and non-Motors categories)eBay UK eBay Germany eBay Australia eBay Francee Bay Italy eBay Spain
 
         :param str category_tree_id: This is the unique identifier of category tree. The following is the list of category_tree_id values and the eBay marketplaces that they represent. One of these ID values must be passed in as a path parameter, and the category_id value, that is passed in as query parameter, must be a valid eBay category on that eBay marketplace that supports parts compatibility for cars, trucks, or motorcycles.eBay US: 0eBay Motors US: 100eBay Canada: 2eBay UK: 3eBay Germany: 77eBay Australia: 15eBay France: 71eBay Italy: 101eBay Spain: 186 (required)
-        :param str category_id: The unique identifier of an eBay category. This eBay category must be a valid eBay category on the specified eBay marketplace, and the category must support parts compatibility for cars, trucks, or motorcycles. The getAutomotivePartsCompatibilityPolicies method of the Selling Metadata API can be used to retrieve all eBay categories for an eBay marketplace that supports parts compatibility cars, trucks, or motorcycles. The getAutomotivePartsCompatibilityPolicies method can also be used to see if one or more specific eBay categories support parts compatibility. (required)
+        :param str category_id: The unique identifier of an eBay category. This eBay category must be a valid eBay category on the specified eBay marketplace, and the category must support parts compatibility for cars, trucks, or motorcycles. The getAutomotivePartsCompatibilityPolicies method of the Selling Metadata API can be used to retrieve all eBay categories for an eBay marketplace that support parts compatibility for vehicles. (required)
         :return: GetCompatibilityMetadataResponse
         """
         try:
@@ -2884,7 +2884,7 @@ class API(metaclass=Multiton):
 
         :param str category_tree_id: This is the unique identifier of the category tree. The following is the list of category_tree_id values and the eBay marketplaces that they represent. One of these ID values must be passed in as a path parameter, and the category_id value, that is passed in as query parameter, must be a valid eBay category on that eBay marketplace that supports parts compatibility for cars, trucks, or motorcycles.eBay US: 0eBay Motors US: 100eBay Canada: 2eBay UK: 3eBay Germany: 77eBay Australia: 15eBay France: 71eBay Italy: 101eBay Spain: 186 (required)
         :param str compatibility_property: One compatible vehicle property applicable to the specified eBay marketplace and eBay category is specified in this required filter. Compatible vehicle properties are returned in the compatibilityProperties.name field of a getCompatibilityProperties response.  For example, if you wanted to retrieve all vehicle trims for a 2018 Toyota Camry, you would set this filter as follows: compatibility_property=Trim and then include the following three name/value filters through one filter parameter: filter=Year:2018,Make:Toyota,Model:Camry.So, putting this all together, the URI would look something like this:GET https://api.ebay.com/commerce/taxonomy/v1/category_tree/100/get_compatibility_property_values?category_id=6016&compatibility_property=Trim&filter=Year:2018,Make:Toyota,Model:Camry (required)
-        :param str category_id: The unique identifier of an eBay category. This eBay category must be a valid eBay category on the specified eBay marketplace, and the category must support parts compatibility for cars, trucks, or motorcycles. The getAutomotivePartsCompatibilityPolicies method of the Selling Metadata API can be used to retrieve all eBay categories for an eBay marketplace that supports parts compatibility cars, trucks, or motorcycles. The getAutomotivePartsCompatibilityPolicies method can also be used to see if one or more specific eBay categories support parts compatibility. (required)
+        :param str category_id: The unique identifier of an eBay category. This eBay category must be a valid eBay category on the specified eBay marketplace, and the category must support parts compatibility for cars, trucks, or motorcycles. The getAutomotivePartsCompatibilityPolicies method of the Selling Metadata API can be used to retrieve all eBay categories for an eBay marketplace that support parts compatibility for vehicles. (required)
         :param str filter: One or more compatible vehicle property name/value pairs are passed in through this query parameter. The compatible vehicle property name and corresponding value are delimited with a colon (:), such as filter=Year:2018, and multiple compatible vehicle property name/value pairs are delimited with a comma (,).Note: Commas are used as delimiters between filter values. If a value includes a comma (e.g., BodyStyle:AWD B9 8W5,C8WD) you must include a backslash (\\) immediately before the comma to prevent it from being evaluated as a delimiter.As with all query parameter values, the filter parameters must be URL encoded. For more information about encoding request parameters, refer to URL encoding query parameter values.For example, to retrieve all vehicle trims for a 2022 Audi A4:Set the compatibility_property filter to compatibility_property=TrimInclude the following name/value filters using one filter parameter:Year:2022Make:AudiModel:A4BodyStyle:AWD B9 8W5\\,8WDThe resulting comma-separated filter query parameter is:filter=Year:2022,Make:Audi,Model:A4,BodyStyle:AWD B9 8W5\\,8WDThe following sample shows the same filter but with URL encoding for the blank spaces.GET https://api.ebay.com/commerce/taxonomy/v1/category_tree/100/get_compatibility_property_values?category_id=6016&compatibility_property=Trim&filter=Year:2022,Make:Audi,Model:A4,BodyStyle:AWD%20B9%208W5%5C%2C8WD For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/commerce/taxonomy/types/txn:ConstraintFilter
         :return: GetCompatibilityPropertyValuesResponse
         """
@@ -2911,7 +2911,7 @@ class API(metaclass=Multiton):
 
         A given eBay marketplace might use multiple category trees, but one of those trees is considered to be the default for that marketplace. This call retrieves a reference to the default category tree associated with the specified eBay marketplace ID. The response includes only the tree's unique identifier and version, which you can use to retrieve more details about the tree, its structure, and its individual category nodes.
 
-        :param str marketplace_id: The ID of the eBay marketplace for which the category tree ID is being requested. For a list of supported marketplace IDs, see Marketplaces with Default Category Trees. (required)
+        :param str marketplace_id: The unique identifier of the eBay marketplace for which the category tree ID is requested. For a list of supported marketplace IDs, see Marketplaces with Default Category Trees. (required)
         :return: BaseCategoryTree
         """
         try:
@@ -2938,7 +2938,7 @@ class API(metaclass=Multiton):
         This call returns a list of aspects that are appropriate or necessary for accurately describing items in the specified leaf category. Each aspect identifies an item attribute (for example, color,) for which the seller will be required or encouraged to provide a value (or variation values) when offering an item in that category on eBay.For each aspect, getItemAspectsForCategory provides complete metadata, including: The aspect's data type, format, and entry modeWhether the aspect is required in listingsWhether the aspect can be used for item variationsWhether the aspect accepts multiple values for an itemAllowed values for the aspect Use this information to construct an interface through which sellers can enter or select the appropriate values for their items or item variations. Once you collect those values, include them as product aspects when creating inventory items using the Inventory API.
 
         :param str category_id: The unique identifier of the leaf category for which aspects are being requested. Note: If the category_id submitted does not identify a leaf node of the tree, this call returns an error.  (required)
-        :param str category_tree_id: The unique identifier of the eBay category tree from which the specified category's aspects are being requested. (required)
+        :param str category_tree_id: The unique identifier of the eBay category tree. The category tree ID for an eBay marketplace can be retrieved using the getDefaultCategoryTreeId method. (required)
         :return: AspectMetadata
         """
         try:
@@ -3272,7 +3272,7 @@ class API(metaclass=Multiton):
     ):  # noqa: E501
         """create_fulfillment_policy
 
-        This method creates a new fulfillment policy where the policy encapsulates seller's terms for fulfilling item purchases. Fulfillment policies include the shipment options that the seller offers to buyers.  Each policy targets a specific eBay marketplace and a category group type, and you can create multiple policies for each combination. A successful request returns the getFulfillmentPolicy URI to the new policy in the Location response header and the ID for the new policy is returned in the response payload.  Tip: For details on creating and using the business policies supported by the Account API, see eBay business policies. Using the eBay standard envelope service (eSE) The eBay standard envelope service (eSE) is a domestic envelope service with tracking through eBay. This service applies to specific Trading Cards categories (not all categories are supported), and to Coins & Paper Money, Postcards, and Stamps. See Using the eBay standard envelope (eSE) service.
+        This method creates a new fulfillment policy where the policy encapsulates seller's terms for fulfilling item purchases. Fulfillment policies include the shipment options that the seller offers to buyers.  Each policy targets a specific eBay marketplace and a category group type, and you can create multiple policies for each combination. A successful request returns the getFulfillmentPolicy URI to the new policy in the Location response header and the ID for the new policy is returned in the response payload.  Tip: For details on creating and using the business policies supported by the Account API, see eBay business policies. Using the eBay standard envelope service (eSE)The eBay standard envelope service (eSE) is a domestic envelope service with tracking through eBay. This service applies to specific sub-categories of Trading Cards, and to coins & paper money, postcards, stamps, patches, and similar eligible categories, and is only available on the US marketplace. To use this service, send envelopes using the USPS mail and set the shippingServiceCode field to US_eBayStandardEnvelope. See Using eBay standard envelope (eSE) service for details. See eBay standard envelope for additional details, restrictions, and an envelope size template.
 
         :param FulfillmentPolicyRequest body: Request to create a seller account fulfillment policy. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
@@ -4163,12 +4163,12 @@ class API(metaclass=Multiton):
     def sell_analytics_get_traffic_report(self, **kwargs):  # noqa: E501
         """get_traffic_report
 
-        This method returns a report that details the user traffic received by a seller's listings. A traffic report gives sellers the ability to review how often their listings appeared on eBay, how many times their listings are viewed, and how many purchases were made. The report also returns the report's start and end dates, and the date the information was last updated.  When using this call: Be sure to URL-encode the values you pass in query parameters, as described in URI parameters. See the request samples below for details. You can only specify a single metric in the sort parameter and the specified metric must be listed in the metric parameter of your request. Parameter names are case sensitive, but metric names are not. For example, the following are correct: sort=LISTING_IMPRESSION_TOTAL sort=listing_impression_total metric=listing_impression_total However, these are incorrect: SORT=LISTING_IMPRESSION_TOTAL SORT=listing_impression_total Metric=listing_impression_total For more information, see Traffic report detailsNote: Beginning on October 4, 2021, the options for the following metric inputs will change:Sorting on the SALES_CONVERSION_RATE metric will no longer be supportedSorting on the TRANSACTION metric will no longer support ascending order; only descending order will be supportedLISTING_VIEWS_SOURCE_DIRECT will only support a 90-day query range from October 4, 2021 until early January 2022, at which time it will again support a two year query range.
+        This method returns a report that details the user traffic received by a seller's listings. A traffic report gives sellers the ability to review how often their listings appeared on eBay, how many times their listings are viewed, and how many purchases were made. The report also returns the report's start and end dates, and the date the information was last updated.  For more information, see Traffic report details
 
-        :param str dimension: This query parameter specifies the dimension, or \"attribute,\" that is applied to the report metric.  Valid values: DAY or LISTING Examples If you specify dimension=DAY and metric=CLICK_THROUGH_RATE, the traffic report contains the number of times an item displayed on a search results page and the buyer clicked through to the View Item page for each day in the date range, as in: 12-06-17: 32, 12-07-17: 54, ... If you specify dimension=LISTING and metric=LISTING_IMPRESSION_STORE, the traffic report contains the number of times that listing appeared on the seller's store during the specified date range. For example, LISTING_IMPRESSION_STORE: 157 means the item appeared 157 times in the store during the date range.
-        :param str filter: This query parameter refines the information returned in the traffic report.  Configure the following properties of the filter parameter to tune the traffic report to your needs:  date_range Limits the report to the specified range of dates.  Format the date range by enclosing the earliest date and end date for the report in brackets (\"[ ]\"), as follows: [YYYYMMDD..YYYYMMDD] The maximum range between the start and end dates is 90 days, and the earliest start date you can specify is two years prior to the current date, which is defined as 730 days (365 * 2), not accounting for Leap Year.  The last date for which traffic data exists is a value called lastUpdatedDate. eBay returns an error if you specify a date range greater than 90 days, or the start date is after the lastUpdatedDate. If the specified end date is beyond the lastUpdatedDate, eBay returns data up to the lastUpdatedDate.  Required: Always listing_ids This filter limits the results to only the supplied list of listingId values. You can specify to 200 different listingId values. Enclose the list of IDs with curly braces (\"{ }\"), and separate multiple values with a pipe character (\"|\").  This filter only returns data for listings that have been either active or sold in last 90 days, and any unsold listings in the last 30 days. All listings must be the seller's and they  must be listed on the marketplace specified by the marketplace_ids filter argument. marketplace_ids This filter limits the report to seller data related to only the specified marketplace ID (currently the filter allows only a single marketplace ID). Enclose the marketplace ID in curly braces (\"{ }\").  Valid values: EBAY_AU EBAY_DE EBAY_GB EBAY_US EBAY_MOTORS_US Required if you set the dimension parameter to DAY. Example filter parameter The following example shows how to configure the filter parameter with the marketplace_ids and date_range filters: filter=marketplace_ids:{EBAY_US},date_range:[20170601..20170828] Note:  You must URL encode all the values you supply in the filter parameter, as described in URL parameters.  For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/analytics/types/csb:FilterField
-        :param str metric: This query parameter specifies the metrics you want covered in the report.  Specify a comma-separated list of the metrics you want included in the report.  Valid values: CLICK_THROUGH_RATE The number of times an item displays on the search results page divided by the number of times buyers clicked through to its View Item page. Localized name:  Click through rate LISTING_IMPRESSION_SEARCH_RESULTS_PAGE  The number of times the seller's listings displayed on the search results page. Note, the listing might not have been visible to the buyer due to its position on the page. Localized name:  Listing impressions from the search results page LISTING_IMPRESSION_STORE   The number of times the seller's listings displayed on the seller's store. Note, the listing might not have been visible to the buyer due to its position on the page. Localized name:  Listing impressions from your Store LISTING_IMPRESSION_TOTAL  The total number of times the seller's listings displayed on the search results page OR in the seller's store. The item is counted each time it displays on either page. However, the listing might not have been visible to the buyer due to its position on the page. This is a combination of:  LISTING_IMPRESSION_SEARCH_RESULTS_PAGE + LISTING_IMPRESSION_STORE. Localized name:  Total listing impressions LISTING_VIEWS_SOURCE_DIRECT  The number of times a View Item page was directly accessed, such as when a buyer navigates to the page using a bookmark.Localized name:  Direct views  LISTING_VIEWS_SOURCE_OFF_EBAY The number of times a View Item page was accessed via a site other than eBay, such as when a buyer clicks on a link to the listing from a search engine page. Localized name:  Off eBay views LISTING_VIEWS_SOURCE_OTHER_EBAY  The number of times a View Item page was accessed from an eBay page that is not either the search results page or the seller's store. Localized name: Views from non-search and non-store pages within eBay LISTING_VIEWS_SOURCE_SEARCH_RESULTS_PAGE  The number of times the item displayed on the search results page. Localized name:  Views on the search results page LISTING_VIEWS_SOURCE_STORE  The number of times a View Item page was accessed via the seller's store. Localized name:  Views from your Store LISTING_VIEWS_TOTAL   Total number of listings viewed. This number sums: LISTING_VIEWS_SOURCE_DIRECT  LISTING_VIEWS_SOURCE_OFF_EBAY LISTING_VIEWS_SOURCE_OTHER_EBAY LISTING_VIEWS_SOURCE_SEARCH_RESULTS_PAGE LISTING_VIEWS_SOURCE_STORE. Localized name:  Total views SALES_CONVERSION_RATE The number of completed transactions divided by the number of View Item page views. Equals: TRANSACTION / LISTING_VIEWS_TOTAL Localized name:  Sales conversion rate TRANSACTION The total number of completed transactions. Localized name:  Transaction count
-        :param str sort: This query parameter sorts the report on the specified metric.  The metric you specify must be included in the configuration of the report's metric parameter.  Sorting is helpful when you want to review how a specific metric is performing, such as the CLICK_THROUGH_RATE.  Reports can be sorted in ascending or descending order. Precede the value of a descending-order request with a minus sign (\"-\"), for example: sort=-CLICK_THROUGH_RATE.Note: Beginning on October 4, 2021, the options for the following metric inputs will change:Sorting on the SALES_CONVERSION_RATE metric will no longer be supportedSorting on the TRANSACTION metric will no longer support ascending order; only descending order will be supportedLISTING_VIEWS_SOURCE_DIRECT will only support a 90-day query range from October 4, 2021 until early January 2022, at which time it will again support a two year query range.  For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/analytics/types/csb:SortField
+        :param str dimension: This query parameter specifies the dimension, or \"attribute,\" that is applied to the report metric.  Valid values: DAY or LISTING Examples If you specify dimension=DAY and metric=CLICK_THROUGH_RATE, the traffic report contains the number of times an item displayed on a search results page and the buyer clicked through to the View Item page for each day in the date range, as in: 12-06-17: 32, 12-07-17: 54, ... If you specify dimension=LISTING and metric=LISTING_IMPRESSION_STORE, the traffic report contains the number of times that listing appeared on the seller's store during the specified date range. For example, LISTING_IMPRESSION_STORE: 157 means the item appeared 157 times in the store during the date range.If you specify dimension=LISTING without specifying any listing_ids in the parameter filter, the traffic report returned in the response contains a maximum of 200 listings.
+        :param str filter: This query parameter refines the information returned in the traffic report. Note:  URL encode all the values you supply in the filter parameter. See URL encoding query parameter values as described in URL parameters.Configure the following properties of the filter parameter to tune the traffic report to your needs:  date_range Limits the report to the specified range of dates.  Format the date range by enclosing the earliest date and end date for the report in brackets (\"[ ]\"), as follows: [YYYYMMDD..YYYYMMDD] The maximum range between the start and end dates is 90 days, and the earliest start date you can specify is two years prior to the current date, which is defined as 730 days (365 * 2), not accounting for Leap Year.  The last date for which traffic data exists is a value called lastUpdatedDate. eBay returns an error if you specify a date range greater than 90 days, or the start date is after the lastUpdatedDate. If the specified end date is beyond the lastUpdatedDate, eBay returns data up to the lastUpdatedDate.  Required: Always listing_ids This filter limits the results to only the supplied list of listingId values. Note: If you specify dimension=LISTING without specifying any listing_ids in this parameter, the traffic report returned in the response contains a maximum of 200 listings.You can specify to 200 different listingId values. Enclose the list of IDs with curly braces (\"{ }\"), and separate multiple values with a pipe character (\"|\").  This filter only returns data for listings that have been either active or sold in last 90 days, and any unsold listings in the last 30 days. All listings must be the seller's and they  must be listed on the marketplace specified by the marketplace_ids filter argument. marketplace_ids This filter limits the report to seller data related to only the specified marketplace ID (currently the filter allows only a single marketplace ID). Enclose the marketplace ID in curly braces (\"{ }\").  Valid values: EBAY_AU EBAY_DE EBAY_GB EBAY_US EBAY_MOTORS_US Required if you set the dimension parameter to DAY. Example filter parameter The following example shows how to configure the filter parameter with the marketplace_ids and date_range filters: filter=marketplace_ids:{EBAY_US},date_range:[20170601..20170828]Encoding this portion of the query parameter sample yields: filter=marketplace_ids:%7BEBAY_US%7D,date_range:%5B20230601..20230828%5D See samples for additional examples. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/analytics/types/csb:FilterField
+        :param str metric: This query parameter specifies the metrics you want covered in the report. Note:  Unlike names for parameters and enumerated values, metric values are not case sensitive.Valid values: CLICK_THROUGH_RATE LISTING_IMPRESSION_SEARCH_RESULTS_PAGE  LISTING_IMPRESSION_STORE LISTING_IMPRESSION_TOTAL LISTING_VIEWS_SOURCE_DIRECT LISTING_VIEWS_SOURCE_OFF_EBAY LISTING_VIEWS_SOURCE_OTHER_EBAY LISTING_VIEWS_SOURCE_SEARCH_RESULTS_PAGE LISTING_VIEWS_SOURCE_STORE LISTING_VIEWS_TOTAL SALES_CONVERSION_RATE TOTAL_IMPRESSION_TOTAL TRANSACTIONSpecify a comma-separated list of the metrics to include them in the report. See Using different metric parameters for more information including detailed metric descriptions and localized names.
+        :param str sort: This query parameter sorts the report on the specified metric.  You can only specify a single metric in the sort parameter and the specified metric must be included in the configuration of the report's metric parameter.  Sorting is helpful when you want to review how a specific metric is performing, such as the CLICK_THROUGH_RATE.  Most reports can be sorted in ascending or descending order. Precede the value of a descending-order request with a minus sign (\"-\"), for example: sort=-CLICK_THROUGH_RATE.Note: There are a couple of constraints on sorting the report by different metrics:Sorting on the SALES_CONVERSION_RATE metric is not supportedThe TRANSACTION metric can only be sorted in the descending order (sorting in the ascending order is not supported).  For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/analytics/types/csb:SortField
         :return: Report
         """
         try:
@@ -5077,8 +5077,8 @@ class API(metaclass=Multiton):
 
         Use this call to retrieve the contents of an order based on its unique identifier, orderId. This value was returned in the  getOrders call's orders.orderId field when you searched for orders by creation date, modification date, or fulfillment status. Include the optional fieldGroups query parameter set to TAX_BREAKDOWN to return a breakdown of the taxes and fees.  The returned Order object contains information you can use to create and process fulfillments, including:  Information about the buyer and seller Information about the order's line items  The plans for packaging, addressing and shipping the order The status of payment, packaging, addressing, and shipping the order A summary of monetary amounts specific to the order such as pricing, payments, and shipping costs A summary of applied taxes and fees, and optionally a breakdown of each
 
-        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the getOrders method in the orders.orderId field.Note: getOrders can return orders up to two years old. Do not provide the orderId for an order created more than two years in the past. (required)
-        :param str field_groups: The response type associated with the order. The only presently supported value is TAX_BREAKDOWN. This type returns a breakdown of tax and fee values associated with the order.
+        :param str order_id: This path parameter is used to specify the unique identifier of the order being retrieved. Use the getOrders method to retrieve order IDs. Order ID values are also shown in My eBay/Seller Hub.Note: getOrders can return orders up to two years old. Do not provide the orderId for an order created more than two years in the past. (required)
+        :param str field_groups: This parameter lets you control what is returned in the response.Note: The only presently supported value is TAX_BREAKDOWN. This field group adds addition fields to the response that return a breakdown of taxes and fees.
         :return: Order
         """
         try:
@@ -5102,7 +5102,7 @@ class API(metaclass=Multiton):
 
         Use this method to search for and retrieve one or more orders based on their creation date, last modification date, or fulfillment status using the filter parameter. You can alternatively specify a list of orders using the orderIds parameter. Include the optional fieldGroups query parameter set to TAX_BREAKDOWN to return a breakdown of the taxes and fees. By default, when no filters are used this call returns all orders created within the last 90 days.  The returned Order objects contain information you can use to create and process fulfillments, including:  Information about the buyer and seller Information about the order's line items The plans for packaging, addressing and shipping the order The status of payment, packaging, addressing, and shipping the order A summary of monetary amounts specific to the order such as pricing, payments, and shipping costs A summary of applied taxes and fees, and optionally a breakdown of each   Important: In this call, the cancelStatus.cancelRequests array is returned but is always empty. Use the getOrder call instead, which returns this array fully populated with information about any cancellation requests.
 
-        :param str field_groups: The response type associated with the order. The only presently supported value is TAX_BREAKDOWN. This type returns a breakdown of tax and fee values associated with the order.
+        :param str field_groups: This parameter lets you control what is returned in the response.Note: The only presently supported value is TAX_BREAKDOWN. This field group adds addition fields to the response that return a breakdown of taxes and fees.
         :param str filter: One or more comma-separated criteria for narrowing down the collection of orders returned by this call. These criteria correspond to specific fields in the response payload. Multiple filter criteria combine to further restrict the results. Note: getOrders can return orders up to two years old. Do not set the creationdate filter to a date beyond two years in the past.Note: If the orderIds parameter is included in the request, the filter parameter will be ignored.The available criteria are as follows:  creationdate The time period during which qualifying orders were created (the orders.creationDate field). In the URI, this is expressed as a starting timestamp, with or without an ending timestamp (in brackets). The timestamps are in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock.For example:  creationdate:[2016-02-21T08:25:43.511Z..] identifies orders created on or after the given timestamp. creationdate:[2016-02-21T08:25:43.511Z..2016-04-21T08:25:43.511Z] identifies orders created between the given timestamps, inclusive.   lastmodifieddate The time period during which qualifying orders were last modified (the orders.modifiedDate field).  In the URI, this is expressed as a starting timestamp, with or without an ending timestamp (in brackets). The timestamps are in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock.For example:  lastmodifieddate:[2016-05-15T08:25:43.511Z..] identifies orders modified on or after the given timestamp. lastmodifieddate:[2016-05-15T08:25:43.511Z..2016-05-31T08:25:43.511Z] identifies orders modified between the given timestamps, inclusive.  Note: If creationdate and lastmodifieddate are both included, only creationdate is used.  orderfulfillmentstatus The degree to which qualifying orders have been shipped (the orders.orderFulfillmentStatus field). In the URI, this is expressed as one of the following value combinations:  orderfulfillmentstatus:{NOT_STARTED|IN_PROGRESS} specifies orders for which no shipping fulfillments have been started, plus orders for which at least one shipping fulfillment has been started but not completed. orderfulfillmentstatus:{FULFILLED|IN_PROGRESS} specifies orders for which all shipping fulfillments have been completed, plus orders for which at least one shipping fulfillment has been started but not completed.  Note: The values NOT_STARTED, IN_PROGRESS, and FULFILLED can be used in various combinations, but only the combinations shown here are currently supported.   Here is an example of a getOrders call using all of these filters:  GET https://api.ebay.com/sell/v1/order?filter=creationdate:%5B2016-03-21T08:25:43.511Z..2016-04-21T08:25:43.511Z%5D,lastmodifieddate:%5B2016-05-15T08:25:43.511Z..%5D,orderfulfillmentstatus:%7BNOT_STARTED%7CIN_PROGRESS%7D  Note: This call requires that certain special characters in the URI query string be percent-encoded:      [ = %5B       ] = %5D       { = %7B       | = %7C       } = %7D  This query filter example uses these codes. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/fulfillment/types/api:FilterField
         :param str limit: The number of orders to return per page of the result set. Use this parameter in conjunction with the offset parameter to control the pagination of the output. For example, if offset is set to 10 and limit is set to 10, the call retrieves orders 11 thru 20 from the result set.  If a limit is not set, the limit defaults to 50 and returns up to 50 orders. If a requested limit is more than 200, the call fails and returns an error. Note: This feature employs a zero-based list, where the first item in the list has an offset of 0. If the orderIds parameter is included in the request, this parameter will be ignored.  Maximum: 200  Default: 50
         :param str offset: Specifies the number of orders to skip in the result set before returning the first order in the paginated response.  Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
@@ -5132,7 +5132,7 @@ class API(metaclass=Multiton):
 
 
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str order_id: The unique identifier of the order. Order IDs are returned in the getOrders method (and GetOrders call of Trading API). The issueRefund method supports the legacy API Order IDs and REST API order IDs. (required)
+        :param str order_id: This path parameter is used to specify the unique identifier of the order associated with a refund.Use the getOrders method to retrieve order IDs. (required)
         :param IssueRefundRequest body:
         :return: Refund
         """
@@ -5160,7 +5160,7 @@ class API(metaclass=Multiton):
         This method is used if the seller wishes to accept a payment dispute. The unique identifier of the payment dispute is passed in as a path parameter, and unique identifiers for payment disputes can be retrieved with the getPaymentDisputeSummaries method.The revision field in the request payload is required, and the returnAddress field should be supplied if the seller is expecting the buyer to return the item. See the Request Payload section for more information on these fields.
 
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed into the call URI to identify the payment dispute for which the user plans to accept. This identifier is automatically created by eBay once the payment dispute comes into the eBay system. The unique identifier for payment disputes is returned in the paymentDisputeId field in the getPaymentDisputeSummaries response.This path parameter is required, and the actual identifier value is passed in right after the payment_dispute resource. See the Resource URI above. (required)
+        :param str payment_dispute_id: This parameter is used to specify the unique identifier of the payment dispute being accepted.  Use the getPaymentDisputeSummaries method to retrieve payment dispute IDs. (required)
         :param AcceptPaymentDisputeRequest body:
         :return: None
         """
@@ -5188,7 +5188,7 @@ class API(metaclass=Multiton):
         This method is used by the seller to add one or more evidence files to address a payment dispute initiated by the buyer. The unique identifier of the payment dispute is passed in as a path parameter, and unique identifiers for payment disputes can be retrieved with the getPaymentDisputeSummaries method.Note: All evidence files should be uploaded using addEvidence and updateEvidence  before the seller decides to contest the payment dispute. Once the seller has officially contested the dispute (using contestPaymentDispute or through My eBay), the addEvidence and updateEvidence methods can no longer be used. In the evidenceRequests array of the getPaymentDispute response, eBay prompts the seller with the type of evidence file(s) that will be needed to contest the payment dispute.The file(s) to add are identified through the files array in the request payload.  Adding one or more new evidence files for a payment dispute triggers the creation of an evidence file, and the unique identifier for the new evidence file is automatically generated and returned in the evidenceId field of the addEvidence response payload upon a successful call.The type of evidence being added should be specified in the evidenceType field. All files being added (if more than one) should correspond to this evidence type.Upon a successful call, an evidenceId value is returned in the response. This indicates that a new evidence set has been created for the payment dispute, and this evidence set includes the evidence file(s) that were passed in to the fileId array. The evidenceId value will be needed if the seller wishes to add to the evidence set by using the updateEvidence method, or if they want to retrieve a specific evidence file within the evidence set by using the fetchEvidenceContent method.
 
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed into the call URI to identify the payment dispute for which the user plans to add evidence for a contested payment dispute. This identifier is automatically created by eBay once the payment dispute comes into the eBay system. The unique identifier for payment disputes is returned in the paymentDisputeId field in the getPaymentDisputeSummaries response.This path parameter is required, and the actual identifier value is passed in right after the payment_dispute resource. See the Resource URI above. (required)
+        :param str payment_dispute_id: This parameter is used to specify the unique identifier of the contested payment dispute for which the seller wishes to add evidence files.  Use the getPaymentDisputeSummaries method to retrieve payment dispute IDs. (required)
         :param AddEvidencePaymentDisputeRequest body:
         :return: AddEvidencePaymentDisputeResponse
         """
@@ -5216,7 +5216,7 @@ class API(metaclass=Multiton):
         This method is used if the seller wishes to contest a payment dispute initiated by the buyer. The unique identifier of the payment dispute is passed in as a path parameter, and unique identifiers for payment disputes can be retrieved with the getPaymentDisputeSummaries method.Note: Before contesting a payment dispute, the seller must upload all supporting files using the addEvidence and updateEvidence methods. Once the seller has officially contested the dispute (using contestPaymentDispute), the addEvidence and updateEvidence methods can no longer be used. In the evidenceRequests array of the getPaymentDispute response, eBay prompts the seller with the type of supporting file(s) that will be needed to contest the payment dispute.If a seller decides to contest a payment dispute, that seller should be prepared to provide supporting documents such as proof of delivery, proof of authentication, or other documents. The type of supporting documents that the seller will provide will depend on why the buyer filed the payment dispute.The revision field in the request payload is required, and the returnAddress field should be supplied if the seller is expecting the buyer to return the item. See the Request Payload section for more information on these fields.
 
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed into the call URI to identify the payment dispute for which the user plans to contest. This identifier is automatically created by eBay once the payment dispute comes into the eBay system. The unique identifier for payment disputes is returned in the paymentDisputeId field in the getPaymentDisputeSummaries response.This path parameter is required, and the actual identifier value is passed in right after the payment_dispute resource. See the Resource URI above. (required)
+        :param str payment_dispute_id: This parameter is used to specify the unique identifier of the payment dispute being contested.  Use the getPaymentDisputeSummaries method to retrieve payment dispute IDs. (required)
         :param ContestPaymentDisputeRequest body:
         :return: None
         """
@@ -5243,9 +5243,9 @@ class API(metaclass=Multiton):
 
         This call retrieves a specific evidence file for a payment dispute. The following three identifying parameters are needed in the call URI:payment_dispute_id: the identifier of the payment dispute. The identifier of each payment dispute is returned in the getPaymentDisputeSummaries response.evidence_id: the identifier of the evidential file set. The identifier of an evidential file set for a payment dispute is returned under the evidence array in the getPaymentDispute response.file_id: the identifier of an evidential file. This file must belong to the evidential file set identified through the evidence_id query parameter. The identifier of each evidential file is returned under the evidence.files array in the getPaymentDispute response.An actual binary file is returned if the call is successful. An error will occur if any of three identifiers are invalid.
 
-        :param str payment_dispute_id: The identifier of the payment dispute. The identifier of each payment dispute is returned in the getPaymentDisputeSummaries response. This identifier is passed in as a path parameter at the end of the call URI. (required)
-        :param str evidence_id: The identifier of the evidential file set. The identifier of an evidential file set for a payment dispute is returned under the evidence array in the getPaymentDispute response.Below is an example of the syntax to use for this query parameter:evidence_id=12345678 (required)
-        :param str file_id: The identifier of an evidential file. This file must belong to the evidential file set identified through the evidence_id query parameter. The identifier of each evidential file is returned under the evidence.files array in the getPaymentDispute response. Below is an example of the syntax to use for this query parameter:file_id=12345678  (required)
+        :param str payment_dispute_id: This path parameter is used to specify the unique identifier of the payment dispute associated with the evidence file being retrieved. Use the getPaymentDisputeSummaries method to retrieve payment dispute IDs. (required)
+        :param str evidence_id: This query parameter is used to specify the unique identifier of the evidential file set.The identifier of an evidential file set for a payment dispute is returned under the evidence array in the getPaymentDispute response. (required)
+        :param str file_id: This query parameter is used to specify the unique identifier of an evidential file. This file must belong to the evidential file set identified through the evidence_id query parameter.The identifier of each evidential file is returned under the evidence.files array in the getPaymentDispute response. (required)
         :return: list[str]
         """
         try:
@@ -5271,7 +5271,7 @@ class API(metaclass=Multiton):
 
         This method retrieve a log of activity for a payment dispute. The identifier of the payment dispute is passed in as a path parameter. The output includes a timestamp for each action of the payment dispute, from creation to resolution, and all steps in between.
 
-        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed in at the end of the call URI to identify the payment dispute for which the user wishes to see all activity. This identifier is automatically created by eBay once the payment dispute comes into the eBay system. The unique identifier for payment disputes is returned in the paymentDisputeId field in the getPaymentDisputeSummaries response.This path parameter is required, and the actual identifier value is passed in right after the payment_dispute resource. See the Resource URI above. (required)
+        :param str payment_dispute_id: This parameter is used to specify the unique identifier of the payment dispute associated with the activity log being retrieved. Use the getPaymentDisputeSummaries method to retrieve payment dispute IDs. (required)
         :return: PaymentDisputeActivityHistory
         """
         try:
@@ -5297,7 +5297,7 @@ class API(metaclass=Multiton):
 
         This method retrieves detailed information on a specific payment dispute. The payment dispute identifier is passed in as path parameter at the end of the call URI.Below is a summary of the information that is retrieved:Current status of payment disputeAmount of the payment disputeReason the payment dispute was openedOrder and line items associated with the payment disputeSeller response options if an action is currently required on the payment disputeDetails on the results of the payment dispute if it has been closedDetails on any evidence that was provided by the seller to fight the payment dispute
 
-        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed in at the end of the call URI to identify the payment dispute to retrieve. This identifier is automatically created by eBay once the payment dispute comes into the eBay system. The unique identifier for payment disputes is returned in the paymentDisputeId field in the getPaymentDisputeSummaries response. (required)
+        :param str payment_dispute_id: This parameter is used to specify the unique identifier of the payment dispute being retrieved. Use the getPaymentDisputeSummaries method to retrieve payment dispute IDs. (required)
         :return: PaymentDispute
         """
         try:
@@ -5321,13 +5321,13 @@ class API(metaclass=Multiton):
 
         This method is used retrieve one or more payment disputes filed against the seller. These payment disputes can be open or recently closed. The following filter types are available in the request payload to control the payment disputes that are returned:Dispute filed against a specific order (order_id parameter is used)Dispute(s) filed by a specific buyer (buyer_username parameter is used)Dispute(s) filed within a specific date range (open_date_from and/or open_date_to parameters are used)Disputes in a specific state (payment_dispute_status parameter is used)More than one of these filter types can be used together. See the request payload request fields for more information about how each filter is used.If none of the filters are used, all open and recently closed payment disputes are returned.Pagination is also available. See the limit and offset fields for more information on how pagination is used for this method.
 
-        :param str order_id: This filter is used if the seller wishes to retrieve one or more payment disputes filed against a specific order. It is possible that there can be more than one dispute filed against an order if the order has multiple line items. If this filter is used, any other filters are ignored.
-        :param str buyer_username: This filter is used if the seller wishes to retrieve one or more payment disputes opened by a specific seller. The string that is passed in to this query parameter is the eBay user ID of the buyer.
+        :param str order_id: This filter is used if the seller wishes to retrieve one or more payment disputes filed against a specific order. It is possible that there can be more than one dispute filed against an order if the order has multiple line items. If this filter is used, any other filters are ignored.Use the getOrders method to retrieve order IDs. Order ID values are also shown in My eBay/Seller Hub.
+        :param str buyer_username: This filter is used if the seller wishes to retrieve one or more payment disputes opened by a specific buyer. The string that is passed in to this query parameter is the eBay user ID of the buyer.
         :param str open_date_from: The open_date_from and/or open_date_to date filters are used if the seller wishes to retrieve payment disputes opened within a specific date range. A maximum date range that may be set with the open_date_from and/or open_date_to filters is 90 days. These date filters use the ISO-8601 24-hour date and time format, and time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu.The open_date_from field sets the beginning date of the date range, and can be set as far back as 18 months from the present time. If a open_date_from field is used, but a open_date_to field is not used, the open_date_to value will default to 90 days after the date specified in the open_date_from field, or to the present time if less than 90 days in the past.The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.
         :param str open_date_to: The open_date_from and/or open_date_to date filters are used if the seller wishes to retrieve payment disputes opened within a specific date range. A maximum date range that may be set with the open_date_from and/or open_date_to filters is 90 days. These date filters use the ISO-8601 24-hour date and time format, and the time zone used is Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT), or Zulu.The open_date_to field sets the ending date of the date range, and can be set up to 90 days from the date set in the open_date_from field. The ISO-8601 format looks like this: yyyy-MM-ddThh:mm.ss.sssZ. An example would be 2019-08-04T19:09:02.768Z.
-        :param str payment_dispute_status: This filter is used if the seller wishes to only retrieve payment disputes in a specific state. More than one value can be specified. If no payment_dispute_status filter is used, payment disputes in all states are returned in the response. See DisputeStateEnum type for supported values.
-        :param str limit: The value passed in this query parameter sets the maximum number of payment disputes to return per page of data. The value passed in this field should be an integer from 1 to 200. If this query parameter is not set, up to 200 records will be returned on each page of results.Min: 1; Max: 200; Default: 200
-        :param str offset: This field is used to specify the number of records to skip in the result set before returning the first payment dispute in the paginated response. A zero-based index is used, so if you set the offset value to 0 (default value), the first payment dispute in the result set appears at the top of the response. Combine offset with the limit parameter to control the payment disputes returned in the response. For example, if you supply an offset value of 0 and a limit value of 10, the response will contain the first 10 payment disputes from the result set that matches the input criteria. If you supply an offset value of 10 and a limit value of 20, the response will contain payment disputes 11-30 from the result set that matches the input criteria.Min: 0; Max: total number of payment disputes - 1; Default: 0
+        :param str payment_dispute_status: This filter is used if the seller wishes to only retrieve payment disputes in one or more specific states. To filter by more than one status value, a separate payment_dispute_status filter must be used for each value, as shown below:https://apiz.ebay.com/sell/fulfillment/v1/payment_dispute_summary?payment_dispute_status=OPEN&payment_dispute_status=ACTION_NEEDED If no payment_dispute_status filter is used, payment disputes in all states are returned in the response.See DisputeStatusEnum type for supported values.
+        :param str limit: The value passed in this query parameter sets the maximum number of payment disputes to return per page of data. The value passed in this field should be an integer from 1 to 200. If this query parameter is not set, up to 200 records will be returned on each page of results.Min: 1 Max: 200Default: 200
+        :param str offset: This field is used to specify the number of records to skip in the result set before returning the first payment dispute in the paginated response. A zero-based index is used, so if you set the offset value to 0 (default value), the first payment dispute in the result set appears at the top of the response. Combine offset with the limit parameter to control the payment disputes returned in the response. For example, if you supply an offset value of 0 and a limit value of 10, the response will contain the first 10 payment disputes from the result set that matches the input criteria. If you supply an offset value of 10 and a limit value of 20, the response will contain payment disputes 11-30 from the result set that matches the input criteria.Min: 0 Default: 0
         :return: DisputeSummaryResponse
         """
         try:
@@ -5354,7 +5354,7 @@ class API(metaclass=Multiton):
         This method is used by the seller to update an existing evidence set for a payment dispute with one or more evidence files. The unique identifier of the payment dispute is passed in as a path parameter, and unique identifiers for payment disputes can be retrieved with the getPaymentDisputeSummaries method.Note: All evidence files should be uploaded using addEvidence and updateEvidence  before the seller decides to contest the payment dispute. Once the seller has officially contested the dispute (using contestPaymentDispute or through My eBay), the addEvidence and updateEvidence methods can no longer be used. In the evidenceRequests array of the getPaymentDispute response, eBay prompts the seller with the type of evidence file(s) that will be needed to contest the payment dispute.The unique identifier of the evidence set to update is specified through the evidenceId field, and the file(s) to add are identified through the files array in the request payload. The unique identifier for an evidence file is automatically generated and returned in the fileId field of the uploadEvidence response payload upon a successful call. Sellers must make sure to capture the fileId value for each evidence file that is uploaded with the uploadEvidence method.The type of evidence being added should be specified in the evidenceType field.  All files being added (if more than one) should correspond to this evidence type.Upon a successful call, an http status code of 204 Success is returned. There is no response payload unless an error occurs. To verify that a new file is a part of the evidence set, the seller can use the fetchEvidenceContent method, passing in the proper evidenceId and fileId values.
 
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed into the call URI to identify the payment dispute for which the user plans to update the evidence set for a contested payment dispute. This identifier is automatically created by eBay once the payment dispute comes into the eBay system. The unique identifier for payment disputes is returned in the paymentDisputeId field in the getPaymentDisputeSummaries response.This path parameter is required, and the actual identifier value is passed in right after the payment_dispute resource. See the Resource URI above. (required)
+        :param str payment_dispute_id: This parameter is used to specify the unique identifier of the contested payment dispute for which the user plans to update the evidence set. Use the getPaymentDisputeSummaries method to retrieve payment dispute IDs. (required)
         :param UpdateEvidencePaymentDisputeRequest body:
         :return: None
         """
@@ -5381,7 +5381,7 @@ class API(metaclass=Multiton):
 
         This method is used to upload an evidence file for a contested payment dispute. The unique identifier of the payment dispute is passed in as a path parameter, and unique identifiers for payment disputes can be retrieved with the getPaymentDisputeSummaries method.Note: The uploadEvidenceFile only uploads an encrypted, binary image file (using multipart/form-data HTTP request header), and does not have a JSON-based request payload.Use 'file' as the name of the key that you use to upload the image file. The upload will not be successful if a different key name is used.The three image formats supported at this time are .JPEG, .JPG, and .PNG.After the file is successfully uploaded, the seller will need to grab the fileId value in the response payload to add this file to a new evidence set using the addEvidence method, or to add this file to an existing evidence set using the updateEvidence method.
 
-        :param str payment_dispute_id: This is the unique identifier of the payment dispute. This path parameter must be passed into the call URI to identify the payment dispute for which the user plans to upload an evidence file. This identifier is automatically created by eBay after the payment dispute comes into the eBay system. The unique identifier for payment disputes is returned in the paymentDisputeId field in the getPaymentDisputeSummaries response.This path parameter is required, and the actual identifier value is passed in right after the payment_dispute resource. See the Resource URI above. (required)
+        :param str payment_dispute_id: This parameter is used to specify the unique identifier of the contested payment dispute for which the user intends to upload an evidence file. Use the getPaymentDisputeSummaries method to retrieve payment dispute IDs. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to multipart/form-data.  For more information, refer to HTTP request headers. (required)
         :return: FileEvidence
         """
@@ -5410,7 +5410,7 @@ class API(metaclass=Multiton):
 
         :param ShippingFulfillmentDetails body: fulfillment payload (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the getOrders method in the orders.orderId field. (required)
+        :param str order_id: This path parameter is used to specify the unique identifier of the order associated with the shipping fulfillment being created. Use the getOrders method to retrieve order IDs. (required)
         :return: object
         """
         try:
@@ -5436,8 +5436,8 @@ class API(metaclass=Multiton):
 
         Use this call to retrieve the contents of a fulfillment based on its unique identifier, fulfillmentId (combined with the associated order's orderId). The fulfillmentId value was originally generated by the createShippingFulfillment call, and is returned by the getShippingFulfillments call in the members.fulfillmentId field.
 
-        :param str fulfillment_id: The unique identifier of the fulfillment. This eBay-generated value was created by the Create Shipping Fulfillment call, and returned by the getShippingFulfillments call in the fulfillments.fulfillmentId field; for example, 9405509699937003457459. (required)
-        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the getOrders method in the orders.orderId field. (required)
+        :param str fulfillment_id: This path parameter is used to specify the unique identifier of the shipping fulfillment being retrieved.Use the getShippingFulfillments method to retrieved fulfillment IDs. (required)
+        :param str order_id: This path parameter is used to specify the unique identifier of the order associated with the shipping fulfillment being retrieved. Use the getOrders method to retrieve order IDs. Order ID values are also shown in My eBay/Seller Hub. (required)
         :return: ShippingFulfillment
         """
         try:
@@ -5463,7 +5463,7 @@ class API(metaclass=Multiton):
 
         Use this call to retrieve the contents of all fulfillments currently defined for a specified order based on the order's unique identifier, orderId. This value is returned in the getOrders call's members.orderId field when you search for orders by creation date or shipment status.
 
-        :param str order_id: The unique identifier of the order. Order ID values are shown in My eBay/Seller Hub, and are also returned by the getOrders method in the orders.orderId field. (required)
+        :param str order_id: This path parameter is used to specify the unique identifier of the order associated with the shipping fulfillments being retrieved.Use the getOrders method to retrieve order IDs. Order ID values are also shown in My eBay/Seller Hub. (required)
         :return: ShippingFulfillmentPagedCollection
         """
         try:
@@ -5491,7 +5491,7 @@ class API(metaclass=Multiton):
 
         :param BulkInventoryItem body: Details of the inventories with sku and locale (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be en-US for English or de-DE for German. For more information on the Content-Language header, refer to HTTP request headers. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be en-US for English or de-DE for German.For more information on the Content-Language header, refer to HTTP request headers. (required)
         :return: BulkInventoryItemResponse
         """
         try:
@@ -5572,9 +5572,9 @@ class API(metaclass=Multiton):
         Note: Please note that any eBay listing created using the Inventory API cannot be revised or relisted using the Trading API calls.Note: Each listing can be revised up to 250 times in one calendar day. If this revision threshold is reached, the seller will be blocked from revising the item until the next calendar day.This call creates a new inventory item record or replaces an existing inventory item record. It is up to sellers whether they want to create a complete inventory item record right from the start, or sellers can provide only some information with the initial createOrReplaceInventoryItem call, and then make one or more additional createOrReplaceInventoryItem calls to complete all required fields for the inventory item record and prepare it for publishing. Upon first creating an inventory item record, only the SKU value in the call path is required.Note: In addition to the authorization header, which is required for all Inventory API calls, this call also requires the Content-Type and Content-Language headers. See the HTTP request headers for more information. In the case of replacing an existing inventory item record, the createOrReplaceInventoryItem call will do a complete replacement of the existing inventory item record, so all fields that are currently defined for the inventory item record are required in that update action, regardless of whether their values changed. So, when replacing/updating an inventory item record, it is advised that the seller run a getInventoryItem call to retrieve the full inventory item record and see all of its current values/settings before attempting to update the record. And if changes are made to an inventory item that is part of one or more active eBay listings, a successful call will automatically update these eBay listings.  The key information that is set with the createOrReplaceInventoryItem call include:  Seller-defined SKU value for the product. Each seller product, including products within an item inventory group, must have their own SKU value. This SKU value is passed in at the end of the call URI Condition of the item Product details, including any product identifier(s), such as a UPC, ISBN, EAN, or Brand/Manufacturer Part Number pair, a product description, a product title, product/item aspects, and links to images. eBay will use any supplied eBay Product ID (ePID) or a GTIN (UPC, ISBN, or EAN) and attempt to match those identifiers to a product in the eBay Catalog, and if a product match is found, the product details for the inventory item will automatically be populated. Quantity of the inventory item that is available for purchase Package weight and dimensions, which is required if the seller will be offering calculated shipping options. The package weight will also be required if the seller will be providing flat-rate shipping services, but charging a weight surcharge.  In addition to the authorization header, which is required for all eBay REST API calls, the createOrReplaceInventoryItem call also requires the Content-Language header, that sets the natural language that will be used in the field values of the request payload. For US English, the code value passed in this header should be en-US. To view other supported Content-Language values, and to read more about all supported HTTP headers for eBay REST API calls, see the HTTP request headers topic in the Using eBay RESTful APIs document.For those who prefer to create or update numerous inventory item records with one call (up to 25 at a time), the bulkCreateOrReplaceInventoryItem method can be used.
 
         :param InventoryItem body: Details of the inventory item record. (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be en-US for English or de-DE for German. For more information on the Content-Language header, refer to HTTP request headers. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be en-US for English or de-DE for German.For more information on the Content-Language header, refer to HTTP request headers. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str sku: The seller-defined SKU value for the inventory item is required whether the seller is creating a new inventory item, or updating an existing inventory item. This SKU value is passed in at the end of the call URI. SKU values must be unique across the seller's inventory.  Max length: 50. (required)
+        :param str sku: This path parameter specifies the seller-defined SKU value for the inventory item being created or updated. SKU values must be unique across the seller's inventory.  Max length: 50 (required)
         :return: BaseResponse
         """
         try:
@@ -5598,7 +5598,7 @@ class API(metaclass=Multiton):
 
         This call is used to delete an inventory item record associated with a specified SKU. A successful call will not only delete that inventory item record, but will also have the following effects:Delete any and all unpublished offers associated with that SKU;Delete any and all single-variation eBay listings associated with that SKU;Automatically remove that SKU from a multiple-variation listing and remove that SKU from any and all inventory item groups in which that SKU was a member.The authorization header is the only required HTTP header for this call. See the HTTP request headers section for more information.
 
-        :param str sku: This is the seller-defined SKU value of the product whose inventory item record you wish to delete.Max length: 50. (required)
+        :param str sku: This path parameter specifies the seller-defined SKU value of the product whose inventory item record you wish to delete.Use the getInventoryItems method to retrieve SKU values.Max length: 50 (required)
         :return: None
         """
         try:
@@ -5622,7 +5622,7 @@ class API(metaclass=Multiton):
 
         This call retrieves the inventory item record for a given SKU. The SKU value is passed in at the end of the call URI. There is no request payload for this call.The authorization header is the only required HTTP header for this call, and it is required for all Inventory API calls. See the HTTP request headers section for more information.For those who prefer to retrieve numerous inventory item records by SKU value with one call (up to 25 at a time), the bulkGetInventoryItem method can be used. To retrieve all inventory item records defined on the seller's account, the getInventoryItems method can be used (with pagination control if desired).
 
-        :param str sku: This is the seller-defined SKU value of the product whose inventory item record you wish to retrieve.Max length: 50. (required)
+        :param str sku: This path parameter specifies the seller-defined SKU value of the product whose inventory item record you wish to retrieve.Use the getInventoryItems method to retrieve SKU values.Max length: 50 (required)
         :return: InventoryItemWithSkuLocaleGroupid
         """
         try:
@@ -5646,7 +5646,7 @@ class API(metaclass=Multiton):
 
         This call retrieves all inventory item records defined for the seller's account. The limit query parameter allows the seller to control how many records are returned per page, and the offset query parameter is used to retrieve a specific page of records. The seller can make multiple calls to scan through multiple pages of records. There is no request payload for this call.The authorization header is the only required HTTP header for this call, and it is required for all Inventory API calls. See the HTTP request headers section for more information.For those who prefer to retrieve numerous inventory item records by SKU value with one call (up to 25 at a time), the bulkGetInventoryItem method can be used.
 
-        :param str limit: The value passed in this query parameter sets the maximum number of records to return per page of data. Although this field is a string, the value passed in this field should be an integer  from 1 to 100. If this query parameter is not set, up to 100 records will be returned on each page of results.Min: 1, Max: 100
+        :param str limit: The value passed in this query parameter sets the maximum number of records to return per page of data. Although this field is a string, the value passed in this field should be an integer  from 1 to 100. Min: 1Max: 100Default: 25
         :param str offset: The value passed in this query parameter sets the page number to retrieve. The first page of records has a value of 0, the second page of records has a value of 1, and so on. If this query parameter is not set, its value defaults to 0, and the first page of records is returned.
         :return: InventoryItems
         """
@@ -5674,9 +5674,9 @@ class API(metaclass=Multiton):
         Note: Each listing can be revised up to 250 times in one calendar day. If this revision threshold is reached, the seller will be blocked from revising the item until the next calendar day.This call creates a new inventory item group or updates an existing inventory item group. It is up to sellers whether they want to create a complete inventory item group record right from the start, or sellers can provide only some information with the initial createOrReplaceInventoryItemGroup call, and then make one or more additional createOrReplaceInventoryItemGroup calls to complete the inventory item group record. Upon first creating an inventory item group record, the only required elements are  the inventoryItemGroupKey identifier in the call URI, and the members of the inventory item group specified through the variantSKUs array in the request payload.Note: In addition to the authorization header, which is required for all Inventory API calls, this call also requires the Content-Type and Content-Language headers. See the HTTP request headers for more information.In the case of updating/replacing an existing inventory item group, this call does a complete replacement of the existing inventory item group record, so all fields (including the member SKUs) that make up the inventory item group are required, regardless of whether their values changed. So, when replacing/updating an inventory item group record, it is advised that the seller run a getInventoryItemGroup call for that inventory item group to see all of its current values/settings/members before attempting to update the record. And if changes are made to an inventory item group that is part of a live, multiple-variation eBay listing, these changes automatically update the eBay listing. For example, if a SKU value is removed from the inventory item group, the corresponding product variation will be removed from the eBay listing as well. In addition to the required inventory item group identifier and member SKUs, other key information that is set with this call include:  Title and description of the inventory item group. The string values provided in these fields will actually become the listing title and listing description of the listing once the first SKU of the inventory item group is published successfully Common aspects that inventory items in the group share Product aspects that vary within each product variation Links to images demonstrating the variations of the product, and these images should correspond to the product aspect that is set with the variesBy.aspectsImageVariesBy field
 
         :param InventoryItemGroup body: Details of the inventory Item Group (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be en-US for English or de-DE for German. For more information on the Content-Language header, refer to HTTP request headers. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be en-US for English or de-DE for German.For more information on the Content-Language header, refer to HTTP request headers. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str inventory_item_group_key: Unique identifier of the inventory item group. This identifier is supplied by the seller. The inventoryItemGroupKey value for the inventory item group to create/update is passed in at the end of the call URI. This value cannot be changed once it is set. (required)
+        :param str inventory_item_group_key: This path parameter specifies the unique identifier of the inventory item group being created or updated. This identifier is defined by the seller.This value cannot be changed once it is set.Max Length: 50 (required)
         :return: BaseResponse
         """
         try:
@@ -5702,7 +5702,7 @@ class API(metaclass=Multiton):
 
         This call deletes the inventory item group for a given inventoryItemGroupKey value.
 
-        :param str inventory_item_group_key: The unique identifier of an inventory item group. This value is assigned by the seller when an inventory item group is created. The inventoryItemGroupKey value for the inventory item group to delete is passed in at the end of the call URI. (required)
+        :param str inventory_item_group_key: This path parameter specifies the unique identifier of the inventory item group being deleted. This value is assigned by the seller when an inventory item group is created. (required)
         :return: None
         """
         try:
@@ -5728,7 +5728,7 @@ class API(metaclass=Multiton):
 
         This call retrieves the inventory item group for a given inventoryItemGroupKey value. The inventoryItemGroupKey value is passed in at the end of the call URI.
 
-        :param str inventory_item_group_key: The unique identifier of an inventory item group. This value is assigned by the seller when an inventory item group is created. The inventoryItemGroupKey value for the inventory item group to retrieve is passed in at the end of the call URI. (required)
+        :param str inventory_item_group_key: This path parameter specifies the unique identifier of the inventory item group being retrieved. This value is assigned by the seller when an inventory item group is created. (required)
         :return: InventoryItemGroup
         """
         try:
@@ -5783,7 +5783,7 @@ class API(metaclass=Multiton):
 
         :param InventoryLocationFull body: Inventory Location details (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str merchant_location_key: A unique, merchant-defined key (ID) for an inventory location. This unique identifier, or key, is used in other Inventory API calls to identify an inventory location. Max length: 36 (required)
+        :param str merchant_location_key: This path parameter specifies the unique, seller-defined key (ID) for an inventory location.Max length: 36 (required)
         :return: None
         """
         try:
@@ -5809,7 +5809,7 @@ class API(metaclass=Multiton):
 
         This call deletes the inventory location that is specified in the merchantLocationKey path parameter. Note that deleting a location will not affect any active eBay listings associated with the deleted location, but the seller will not be able modify the offers associated with the inventory location once it is deleted.The authorization HTTP header is the only required request header for this call. Unless one or more errors and/or warnings occur with the call, there is no response payload for this call. A successful call will return an HTTP status value of 200 OK.
 
-        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in at the end of the call URI to indicate the inventory location to be deleted. Max length: 36 (required)
+        :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for the inventory location that is to be deleted.Use the getInventoryLocations method to retrieve merchant location keys.Max length: 36 (required)
         :return: None
         """
         try:
@@ -5835,7 +5835,7 @@ class API(metaclass=Multiton):
 
         This call disables the inventory location that is specified in the merchantLocationKey path parameter. Sellers can not load/modify inventory to disabled inventory locations. Note that disabling an inventory location will not affect any active eBay listings associated with the disabled location, but the seller will not be able modify the offers associated with a disabled inventory location.A successful call will return an HTTP status value of 200 OK.
 
-        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in through the call URI to disable the specified inventory location. Max length: 36 (required)
+        :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for an inventory location that is to be disabled. Use the getInventoryLocations method to retrieve merchant location keys.Max length: 36 (required)
         :return: object
         """
         try:
@@ -5861,7 +5861,7 @@ class API(metaclass=Multiton):
 
         This call enables a disabled inventory location that is specified in the merchantLocationKey path parameter. Once a disabled inventory location is enabled, sellers can start loading/modifying inventory to that inventory location. A successful call will return an HTTP status value of 200 OK.
 
-        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in through the call URI to specify the disabled inventory location to enable. Max length: 36 (required)
+        :param str merchant_location_key: This path parameter specifies unique merchant-defined key (ID) for a disabled inventory location that is to be enabled.Use the getInventoryLocations method to retrieve merchant location keys.Max length: 36 (required)
         :return: object
         """
         try:
@@ -5887,7 +5887,7 @@ class API(metaclass=Multiton):
 
         This call retrieves all defined details of the inventory location that is specified by the merchantLocationKey path parameter. The authorization HTTP header is the only required request header for this call. A successful call will return an HTTP status value of 200 OK.
 
-        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in at the end of the call URI to specify the inventory location to retrieve. Max length: 36 (required)
+        :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for an inventory location that is being retrieved. Use the getInventoryLocations method to retrieve merchant location keys. Max length: 36 (required)
         :return: InventoryLocationResponse
         """
         try:
@@ -5940,7 +5940,7 @@ class API(metaclass=Multiton):
 
         :param InventoryLocation body: The inventory location details to be updated (other than the address and geo co-ordinates). (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in the call URI to indicate the inventory location to be updated. Max length: 36 (required)
+        :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for an inventory location that is to be updated. Use the getInventoryLocations method to retrieve merchant location keys. Max length: 36 (required)
         :return: None
         """
         try:
@@ -5967,7 +5967,7 @@ class API(metaclass=Multiton):
         This call creates multiple offers (up to 25) for specific inventory items on a specific eBay marketplace. Although it is not a requirement for the seller to create complete offers (with all necessary details) right from the start, eBay recommends that the seller provide all necessary details with this call since there is currently no bulk operation available to update multiple offers with one call. The following fields are always required in the request payload:  sku, marketplaceId, and (listing) format. Other information that will be required before a offer can be published are highlighted below: Inventory location Offer price Available quantity eBay listing category Referenced listing policy profiles to set payment, return, and fulfillment values/settings Note: Though the includeCatalogProductDetails parameter is not required to be submitted in the request, the parameter defaults to true if omitted.Note: In addition to the authorization header, which is required for all Inventory API calls, this call also requires the Content-Type and Content-Language headers. See the HTTP request headers for more information. If the call is successful, unique offerId values are returned in the response for each successfully created offer. The offerId value will be required for many other offer-related calls. Note that this call only stages an offer for publishing. The seller must run either the publishOffer, bulkPublishOffer, or publishOfferByInventoryItemGroup call to convert offer(s) into an active single- or multiple-variation listing.For those who prefer to create a single offer per call, the createOffer method can be used instead.
 
         :param BulkEbayOfferDetailsWithKeys body: Details of the offer for the channel (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be en-US for English or de-DE for German. For more information on the Content-Language header, refer to HTTP request headers. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be en-US for English or de-DE for German.For more information on the Content-Language header, refer to HTTP request headers. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: BulkOfferResponse
         """
@@ -6022,7 +6022,7 @@ class API(metaclass=Multiton):
         This call creates an offer for a specific inventory item on a specific eBay marketplace. It is up to the sellers whether they want to create a complete offer (with all necessary details) right from the start, or sellers can provide only some information with the initial createOffer call, and then make one or more subsequent updateOffer calls to complete the offer and prepare to publish the offer. Upon first creating an offer, the following fields are required in the request payload:  sku, marketplaceId, and (listing) format. Other information that will be required before an offer can be published are highlighted below. These settings are either set with createOffer, or they can be set with a subsequent updateOffer call: Inventory location Offer price Available quantity eBay listing category Referenced listing policy profiles to set payment, return, and fulfillment values/settings  Note: Though the includeCatalogProductDetails parameter is not required to be submitted in the request, the parameter defaults to true if omitted.Note: In addition to the authorization header, which is required for all Inventory API calls, this call also requires the Content-Type and Content-Language headers. See the HTTP request headers for more information.If the call is successful, a unique offerId value is returned in the response. This value will be required for many other offer-related calls. Note that this call only stages an offer for publishing. The seller must run the publishOffer call to convert the offer to an active eBay listing.For those who prefer to create multiple offers (up to 25 at a time) with one call, the bulkCreateOffer method can be used.
 
         :param EbayOfferDetailsWithKeys body: Details of the offer for the channel (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be en-US for English or de-DE for German. For more information on the Content-Language header, refer to HTTP request headers. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be en-US for English or de-DE for German.For more information on the Content-Language header, refer to HTTP request headers. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: OfferResponse
         """
@@ -6047,7 +6047,7 @@ class API(metaclass=Multiton):
 
         If used against an unpublished offer, this call will permanently delete that offer. In the case of a published offer (or live eBay listing), a successful call will either end the single-variation listing associated with the offer, or it will remove that product variation from the eBay listing and also automatically remove that product variation from the inventory item group. In the case of a multiple-variation listing, the deleteOffer will not remove the product variation from the listing if that variation has one or more sales. If that product variation has one or more sales, the seller can alternately just set the available quantity of that product variation to 0, so it is not available in the eBay search or View Item page, and then the seller can remove that product variation from the inventory item group at a later time.
 
-        :param str offer_id: The unique identifier of the offer to delete. The unique identifier of the offer (offerId) is passed in at the end of the call URI. (required)
+        :param str offer_id: This path parameter specifies the unique identifier of the offer being deleted.Use the getOffers method to retrieve offer IDs. (required)
         :return: None
         """
         try:
@@ -6096,7 +6096,7 @@ class API(metaclass=Multiton):
 
         This call retrieves a specific published or unpublished offer. The unique identifier of the offer (offerId) is passed in at the end of the call URI.The authorization header is the only required HTTP header for this call. See the HTTP request headers section for more information.
 
-        :param str offer_id: The unique identifier of the offer that is to be retrieved. (required)
+        :param str offer_id: This path parameter specifies the unique identifier of the offer that is to be retrieved.Use the getOffers method to retrieve offer IDs. (required)
         :return: EbayOfferDetailsWithAll
         """
         try:
@@ -6120,11 +6120,11 @@ class API(metaclass=Multiton):
 
         This call retrieves all existing offers for the specified SKU value. The seller has the option of limiting the offers that are retrieved to a specific eBay marketplace, or to a listing format.Note: At this time, the same SKU value can not be offered across multiple eBay marketplaces, so the marketplace_id query parameter currently does not have any practical use for this call.Note: The same SKU can be offered through an auction and a fixed-price listing concurrently. If this is the case, getOffers will return two offers. Otherwise, only one offer will be returned.The authorization header is the only required HTTP header for this call. See the HTTP request headers section for more information.
 
-        :param str format: This enumeration value sets the listing format for the offer. This query parameter will be passed in if the seller only wants to see offers in this specified listing format.
+        :param str format: This enumeration value sets the listing format for the offers being retrieved. This query parameter will be passed in if the seller only wants to see offers in a specified listing format, such as FIXED_PRICE.
         :param str limit: The value passed in this query parameter sets the maximum number of records to return per page of data. Although this field is a string, the value passed in this field should be a positive integer value. If this query parameter is not set, up to 100 records will be returned on each page of results.
         :param str marketplace_id: The unique identifier of the eBay marketplace. This query parameter will be passed in if the seller only wants to see the product's offers on a specific eBay marketplace.Note: At this time, the same SKU value can not be offered across multiple eBay marketplaces, so the marketplace_id query parameter currently does not have any practical use for this call.
         :param str offset: The value passed in this query parameter sets the page number to retrieve. Although this field is a string, the value passed in this field should be a integer value equal to or greater than 0. The first page of records has a value of 0, the second page of records has a value of 1, and so on. If this query parameter is not set, its value defaults to 0, and the first page of records is returned.
-        :param str sku: The seller-defined SKU value is passed in as a query parameter. All offers associated with this product are returned in the response. Note: The same SKU can be offered through an auction and a fixed-price listing concurrently. If this is the case, getOffers will return two offers. Otherwise, only one offer will be returned. Max length: 50.
+        :param str sku: The seller-defined SKU value is passed in as a query parameter. All offers associated with this product are returned in the response. Note: The same SKU can be offered through an auction and a fixed-price listing concurrently. If this is the case, getOffers will return two offers. Otherwise, only one offer will be returned.Use the getInventoryItems method to retrieve SKU values.Max length: 50.
         :return: Offers
         """
         try:
@@ -6148,7 +6148,7 @@ class API(metaclass=Multiton):
 
         Note: Each listing can be revised up to 250 times in one calendar day. If this revision threshold is reached, the seller will be blocked from revising the item until the next calendar day.This call is used to convert an unpublished offer into a published offer, or live eBay listing. The unique identifier of the offer (offerId) is passed in at the end of the call URI.For those who prefer to publish multiple offers (up to 25 at a time) with one call, the bulkPublishOffer method can be used. In the case of a multiple-variation listing, the publishOfferByInventoryItemGroup call should be used instead, as this call will convert all unpublished offers associated with an inventory item group into a multiple-variation listing.
 
-        :param str offer_id: The unique identifier of the offer that is to be published. (required)
+        :param str offer_id: This path parameter specifies the unique identifier of the offer that is to be published.Use the getOffers method to retrieve offer IDs. (required)
         :return: PublishResponse
         """
         try:
@@ -6202,9 +6202,9 @@ class API(metaclass=Multiton):
         This call updates an existing offer. An existing offer may be in published state (active eBay listing), or in an unpublished state and yet to be published with the publishOffer call. The unique identifier (offerId) for the offer to update is passed in at the end of the call URI.  The updateOffer call does a complete replacement of the existing offer object, so all fields that make up the current offer object are required, regardless of whether their values changed.  Other information that is required before an unpublished offer can be published or before a published offer can be revised include: Inventory location Offer price Available quantity eBay listing category Referenced listing policy profiles to set payment, return, and fulfillment values/settings  Note: Though the includeCatalogProductDetails parameter is not required to be submitted in the request, the parameter defaults to true if omitted from both the updateOffer and the createOffer calls. If a value is specified in the updateOffer call, this value will be used.Note: In addition to the authorization header, which is required for all Inventory API calls, this call also requires the Content-Type and Content-Language headers. See the HTTP request headers for more information.Note: Each listing can be revised up to 250 times in one calendar day. If this revision threshold is reached, the seller will be blocked from revising the item until the next calendar day. For published offers, the listingDescription field is also required to update the offer/eBay listing. For unpublished offers, this field is not necessarily required unless it is already set for the unpublished offer.
 
         :param EbayOfferDetailsWithId body: Details of the offer for the channel (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be en-US for English or de-DE for German. For more information on the Content-Language header, refer to HTTP request headers. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be en-US for English or de-DE for German.For more information on the Content-Language header, refer to HTTP request headers. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str offer_id: The unique identifier of the offer that is being updated. This identifier is passed in at the end of the call URI. (required)
+        :param str offer_id: This path parameter specifies the unique identifier of the offer being updated.Use the getOffers method to retrieve offer IDs. (required)
         :return: OfferResponse
         """
         try:
@@ -6228,7 +6228,7 @@ class API(metaclass=Multiton):
 
         This call is used to end a single-variation listing that is associated with the specified offer. This call is used in place of the deleteOffer call if the seller only wants to end the listing associated with the offer but does not want to delete the offer object. With this call, the offer object remains, but it goes into the unpublished state, and will require a publishOffer call to relist the offer.To end a multiple-variation listing that is associated with an inventory item group, the withdrawOfferByInventoryItemGroup method can be used. This call only ends the multiple-variation listing associated with an inventory item group but does not delete the inventory item group object, nor does it delete any of the offers associated with the inventory item group, but instead all of these offers go into the unpublished state.
 
-        :param str offer_id: The unique identifier of the offer that is to be withdrawn. This value is passed into the path of the call URI. (required)
+        :param str offer_id: This path parameter specifies the unique identifier of the offer that is to be withdrawn.Use the getOffers method to retrieve offer IDs. (required)
         :return: WithdrawResponse
         """
         try:
@@ -6282,9 +6282,9 @@ class API(metaclass=Multiton):
         This call is used by the seller to create or replace a list of products that are compatible with the inventory item. The inventory item is identified with a SKU value in the URI. Product compatibility is currently only applicable to motor vehicle parts and accessory categories, but more categories may be supported in the future.Note: In addition to the authorization header, which is required for all Inventory API calls, this call also requires the Content-Type and Content-Language headers. See the HTTP request headers for more information.
 
         :param Compatibility body: Details of the compatibility (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be en-US for English or de-DE for German. For more information on the Content-Language header, refer to HTTP request headers. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be en-US for English or de-DE for German.For more information on the Content-Language header, refer to HTTP request headers. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str sku: A SKU (stock keeping unit) is an unique identifier defined by a seller for a product (required)
+        :param str sku: This path parameter specifies the SKU (stock keeping unit) of the inventory item associated with the compatibility list being created.Use the getInventoryItems method to retrieve SKU values. (required)
         :return: BaseResponse
         """
         try:
@@ -6308,7 +6308,7 @@ class API(metaclass=Multiton):
 
         This call is used by the seller to delete the list of products that are compatible with the inventory item that is associated with the compatible product list. The inventory item is identified with a SKU value in the URI. Product compatibility is currently only applicable to motor vehicle parts and accessory categories, but more categories may be supported in the future.
 
-        :param str sku: A SKU (stock keeping unit) is an unique identifier defined by a seller for a product (required)
+        :param str sku: This path parameter specifies the SKU (stock keeping unit) of the inventory item that is associated with the product compatibility list that is being deleted.Use the getInventoryItems method to retrieve SKU values. (required)
         :return: None
         """
         try:
@@ -6332,7 +6332,7 @@ class API(metaclass=Multiton):
 
         This call is used by the seller to retrieve the list of products that are compatible with the inventory item. The SKU value for the inventory item is passed into the call URI, and a successful call with return the compatible vehicle list associated with this inventory item. Product compatibility is currently only applicable to motor vehicle parts and accessory categories, but more categories may be supported in the future.
 
-        :param str sku: A SKU (stock keeping unit) is an unique identifier defined by a seller for a product (required)
+        :param str sku: This path parameter specifies the SKU (stock keeping unit) of the inventory item associated with the product compatibility list being retrieved.Use the getInventoryItems method to retrieve SKU values. (required)
         :return: Compatibility
         """
         try:
@@ -6356,7 +6356,7 @@ class API(metaclass=Multiton):
 
         This method cancels the shipment associated with the specified shipment ID and the associated shipping label is deleted. When you cancel a shipment, the totalShippingCost of the canceled shipment is refunded to the account established by the user's billing agreement.  Note that you cannot cancel a shipment if you have used the associated shipping label.
 
-        :param str shipment_id: This path parameter specifies the unique eBay-assigned ID of the shipment to be canceled. The shipmentId value is generated and returned by a call to createFromShippingQuote. (required)
+        :param str shipment_id: This path parameter specifies the unique eBay-assigned ID of the shipment to be canceled.The shipmentId value is generated and returned by the createFromShippingQuote method. (required)
         :return: Shipment
         """
         try:
@@ -6409,7 +6409,7 @@ class API(metaclass=Multiton):
 
         This method returns the shipping label file that was generated for the shipmentId value specified in the request. Call createFromShippingQuote to generate a shipment ID.  Use the Accept HTTP header to specify the format of the returned file. The default file format is a PDF file.
 
-        :param str shipment_id: This path parameter specifies the unique eBay-assigned ID of the shipment associated with the shipping label you want to download. The shipmentId value is generated and returned by a call to createFromShippingQuote. (required)
+        :param str shipment_id: This path parameter specifies the unique eBay-assigned identifier of the shipment associated with the shipping label you want to download. The shipmentId value is generated and returned by the createFromShippingQuote method. (required)
         :param str accept: This header specifies the format of the returned file. For this method, the value of the header should be Accept: application/pdf.  (required)
         :return: list[str]
         """
@@ -6434,7 +6434,7 @@ class API(metaclass=Multiton):
 
         This method retrieves the shipment details for the specified shipment ID. Call createFromShippingQuote to generate a shipment ID.
 
-        :param str shipment_id: This path parameter specifies the unique eBay-assigned ID of the shipment you want to retrieve. The shipmentId value is generated and returned by a call to createFromShippingQuote. (required)
+        :param str shipment_id: This path parameter specifies the unique eBay-assigned identifier of the shipment you want to retrieve.The shipmentId value is generated and returned by the createFromShippingQuote method. (required)
         :return: Shipment
         """
         try:
@@ -6461,7 +6461,7 @@ class API(metaclass=Multiton):
         The createShippingQuote method returns a shipping quote  that contains a list of live \"rates.\"  Each rate represents an offer made by a shipping carrier for a specific service and each offer has a live quote for the base service cost. Rates have a time window in which they are \"live,\" and rates expire when their purchase window ends. If offered by the carrier, rates can include shipping options (and their associated prices), and users can add any offered shipping option to the base service should they desire.  Also, depending on the services required, rates can also include pickup and delivery windows.  Each rate is for a single package and is based on the following information: The shipping origin The shipping destination The package size (weight and dimensions)  Rates are identified by a unique eBay-assigned rateId and rates are based on price points, pickup and delivery time frames, and other user requirements. Because each rate offered must be compliant with the eBay shipping program, all rates reflect eBay-negotiated prices.  The various rates returned in a shipping quote offer the user a choice from which they can choose a shipping service that best fits their needs. Select the rate for your shipment and using the associated rateId, call createFromShippingQuote to create a shipment and generate a shipping label that you can use to ship the package.
 
         :param ShippingQuoteRequest body: The request object for createShippingQuote. (required)
-        :param str x_ebay_c_marketplace_id: This header parameter specifies the eBay marketplace for the shipping quote that is being created. For a list of valid values, refer to the section Marketplace ID Values in the Using eBay RESTful APIs guide. (required)
+        :param str x_ebay_c_marketplace_id: This header parameter specifies the eBay marketplace for the shipping quote that is being created.For a list of valid values, refer to the section Marketplace ID Values in the Using eBay RESTful APIs guide. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: ShippingQuote
         """
@@ -6488,7 +6488,7 @@ class API(metaclass=Multiton):
 
         This method retrieves the complete details of the shipping quote associated with the specified shippingQuoteId value.  A \"shipping quote\" pertains to a single specific package and contains a set of shipping \"rates\" that quote the cost to ship the package by different shipping carriers and services. The quotes are based on the package's origin, destination, and size.  Call createShippingQuote to create a shippingQuoteId.
 
-        :param str shipping_quote_id: This path parameter specifies the unique eBay-assigned ID of the shipping quote you want to retrieve. The shippingQuoteId value is generated and returned by a call to createShippingQuote. (required)
+        :param str shipping_quote_id: This path parameter specifies the unique eBay-assigned ID of the shipping quote you want to retrieve.The shippingQuoteId value is generated and returned by the createShippingQuote method. (required)
         :return: ShippingQuote
         """
         try:
@@ -6516,7 +6516,7 @@ class API(metaclass=Multiton):
 
         :param BulkCreateAdsByInventoryReferenceRequest body: The container for the bulk request to create ads for eBay inventory reference IDs. eBay inventory reference IDs are seller-defined IDs used by theInventory API. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which to associated the ads being created. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkCreateAdsByInventoryReferenceResponse
         """
         try:
@@ -6544,7 +6544,7 @@ class API(metaclass=Multiton):
 
         :param BulkCreateAdRequest body: The container for the bulk request to create ads for eBay listing IDs. eBay listing IDs are generated by the Trading API and Inventory API when the listing is created on eBay. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which to associated the ads being created. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkAdResponse
         """
         try:
@@ -6572,7 +6572,7 @@ class API(metaclass=Multiton):
 
         :param BulkDeleteAdsByInventoryReferenceRequest body: This request works with listings created via the Inventory API.The request is to delete a set of ads in bulk, as specified by a list of inventory reference IDs from the specified campaign. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which to delete a set of ads. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkDeleteAdsByInventoryReferenceResponse
         """
         try:
@@ -6600,7 +6600,7 @@ class API(metaclass=Multiton):
 
         :param BulkDeleteAdRequest body: This request object defines the fields for the bulkDeleteAdsByListingId request. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: This path parameter specifies the eBay-assigned identifier of the ad campaign for which to delete a set of ads. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkDeleteAdResponse
         """
         try:
@@ -6628,7 +6628,7 @@ class API(metaclass=Multiton):
 
         :param BulkCreateAdsByInventoryReferenceRequest body: This request object defines the fields for the BulkCreateAdsByInventoryReference request. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which to update the bid percentage for a set of ads. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkUpdateAdsByInventoryReferenceResponse
         """
         try:
@@ -6656,7 +6656,7 @@ class API(metaclass=Multiton):
 
         :param BulkCreateAdRequest body: This request object defines the fields for the BulkCreateAdsByListingId request. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that's generated when a campaign is created. Get a seller's campaign IDs by calling getCampaigns. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which to update the bid percentage for a set of ads. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkAdUpdateResponse
         """
         try:
@@ -6684,7 +6684,7 @@ class API(metaclass=Multiton):
 
         :param BulkUpdateAdStatusRequest body: The bulk request to update the ads. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the ad statuses being updated. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkAdUpdateStatusResponse
         """
         try:
@@ -6712,7 +6712,7 @@ class API(metaclass=Multiton):
 
         :param BulkUpdateAdStatusByListingIdRequest body: The bulk request to update ads. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the ads being updated. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkAdUpdateStatusByListingIdResponse
         """
         try:
@@ -6740,7 +6740,7 @@ class API(metaclass=Multiton):
 
         :param CreateAdRequest body: This request object defines the fields used in the createAdByListingId request. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which to associate the newly created ad. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: object
         """
         try:
@@ -6768,7 +6768,7 @@ class API(metaclass=Multiton):
 
         :param CreateAdsByInventoryReferenceRequest body: This request object defines the fields used in the createAdsByInventoryReference request. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which to associate the newly created ads. Use the getCampaigns method to retrieve campaign IDs (required)
         :return: AdReferences
         """
         try:
@@ -6792,8 +6792,8 @@ class API(metaclass=Multiton):
 
         This method removes the specified ad from the specified campaign.Pass the ID of the ad to delete with the ID of the campaign associated with the ad as path parameters to the call.Call getCampaigns to get the current list of the seller's campaign IDs.Note: This method only applies to the Cost Per Sale (CPS) funding model; it does not apply to the Cost Per Click (CPC) funding model. See Funding Models in the Promoted Listings Playbook for more information.When using the CPC funding model, use the bulkUpdateAdsStatusByListingId method to change the status of ads to ARCHIVED.
 
-        :param str ad_id: Identifier of an ad. This ID was generated when the ad was created. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str ad_id: This path parameter specifies the unique identifier of the ad being deleted. Use the getAds method to retrieve ad IDs. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the ad being deleted. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
         try:
@@ -6821,7 +6821,7 @@ class API(metaclass=Multiton):
 
         :param DeleteAdsByInventoryReferenceRequest body: This request object defines the fields for the deleteAdsByInventoryReference request. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the ads being deleted. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: AdIds
         """
         try:
@@ -6845,8 +6845,8 @@ class API(metaclass=Multiton):
 
         This method retrieves the specified ad from the specified campaign.  In the request, supply the campaign_id and ad_id as path parameters. Call getCampaigns to retrieve a list of the seller's current campaign IDs and call getAds to retrieve their current ad IDs.
 
-        :param str ad_id: A unique identifier for an ad. This ID is generated when the ad is created. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str ad_id: This path parameter specifies the unique identifier of the ad being retrieved. Use the getAds method to retrieve ad IDs. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the ad being retrieved. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: Ad
         """
         try:
@@ -6870,11 +6870,11 @@ class API(metaclass=Multiton):
 
         This method retrieves Promoted Listings ads that are associated with listings created with either the Trading API or the Inventory API. The method retrieves ads related to the specified campaign. Specify the Promoted Listings campaign to target with the campaign_id path parameter. Because of the large number of possible results, you can use query parameters to paginate the result set by specifying a limit, which dictates how many ads to return on each page of the response. You can also specify how many ads to skip in the result set before returning the first result using the offset path parameter. Call getCampaigns to retrieve the current campaign IDs for the seller.
 
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
-        :param str ad_group_ids: A comma-separated list of ad group IDs. The results will be filtered to only include active ads for these ad groups. Call getAdGroups to retrieve the ad group ID for the ad group.Note: This field only applies to the Cost Per Click (CPC) funding model; it does not apply to the Cost Per Sale (CPS) funding model.
-        :param str ad_status: A comma-separated list of ad statuses. The results will be filtered to only include the given statuses of the ad. If none are provided, all ads are returned.
-        :param str limit: Specifies the maximum number of ads to return on a page in the paginated response. Default: 10 Maximum: 500
-        :param str listing_ids: A comma-separated list of listing IDs. The response includes only active ads (ads associated with a RUNNING campaign). The results do not include listing IDs that are excluded by other conditions.
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the ads being retrieved. Use the getCampaigns method to retrieve campaign IDs. (required)
+        :param str ad_group_ids: A comma-separated list of ad group IDs. The results will be filtered to only include active ads for these ad groups.Use the getAdGroups method to retrieve the ad group ID for the ad group.Note: This field only applies to the Cost Per Click (CPC) funding model; it does not apply to the Cost Per Sale (CPS) funding model.
+        :param str ad_status: A comma-separated list of ad statuses. The results will be filtered to only include the given statuses of the ad. If none are provided, all ads are returned.See AdStatusEnum for supported values.
+        :param str limit: Specifies the maximum number of ads to return on a page in the paginated response.Default: 10 Maximum: 500
+        :param str listing_ids: A comma-separated list of listing IDs. Note: The response includes only active ads. The results do not include listing IDs that are excluded by other conditions.
         :param str offset: Specifies the number of ads to skip in the result set before returning the first ad in the paginated response.  Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
         :return: AdPagedCollectionResponse
         """
@@ -6901,9 +6901,9 @@ class API(metaclass=Multiton):
 
         This method retrieves Promoted Listings ads associated with listings that are managed with the Inventory API from the specified campaign.Supply the campaign_id as a path parameter and use query parameters to specify the inventory_reference_id and inventory_reference_type pairs.In the Inventory API, an inventory reference ID is either a seller-defined SKU value or an inventoryItemGroupKey (a seller-defined ID for an inventory item group, which is an entity that's used in the Inventory API to create a multiple-variation listing). To indicate a listing managed by the Inventory API, you must always specify both an inventory_reference_id and the associated inventory_reference_type.Call getCampaigns to retrieve all of the seller's the current campaign IDs.Note: This method only applies to the Cost Per Sale (CPS) funding model; it does not apply to the Cost Per Click (CPC) funding model. See Funding Models in the Promoted Listings Playbook for more information.
 
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
-        :param str inventory_reference_id: The inventory reference ID associated with the ad you want returned. A seller's inventory reference ID is the ID of either a listing or the ID of an inventory item group (the parent of a multi-variation listing, such as a shirt that is available in multiple sizes and colors). You must always supply in both an inventory_reference_id and an inventory_reference_type. (required)
-        :param str inventory_reference_type: The type of the inventory reference ID. Set this value to either INVENTORY_ITEM (a single listing) or INVENTORY_ITEM_GROUP (a multi-variation listing). You must always pass in both an inventory_reference_id and an inventory_reference_type.  (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the ads being retrieved. Use the getCampaigns method to retrieve campaign IDs. (required)
+        :param str inventory_reference_id: This query parameter specifies the unique identifier of a single-item listing or a multi-variation listing.To retrieve an ad for a single-item listing, set the inventoryReferenceType value to INVENTORY_ITEM and specify an item ID or a SKU (if the SKU is defined in the listing).To retrieve an ad for a multi-variation listing, set the inventoryReferenceType value to INVENTORY_ITEM_GROUP and specify the item ID for the multi-variation listing or the inventoryitemGroupKey value as defined in the Inventory API. (required)
+        :param str inventory_reference_type: This query parameter specifies the type of the item the inventory_reference_id references.See InventoryReferenceType for supported values. (required)
         :return: Ads
         """
         try:
@@ -6931,8 +6931,8 @@ class API(metaclass=Multiton):
 
         :param UpdateBidPercentageRequest body: This type defines the fields for the updateBid request. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str ad_id: A unique eBay-assigned ID for an ad that's generated when an ad is created. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str ad_id: This path parameter specifies the unique identifier of the ad for which the bid percentage is being updated. Use the getAds method to retrieve ad IDs. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the ad being updated. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
         try:
@@ -6960,7 +6960,7 @@ class API(metaclass=Multiton):
 
         :param CreateAdGroupRequest body: This type defines the fields for the createAdGroup request. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign to associate with the ad group being created. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: object
         """
         try:
@@ -6986,8 +6986,8 @@ class API(metaclass=Multiton):
 
         Note: This method is only available for select partners who have been approved for the eBay Promoted Listings Advanced (PLA) program. For information about how to request access to this program, refer to  Promoted Listings Advanced Access Requests in the Promoted Listings Playbook. To determine if a seller qualifies for PLA, use the getAdvertisingEligibility method in Account API.This method retrieves the details of a specified ad group, such as the ad group’s default bid and status.In the request, specify the campaign_id and ad_group_id as path parameters.Call getCampaigns to retrieve a list of the current campaign IDs for a seller and call getAdGroups for the ad group ID of the ad group you wish to retrieve.
 
-        :param str ad_group_id: The ID of the ad group that shall be retrieved. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str ad_group_id: This path parameter specifies the unique identifier of the ad group being retrieved. Use the getAdGroups method to retrieve ad group IDs. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the ad group being retrieved. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: AdGroup
         """
         try:
@@ -7011,8 +7011,8 @@ class API(metaclass=Multiton):
 
         Note: This method is only available for select partners who have been approved for the eBay Promoted Listings Advanced (PLA) program. For information about how to request access to this program, refer to  Promoted Listings Advanced Access Requests in the Promoted Listings Playbook. To determine if a seller qualifies for PLA, use the getAdvertisingEligibility method in Account API.This method retrieves ad groups for the specified campaigns.Each campaign can only have one ad group.In the request, supply the campaign_ids as path parameters.Call getCampaigns to retrieve a list of the current campaign IDs for a seller.
 
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
-        :param str ad_group_status: A comma-separated list of ad group statuses. The results will be filtered to only include the given statuses of the ad group.The results might not include these ad groups if other search conditions exclude them.
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the ad groups being retrieved. Use the getCampaigns method to retrieve campaign IDs. (required)
+        :param str ad_group_status: A comma-separated list of ad group statuses. The results will be filtered to only include the given statuses of the ad group. See AdGroupStatusEnum for supported values.
         :param str limit: The number of results, from the current result set, to be returned in a single page.
         :param str offset: The number of results that will be skipped in the result set. This is used with the limit field to control the pagination of the output.For example, if the offset is set to 0 and the limit is set to 10, the method will retrieve items 1 through 10 from the list of items returned. If the offset is set to 10 and the limit is set to 10, the method will retrieve items 11 through 20 from the list of items returned.Default: 0
         :return: AdGroupPagedCollectionResponse
@@ -7042,8 +7042,8 @@ class API(metaclass=Multiton):
 
         :param TargetedBidRequest body: The data requested to retrieve the suggested bids. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str ad_group_id: The ID of the ad group containing the keywords for which the bid suggestions will be provided. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str ad_group_id: This path parameter specifies the unique identifier of the ad group containing the keywords for which the bid suggestions will be provided. Use the getAdGroups method to retrieve ad group IDs. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the keywords for which bid suggestions will be provided. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: TargetedBidsPagedCollection
         """
         try:
@@ -7070,8 +7070,8 @@ class API(metaclass=Multiton):
         Note: This method is only available for select partners who have been approved for the eBay Promoted Listings Advanced (PLA) program. For information about how to request access to this program, refer to  Promoted Listings Advanced Access Requests in the Promoted Listings Playbook. To determine if a seller qualifies for PLA, use the getAdvertisingEligibility method in Account API.This method allows sellers to retrieve a list of keyword ideas to be targeted for Promoted Listings campaigns.
 
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str ad_group_id: The ID of the ad group for which the keyword suggestions will be provided. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str ad_group_id: This path parameter specifies the unique identifier of the ad group for which the keyword suggestions will be provided. Use the getAdGroups method to retrieve ad group IDs. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which keyword suggestions will be provided. Use the getCampaigns method to retrieve campaign IDs. (required)
         :param TargetedKeywordRequest body: The required data to retrieve suggested keywords.
         :return: TargetedKeywordsPagedCollection
         """
@@ -7100,8 +7100,8 @@ class API(metaclass=Multiton):
 
         :param UpdateAdGroupRequest body: This type defines the fields for the UpdateAdGroup request. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str ad_group_id: The ID of the ad group that shall be updated. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str ad_group_id: This path parameter specifies the unique identifier of the ad group that is being updated. Use the getAdGroups method to retrieve ad group IDs. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which the ad group is being updated. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
         try:
@@ -7125,7 +7125,7 @@ class API(metaclass=Multiton):
 
         This call downloads the report as specified by the report_id path parameter.  Call createReportTask to schedule and generate a Promoted Listings report. All date values are returned in UTC format (yyyy-MM-ddThh:mm:ss.sssZ).Note: The reporting of some data related to sales and ad-fees may require a 72-hour (maximum) adjustment period which is often referred to as the Reconciliation Period. Such adjustment periods should, on average, be minimal. However, at any given time, the payments tab may be used to view those amounts that have actually been charged.Important!For ad_report and ad_report_task methods, the API call limit is subject to a per user quota. These API calls can only be executed a maximum of 200 times per hour for each seller/user. If the number of calls per hour exceeds this limit, any new calls will be blocked for the next hour.
 
-        :param str report_id: The unique ID of the Promoted Listings report you want to get. This ID is generated by eBay when you run a report task with a call to createReportTask. Get all the seller's report IDs by calling getReportTasks. (required)
+        :param str report_id: This path parameter specifies the unique ID of the Promoted Listings report being retrieved.Use the getReportTasks method to retrieve report IDs. (required)
         :return: object
         """
         try:
@@ -7147,8 +7147,10 @@ class API(metaclass=Multiton):
     def sell_marketing_get_report_metadata(self, **kwargs):  # noqa: E501
         """get_report_metadata
 
-        This call retrieves information that details the fields used in each of the Promoted Listings reports. Use the returned information to configure the different types of Promoted Listings reports.The request for this method does not use a payload or any URI parameters.Note: The reporting of some data related to sales and ad-fees may require a 72-hour (maximum) adjustment period which is often referred to as the Reconciliation Period. Such adjustment periods should, on average, be minimal. However, at any given time, the payments tab may be used to view those amounts that have actually been charged.
+        This call retrieves information that details the fields used in each of the Promoted Listings reports. Use the returned information to configure the different types of Promoted Listings reports. You can retrieve metadata for all report types,funding models and channels, or you can filter based on funding model and/or channel.Note: The reporting of some data related to sales and ad-fees may require a 72-hour (maximum) adjustment period which is often referred to as the Reconciliation Period. Such adjustment periods should, on average, be minimal. However, at any given time, the payments tab may be used to view those amounts that have actually been charged.
 
+        :param str funding_model: This query parameter is used only if the user wants to see report metadata for a specific funding model. Refer to the FundingModelEnum type for supported values.
+        :param str channel: This query parameter is used only if the user wants to see COST_PER_CLICK report metadata for a specific channel. Refer to the ChannelEnum type for supported values.Note: The channel parameter is only applicable for COST_PER_CLICK funding model.
         :return: ReportMetadatas
         """
         try:
@@ -7174,7 +7176,9 @@ class API(metaclass=Multiton):
 
         This call retrieves metadata that details the fields used by a specific Promoted Listings report type. Use the report_type path parameter to indicate metadata to retrieve.This method does not use a request payload.Note: The reporting of some data related to sales and ad-fees may require a 72-hour (maximum) adjustment period which is often referred to as the Reconciliation Period. Such adjustment periods should, on average, be minimal. However, at any given time, the payments tab may be used to view those amounts that have actually been charged.
 
-        :param str report_type: The name of the report type whose metadata you want to retrieve.Tip: For details about available report types and their descriptions, refer to the ReportTypeEnum. (required)
+        :param str report_type: This path parameter specifies the name of the report type whose metadata you want to retrieve.For details about available report types and their descriptions, refer to the ReportTypeEnum. (required)
+        :param str funding_model: The funding model used in the report. The funding model must be compatible with the report type specified in the path parameter. Refer to the FundingModelEnum type for supported values.
+        :param str channel: The channel used in the report. The channel must be compatible with the report type specified in the path parameter. Refer to the ChannelEnum type for supported values. Note: The channel parameter is only applicable for COST_PER_CLICK funding model.
         :return: ReportMetadata
         """
         try:
@@ -7225,7 +7229,7 @@ class API(metaclass=Multiton):
 
         This call deletes the report task specified by the report_task_id path parameter. This method also deletes any reports generated by the report task.  Report task IDs are generated by eBay when you call createReportTask. Get a complete list of a seller's report-task IDs by calling getReportTasks.Important!For ad_report and ad_report_task methods, the API call limit is subject to a per user quota. These API calls can only be executed a maximum of 200 times per hour for each seller/user. If the number of calls per hour exceeds this limit, any new calls will be blocked for the next hour.
 
-        :param str report_task_id: A unique eBay-assigned ID for the report task that's generated when the report task is created by a call to createReportTask. (required)
+        :param str report_task_id: This path parameter specifies the unique identifier of the report task being deleted. Use the getReportTasks method to retrieve report task Ids. (required)
         :return: None
         """
         try:
@@ -7249,7 +7253,7 @@ class API(metaclass=Multiton):
 
         This call returns the details of a specific Promoted Listings report task, as specified by the report_task_id path parameter. The report task includes the report criteria (such as the report dimensions, metrics, and included listing) and the report-generation rules (such as starting and ending dates for the specified report task). Report-task IDs are generated by eBay when you call createReportTask. Get a complete list of a seller's report-task IDs by calling getReportTasks.Important!For ad_report and ad_report_task methods, the API call limit is subject to a per user quota. These API calls can only be executed a maximum of 200 times per hour for each seller/user. If the number of calls per hour exceeds this limit, any new calls will be blocked for the next hour.
 
-        :param str report_task_id: A unique eBay-assigned ID for the report task that's generated when the report task is created by a call to createReportTask. (required)
+        :param str report_task_id: This path parameter specifies the unique identifier of the report task being retrieved. Use the getReportTasks method to retrieve report task Ids. (required)
         :return: ReportTask
         """
         try:
@@ -7273,9 +7277,9 @@ class API(metaclass=Multiton):
 
         This method returns information on all the existing report tasks related to a seller. Use the report_task_statuses query parameter to control which reports to return. You can paginate the result set by specifying a limit, which dictates how many report tasks to return on each page of the response. Use the offset parameter to specify how many reports to skip in the result set before returning the first result.Important!For ad_report and ad_report_task methods, the API call limit is subject to a per user quota. These API calls can only be executed a maximum of 200 times per hour for each seller/user. If the number of calls per hour exceeds this limit, any new calls will be blocked for the next hour.
 
-        :param str limit: Specifies the maximum number of report tasks to return on a page in the paginated response.  Default: 10Maximum: 500
+        :param str limit: Specifies the maximum number of report tasks to return on a page in the paginated response.Default: 10Maximum: 500
         :param str offset: Specifies the number of report tasks to skip in the result set before returning the first report in the paginated response.  Combine offset with the limit query parameter to control the reports returned in the response. For example, if you supply an offset of 0 and a limit of 10, the response contains the first 10 reports from the complete list of report tasks retrieved by the call. If offset is 10 and limit is 10, the first page of the response contains reports 11-20 from the complete result set. Default: 0
-        :param str report_task_statuses: This parameter filters the returned report tasks by their status. Supply a comma-separated list of the report statuses you want returned. The results are filtered to include only the report statuses you specify.Note: The results might not include some report tasks if other search conditions exclude them.Valid values:     PENDING    SUCCESS    FAILED
+        :param str report_task_statuses: This query parameter filters the returned report tasks by their status. Supply a comma-separated list of the report statuses you want returned. The results are filtered to include only the report statuses you specify.Note: The results might not include some report tasks if other search conditions exclude them.See TaskStatusEnum for supported values.
         :return: ReportTaskPagedCollection
         """
         try:
@@ -7303,7 +7307,7 @@ class API(metaclass=Multiton):
 
         :param CloneCampaignRequest body: This type defines the fields for a clone campaign request. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created. This ID is the campaign ID of the campaign being cloned.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign being cloned. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: object
         """
         try:
@@ -7354,7 +7358,7 @@ class API(metaclass=Multiton):
 
         This method deletes the campaign specified by the campaign_id query parameter.Note:  You can only delete campaigns that have ended.Call getCampaigns to retrieve the campaign_id and the campaign status (RUNNING, PAUSED, ENDED, and so on) for all the seller's campaigns.
 
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign being deleted. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
         try:
@@ -7378,7 +7382,7 @@ class API(metaclass=Multiton):
 
         This method ends an active (RUNNING) or paused campaign. Specify the campaign you want to end by supplying its campaign ID in a query parameter.  Call getCampaigns to retrieve the campaign_id and the campaign status (RUNNING, PAUSED, ENDED, and so on) for all the seller's campaigns.
 
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the RUNNING or PAUSED ad campaign that is being ended. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
         try:
@@ -7402,9 +7406,9 @@ class API(metaclass=Multiton):
 
         This method retrieves the campaigns containing the listing that is specified using either a listing ID, or an inventory reference ID and inventory reference type pair. The request accepts either a listing_id, or an inventory_reference_id and inventory_reference_type pair, as used in the Inventory API.eBay listing IDs are generated by either the Trading API or the Inventory API when you create a listing.An inventory reference ID can be either a seller-defined SKU or inventoryItemGroupKey, as specified in the Inventory API.Note: This method only applies to the Cost Per Sale (CPS) funding model; it does not apply to the Cost Per Click (CPC) funding model. See Funding Models in the Promoted Listings Playbook for more information.
 
-        :param str inventory_reference_id: The seller's inventory reference ID of the listing to be used to find the campaign in which it is associated.  This will either be a seller-defined SKU value or inventory item group ID, depending on the reference type specified. You must always pass in both  inventory_reference_id and inventory_reference_type.
-        :param str inventory_reference_type: The type of the seller's inventory reference ID, which is a listing or group of items. You must always pass in both inventory_reference_id and inventory_reference_type.
-        :param str listing_id: Identifier of the eBay listing associated with the ad.
+        :param str inventory_reference_id: This query parameter specifies the unique identifier of a single-item listing or a multi-variation listing associated with the campaign being retrieved.To retrieve an campaign for a single-item listing, set the inventoryReferenceType value to INVENTORY_ITEM and specify an item ID or a SKU (if the SKU is defined in the listing).To retrieve an campaign for a multi-variation listing, set the inventoryReferenceType value to INVENTORY_ITEM_GROUP and specify the item ID for the multi-variation listing or the inventoryitemGroupKey value as defined in the Inventory API.Note: You must always pass in both inventory_reference_id and inventory_reference_type.
+        :param str inventory_reference_type: This query parameter specifies the type of the seller's inventory reference ID, which is a listing or group of items.See InventoryReferenceTypeEnum for supported values.Note: You must always pass in both inventory_reference_id and inventory_reference_type.
+        :param str listing_id: This query parameter specifies the unique identifier of the eBay listing associated with the ad being used to retrieve the campaign.eBay listing IDs are generated by either the Trading API or the Inventory API when you create a listing.
         :return: Campaigns
         """
         try:
@@ -7428,7 +7432,7 @@ class API(metaclass=Multiton):
 
         This method retrieves the details of a single campaign, as specified with the campaign_id query parameter.  This method returns all the details of a campaign (including the campaign's the selection rules), except the for the listing IDs or inventory reference IDs included in the campaign. These IDs are returned by getAds. Call getCampaigns to retrieve a list of the seller's campaign IDs.
 
-        :param str campaign_id: The unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign being retrieved. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: Campaign
         """
         try:
@@ -7454,7 +7458,7 @@ class API(metaclass=Multiton):
 
         This method retrieves the details of a single campaign, as specified with the campaign_name query parameter. Note that the campaign name you specify must be an exact, case-sensitive match of the name of the campaign you want to retrieve.Call getCampaigns to retrieve a list of the seller's campaign names.
 
-        :param str campaign_name: The name of the campaign. (required)
+        :param str campaign_name: This query parameter specifies name of the campaign being retrieved. Use the getCampaigns method to retrieve a list of a seller's campaign names. (required)
         :return: Campaign
         """
         try:
@@ -7478,14 +7482,14 @@ class API(metaclass=Multiton):
 
         This method retrieves the details for all of the seller's defined campaigns. Request parameters can be used to retrieve a specific campaign, such as the campaign's name, the start and end date, the channel, the status, and the funding model (i.e., Cost Per Sale (CPS) or Cost Per Click (CPC)). You can filter the result set by a campaign name, end date range, start date range, campaign channel, or campaign status. You can also paginate the records returned from the result set using the limit query parameter, and control which records to return using the  offset parameter.
 
-        :param str campaign_name: Specifies the campaign name. The results are filtered to include only the campaign by the specified name.Note: The results might be null if other filters exclude the campaign with this name. Maximum:  1 campaign name
-        :param str campaign_status: Include this filter and input a specific campaign status to retrieve campaigns currently in that state. Note: The results might not include all the campaigns with this status if other filters exclude them. Valid values: See CampaignStatusEnum Maximum:  1 status
-        :param str channels: Specifies the channel for the the campaign.The results will be filtered to only include campaigns with the specified channel. If not specified, all campaigns matching other filter parameters will be returned. The results might not include these campaigns if other search conditions exclude them.Valid Values:ON_SITEOFF_SITE
-        :param str end_date_range: Specifies the range of a campaign's end date. The results are filtered to include only campaigns with an end date that is within specified range. Valid format (UTC):  yyyy-MM-ddThh:mm:ssZ..yyyy-MM-ddThh:mm:ssZ   (campaign ends within this range)yyyy-MM-ddThh:mm:ssZ.. (campaign ends on or after this date)..yyyy-MM-ddThh:mm:ssZ  (campaign ends on or before this date)2016-09-08T00:00.00.000Z..2016-09-09T00:00:00Z (campaign ends on September 08, 2016) Note: The results might not include all the campaigns ending on this date if other filters exclude them.
-        :param str funding_strategy: Specifies the funding strategy for the campaign.The results will be filtered to only include campaigns with the specified funding model. If not specified, all campaigns matching the other filter parameters will be returned. The results might not include these campaigns if other search conditions exclude them.Valid Values:COST_PER_SALECOST_PER_CLICK
-        :param str limit: Specifies the maximum number of campaigns to return on a page in the paginated response. Default: 10 Maximum:  500
-        :param str offset: Specifies the number of campaigns to skip in the result set before returning the first report in the paginated response.  Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
-        :param str start_date_range: Specifies the range of a campaign's start date in which to filter the results. The results are filtered to include only campaigns with a start date that is equal to this date or is within specified range.Valid format (UTC):  yyyy-MM-ddThh:mm:ssZ..yyyy-MM-ddThh:mm:ssZ (starts within this range)yyyy-MM-ddThh:mm:ssZ (campaign starts on or after this date)..yyyy-MM-ddThh:mm:ssZ (campaign starts on or before this date)2016-09-08T00:00.00.000Z..2016-09-09T00:00:00Z (campaign starts on September 08, 2016)Note: The results might not include all the campaigns with this start date if other filters exclude them.
+        :param str campaign_name: This query parameter specifies the name of the campaign being retrieved. The results are filtered to include only the campaign by the specified name. Use the getCampaigns method to retrieve a list of a seller's campaign names.Note: The results might be null if other filters exclude the campaign with this name. Maximum:  1 campaign name
+        :param str campaign_status: This query parameter specifies the status of the campaign(s) being retrieved.Note: The results might not include all the campaigns with this status if other filters exclude them.Valid values: See CampaignStatusEnum Maximum:  1 status
+        :param str channels: This query parameter specifies the channel for the the campaign(s) being retrieved.The results will be filtered to only include campaigns with the specified channel. If not specified, all campaigns matching other filter parameters will be returned. The results might not include these campaigns if other search conditions exclude them.Valid Values: See ChannelEnum
+        :param str end_date_range: This query parameter specifies the range of a campaign's end date. The results are filtered to include only campaigns with an end date that is within specified range. Valid format (UTC):  yyyy-MM-ddThh:mm:ssZ..yyyy-MM-ddThh:mm:ssZ   (campaign ends within this range)yyyy-MM-ddThh:mm:ssZ.. (campaign ends on or after this date)..yyyy-MM-ddThh:mm:ssZ  (campaign ends on or before this date)2016-09-08T00:00.00.000Z..2016-09-09T00:00:00Z (campaign ends on September 08, 2016)Note:The results might not include all the campaigns ending on this date if other filters exclude them.
+        :param str funding_strategy: This query parameter specifies the funding strategy for the campaign(s) being retrieved.The results will be filtered to only include campaigns with the specified funding model. If not specified, all campaigns matching the other filter parameters will be returned. The results might not include these campaigns if other search conditions exclude them.Valid Values: See FundingModelEnum
+        :param str limit: This query parameter specifies the maximum number of campaigns to return on a page in the paginated response. Default: 10Maximum:  500
+        :param str offset: This query parameter specifies the number of campaigns to skip in the result set before returning the first report in the paginated response.Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
+        :param str start_date_range: This query parameter specifies the range of a campaign's start date in which to filter the results. The results are filtered to include only campaigns with a start date that is equal to this date or is within specified range.Valid format (UTC):  yyyy-MM-ddThh:mm:ssZ..yyyy-MM-ddThh:mm:ssZ (starts within this range)yyyy-MM-ddThh:mm:ssZ (campaign starts on or after this date)..yyyy-MM-ddThh:mm:ssZ (campaign starts on or before this date)2016-09-08T00:00.00.000Z..2016-09-09T00:00:00Z (campaign starts on September 08, 2016)Note: The results might not include all the campaigns with this start date if other filters exclude them.
         :return: CampaignPagedCollectionResponse
         """
         try:
@@ -7509,7 +7513,7 @@ class API(metaclass=Multiton):
 
         This method launches a Promoted Listings Advanced campaign created using the setupQuickCampaign method that is in DRAFT status. This changes the campaign status to RUNNING or SCHEDULED, based on its specified start date. Specify the campaign you wish to launch by supplying its campaign_id as a path parameter in the call URI. Use the getCampaigns method to retrieve the campaign_id and the campaign status for all the seller's campaigns.
 
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign.Note: The campaign ID value used here must be for a PLA campaign in DRAFT status. For PLA campaigns created with the setupQuickCampaign method, the getCampaign URI for that campaign is returned in the Location response header. That URI will include the campaign_id value, which you will pass in as a path parameter in the launchCampaign method.  (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign being launched.For PLA campaigns created with the setupQuickCampaign method, the getCampaign URI for that campaign is returned in the Location response header. That URI will include the campaign_id value, which you will pass in as a path parameter in the launchCampaign method.Note: The campaign ID value used here must be for a PLA campaign in DRAFT status.  (required)
         :return: None
         """
         try:
@@ -7531,9 +7535,9 @@ class API(metaclass=Multiton):
     def sell_marketing_pause_campaign(self, campaign_id, **kwargs):  # noqa: E501
         """pause_campaign
 
-        This method pauses an active (RUNNING) campaign.  You can restart the campaign by calling resumeCampaign, as long as the campaign's end date is in the future. Note:  The listings associated with a paused campaign cannot be added into another campaign. Call getCampaigns to retrieve the campaign_id and the campaign status (RUNNING, PAUSED, ENDED, and so on) for all the seller's campaigns.
+        This method pauses an active (RUNNING) campaign.  You can restart the campaign by calling resumeCampaign, as long as the campaign's end date is in the future.Note:The listings associated with a paused campaign cannot be added into another campaign.Call getCampaigns to retrieve the campaign_id and the campaign status (RUNNING, PAUSED, ENDED, and so on) for all the seller's campaigns.
 
-        :param str campaign_id: The unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the RUNNING ad campaign being paused. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
         try:
@@ -7557,7 +7561,7 @@ class API(metaclass=Multiton):
 
         This method resumes a paused campaign, as long as its end date is in the future. Supply the campaign_id for the campaign you want to restart as a query parameter in the request.  Call getCampaigns to retrieve the campaign_id and the campaign status (RUNNING, PAUSED, ENDED, and so on) for all the seller's campaigns.
 
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the paused ad campaign that is being resumed. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
         try:
@@ -7610,7 +7614,7 @@ class API(metaclass=Multiton):
 
         Note: This method is only supported for Offsite Ads campaigns. Sellers can use the getAdvertisingEligibility method of the Account API v1 to determine if they are eligible for Offsite Ads.This method allows sellers to retrieve the suggested budget for an Offsite Ads campaign.
 
-        :param str x_ebay_c_marketplace_id: This header identifies the seller's eBay marketplace.Note: If a marketplace ID value is not provided, the default value of EBAY_US is used.See HTTP Request Headers for marketplace ID values. (required)
+        :param str x_ebay_c_marketplace_id: This header identifies the seller's eBay marketplace.Note: If a marketplace ID value is not provided, the default value of EBAY_US is used.See MarketplaceIdEnum for supported values. (required)
         :return: SuggestBudgetResponse
         """
         try:
@@ -7634,10 +7638,10 @@ class API(metaclass=Multiton):
 
         Note: This method is only available for select partners who have been approved for the eBay Promoted Listings Advanced (PLA) program. For information about how to request access to this program, refer to  Promoted Listings Advanced Access Requests in the Promoted Listings Playbook. To determine if a seller qualifies for PLA, use the getAdvertisingEligibility method in Account API.This method allows sellers to obtain ideas for listings, which can be targeted for Promoted Listings campaigns.
 
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
-        :param str category_ids: Specifies the category ID that is used to limit the results. This refers to an exact leaf category (the lowest level in that category and has no children). This field can have one category ID, or a comma-separated list of IDs. To return all category IDs, set to null. Maximum:  10
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which suggestions are being provided. Use the getCampaigns method to retrieve campaign IDs. (required)
+        :param str category_ids: Specifies the category ID that is used to limit the results. This refers to an exact leaf category (the lowest level in that category and has no children). This field can have one category ID, or a comma-separated list of IDs. To return all category IDs, set to null.Use the getCategorySuggestions method to retrieve category IDs.Maximum:  10
         :param str limit: Specifies the maximum number of campaigns to return on a page in the paginated response. If no value is specified, the default value is used. Default: 10 Minimum:  1Maximum:  1000
-        :param str offset: Specifies the number of campaigns to skip in the result set before returning the first report in the paginated response.  Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
+        :param str offset: Specifies the number of campaigns to skip in the result set before returning the first report in the paginated response.Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
         :return: TargetedAdsPagedCollection
         """
         try:
@@ -7665,7 +7669,7 @@ class API(metaclass=Multiton):
 
         :param UpdateAdrateStrategyRequest body: This type defines the request fields for the ad rate strategy that shall be updated. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which the ad rate strategy is being updated. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
         try:
@@ -7692,7 +7696,7 @@ class API(metaclass=Multiton):
         This method allows sellers to change the bidding strategy for a specified Cost Per Click (CPC) campaign. Available bidding strategies are:FIXEDWhen using a fixed bidding strategy, sellers manually assign and adjust keyword bids for the CPC campaign.DYNAMICWhen using a dynamic bidding strategy, eBay will manage a campaign's keyword bids and automatically update them daily to the suggested bid.Note: For a CPC campaign using dynamic bidding, sellers can continue to manually add keywords for the campaign, but they are no longer able to manually adjust their associated bid values. In order to manually adjust bid values, sellers must use the FIXED bidding strategy.Note: This method only applies to the Cost Per Click (CPC) funding model; it does not apply to the Cost Per Sale (CPS) funding model. Refer to Funding Models in the Promoted Listings Playbook for more information.
 
         :param UpdateBiddingStrategyRequest body: This type specifies the new value for the bidding strategy. (required)
-        :param str campaign_id: The unique identifier for the ad campaign for which the keyword bidding strategy will be changed. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which the keyword bidding strategy is being updated. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
         try:
@@ -7720,7 +7724,7 @@ class API(metaclass=Multiton):
 
         :param UpdateCampaignBudgetRequest body: This type defines the request fields for the budget details that shall be updated. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which the budget is being updated. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
         try:
@@ -7748,7 +7752,7 @@ class API(metaclass=Multiton):
 
         :param UpdateCampaignIdentificationRequest body: This type defines the fields to update the campaign name and start and end dates. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign being updated. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
         try:
@@ -7775,7 +7779,7 @@ class API(metaclass=Multiton):
         This method creates a new email campaign. An eBay store owner can create six different types of email campaigns: Welcome, New products & collections, Coupon, Sale event + markdown, Order discount, and Volume pricing.A successful createEmailCampaign request returns the emailCampaignId assigned to the new email campaign.The fields emailCampaignType, audienceCodes, itemSelectMode, subject, and personalizedMessage are required for all email campaign types. Specific email campaign types have required values for additional fields. For more information on the email campaign types, see the Store Email Campaigns section of the Selling Integration Guide.
 
         :param CreateEmailCampaignRequest body: Create a new email campaign request. (required)
-        :param str x_ebay_c_marketplace_id: The eBay marketplace that the email campaign interfaces with.eBay marketplaces correspond to geographical regions or large submarkets of regions. For example, EBAY-US corresponds to the United States market.See the full list of marketplace IDs. (required)
+        :param str x_ebay_c_marketplace_id: The eBay marketplace that the email campaign interfaces with.eBay marketplaces correspond to geographical regions or large submarkets of regions. For example, EBAY-US corresponds to the United States market.See MarketplaceIdEnum for supported values. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: CreateEmailCampaignResponse
         """
@@ -7802,7 +7806,7 @@ class API(metaclass=Multiton):
 
         This method deletes the email campaign specified by the email_campaign_id path parameter.Call getEmailCampaigns to retrieve all of the seller's email campaigns. Use the email_campaign_id of the desired email campaign in the response as the path parameter for this request.
 
-        :param str email_campaign_id: A unique eBay-assigned ID for an email campaign that is generated when an email campaign is created.Note: You can retrieve the email campaign IDs for a specified seller using the getEmailCampaigns method. (required)
+        :param str email_campaign_id: This path parameter specifies the unique eBay-assigned identifier for the email campaign being deleted. You can retrieve the email campaign IDs for a specified seller using the getEmailCampaigns method. (required)
         :return: DeleteEmailCampaignResponse
         """
         try:
@@ -7826,7 +7830,7 @@ class API(metaclass=Multiton):
 
         This method retrieves all available email newsletter audiences for the email campaign type specified by the emailCampaignType path parameter.Use the optional limit and offset path parameters to paginate the results and to control which records are returned, respectively.
 
-        :param str email_campaign_type: The email campaign type to search against. See CampaignTypeEnum for the full list of available email campaign types and associated enum values. (required)
+        :param str email_campaign_type: The email campaign type to search against.See CampaignTypeEnum for the full list of available email campaign types and associated enum values. (required)
         :param str limit: The maximum number of audience groups returned per page in the results set.Min value: 1Max value: 200Default value: 100
         :param str offset: The number of results to skip in a pagination query. This value cannot be less than 0.Default value: 0
         :return: GetEmailCampaignAudiencesResponse
@@ -7854,7 +7858,7 @@ class API(metaclass=Multiton):
 
         This method returns the details of a single email campaign specified by the email_campaign_id path parameter.Call getEmailCampaigns to retrieve a list of all email campaigns from a seller's eBay store.
 
-        :param str email_campaign_id: The unique eBay-assigned ID of the email campaign.Call getEmailCampaigns to retrieve a list of email campaign IDs for a seller. Use the emailCampaignId value of the desired email campaign. (required)
+        :param str email_campaign_id: This path parameter specifies the unique eBay-assigned identifier of the email campaign being retrieved.Use the getEmailCampaigns method to retrieve a list of email campaign IDs for a seller. (required)
         :return: GetEmailCampaignResponse
         """
         try:
@@ -7907,7 +7911,7 @@ class API(metaclass=Multiton):
 
         This method returns a preview of the email sent by the email campaign indicated by the email_campaign_id path parameter.Call getEmailCampaigns to obtain a list of email campaigns. Use the emailCampaignId value of the desired email campaign as the email_campaign_id path parameter value.If this call is executed successfully, the response returns a content field that contains the raw HTML code of the email campaign that can then be rendered anywhere.Note: The eBay listings in the email are sorted according to the email campaign sort criteria. The individual listings can change over time, as well.The result of the email preview call can be treated as a snapshot of the email campaign taken at the date and time of the renderDate value found in the results of the call.
 
-        :param str email_campaign_id: The email campaign id assigned by the system when the email campaign is created. Call getEmailCampaigns to retrieve a list of email campaign IDs for a seller. (required)
+        :param str email_campaign_id: This path parameter specifies the unique eBay assigned identifier for the email campaign associated with the preview being retrieved.Use the getEmailCampaigns method to retrieve a list of email campaign IDs for a seller. (required)
         :return: GetEmailPreviewResponse
         """
         try:
@@ -7962,7 +7966,7 @@ class API(metaclass=Multiton):
 
         :param UpdateCampaignRequest body: update email campaign request (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str email_campaign_id: The email campaign id assigned by the system when the email campaign is created. Call getEmailCampaigns to retrieve a list of email campaign IDs for a seller. (required)
+        :param str email_campaign_id: This path parameter specifies the unique eBay assigned identifier for the email campaign being updated.Use the getEmailCampaigns method to retrieve a list of email campaign IDs for a seller. (required)
         :return: UpdateEmailCampaignResponse
         """
         try:
@@ -8015,7 +8019,7 @@ class API(metaclass=Multiton):
 
         This method deletes the item price markdown promotion specified by the promotion_id path parameter. Call getPromotions to retrieve the IDs of a seller's promotions.  You can delete any promotion with the exception of those that are currently active (RUNNING). To end a running promotion, call updateItemPriceMarkdownPromotion and adjust the endDate field as appropriate.
 
-        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to delete plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (@).  The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Example: 1********5@EBAY_US (required)
+        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to delete plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (@). The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Use the getPromotions method to retrieve promotion Ids. See MarketplaceIdEnum for supported Marketplace ID values.Example: 1********5@EBAY_US (required)
         :return: None
         """
         try:
@@ -8041,7 +8045,7 @@ class API(metaclass=Multiton):
 
         This method returns the complete details of the item price markdown promotion that's indicated by the promotion_id path parameter. Call getPromotions to retrieve the IDs of a seller's promotions.
 
-        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to get plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (@).  The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Example: 1********5@EBAY_US (required)
+        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to retrieve plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (@). The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Use the getPromotions method to retrieve promotion Ids. See MarketplaceIdEnum for supported Marketplace ID values.Example: 1********5@EBAY_US (required)
         :return: ItemPriceMarkdown
         """
         try:
@@ -8068,7 +8072,7 @@ class API(metaclass=Multiton):
         This method updates the specified item price markdown promotion with the new configuration that you supply in the payload of the request. Specify the promotion you want to update using the promotion_id path parameter. Call getPromotions to retrieve the IDs of a seller's promotions.  When updating a promotion, supply all the fields that you used to configure the original promotion (and not just the fields you are updating). eBay replaces the specified promotion with the values you supply in the update request and if you don't pass a field that currently has a value, the update request fails.  The parameters you are allowed to update with this request depend on the status of the promotion you're updating:  DRAFT or SCHEDULED promotions: You can update any of the parameters in these promotions that have not yet started to run, including the discountRules. RUNNING promotions: You can change the endDate and the item's inventory but you cannot change the promotional discount or the promotion's start date. ENDED promotions: Nothing can be changed.
 
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to update plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (@).  The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Example: 1********5@EBAY_US (required)
+        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to update plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (@). The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Use the getPromotions method to retrieve promotion Ids. See MarketplaceIdEnum for supported Marketplace ID values.Example: 1********5@EBAY_US (required)
         :param ItemPriceMarkdown body: This type defines the fields that describe an item price markdown promotion.
         :return: object
         """
@@ -8122,7 +8126,7 @@ class API(metaclass=Multiton):
 
         This method deletes the threshold promotion specified by the promotion_id path parameter. Call getPromotions to retrieve the IDs of a seller's promotions.  You can delete any promotion with the exception of those that are currently active (RUNNING). To end a running threshold promotion, call updateItemPromotion and adjust the endDate field as appropriate.
 
-        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to delete plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (@).  The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Example: 1********5@EBAY_US (required)
+        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to delete plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (@). The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Use the getPromotions method to retrieve promotion Ids. See MarketplaceIdEnum for supported Marketplace ID values.Example: 1********5@EBAY_US (required)
         :return: None
         """
         try:
@@ -8146,7 +8150,7 @@ class API(metaclass=Multiton):
 
         This method returns the complete details of the threshold promotion specified by the promotion_id path parameter. Call getPromotions to retrieve the IDs of a seller's promotions.
 
-        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to retrieve plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (@).  The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Example: 1********5@EBAY_US (required)
+        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to retrieve plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (@). The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Use the getPromotions method to retrieve promotion Ids. See MarketplaceIdEnum for supported Marketplace ID values.Example: 1********5@EBAY_US (required)
         :return: ItemPromotionResponse
         """
         try:
@@ -8173,7 +8177,7 @@ class API(metaclass=Multiton):
         This method updates the specified threshold promotion with the new configuration that you supply in the request. Indicate the promotion you want to update using the promotion_id path parameter.  Call getPromotions to retrieve the IDs of a seller's promotions. When updating a promotion, supply all the fields that you used to configure the original promotion (and not just the fields you are updating). eBay replaces the specified promotion with the values you supply in the update request and if you don't pass a field that currently has a value, the update request will fail. The parameters you are allowed to update with this request depend on the status of the promotion you're updating:  DRAFT or SCHEDULED promotions: You can update any of the parameters in these promotions that have not yet started to run, including the discountRules. RUNNING or PAUSED promotions: You can change the endDate and the item's inventory but you cannot change the promotional discount or the promotion's start date. ENDED promotions: Nothing can be changed. Tip: When updating a RUNNING or PAUSED promotion, set the status field to SCHEDULED for the update request. When the promotion is updated, the previous status (either RUNNING or PAUSED) is retained.
 
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to update plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (@).  The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Example: 1********5@EBAY_US (required)
+        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to update plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (@). The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Use the getPromotions method to retrieve promotion Ids. See MarketplaceIdEnum for supported Marketplace ID values.Example: 1********5@EBAY_US (required)
         :param ItemPromotion body: This type defines the fields that describe an item promotion.
         :return: BaseResponse
         """
@@ -8202,7 +8206,7 @@ class API(metaclass=Multiton):
 
         :param BulkCreateKeywordRequest body: A type that defines the fields for the bulk request to create keywords. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which a set of keywords is being created. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkCreateKeywordResponse
         """
         try:
@@ -8230,7 +8234,7 @@ class API(metaclass=Multiton):
 
         :param BulkUpdateKeywordRequest body: A type that defines the fields for the bulk request to update keywords. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which a set of keywords is being updated.  Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkUpdateKeywordResponse
         """
         try:
@@ -8258,7 +8262,7 @@ class API(metaclass=Multiton):
 
         :param CreateKeywordRequest body: A type that defines the fields for the request to create a keyword. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which a keyword is being created.  Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: object
         """
         try:
@@ -8284,8 +8288,8 @@ class API(metaclass=Multiton):
 
         Note: This method is only available for select partners who have been approved for the eBay Promoted Listings Advanced (PLA) program. For information about how to request access to this program, refer to  Promoted Listings Advanced Access Requests in the Promoted Listings Playbook. To determine if a seller qualifies for PLA, use the getAdvertisingEligibility method in Account API.This method retrieves details on a specific keyword from an ad group within a PLA campaign that uses the Cost Per Click (CPC) funding model.In the request, specify the campaign_id and keyword_id as path parameters.Call the getCampaigns method to retrieve a list of current campaign IDs for a seller and call the getKeywords method to retrieve their keyword IDs.
 
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
-        :param str keyword_id: This path parameter is used to identify the keyword to retrieve. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the keyword being retrieved.  Use the getCampaigns method to retrieve campaign IDs. (required)
+        :param str keyword_id: This path parameter specifies the unique identifier of the keyword being retrieved. Use the getKeywords method to retrieve keyword IDs. (required)
         :return: Keyword
         """
         try:
@@ -8309,9 +8313,9 @@ class API(metaclass=Multiton):
 
         Note: This method is only available for select partners who have been approved for the eBay Promoted Listings Advanced (PLA) program. For information about how to request access to this program, refer to  Promoted Listings Advanced Access Requests in the Promoted Listings Playbook. To determine if a seller qualifies for PLA, use the getAdvertisingEligibility method in Account API.This method can be used to retrieve all of the keywords for ad groups in PLA campaigns that use the Cost Per Click (CPC) funding model.In the request, specify the campaign_id as a path parameter. If one or more ad_group_ids are passed in the request body, the keywords for those ad groups will be returned. If ad_group_ids are not passed in the response body, the call will return all the keywords in the campaign.Call the getCampaigns method to retrieve a list of current campaign IDs for a seller.
 
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
-        :param str ad_group_ids: A comma-separated list of ad group IDs. This query parameter is used if the seller wants to retrieve keywords from one or more specific ad groups. If this query parameter is not used, all keywords that are part of the CPC campaign are returned.Note:You can call the getAdGroups  method to retrieve the ad group IDs for a seller.
-        :param str keyword_status: A comma-separated list of keyword statuses. The results will be filtered to only include the given statuses of the keyword. If none are provided, all keywords are returned.
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the keyword(s) being retrieved.  Use the getCampaigns method to retrieve campaign IDs. (required)
+        :param str ad_group_ids: A comma-separated list of ad group IDs. This query parameter is used if the seller wants to retrieve keywords from one or more specific ad groups. If this query parameter is not used, all keywords that are part of the CPC campaign are returned.Use the getAdGroups  method to retrieve the ad group IDs for a seller.
+        :param str keyword_status: A comma-separated list of keyword statuses. The results will be filtered to only include the given statuses of the keyword. If none are provided, all keywords are returned.See KeywordStatusEnum for supported values.
         :param str limit: Specifies the maximum number of results to return on a page in the paginated response. Default: 10 Maximum:  500
         :param str offset: Specifies the number of results to skip in the result set before returning the first report in the paginated response.  Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
         :return: KeywordPagedCollectionResponse
@@ -8341,8 +8345,8 @@ class API(metaclass=Multiton):
 
         :param UpdateKeywordRequest body: A type that defines the fields for the request to update a keyword. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
-        :param str campaign_id: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.Note: You can retrieve the campaign IDs for a specified seller using the getCampaigns method. (required)
-        :param str keyword_id: A unique eBay-assigned ID that is generated when a keyword is created. (required)
+        :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the keyword being updated.  Use the getCampaigns method to retrieve campaign IDs. (required)
+        :param str keyword_id: This path parameter specifies the unique identifier of the keyword being updated. Use the getKeywords method to retrieve keyword IDs. (required)
         :return: UpdateKeywordResponse
         """
         try:
@@ -8449,7 +8453,7 @@ class API(metaclass=Multiton):
 
         Note: This method is only available for select partners who have been approved for the eBay Promoted Listings Advanced (PLA) program. For information about how to request access to this program, refer to  Promoted Listings Advanced Access Requests in the Promoted Listings Playbook. To determine if a seller qualifies for PLA, use the getAdvertisingEligibility method in Account API.This method retrieves details on a specific negative keyword.In the request, specify the negative_keyword_id as a path parameter.
 
-        :param str negative_keyword_id: The unique identifier for the negative keyword.This value is returned in the Location response header from the createNegativeKeyword method. (required)
+        :param str negative_keyword_id: This path parameter specifies the unique identifier for the negative keyword being retrieved.Use the  getNegativeKeywords method to retrieve negative keyword IDs. (required)
         :return: NegativeKeyword
         """
         try:
@@ -8473,10 +8477,10 @@ class API(metaclass=Multiton):
 
         Note: This method is only available for select partners who have been approved for the eBay Promoted Listings Advanced (PLA) program. For information about how to request access to this program, refer to  Promoted Listings Advanced Access Requests in the Promoted Listings Playbook. To determine if a seller qualifies for PLA, use the getAdvertisingEligibility method in Account API.This method can be used to retrieve all of the negative keywords for ad groups in PLA campaigns that use the Cost Per Click (CPC) funding model.The results can be filtered using the campaign_ids, ad_group_ids, and negative_keyword_status query parameters.Call the getCampaigns method to retrieve a list of current campaign IDs for a seller.
 
-        :param str ad_group_ids: A comma-separated list of ad group IDs.This query parameter is used if the seller wants to retrieve the negative keywords from one or more specific ad groups. The results might not include these ad group IDs if other search conditions exclude them.Note:You can call the getAdGroups method to retrieve the ad group IDs for a seller.Required if the search results must be filtered to include negative keywords created at the ad group level.
-        :param str campaign_ids: A unique eBay-assigned ID for an ad campaign that is generated when a campaign is created.This query parameter is used if the seller wants to retrieve the negative keywords from a specific campaign. The results might not include these campaign IDs if other search conditions exclude them.Note: Currently, only one campaign ID value is supported for each request.
+        :param str ad_group_ids: A comma-separated list of ad group IDs.This query parameter is used if the seller wants to retrieve the negative keywords from one or more specific ad groups. The results might not include these ad group IDs if other search conditions exclude them.Use the getAdGroups method to retrieve the ad group IDs for a seller.Required if the search results must be filtered to include negative keywords created at the ad group level.
+        :param str campaign_ids: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the negative keywords being retrieved.This query parameter is used if the seller wants to retrieve the negative keywords from a specific campaign. The results might not include these campaign IDs if other search conditions exclude them.Note: Currently, only one campaign ID value is supported for each request. Use the getCampaigns method to retrieve campaign IDs.
         :param str limit: The number of results, from the current result set, to be returned in a single page.
-        :param str negative_keyword_status: A comma-separated list of negative keyword statuses.This query parameter is used if the seller wants to filter the search results based on one or more negative keyword statuses.
+        :param str negative_keyword_status: A comma-separated list of negative keyword statuses.This query parameter is used if the seller wants to filter the search results based on one or more negative keyword statuses. See NegativeKeywordStatusEnum for supported values.
         :param str offset: The number of results that will be skipped in the result set. This is used with the limit field to control the pagination of the output.For example, if the offset is set to 0 and the limit is set to 10, the method will retrieve items 1 through 10 from the list of items returned. If the offset is set to 10 and the limit is set to 10, the method will retrieve items 11 through 20 from the list of items returned.
         :return: NegativeKeywordPagedCollectionResponse
         """
@@ -8529,12 +8533,12 @@ class API(metaclass=Multiton):
 
         This method returns the set of listings associated with the promotion_id specified in the path parameter. Call getPromotions to retrieve the IDs of a seller's promotions.  The listing details are returned in a paginated set and you can control and results returned using the following query parameters: limit, offset, q, sort, and status. Maximum associated listings returned: 200 Default number of listings returned: 200
 
-        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to get plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (@).  The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Example: 1********5@EBAY_US (required)
+        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion associated with the listing set plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (@). The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Use the getPromotions method to retrieve promotion Ids. See MarketplaceIdEnum for supported Marketplace ID values.Example: 1********5@EBAY_US (required)
         :param str limit: Specifies the maximum number of promotions returned on a page from the result set. Default: 200Maximum: 200
         :param str offset: Specifies the number of promotions to skip in the result set before returning the first promotion in the paginated response.  Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
         :param str q: Reserved for future use.
         :param str sort: Specifies the order in which to sort the associated listings in the response. If you precede the supplied value with a dash, the response is sorted in reverse order.  Example:    sort=PRICE - Sorts the associated listings by their current price in ascending order    sort=-TITLE - Sorts the associated listings by their title in descending alphabetical order (Z-Az-a)  Valid values:AVAILABLE PRICE TITLE For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/marketing/types/csb:SortField
-        :param str status: This query parameter applies only to markdown promotions. It filters the response based on the indicated status of the promotion. Currently, the only supported value for this parameter is MARKED_DOWN, which indicates active markdown promotions. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/marketing/types/sme:ItemMarkdownStatusEnum
+        :param str status: This query parameter applies only to markdown promotions. It filters the response based on the indicated status of the promotion.Note: Currently, the only supported value for this parameter is MARKED_DOWN, which indicates active markdown promotions. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/marketing/types/sme:ItemMarkdownStatusEnum
         :return: ItemsPagedCollection
         """
         try:
@@ -8558,11 +8562,11 @@ class API(metaclass=Multiton):
 
         This method returns a list of a seller's undeleted promotions. The call returns up to 200 currently-available promotions on the specified marketplace. While the response body does not include the promotion's discountRules or inventoryCriterion containers, it does include the promotionHref (which you can use to retrieve the complete details of the promotion). Use query parameters to sort and filter the results by the number of promotions to return, the promotion state or type, and the eBay marketplace. You can also supply keywords to limit the response to the promotions that contain that keywords in the title of the promotion. Maximum returned: 200
 
-        :param str marketplace_id: The eBay marketplace ID of the site where the promotion is hosted.  Valid values: EBAY_AU = Australia EBAY_DE = Germany EBAY_ES = Spain EBAY_FR = France EBAY_GB = Great Britain EBAY_IT = Italy EBAY_US = United States (required)
+        :param str marketplace_id: This parameter specifies eBay marketplace ID of the site where the promotion is hosted.See MarketplaceIdEnum for supported Marketplace ID values. (required)
         :param str limit: Specifies the maximum number of promotions returned on a page from the result set.  Default: 200 Maximum: 200
         :param str offset: Specifies the number of promotions to skip in the result set before returning the first promotion in the paginated response.  Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
-        :param str promotion_status: Specifies the promotion state by which you want to filter the results. The response contains only those promotions that match the state you specify.  Valid values: DRAFT SCHEDULED RUNNING PAUSED ENDEDMaximum number of input values: 1
-        :param str promotion_type: Filters the returned promotions based on their campaign promotion type. Specify one of the following values to indicate the promotion type you want returned: CODED_COUPON – A coupon code promotion set with createItemPromotion. MARKDOWN_SALE – A markdown promotion set with createItemPriceMarkdownPromotion. ORDER_DISCOUNT – A threshold promotion set with createItemPromotion. VOLUME_DISCOUNT – A volume pricing promotion set with createItemPromotion.
+        :param str promotion_status: This parameter specifies the promotion state by which you want to filter the results. The response contains only those promotions that match the state you specify. See PromotionStatusEnum for supported values.Maximum number of input values: 1
+        :param str promotion_type: This parameter specifies the campaign promotion type by which you want to filter the results.See PromotionTypeEnum for supported values.
         :param str q: A string consisting of one or more keywords. eBay filters the response by returning only the promotions that contain the supplied keywords in the promotion title.  Example: \"iPhone\" or \"Harry Potter.\"  Commas that separate keywords are ignored. For example, a keyword string of \"iPhone, iPad\" equals \"iPhone iPad\", and each results in a response that contains promotions with both \"iPhone\" and \"iPad\" in the title.
         :param str sort: Specifies the order for how to sort the response. If you precede the supplied value with a dash, the response is sorted in reverse order.  Example:    sort=END_DATE   Sorts the promotions in the response by their end dates in ascending order    sort=-PROMOTION_NAME   Sorts the promotions by their promotion name in descending alphabetical order (Z-Az-a)  Valid values:START_DATE END_DATE PROMOTION_NAME For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/marketing/types/csb:SortField
         :return: PromotionsPagedCollection
@@ -8588,7 +8592,7 @@ class API(metaclass=Multiton):
 
         This method pauses a currently-active (RUNNING) threshold promotion and changes the state of the promotion from RUNNING to PAUSED. Pausing a promotion makes the promotion temporarily unavailable to buyers and any currently-incomplete transactions will not receive the promotional offer until the promotion is resumed. Also, promotion teasers are not displayed when a promotion is paused.  Pass the ID of the promotion you want to pause using the promotion_id path parameter. Call getPromotions to retrieve the IDs of the seller's promotions. Note: You can only pause threshold promotions (you cannot pause markdown promotions).
 
-        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to pause plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (@).  The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Example: 1********5@EBAY_US (required)
+        :param str promotion_id: This path parameter takes a concatenation of the ID of the active promotion being paused plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (@). The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Use the getPromotions method to retrieve promotion Ids. See MarketplaceIdEnum for supported Marketplace ID values.Example: 1********5@EBAY_US (required)
         :return: None
         """
         try:
@@ -8612,7 +8616,7 @@ class API(metaclass=Multiton):
 
         This method restarts a threshold promotion that was previously paused and changes the state of the promotion from PAUSED to RUNNING. Only promotions that have been previously paused can be resumed. Resuming a promotion reinstates the promotional teasers and any transactions that were in motion before the promotion was paused will again be eligible for the promotion.  Pass the ID of the promotion you want to resume using the promotion_id path parameter. Call getPromotions to retrieve the IDs of the seller's promotions.
 
-        :param str promotion_id: This path parameter takes a concatenation of the ID of the promotion you want to resume plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (@).  The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Example: 1********5@EBAY_US (required)
+        :param str promotion_id: This path parameter takes a concatenation of the ID of the paused promotion being resumed with the listing set plus the marketplace ID on which the promotion is hosted. Concatenate the two values by separating them with an \"at sign\" (@). The ID of the promotion (promotionId) is a unique eBay-assigned value that's generated when the promotion is created. The Marketplace ID is the ENUM value of eBay marketplace where the promotion is hosted. Use the getPromotions method to retrieve promotion Ids. See MarketplaceIdEnum for supported Marketplace ID values.Example: 1********5@EBAY_US (required)
         :return: None
         """
         try:
@@ -8638,11 +8642,11 @@ class API(metaclass=Multiton):
 
         This method generates a report that lists the seller's running, paused, and ended promotions for the specified eBay marketplace. The result set can be filtered by the promotion status and the number of results to return. You can also supply keywords to limit the report to promotions that contain the specified keywords. Specify the eBay marketplace for which you want the report run using the marketplace_id query parameter. Supply additional query parameters to control the report as needed.
 
-        :param str marketplace_id: The eBay marketplace ID of the site for which you want the promotions report.  Valid values: EBAY_AU = Australia EBAY_DE = Germany EBAY_ES = Spain EBAY_FR = France EBAY_GB = Great Britain EBAY_IT = Italy EBAY_US = United States (required)
+        :param str marketplace_id: This parameter specifies the eBay marketplace ID of the site for which you want the promotions report.See MarketplaceIdEnum for supported Marketplace ID values. (required)
         :param str limit: Specifies the maximum number of promotions returned on a page from the result set.  Default: 200 Maximum: 200
         :param str offset: Specifies the number of promotions to skip in the result set before returning the first promotion in the paginated response.  Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
-        :param str promotion_status: Limits the results to the promotions that are in the state specified by this query parameter.  Valid values: DRAFT SCHEDULED RUNNING PAUSED ENDEDMaximum number of values supported: 1
-        :param str promotion_type: Filters the returned promotions in the report based on their campaign promotion type. Specify one of the following values to indicate the promotion type you want returned in the report: CODED_COUPON – A coupon code promotion set with createItemPromotion. MARKDOWN_SALE – A markdown promotion set with createItemPriceMarkdownPromotion. ORDER_DISCOUNT – A threshold promotion set with createItemPromotion. VOLUME_DISCOUNT – A volume pricing promotion set with createItemPromotion.
+        :param str promotion_status: This parameter specifies the promotion state by which you want to filter the results. See PromotionStatusEnum for supported values.Maximum number of input values: 1
+        :param str promotion_type: This parameter specifies the campaign promotion type by which you want to filter the results.See PromotionTypeEnum for supported values.
         :param str q: A string consisting of one or more keywords. eBay filters the response by returning only the promotions that contain the supplied keywords in the promotion title.  Example: \"iPhone\" or \"Harry Potter.\"  Commas that separate keywords are ignored. For example, a keyword string of \"iPhone, iPad\" equals \"iPhone iPad\", and each results in a response that contains promotions with both \"iPhone\" and \"iPad\" in the title.
         :return: PromotionsReportPagedCollection
         """
@@ -8669,7 +8673,7 @@ class API(metaclass=Multiton):
 
         This method generates a report that summarizes the seller's promotions for the specified eBay marketplace. The report returns information on RUNNING, PAUSED, and ENDED promotions (deleted reports are not returned) and summarizes the seller's campaign performance for all promotions on a given site.  For information about summary reports, see Reading the item promotion Summary report.
 
-        :param str marketplace_id: The eBay marketplace ID of the site you for which you want a promotion summary report.  Valid values: EBAY_AU = Australia EBAY_DE = Germany EBAY_ES = Spain EBAY_FR = France EBAY_GB = Great Britain EBAY_IT = Italy EBAY_US = United States (required)
+        :param str marketplace_id: This parameter specifies the eBay marketplace ID of the site for which you want a promotions summary report.See MarketplaceIdEnum for supported Marketplace ID values. (required)
         :return: SummaryReportResponse
         """
         try:
@@ -8695,7 +8699,7 @@ class API(metaclass=Multiton):
 
         This method retrieves all the sales tax jurisdictions for the country that you specify in the countryCode path parameter. Countries with valid sales tax jurisdictions are Canada and the US.  The response from this call tells you the jurisdictions for which a seller can configure tax tables. Although setting up tax tables is optional, you can use the createOrReplaceSalesTax in the Account API call to configure the tax tables for the jurisdictions you sell to.
 
-        :param str country_code: This path parameter specifies the two-letter ISO 3166 country code for the country whose jurisdictions you want to retrieve. eBay provides sales tax jurisdiction information for Canada and the United States.Valid values for this path parameter are CA and US. (required)
+        :param str country_code: This path parameter specifies the two-letter ISO 3166 country code for the country whose jurisdictions you want to retrieve. Note: eBay only provides sales tax jurisdiction information for Canada and the United States. Valid values for this path parameter are CA and US. (required)
         :return: SalesTaxJurisdictions
         """
         try:
@@ -8721,8 +8725,8 @@ class API(metaclass=Multiton):
 
         This method returns the eBay policies that define how to list automotive-parts-compatibility items in the categories of a specific marketplace.  By default, this method returns the entire category tree for the specified marketplace. You can limit the size of the result set by using the filter query parameter to specify only the category IDs you want to review.Tip: This method can potentially return a very large response payload. eBay recommends that the response payload be compressed by passing in the Accept-Encoding request header and setting the value to gzip.
 
-        :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.  Note: Only the following eBay marketplaces support automotive parts compatibility:  EBAY_US EBAY_AU EBAY_CA EBAY_DE EBAY_ES EBAY_FR EBAY_GB EBAY_IT (required)
-        :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply categoryId values for the sections of the tree you want returned.  When you specify a categoryId value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  The parameter takes a list of categoryId values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 categoryId values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  Example: filter=categoryIds:{100|101|102} Note that you must URL-encode the parameter list, which results in the following filter for the above example:    filter=categoryIds%3A%7B100%7C101%7C102%7D
+        :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.  Note:Only the following eBay marketplaces support automotive parts compatibility:  EBAY_US EBAY_AU EBAY_CA EBAY_DE EBAY_ES EBAY_FR EBAY_GB EBAY_IT  (required)
+        :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply categoryId values for the sections of the tree you want returned. Use the Taxonomy API to retrieve category ID values.When you specify a categoryId value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  The parameter takes a list of categoryId values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 categoryId values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  Example: filter=categoryIds:{100|101|102} Note that you must URL-encode the parameter list, which results in the following filter for the above example:    filter=categoryIds%3A%7B100%7C101%7C102%7D
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
         :return: AutomotivePartsCompatibilityPolicyResponse
         """
@@ -8749,7 +8753,7 @@ class API(metaclass=Multiton):
 
         This method returns the Extended Producer Responsibility policies for one, multiple, or all eBay categories in an eBay marketplace.The identifier of the eBay marketplace is passed in as a path parameter, and unless one or more eBay category IDs are passed in through the filter query parameter, this method will return metadata on every applicable category for the specified marketplace.Note: Currently, the Extended Producer Responsibility policies are only applicable to a limited number of categories.Note: Extended Producer Responsibility IDs are no longer set at the listing level so category-level metadata is no longer returned. Instead, sellers will provide/manage these IDs at the account level by going to Account Settings.Tip: This method can potentially return a very large response payload. eBay recommends that the response payload be compressed by passing in the Accept-Encoding request header and setting the value to gzip.
 
-        :param str marketplace_id: A path parameter that specifies the eBay marketplace for which policy information shall be retrieved.Tip: See Request components for a list of valid eBay marketplace IDs. (required)
+        :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information shall be retrieved.See HTTP Request Headers for a list of supported eBay marketplace ID values. (required)
         :param str filter: A query parameter that can be used to limit the response by returning policy information for only the selected sections of the category tree. Supply categoryId values for the sections of the tree that should be returned.When a categoryId value is specified, the returned category tree includes the policies for that parent node, as well as the policies for any child nodes below that parent node.Pass in the categoryId values using a URL-encoded, pipe-separated ('|') list. For example:filter=categoryIds%3A%7B100%7C101%7C102%7DMaximum: 50
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
         :return: ExtendedProducerResponsibilityPolicyResponse
@@ -8777,7 +8781,7 @@ class API(metaclass=Multiton):
 
         This method returns hazardous materials label information for the specified eBay marketplace. The information includes IDs, descriptions, and URLs (as applicable) for the available signal words, statements, and pictograms. The returned statements are localized for the default langauge of the marketplace. If a marketplace does not support hazardous materials label information, an error is returned.This information is used by the seller to add hazardous materials label related information to their listings (see Specifying hazardous material related information).
 
-        :param str marketplace_id: A path parameter that specifies the eBay marketplace for which hazardous materials label information shall be retrieved.Tip: See Request components for a list of valid eBay marketplace IDs. (required)
+        :param str marketplace_id: This path parameter specifies the eBay marketplace for which hazardous materials label information shall be retrieved.See HTTP Request Headers for a list of supported eBay marketplace ID values. (required)
         :return: HazardousMaterialDetailsResponse
         """
         try:
@@ -8803,7 +8807,7 @@ class API(metaclass=Multiton):
 
         This method returns item condition metadata on one, multiple, or all eBay categories on an eBay marketplace. This metadata consists of the different item conditions (with IDs) that an eBay category supports, and a boolean to indicate if an eBay category requires an item condition. If applicable, this metadata also shows the different condition descriptors (with IDs) that an eBay category supports.Note: Currently, condition grading is only applicable to the following trading card categories: Non-Sport Trading Card SinglesCCG Individual CardsSports Trading Cards SinglesThe identifier of the eBay marketplace is passed in as a path parameter, and unless one or more eBay category IDs are passed in through the filter query parameter, this method will return metadata on every single category for the specified marketplace. If you only want to view item condition metadata for one eBay category or a select group of eBay categories, you can pass in up to 50 eBay category ID through the filter query parameter.Important: Certified - Refurbished-eligible sellers, and sellers who are eligible to list with the new values (EXCELLENT_REFURBISHED, VERY_GOOD_REFURBISHED, and GOOD_REFURBISHED) must use an OAuth token created with the authorization code grant flow and https://api.ebay.com/oauth/api_scope/sell.inventory scope in order to retrieve the refurbished conditions for the relevant categories.See the eBay Refurbished Program - Category and marketplace support topic for the categories and marketplaces that support these refurbished conditionsThese restricted item conditions will not be returned if an OAuth token created with the client credentials grant flow and https://api.ebay.com/oauth/api_scope scope is used, or if any seller is not eligible to list with that item condition.  See the Specifying OAuth scopes topic for more information about specifying scopes.Tip: This method can potentially return a very large response payload. eBay recommends that the response payload be compressed by passing in the Accept-Encoding request header and setting the value to gzip.
 
-        :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved. See the following page for a list of valid eBay marketplace IDs: Request components. (required)
+        :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.See HTTP Request Headers for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply categoryId values for the sections of the tree you want returned.  When you specify a categoryId value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  The parameter takes a list of categoryId values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 categoryId values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  Example: filter=categoryIds:{100|101|102} Note that you must URL-encode the parameter list, which results in the following filter for the above example:    filter=categoryIds%3A%7B100%7C101%7C102%7D
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
         :return: ItemConditionPolicyResponse
@@ -8831,7 +8835,7 @@ class API(metaclass=Multiton):
 
         This method returns the eBay policies that define the allowed listing structures for the categories of a specific marketplace. The listing-structure policies currently pertain to whether or not you can list items with variations.  By default, this method returns the entire category tree for the specified marketplace. You can limit the size of the result set by using the filter query parameter to specify only the category IDs you want to review.Tip: This method can potentially return a very large response payload. eBay recommends that the response payload be compressed by passing in the Accept-Encoding request header and setting the value to gzip.
 
-        :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved. See the following page for a list of valid eBay marketplace IDs: Request components. (required)
+        :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved. See HTTP Request Headers for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply categoryId values for the sections of the tree you want returned.  When you specify a categoryId value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  The parameter takes a list of categoryId values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 categoryId values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  Example: filter=categoryIds:{100|101|102} Note that you must URL-encode the parameter list, which results in the following filter for the above example:    filter=categoryIds%3A%7B100%7C101%7C102%7D
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
         :return: ListingStructurePolicyResponse
@@ -8859,7 +8863,7 @@ class API(metaclass=Multiton):
 
         This method returns the eBay policies that define the supported negotiated price features (like \"best offer\") for the categories of a specific marketplace.  By default, this method returns the entire category tree for the specified marketplace. You can limit the size of the result set by using the filter query parameter to specify only the category IDs you want to review.Tip: This method can potentially return a very large response payload. eBay recommends that the response payload be compressed by passing in the Accept-Encoding request header and setting the value to gzip.
 
-        :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved. See the following page for a list of valid eBay marketplace IDs: Request components. (required)
+        :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.See HTTP Request Headers for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply categoryId values for the sections of the tree you want returned.  When you specify a categoryId value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  The parameter takes a list of categoryId values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 categoryId values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  Example: filter=categoryIds:{100|101|102} Note that you must URL-encode the parameter list, which results in the following filter for the above example:    filter=categoryIds%3A%7B100%7C101%7C102%7D
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
         :return: NegotiatedPricePolicyResponse
@@ -8885,7 +8889,7 @@ class API(metaclass=Multiton):
 
         This method returns the eBay policies that define whether or not you must include a return policy for the items you list in the categories of a specific marketplace, plus the guidelines for creating domestic and international return policies in the different eBay categories.  By default, this method returns the entire category tree for the specified marketplace. You can limit the size of the result set by using the filter query parameter to specify only the category IDs you want to review.Tip: This method can potentially return a very large response payload. eBay recommends that the response payload be compressed by passing in the Accept-Encoding request header and setting the value to gzip.
 
-        :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved. See the following page for a list of valid eBay marketplace IDs: Request components. (required)
+        :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.See HTTP Request Headers for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply categoryId values for the sections of the tree you want returned.  When you specify a categoryId value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  The parameter takes a list of categoryId values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 categoryId values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  Example: filter=categoryIds:{100|101|102} Note that you must URL-encode the parameter list, which results in the following filter for the above example:    filter=categoryIds%3A%7B100%7C101%7C102%7D
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
         :return: ReturnPolicyResponse
@@ -8914,7 +8918,7 @@ class API(metaclass=Multiton):
         This method evaluates a seller's current listings and returns the set of IDs that are eligible for a seller-initiated discount offer to a buyer.  A listing ID is returned only when one or more buyers have shown an \"interest\" in the listing.  If any buyers have shown interest in a listing, the seller can initiate a \"negotiation\" with them by calling sendOfferToInterestedBuyers, which sends all interested buyers a message that offers the listing at a discount.  For details about how to create seller offers to buyers, see Sending offers to buyers.
 
         :param str x_ebay_c_marketplace_id: The eBay marketplace on which you want to search for eligible listings. For a complete list of supported marketplaces, see Negotiation API requirements and restrictions. (required)
-        :param str limit: This query parameter specifies the maximum number of items to return from the result set on a page in the paginated response. Minimum: 1    Maximum: 200 Default: 10
+        :param str limit: This query parameter specifies the maximum number of items to return from the result set on a page in the paginated response.Minimum: 1Maximum: 200Default: 10
         :param str offset: This query parameter specifies the number of results to skip in the result set before returning the first result in the paginated response.  Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 results from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
         :return: PagedEligibleItemCollection
         """
@@ -8969,7 +8973,7 @@ class API(metaclass=Multiton):
 
         The find method currently returns information for a single recommendation type (AD) which contains information that sellers can use to configure Promoted Listings ad campaigns. The response from this method includes an array of the seller's listing IDs, where each element in the array contains recommendations related to the associated listing ID. For details on how to use this method, see Using the Recommendation API to help configure campaigns. The AD recommendation type  The AD type contains two sets of information: The promoteWithAd indicator The promoteWithAd response field indicates whether or not eBay recommends you place the associated listing in a Promoted Listings ad campaign. The returned value is set to either RECOMMENDED or UNDETERMINED, where RECOMMENDED identifies the listings that will benefit the most from having them included in an ad campaign. The bid percentage Also known as the \"ad rate,\" the bidPercentage field provides the current trending bid percentage of similarly promoted items in the marketplace. The ad rate is a user-specified value that indicates the level of promotion that eBay applies to the campaign across the marketplace. The value is also used to calculate the Promotion Listings fee, which is assessed to the seller if a Promoted Listings action results in the sale of an item. Configuring the request You can configure a request to review all of a seller's currently active listings, or just a subset of them. All active listings – If you leave the request body empty, the request targets all the items currently listed by the seller. Here, the response is filtered to contain only the items where promoteWithAd equals RECOMMENDED. In this case, eBay recommends that all the returned listings should be included in a Promoted Listings ad campaign. Selected listing IDs – If you populate the request body with a set of listingIds, the response contains data for all the specified listing IDs. In this scenario, the response provides you with information on listings where the promoteWithAd can be either RECOMMENDED or UNDETERMINED. The paginated response Because the response can contain many listing IDs, the findListingRecommendations method paginates the response set. You can control size of the returned pages, as well as an offset that dictates where to start the pagination, using query parameters in the request.
 
-        :param str x_ebay_c_marketplace_id: Use this header to specify the eBay marketplace where you list the items for which you want to get recommendations. (required)
+        :param str x_ebay_c_marketplace_id: This header specifies the eBay marketplace where you list the items for which you want to get recommendations.See HTTP Request Headers for a list of supported eBay marketplace ID values. (required)
         :param FindListingRecommendationRequest body:
         :param str filter: Provide a list of key-value pairs to specify the criteria you want to use to filter the response.  In the list, separate each filter key from its associated value with a colon (\":\").  Currently, the only supported filter value is recommendationTypes and it supports only the (\"AD\") type. Follow the recommendationTypes specifier with the filter type(s) enclosed in curly braces (\"{ }\"), and separate multiple types with commas.  Example: filter=recommendationTypes:{AD} Default: recommendationTypes:{AD}
         :param str limit: Use this query parameter to set the maximum number of ads to return on a page from the paginated response.  Default: 10 Maximum: 500

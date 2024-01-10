@@ -475,7 +475,7 @@ class EbayOfferDetailsWithAll(object):
     def merchant_location_key(self):
         """Gets the merchant_location_key of this EbayOfferDetailsWithAll.  # noqa: E501
 
-        The unique identifier of the inventory location. This identifier is set up by the merchant when the inventory location is first created with the <strong>createInventoryLocation</strong> call. Once this value is set for an inventory location, it can not be modified. To get more information about this inventory location, the <strong>getInventoryLocation</strong> call can be used, passing in this value at the end of the call URI.<br><br>This field is always returned for published offers, but is only returned if set for unpublished offers.<br><br><b>Max length</b>: 36  # noqa: E501
+        The unique identifier of the inventory location. This identifier is set up by the merchant when the inventory location is first created with the <strong>createInventoryLocation</strong> call. Once this value is set for an inventory location, it can not be modified. To get more information about this inventory location, the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocation\" target=\"_blank \">getInventoryLocation</a> method can be used, passing in this value at the end of the call URI.<br><br>This field is always returned for published offers, but is only returned if set for unpublished offers.<br><br><b>Max length</b>: 36  # noqa: E501
 
         :return: The merchant_location_key of this EbayOfferDetailsWithAll.  # noqa: E501
         :rtype: str
@@ -486,7 +486,7 @@ class EbayOfferDetailsWithAll(object):
     def merchant_location_key(self, merchant_location_key):
         """Sets the merchant_location_key of this EbayOfferDetailsWithAll.
 
-        The unique identifier of the inventory location. This identifier is set up by the merchant when the inventory location is first created with the <strong>createInventoryLocation</strong> call. Once this value is set for an inventory location, it can not be modified. To get more information about this inventory location, the <strong>getInventoryLocation</strong> call can be used, passing in this value at the end of the call URI.<br><br>This field is always returned for published offers, but is only returned if set for unpublished offers.<br><br><b>Max length</b>: 36  # noqa: E501
+        The unique identifier of the inventory location. This identifier is set up by the merchant when the inventory location is first created with the <strong>createInventoryLocation</strong> call. Once this value is set for an inventory location, it can not be modified. To get more information about this inventory location, the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocation\" target=\"_blank \">getInventoryLocation</a> method can be used, passing in this value at the end of the call URI.<br><br>This field is always returned for published offers, but is only returned if set for unpublished offers.<br><br><b>Max length</b>: 36  # noqa: E501
 
         :param merchant_location_key: The merchant_location_key of this EbayOfferDetailsWithAll.  # noqa: E501
         :type: str

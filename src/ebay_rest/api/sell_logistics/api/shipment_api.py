@@ -42,7 +42,7 @@ class ShipmentApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str shipment_id: This path parameter specifies the unique eBay-assigned ID of the shipment to be canceled. The <b>shipmentId</b> value is generated and returned by a call to <b>createFromShippingQuote</b>. (required)
+        :param str shipment_id: This path parameter specifies the unique eBay-assigned ID of the shipment to be canceled.<br><br>The <b>shipmentId</b> value is generated and returned by the <a href=\"/api-docs/sell/logistics/resources/shipment/methods/createFromShippingQuote\" target=\"_blank\">createFromShippingQuote</a> method. (required)
         :return: Shipment
                  If the method is called asynchronously,
                  returns the request thread.
@@ -64,7 +64,7 @@ class ShipmentApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str shipment_id: This path parameter specifies the unique eBay-assigned ID of the shipment to be canceled. The <b>shipmentId</b> value is generated and returned by a call to <b>createFromShippingQuote</b>. (required)
+        :param str shipment_id: This path parameter specifies the unique eBay-assigned ID of the shipment to be canceled.<br><br>The <b>shipmentId</b> value is generated and returned by the <a href=\"/api-docs/sell/logistics/resources/shipment/methods/createFromShippingQuote\" target=\"_blank\">createFromShippingQuote</a> method. (required)
         :return: Shipment
                  If the method is called asynchronously,
                  returns the request thread.
@@ -244,7 +244,7 @@ class ShipmentApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str shipment_id: This path parameter specifies the unique eBay-assigned ID of the shipment associated with the shipping label you want to download. The <b>shipmentId</b> value is generated and returned by a call to <b>createFromShippingQuote</b>. (required)
+        :param str shipment_id: This path parameter specifies the unique eBay-assigned identifier of the shipment associated with the shipping label you want to download.<br><br> The <b>shipmentId</b> value is generated and returned by the <a href=\"/api-docs/sell/logistics/resources/shipment/methods/createFromShippingQuote\" target=\"_blank\">createFromShippingQuote</a> method. (required)
         :param str accept: This header specifies the format of the returned file. For this method, the value of the header should be <code>Accept: application/pdf</code>.  (required)
         :return: list[str]
                  If the method is called asynchronously,
@@ -267,7 +267,7 @@ class ShipmentApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str shipment_id: This path parameter specifies the unique eBay-assigned ID of the shipment associated with the shipping label you want to download. The <b>shipmentId</b> value is generated and returned by a call to <b>createFromShippingQuote</b>. (required)
+        :param str shipment_id: This path parameter specifies the unique eBay-assigned identifier of the shipment associated with the shipping label you want to download.<br><br> The <b>shipmentId</b> value is generated and returned by the <a href=\"/api-docs/sell/logistics/resources/shipment/methods/createFromShippingQuote\" target=\"_blank\">createFromShippingQuote</a> method. (required)
         :param str accept: This header specifies the format of the returned file. For this method, the value of the header should be <code>Accept: application/pdf</code>.  (required)
         :return: list[str]
                  If the method is called asynchronously,
@@ -347,7 +347,7 @@ class ShipmentApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str shipment_id: This path parameter specifies the unique eBay-assigned ID of the shipment you want to retrieve. The <b>shipmentId</b> value is generated and returned by a call to <b>createFromShippingQuote</b>. (required)
+        :param str shipment_id: This path parameter specifies the unique eBay-assigned identifier of the shipment you want to retrieve.<br><br>The <b>shipmentId</b> value is generated and returned by the <a href=\"/api-docs/sell/logistics/resources/shipment/methods/createFromShippingQuote\" target=\"_blank\">createFromShippingQuote</a> method. (required)
         :return: Shipment
                  If the method is called asynchronously,
                  returns the request thread.
@@ -369,7 +369,7 @@ class ShipmentApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str shipment_id: This path parameter specifies the unique eBay-assigned ID of the shipment you want to retrieve. The <b>shipmentId</b> value is generated and returned by a call to <b>createFromShippingQuote</b>. (required)
+        :param str shipment_id: This path parameter specifies the unique eBay-assigned identifier of the shipment you want to retrieve.<br><br>The <b>shipmentId</b> value is generated and returned by the <a href=\"/api-docs/sell/logistics/resources/shipment/methods/createFromShippingQuote\" target=\"_blank\">createFromShippingQuote</a> method. (required)
         :return: Shipment
                  If the method is called asynchronously,
                  returns the request thread.

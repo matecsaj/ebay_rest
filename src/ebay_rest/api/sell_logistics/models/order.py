@@ -51,7 +51,7 @@ class Order(object):
     def channel(self):
         """Gets the channel of this Order.  # noqa: E501
 
-        The e-commerce platform or environment where the order was created. Use the value <code>EBAY</code> to get the rates available for eBay orders.  # noqa: E501
+        The marketplace where the order was created.<br><br>Use the value <code>EBAY</code> to get the rates available for eBay orders.  # noqa: E501
 
         :return: The channel of this Order.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class Order(object):
     def channel(self, channel):
         """Sets the channel of this Order.
 
-        The e-commerce platform or environment where the order was created. Use the value <code>EBAY</code> to get the rates available for eBay orders.  # noqa: E501
+        The marketplace where the order was created.<br><br>Use the value <code>EBAY</code> to get the rates available for eBay orders.  # noqa: E501
 
         :param channel: The channel of this Order.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class Order(object):
     def order_id(self):
         """Gets the order_id of this Order.  # noqa: E501
 
-        The unique ID of the order supplied by the channel of origin. For eBay orders, this would be the <b>orderId</b>.  # noqa: E501
+        The unique identifier of the order supplied by the channel of origin. For eBay orders, this would be the <b>orderId</b>. Use the <a href=/api-docs/sell/fulfillment/resources/order/methods/getOrders\" target=\"_blank\">getOrders</a> method of the <b>Fulfillment API</b> to retrieve order IDs.  # noqa: E501
 
         :return: The order_id of this Order.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class Order(object):
     def order_id(self, order_id):
         """Sets the order_id of this Order.
 
-        The unique ID of the order supplied by the channel of origin. For eBay orders, this would be the <b>orderId</b>.  # noqa: E501
+        The unique identifier of the order supplied by the channel of origin. For eBay orders, this would be the <b>orderId</b>. Use the <a href=/api-docs/sell/fulfillment/resources/order/methods/getOrders\" target=\"_blank\">getOrders</a> method of the <b>Fulfillment API</b> to retrieve order IDs.  # noqa: E501
 
         :param order_id: The order_id of this Order.  # noqa: E501
         :type: str

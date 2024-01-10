@@ -42,7 +42,7 @@ class CountryApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html \" title=\"https://www.iso.org \" target=\"_blank\">ISO 3166</a> country code for the country whose jurisdictions you want to retrieve. eBay provides sales tax jurisdiction information for Canada and the United States.Valid values for this path parameter are <code>CA</code> and <code>US</code>. (required)
+        :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html \" title=\"https://www.iso.org \" target=\"_blank\">ISO 3166</a> country code for the country whose jurisdictions you want to retrieve. <br><br><span class=\"tablenote\"><b>Note:</b> eBay only provides sales tax jurisdiction information for Canada and the United States. Valid values for this path parameter are <code>CA</code> and <code>US</code>.</span> (required)
         :return: SalesTaxJurisdictions
                  If the method is called asynchronously,
                  returns the request thread.
@@ -64,7 +64,7 @@ class CountryApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html \" title=\"https://www.iso.org \" target=\"_blank\">ISO 3166</a> country code for the country whose jurisdictions you want to retrieve. eBay provides sales tax jurisdiction information for Canada and the United States.Valid values for this path parameter are <code>CA</code> and <code>US</code>. (required)
+        :param str country_code: This path parameter specifies the two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html \" title=\"https://www.iso.org \" target=\"_blank\">ISO 3166</a> country code for the country whose jurisdictions you want to retrieve. <br><br><span class=\"tablenote\"><b>Note:</b> eBay only provides sales tax jurisdiction information for Canada and the United States. Valid values for this path parameter are <code>CA</code> and <code>US</code>.</span> (required)
         :return: SalesTaxJurisdictions
                  If the method is called asynchronously,
                  returns the request thread.

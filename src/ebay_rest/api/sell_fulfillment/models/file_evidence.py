@@ -46,7 +46,7 @@ class FileEvidence(object):
     def file_id(self):
         """Gets the file_id of this FileEvidence.  # noqa: E501
 
-        If an <strong>uploadEvidenceFile</strong> call is successful, a unique identifier of this evidence file will be returned in the <strong>uploadEvidenceFile</strong> response payload.  This unique <strong>fileId</strong> value is then used to either add this evidence file to a new evidence set using the <strong>addEvidence</strong> method, or to add this file to an existing evidence set using the <strong>updateEvidence</strong> method.<br><br>Note that if an evidence set already exists for a payment dispute, the <strong>getPaymentDispute</strong> method will return both the <strong>evidenceId</strong> (unique identifier of evidence set) value, and the <strong>fileId</strong> (unique identifier of a file within that evidence set) value(s).  # noqa: E501
+        This field is used to identify the evidence file to be uploaded to the evidence set.<br><br> This file is created with the <a href=\"/api-docs/sell/fulfillment/resources/payment_dispute/methods/uploadEvidenceFile\" target=\"_blank \">uploadEvidenceFile</a> method and can be retrieved using the <a href=\"/api-docs/sell/fulfillment/resources/payment_dispute/methods/getPaymentDisputes\" target=\"_blank \">getPaymentDisputes</a> method.  # noqa: E501
 
         :return: The file_id of this FileEvidence.  # noqa: E501
         :rtype: str
@@ -57,7 +57,7 @@ class FileEvidence(object):
     def file_id(self, file_id):
         """Sets the file_id of this FileEvidence.
 
-        If an <strong>uploadEvidenceFile</strong> call is successful, a unique identifier of this evidence file will be returned in the <strong>uploadEvidenceFile</strong> response payload.  This unique <strong>fileId</strong> value is then used to either add this evidence file to a new evidence set using the <strong>addEvidence</strong> method, or to add this file to an existing evidence set using the <strong>updateEvidence</strong> method.<br><br>Note that if an evidence set already exists for a payment dispute, the <strong>getPaymentDispute</strong> method will return both the <strong>evidenceId</strong> (unique identifier of evidence set) value, and the <strong>fileId</strong> (unique identifier of a file within that evidence set) value(s).  # noqa: E501
+        This field is used to identify the evidence file to be uploaded to the evidence set.<br><br> This file is created with the <a href=\"/api-docs/sell/fulfillment/resources/payment_dispute/methods/uploadEvidenceFile\" target=\"_blank \">uploadEvidenceFile</a> method and can be retrieved using the <a href=\"/api-docs/sell/fulfillment/resources/payment_dispute/methods/getPaymentDisputes\" target=\"_blank \">getPaymentDisputes</a> method.  # noqa: E501
 
         :param file_id: The file_id of this FileEvidence.  # noqa: E501
         :type: str

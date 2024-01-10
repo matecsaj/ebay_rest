@@ -46,7 +46,7 @@ class OfferKeyWithId(object):
     def offer_id(self):
         """Gets the offer_id of this OfferKeyWithId.  # noqa: E501
 
-        The unique identifier of an unpublished offer for which expected listing fees will be retrieved. One to 250 <strong>offerId</strong> values can be passed in to the <strong>offers</strong> container for one <strong>getListingFees</strong> call. Errors will occur if <strong>offerId</strong> values representing published offers are passed in.  # noqa: E501
+        The unique identifier of an unpublished offer for which expected listing fees will be retrieved. One to 250 <strong>offerId</strong> values can be passed in to the <strong>offers</strong> container for one <strong>getListingFees</strong> call. <br><br>Use the <a href=\"/api-docs/sell/inventory/resources/offer/methods/getOffers\">getOffers</a> method to retrieve offer IDs.<br><br><span class=\"tablenote\"><b>Note:</b> Errors will occur if <strong>offerId</strong> values representing published offers are passed in.</span>  # noqa: E501
 
         :return: The offer_id of this OfferKeyWithId.  # noqa: E501
         :rtype: str
@@ -57,7 +57,7 @@ class OfferKeyWithId(object):
     def offer_id(self, offer_id):
         """Sets the offer_id of this OfferKeyWithId.
 
-        The unique identifier of an unpublished offer for which expected listing fees will be retrieved. One to 250 <strong>offerId</strong> values can be passed in to the <strong>offers</strong> container for one <strong>getListingFees</strong> call. Errors will occur if <strong>offerId</strong> values representing published offers are passed in.  # noqa: E501
+        The unique identifier of an unpublished offer for which expected listing fees will be retrieved. One to 250 <strong>offerId</strong> values can be passed in to the <strong>offers</strong> container for one <strong>getListingFees</strong> call. <br><br>Use the <a href=\"/api-docs/sell/inventory/resources/offer/methods/getOffers\">getOffers</a> method to retrieve offer IDs.<br><br><span class=\"tablenote\"><b>Note:</b> Errors will occur if <strong>offerId</strong> values representing published offers are passed in.</span>  # noqa: E501
 
         :param offer_id: The offer_id of this OfferKeyWithId.  # noqa: E501
         :type: str

@@ -51,7 +51,7 @@ class LineItemReference(object):
     def line_item_id(self):
         """Gets the line_item_id of this LineItemReference.  # noqa: E501
 
-        This is the unique identifier of the eBay order line item that is part of the shipping fulfillment. The line item ID is created as soon as there is a commitment to buy from the seller.  # noqa: E501
+        This is the unique identifier of the eBay order line item that is part of the shipping fulfillment.<br><br>Line item Ids can be found in the lineItems.<b>lineItemId</b> field of the <a href=\"/api-docs/sell/fulfillment/resources/order/methods/getOrders\" target=\"_blank\">getOrders</a> response.  # noqa: E501
 
         :return: The line_item_id of this LineItemReference.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class LineItemReference(object):
     def line_item_id(self, line_item_id):
         """Sets the line_item_id of this LineItemReference.
 
-        This is the unique identifier of the eBay order line item that is part of the shipping fulfillment. The line item ID is created as soon as there is a commitment to buy from the seller.  # noqa: E501
+        This is the unique identifier of the eBay order line item that is part of the shipping fulfillment.<br><br>Line item Ids can be found in the lineItems.<b>lineItemId</b> field of the <a href=\"/api-docs/sell/fulfillment/resources/order/methods/getOrders\" target=\"_blank\">getOrders</a> response.  # noqa: E501
 
         :param line_item_id: The line_item_id of this LineItemReference.  # noqa: E501
         :type: str

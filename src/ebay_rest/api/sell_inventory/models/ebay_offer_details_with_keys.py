@@ -169,7 +169,7 @@ class EbayOfferDetailsWithKeys(object):
     def category_id(self):
         """Gets the category_id of this EbayOfferDetailsWithKeys.  # noqa: E501
 
-        The unique identifier of the eBay category that the product will be listed under. This field is not immediately required upon creating an offer, but will be required before publishing the offer. Sellers can use the <a href=\"/api-docs/commerce/taxonomy/resources/category_tree/methods/getCategorySuggestions \" target=\"_blank\">getCategorySuggestions</a> method of the Taxonomy API to retrieve suggested category ID values. The seller passes in a query string like \"<em>iPhone 6</em>\", and category ID values for suggested categories are returned in the response.  # noqa: E501
+        The unique identifier of the eBay category that the product will be listed under. This field is not immediately required upon creating an offer, but will be required before publishing the offer. <br><br>Sellers can use the <a href=\"/api-docs/commerce/taxonomy/resources/category_tree/methods/getCategorySuggestions \" target=\"_blank\">getCategorySuggestions</a> method of the Taxonomy API to retrieve suggested category ID values. The seller passes in a query string like \"<em>iPhone 6</em>\", and category ID values for suggested categories are returned in the response.  # noqa: E501
 
         :return: The category_id of this EbayOfferDetailsWithKeys.  # noqa: E501
         :rtype: str
@@ -180,7 +180,7 @@ class EbayOfferDetailsWithKeys(object):
     def category_id(self, category_id):
         """Sets the category_id of this EbayOfferDetailsWithKeys.
 
-        The unique identifier of the eBay category that the product will be listed under. This field is not immediately required upon creating an offer, but will be required before publishing the offer. Sellers can use the <a href=\"/api-docs/commerce/taxonomy/resources/category_tree/methods/getCategorySuggestions \" target=\"_blank\">getCategorySuggestions</a> method of the Taxonomy API to retrieve suggested category ID values. The seller passes in a query string like \"<em>iPhone 6</em>\", and category ID values for suggested categories are returned in the response.  # noqa: E501
+        The unique identifier of the eBay category that the product will be listed under. This field is not immediately required upon creating an offer, but will be required before publishing the offer. <br><br>Sellers can use the <a href=\"/api-docs/commerce/taxonomy/resources/category_tree/methods/getCategorySuggestions \" target=\"_blank\">getCategorySuggestions</a> method of the Taxonomy API to retrieve suggested category ID values. The seller passes in a query string like \"<em>iPhone 6</em>\", and category ID values for suggested categories are returned in the response.  # noqa: E501
 
         :param category_id: The category_id of this EbayOfferDetailsWithKeys.  # noqa: E501
         :type: str
@@ -439,7 +439,7 @@ class EbayOfferDetailsWithKeys(object):
     def merchant_location_key(self):
         """Gets the merchant_location_key of this EbayOfferDetailsWithKeys.  # noqa: E501
 
-        The unique identifier of a merchant's inventory location (where the inventory item in the offer is located). A <strong>merchantLocationKey</strong> value is established when the merchant creates an inventory location using the <strong>createInventoryLocation</strong> call. To get more information about inventory locations, the <strong>getInventoryLocation</strong> call can be used.<br><br>This field is not initially required upon first creating an offer, but will become required before an offer can be published.<br><br><b>Max length</b>: 36  # noqa: E501
+        The unique identifier of a merchant's inventory location (where the inventory item in the offer is located).<br><br> To get more information about inventory locations, the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocations\" target=\"_blank\">getInventoryLocations</a> method can be used.<br><br><span class=\"tablenote\"><b>Note:</b> This field is not initially required upon first creating an offer, but will become required before an offer can be published.</span><br><b>Max length</b>: 36  # noqa: E501
 
         :return: The merchant_location_key of this EbayOfferDetailsWithKeys.  # noqa: E501
         :rtype: str
@@ -450,7 +450,7 @@ class EbayOfferDetailsWithKeys(object):
     def merchant_location_key(self, merchant_location_key):
         """Sets the merchant_location_key of this EbayOfferDetailsWithKeys.
 
-        The unique identifier of a merchant's inventory location (where the inventory item in the offer is located). A <strong>merchantLocationKey</strong> value is established when the merchant creates an inventory location using the <strong>createInventoryLocation</strong> call. To get more information about inventory locations, the <strong>getInventoryLocation</strong> call can be used.<br><br>This field is not initially required upon first creating an offer, but will become required before an offer can be published.<br><br><b>Max length</b>: 36  # noqa: E501
+        The unique identifier of a merchant's inventory location (where the inventory item in the offer is located).<br><br> To get more information about inventory locations, the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocations\" target=\"_blank\">getInventoryLocations</a> method can be used.<br><br><span class=\"tablenote\"><b>Note:</b> This field is not initially required upon first creating an offer, but will become required before an offer can be published.</span><br><b>Max length</b>: 36  # noqa: E501
 
         :param merchant_location_key: The merchant_location_key of this EbayOfferDetailsWithKeys.  # noqa: E501
         :type: str
@@ -550,7 +550,7 @@ class EbayOfferDetailsWithKeys(object):
     def sku(self):
         """Gets the sku of this EbayOfferDetailsWithKeys.  # noqa: E501
 
-        This is the seller-defined SKU value of the product that will be listed on the eBay site (specified in the <strong>marketplaceId</strong> field). Only one offer (in unpublished or published state) may exist for each <strong>sku</strong>/<strong>marketplaceId</strong>/<strong>format</strong> combination. This field is required.<br><br><strong>Max Length</strong>: 50<br>  # noqa: E501
+        The seller-defined SKU value of the product that will be listed on the eBay site (specified in the <strong>marketplaceId</strong> field). Only one offer (in unpublished or published state) may exist for each <strong>sku</strong>/<strong>marketplaceId</strong>/<strong>format</strong> combination. This field is required.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/inventory_item/methods/getInventoryItems \" target=\"_blank\">getInventoryItems</a> method to retrieve SKU values.<br><br><strong>Max Length</strong>: 50<br>  # noqa: E501
 
         :return: The sku of this EbayOfferDetailsWithKeys.  # noqa: E501
         :rtype: str
@@ -561,7 +561,7 @@ class EbayOfferDetailsWithKeys(object):
     def sku(self, sku):
         """Sets the sku of this EbayOfferDetailsWithKeys.
 
-        This is the seller-defined SKU value of the product that will be listed on the eBay site (specified in the <strong>marketplaceId</strong> field). Only one offer (in unpublished or published state) may exist for each <strong>sku</strong>/<strong>marketplaceId</strong>/<strong>format</strong> combination. This field is required.<br><br><strong>Max Length</strong>: 50<br>  # noqa: E501
+        The seller-defined SKU value of the product that will be listed on the eBay site (specified in the <strong>marketplaceId</strong> field). Only one offer (in unpublished or published state) may exist for each <strong>sku</strong>/<strong>marketplaceId</strong>/<strong>format</strong> combination. This field is required.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/inventory_item/methods/getInventoryItems \" target=\"_blank\">getInventoryItems</a> method to retrieve SKU values.<br><br><strong>Max Length</strong>: 50<br>  # noqa: E501
 
         :param sku: The sku of this EbayOfferDetailsWithKeys.  # noqa: E501
         :type: str

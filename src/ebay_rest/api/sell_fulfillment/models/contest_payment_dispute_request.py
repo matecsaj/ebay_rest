@@ -56,7 +56,7 @@ class ContestPaymentDisputeRequest(object):
     def note(self):
         """Gets the note of this ContestPaymentDisputeRequest.  # noqa: E501
 
-        This field shows information that the seller provides about the dispute, such as the basis for the dispute, any relevant evidence, tracking numbers, and so forth.<br><br>This field is limited to 1000 characters.  # noqa: E501
+        This field shows information that the seller provides about the dispute, such as the basis for the dispute, any relevant evidence, tracking numbers, and so forth.<br><br><b>Max Length:</b> 1000 characters.  # noqa: E501
 
         :return: The note of this ContestPaymentDisputeRequest.  # noqa: E501
         :rtype: str
@@ -67,7 +67,7 @@ class ContestPaymentDisputeRequest(object):
     def note(self, note):
         """Sets the note of this ContestPaymentDisputeRequest.
 
-        This field shows information that the seller provides about the dispute, such as the basis for the dispute, any relevant evidence, tracking numbers, and so forth.<br><br>This field is limited to 1000 characters.  # noqa: E501
+        This field shows information that the seller provides about the dispute, such as the basis for the dispute, any relevant evidence, tracking numbers, and so forth.<br><br><b>Max Length:</b> 1000 characters.  # noqa: E501
 
         :param note: The note of this ContestPaymentDisputeRequest.  # noqa: E501
         :type: str

@@ -51,7 +51,7 @@ class NameValueList(object):
     def name(self):
         """Gets the name of this NameValueList.  # noqa: E501
 
-        This string value identifies the motor vehicle aspect, such as 'make', 'model', 'year', 'trim', and 'engine'. Typically, the make, model, and year of the motor vehicle are always required, with the trim and engine being necessary sometimes, but it will be dependent on the part or accessory, and on the vehicle class.  # noqa: E501
+        This string value identifies the motor vehicle aspect, such as 'make', 'model', 'year', 'trim', and 'engine'. Typically, the make, model, and year of the motor vehicle are always required, with the trim and engine being necessary sometimes, but it will be dependent on the part or accessory, and on the vehicle class.<br><br>The <a href=\"/api-docs/commerce/taxonomy/resources/category_tree/methods/getCompatibilityProperties\" target=\"_blank\">getCompatibilityProperties</a> method of the Taxonomy API can be used to retrieve applicable vehicle aspect names for a specified category.  # noqa: E501
 
         :return: The name of this NameValueList.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class NameValueList(object):
     def name(self, name):
         """Sets the name of this NameValueList.
 
-        This string value identifies the motor vehicle aspect, such as 'make', 'model', 'year', 'trim', and 'engine'. Typically, the make, model, and year of the motor vehicle are always required, with the trim and engine being necessary sometimes, but it will be dependent on the part or accessory, and on the vehicle class.  # noqa: E501
+        This string value identifies the motor vehicle aspect, such as 'make', 'model', 'year', 'trim', and 'engine'. Typically, the make, model, and year of the motor vehicle are always required, with the trim and engine being necessary sometimes, but it will be dependent on the part or accessory, and on the vehicle class.<br><br>The <a href=\"/api-docs/commerce/taxonomy/resources/category_tree/methods/getCompatibilityProperties\" target=\"_blank\">getCompatibilityProperties</a> method of the Taxonomy API can be used to retrieve applicable vehicle aspect names for a specified category.  # noqa: E501
 
         :param name: The name of this NameValueList.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class NameValueList(object):
     def value(self):
         """Gets the value of this NameValueList.  # noqa: E501
 
-        This string value identifies the motor vehicle aspect specified in the corresponding <strong>name</strong> field. For example, if the <strong>name</strong> field is 'make', this field may be 'Toyota', or if the <strong>name</strong> field is 'model', this field may be 'Camry'.  # noqa: E501
+        This string value identifies the motor vehicle aspect specified in the corresponding <strong>name</strong> field. For example, if the <strong>name</strong> field is 'make', this field may be 'Toyota', or if the <strong>name</strong> field is 'model', this field may be 'Camry'.<br><br>The <a href=\"/api-docs/commerce/taxonomy/resources/category_tree/methods/getCompatibilityPropertyValues\" target=\"_blank\">getCompatibilityPropertyValues</a> method of the Taxonomy API can be used to retrieve possible values for vehicle aspect names.  # noqa: E501
 
         :return: The value of this NameValueList.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class NameValueList(object):
     def value(self, value):
         """Sets the value of this NameValueList.
 
-        This string value identifies the motor vehicle aspect specified in the corresponding <strong>name</strong> field. For example, if the <strong>name</strong> field is 'make', this field may be 'Toyota', or if the <strong>name</strong> field is 'model', this field may be 'Camry'.  # noqa: E501
+        This string value identifies the motor vehicle aspect specified in the corresponding <strong>name</strong> field. For example, if the <strong>name</strong> field is 'make', this field may be 'Toyota', or if the <strong>name</strong> field is 'model', this field may be 'Camry'.<br><br>The <a href=\"/api-docs/commerce/taxonomy/resources/category_tree/methods/getCompatibilityPropertyValues\" target=\"_blank\">getCompatibilityPropertyValues</a> method of the Taxonomy API can be used to retrieve possible values for vehicle aspect names.  # noqa: E501
 
         :param value: The value of this NameValueList.  # noqa: E501
         :type: str

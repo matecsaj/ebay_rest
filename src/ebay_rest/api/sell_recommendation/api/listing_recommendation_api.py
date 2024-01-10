@@ -42,7 +42,7 @@ class ListingRecommendationApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str x_ebay_c_marketplace_id: Use this header to specify the eBay marketplace where you list the items for which you want to get recommendations. (required)
+        :param str x_ebay_c_marketplace_id: This header specifies the eBay marketplace where you list the items for which you want to get recommendations.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param FindListingRecommendationRequest body:
         :param str filter: Provide a list of key-value pairs to specify the criteria you want to use to filter the response.  <br><br>In the list, separate each filter key from its associated value with a colon (\"<code>:</code>\").  <br><br>Currently, the only supported filter value is <b>recommendationTypes</b> and it supports only the (\"<code>AD</code>\") type. Follow the <b>recommendationTypes</b> specifier with the filter type(s) enclosed in curly braces (\"<code>{ }</code>\"), and separate multiple types with commas.  <br><br><b>Example:</b> <code>filter=recommendationTypes:{AD}</code>  <br><br><b>Default:</b> <code>recommendationTypes:{AD}</code>
         :param str limit: Use this query parameter to set the maximum number of ads to return on a page from the paginated response.  <br><br><b>Default: </b>10 <br><b>Maximum:</b> 500
@@ -68,7 +68,7 @@ class ListingRecommendationApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str x_ebay_c_marketplace_id: Use this header to specify the eBay marketplace where you list the items for which you want to get recommendations. (required)
+        :param str x_ebay_c_marketplace_id: This header specifies the eBay marketplace where you list the items for which you want to get recommendations.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param FindListingRecommendationRequest body:
         :param str filter: Provide a list of key-value pairs to specify the criteria you want to use to filter the response.  <br><br>In the list, separate each filter key from its associated value with a colon (\"<code>:</code>\").  <br><br>Currently, the only supported filter value is <b>recommendationTypes</b> and it supports only the (\"<code>AD</code>\") type. Follow the <b>recommendationTypes</b> specifier with the filter type(s) enclosed in curly braces (\"<code>{ }</code>\"), and separate multiple types with commas.  <br><br><b>Example:</b> <code>filter=recommendationTypes:{AD}</code>  <br><br><b>Default:</b> <code>recommendationTypes:{AD}</code>
         :param str limit: Use this query parameter to set the maximum number of ads to return on a page from the paginated response.  <br><br><b>Default: </b>10 <br><b>Maximum:</b> 500

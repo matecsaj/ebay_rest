@@ -84,7 +84,7 @@ class ListingDetails(object):
     def listing_on_hold(self):
         """Gets the listing_on_hold of this ListingDetails.  # noqa: E501
 
-        Indicates if a listing is on hold due to an eBay policy violation.<br><p>If a listing is put on hold, users are unable to view the listing details, the listing is hidden from search, and all attempted purchases, offers, and bids for the listing are blocked. eBay, however, gives sellers the opportunity to address violations and get listings fully reinstated. A listing will be ended if a seller does not address a violation, or if the violation can not be rectified.</p><p>If a listing is fixable, the seller should be able to view the listing details and this boolean will be returned as true.</p><p>Once a listing is fixed, this boolean will no longer be returned.</p>  # noqa: E501
+        Indicates if a listing is on hold due to an eBay policy violation.<br><p>If a listing is put on hold, users are unable to view the listing details, the listing is hidden from search, and all attempted purchases, offers, and bids for the listing are blocked. eBay, however, gives sellers the opportunity to address violations and get listings fully reinstated. A listing will be ended if a seller does not address a violation, or if the violation can not be rectified.</p><br><p>If a listing is fixable, the seller should be able to view the listing details and this boolean will be returned as true.</p><br><p>Once a listing is fixed, this boolean will no longer be returned.</p>  # noqa: E501
 
         :return: The listing_on_hold of this ListingDetails.  # noqa: E501
         :rtype: bool
@@ -95,7 +95,7 @@ class ListingDetails(object):
     def listing_on_hold(self, listing_on_hold):
         """Sets the listing_on_hold of this ListingDetails.
 
-        Indicates if a listing is on hold due to an eBay policy violation.<br><p>If a listing is put on hold, users are unable to view the listing details, the listing is hidden from search, and all attempted purchases, offers, and bids for the listing are blocked. eBay, however, gives sellers the opportunity to address violations and get listings fully reinstated. A listing will be ended if a seller does not address a violation, or if the violation can not be rectified.</p><p>If a listing is fixable, the seller should be able to view the listing details and this boolean will be returned as true.</p><p>Once a listing is fixed, this boolean will no longer be returned.</p>  # noqa: E501
+        Indicates if a listing is on hold due to an eBay policy violation.<br><p>If a listing is put on hold, users are unable to view the listing details, the listing is hidden from search, and all attempted purchases, offers, and bids for the listing are blocked. eBay, however, gives sellers the opportunity to address violations and get listings fully reinstated. A listing will be ended if a seller does not address a violation, or if the violation can not be rectified.</p><br><p>If a listing is fixable, the seller should be able to view the listing details and this boolean will be returned as true.</p><br><p>Once a listing is fixed, this boolean will no longer be returned.</p>  # noqa: E501
 
         :param listing_on_hold: The listing_on_hold of this ListingDetails.  # noqa: E501
         :type: bool

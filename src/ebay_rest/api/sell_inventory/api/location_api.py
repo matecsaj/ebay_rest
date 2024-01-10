@@ -44,7 +44,7 @@ class LocationApi(object):
         :param async_req bool
         :param InventoryLocationFull body: Inventory Location details (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str merchant_location_key: A unique, merchant-defined key (ID) for an inventory location. This unique identifier, or key, is used in other Inventory API calls to identify an inventory location. <br><br><b>Max length</b>: 36 (required)
+        :param str merchant_location_key: This path parameter specifies the unique, seller-defined key (ID) for an inventory location.<br><br><b>Max length</b>: 36 (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -68,7 +68,7 @@ class LocationApi(object):
         :param async_req bool
         :param InventoryLocationFull body: Inventory Location details (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str merchant_location_key: A unique, merchant-defined key (ID) for an inventory location. This unique identifier, or key, is used in other Inventory API calls to identify an inventory location. <br><br><b>Max length</b>: 36 (required)
+        :param str merchant_location_key: This path parameter specifies the unique, seller-defined key (ID) for an inventory location.<br><br><b>Max length</b>: 36 (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -153,7 +153,7 @@ class LocationApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in at the end of the call URI to indicate the inventory location to be deleted. <br><br><b>Max length</b>: 36 (required)
+        :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for the inventory location that is to be deleted.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocations\">getInventoryLocations</a> method to retrieve merchant location keys.<br><br><b>Max length</b>: 36 (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -175,7 +175,7 @@ class LocationApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in at the end of the call URI to indicate the inventory location to be deleted. <br><br><b>Max length</b>: 36 (required)
+        :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for the inventory location that is to be deleted.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocations\">getInventoryLocations</a> method to retrieve merchant location keys.<br><br><b>Max length</b>: 36 (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -244,7 +244,7 @@ class LocationApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in through the call URI to disable the specified inventory location. <br><br><b>Max length</b>: 36 (required)
+        :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for an inventory location that is to be disabled. <br><br>Use the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocations\">getInventoryLocations</a> method to retrieve merchant location keys.<br><br><b>Max length</b>: 36 (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -266,7 +266,7 @@ class LocationApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in through the call URI to disable the specified inventory location. <br><br><b>Max length</b>: 36 (required)
+        :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for an inventory location that is to be disabled. <br><br>Use the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocations\">getInventoryLocations</a> method to retrieve merchant location keys.<br><br><b>Max length</b>: 36 (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -339,7 +339,7 @@ class LocationApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in through the call URI to specify the disabled inventory location to enable. <br><br><b>Max length</b>: 36 (required)
+        :param str merchant_location_key: This path parameter specifies unique merchant-defined key (ID) for a <code>disabled</code> inventory location that is to be enabled.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocations\">getInventoryLocations</a> method to retrieve merchant location keys.<br><br><b>Max length</b>: 36 (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -361,7 +361,7 @@ class LocationApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in through the call URI to specify the disabled inventory location to enable. <br><br><b>Max length</b>: 36 (required)
+        :param str merchant_location_key: This path parameter specifies unique merchant-defined key (ID) for a <code>disabled</code> inventory location that is to be enabled.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocations\">getInventoryLocations</a> method to retrieve merchant location keys.<br><br><b>Max length</b>: 36 (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -434,7 +434,7 @@ class LocationApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in at the end of the call URI to specify the inventory location to retrieve. <br><br><b>Max length</b>: 36 (required)
+        :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for an inventory location that is being retrieved. <br><br>Use the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocations\">getInventoryLocations</a> method to retrieve merchant location keys. <br><br><b>Max length</b>: 36 (required)
         :return: InventoryLocationResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -456,7 +456,7 @@ class LocationApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in at the end of the call URI to specify the inventory location to retrieve. <br><br><b>Max length</b>: 36 (required)
+        :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for an inventory location that is being retrieved. <br><br>Use the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocations\">getInventoryLocations</a> method to retrieve merchant location keys. <br><br><b>Max length</b>: 36 (required)
         :return: InventoryLocationResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -626,7 +626,7 @@ class LocationApi(object):
         :param async_req bool
         :param InventoryLocation body: The inventory location details to be updated (other than the address and geo co-ordinates). (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in the call URI to indicate the inventory location to be updated. <br><br><b>Max length</b>: 36 (required)
+        :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for an inventory location that is to be updated. <br><br>Use the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocations\">getInventoryLocations</a> method to retrieve merchant location keys. <br><br><b>Max length</b>: 36 (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -650,7 +650,7 @@ class LocationApi(object):
         :param async_req bool
         :param InventoryLocation body: The inventory location details to be updated (other than the address and geo co-ordinates). (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str merchant_location_key: A unique merchant-defined key (ID) for an inventory location. This value is passed in the call URI to indicate the inventory location to be updated. <br><br><b>Max length</b>: 36 (required)
+        :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for an inventory location that is to be updated. <br><br>Use the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocations\">getInventoryLocations</a> method to retrieve merchant location keys. <br><br><b>Max length</b>: 36 (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.

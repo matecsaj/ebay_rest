@@ -105,7 +105,7 @@ class PickupAtLocationAvailability(object):
     def merchant_location_key(self):
         """Gets the merchant_location_key of this PickupAtLocationAvailability.  # noqa: E501
 
-        The unique identifier of a merchant's store where the In-Store Pickup inventory item is currently located, or where inventory will be sent to. If the merchant's store is currently awaiting for inventory, the <strong>availabilityType</strong> value should be <code>SHIP_TO_STORE</code>. This field is required if the <strong>pickupAtLocationAvailability</strong> container is used, and is always returned with the <strong>pickupAtLocationAvailability</strong> container.<br> <br><b>Max length</b>: 36  # noqa: E501
+        The unique identifier of a merchant's store where the In-Store Pickup inventory item is currently located, or where inventory will be sent to. If the merchant's store is currently awaiting for inventory, the <strong>availabilityType</strong> value should be <code>SHIP_TO_STORE</code>. This field is required if the <strong>pickupAtLocationAvailability</strong> container is used, and is always returned with the <strong>pickupAtLocationAvailability</strong> container.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocations\" target=\"_blank\">getInventoryLocations</a> method to retrieve merchant location keys.<br><br><b>Max length</b>: 36  # noqa: E501
 
         :return: The merchant_location_key of this PickupAtLocationAvailability.  # noqa: E501
         :rtype: str
@@ -116,7 +116,7 @@ class PickupAtLocationAvailability(object):
     def merchant_location_key(self, merchant_location_key):
         """Sets the merchant_location_key of this PickupAtLocationAvailability.
 
-        The unique identifier of a merchant's store where the In-Store Pickup inventory item is currently located, or where inventory will be sent to. If the merchant's store is currently awaiting for inventory, the <strong>availabilityType</strong> value should be <code>SHIP_TO_STORE</code>. This field is required if the <strong>pickupAtLocationAvailability</strong> container is used, and is always returned with the <strong>pickupAtLocationAvailability</strong> container.<br> <br><b>Max length</b>: 36  # noqa: E501
+        The unique identifier of a merchant's store where the In-Store Pickup inventory item is currently located, or where inventory will be sent to. If the merchant's store is currently awaiting for inventory, the <strong>availabilityType</strong> value should be <code>SHIP_TO_STORE</code>. This field is required if the <strong>pickupAtLocationAvailability</strong> container is used, and is always returned with the <strong>pickupAtLocationAvailability</strong> container.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocations\" target=\"_blank\">getInventoryLocations</a> method to retrieve merchant location keys.<br><br><b>Max length</b>: 36  # noqa: E501
 
         :param merchant_location_key: The merchant_location_key of this PickupAtLocationAvailability.  # noqa: E501
         :type: str

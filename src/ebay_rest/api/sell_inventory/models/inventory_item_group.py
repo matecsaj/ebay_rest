@@ -155,7 +155,7 @@ class InventoryItemGroup(object):
     def inventory_item_group_key(self):
         """Gets the inventory_item_group_key of this InventoryItemGroup.  # noqa: E501
 
-        This is the unique identifier of the inventory item group. This identifier is created by the seller when an inventory item group is created. This field is only applicable to the <strong>getInventoryItemGroup</strong> call and not to the <strong>createOrReplaceInventoryItemGroup</strong> call. In the <strong>createOrReplaceInventoryItemGroup</strong> call, the <strong>inventoryItemGroupKey</strong> value is passed into the end of the call URI instead.   # noqa: E501
+        This is the unique identifier of the inventory item group. This identifier is created by the seller when an inventory item group is created. <br><br><span class=\"tablenote\"><b>Note:</b> This field is only applicable to the <strong>getInventoryItemGroup</strong> call and not to the <strong>createOrReplaceInventoryItemGroup</strong> call. In the <strong>createOrReplaceInventoryItemGroup</strong> call, the <strong>inventoryItemGroupKey</strong> value is passed into the end of the call URI instead. </span>  # noqa: E501
 
         :return: The inventory_item_group_key of this InventoryItemGroup.  # noqa: E501
         :rtype: str
@@ -166,7 +166,7 @@ class InventoryItemGroup(object):
     def inventory_item_group_key(self, inventory_item_group_key):
         """Sets the inventory_item_group_key of this InventoryItemGroup.
 
-        This is the unique identifier of the inventory item group. This identifier is created by the seller when an inventory item group is created. This field is only applicable to the <strong>getInventoryItemGroup</strong> call and not to the <strong>createOrReplaceInventoryItemGroup</strong> call. In the <strong>createOrReplaceInventoryItemGroup</strong> call, the <strong>inventoryItemGroupKey</strong> value is passed into the end of the call URI instead.   # noqa: E501
+        This is the unique identifier of the inventory item group. This identifier is created by the seller when an inventory item group is created. <br><br><span class=\"tablenote\"><b>Note:</b> This field is only applicable to the <strong>getInventoryItemGroup</strong> call and not to the <strong>createOrReplaceInventoryItemGroup</strong> call. In the <strong>createOrReplaceInventoryItemGroup</strong> call, the <strong>inventoryItemGroupKey</strong> value is passed into the end of the call URI instead. </span>  # noqa: E501
 
         :param inventory_item_group_key: The inventory_item_group_key of this InventoryItemGroup.  # noqa: E501
         :type: str
@@ -268,7 +268,7 @@ class InventoryItemGroup(object):
     def video_ids(self):
         """Gets the video_ids of this InventoryItemGroup.  # noqa: E501
 
-        An array of one or more VideoId values for the inventory item group. A VideoId is a unique identifier that is automatically created by eBay when a seller successfully uploads a video to eBay using the  <a href=\"/api-docs/commerce/media/resources/video/methods/uploadVideo \" target=\"_blank\">uploadVideo</a> method of the <a href=\"/api-docs/commerce/media/overview.html \" target=\"_blank\">Media API</a>.<br><br>For information on supported marketplaces and platforms, as well as other requirements and limitations of video support, please refer to <a href=\"/api-docs/sell/static/inventory/managing-video-media.html \" target=\"_blank\">Managing videos</a>.  # noqa: E501
+        An array of one or more <b>videoId</b> values for the inventory item group. A video ID is a unique identifier that is automatically created by eBay when a seller successfully uploads a video to eBay using the  <a href=\"/api-docs/commerce/media/resources/video/methods/uploadVideo \" target=\"_blank\">uploadVideo</a> method of the <a href=\"/api-docs/commerce/media/overview.html \" target=\"_blank\">Media API</a>.<br><br>For information on supported marketplaces and platforms, as well as other requirements and limitations of video support, please refer to <a href=\"/api-docs/sell/static/inventory/managing-video-media.html \" target=\"_blank\">Managing videos</a>.<br><br><span class=\"tablenote\"><b>Note:</b> Only one video per listing is supported.</span>  # noqa: E501
 
         :return: The video_ids of this InventoryItemGroup.  # noqa: E501
         :rtype: list[str]
@@ -279,7 +279,7 @@ class InventoryItemGroup(object):
     def video_ids(self, video_ids):
         """Sets the video_ids of this InventoryItemGroup.
 
-        An array of one or more VideoId values for the inventory item group. A VideoId is a unique identifier that is automatically created by eBay when a seller successfully uploads a video to eBay using the  <a href=\"/api-docs/commerce/media/resources/video/methods/uploadVideo \" target=\"_blank\">uploadVideo</a> method of the <a href=\"/api-docs/commerce/media/overview.html \" target=\"_blank\">Media API</a>.<br><br>For information on supported marketplaces and platforms, as well as other requirements and limitations of video support, please refer to <a href=\"/api-docs/sell/static/inventory/managing-video-media.html \" target=\"_blank\">Managing videos</a>.  # noqa: E501
+        An array of one or more <b>videoId</b> values for the inventory item group. A video ID is a unique identifier that is automatically created by eBay when a seller successfully uploads a video to eBay using the  <a href=\"/api-docs/commerce/media/resources/video/methods/uploadVideo \" target=\"_blank\">uploadVideo</a> method of the <a href=\"/api-docs/commerce/media/overview.html \" target=\"_blank\">Media API</a>.<br><br>For information on supported marketplaces and platforms, as well as other requirements and limitations of video support, please refer to <a href=\"/api-docs/sell/static/inventory/managing-video-media.html \" target=\"_blank\">Managing videos</a>.<br><br><span class=\"tablenote\"><b>Note:</b> Only one video per listing is supported.</span>  # noqa: E501
 
         :param video_ids: The video_ids of this InventoryItemGroup.  # noqa: E501
         :type: list[str]

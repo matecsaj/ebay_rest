@@ -44,7 +44,7 @@ class InventoryItemApi(object):
         :param async_req bool
         :param BulkInventoryItem body: Details of the inventories with sku and locale (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German. For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German.<br><br>For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: BulkInventoryItemResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -68,7 +68,7 @@ class InventoryItemApi(object):
         :param async_req bool
         :param BulkInventoryItem body: Details of the inventories with sku and locale (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German. For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German.<br><br>For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: BulkInventoryItemResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -372,9 +372,9 @@ class InventoryItemApi(object):
 
         :param async_req bool
         :param InventoryItem body: Details of the inventory item record. (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German. For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German.<br><br>For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str sku: The seller-defined SKU value for the inventory item is required whether the seller is creating a new inventory item, or updating an existing inventory item. This SKU value is passed in at the end of the call URI. SKU values must be unique across the seller's inventory. <br><br> <strong>Max length</strong>: 50. (required)
+        :param str sku: This path parameter specifies the seller-defined SKU value for the inventory item being created or updated. SKU values must be unique across the seller's inventory. <br><br> <strong>Max length</strong>: 50 (required)
         :return: BaseResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -397,9 +397,9 @@ class InventoryItemApi(object):
 
         :param async_req bool
         :param InventoryItem body: Details of the inventory item record. (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German. For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German.<br><br>For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str sku: The seller-defined SKU value for the inventory item is required whether the seller is creating a new inventory item, or updating an existing inventory item. This SKU value is passed in at the end of the call URI. SKU values must be unique across the seller's inventory. <br><br> <strong>Max length</strong>: 50. (required)
+        :param str sku: This path parameter specifies the seller-defined SKU value for the inventory item being created or updated. SKU values must be unique across the seller's inventory. <br><br> <strong>Max length</strong>: 50 (required)
         :return: BaseResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -494,7 +494,7 @@ class InventoryItemApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str sku: This is the seller-defined SKU value of the product whose inventory item record you wish to delete.<br><br><strong>Max length</strong>: 50. (required)
+        :param str sku: This path parameter specifies the seller-defined SKU value of the product whose inventory item record you wish to delete.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/inventory_item/methods/getInventoryItems\" target=\"_blank \">getInventoryItems</a> method to retrieve SKU values.<br><br><strong>Max length</strong>: 50 (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -516,7 +516,7 @@ class InventoryItemApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str sku: This is the seller-defined SKU value of the product whose inventory item record you wish to delete.<br><br><strong>Max length</strong>: 50. (required)
+        :param str sku: This path parameter specifies the seller-defined SKU value of the product whose inventory item record you wish to delete.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/inventory_item/methods/getInventoryItems\" target=\"_blank \">getInventoryItems</a> method to retrieve SKU values.<br><br><strong>Max length</strong>: 50 (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -585,7 +585,7 @@ class InventoryItemApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str sku: This is the seller-defined SKU value of the product whose inventory item record you wish to retrieve.<br><br><strong>Max length</strong>: 50. (required)
+        :param str sku: This path parameter specifies the seller-defined SKU value of the product whose inventory item record you wish to retrieve.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/inventory_item/methods/getInventoryItems\" target=\"_blank \">getInventoryItems</a> method to retrieve SKU values.<br><br><strong>Max length</strong>: 50 (required)
         :return: InventoryItemWithSkuLocaleGroupid
                  If the method is called asynchronously,
                  returns the request thread.
@@ -607,7 +607,7 @@ class InventoryItemApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str sku: This is the seller-defined SKU value of the product whose inventory item record you wish to retrieve.<br><br><strong>Max length</strong>: 50. (required)
+        :param str sku: This path parameter specifies the seller-defined SKU value of the product whose inventory item record you wish to retrieve.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/inventory_item/methods/getInventoryItems\" target=\"_blank \">getInventoryItems</a> method to retrieve SKU values.<br><br><strong>Max length</strong>: 50 (required)
         :return: InventoryItemWithSkuLocaleGroupid
                  If the method is called asynchronously,
                  returns the request thread.
@@ -680,7 +680,7 @@ class InventoryItemApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str limit: The value passed in this query parameter sets the maximum number of records to return per page of data. Although this field is a string, the value passed in this field should be an integer  from <code>1</code> to <code>100</code>. If this query parameter is not set, up to 100 records will be returned on each page of results.<br><br><strong>Min</strong>: 1, <strong>Max</strong>: 100 
+        :param str limit: The value passed in this query parameter sets the maximum number of records to return per page of data. Although this field is a string, the value passed in this field should be an integer  from <code>1</code> to <code>100</code>. <br><br><strong>Min</strong>: 1<br><br><strong>Max</strong>: 100<br><br><b>Default</b>: 25 
         :param str offset: The value passed in this query parameter sets the page number to retrieve. The first page of records has a value of <code>0</code>, the second page of records has a value of <code>1</code>, and so on. If this query parameter is not set, its value defaults to <code>0</code>, and the first page of records is returned. 
         :return: InventoryItems
                  If the method is called asynchronously,
@@ -703,7 +703,7 @@ class InventoryItemApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str limit: The value passed in this query parameter sets the maximum number of records to return per page of data. Although this field is a string, the value passed in this field should be an integer  from <code>1</code> to <code>100</code>. If this query parameter is not set, up to 100 records will be returned on each page of results.<br><br><strong>Min</strong>: 1, <strong>Max</strong>: 100 
+        :param str limit: The value passed in this query parameter sets the maximum number of records to return per page of data. Although this field is a string, the value passed in this field should be an integer  from <code>1</code> to <code>100</code>. <br><br><strong>Min</strong>: 1<br><br><strong>Max</strong>: 100<br><br><b>Default</b>: 25 
         :param str offset: The value passed in this query parameter sets the page number to retrieve. The first page of records has a value of <code>0</code>, the second page of records has a value of <code>1</code>, and so on. If this query parameter is not set, its value defaults to <code>0</code>, and the first page of records is returned. 
         :return: InventoryItems
                  If the method is called asynchronously,

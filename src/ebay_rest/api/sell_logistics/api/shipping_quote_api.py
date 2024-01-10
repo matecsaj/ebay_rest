@@ -43,7 +43,7 @@ class ShippingQuoteApi(object):
 
         :param async_req bool
         :param ShippingQuoteRequest body: The request object for <b>createShippingQuote</b>. (required)
-        :param str x_ebay_c_marketplace_id: This header parameter specifies the eBay marketplace for the shipping quote that is being created. For a list of valid values, refer to the section <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">Marketplace ID Values</a> in the <b>Using eBay RESTful APIs</b> guide. (required)
+        :param str x_ebay_c_marketplace_id: This header parameter specifies the eBay marketplace for the shipping quote that is being created.<br><br>For a list of valid values, refer to the section <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">Marketplace ID Values</a> in the <b>Using eBay RESTful APIs</b> guide. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: ShippingQuote
                  If the method is called asynchronously,
@@ -67,7 +67,7 @@ class ShippingQuoteApi(object):
 
         :param async_req bool
         :param ShippingQuoteRequest body: The request object for <b>createShippingQuote</b>. (required)
-        :param str x_ebay_c_marketplace_id: This header parameter specifies the eBay marketplace for the shipping quote that is being created. For a list of valid values, refer to the section <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">Marketplace ID Values</a> in the <b>Using eBay RESTful APIs</b> guide. (required)
+        :param str x_ebay_c_marketplace_id: This header parameter specifies the eBay marketplace for the shipping quote that is being created.<br><br>For a list of valid values, refer to the section <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">Marketplace ID Values</a> in the <b>Using eBay RESTful APIs</b> guide. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: ShippingQuote
                  If the method is called asynchronously,
@@ -157,7 +157,7 @@ class ShippingQuoteApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str shipping_quote_id: This path parameter specifies the unique eBay-assigned ID of the shipping quote you want to retrieve. The <b>shippingQuoteId</b> value is generated and returned by a call to <b>createShippingQuote</b>. (required)
+        :param str shipping_quote_id: This path parameter specifies the unique eBay-assigned ID of the shipping quote you want to retrieve.<br><br>The <b>shippingQuoteId</b> value is generated and returned by the <a href=\"/api-docs/sell/logistics/resources/shipping_quote/methods/createShippingQuote\" target=\"_blank\">createShippingQuote</a> method. (required)
         :return: ShippingQuote
                  If the method is called asynchronously,
                  returns the request thread.
@@ -179,7 +179,7 @@ class ShippingQuoteApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str shipping_quote_id: This path parameter specifies the unique eBay-assigned ID of the shipping quote you want to retrieve. The <b>shippingQuoteId</b> value is generated and returned by a call to <b>createShippingQuote</b>. (required)
+        :param str shipping_quote_id: This path parameter specifies the unique eBay-assigned ID of the shipping quote you want to retrieve.<br><br>The <b>shippingQuoteId</b> value is generated and returned by the <a href=\"/api-docs/sell/logistics/resources/shipping_quote/methods/createShippingQuote\" target=\"_blank\">createShippingQuote</a> method. (required)
         :return: ShippingQuote
                  If the method is called asynchronously,
                  returns the request thread.

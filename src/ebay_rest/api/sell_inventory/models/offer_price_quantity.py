@@ -79,7 +79,7 @@ class OfferPriceQuantity(object):
     def offer_id(self):
         """Gets the offer_id of this OfferPriceQuantity.  # noqa: E501
 
-        This field is the unique identifier of the offer. If an <strong>offers</strong> container is used to update one or more offers associated to a specific inventory item, the <strong>offerId</strong> value is required in order to identify the offer to update with a modified price and/or quantity.<br><br>The seller can run a <strong>getOffers</strong> call (passing in the correct SKU value as a query parameter) to retrieve <strong>offerId</strong> values for offers associated with the SKU.  # noqa: E501
+        This field is the unique identifier of the offer. If an <strong>offers</strong> container is used to update one or more offers associated to a specific inventory item, the <strong>offerId</strong> value is required in order to identify the offer to update with a modified price and/or quantity.<br><br>The seller can use the <a href=\"/api-docs/sell/inventory/resources/offer/methods/getOffers\" target=\"_blank \">getOffers</a> method (passing in the correct SKU value as a query parameter) to retrieve <strong>offerId</strong> values for offers associated with the SKU.  # noqa: E501
 
         :return: The offer_id of this OfferPriceQuantity.  # noqa: E501
         :rtype: str
@@ -90,7 +90,7 @@ class OfferPriceQuantity(object):
     def offer_id(self, offer_id):
         """Sets the offer_id of this OfferPriceQuantity.
 
-        This field is the unique identifier of the offer. If an <strong>offers</strong> container is used to update one or more offers associated to a specific inventory item, the <strong>offerId</strong> value is required in order to identify the offer to update with a modified price and/or quantity.<br><br>The seller can run a <strong>getOffers</strong> call (passing in the correct SKU value as a query parameter) to retrieve <strong>offerId</strong> values for offers associated with the SKU.  # noqa: E501
+        This field is the unique identifier of the offer. If an <strong>offers</strong> container is used to update one or more offers associated to a specific inventory item, the <strong>offerId</strong> value is required in order to identify the offer to update with a modified price and/or quantity.<br><br>The seller can use the <a href=\"/api-docs/sell/inventory/resources/offer/methods/getOffers\" target=\"_blank \">getOffers</a> method (passing in the correct SKU value as a query parameter) to retrieve <strong>offerId</strong> values for offers associated with the SKU.  # noqa: E501
 
         :param offer_id: The offer_id of this OfferPriceQuantity.  # noqa: E501
         :type: str

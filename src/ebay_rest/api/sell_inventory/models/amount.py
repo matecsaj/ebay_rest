@@ -51,7 +51,7 @@ class Amount(object):
     def currency(self):
         """Gets the currency of this Amount.  # noqa: E501
 
-        A three-digit string value respresenting the type of currency being used. Both the <strong>value</strong> and <strong>currency</strong> fields are required/always returned when expressing prices. See the <a href=\"/api-docs/sell/inventory/types/ba:CurrencyCodeEnum\" target=\"_blank\">CurrencyCodeEnum</a> type for the full list of currencies and their corresponding three-digit string values.  # noqa: E501
+        A three-digit string value representing the type of currency being used. Both the <strong>value</strong> and <strong>currency</strong> fields are required/always returned when expressing prices. <br><br>See the <a href=\"/api-docs/sell/inventory/types/ba:CurrencyCodeEnum\" target=\"_blank\">CurrencyCodeEnum</a> type for the full list of currencies and their corresponding three-digit string values.  # noqa: E501
 
         :return: The currency of this Amount.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class Amount(object):
     def currency(self, currency):
         """Sets the currency of this Amount.
 
-        A three-digit string value respresenting the type of currency being used. Both the <strong>value</strong> and <strong>currency</strong> fields are required/always returned when expressing prices. See the <a href=\"/api-docs/sell/inventory/types/ba:CurrencyCodeEnum\" target=\"_blank\">CurrencyCodeEnum</a> type for the full list of currencies and their corresponding three-digit string values.  # noqa: E501
+        A three-digit string value representing the type of currency being used. Both the <strong>value</strong> and <strong>currency</strong> fields are required/always returned when expressing prices. <br><br>See the <a href=\"/api-docs/sell/inventory/types/ba:CurrencyCodeEnum\" target=\"_blank\">CurrencyCodeEnum</a> type for the full list of currencies and their corresponding three-digit string values.  # noqa: E501
 
         :param currency: The currency of this Amount.  # noqa: E501
         :type: str

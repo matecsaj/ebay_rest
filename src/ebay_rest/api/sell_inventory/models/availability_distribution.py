@@ -77,7 +77,7 @@ class AvailabilityDistribution(object):
     def merchant_location_key(self):
         """Gets the merchant_location_key of this AvailabilityDistribution.  # noqa: E501
 
-        The unique identifier of an inventory location where quantity is available for the inventory item. This field is conditionally required to identify the inventory location that has quantity of the inventory item.  # noqa: E501
+        The unique identifier of an inventory location where quantity is available for the inventory item. This field is conditionally required to identify the inventory location that has quantity of the inventory item.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocations\" target=\"_blank\">getInventoryLocations</a> method to retrieve merchant location keys.  # noqa: E501
 
         :return: The merchant_location_key of this AvailabilityDistribution.  # noqa: E501
         :rtype: str
@@ -88,7 +88,7 @@ class AvailabilityDistribution(object):
     def merchant_location_key(self, merchant_location_key):
         """Sets the merchant_location_key of this AvailabilityDistribution.
 
-        The unique identifier of an inventory location where quantity is available for the inventory item. This field is conditionally required to identify the inventory location that has quantity of the inventory item.  # noqa: E501
+        The unique identifier of an inventory location where quantity is available for the inventory item. This field is conditionally required to identify the inventory location that has quantity of the inventory item.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocations\" target=\"_blank\">getInventoryLocations</a> method to retrieve merchant location keys.  # noqa: E501
 
         :param merchant_location_key: The merchant_location_key of this AvailabilityDistribution.  # noqa: E501
         :type: str

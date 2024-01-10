@@ -98,7 +98,7 @@ class Regulatory(object):
     def repair_score(self):
         """Gets the repair_score of this Regulatory.  # noqa: E501
 
-        This field represents the repair index for the listing.<br><br>The repair index identifies the manufacturer's repair score for a product (i.e., how easy is it to repair the product.) This field is a floating point value between 0.0 (i.e., difficult to repair,) and 10.0 (i.e., easily repaired.)<br><br>The format for <b>repairScore</b> is limited to one decimal place. For example:<ul><li><code>7.9</code> and <code>0.0</code> are both valid scores</li><li><code>5.645</code> and <code>2.10</code> are both invalid scores</li></ul>  # noqa: E501
+        This field represents the repair index for the listing.<br><br>The repair index identifies the manufacturer's repair score for a product (i.e., how easy is it to repair the product.) This field is a floating point value between 0.0 (i.e., difficult to repair,) and 10.0 (i.e., easily repaired.)<br><br>The format for <b>repairScore</b> is limited to one decimal place. For example:<ul><li><code>7.9</code> and <code>0.0</code> are both valid scores</li><li><code>5.645</code> and <code>2.10</code> are both invalid scores</li></ul><br><span class=\"tablenote\"><b>Note:</b> Repair score is not applicable to all categories. Use the <a href=\"/api-docs/sell/metadata/resources/marketplace/methods/getExtendedProducerResponsibilityPolicies\" target=\"_blank\">getExtendedProducerResponsibilityPolicies</a> method of the <b>Metadata API</b> to see where repair score is applicable.</span>  # noqa: E501
 
         :return: The repair_score of this Regulatory.  # noqa: E501
         :rtype: float
@@ -109,7 +109,7 @@ class Regulatory(object):
     def repair_score(self, repair_score):
         """Sets the repair_score of this Regulatory.
 
-        This field represents the repair index for the listing.<br><br>The repair index identifies the manufacturer's repair score for a product (i.e., how easy is it to repair the product.) This field is a floating point value between 0.0 (i.e., difficult to repair,) and 10.0 (i.e., easily repaired.)<br><br>The format for <b>repairScore</b> is limited to one decimal place. For example:<ul><li><code>7.9</code> and <code>0.0</code> are both valid scores</li><li><code>5.645</code> and <code>2.10</code> are both invalid scores</li></ul>  # noqa: E501
+        This field represents the repair index for the listing.<br><br>The repair index identifies the manufacturer's repair score for a product (i.e., how easy is it to repair the product.) This field is a floating point value between 0.0 (i.e., difficult to repair,) and 10.0 (i.e., easily repaired.)<br><br>The format for <b>repairScore</b> is limited to one decimal place. For example:<ul><li><code>7.9</code> and <code>0.0</code> are both valid scores</li><li><code>5.645</code> and <code>2.10</code> are both invalid scores</li></ul><br><span class=\"tablenote\"><b>Note:</b> Repair score is not applicable to all categories. Use the <a href=\"/api-docs/sell/metadata/resources/marketplace/methods/getExtendedProducerResponsibilityPolicies\" target=\"_blank\">getExtendedProducerResponsibilityPolicies</a> method of the <b>Metadata API</b> to see where repair score is applicable.</span>  # noqa: E501
 
         :param repair_score: The repair_score of this Regulatory.  # noqa: E501
         :type: float

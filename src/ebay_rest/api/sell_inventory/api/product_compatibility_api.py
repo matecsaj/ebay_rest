@@ -43,9 +43,9 @@ class ProductCompatibilityApi(object):
 
         :param async_req bool
         :param Compatibility body: Details of the compatibility (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German. For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German.<br><br>For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str sku: A SKU (stock keeping unit) is an unique identifier defined by a seller for a product (required)
+        :param str sku: This path parameter specifies the SKU (stock keeping unit) of the inventory item associated with the compatibility list being created.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/inventory_item/methods/getInventoryItems\" target=\"_blank \">getInventoryItems</a> method to retrieve SKU values. (required)
         :return: BaseResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -68,9 +68,9 @@ class ProductCompatibilityApi(object):
 
         :param async_req bool
         :param Compatibility body: Details of the compatibility (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German. For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German.<br><br>For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str sku: A SKU (stock keeping unit) is an unique identifier defined by a seller for a product (required)
+        :param str sku: This path parameter specifies the SKU (stock keeping unit) of the inventory item associated with the compatibility list being created.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/inventory_item/methods/getInventoryItems\" target=\"_blank \">getInventoryItems</a> method to retrieve SKU values. (required)
         :return: BaseResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -165,7 +165,7 @@ class ProductCompatibilityApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str sku: A SKU (stock keeping unit) is an unique identifier defined by a seller for a product (required)
+        :param str sku: This path parameter specifies the SKU (stock keeping unit) of the inventory item that is associated with the product compatibility list that is being deleted.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/inventory_item/methods/getInventoryItems\" target=\"_blank \">getInventoryItems</a> method to retrieve SKU values. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -187,7 +187,7 @@ class ProductCompatibilityApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str sku: A SKU (stock keeping unit) is an unique identifier defined by a seller for a product (required)
+        :param str sku: This path parameter specifies the SKU (stock keeping unit) of the inventory item that is associated with the product compatibility list that is being deleted.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/inventory_item/methods/getInventoryItems\" target=\"_blank \">getInventoryItems</a> method to retrieve SKU values. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -256,7 +256,7 @@ class ProductCompatibilityApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str sku: A SKU (stock keeping unit) is an unique identifier defined by a seller for a product (required)
+        :param str sku: This path parameter specifies the SKU (stock keeping unit) of the inventory item associated with the product compatibility list being retrieved.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/inventory_item/methods/getInventoryItems\" target=\"_blank \">getInventoryItems</a> method to retrieve SKU values. (required)
         :return: Compatibility
                  If the method is called asynchronously,
                  returns the request thread.
@@ -278,7 +278,7 @@ class ProductCompatibilityApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str sku: A SKU (stock keeping unit) is an unique identifier defined by a seller for a product (required)
+        :param str sku: This path parameter specifies the SKU (stock keeping unit) of the inventory item associated with the product compatibility list being retrieved.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/inventory_item/methods/getInventoryItems\" target=\"_blank \">getInventoryItems</a> method to retrieve SKU values. (required)
         :return: Compatibility
                  If the method is called asynchronously,
                  returns the request thread.

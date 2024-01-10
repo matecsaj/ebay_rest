@@ -378,7 +378,7 @@ class EbayOfferDetailsWithId(object):
     def merchant_location_key(self):
         """Gets the merchant_location_key of this EbayOfferDetailsWithId.  # noqa: E501
 
-        The unique identifier of a merchant's inventory location (where the inventory item in the offer is located). A <strong>merchantLocationKey</strong> value is established when the merchant creates an inventory location using the <strong>createInventoryLocation</strong> call. To get more information about inventory locations, the <strong>getInventoryLocation</strong> call can be used.<br><br>This field is not initially required upon first creating an offer, but will become required before an offer can be published.<br><br><b>Max length</b>: 36  # noqa: E501
+        The unique identifier of a merchant's inventory location (where the inventory item in the offer is located).<br><br> To get more information about inventory locations, the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocations\" target=\"_blank\">getInventoryLocations</a> method can be used.br><br><span class=\"tablenote\"><b>Note:</b> This field is not initially required upon first creating an offer, but will become required before an offer can be published.</span><br><b>Max length</b>: 36  # noqa: E501
 
         :return: The merchant_location_key of this EbayOfferDetailsWithId.  # noqa: E501
         :rtype: str
@@ -389,7 +389,7 @@ class EbayOfferDetailsWithId(object):
     def merchant_location_key(self, merchant_location_key):
         """Sets the merchant_location_key of this EbayOfferDetailsWithId.
 
-        The unique identifier of a merchant's inventory location (where the inventory item in the offer is located). A <strong>merchantLocationKey</strong> value is established when the merchant creates an inventory location using the <strong>createInventoryLocation</strong> call. To get more information about inventory locations, the <strong>getInventoryLocation</strong> call can be used.<br><br>This field is not initially required upon first creating an offer, but will become required before an offer can be published.<br><br><b>Max length</b>: 36  # noqa: E501
+        The unique identifier of a merchant's inventory location (where the inventory item in the offer is located).<br><br> To get more information about inventory locations, the <a href=\"/api-docs/sell/inventory/resources/location/methods/getInventoryLocations\" target=\"_blank\">getInventoryLocations</a> method can be used.br><br><span class=\"tablenote\"><b>Note:</b> This field is not initially required upon first creating an offer, but will become required before an offer can be published.</span><br><b>Max length</b>: 36  # noqa: E501
 
         :param merchant_location_key: The merchant_location_key of this EbayOfferDetailsWithId.  # noqa: E501
         :type: str

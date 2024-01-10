@@ -43,7 +43,7 @@ class OfferApi(object):
 
         :param async_req bool
         :param BulkEbayOfferDetailsWithKeys body: Details of the offer for the channel (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German. For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German.<br><br>For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: BulkOfferResponse
                  If the method is called asynchronously,
@@ -67,7 +67,7 @@ class OfferApi(object):
 
         :param async_req bool
         :param BulkEbayOfferDetailsWithKeys body: Details of the offer for the channel (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German. For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German.<br><br>For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: BulkOfferResponse
                  If the method is called asynchronously,
@@ -150,7 +150,7 @@ class OfferApi(object):
     def bulk_publish_offer(self, body, content_type, **kwargs):  # noqa: E501
         """bulk_publish_offer  # noqa: E501
 
-        <span class=\"tablenote\"><strong>Note:</strong> Each listing can be revised up to 250 times in one calendar day. If this revision threshold is reached, the seller will be blocked from revising the item until the next calendar day.</span><br><br>This call is used to convert unpublished offers (up to 25) into  published offers, or live eBay listings. The unique identifier (<strong>offerId</strong>) of each offer to publish is passed into the request payload. It is possible that some unpublished offers will be successfully created into eBay listings, but others may fail. The response payload will show the results for each <strong>offerId</strong> value that is passed into the request payload. The <strong>errors</strong> and <strong>warnings</strong> containers will be returned for an offer that had one or more issues being published. <br><br>For those who prefer to publish one offer per call, the <strong>publishOffer</strong> method can be used instead. In the case of a multiple-variation listing, the <strong>publishOfferByInventoryItemGroup</strong> call should be used instead, as this call will convert all unpublished offers associated with an inventory item group into a multiple-variation listing.  # noqa: E501
+        <span class=\"tablenote\"><strong>Note:</strong> Each listing can be revised up to 250 times in one calendar day. If this revision threshold is reached, the seller will be blocked from revising the item until the next calendar day.</span><br>This call is used to convert unpublished offers (up to 25) into  published offers, or live eBay listings. The unique identifier (<strong>offerId</strong>) of each offer to publish is passed into the request payload. It is possible that some unpublished offers will be successfully created into eBay listings, but others may fail. The response payload will show the results for each <strong>offerId</strong> value that is passed into the request payload. The <strong>errors</strong> and <strong>warnings</strong> containers will be returned for an offer that had one or more issues being published. <br><br>For those who prefer to publish one offer per call, the <strong>publishOffer</strong> method can be used instead. In the case of a multiple-variation listing, the <strong>publishOfferByInventoryItemGroup</strong> call should be used instead, as this call will convert all unpublished offers associated with an inventory item group into a multiple-variation listing.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.bulk_publish_offer(body, content_type, async_req=True)
@@ -173,7 +173,7 @@ class OfferApi(object):
     def bulk_publish_offer_with_http_info(self, body, content_type, **kwargs):  # noqa: E501
         """bulk_publish_offer  # noqa: E501
 
-        <span class=\"tablenote\"><strong>Note:</strong> Each listing can be revised up to 250 times in one calendar day. If this revision threshold is reached, the seller will be blocked from revising the item until the next calendar day.</span><br><br>This call is used to convert unpublished offers (up to 25) into  published offers, or live eBay listings. The unique identifier (<strong>offerId</strong>) of each offer to publish is passed into the request payload. It is possible that some unpublished offers will be successfully created into eBay listings, but others may fail. The response payload will show the results for each <strong>offerId</strong> value that is passed into the request payload. The <strong>errors</strong> and <strong>warnings</strong> containers will be returned for an offer that had one or more issues being published. <br><br>For those who prefer to publish one offer per call, the <strong>publishOffer</strong> method can be used instead. In the case of a multiple-variation listing, the <strong>publishOfferByInventoryItemGroup</strong> call should be used instead, as this call will convert all unpublished offers associated with an inventory item group into a multiple-variation listing.  # noqa: E501
+        <span class=\"tablenote\"><strong>Note:</strong> Each listing can be revised up to 250 times in one calendar day. If this revision threshold is reached, the seller will be blocked from revising the item until the next calendar day.</span><br>This call is used to convert unpublished offers (up to 25) into  published offers, or live eBay listings. The unique identifier (<strong>offerId</strong>) of each offer to publish is passed into the request payload. It is possible that some unpublished offers will be successfully created into eBay listings, but others may fail. The response payload will show the results for each <strong>offerId</strong> value that is passed into the request payload. The <strong>errors</strong> and <strong>warnings</strong> containers will be returned for an offer that had one or more issues being published. <br><br>For those who prefer to publish one offer per call, the <strong>publishOffer</strong> method can be used instead. In the case of a multiple-variation listing, the <strong>publishOfferByInventoryItemGroup</strong> call should be used instead, as this call will convert all unpublished offers associated with an inventory item group into a multiple-variation listing.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.bulk_publish_offer_with_http_info(body, content_type, async_req=True)
@@ -265,7 +265,7 @@ class OfferApi(object):
 
         :param async_req bool
         :param EbayOfferDetailsWithKeys body: Details of the offer for the channel (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German. For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German.<br><br>For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: OfferResponse
                  If the method is called asynchronously,
@@ -289,7 +289,7 @@ class OfferApi(object):
 
         :param async_req bool
         :param EbayOfferDetailsWithKeys body: Details of the offer for the channel (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German. For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German.<br><br>For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: OfferResponse
                  If the method is called asynchronously,
@@ -379,7 +379,7 @@ class OfferApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str offer_id: The unique identifier of the offer to delete. The unique identifier of the offer (<strong>offerId</strong>) is passed in at the end of the call URI. (required)
+        :param str offer_id: This path parameter specifies the unique identifier of the offer being deleted.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/offer/methods/getOffers\">getOffers</a> method to retrieve offer IDs. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -401,7 +401,7 @@ class OfferApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str offer_id: The unique identifier of the offer to delete. The unique identifier of the offer (<strong>offerId</strong>) is passed in at the end of the call URI. (required)
+        :param str offer_id: This path parameter specifies the unique identifier of the offer being deleted.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/offer/methods/getOffers\">getOffers</a> method to retrieve offer IDs. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -573,7 +573,7 @@ class OfferApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str offer_id: The unique identifier of the offer that is to be retrieved. (required)
+        :param str offer_id: This path parameter specifies the unique identifier of the offer that is to be retrieved.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/offer/methods/getOffers\">getOffers</a> method to retrieve offer IDs. (required)
         :return: EbayOfferDetailsWithAll
                  If the method is called asynchronously,
                  returns the request thread.
@@ -595,7 +595,7 @@ class OfferApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str offer_id: The unique identifier of the offer that is to be retrieved. (required)
+        :param str offer_id: This path parameter specifies the unique identifier of the offer that is to be retrieved.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/offer/methods/getOffers\">getOffers</a> method to retrieve offer IDs. (required)
         :return: EbayOfferDetailsWithAll
                  If the method is called asynchronously,
                  returns the request thread.
@@ -668,11 +668,11 @@ class OfferApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str format: This enumeration value sets the listing format for the offer. This query parameter will be passed in if the seller only wants to see offers in this specified listing format.
+        :param str format: This enumeration value sets the listing format for the offers being retrieved. This query parameter will be passed in if the seller only wants to see offers in a specified listing format, such as <code>FIXED_PRICE</code>.
         :param str limit: The value passed in this query parameter sets the maximum number of records to return per page of data. Although this field is a string, the value passed in this field should be a positive integer value. If this query parameter is not set, up to 100 records will be returned on each page of results.
         :param str marketplace_id: The unique identifier of the eBay marketplace. This query parameter will be passed in if the seller only wants to see the product's offers on a specific eBay marketplace.<br><br><span class=\"tablenote\"><strong>Note:</strong> At this time, the same SKU value can not be offered across multiple eBay marketplaces, so the <strong>marketplace_id</strong> query parameter currently does not have any practical use for this call.</span>
         :param str offset: The value passed in this query parameter sets the page number to retrieve. Although this field is a string, the value passed in this field should be a integer value equal to or greater than <code>0</code>. The first page of records has a value of <code>0</code>, the second page of records has a value of <code>1</code>, and so on. If this query parameter is not set, its value defaults to <code>0</code>, and the first page of records is returned.
-        :param str sku: The seller-defined SKU value is passed in as a query parameter. All offers associated with this product are returned in the response. <br><br><span class=\"tablenote\"><strong>Note:</strong> The same SKU can be offered through an auction and a fixed-price listing concurrently. If this is the case, <b>getOffers</b> will return two offers. Otherwise, only one offer will be returned.</span><br> <strong>Max length</strong>: 50.
+        :param str sku: The seller-defined SKU value is passed in as a query parameter. All offers associated with this product are returned in the response. <br><br><span class=\"tablenote\"><strong>Note:</strong> The same SKU can be offered through an auction and a fixed-price listing concurrently. If this is the case, <b>getOffers</b> will return two offers. Otherwise, only one offer will be returned.</span><br>Use the <a href=\"/api-docs/sell/inventory/resources/inventory_item/methods/getInventoryItems\">getInventoryItems</a> method to retrieve SKU values.<br><br><strong>Max length</strong>: 50.
         :return: Offers
                  If the method is called asynchronously,
                  returns the request thread.
@@ -694,11 +694,11 @@ class OfferApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str format: This enumeration value sets the listing format for the offer. This query parameter will be passed in if the seller only wants to see offers in this specified listing format.
+        :param str format: This enumeration value sets the listing format for the offers being retrieved. This query parameter will be passed in if the seller only wants to see offers in a specified listing format, such as <code>FIXED_PRICE</code>.
         :param str limit: The value passed in this query parameter sets the maximum number of records to return per page of data. Although this field is a string, the value passed in this field should be a positive integer value. If this query parameter is not set, up to 100 records will be returned on each page of results.
         :param str marketplace_id: The unique identifier of the eBay marketplace. This query parameter will be passed in if the seller only wants to see the product's offers on a specific eBay marketplace.<br><br><span class=\"tablenote\"><strong>Note:</strong> At this time, the same SKU value can not be offered across multiple eBay marketplaces, so the <strong>marketplace_id</strong> query parameter currently does not have any practical use for this call.</span>
         :param str offset: The value passed in this query parameter sets the page number to retrieve. Although this field is a string, the value passed in this field should be a integer value equal to or greater than <code>0</code>. The first page of records has a value of <code>0</code>, the second page of records has a value of <code>1</code>, and so on. If this query parameter is not set, its value defaults to <code>0</code>, and the first page of records is returned.
-        :param str sku: The seller-defined SKU value is passed in as a query parameter. All offers associated with this product are returned in the response. <br><br><span class=\"tablenote\"><strong>Note:</strong> The same SKU can be offered through an auction and a fixed-price listing concurrently. If this is the case, <b>getOffers</b> will return two offers. Otherwise, only one offer will be returned.</span><br> <strong>Max length</strong>: 50.
+        :param str sku: The seller-defined SKU value is passed in as a query parameter. All offers associated with this product are returned in the response. <br><br><span class=\"tablenote\"><strong>Note:</strong> The same SKU can be offered through an auction and a fixed-price listing concurrently. If this is the case, <b>getOffers</b> will return two offers. Otherwise, only one offer will be returned.</span><br>Use the <a href=\"/api-docs/sell/inventory/resources/inventory_item/methods/getInventoryItems\">getInventoryItems</a> method to retrieve SKU values.<br><br><strong>Max length</strong>: 50.
         :return: Offers
                  If the method is called asynchronously,
                  returns the request thread.
@@ -768,14 +768,14 @@ class OfferApi(object):
     def publish_offer(self, offer_id, **kwargs):  # noqa: E501
         """publish_offer  # noqa: E501
 
-        <span class=\"tablenote\"><strong>Note:</strong> Each listing can be revised up to 250 times in one calendar day. If this revision threshold is reached, the seller will be blocked from revising the item until the next calendar day.</span><br><br>This call is used to convert an unpublished offer into a published offer, or live eBay listing. The unique identifier of the offer (<strong>offerId</strong>) is passed in at the end of the call URI.<br><br>For those who prefer to publish multiple offers (up to 25 at a time) with one call, the <strong>bulkPublishOffer</strong> method can be used. In the case of a multiple-variation listing, the <strong>publishOfferByInventoryItemGroup</strong> call should be used instead, as this call will convert all unpublished offers associated with an inventory item group into a multiple-variation listing.  # noqa: E501
+        <span class=\"tablenote\"><strong>Note:</strong> Each listing can be revised up to 250 times in one calendar day. If this revision threshold is reached, the seller will be blocked from revising the item until the next calendar day.</span><br>This call is used to convert an unpublished offer into a published offer, or live eBay listing. The unique identifier of the offer (<strong>offerId</strong>) is passed in at the end of the call URI.<br><br>For those who prefer to publish multiple offers (up to 25 at a time) with one call, the <strong>bulkPublishOffer</strong> method can be used. In the case of a multiple-variation listing, the <strong>publishOfferByInventoryItemGroup</strong> call should be used instead, as this call will convert all unpublished offers associated with an inventory item group into a multiple-variation listing.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.publish_offer(offer_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str offer_id: The unique identifier of the offer that is to be published. (required)
+        :param str offer_id: This path parameter specifies the unique identifier of the offer that is to be published.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/offer/methods/getOffers\">getOffers</a> method to retrieve offer IDs. (required)
         :return: PublishResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -790,14 +790,14 @@ class OfferApi(object):
     def publish_offer_with_http_info(self, offer_id, **kwargs):  # noqa: E501
         """publish_offer  # noqa: E501
 
-        <span class=\"tablenote\"><strong>Note:</strong> Each listing can be revised up to 250 times in one calendar day. If this revision threshold is reached, the seller will be blocked from revising the item until the next calendar day.</span><br><br>This call is used to convert an unpublished offer into a published offer, or live eBay listing. The unique identifier of the offer (<strong>offerId</strong>) is passed in at the end of the call URI.<br><br>For those who prefer to publish multiple offers (up to 25 at a time) with one call, the <strong>bulkPublishOffer</strong> method can be used. In the case of a multiple-variation listing, the <strong>publishOfferByInventoryItemGroup</strong> call should be used instead, as this call will convert all unpublished offers associated with an inventory item group into a multiple-variation listing.  # noqa: E501
+        <span class=\"tablenote\"><strong>Note:</strong> Each listing can be revised up to 250 times in one calendar day. If this revision threshold is reached, the seller will be blocked from revising the item until the next calendar day.</span><br>This call is used to convert an unpublished offer into a published offer, or live eBay listing. The unique identifier of the offer (<strong>offerId</strong>) is passed in at the end of the call URI.<br><br>For those who prefer to publish multiple offers (up to 25 at a time) with one call, the <strong>bulkPublishOffer</strong> method can be used. In the case of a multiple-variation listing, the <strong>publishOfferByInventoryItemGroup</strong> call should be used instead, as this call will convert all unpublished offers associated with an inventory item group into a multiple-variation listing.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.publish_offer_with_http_info(offer_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str offer_id: The unique identifier of the offer that is to be published. (required)
+        :param str offer_id: This path parameter specifies the unique identifier of the offer that is to be published.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/offer/methods/getOffers\">getOffers</a> method to retrieve offer IDs. (required)
         :return: PublishResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -978,9 +978,9 @@ class OfferApi(object):
 
         :param async_req bool
         :param EbayOfferDetailsWithId body: Details of the offer for the channel (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German. For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German.<br><br>For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str offer_id: The unique identifier of the offer that is being updated. This identifier is passed in at the end of the call URI. (required)
+        :param str offer_id: This path parameter specifies the unique identifier of the offer being updated.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/offer/methods/getOffers\">getOffers</a> method to retrieve offer IDs. (required)
         :return: OfferResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1003,9 +1003,9 @@ class OfferApi(object):
 
         :param async_req bool
         :param EbayOfferDetailsWithId body: Details of the offer for the channel (required)
-        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German. For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be <code>en-US</code> for English or <code>de-DE</code> for German.<br><br>For more information on the Content-Language header, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
-        :param str offer_id: The unique identifier of the offer that is being updated. This identifier is passed in at the end of the call URI. (required)
+        :param str offer_id: This path parameter specifies the unique identifier of the offer being updated.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/offer/methods/getOffers\">getOffers</a> method to retrieve offer IDs. (required)
         :return: OfferResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1100,7 +1100,7 @@ class OfferApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str offer_id: The unique identifier of the offer that is to be withdrawn. This value is passed into the path of the call URI. (required)
+        :param str offer_id: This path parameter specifies the unique identifier of the offer that is to be withdrawn.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/offer/methods/getOffers\">getOffers</a> method to retrieve offer IDs. (required)
         :return: WithdrawResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1122,7 +1122,7 @@ class OfferApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str offer_id: The unique identifier of the offer that is to be withdrawn. This value is passed into the path of the call URI. (required)
+        :param str offer_id: This path parameter specifies the unique identifier of the offer that is to be withdrawn.<br><br>Use the <a href=\"/api-docs/sell/inventory/resources/offer/methods/getOffers\">getOffers</a> method to retrieve offer IDs. (required)
         :return: WithdrawResponse
                  If the method is called asynchronously,
                  returns the request thread.

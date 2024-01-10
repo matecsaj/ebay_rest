@@ -61,7 +61,7 @@ class UpdateEvidencePaymentDisputeRequest(object):
     def evidence_id(self):
         """Gets the evidence_id of this UpdateEvidencePaymentDisputeRequest.  # noqa: E501
 
-        The unique identifier of the evidence set that is being updated with new evidence files.  # noqa: E501
+        The unique identifier of the evidence set that is being updated with new evidence files.<br><br> This ID is returned under the <strong>evidence</strong> array in the <a href=\"/api-docs/sell/fulfillment/resources/payment_dispute/methods/getPaymentDispute\" target=\"_blank \">getPaymentDispute</a> response.  # noqa: E501
 
         :return: The evidence_id of this UpdateEvidencePaymentDisputeRequest.  # noqa: E501
         :rtype: str
@@ -72,7 +72,7 @@ class UpdateEvidencePaymentDisputeRequest(object):
     def evidence_id(self, evidence_id):
         """Sets the evidence_id of this UpdateEvidencePaymentDisputeRequest.
 
-        The unique identifier of the evidence set that is being updated with new evidence files.  # noqa: E501
+        The unique identifier of the evidence set that is being updated with new evidence files.<br><br> This ID is returned under the <strong>evidence</strong> array in the <a href=\"/api-docs/sell/fulfillment/resources/payment_dispute/methods/getPaymentDispute\" target=\"_blank \">getPaymentDispute</a> response.  # noqa: E501
 
         :param evidence_id: The evidence_id of this UpdateEvidencePaymentDisputeRequest.  # noqa: E501
         :type: str
@@ -84,7 +84,7 @@ class UpdateEvidencePaymentDisputeRequest(object):
     def evidence_type(self):
         """Gets the evidence_type of this UpdateEvidencePaymentDisputeRequest.  # noqa: E501
 
-        This field is used to indicate the type of evidence being provided through one or more evidence files. All evidence files (if more than one) should be associated with the evidence type passed in this field. See the <strong>EvidenceTypeEnum</strong> type for the supported evidence types. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/api:EvidenceTypeEnum'>eBay API documentation</a>  # noqa: E501
+        This field is used to indicate the type of evidence being provided through one or more evidence files. All evidence files (if more than one) should be associated with the evidence type passed in this field.<br><br>See the <a href=\"/api-docs/sell/fulfillment/types/api:EvidenceTypeEnum\" target=\"_blank \">EvidenceTypeEnum</a> type for the supported evidence types. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/api:EvidenceTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The evidence_type of this UpdateEvidencePaymentDisputeRequest.  # noqa: E501
         :rtype: str
@@ -95,7 +95,7 @@ class UpdateEvidencePaymentDisputeRequest(object):
     def evidence_type(self, evidence_type):
         """Sets the evidence_type of this UpdateEvidencePaymentDisputeRequest.
 
-        This field is used to indicate the type of evidence being provided through one or more evidence files. All evidence files (if more than one) should be associated with the evidence type passed in this field. See the <strong>EvidenceTypeEnum</strong> type for the supported evidence types. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/api:EvidenceTypeEnum'>eBay API documentation</a>  # noqa: E501
+        This field is used to indicate the type of evidence being provided through one or more evidence files. All evidence files (if more than one) should be associated with the evidence type passed in this field.<br><br>See the <a href=\"/api-docs/sell/fulfillment/types/api:EvidenceTypeEnum\" target=\"_blank \">EvidenceTypeEnum</a> type for the supported evidence types. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/api:EvidenceTypeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param evidence_type: The evidence_type of this UpdateEvidencePaymentDisputeRequest.  # noqa: E501
         :type: str
@@ -130,7 +130,7 @@ class UpdateEvidencePaymentDisputeRequest(object):
     def line_items(self):
         """Gets the line_items of this UpdateEvidencePaymentDisputeRequest.  # noqa: E501
 
-        This required array identifies the order line item(s) for which the evidence file(s) will be applicable. Both the <strong>itemId</strong> and <strong>lineItemID</strong> fields are needed to identify each order line item, and both of these values are returned under the <strong>evidenceRequests.lineItems</strong> array in the <strong>getPaymentDispute</strong> response.  # noqa: E501
+        This required array identifies the order line item(s) for which the evidence file(s) will be applicable. <br><Br>These values are returned under the <strong>evidenceRequests.lineItems</strong> array in the <a href=\"/api-docs/sell/fulfillment/resources/payment_dispute/methods/getPaymentDispute\" target=\"_blank \">getPaymentDispute</a> response. <br><br><span class=\"tablenote\"><b>Note:</b> Both the <strong>itemId</strong> and <strong>lineItemID</strong> fields are needed to identify each order line item.</span>  # noqa: E501
 
         :return: The line_items of this UpdateEvidencePaymentDisputeRequest.  # noqa: E501
         :rtype: list[OrderLineItems]
@@ -141,7 +141,7 @@ class UpdateEvidencePaymentDisputeRequest(object):
     def line_items(self, line_items):
         """Sets the line_items of this UpdateEvidencePaymentDisputeRequest.
 
-        This required array identifies the order line item(s) for which the evidence file(s) will be applicable. Both the <strong>itemId</strong> and <strong>lineItemID</strong> fields are needed to identify each order line item, and both of these values are returned under the <strong>evidenceRequests.lineItems</strong> array in the <strong>getPaymentDispute</strong> response.  # noqa: E501
+        This required array identifies the order line item(s) for which the evidence file(s) will be applicable. <br><Br>These values are returned under the <strong>evidenceRequests.lineItems</strong> array in the <a href=\"/api-docs/sell/fulfillment/resources/payment_dispute/methods/getPaymentDispute\" target=\"_blank \">getPaymentDispute</a> response. <br><br><span class=\"tablenote\"><b>Note:</b> Both the <strong>itemId</strong> and <strong>lineItemID</strong> fields are needed to identify each order line item.</span>  # noqa: E501
 
         :param line_items: The line_items of this UpdateEvidencePaymentDisputeRequest.  # noqa: E501
         :type: list[OrderLineItems]
