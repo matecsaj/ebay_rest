@@ -347,7 +347,7 @@ Release Steps
    6. pipreqs --print src
 2. edit the setup.cfg file
    1. update the section install_requires per the output from pipregs
-   2. advance the version number
+   2. advance the [Semantic three-part version number](https://en.wikipedia.org/wiki/Software_versioning)
 3. repeat until error-free 
    1. run /ebay_rest/scripts/generate_code.py
    2. run /test/ebay_rest.py
