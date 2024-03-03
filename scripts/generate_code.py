@@ -30,19 +30,18 @@ from urllib.parse import urljoin, urlsplit, urlunsplit
 # Globals
 
 
-async def run(cmd):
+async def run_command(cmd):
     """Run a command line in a subprocess."""
+    logger = logging.getLogger(__name__)
     proc = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
-
     stdout, stderr = await proc.communicate()
-
-    print(f"[{cmd!r} exited with {proc.returncode}]")
+    logger.debug(f"[{cmd!r} exited with {proc.returncode}]")
     if stdout:
-        print(f"[stdout]\n{stdout.decode()}")
+        logger.debug(f"[stdout]\n{stdout.decode()}")
     if stderr:
-        print(f"[stderr]\n{stderr.decode()}")
+        logger.debug(f"[stderr]\n{stderr.decode()}")
 
 
 async def get_table_via_link(url: str) -> list:
@@ -65,8 +64,8 @@ async def get_table_via_link(url: str) -> list:
 async def make_json_file(source: dict or list, name: str) -> None:
     if len(source) > 0:
         path = "../src/ebay_rest/references/"
-        with open(path + name + ".json", "w") as outfile:
-            json.dump(source, outfile, sort_keys=True, indent=4)
+        async with aiofiles.open(path + name + ".json", mode='w') as outfile:
+            await outfile.write(json.dumps(source, sort_keys=True, indent=4))
     else:
         logging.error(f"The json file for {name} should not be empty; not created.")
 
@@ -168,7 +167,7 @@ async def generate_marketplace_id_values() -> None:
                     ","
                 )  # convert comma separated locales to a list of strings
                 sites = re.findall(
-                    "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|%[0-9a-fA-F][0-9a-fA-F])+",
+                    "https?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|%[0-9a-fA-F][0-9a-fA-F])+",
                     marketplace_site,
                 )
                 comments = re.findall("\\(([^)]*)\\)", marketplace_site)
@@ -187,34 +186,23 @@ async def generate_marketplace_id_values() -> None:
 async def get_soup_via_link(url: str) -> BeautifulSoup:
     # Get the html at an url and then make soup of it.
 
-    # TODO Determine the common exceptions and then handle then; run the debugger with breakpoints on the bp lines.
+    # the header is meant to prevent the exception 'Response payload is not completed'
+    headers = {"Connection": "keep-alive"}
 
-    # Get the html
     try:
-        # the header is meant to prevent the exception 'Response payload is not completed'
-        async with aiohttp.ClientSession(
-            headers={"Connection": "keep-alive"}
-        ) as session:
-            try:
-                async with session.get(url) as response:
-                    try:
-                        html_content = await response.text()
-                    except Exception as e:
-                        bp = True
-            except Exception as e:
-                if "Connection reset by peer" in e:
-                    logging.fatal(
-                        "The server dropped the connection on the TCP level; it may think we are a "
-                        "denial-of-service attacker; try again tomorrow."
-                    )
-                    exit()
-                else:
-                    bp = True
+        async with aiohttp.ClientSession(headers=headers) as session:
+            async with session.get(url) as response:
+                response.raise_for_status()  # this will raise an exception for 4xx and 5xx status
+                html_content = await response.text()
+                # Parse the html content
+                return BeautifulSoup(html_content, "html.parser")
+    except aiohttp.ClientConnectorError as e:
+        logging.fatal("The server dropped the connection on the TCP level; it may think we are a "
+                      f"denial-of-service attacker; try again tomorrow. {url}: {e}")
+        sys.exit()
     except Exception as e:
-        bp = True
-
-    # Parse the html content
-    return BeautifulSoup(html_content, "html.parser")
+        logging.error(f"An error occurred while trying to get content from {url}: {e}")
+        return BeautifulSoup("", "html.parser")  # return an empty soup object instead of None
 
 
 async def generate_references():
@@ -247,7 +235,10 @@ async def get_ebay_list_url(code_type: str) -> str:
 
     example: https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/countrycodetype.html
     """
-    return f"https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/{code_type}.html"
+    if not code_type:
+        raise ValueError("code_type can't be None or empty")
+    else:
+        return f"https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/{code_type}.html"
 
 
 class Locations:
@@ -346,7 +337,7 @@ class Contracts:
                 "/static/", "/"
             )  # help dup. filter, remove a redundant part that is sometimes present
             if not re.search(
-                "/v\d/", path
+                r"/v\d/", path
             ):  # skip the experimental libraries because few people can use them
                 overview_link = urljoin(developer_url, path)
                 if overview_link not in overview_links:  # skip duplicate links
@@ -464,7 +455,7 @@ class Contracts:
             logging.error(f"Can't open {file_location}.")
         else:
             # Add a new import
-            target = "from six.moves.urllib.parse import urlencode"
+            target = "from six.moves.urllib.parse import urlencode"       # noqa:
             new_code = (
                 "\nfrom ...digital_signatures import signed_request  # ebay_rest patch"
             )
@@ -503,7 +494,7 @@ class Contracts:
             command = "java -jar swagger-codegen-cli.jar" + command
         else:
             assert False, f"Please extend main() for your {sys.platform} platform."
-        await run(command)
+        await run_command(command)
 
     async def get_api_name(self):
         name = f"{self.category}_{self.call}"
@@ -789,10 +780,7 @@ class Contracts:
 
         # fix typos
         typo_remedy = (  # pairs of typos found in docstrings and their remedy
-            (
-                "AustraliaeBay",
-                "Australia eBay",
-            ),  # noqa: - suppress flake8 compatible linters, misspelling is intended
+            ("AustraliaeBay", "Australia eBay"),  # noqa: - suppress flake8 compatible linters, misspelling is intended
             ("cerate", "create"),  # noqa:
             ("distibuted", "distributed"),  # noqa:
             ("FranceeBay", "Francee Bay"),  # noqa:
@@ -1131,7 +1119,7 @@ async def main() -> None:
 
     # while debugging, it is handy to change the log level from INFO to DEBUG
     logging.basicConfig(
-        format="%(asctime)s %(levelname)s %(filename)s %(lineno)d %(funcName)s: %(message)s",
+        format="%(asctime)s %(levelname)s %(filename)s %(lineno)d %(funcName)s: %(message)s",     # noqa:
         level=logging.WARNING,
     )
 
