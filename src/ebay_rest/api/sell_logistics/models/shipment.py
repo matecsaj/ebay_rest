@@ -219,7 +219,7 @@ class Shipment(object):
     def orders(self):
         """Gets the orders of this Shipment.  # noqa: E501
 
-        This list value is optionally assigned by the seller. When present, each element in the returned list contains seller-assigned information about an order (such as an order number). Because a package can contain all or part of one or more orders, this field provides a way for sellers to identify the packages that contain specific orders.  # noqa: E501
+        A list of one or more orders that will be shipped in the shipping package.  # noqa: E501
 
         :return: The orders of this Shipment.  # noqa: E501
         :rtype: list[Order]
@@ -230,7 +230,7 @@ class Shipment(object):
     def orders(self, orders):
         """Sets the orders of this Shipment.
 
-        This list value is optionally assigned by the seller. When present, each element in the returned list contains seller-assigned information about an order (such as an order number). Because a package can contain all or part of one or more orders, this field provides a way for sellers to identify the packages that contain specific orders.  # noqa: E501
+        A list of one or more orders that will be shipped in the shipping package.  # noqa: E501
 
         :param orders: The orders of this Shipment.  # noqa: E501
         :type: list[Order]

@@ -51,7 +51,7 @@ class UpdateQuantity(object):
     def line_item_id(self):
         """Gets the line_item_id of this UpdateQuantity.  # noqa: E501
 
-        A unique eBay-assigned ID value that identifies a line item in a purchase order.  # noqa: E501
+        A unique eBay-assigned ID value that identifies a line item in a purchase order.<br><br><b>For example:</b> <code>v1|2**********6|5**********4</code> or <code>v1|1**********9|0</code>.<br><br>For more information about item IDs for RESTful APIs, see <a href=\"/api-docs/buy/static/api-browse.html#Legacy\">Legacy API compatibility</a>.  # noqa: E501
 
         :return: The line_item_id of this UpdateQuantity.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class UpdateQuantity(object):
     def line_item_id(self, line_item_id):
         """Sets the line_item_id of this UpdateQuantity.
 
-        A unique eBay-assigned ID value that identifies a line item in a purchase order.  # noqa: E501
+        A unique eBay-assigned ID value that identifies a line item in a purchase order.<br><br><b>For example:</b> <code>v1|2**********6|5**********4</code> or <code>v1|1**********9|0</code>.<br><br>For more information about item IDs for RESTful APIs, see <a href=\"/api-docs/buy/static/api-browse.html#Legacy\">Legacy API compatibility</a>.  # noqa: E501
 
         :param line_item_id: The line_item_id of this UpdateQuantity.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class UpdateQuantity(object):
     def quantity(self):
         """Gets the quantity of this UpdateQuantity.  # noqa: E501
 
-        The number of individual items ordered in this line item, as specified by the buyer.  # noqa: E501
+        The quantity of the line item that you wish to update.  # noqa: E501
 
         :return: The quantity of this UpdateQuantity.  # noqa: E501
         :rtype: int
@@ -85,7 +85,7 @@ class UpdateQuantity(object):
     def quantity(self, quantity):
         """Sets the quantity of this UpdateQuantity.
 
-        The number of individual items ordered in this line item, as specified by the buyer.  # noqa: E501
+        The quantity of the line item that you wish to update.  # noqa: E501
 
         :param quantity: The quantity of this UpdateQuantity.  # noqa: E501
         :type: int

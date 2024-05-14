@@ -539,63 +539,47 @@ class TaskApi(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def upload_file(self, content_type, task_id, **kwargs):  # noqa: E501
+    def upload_file(self, task_id, content_type, **kwargs):  # noqa: E501
         """upload_file  # noqa: E501
 
-        This method associates the specified file with the specified task ID and uploads the input file. After the file has been uploaded, the processing of the file begins. <br /><br />Reports often take time to generate and it's common for this method to return an HTTP status of 202, which indicates the report is being generated. Use the <b> getTask</b> with the task ID or <b> getTasks</b> to determine the status of a report. <br /><br />The status flow is <code>QUEUED</code> &gt; <code>IN_PROCESS</code> &gt; <code>COMPLETED</code> or <code>COMPLETED_WITH_ERROR</code>. When the status is <code>COMPLETED</code> or <code>COMPLETED_WITH_ERROR</code>, this indicates the file has been processed and the order report can be downloaded. If there are errors, they will be indicated in the report file. <br /><br />For details of how this method is used in the upload flow, see <a href=\"/api-docs/sell/static/orders/generating-and-retrieving-order-reports.html\">Working with Order Feeds</a> in the Selling Integration Guide. <p><span class=\"tablenote\"><strong>Note:</strong> This method applies to all Seller Hub feed types and LMS feed types except <code>LMS_ORDER_REPORT</code> and <code>LMS_ACTIVE_INVENTORY_REPORT</code>. See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Availabl\" target=\"_blank\">LMS feed types</a> and <a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#availabl\" target=\"_blank\">Seller Hub feed types</a>.</span></p><p> <span class=\"tablenote\"><b>Note:</b> You must use a <strong>Content-Type</strong> header with its value set to \"<strong>multipart/form-data</strong>\". See <a href=\"/api-docs/sell/feed/resources/task/methods/uploadFile#h2-samples\">Samples</a> for information.</span></p>  # noqa: E501
+        This method associates the specified file with the specified task ID and uploads the input file. After the file has been uploaded, the processing of the file begins. <br><br>Reports often take time to generate and it's common for this method to return an HTTP status of 202, which indicates the report is being generated. Use the <b> getTask</b> with the task ID or <b> getTasks</b> to determine the status of a report. <br><br>The status flow is <code>QUEUED</code> &gt; <code>IN_PROCESS</code> &gt; <code>COMPLETED</code> or <code>COMPLETED_WITH_ERROR</code>. When the status is <code>COMPLETED</code> or <code>COMPLETED_WITH_ERROR</code>, this indicates the file has been processed and the order report can be downloaded. If there are errors, they will be indicated in the report file. <br /><br />For details of how this method is used in the upload flow, see <a href=\"/api-docs/sell/static/orders/generating-and-retrieving-order-reports.html\">Working with Order Feeds</a> in the Selling Integration Guide. <br><br>This call does not have a JSON Request payload but uploads the file as form-data. For example:<br /> <pre> fileName: &quot;AddFixedPriceItem_Macbook.xml&quot; <br /> name: &quot;file&quot; <br /> type: &quot;form-data&quot; <br /> file: @&quot;/C:/Users/.../AddFixedPriceItem_Macbook.7z&quot;</pre>See <a href=\"/api-docs/sell/feed/resources/task/methods/uploadFile#h2-samples\">Samples</a> for information.<p><span class=\"tablenote\"><strong>Note:</strong> This method applies to all <a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#availabl\" target=\"_blank\">Seller Hub feed types</a>, and to all <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Availabl\" target=\"_blank\">LMS feed types</a> except <code>LMS_ORDER_REPORT</code> and <code>LMS_ACTIVE_INVENTORY_REPORT</code>.</span></p><p> <span class=\"tablenote\"><b>Note:</b> You must use a <strong>Content-Type</strong> header with its value set to \"<strong>multipart/form-data</strong>\". See <a href=\"/api-docs/sell/feed/resources/task/methods/uploadFile#h2-samples\">Samples</a> for information.</span></p><p><span class=\"tablenote\"><b>Note:</b> For LMS feed types, upload a regular XML file or an XML file in zipped format (both formats are allowed).</span></p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.upload_file(content_type, task_id, async_req=True)
+        >>> thread = api.upload_file(task_id, content_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>multipart/form-data</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str task_id: This path parameter is the unique identifier of the task associated with the file that will be uploaded.<br><br>Use the <a href=\"/api-docs/sell/feed/resources/task/methods/getTasks\" target=\"_blank \">getTasks</a> method to retrieve task IDs. (required)
-        :param str creation_date:
-        :param str file_name:
-        :param str modification_date:
-        :param str name:
-        :param dict(str, str) parameters:
-        :param str read_date:
-        :param int size:
-        :param str type:
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>multipart/form-data</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.upload_file_with_http_info(content_type, task_id, **kwargs)  # noqa: E501
+            return self.upload_file_with_http_info(task_id, content_type, **kwargs)  # noqa: E501
         else:
-            (data) = self.upload_file_with_http_info(content_type, task_id, **kwargs)  # noqa: E501
+            (data) = self.upload_file_with_http_info(task_id, content_type, **kwargs)  # noqa: E501
             return data
 
-    def upload_file_with_http_info(self, content_type, task_id, **kwargs):  # noqa: E501
+    def upload_file_with_http_info(self, task_id, content_type, **kwargs):  # noqa: E501
         """upload_file  # noqa: E501
 
-        This method associates the specified file with the specified task ID and uploads the input file. After the file has been uploaded, the processing of the file begins. <br /><br />Reports often take time to generate and it's common for this method to return an HTTP status of 202, which indicates the report is being generated. Use the <b> getTask</b> with the task ID or <b> getTasks</b> to determine the status of a report. <br /><br />The status flow is <code>QUEUED</code> &gt; <code>IN_PROCESS</code> &gt; <code>COMPLETED</code> or <code>COMPLETED_WITH_ERROR</code>. When the status is <code>COMPLETED</code> or <code>COMPLETED_WITH_ERROR</code>, this indicates the file has been processed and the order report can be downloaded. If there are errors, they will be indicated in the report file. <br /><br />For details of how this method is used in the upload flow, see <a href=\"/api-docs/sell/static/orders/generating-and-retrieving-order-reports.html\">Working with Order Feeds</a> in the Selling Integration Guide. <p><span class=\"tablenote\"><strong>Note:</strong> This method applies to all Seller Hub feed types and LMS feed types except <code>LMS_ORDER_REPORT</code> and <code>LMS_ACTIVE_INVENTORY_REPORT</code>. See <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Availabl\" target=\"_blank\">LMS feed types</a> and <a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#availabl\" target=\"_blank\">Seller Hub feed types</a>.</span></p><p> <span class=\"tablenote\"><b>Note:</b> You must use a <strong>Content-Type</strong> header with its value set to \"<strong>multipart/form-data</strong>\". See <a href=\"/api-docs/sell/feed/resources/task/methods/uploadFile#h2-samples\">Samples</a> for information.</span></p>  # noqa: E501
+        This method associates the specified file with the specified task ID and uploads the input file. After the file has been uploaded, the processing of the file begins. <br><br>Reports often take time to generate and it's common for this method to return an HTTP status of 202, which indicates the report is being generated. Use the <b> getTask</b> with the task ID or <b> getTasks</b> to determine the status of a report. <br><br>The status flow is <code>QUEUED</code> &gt; <code>IN_PROCESS</code> &gt; <code>COMPLETED</code> or <code>COMPLETED_WITH_ERROR</code>. When the status is <code>COMPLETED</code> or <code>COMPLETED_WITH_ERROR</code>, this indicates the file has been processed and the order report can be downloaded. If there are errors, they will be indicated in the report file. <br /><br />For details of how this method is used in the upload flow, see <a href=\"/api-docs/sell/static/orders/generating-and-retrieving-order-reports.html\">Working with Order Feeds</a> in the Selling Integration Guide. <br><br>This call does not have a JSON Request payload but uploads the file as form-data. For example:<br /> <pre> fileName: &quot;AddFixedPriceItem_Macbook.xml&quot; <br /> name: &quot;file&quot; <br /> type: &quot;form-data&quot; <br /> file: @&quot;/C:/Users/.../AddFixedPriceItem_Macbook.7z&quot;</pre>See <a href=\"/api-docs/sell/feed/resources/task/methods/uploadFile#h2-samples\">Samples</a> for information.<p><span class=\"tablenote\"><strong>Note:</strong> This method applies to all <a href=\"/api-docs/sell/static/feed/fx-feeds-quick-reference.html#availabl\" target=\"_blank\">Seller Hub feed types</a>, and to all <a href=\"/api-docs/sell/static/feed/lms-feeds-quick-reference.html#Availabl\" target=\"_blank\">LMS feed types</a> except <code>LMS_ORDER_REPORT</code> and <code>LMS_ACTIVE_INVENTORY_REPORT</code>.</span></p><p> <span class=\"tablenote\"><b>Note:</b> You must use a <strong>Content-Type</strong> header with its value set to \"<strong>multipart/form-data</strong>\". See <a href=\"/api-docs/sell/feed/resources/task/methods/uploadFile#h2-samples\">Samples</a> for information.</span></p><p><span class=\"tablenote\"><b>Note:</b> For LMS feed types, upload a regular XML file or an XML file in zipped format (both formats are allowed).</span></p>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.upload_file_with_http_info(content_type, task_id, async_req=True)
+        >>> thread = api.upload_file_with_http_info(task_id, content_type, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>multipart/form-data</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str task_id: This path parameter is the unique identifier of the task associated with the file that will be uploaded.<br><br>Use the <a href=\"/api-docs/sell/feed/resources/task/methods/getTasks\" target=\"_blank \">getTasks</a> method to retrieve task IDs. (required)
-        :param str creation_date:
-        :param str file_name:
-        :param str modification_date:
-        :param str name:
-        :param dict(str, str) parameters:
-        :param str read_date:
-        :param int size:
-        :param str type:
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>multipart/form-data</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['content_type', 'task_id', 'creation_date', 'file_name', 'modification_date', 'name', 'parameters', 'read_date', 'size', 'type']  # noqa: E501
+        all_params = ['task_id', 'content_type']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -610,14 +594,14 @@ class TaskApi(object):
                 )
             params[key] = val
         del params['kwargs']
-        # verify the required parameter 'content_type' is set
-        if ('content_type' not in params or
-                params['content_type'] is None):
-            raise ValueError("Missing the required parameter `content_type` when calling `upload_file`")  # noqa: E501
         # verify the required parameter 'task_id' is set
         if ('task_id' not in params or
                 params['task_id'] is None):
             raise ValueError("Missing the required parameter `task_id` when calling `upload_file`")  # noqa: E501
+        # verify the required parameter 'content_type' is set
+        if ('content_type' not in params or
+                params['content_type'] is None):
+            raise ValueError("Missing the required parameter `content_type` when calling `upload_file`")  # noqa: E501
 
         collection_formats = {}
 
@@ -633,31 +617,11 @@ class TaskApi(object):
 
         form_params = []
         local_var_files = {}
-        if 'creation_date' in params:
-            form_params.append(('creationDate', params['creation_date']))  # noqa: E501
-        if 'file_name' in params:
-            form_params.append(('fileName', params['file_name']))  # noqa: E501
-        if 'modification_date' in params:
-            form_params.append(('modificationDate', params['modification_date']))  # noqa: E501
-        if 'name' in params:
-            form_params.append(('name', params['name']))  # noqa: E501
-        if 'parameters' in params:
-            form_params.append(('parameters', params['parameters']))  # noqa: E501
-        if 'read_date' in params:
-            form_params.append(('readDate', params['read_date']))  # noqa: E501
-        if 'size' in params:
-            form_params.append(('size', params['size']))  # noqa: E501
-        if 'type' in params:
-            form_params.append(('type', params['type']))  # noqa: E501
 
         body_params = None
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['multipart/form-data'])  # noqa: E501
 
         # Authentication setting
         auth_settings = ['api_auth']  # noqa: E501

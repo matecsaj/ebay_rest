@@ -100,7 +100,7 @@ class CreateInventoryTaskRequest(object):
     def schema_version(self):
         """Gets the schema_version of this CreateInventoryTaskRequest.  # noqa: E501
 
-        The schema version of the ActiveInventoryReport.<br><br>For the <code>LMS_ACTIVE_INVENTORY_REPORT</code> feed type, see the <a href=\"/devzone/merchant-data/callref/ActiveInventoryReport.html\" target=\"_blank\">ActiveInventoryReport</a> reference page to see the present schema version. The schemaVersion value is the version number shown at the top of the ActiveInventoryReport page.  # noqa: E501
+        The version number of the inventory task to use for the <b>feedType</b>.<br><br><span class=\"tablenote\"><b>Note:</b> This field <b>must</b> have a value of <code>1.0</code>.</span>  # noqa: E501
 
         :return: The schema_version of this CreateInventoryTaskRequest.  # noqa: E501
         :rtype: str
@@ -111,7 +111,7 @@ class CreateInventoryTaskRequest(object):
     def schema_version(self, schema_version):
         """Sets the schema_version of this CreateInventoryTaskRequest.
 
-        The schema version of the ActiveInventoryReport.<br><br>For the <code>LMS_ACTIVE_INVENTORY_REPORT</code> feed type, see the <a href=\"/devzone/merchant-data/callref/ActiveInventoryReport.html\" target=\"_blank\">ActiveInventoryReport</a> reference page to see the present schema version. The schemaVersion value is the version number shown at the top of the ActiveInventoryReport page.  # noqa: E501
+        The version number of the inventory task to use for the <b>feedType</b>.<br><br><span class=\"tablenote\"><b>Note:</b> This field <b>must</b> have a value of <code>1.0</code>.</span>  # noqa: E501
 
         :param schema_version: The schema_version of this CreateInventoryTaskRequest.  # noqa: E501
         :type: str

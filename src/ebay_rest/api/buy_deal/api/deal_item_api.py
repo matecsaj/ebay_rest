@@ -35,20 +35,20 @@ class DealItemApi(object):
     def get_deal_items(self, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """get_deal_items  # noqa: E501
 
-        <p>This method retrieves a paginated set of deal items. The result set contains all deal items associated with the specified search criteria and marketplace ID.</p>  <h3><b> Request headers</b></h3> This method uses the  <b>X-EBAY-C-ENDUSERCTX</b> request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, <a href=\"/api-docs/buy/static/api-browse.html#Headers\">Request headers</a> in the Buying Integration Guide.      <h3><b>Restrictions </b></h3> <p>This method can return a maximum of 10,000 items. For a list of supported sites and other restrictions, see <a href=\"/api-docs/buy/browse/overview.html#API\">API Restrictions</a>.</p>    <span class=\"tablenote\"><b>eBay Partner Network: </b> In order to receive a commission for your sales, you must use the URL returned in the <code>itemAffiliateWebUrl</code> field to forward your buyer to the ebay.com site. </span>  # noqa: E501
+        This method retrieves a paginated set of deal items. The result set contains all deal items associated with the specified search criteria and marketplace ID.<h3>Restrictions</h3>This method can return a maximum of 10,000 items. For a list of supported sites and other restrictions, see <a href=\"/api-docs/buy/browse/overview.html#API\" target=\"_blank\">API Restrictions</a>.<br><br><span class=\"tablenote\"><b>eBay Partner Network: </b> In order to receive a commission for your sales, you must use the URL returned in the <code>itemAffiliateWebUrl</code> field to forward your buyer to the ebay.com site.</span>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_deal_items(x_ebay_c_marketplace_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str x_ebay_c_marketplace_id: This header identifies the eBay marketplace.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl \" target=\"_blank \">HTTP request headers</a> for the marketplace ID values. (required)
-        :param str category_ids: The unique identifier of the eBay category for the search.
-        :param str commissionable: A filter for commissionable deals.<br /><br /><b>Restriction: </b> This filter is currently only supported for the US marketplace.
-        :param str delivery_country: A filter for items that can be shipped to the specified country.
+        :param str x_ebay_c_marketplace_id: This header identifies the eBay marketplace.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl \" target=\"_blank \">HTTP request headers</a> for supported marketplace ID values. (required)
+        :param str category_ids: This query parameter specifies the unique identifier of the eBay category for the search.<br><br>For details see <a href=\"/api-docs/buy/buy-categories.html\" target=\"_blank\">Get Categories for Buy APIs</a>.
+        :param str commissionable: This query parameter allows the response to filter by commissionable items.<br><br>If set to <code>true</code>, only commissionable items will be returned in the response. If set to <code>false</code>, commissionable items will <b>not</b> be returned in the response.<br><br><span class=\"tablenote\"><b>Note:</b> This filter is currently only supported for the US marketplace.</span>
+        :param str delivery_country: This query parameter allows the response to only return items that can be shipped to the specified country (2-digit ISO code).
         :param str limit: The maximum number of items, from the current result set, returned on a single page.
         :param str offset: The number of items that will be skipped in the result set. This is used with the <b>limit</b> field to control the pagination of the output.<br /><br />For example, if the <b>offset</b> is set to <code>0</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 1 through 10 from the list of items returned. If the <b>offset</b> is set to <code>10</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 11 through 20 from the list of items returned.<br /><br /><b>Default:</b> <code>0</code>
-        :param str x_ebay_c_enduserctx: This header is needed to support revenue sharing for eBay Partner Network and to improve the accuracy of shipping and delivery time estimations.<br>For additional information, refer to <a href=\"/api-docs/buy/static/api-browse.html#Headers\" target=\"_blank \">Use request headers</a>.
+        :param str x_ebay_c_enduserctx: This header is required to support revenue sharing for eBay Partner Network and to improve the accuracy of shipping and delivery time estimations.<br><br>For additional information, refer to <a href=\"/api-docs/buy/static/api-browse.html#Headers\" target=\"_blank \">Use request headers</a> section of the Buying Integration Guide.
         :return: DealItemSearchResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -63,20 +63,20 @@ class DealItemApi(object):
     def get_deal_items_with_http_info(self, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """get_deal_items  # noqa: E501
 
-        <p>This method retrieves a paginated set of deal items. The result set contains all deal items associated with the specified search criteria and marketplace ID.</p>  <h3><b> Request headers</b></h3> This method uses the  <b>X-EBAY-C-ENDUSERCTX</b> request header to support revenue sharing for eBay Partner Networks and to improve the accuracy of shipping and delivery time estimations. For details see, <a href=\"/api-docs/buy/static/api-browse.html#Headers\">Request headers</a> in the Buying Integration Guide.      <h3><b>Restrictions </b></h3> <p>This method can return a maximum of 10,000 items. For a list of supported sites and other restrictions, see <a href=\"/api-docs/buy/browse/overview.html#API\">API Restrictions</a>.</p>    <span class=\"tablenote\"><b>eBay Partner Network: </b> In order to receive a commission for your sales, you must use the URL returned in the <code>itemAffiliateWebUrl</code> field to forward your buyer to the ebay.com site. </span>  # noqa: E501
+        This method retrieves a paginated set of deal items. The result set contains all deal items associated with the specified search criteria and marketplace ID.<h3>Restrictions</h3>This method can return a maximum of 10,000 items. For a list of supported sites and other restrictions, see <a href=\"/api-docs/buy/browse/overview.html#API\" target=\"_blank\">API Restrictions</a>.<br><br><span class=\"tablenote\"><b>eBay Partner Network: </b> In order to receive a commission for your sales, you must use the URL returned in the <code>itemAffiliateWebUrl</code> field to forward your buyer to the ebay.com site.</span>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_deal_items_with_http_info(x_ebay_c_marketplace_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str x_ebay_c_marketplace_id: This header identifies the eBay marketplace.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl \" target=\"_blank \">HTTP request headers</a> for the marketplace ID values. (required)
-        :param str category_ids: The unique identifier of the eBay category for the search.
-        :param str commissionable: A filter for commissionable deals.<br /><br /><b>Restriction: </b> This filter is currently only supported for the US marketplace.
-        :param str delivery_country: A filter for items that can be shipped to the specified country.
+        :param str x_ebay_c_marketplace_id: This header identifies the eBay marketplace.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl \" target=\"_blank \">HTTP request headers</a> for supported marketplace ID values. (required)
+        :param str category_ids: This query parameter specifies the unique identifier of the eBay category for the search.<br><br>For details see <a href=\"/api-docs/buy/buy-categories.html\" target=\"_blank\">Get Categories for Buy APIs</a>.
+        :param str commissionable: This query parameter allows the response to filter by commissionable items.<br><br>If set to <code>true</code>, only commissionable items will be returned in the response. If set to <code>false</code>, commissionable items will <b>not</b> be returned in the response.<br><br><span class=\"tablenote\"><b>Note:</b> This filter is currently only supported for the US marketplace.</span>
+        :param str delivery_country: This query parameter allows the response to only return items that can be shipped to the specified country (2-digit ISO code).
         :param str limit: The maximum number of items, from the current result set, returned on a single page.
         :param str offset: The number of items that will be skipped in the result set. This is used with the <b>limit</b> field to control the pagination of the output.<br /><br />For example, if the <b>offset</b> is set to <code>0</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 1 through 10 from the list of items returned. If the <b>offset</b> is set to <code>10</code> and the <b>limit</b> is set to <code>10</code>, the method will retrieve items 11 through 20 from the list of items returned.<br /><br /><b>Default:</b> <code>0</code>
-        :param str x_ebay_c_enduserctx: This header is needed to support revenue sharing for eBay Partner Network and to improve the accuracy of shipping and delivery time estimations.<br>For additional information, refer to <a href=\"/api-docs/buy/static/api-browse.html#Headers\" target=\"_blank \">Use request headers</a>.
+        :param str x_ebay_c_enduserctx: This header is required to support revenue sharing for eBay Partner Network and to improve the accuracy of shipping and delivery time estimations.<br><br>For additional information, refer to <a href=\"/api-docs/buy/static/api-browse.html#Headers\" target=\"_blank \">Use request headers</a> section of the Buying Integration Guide.
         :return: DealItemSearchResponse
                  If the method is called asynchronously,
                  returns the request thread.

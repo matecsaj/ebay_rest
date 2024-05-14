@@ -51,7 +51,7 @@ class LineItemInput(object):
     def item_id(self):
         """Gets the item_id of this LineItemInput.  # noqa: E501
 
-        The unique eBay-assigned identifier of an item. This ID is returned by the <b>Browse</b> and <b>Feed</b> API methods. The ID must be in RESTful item ID format.<br><br><b>For example:</b> <code>v1|2**********6|5**********4</code> or <code>v1|1**********9|0</code>.<br><br>For more information about item IDs for RESTful APIs, see <a href=\"/api-docs/buy/static/api-browse.html#Legacy\">Legacy API compatibility</a>.<br><br>Each <b>itemId</b> will become a single line item.<br><br><b>Maximum:</b>10 per checkout  # noqa: E501
+        The unique eBay-assigned identifier of an item. This ID is returned by the <b>Browse</b> and <b>Feed</b> API methods. The ID must be in RESTful item ID format.<br><br><b>For example:</b> <code>v1|2**********6|5**********4</code> or <code>v1|1**********9|0</code>.<br><br>For more information about item IDs for RESTful APIs, see <a href=\"/api-docs/buy/static/api-browse.html#Legacy\">Legacy API compatibility</a>.<br><br>Each <b>itemId</b> will become a single line item.<br><br><b>Maximum:</b> 10 per session  # noqa: E501
 
         :return: The item_id of this LineItemInput.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class LineItemInput(object):
     def item_id(self, item_id):
         """Sets the item_id of this LineItemInput.
 
-        The unique eBay-assigned identifier of an item. This ID is returned by the <b>Browse</b> and <b>Feed</b> API methods. The ID must be in RESTful item ID format.<br><br><b>For example:</b> <code>v1|2**********6|5**********4</code> or <code>v1|1**********9|0</code>.<br><br>For more information about item IDs for RESTful APIs, see <a href=\"/api-docs/buy/static/api-browse.html#Legacy\">Legacy API compatibility</a>.<br><br>Each <b>itemId</b> will become a single line item.<br><br><b>Maximum:</b>10 per checkout  # noqa: E501
+        The unique eBay-assigned identifier of an item. This ID is returned by the <b>Browse</b> and <b>Feed</b> API methods. The ID must be in RESTful item ID format.<br><br><b>For example:</b> <code>v1|2**********6|5**********4</code> or <code>v1|1**********9|0</code>.<br><br>For more information about item IDs for RESTful APIs, see <a href=\"/api-docs/buy/static/api-browse.html#Legacy\">Legacy API compatibility</a>.<br><br>Each <b>itemId</b> will become a single line item.<br><br><b>Maximum:</b> 10 per session  # noqa: E501
 
         :param item_id: The item_id of this LineItemInput.  # noqa: E501
         :type: str

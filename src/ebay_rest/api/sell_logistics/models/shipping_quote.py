@@ -132,7 +132,7 @@ class ShippingQuote(object):
     def orders(self):
         """Gets the orders of this ShippingQuote.  # noqa: E501
 
-        This list value is optionally assigned by the seller. When present, each element in the returned list contains seller-assigned information about an order (such as an order number). Because a package can contain all or part of one or more orders, this field provides a way for sellers to identify the packages that contain specific orders.  # noqa: E501
+        A list of one or more orders that will be shipped in the shipping package.  # noqa: E501
 
         :return: The orders of this ShippingQuote.  # noqa: E501
         :rtype: list[Order]
@@ -143,7 +143,7 @@ class ShippingQuote(object):
     def orders(self, orders):
         """Sets the orders of this ShippingQuote.
 
-        This list value is optionally assigned by the seller. When present, each element in the returned list contains seller-assigned information about an order (such as an order number). Because a package can contain all or part of one or more orders, this field provides a way for sellers to identify the packages that contain specific orders.  # noqa: E501
+        A list of one or more orders that will be shipped in the shipping package.  # noqa: E501
 
         :param orders: The orders of this ShippingQuote.  # noqa: E501
         :type: list[Order]
@@ -176,7 +176,7 @@ class ShippingQuote(object):
     def rates(self):
         """Gets the rates of this ShippingQuote.  # noqa: E501
 
-        A list of <i>rates</i> where each rate, as identified by a <b>rateId</b>, contains information about a specific shipping service offered by a carrier.  Rates include shipping carrier and service, the to and from locations, the pickup and delivery windows, the seller's shipping parameters, the service constraints, and the cost for the base service and a list of additional shipping options.  <br><br>Each rate offered is supported by a label service where you can purchase the rate, and associated shipping label, via a call to <b>createFromShippingQuote</b>.  # noqa: E501
+        A list of <i>rates</i> where each rate, as identified by a <b>rateId</b>, contains information about a specific shipping service offered by a carrier.  Rates include shipping carrier and service, the to and from locations, the pickup and delivery windows, the seller's shipping parameters, the service constraints, and the cost for the base service and a list of additional shipping options.<br><br><span class=\"tablenote\"><b>Note:</b> The Logistics API only supports USPS shipping rates and labels.</span><br>Each rate offered is supported by a label service where you can purchase the rate, and associated shipping label, via a call to <b>createFromShippingQuote</b>.  # noqa: E501
 
         :return: The rates of this ShippingQuote.  # noqa: E501
         :rtype: list[Rate]
@@ -187,7 +187,7 @@ class ShippingQuote(object):
     def rates(self, rates):
         """Sets the rates of this ShippingQuote.
 
-        A list of <i>rates</i> where each rate, as identified by a <b>rateId</b>, contains information about a specific shipping service offered by a carrier.  Rates include shipping carrier and service, the to and from locations, the pickup and delivery windows, the seller's shipping parameters, the service constraints, and the cost for the base service and a list of additional shipping options.  <br><br>Each rate offered is supported by a label service where you can purchase the rate, and associated shipping label, via a call to <b>createFromShippingQuote</b>.  # noqa: E501
+        A list of <i>rates</i> where each rate, as identified by a <b>rateId</b>, contains information about a specific shipping service offered by a carrier.  Rates include shipping carrier and service, the to and from locations, the pickup and delivery windows, the seller's shipping parameters, the service constraints, and the cost for the base service and a list of additional shipping options.<br><br><span class=\"tablenote\"><b>Note:</b> The Logistics API only supports USPS shipping rates and labels.</span><br>Each rate offered is supported by a label service where you can purchase the rate, and associated shipping label, via a call to <b>createFromShippingQuote</b>.  # noqa: E501
 
         :param rates: The rates of this ShippingQuote.  # noqa: E501
         :type: list[Rate]

@@ -46,7 +46,7 @@ class SalesTaxJurisdiction(object):
     def sales_tax_jurisdiction_id(self):
         """Gets the sales_tax_jurisdiction_id of this SalesTaxJurisdiction.  # noqa: E501
 
-        The unique ID for a sales tax jurisdiction.  # noqa: E501
+        The unique ID for a sales-tax jurisdiction.<br><br><div class=\"msgbox_important\"><p class=\"msgbox_importantInDiv\" data-mc-autonum=\"&lt;b&gt;&lt;span style=&quot;color: #dd1e31;&quot; class=&quot;mcFormatColor&quot;&gt;Important! &lt;/span&gt;&lt;/b&gt;\"><span class=\"autonumber\"><span><b><span style=\"color: #dd1e31;\" class=\"mcFormatColor\">Important!</span></b></span></span> When <code>countryCode</code> is set to <code>US</code>, IDs for all 50 states, Washington, DC, and all US territories will be returned. However, the only <code>salesTaxJurisdictionId</code> values currently supported are:<ul><li><code>AS</code> (American Samoa)</li><li><code>GU</code> (Guam</li><li><code>MP</code> Northern Mariana Islands</li><li><code>PW (Palau)</li><li><code>VI</code> (US Virgin Islands)</li></ul></p></div>  # noqa: E501
 
         :return: The sales_tax_jurisdiction_id of this SalesTaxJurisdiction.  # noqa: E501
         :rtype: str
@@ -57,7 +57,7 @@ class SalesTaxJurisdiction(object):
     def sales_tax_jurisdiction_id(self, sales_tax_jurisdiction_id):
         """Sets the sales_tax_jurisdiction_id of this SalesTaxJurisdiction.
 
-        The unique ID for a sales tax jurisdiction.  # noqa: E501
+        The unique ID for a sales-tax jurisdiction.<br><br><div class=\"msgbox_important\"><p class=\"msgbox_importantInDiv\" data-mc-autonum=\"&lt;b&gt;&lt;span style=&quot;color: #dd1e31;&quot; class=&quot;mcFormatColor&quot;&gt;Important! &lt;/span&gt;&lt;/b&gt;\"><span class=\"autonumber\"><span><b><span style=\"color: #dd1e31;\" class=\"mcFormatColor\">Important!</span></b></span></span> When <code>countryCode</code> is set to <code>US</code>, IDs for all 50 states, Washington, DC, and all US territories will be returned. However, the only <code>salesTaxJurisdictionId</code> values currently supported are:<ul><li><code>AS</code> (American Samoa)</li><li><code>GU</code> (Guam</li><li><code>MP</code> Northern Mariana Islands</li><li><code>PW (Palau)</li><li><code>VI</code> (US Virgin Islands)</li></ul></p></div>  # noqa: E501
 
         :param sales_tax_jurisdiction_id: The sales_tax_jurisdiction_id of this SalesTaxJurisdiction.  # noqa: E501
         :type: str

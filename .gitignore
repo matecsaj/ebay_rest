@@ -154,3 +154,6 @@ scripts/api_cache/
 
 # Credential files
 ebay_rest.json
+
+# 3rd party programs
+/scripts/swagger-codegen-cli.jar

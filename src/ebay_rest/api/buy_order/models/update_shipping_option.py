@@ -51,7 +51,7 @@ class UpdateShippingOption(object):
     def line_item_id(self):
         """Gets the line_item_id of this UpdateShippingOption.  # noqa: E501
 
-        A unique eBay-assigned ID value that identifies the line item in a checkout session.  # noqa: E501
+        A unique eBay-assigned ID value that identifies the line item in a checkout session.<br><br><b>For example:</b> <code>v1|2**********6|5**********4</code> or <code>v1|1**********9|0</code>.<br><br>For more information about item IDs for RESTful APIs, see <a href=\"/api-docs/buy/static/api-browse.html#Legacy\">Legacy API compatibility</a>  # noqa: E501
 
         :return: The line_item_id of this UpdateShippingOption.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class UpdateShippingOption(object):
     def line_item_id(self, line_item_id):
         """Sets the line_item_id of this UpdateShippingOption.
 
-        A unique eBay-assigned ID value that identifies the line item in a checkout session.  # noqa: E501
+        A unique eBay-assigned ID value that identifies the line item in a checkout session.<br><br><b>For example:</b> <code>v1|2**********6|5**********4</code> or <code>v1|1**********9|0</code>.<br><br>For more information about item IDs for RESTful APIs, see <a href=\"/api-docs/buy/static/api-browse.html#Legacy\">Legacy API compatibility</a>  # noqa: E501
 
         :param line_item_id: The line_item_id of this UpdateShippingOption.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class UpdateShippingOption(object):
     def shipping_option_id(self):
         """Gets the shipping_option_id of this UpdateShippingOption.  # noqa: E501
 
-        A unique ID for the selected shipping option/method.  # noqa: E501
+        A unique identifier of the selected shipping option/method.  # noqa: E501
 
         :return: The shipping_option_id of this UpdateShippingOption.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class UpdateShippingOption(object):
     def shipping_option_id(self, shipping_option_id):
         """Sets the shipping_option_id of this UpdateShippingOption.
 
-        A unique ID for the selected shipping option/method.  # noqa: E501
+        A unique identifier of the selected shipping option/method.  # noqa: E501
 
         :param shipping_option_id: The shipping_option_id of this UpdateShippingOption.  # noqa: E501
         :type: str

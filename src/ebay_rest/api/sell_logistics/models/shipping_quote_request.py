@@ -61,7 +61,7 @@ class ShippingQuoteRequest(object):
     def orders(self):
         """Gets the orders of this ShippingQuoteRequest.  # noqa: E501
 
-        A seller-defined list that contains information about the orders in the package. This allows sellers to include information about the line items in the package with the shipment information.  <br><br>A package can contain any number of line items from one or more orders, providing they all ship in the same package.  <br><br><b>Maximum list size:</b> 10  # noqa: E501
+        In this array, the seller specifies one or more orders that will be shipped in the shipping package. <br><br>A shipping package can contain any number of line items from one or more orders, providing they all ship in the same package.  <br><br><b>Maximum list size:</b> 10  # noqa: E501
 
         :return: The orders of this ShippingQuoteRequest.  # noqa: E501
         :rtype: list[Order]
@@ -72,7 +72,7 @@ class ShippingQuoteRequest(object):
     def orders(self, orders):
         """Sets the orders of this ShippingQuoteRequest.
 
-        A seller-defined list that contains information about the orders in the package. This allows sellers to include information about the line items in the package with the shipment information.  <br><br>A package can contain any number of line items from one or more orders, providing they all ship in the same package.  <br><br><b>Maximum list size:</b> 10  # noqa: E501
+        In this array, the seller specifies one or more orders that will be shipped in the shipping package. <br><br>A shipping package can contain any number of line items from one or more orders, providing they all ship in the same package.  <br><br><b>Maximum list size:</b> 10  # noqa: E501
 
         :param orders: The orders of this ShippingQuoteRequest.  # noqa: E501
         :type: list[Order]

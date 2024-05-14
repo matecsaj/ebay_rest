@@ -46,7 +46,7 @@ class SalesTaxJurisdictions(object):
     def sales_tax_jurisdictions(self):
         """Gets the sales_tax_jurisdictions of this SalesTaxJurisdictions.  # noqa: E501
 
-        A list of sales tax jurisdictions.  # noqa: E501
+        A list of sales-tax jurisdictions.  # noqa: E501
 
         :return: The sales_tax_jurisdictions of this SalesTaxJurisdictions.  # noqa: E501
         :rtype: list[SalesTaxJurisdiction]
@@ -57,7 +57,7 @@ class SalesTaxJurisdictions(object):
     def sales_tax_jurisdictions(self, sales_tax_jurisdictions):
         """Sets the sales_tax_jurisdictions of this SalesTaxJurisdictions.
 
-        A list of sales tax jurisdictions.  # noqa: E501
+        A list of sales-tax jurisdictions.  # noqa: E501
 
         :param sales_tax_jurisdictions: The sales_tax_jurisdictions of this SalesTaxJurisdictions.  # noqa: E501
         :type: list[SalesTaxJurisdiction]

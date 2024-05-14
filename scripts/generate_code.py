@@ -41,7 +41,7 @@ async def run_command(cmd):
     if stdout:
         logger.debug(f"[stdout]\n{stdout.decode()}")
     if stderr:
-        logger.debug(f"[stderr]\n{stderr.decode()}")
+        logger.error(f"[stderr]\n{stderr.decode()}")
 
 
 async def get_table_via_link(url: str) -> list:
@@ -64,7 +64,7 @@ async def get_table_via_link(url: str) -> list:
 async def make_json_file(source: dict or list, name: str) -> None:
     if len(source) > 0:
         path = "../src/ebay_rest/references/"
-        async with aiofiles.open(path + name + ".json", mode='w') as outfile:
+        async with aiofiles.open(path + name + ".json", mode="w") as outfile:
             await outfile.write(json.dumps(source, sort_keys=True, indent=4))
     else:
         logging.error(f"The json file for {name} should not be empty; not created.")
@@ -197,12 +197,16 @@ async def get_soup_via_link(url: str) -> BeautifulSoup:
                 # Parse the html content
                 return BeautifulSoup(html_content, "html.parser")
     except aiohttp.ClientConnectorError as e:
-        logging.fatal("The server dropped the connection on the TCP level; it may think we are a "
-                      f"denial-of-service attacker; try again tomorrow. {url}: {e}")
+        logging.fatal(
+            "The server dropped the connection on the TCP level; it may think we are a "
+            f"denial-of-service attacker; try again tomorrow. {url}: {e}"
+        )
         sys.exit()
     except Exception as e:
         logging.error(f"An error occurred while trying to get content from {url}: {e}")
-        return BeautifulSoup("", "html.parser")  # return an empty soup object instead of None
+        return BeautifulSoup(
+            "", "html.parser"
+        )  # return an empty soup object instead of None
 
 
 async def generate_references():
@@ -455,7 +459,7 @@ class Contracts:
             logging.error(f"Can't open {file_location}.")
         else:
             # Add a new import
-            target = "from six.moves.urllib.parse import urlencode"       # noqa:
+            target = "from six.moves.urllib.parse import urlencode"  # noqa:
             new_code = (
                 "\nfrom ...digital_signatures import signed_request  # ebay_rest patch"
             )
@@ -684,15 +688,21 @@ class Contracts:
         end_tag = "]\n"
         requirements = set()
         src = os.path.join(Locations.cache_path, self.name, "setup.py")
-        with open(src) as file:
-            for line in file:
-                if line.startswith(start_tag):
-                    line = line.replace(start_tag, "")
-                    line = line.replace(end_tag, "")
-                    parts = line.split(", ")
-                    for part in parts:
-                        requirements.add(part)
-                    break
+        try:
+            with open(src) as file:
+                for line in file:
+                    if line.startswith(start_tag):
+                        line = line.replace(start_tag, "")
+                        line = line.replace(end_tag, "")
+                        parts = line.split(", ")
+                        for part in parts:
+                            requirements.add(part)
+                        break
+        except FileNotFoundError:
+            logging.error(
+                f"The requirements for library {self.name} are unknown because a file is missing {src}."
+            )
+
         return requirements
 
     async def get_includes(self) -> List[str]:
@@ -780,7 +790,10 @@ class Contracts:
 
         # fix typos
         typo_remedy = (  # pairs of typos found in docstrings and their remedy
-            ("AustraliaeBay", "Australia eBay"),  # noqa: - suppress flake8 compatible linters, misspelling is intended
+            (
+                "AustraliaeBay",
+                "Australia eBay",
+            ),  # noqa: - suppress flake8 compatible linters, misspelling is intended
             ("cerate", "create"),  # noqa:
             ("distibuted", "distributed"),  # noqa:
             ("FranceeBay", "Francee Bay"),  # noqa:
@@ -1106,20 +1119,27 @@ async def generate_apis():
     methods = str()
     for record in records:
         include, method, name, requirement = record
-        names.append(name)
-        requirements.update(requirement)
-        includes.extend(include)
-        methods += method
-    await Insert().do(requirements, includes, methods)
+        if include == "":
+            logging.error(f"There are no includes for {name}.")
+        elif method == "":
+            logging.error(f"There are no methods for {name}.")
+        elif requirement == "":
+            logging.error(f"There are no requirements for {name}.")
+        else:
+            names.append(name)
+            requirements.update(requirement)
+            includes.extend(include)
+            methods += method
+        await Insert().do(requirements, includes, methods)
     # p.remove_duplicates(names)     # TODO uncomment the method call when work on it resumes
 
 
 async def main() -> None:
     start = time.time()
 
-    # while debugging, it is handy to change the log level from INFO to DEBUG
+    # while debugging, it is handy to change the log level from WARNING to INFO or DEBUG
     logging.basicConfig(
-        format="%(asctime)s %(levelname)s %(filename)s %(lineno)d %(funcName)s: %(message)s",     # noqa:
+        format="%(asctime)s %(levelname)s %(filename)s %(lineno)d %(funcName)s: %(message)s",  # noqa:
         level=logging.WARNING,
     )
 
