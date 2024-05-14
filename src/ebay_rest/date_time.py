@@ -26,7 +26,7 @@ class DateTime:
         # https://ofr.ebay.ca/ws/eBayISAPI.dll?EbayTime  (only accurate to the second)
         # https://developer.ebay.com/Devzone/shopping/docs/CallRef/GeteBayTime.html (not a REST-ful call, old SOAP)
 
-        d_t = datetime.utcnow()
+        d_t = datetime.now(timezone.utc)
         return d_t.replace(tzinfo=timezone.utc)
 
     @staticmethod

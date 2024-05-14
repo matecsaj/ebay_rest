@@ -634,7 +634,7 @@ class _OAuth2Api:
         if resp.status_code == codes.ok:
             token.refresh_token = content["refresh_token"]
             token.refresh_token_expiry = (
-                datetime.utcnow()
+                datetime.now(timezone.utc)
                 + timedelta(seconds=int(content["refresh_token_expires_in"]))
                 - timedelta(minutes=5)
             )
@@ -737,7 +737,7 @@ class _OAuth2Api:
         if resp.status_code == codes.ok:
             token.access_token = content["access_token"]
             token.token_expiry = (
-                datetime.utcnow()
+                datetime.now(timezone.utc)
                 + timedelta(seconds=int(content["expires_in"]))
                 - timedelta(minutes=5)
             )
