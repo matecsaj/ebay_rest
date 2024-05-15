@@ -88,9 +88,9 @@ print(help(Reference))
 * eBay classifies data as optional or mandatory. Optional elements, dicts or lists are omitted. Manditories have a [None](https://docs.python.org/3/library/constants.html?highlight=none#None) value.
 
 ##
-**Q:** How are paged calls/results handled? 
+**Q:** How are paged calls/results handled? In other words, what happens with the result contains zero or more records? 
 
-**A:** A [simple generator](https://www.python.org/dev/peps/pep-0255/#specification-yield) is implemented.
+**A:** A [Python generator](https://www.python.org/dev/peps/pep-0255/#specification-yield) is implemented; a [Python list](https://docs.python.org/3/tutorial/datastructures.html#) is not returned.
 * To be clear, "Paging" is eBay's term for repeating a call while advancing a record offset to get all records.
 * eBay documentation has the word "Page" in the return type of paging calls. 
 * Do NOT supply a record "offset" parameter when making a paging call.
