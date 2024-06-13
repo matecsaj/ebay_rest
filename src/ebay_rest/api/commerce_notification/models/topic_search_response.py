@@ -28,62 +28,39 @@ class TopicSearchResponse(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'total': 'int',
         'href': 'str',
-        'next': 'str',
         'limit': 'int',
-        'topics': 'list[Topic]'
+        'next': 'str',
+        'topics': 'list[Topic]',
+        'total': 'int'
     }
 
     attribute_map = {
-        'total': 'total',
         'href': 'href',
-        'next': 'next',
         'limit': 'limit',
-        'topics': 'topics'
+        'next': 'next',
+        'topics': 'topics',
+        'total': 'total'
     }
 
-    def __init__(self, total=None, href=None, next=None, limit=None, topics=None):  # noqa: E501
+    def __init__(self, href=None, limit=None, next=None, topics=None, total=None):  # noqa: E501
         """TopicSearchResponse - a model defined in Swagger"""  # noqa: E501
-        self._total = None
         self._href = None
-        self._next = None
         self._limit = None
+        self._next = None
         self._topics = None
+        self._total = None
         self.discriminator = None
-        if total is not None:
-            self.total = total
         if href is not None:
             self.href = href
-        if next is not None:
-            self.next = next
         if limit is not None:
             self.limit = limit
+        if next is not None:
+            self.next = next
         if topics is not None:
             self.topics = topics
-
-    @property
-    def total(self):
-        """Gets the total of this TopicSearchResponse.  # noqa: E501
-
-        The total number of matches for the search criteria.  # noqa: E501
-
-        :return: The total of this TopicSearchResponse.  # noqa: E501
-        :rtype: int
-        """
-        return self._total
-
-    @total.setter
-    def total(self, total):
-        """Sets the total of this TopicSearchResponse.
-
-        The total number of matches for the search criteria.  # noqa: E501
-
-        :param total: The total of this TopicSearchResponse.  # noqa: E501
-        :type: int
-        """
-
-        self._total = total
+        if total is not None:
+            self.total = total
 
     @property
     def href(self):
@@ -109,29 +86,6 @@ class TopicSearchResponse(object):
         self._href = href
 
     @property
-    def next(self):
-        """Gets the next of this TopicSearchResponse.  # noqa: E501
-
-        The URL to access the next set of results. This field includes a <strong>continuation_token</strong>. No <b>prev</b> field is returned, but this value is persistent during the session so that you can use it to return to the next page.<br><br>This field is not returned if fewer records than specified by the <strong>limit</strong> field are returned.  # noqa: E501
-
-        :return: The next of this TopicSearchResponse.  # noqa: E501
-        :rtype: str
-        """
-        return self._next
-
-    @next.setter
-    def next(self, next):
-        """Sets the next of this TopicSearchResponse.
-
-        The URL to access the next set of results. This field includes a <strong>continuation_token</strong>. No <b>prev</b> field is returned, but this value is persistent during the session so that you can use it to return to the next page.<br><br>This field is not returned if fewer records than specified by the <strong>limit</strong> field are returned.  # noqa: E501
-
-        :param next: The next of this TopicSearchResponse.  # noqa: E501
-        :type: str
-        """
-
-        self._next = next
-
-    @property
     def limit(self):
         """Gets the limit of this TopicSearchResponse.  # noqa: E501
 
@@ -155,6 +109,29 @@ class TopicSearchResponse(object):
         self._limit = limit
 
     @property
+    def next(self):
+        """Gets the next of this TopicSearchResponse.  # noqa: E501
+
+        The URL to access the next set of results. This field includes a <strong>continuation_token</strong>. No <b>prev</b> field is returned, but this value is persistent during the session so that you can use it to return to the next page.<br><br>This field is not returned if fewer records than specified by the <strong>limit</strong> field are returned.  # noqa: E501
+
+        :return: The next of this TopicSearchResponse.  # noqa: E501
+        :rtype: str
+        """
+        return self._next
+
+    @next.setter
+    def next(self, next):
+        """Sets the next of this TopicSearchResponse.
+
+        The URL to access the next set of results. This field includes a <strong>continuation_token</strong>. No <b>prev</b> field is returned, but this value is persistent during the session so that you can use it to return to the next page.<br><br>This field is not returned if fewer records than specified by the <strong>limit</strong> field are returned.  # noqa: E501
+
+        :param next: The next of this TopicSearchResponse.  # noqa: E501
+        :type: str
+        """
+
+        self._next = next
+
+    @property
     def topics(self):
         """Gets the topics of this TopicSearchResponse.  # noqa: E501
 
@@ -176,6 +153,29 @@ class TopicSearchResponse(object):
         """
 
         self._topics = topics
+
+    @property
+    def total(self):
+        """Gets the total of this TopicSearchResponse.  # noqa: E501
+
+        The total number of matches for the search criteria.  # noqa: E501
+
+        :return: The total of this TopicSearchResponse.  # noqa: E501
+        :rtype: int
+        """
+        return self._total
+
+    @total.setter
+    def total(self, total):
+        """Sets the total of this TopicSearchResponse.
+
+        The total number of matches for the search criteria.  # noqa: E501
+
+        :param total: The total of this TopicSearchResponse.  # noqa: E501
+        :type: int
+        """
+
+        self._total = total
 
     def to_dict(self):
         """Returns the model properties as a dict"""

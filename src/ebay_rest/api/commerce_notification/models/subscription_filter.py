@@ -28,62 +28,62 @@ class SubscriptionFilter(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'subscription_id': 'str',
+        'creation_date': 'str',
         'filter_id': 'str',
         'filter_schema': 'dict(str, object)',
         'filter_status': 'str',
-        'creation_date': 'str'
+        'subscription_id': 'str'
     }
 
     attribute_map = {
-        'subscription_id': 'subscriptionId',
+        'creation_date': 'creationDate',
         'filter_id': 'filterId',
         'filter_schema': 'filterSchema',
         'filter_status': 'filterStatus',
-        'creation_date': 'creationDate'
+        'subscription_id': 'subscriptionId'
     }
 
-    def __init__(self, subscription_id=None, filter_id=None, filter_schema=None, filter_status=None, creation_date=None):  # noqa: E501
+    def __init__(self, creation_date=None, filter_id=None, filter_schema=None, filter_status=None, subscription_id=None):  # noqa: E501
         """SubscriptionFilter - a model defined in Swagger"""  # noqa: E501
-        self._subscription_id = None
+        self._creation_date = None
         self._filter_id = None
         self._filter_schema = None
         self._filter_status = None
-        self._creation_date = None
+        self._subscription_id = None
         self.discriminator = None
-        if subscription_id is not None:
-            self.subscription_id = subscription_id
+        if creation_date is not None:
+            self.creation_date = creation_date
         if filter_id is not None:
             self.filter_id = filter_id
         if filter_schema is not None:
             self.filter_schema = filter_schema
         if filter_status is not None:
             self.filter_status = filter_status
-        if creation_date is not None:
-            self.creation_date = creation_date
+        if subscription_id is not None:
+            self.subscription_id = subscription_id
 
     @property
-    def subscription_id(self):
-        """Gets the subscription_id of this SubscriptionFilter.  # noqa: E501
+    def creation_date(self):
+        """Gets the creation_date of this SubscriptionFilter.  # noqa: E501
 
-        The unique identifier for the subscription.  # noqa: E501
+        The creation date for this subscription filter.  # noqa: E501
 
-        :return: The subscription_id of this SubscriptionFilter.  # noqa: E501
+        :return: The creation_date of this SubscriptionFilter.  # noqa: E501
         :rtype: str
         """
-        return self._subscription_id
+        return self._creation_date
 
-    @subscription_id.setter
-    def subscription_id(self, subscription_id):
-        """Sets the subscription_id of this SubscriptionFilter.
+    @creation_date.setter
+    def creation_date(self, creation_date):
+        """Sets the creation_date of this SubscriptionFilter.
 
-        The unique identifier for the subscription.  # noqa: E501
+        The creation date for this subscription filter.  # noqa: E501
 
-        :param subscription_id: The subscription_id of this SubscriptionFilter.  # noqa: E501
+        :param creation_date: The creation_date of this SubscriptionFilter.  # noqa: E501
         :type: str
         """
 
-        self._subscription_id = subscription_id
+        self._creation_date = creation_date
 
     @property
     def filter_id(self):
@@ -155,27 +155,27 @@ class SubscriptionFilter(object):
         self._filter_status = filter_status
 
     @property
-    def creation_date(self):
-        """Gets the creation_date of this SubscriptionFilter.  # noqa: E501
+    def subscription_id(self):
+        """Gets the subscription_id of this SubscriptionFilter.  # noqa: E501
 
-        The creation date for this subscription filter.  # noqa: E501
+        The unique identifier for the subscription.  # noqa: E501
 
-        :return: The creation_date of this SubscriptionFilter.  # noqa: E501
+        :return: The subscription_id of this SubscriptionFilter.  # noqa: E501
         :rtype: str
         """
-        return self._creation_date
+        return self._subscription_id
 
-    @creation_date.setter
-    def creation_date(self, creation_date):
-        """Sets the creation_date of this SubscriptionFilter.
+    @subscription_id.setter
+    def subscription_id(self, subscription_id):
+        """Sets the subscription_id of this SubscriptionFilter.
 
-        The creation date for this subscription filter.  # noqa: E501
+        The unique identifier for the subscription.  # noqa: E501
 
-        :param creation_date: The creation_date of this SubscriptionFilter.  # noqa: E501
+        :param subscription_id: The subscription_id of this SubscriptionFilter.  # noqa: E501
         :type: str
         """
 
-        self._creation_date = creation_date
+        self._subscription_id = subscription_id
 
     def to_dict(self):
         """Returns the model properties as a dict"""

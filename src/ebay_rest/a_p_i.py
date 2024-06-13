@@ -2336,8 +2336,8 @@ class API(metaclass=Multiton):
 
         This method allows applications to retrieve a paginated collection of destination resources and related details. The details include the destination names, statuses, and configurations, including the endpoints and verification tokens.
 
-        :param str limit: The maximum number of destinations to return per page from the result set.Min: 10Max: 100Default: 20
         :param str continuation_token: This string value can be used to return the next page in the result set. The string to use here is returned in the next field of the current page of results.
+        :param str limit: The maximum number of destinations to return per page from the result set.Min: 10Max: 100Default: 20
         :return: DestinationSearchResponse
         """
         try:
@@ -2492,14 +2492,14 @@ class API(metaclass=Multiton):
             raise
 
     def commerce_notification_delete_subscription_filter(
-        self, subscription_id, filter_id, **kwargs
+        self, filter_id, subscription_id, **kwargs
     ):  # noqa: E501
         """delete_subscription_filter
 
         This method allows applications to disable the active filter on a subscription, so that a new subscription filter may be added.Note: Subscription filters in PENDING status can not be disabled. However, a new filter can be created instead with the createSubscriptionFilter method and this new filter will override the PENDING filter.
 
-        :param str subscription_id: The unique identifier of the subscription associated with the filter to delete. Use getSubscriptions to retrieve subscription IDs. (required)
         :param str filter_id: The unique identifier of the subscription filter to delete.  Filter ID values, if configured for a subscription, will be shown in the subscriptions.filterId field in getSubscription and getSubscription responses. The filter ID value is also returned in the Location response header when a filter is created with createSubscriptionFilter. (required)
+        :param str subscription_id: The unique identifier of the subscription associated with the filter to delete. Use getSubscriptions to retrieve subscription IDs. (required)
         :return: None
         """
         try:
@@ -2512,7 +2512,7 @@ class API(metaclass=Multiton):
                 CommerceNotificationException,
                 False,
                 ["commerce.notification", "subscription"],
-                (subscription_id, filter_id),
+                (filter_id, subscription_id),
                 **kwargs,
             )  # noqa: E501
         except Error:
@@ -2597,14 +2597,14 @@ class API(metaclass=Multiton):
             raise
 
     def commerce_notification_get_subscription_filter(
-        self, subscription_id, filter_id, **kwargs
+        self, filter_id, subscription_id, **kwargs
     ):  # noqa: E501
         """get_subscription_filter
 
         This method allows applications to retrieve the filter details for the specified subscription filter.Specify the subscription filter to retrieve by using the subscription_id and the filter_id associated with the subscription filter. The filter_id can be found in the response body for the getSubscription method, if there is a filter applied on the subscription.Filters allow applications to only be sent notifications that match a provided criteria. Notifications that do not match this criteria will not be sent to the destination.
 
-        :param str subscription_id: The unique identifier of the subscription associated with the filter. Use getSubscriptions to retrieve subscription IDs. (required)
         :param str filter_id: The unique identifier of the subscription filter.  Filter ID values, if configured for a subscription, will be shown in the subscriptions.filterId field in getSubscription and getSubscription responses. The filter ID value is also returned in the Location response header when a filter is created with createSubscriptionFilter. (required)
+        :param str subscription_id: The unique identifier of the subscription associated with the filter. Use getSubscriptions to retrieve subscription IDs. (required)
         :return: SubscriptionFilter
         """
         try:
@@ -2617,7 +2617,7 @@ class API(metaclass=Multiton):
                 CommerceNotificationException,
                 False,
                 ["commerce.notification", "subscription"],
-                (subscription_id, filter_id),
+                (filter_id, subscription_id),
                 **kwargs,
             )  # noqa: E501
         except Error:
@@ -2628,8 +2628,8 @@ class API(metaclass=Multiton):
 
         This method allows applications to retrieve a list of all subscriptions. The list returned is a paginated collection of subscription resources.Subscriptions allow applications to express interest in notifications and keep receiving the information relevant to their business.
 
-        :param str limit: The maximum number of subscriptions to return per page from the result set.Min: 10Max: 100Default: 20
         :param str continuation_token: This string value can be used to return the next page in the result set. The string to use here is returned in the next field of the current page of results.
+        :param str limit: The maximum number of subscriptions to return per page from the result set.Min: 10Max: 100Default: 20
         :return: SubscriptionSearchResponse
         """
         try:
@@ -2731,8 +2731,8 @@ class API(metaclass=Multiton):
 
         This method returns a paginated collection of all supported topics, along with the details for the topics. This information includes supported schema versions, formats, and other metadata for the topics.Applications can subscribe to any of the topics for a supported schema version and format, limited by the authorization scopes required to subscribe to the topic.A topic specifies the type of information to be received and the data types associated with an event. An event occurs in the eBay system, such as when a user requests deletion or revokes access for an application. An event is an instance of an event type (topic).
 
-        :param str limit: The maximum number of notification topics to return per page from the result set.Min: 10Max: 100Default: 20
         :param str continuation_token: This string value can be used to return the next page in the result set. The string to use here is returned in the next field of the current page of results.
+        :param str limit: The maximum number of notification topics to return per page from the result set.Min: 10Max: 100Default: 20
         :return: TopicSearchResponse
         """
         try:

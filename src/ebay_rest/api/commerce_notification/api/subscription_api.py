@@ -337,47 +337,47 @@ class SubscriptionApi(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def delete_subscription_filter(self, subscription_id, filter_id, **kwargs):  # noqa: E501
+    def delete_subscription_filter(self, filter_id, subscription_id, **kwargs):  # noqa: E501
         """delete_subscription_filter  # noqa: E501
 
         This method allows applications to disable the active filter on a subscription, so that a new subscription filter may be added.<br><br><span class=\"tablenote\"><b>Note:</b> Subscription filters in <strong>PENDING</strong> status can not be disabled. However, a new filter can be created instead with the <strong>createSubscriptionFilter</strong> method and this new filter will override the <strong>PENDING</strong> filter.</span>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_subscription_filter(subscription_id, filter_id, async_req=True)
+        >>> thread = api.delete_subscription_filter(filter_id, subscription_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str subscription_id: The unique identifier of the subscription associated with the filter to delete. Use <b>getSubscriptions</b> to retrieve subscription IDs. (required)
         :param str filter_id: The unique identifier of the subscription filter to delete.  Filter ID values, if configured for a subscription, will be shown in the <b>subscriptions.filterId</b> field in <b>getSubscription</b> and <b>getSubscription</b> responses. The filter ID value is also returned in the Location response header when a filter is created with <b>createSubscriptionFilter</b>. (required)
+        :param str subscription_id: The unique identifier of the subscription associated with the filter to delete. Use <b>getSubscriptions</b> to retrieve subscription IDs. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.delete_subscription_filter_with_http_info(subscription_id, filter_id, **kwargs)  # noqa: E501
+            return self.delete_subscription_filter_with_http_info(filter_id, subscription_id, **kwargs)  # noqa: E501
         else:
-            (data) = self.delete_subscription_filter_with_http_info(subscription_id, filter_id, **kwargs)  # noqa: E501
+            (data) = self.delete_subscription_filter_with_http_info(filter_id, subscription_id, **kwargs)  # noqa: E501
             return data
 
-    def delete_subscription_filter_with_http_info(self, subscription_id, filter_id, **kwargs):  # noqa: E501
+    def delete_subscription_filter_with_http_info(self, filter_id, subscription_id, **kwargs):  # noqa: E501
         """delete_subscription_filter  # noqa: E501
 
         This method allows applications to disable the active filter on a subscription, so that a new subscription filter may be added.<br><br><span class=\"tablenote\"><b>Note:</b> Subscription filters in <strong>PENDING</strong> status can not be disabled. However, a new filter can be created instead with the <strong>createSubscriptionFilter</strong> method and this new filter will override the <strong>PENDING</strong> filter.</span>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_subscription_filter_with_http_info(subscription_id, filter_id, async_req=True)
+        >>> thread = api.delete_subscription_filter_with_http_info(filter_id, subscription_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str subscription_id: The unique identifier of the subscription associated with the filter to delete. Use <b>getSubscriptions</b> to retrieve subscription IDs. (required)
         :param str filter_id: The unique identifier of the subscription filter to delete.  Filter ID values, if configured for a subscription, will be shown in the <b>subscriptions.filterId</b> field in <b>getSubscription</b> and <b>getSubscription</b> responses. The filter ID value is also returned in the Location response header when a filter is created with <b>createSubscriptionFilter</b>. (required)
+        :param str subscription_id: The unique identifier of the subscription associated with the filter to delete. Use <b>getSubscriptions</b> to retrieve subscription IDs. (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['subscription_id', 'filter_id']  # noqa: E501
+        all_params = ['filter_id', 'subscription_id']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -392,22 +392,22 @@ class SubscriptionApi(object):
                 )
             params[key] = val
         del params['kwargs']
-        # verify the required parameter 'subscription_id' is set
-        if ('subscription_id' not in params or
-                params['subscription_id'] is None):
-            raise ValueError("Missing the required parameter `subscription_id` when calling `delete_subscription_filter`")  # noqa: E501
         # verify the required parameter 'filter_id' is set
         if ('filter_id' not in params or
                 params['filter_id'] is None):
             raise ValueError("Missing the required parameter `filter_id` when calling `delete_subscription_filter`")  # noqa: E501
+        # verify the required parameter 'subscription_id' is set
+        if ('subscription_id' not in params or
+                params['subscription_id'] is None):
+            raise ValueError("Missing the required parameter `subscription_id` when calling `delete_subscription_filter`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'subscription_id' in params:
-            path_params['subscription_id'] = params['subscription_id']  # noqa: E501
         if 'filter_id' in params:
             path_params['filter_id'] = params['filter_id']  # noqa: E501
+        if 'subscription_id' in params:
+            path_params['subscription_id'] = params['subscription_id']  # noqa: E501
 
         query_params = []
 
@@ -713,47 +713,47 @@ class SubscriptionApi(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def get_subscription_filter(self, subscription_id, filter_id, **kwargs):  # noqa: E501
+    def get_subscription_filter(self, filter_id, subscription_id, **kwargs):  # noqa: E501
         """get_subscription_filter  # noqa: E501
 
         This method allows applications to retrieve the filter details for the specified subscription filter.<br><br>Specify the subscription filter to retrieve by using the <strong>subscription_id</strong> and the <strong>filter_id</strong> associated with the subscription filter. The <strong>filter_id</strong> can be found in the response body for the <strong>getSubscription</strong> method, if there is a filter applied on the subscription.<br><br>Filters allow applications to only be sent notifications that match a provided criteria. Notifications that do not match this criteria will not be sent to the destination.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_subscription_filter(subscription_id, filter_id, async_req=True)
+        >>> thread = api.get_subscription_filter(filter_id, subscription_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str subscription_id: The unique identifier of the subscription associated with the filter. Use <b>getSubscriptions</b> to retrieve subscription IDs. (required)
         :param str filter_id: The unique identifier of the subscription filter.  Filter ID values, if configured for a subscription, will be shown in the <b>subscriptions.filterId</b> field in <b>getSubscription</b> and <b>getSubscription</b> responses. The filter ID value is also returned in the Location response header when a filter is created with <b>createSubscriptionFilter</b>. (required)
+        :param str subscription_id: The unique identifier of the subscription associated with the filter. Use <b>getSubscriptions</b> to retrieve subscription IDs. (required)
         :return: SubscriptionFilter
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.get_subscription_filter_with_http_info(subscription_id, filter_id, **kwargs)  # noqa: E501
+            return self.get_subscription_filter_with_http_info(filter_id, subscription_id, **kwargs)  # noqa: E501
         else:
-            (data) = self.get_subscription_filter_with_http_info(subscription_id, filter_id, **kwargs)  # noqa: E501
+            (data) = self.get_subscription_filter_with_http_info(filter_id, subscription_id, **kwargs)  # noqa: E501
             return data
 
-    def get_subscription_filter_with_http_info(self, subscription_id, filter_id, **kwargs):  # noqa: E501
+    def get_subscription_filter_with_http_info(self, filter_id, subscription_id, **kwargs):  # noqa: E501
         """get_subscription_filter  # noqa: E501
 
         This method allows applications to retrieve the filter details for the specified subscription filter.<br><br>Specify the subscription filter to retrieve by using the <strong>subscription_id</strong> and the <strong>filter_id</strong> associated with the subscription filter. The <strong>filter_id</strong> can be found in the response body for the <strong>getSubscription</strong> method, if there is a filter applied on the subscription.<br><br>Filters allow applications to only be sent notifications that match a provided criteria. Notifications that do not match this criteria will not be sent to the destination.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_subscription_filter_with_http_info(subscription_id, filter_id, async_req=True)
+        >>> thread = api.get_subscription_filter_with_http_info(filter_id, subscription_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str subscription_id: The unique identifier of the subscription associated with the filter. Use <b>getSubscriptions</b> to retrieve subscription IDs. (required)
         :param str filter_id: The unique identifier of the subscription filter.  Filter ID values, if configured for a subscription, will be shown in the <b>subscriptions.filterId</b> field in <b>getSubscription</b> and <b>getSubscription</b> responses. The filter ID value is also returned in the Location response header when a filter is created with <b>createSubscriptionFilter</b>. (required)
+        :param str subscription_id: The unique identifier of the subscription associated with the filter. Use <b>getSubscriptions</b> to retrieve subscription IDs. (required)
         :return: SubscriptionFilter
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['subscription_id', 'filter_id']  # noqa: E501
+        all_params = ['filter_id', 'subscription_id']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -768,22 +768,22 @@ class SubscriptionApi(object):
                 )
             params[key] = val
         del params['kwargs']
-        # verify the required parameter 'subscription_id' is set
-        if ('subscription_id' not in params or
-                params['subscription_id'] is None):
-            raise ValueError("Missing the required parameter `subscription_id` when calling `get_subscription_filter`")  # noqa: E501
         # verify the required parameter 'filter_id' is set
         if ('filter_id' not in params or
                 params['filter_id'] is None):
             raise ValueError("Missing the required parameter `filter_id` when calling `get_subscription_filter`")  # noqa: E501
+        # verify the required parameter 'subscription_id' is set
+        if ('subscription_id' not in params or
+                params['subscription_id'] is None):
+            raise ValueError("Missing the required parameter `subscription_id` when calling `get_subscription_filter`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'subscription_id' in params:
-            path_params['subscription_id'] = params['subscription_id']  # noqa: E501
         if 'filter_id' in params:
             path_params['filter_id'] = params['filter_id']  # noqa: E501
+        if 'subscription_id' in params:
+            path_params['subscription_id'] = params['subscription_id']  # noqa: E501
 
         query_params = []
 
@@ -826,8 +826,8 @@ class SubscriptionApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str limit: The maximum number of subscriptions to return per page from the result set.<br><br><b>Min:</b> 10<br><br><b>Max:</b> 100<br><br><b>Default:</b> 20
         :param str continuation_token: This string value can be used to return the next page in the result set. The string to use here is returned in the next field of the current page of results.
+        :param str limit: The maximum number of subscriptions to return per page from the result set.<br><br><b>Min:</b> 10<br><br><b>Max:</b> 100<br><br><b>Default:</b> 20
         :return: SubscriptionSearchResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -849,14 +849,14 @@ class SubscriptionApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str limit: The maximum number of subscriptions to return per page from the result set.<br><br><b>Min:</b> 10<br><br><b>Max:</b> 100<br><br><b>Default:</b> 20
         :param str continuation_token: This string value can be used to return the next page in the result set. The string to use here is returned in the next field of the current page of results.
+        :param str limit: The maximum number of subscriptions to return per page from the result set.<br><br><b>Min:</b> 10<br><br><b>Max:</b> 100<br><br><b>Default:</b> 20
         :return: SubscriptionSearchResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['limit', 'continuation_token']  # noqa: E501
+        all_params = ['continuation_token', 'limit']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -877,10 +877,10 @@ class SubscriptionApi(object):
         path_params = {}
 
         query_params = []
-        if 'limit' in params:
-            query_params.append(('limit', params['limit']))  # noqa: E501
         if 'continuation_token' in params:
             query_params.append(('continuation_token', params['continuation_token']))  # noqa: E501
+        if 'limit' in params:
+            query_params.append(('limit', params['limit']))  # noqa: E501
 
         header_params = {}
 

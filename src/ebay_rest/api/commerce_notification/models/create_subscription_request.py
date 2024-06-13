@@ -28,57 +28,78 @@ class CreateSubscriptionRequest(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'topic_id': 'str',
-        'status': 'str',
+        'destination_id': 'str',
         'payload': 'SubscriptionPayloadDetail',
-        'destination_id': 'str'
+        'status': 'str',
+        'topic_id': 'str'
     }
 
     attribute_map = {
-        'topic_id': 'topicId',
-        'status': 'status',
+        'destination_id': 'destinationId',
         'payload': 'payload',
-        'destination_id': 'destinationId'
+        'status': 'status',
+        'topic_id': 'topicId'
     }
 
-    def __init__(self, topic_id=None, status=None, payload=None, destination_id=None):  # noqa: E501
+    def __init__(self, destination_id=None, payload=None, status=None, topic_id=None):  # noqa: E501
         """CreateSubscriptionRequest - a model defined in Swagger"""  # noqa: E501
-        self._topic_id = None
-        self._status = None
-        self._payload = None
         self._destination_id = None
+        self._payload = None
+        self._status = None
+        self._topic_id = None
         self.discriminator = None
-        if topic_id is not None:
-            self.topic_id = topic_id
-        if status is not None:
-            self.status = status
-        if payload is not None:
-            self.payload = payload
         if destination_id is not None:
             self.destination_id = destination_id
+        if payload is not None:
+            self.payload = payload
+        if status is not None:
+            self.status = status
+        if topic_id is not None:
+            self.topic_id = topic_id
 
     @property
-    def topic_id(self):
-        """Gets the topic_id of this CreateSubscriptionRequest.  # noqa: E501
+    def destination_id(self):
+        """Gets the destination_id of this CreateSubscriptionRequest.  # noqa: E501
 
-        The unique identifier of the notification topic to subscribe to. Use <b>getTopics</b> to get topic IDs.  # noqa: E501
+        The unique identifier of the destination endpoint that will receive notifications associated with this subscription. Use the <b>getDestinations</b> method to retrieve destination IDs.  # noqa: E501
 
-        :return: The topic_id of this CreateSubscriptionRequest.  # noqa: E501
+        :return: The destination_id of this CreateSubscriptionRequest.  # noqa: E501
         :rtype: str
         """
-        return self._topic_id
+        return self._destination_id
 
-    @topic_id.setter
-    def topic_id(self, topic_id):
-        """Sets the topic_id of this CreateSubscriptionRequest.
+    @destination_id.setter
+    def destination_id(self, destination_id):
+        """Sets the destination_id of this CreateSubscriptionRequest.
 
-        The unique identifier of the notification topic to subscribe to. Use <b>getTopics</b> to get topic IDs.  # noqa: E501
+        The unique identifier of the destination endpoint that will receive notifications associated with this subscription. Use the <b>getDestinations</b> method to retrieve destination IDs.  # noqa: E501
 
-        :param topic_id: The topic_id of this CreateSubscriptionRequest.  # noqa: E501
+        :param destination_id: The destination_id of this CreateSubscriptionRequest.  # noqa: E501
         :type: str
         """
 
-        self._topic_id = topic_id
+        self._destination_id = destination_id
+
+    @property
+    def payload(self):
+        """Gets the payload of this CreateSubscriptionRequest.  # noqa: E501
+
+
+        :return: The payload of this CreateSubscriptionRequest.  # noqa: E501
+        :rtype: SubscriptionPayloadDetail
+        """
+        return self._payload
+
+    @payload.setter
+    def payload(self, payload):
+        """Sets the payload of this CreateSubscriptionRequest.
+
+
+        :param payload: The payload of this CreateSubscriptionRequest.  # noqa: E501
+        :type: SubscriptionPayloadDetail
+        """
+
+        self._payload = payload
 
     @property
     def status(self):
@@ -104,48 +125,27 @@ class CreateSubscriptionRequest(object):
         self._status = status
 
     @property
-    def payload(self):
-        """Gets the payload of this CreateSubscriptionRequest.  # noqa: E501
+    def topic_id(self):
+        """Gets the topic_id of this CreateSubscriptionRequest.  # noqa: E501
 
+        The unique identifier of the notification topic to subscribe to. Use <b>getTopics</b> to get topic IDs.  # noqa: E501
 
-        :return: The payload of this CreateSubscriptionRequest.  # noqa: E501
-        :rtype: SubscriptionPayloadDetail
-        """
-        return self._payload
-
-    @payload.setter
-    def payload(self, payload):
-        """Sets the payload of this CreateSubscriptionRequest.
-
-
-        :param payload: The payload of this CreateSubscriptionRequest.  # noqa: E501
-        :type: SubscriptionPayloadDetail
-        """
-
-        self._payload = payload
-
-    @property
-    def destination_id(self):
-        """Gets the destination_id of this CreateSubscriptionRequest.  # noqa: E501
-
-        The unique identifier of the destination endpoint that will receive notifications associated with this subscription. Use the <b>getDestinations</b> method to retrieve destination IDs.  # noqa: E501
-
-        :return: The destination_id of this CreateSubscriptionRequest.  # noqa: E501
+        :return: The topic_id of this CreateSubscriptionRequest.  # noqa: E501
         :rtype: str
         """
-        return self._destination_id
+        return self._topic_id
 
-    @destination_id.setter
-    def destination_id(self, destination_id):
-        """Sets the destination_id of this CreateSubscriptionRequest.
+    @topic_id.setter
+    def topic_id(self, topic_id):
+        """Sets the topic_id of this CreateSubscriptionRequest.
 
-        The unique identifier of the destination endpoint that will receive notifications associated with this subscription. Use the <b>getDestinations</b> method to retrieve destination IDs.  # noqa: E501
+        The unique identifier of the notification topic to subscribe to. Use <b>getTopics</b> to get topic IDs.  # noqa: E501
 
-        :param destination_id: The destination_id of this CreateSubscriptionRequest.  # noqa: E501
+        :param topic_id: The topic_id of this CreateSubscriptionRequest.  # noqa: E501
         :type: str
         """
 
-        self._destination_id = destination_id
+        self._topic_id = topic_id
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -137,8 +137,8 @@ class TopicApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str limit: The maximum number of notification topics to return per page from the result set.<br><br><b>Min:</b> 10<br><br><b>Max:</b> 100<br><br><b>Default:</b> 20
         :param str continuation_token: This string value can be used to return the next page in the result set. The string to use here is returned in the <b>next</b> field of the current page of results.
+        :param str limit: The maximum number of notification topics to return per page from the result set.<br><br><b>Min:</b> 10<br><br><b>Max:</b> 100<br><br><b>Default:</b> 20
         :return: TopicSearchResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -160,14 +160,14 @@ class TopicApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str limit: The maximum number of notification topics to return per page from the result set.<br><br><b>Min:</b> 10<br><br><b>Max:</b> 100<br><br><b>Default:</b> 20
         :param str continuation_token: This string value can be used to return the next page in the result set. The string to use here is returned in the <b>next</b> field of the current page of results.
+        :param str limit: The maximum number of notification topics to return per page from the result set.<br><br><b>Min:</b> 10<br><br><b>Max:</b> 100<br><br><b>Default:</b> 20
         :return: TopicSearchResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['limit', 'continuation_token']  # noqa: E501
+        all_params = ['continuation_token', 'limit']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -188,10 +188,10 @@ class TopicApi(object):
         path_params = {}
 
         query_params = []
-        if 'limit' in params:
-            query_params.append(('limit', params['limit']))  # noqa: E501
         if 'continuation_token' in params:
             query_params.append(('continuation_token', params['continuation_token']))  # noqa: E501
+        if 'limit' in params:
+            query_params.append(('limit', params['limit']))  # noqa: E501
 
         header_params = {}
 

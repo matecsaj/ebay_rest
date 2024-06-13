@@ -28,62 +28,62 @@ class DestinationSearchResponse(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'total': 'int',
+        'destinations': 'list[Destination]',
         'href': 'str',
-        'next': 'str',
         'limit': 'int',
-        'destinations': 'list[Destination]'
+        'next': 'str',
+        'total': 'int'
     }
 
     attribute_map = {
-        'total': 'total',
+        'destinations': 'destinations',
         'href': 'href',
-        'next': 'next',
         'limit': 'limit',
-        'destinations': 'destinations'
+        'next': 'next',
+        'total': 'total'
     }
 
-    def __init__(self, total=None, href=None, next=None, limit=None, destinations=None):  # noqa: E501
+    def __init__(self, destinations=None, href=None, limit=None, next=None, total=None):  # noqa: E501
         """DestinationSearchResponse - a model defined in Swagger"""  # noqa: E501
-        self._total = None
-        self._href = None
-        self._next = None
-        self._limit = None
         self._destinations = None
+        self._href = None
+        self._limit = None
+        self._next = None
+        self._total = None
         self.discriminator = None
-        if total is not None:
-            self.total = total
-        if href is not None:
-            self.href = href
-        if next is not None:
-            self.next = next
-        if limit is not None:
-            self.limit = limit
         if destinations is not None:
             self.destinations = destinations
+        if href is not None:
+            self.href = href
+        if limit is not None:
+            self.limit = limit
+        if next is not None:
+            self.next = next
+        if total is not None:
+            self.total = total
 
     @property
-    def total(self):
-        """Gets the total of this DestinationSearchResponse.  # noqa: E501
+    def destinations(self):
+        """Gets the destinations of this DestinationSearchResponse.  # noqa: E501
 
-        The total number of matches for the search criteria.  # noqa: E501
+        An array that contains the destination details.  # noqa: E501
 
-        :return: The total of this DestinationSearchResponse.  # noqa: E501
-        :rtype: int
+        :return: The destinations of this DestinationSearchResponse.  # noqa: E501
+        :rtype: list[Destination]
         """
-        return self._total
+        return self._destinations
 
-    @total.setter
-    def total(self, total):
-        """Sets the total of this DestinationSearchResponse.
+    @destinations.setter
+    def destinations(self, destinations):
+        """Sets the destinations of this DestinationSearchResponse.
 
-        The total number of matches for the search criteria.  # noqa: E501
+        An array that contains the destination details.  # noqa: E501
 
-        :param total: The total of this DestinationSearchResponse.  # noqa: E501
-        :type: int
+        :param destinations: The destinations of this DestinationSearchResponse.  # noqa: E501
+        :type: list[Destination]
         """
 
-        self._total = total
+        self._destinations = destinations
 
     @property
     def href(self):
@@ -109,29 +109,6 @@ class DestinationSearchResponse(object):
         self._href = href
 
     @property
-    def next(self):
-        """Gets the next of this DestinationSearchResponse.  # noqa: E501
-
-        The URL to access the next set of results. This field includes a <strong>continuation_token</strong>. No <b>prev</b> field is returned, but this value is persistent during the session so that you can use it to return to the next page.<br><br>This field is not returned if fewer records than specified by the <strong>limit</strong> field are returned.  # noqa: E501
-
-        :return: The next of this DestinationSearchResponse.  # noqa: E501
-        :rtype: str
-        """
-        return self._next
-
-    @next.setter
-    def next(self, next):
-        """Sets the next of this DestinationSearchResponse.
-
-        The URL to access the next set of results. This field includes a <strong>continuation_token</strong>. No <b>prev</b> field is returned, but this value is persistent during the session so that you can use it to return to the next page.<br><br>This field is not returned if fewer records than specified by the <strong>limit</strong> field are returned.  # noqa: E501
-
-        :param next: The next of this DestinationSearchResponse.  # noqa: E501
-        :type: str
-        """
-
-        self._next = next
-
-    @property
     def limit(self):
         """Gets the limit of this DestinationSearchResponse.  # noqa: E501
 
@@ -155,27 +132,50 @@ class DestinationSearchResponse(object):
         self._limit = limit
 
     @property
-    def destinations(self):
-        """Gets the destinations of this DestinationSearchResponse.  # noqa: E501
+    def next(self):
+        """Gets the next of this DestinationSearchResponse.  # noqa: E501
 
-        An array that contains the destination details.  # noqa: E501
+        The URL to access the next set of results. This field includes a <strong>continuation_token</strong>. No <b>prev</b> field is returned, but this value is persistent during the session so that you can use it to return to the next page.<br><br>This field is not returned if fewer records than specified by the <strong>limit</strong> field are returned.  # noqa: E501
 
-        :return: The destinations of this DestinationSearchResponse.  # noqa: E501
-        :rtype: list[Destination]
+        :return: The next of this DestinationSearchResponse.  # noqa: E501
+        :rtype: str
         """
-        return self._destinations
+        return self._next
 
-    @destinations.setter
-    def destinations(self, destinations):
-        """Sets the destinations of this DestinationSearchResponse.
+    @next.setter
+    def next(self, next):
+        """Sets the next of this DestinationSearchResponse.
 
-        An array that contains the destination details.  # noqa: E501
+        The URL to access the next set of results. This field includes a <strong>continuation_token</strong>. No <b>prev</b> field is returned, but this value is persistent during the session so that you can use it to return to the next page.<br><br>This field is not returned if fewer records than specified by the <strong>limit</strong> field are returned.  # noqa: E501
 
-        :param destinations: The destinations of this DestinationSearchResponse.  # noqa: E501
-        :type: list[Destination]
+        :param next: The next of this DestinationSearchResponse.  # noqa: E501
+        :type: str
         """
 
-        self._destinations = destinations
+        self._next = next
+
+    @property
+    def total(self):
+        """Gets the total of this DestinationSearchResponse.  # noqa: E501
+
+        The total number of matches for the search criteria.  # noqa: E501
+
+        :return: The total of this DestinationSearchResponse.  # noqa: E501
+        :rtype: int
+        """
+        return self._total
+
+    @total.setter
+    def total(self, total):
+        """Sets the total of this DestinationSearchResponse.
+
+        The total number of matches for the search criteria.  # noqa: E501
+
+        :param total: The total of this DestinationSearchResponse.  # noqa: E501
+        :type: int
+        """
+
+        self._total = total
 
     def to_dict(self):
         """Returns the model properties as a dict"""

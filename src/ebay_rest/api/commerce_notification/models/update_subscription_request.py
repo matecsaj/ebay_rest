@@ -28,73 +28,29 @@ class UpdateSubscriptionRequest(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'status': 'str',
+        'destination_id': 'str',
         'payload': 'SubscriptionPayloadDetail',
-        'destination_id': 'str'
+        'status': 'str'
     }
 
     attribute_map = {
-        'status': 'status',
+        'destination_id': 'destinationId',
         'payload': 'payload',
-        'destination_id': 'destinationId'
+        'status': 'status'
     }
 
-    def __init__(self, status=None, payload=None, destination_id=None):  # noqa: E501
+    def __init__(self, destination_id=None, payload=None, status=None):  # noqa: E501
         """UpdateSubscriptionRequest - a model defined in Swagger"""  # noqa: E501
-        self._status = None
-        self._payload = None
         self._destination_id = None
+        self._payload = None
+        self._status = None
         self.discriminator = None
-        if status is not None:
-            self.status = status
-        if payload is not None:
-            self.payload = payload
         if destination_id is not None:
             self.destination_id = destination_id
-
-    @property
-    def status(self):
-        """Gets the status of this UpdateSubscriptionRequest.  # noqa: E501
-
-        Set the status of the subscription being updated to ENABLED or DISABLED. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/api:SubscriptionStatusEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The status of this UpdateSubscriptionRequest.  # noqa: E501
-        :rtype: str
-        """
-        return self._status
-
-    @status.setter
-    def status(self, status):
-        """Sets the status of this UpdateSubscriptionRequest.
-
-        Set the status of the subscription being updated to ENABLED or DISABLED. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/api:SubscriptionStatusEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param status: The status of this UpdateSubscriptionRequest.  # noqa: E501
-        :type: str
-        """
-
-        self._status = status
-
-    @property
-    def payload(self):
-        """Gets the payload of this UpdateSubscriptionRequest.  # noqa: E501
-
-
-        :return: The payload of this UpdateSubscriptionRequest.  # noqa: E501
-        :rtype: SubscriptionPayloadDetail
-        """
-        return self._payload
-
-    @payload.setter
-    def payload(self, payload):
-        """Sets the payload of this UpdateSubscriptionRequest.
-
-
-        :param payload: The payload of this UpdateSubscriptionRequest.  # noqa: E501
-        :type: SubscriptionPayloadDetail
-        """
-
-        self._payload = payload
+        if payload is not None:
+            self.payload = payload
+        if status is not None:
+            self.status = status
 
     @property
     def destination_id(self):
@@ -118,6 +74,50 @@ class UpdateSubscriptionRequest(object):
         """
 
         self._destination_id = destination_id
+
+    @property
+    def payload(self):
+        """Gets the payload of this UpdateSubscriptionRequest.  # noqa: E501
+
+
+        :return: The payload of this UpdateSubscriptionRequest.  # noqa: E501
+        :rtype: SubscriptionPayloadDetail
+        """
+        return self._payload
+
+    @payload.setter
+    def payload(self, payload):
+        """Sets the payload of this UpdateSubscriptionRequest.
+
+
+        :param payload: The payload of this UpdateSubscriptionRequest.  # noqa: E501
+        :type: SubscriptionPayloadDetail
+        """
+
+        self._payload = payload
+
+    @property
+    def status(self):
+        """Gets the status of this UpdateSubscriptionRequest.  # noqa: E501
+
+        Set the status of the subscription being updated to ENABLED or DISABLED. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/api:SubscriptionStatusEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The status of this UpdateSubscriptionRequest.  # noqa: E501
+        :rtype: str
+        """
+        return self._status
+
+    @status.setter
+    def status(self, status):
+        """Sets the status of this UpdateSubscriptionRequest.
+
+        Set the status of the subscription being updated to ENABLED or DISABLED. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/api:SubscriptionStatusEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param status: The status of this UpdateSubscriptionRequest.  # noqa: E501
+        :type: str
+        """
+
+        self._status = status
 
     def to_dict(self):
         """Returns the model properties as a dict"""

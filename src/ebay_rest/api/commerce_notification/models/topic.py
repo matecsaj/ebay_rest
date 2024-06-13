@@ -28,100 +28,54 @@ class Topic(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'topic_id': 'str',
-        'description': 'str',
         'authorization_scopes': 'list[str]',
-        'status': 'str',
         'context': 'str',
+        'description': 'str',
+        'filterable': 'bool',
         'scope': 'str',
+        'status': 'str',
         'supported_payloads': 'list[PayloadDetail]',
-        'filterable': 'bool'
+        'topic_id': 'str'
     }
 
     attribute_map = {
-        'topic_id': 'topicId',
-        'description': 'description',
         'authorization_scopes': 'authorizationScopes',
-        'status': 'status',
         'context': 'context',
+        'description': 'description',
+        'filterable': 'filterable',
         'scope': 'scope',
+        'status': 'status',
         'supported_payloads': 'supportedPayloads',
-        'filterable': 'filterable'
+        'topic_id': 'topicId'
     }
 
-    def __init__(self, topic_id=None, description=None, authorization_scopes=None, status=None, context=None, scope=None, supported_payloads=None, filterable=None):  # noqa: E501
+    def __init__(self, authorization_scopes=None, context=None, description=None, filterable=None, scope=None, status=None, supported_payloads=None, topic_id=None):  # noqa: E501
         """Topic - a model defined in Swagger"""  # noqa: E501
-        self._topic_id = None
-        self._description = None
         self._authorization_scopes = None
-        self._status = None
         self._context = None
-        self._scope = None
-        self._supported_payloads = None
+        self._description = None
         self._filterable = None
+        self._scope = None
+        self._status = None
+        self._supported_payloads = None
+        self._topic_id = None
         self.discriminator = None
-        if topic_id is not None:
-            self.topic_id = topic_id
-        if description is not None:
-            self.description = description
         if authorization_scopes is not None:
             self.authorization_scopes = authorization_scopes
-        if status is not None:
-            self.status = status
         if context is not None:
             self.context = context
-        if scope is not None:
-            self.scope = scope
-        if supported_payloads is not None:
-            self.supported_payloads = supported_payloads
+        if description is not None:
+            self.description = description
         if filterable is not None:
             self.filterable = filterable
-
-    @property
-    def topic_id(self):
-        """Gets the topic_id of this Topic.  # noqa: E501
-
-        The unique identifier for the topic.  # noqa: E501
-
-        :return: The topic_id of this Topic.  # noqa: E501
-        :rtype: str
-        """
-        return self._topic_id
-
-    @topic_id.setter
-    def topic_id(self, topic_id):
-        """Sets the topic_id of this Topic.
-
-        The unique identifier for the topic.  # noqa: E501
-
-        :param topic_id: The topic_id of this Topic.  # noqa: E501
-        :type: str
-        """
-
-        self._topic_id = topic_id
-
-    @property
-    def description(self):
-        """Gets the description of this Topic.  # noqa: E501
-
-        The description of the topic.  # noqa: E501
-
-        :return: The description of this Topic.  # noqa: E501
-        :rtype: str
-        """
-        return self._description
-
-    @description.setter
-    def description(self, description):
-        """Sets the description of this Topic.
-
-        The description of the topic.  # noqa: E501
-
-        :param description: The description of this Topic.  # noqa: E501
-        :type: str
-        """
-
-        self._description = description
+        if scope is not None:
+            self.scope = scope
+        if status is not None:
+            self.status = status
+        if supported_payloads is not None:
+            self.supported_payloads = supported_payloads
+        if topic_id is not None:
+            self.topic_id = topic_id
 
     @property
     def authorization_scopes(self):
@@ -147,29 +101,6 @@ class Topic(object):
         self._authorization_scopes = authorization_scopes
 
     @property
-    def status(self):
-        """Gets the status of this Topic.  # noqa: E501
-
-        The status of this topic. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/api:StatusEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The status of this Topic.  # noqa: E501
-        :rtype: str
-        """
-        return self._status
-
-    @status.setter
-    def status(self, status):
-        """Sets the status of this Topic.
-
-        The status of this topic. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/api:StatusEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param status: The status of this Topic.  # noqa: E501
-        :type: str
-        """
-
-        self._status = status
-
-    @property
     def context(self):
         """Gets the context of this Topic.  # noqa: E501
 
@@ -191,6 +122,52 @@ class Topic(object):
         """
 
         self._context = context
+
+    @property
+    def description(self):
+        """Gets the description of this Topic.  # noqa: E501
+
+        The description of the topic.  # noqa: E501
+
+        :return: The description of this Topic.  # noqa: E501
+        :rtype: str
+        """
+        return self._description
+
+    @description.setter
+    def description(self, description):
+        """Sets the description of this Topic.
+
+        The description of the topic.  # noqa: E501
+
+        :param description: The description of this Topic.  # noqa: E501
+        :type: str
+        """
+
+        self._description = description
+
+    @property
+    def filterable(self):
+        """Gets the filterable of this Topic.  # noqa: E501
+
+        The indicator of whether this topic is filterable or not.  # noqa: E501
+
+        :return: The filterable of this Topic.  # noqa: E501
+        :rtype: bool
+        """
+        return self._filterable
+
+    @filterable.setter
+    def filterable(self, filterable):
+        """Sets the filterable of this Topic.
+
+        The indicator of whether this topic is filterable or not.  # noqa: E501
+
+        :param filterable: The filterable of this Topic.  # noqa: E501
+        :type: bool
+        """
+
+        self._filterable = filterable
 
     @property
     def scope(self):
@@ -216,6 +193,29 @@ class Topic(object):
         self._scope = scope
 
     @property
+    def status(self):
+        """Gets the status of this Topic.  # noqa: E501
+
+        The status of this topic. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/api:StatusEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The status of this Topic.  # noqa: E501
+        :rtype: str
+        """
+        return self._status
+
+    @status.setter
+    def status(self, status):
+        """Sets the status of this Topic.
+
+        The status of this topic. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/api:StatusEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param status: The status of this Topic.  # noqa: E501
+        :type: str
+        """
+
+        self._status = status
+
+    @property
     def supported_payloads(self):
         """Gets the supported_payloads of this Topic.  # noqa: E501
 
@@ -239,27 +239,27 @@ class Topic(object):
         self._supported_payloads = supported_payloads
 
     @property
-    def filterable(self):
-        """Gets the filterable of this Topic.  # noqa: E501
+    def topic_id(self):
+        """Gets the topic_id of this Topic.  # noqa: E501
 
-        The indicator of whether this topic is filterable or not.  # noqa: E501
+        The unique identifier for the topic.  # noqa: E501
 
-        :return: The filterable of this Topic.  # noqa: E501
-        :rtype: bool
+        :return: The topic_id of this Topic.  # noqa: E501
+        :rtype: str
         """
-        return self._filterable
+        return self._topic_id
 
-    @filterable.setter
-    def filterable(self, filterable):
-        """Sets the filterable of this Topic.
+    @topic_id.setter
+    def topic_id(self, topic_id):
+        """Sets the topic_id of this Topic.
 
-        The indicator of whether this topic is filterable or not.  # noqa: E501
+        The unique identifier for the topic.  # noqa: E501
 
-        :param filterable: The filterable of this Topic.  # noqa: E501
-        :type: bool
+        :param topic_id: The topic_id of this Topic.  # noqa: E501
+        :type: str
         """
 
-        self._filterable = filterable
+        self._topic_id = topic_id
 
     def to_dict(self):
         """Returns the model properties as a dict"""

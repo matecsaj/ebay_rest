@@ -28,62 +28,39 @@ class SubscriptionSearchResponse(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'total': 'int',
         'href': 'str',
-        'next': 'str',
         'limit': 'int',
-        'subscriptions': 'list[Subscription]'
+        'next': 'str',
+        'subscriptions': 'list[Subscription]',
+        'total': 'int'
     }
 
     attribute_map = {
-        'total': 'total',
         'href': 'href',
-        'next': 'next',
         'limit': 'limit',
-        'subscriptions': 'subscriptions'
+        'next': 'next',
+        'subscriptions': 'subscriptions',
+        'total': 'total'
     }
 
-    def __init__(self, total=None, href=None, next=None, limit=None, subscriptions=None):  # noqa: E501
+    def __init__(self, href=None, limit=None, next=None, subscriptions=None, total=None):  # noqa: E501
         """SubscriptionSearchResponse - a model defined in Swagger"""  # noqa: E501
-        self._total = None
         self._href = None
-        self._next = None
         self._limit = None
+        self._next = None
         self._subscriptions = None
+        self._total = None
         self.discriminator = None
-        if total is not None:
-            self.total = total
         if href is not None:
             self.href = href
-        if next is not None:
-            self.next = next
         if limit is not None:
             self.limit = limit
+        if next is not None:
+            self.next = next
         if subscriptions is not None:
             self.subscriptions = subscriptions
-
-    @property
-    def total(self):
-        """Gets the total of this SubscriptionSearchResponse.  # noqa: E501
-
-        The total number of matches for the search criteria.  # noqa: E501
-
-        :return: The total of this SubscriptionSearchResponse.  # noqa: E501
-        :rtype: int
-        """
-        return self._total
-
-    @total.setter
-    def total(self, total):
-        """Sets the total of this SubscriptionSearchResponse.
-
-        The total number of matches for the search criteria.  # noqa: E501
-
-        :param total: The total of this SubscriptionSearchResponse.  # noqa: E501
-        :type: int
-        """
-
-        self._total = total
+        if total is not None:
+            self.total = total
 
     @property
     def href(self):
@@ -109,29 +86,6 @@ class SubscriptionSearchResponse(object):
         self._href = href
 
     @property
-    def next(self):
-        """Gets the next of this SubscriptionSearchResponse.  # noqa: E501
-
-        The URL to access the next set of results. This field includes a <strong>continuation_token</strong>. No <b>prev</b> field is returned, but this value is persistent during the session so that you can use it to return to the next page.<br><br>This field is not returned if fewer records than specified by the <strong>limit</strong> field are returned.  # noqa: E501
-
-        :return: The next of this SubscriptionSearchResponse.  # noqa: E501
-        :rtype: str
-        """
-        return self._next
-
-    @next.setter
-    def next(self, next):
-        """Sets the next of this SubscriptionSearchResponse.
-
-        The URL to access the next set of results. This field includes a <strong>continuation_token</strong>. No <b>prev</b> field is returned, but this value is persistent during the session so that you can use it to return to the next page.<br><br>This field is not returned if fewer records than specified by the <strong>limit</strong> field are returned.  # noqa: E501
-
-        :param next: The next of this SubscriptionSearchResponse.  # noqa: E501
-        :type: str
-        """
-
-        self._next = next
-
-    @property
     def limit(self):
         """Gets the limit of this SubscriptionSearchResponse.  # noqa: E501
 
@@ -155,6 +109,29 @@ class SubscriptionSearchResponse(object):
         self._limit = limit
 
     @property
+    def next(self):
+        """Gets the next of this SubscriptionSearchResponse.  # noqa: E501
+
+        The URL to access the next set of results. This field includes a <strong>continuation_token</strong>. No <b>prev</b> field is returned, but this value is persistent during the session so that you can use it to return to the next page.<br><br>This field is not returned if fewer records than specified by the <strong>limit</strong> field are returned.  # noqa: E501
+
+        :return: The next of this SubscriptionSearchResponse.  # noqa: E501
+        :rtype: str
+        """
+        return self._next
+
+    @next.setter
+    def next(self, next):
+        """Sets the next of this SubscriptionSearchResponse.
+
+        The URL to access the next set of results. This field includes a <strong>continuation_token</strong>. No <b>prev</b> field is returned, but this value is persistent during the session so that you can use it to return to the next page.<br><br>This field is not returned if fewer records than specified by the <strong>limit</strong> field are returned.  # noqa: E501
+
+        :param next: The next of this SubscriptionSearchResponse.  # noqa: E501
+        :type: str
+        """
+
+        self._next = next
+
+    @property
     def subscriptions(self):
         """Gets the subscriptions of this SubscriptionSearchResponse.  # noqa: E501
 
@@ -176,6 +153,29 @@ class SubscriptionSearchResponse(object):
         """
 
         self._subscriptions = subscriptions
+
+    @property
+    def total(self):
+        """Gets the total of this SubscriptionSearchResponse.  # noqa: E501
+
+        The total number of matches for the search criteria.  # noqa: E501
+
+        :return: The total of this SubscriptionSearchResponse.  # noqa: E501
+        :rtype: int
+        """
+        return self._total
+
+    @total.setter
+    def total(self, total):
+        """Sets the total of this SubscriptionSearchResponse.
+
+        The total number of matches for the search criteria.  # noqa: E501
+
+        :param total: The total of this SubscriptionSearchResponse.  # noqa: E501
+        :type: int
+        """
+
+        self._total = total
 
     def to_dict(self):
         """Returns the model properties as a dict"""

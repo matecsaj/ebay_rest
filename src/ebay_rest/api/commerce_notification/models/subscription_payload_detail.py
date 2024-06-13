@@ -28,29 +28,52 @@ class SubscriptionPayloadDetail(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'delivery_protocol': 'str',
         'format': 'str',
-        'schema_version': 'str',
-        'delivery_protocol': 'str'
+        'schema_version': 'str'
     }
 
     attribute_map = {
+        'delivery_protocol': 'deliveryProtocol',
         'format': 'format',
-        'schema_version': 'schemaVersion',
-        'delivery_protocol': 'deliveryProtocol'
+        'schema_version': 'schemaVersion'
     }
 
-    def __init__(self, format=None, schema_version=None, delivery_protocol=None):  # noqa: E501
+    def __init__(self, delivery_protocol=None, format=None, schema_version=None):  # noqa: E501
         """SubscriptionPayloadDetail - a model defined in Swagger"""  # noqa: E501
+        self._delivery_protocol = None
         self._format = None
         self._schema_version = None
-        self._delivery_protocol = None
         self.discriminator = None
+        if delivery_protocol is not None:
+            self.delivery_protocol = delivery_protocol
         if format is not None:
             self.format = format
         if schema_version is not None:
             self.schema_version = schema_version
-        if delivery_protocol is not None:
-            self.delivery_protocol = delivery_protocol
+
+    @property
+    def delivery_protocol(self):
+        """Gets the delivery_protocol of this SubscriptionPayloadDetail.  # noqa: E501
+
+        The supported delivery protocol of the notification topic.<br><br><span class=\"tablenote\"><b>Note:</b> <code>HTTPS</code> is currently the only supported delivery protocol of all notification topics. </span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/api:ProtocolEnum'>eBay API documentation</a>  # noqa: E501
+
+        :return: The delivery_protocol of this SubscriptionPayloadDetail.  # noqa: E501
+        :rtype: str
+        """
+        return self._delivery_protocol
+
+    @delivery_protocol.setter
+    def delivery_protocol(self, delivery_protocol):
+        """Sets the delivery_protocol of this SubscriptionPayloadDetail.
+
+        The supported delivery protocol of the notification topic.<br><br><span class=\"tablenote\"><b>Note:</b> <code>HTTPS</code> is currently the only supported delivery protocol of all notification topics. </span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/api:ProtocolEnum'>eBay API documentation</a>  # noqa: E501
+
+        :param delivery_protocol: The delivery_protocol of this SubscriptionPayloadDetail.  # noqa: E501
+        :type: str
+        """
+
+        self._delivery_protocol = delivery_protocol
 
     @property
     def format(self):
@@ -97,29 +120,6 @@ class SubscriptionPayloadDetail(object):
         """
 
         self._schema_version = schema_version
-
-    @property
-    def delivery_protocol(self):
-        """Gets the delivery_protocol of this SubscriptionPayloadDetail.  # noqa: E501
-
-        The supported delivery protocol of the notification topic.<br><br><span class=\"tablenote\"><b>Note:</b> <code>HTTPS</code> is currently the only supported delivery protocol of all notification topics. </span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/api:ProtocolEnum'>eBay API documentation</a>  # noqa: E501
-
-        :return: The delivery_protocol of this SubscriptionPayloadDetail.  # noqa: E501
-        :rtype: str
-        """
-        return self._delivery_protocol
-
-    @delivery_protocol.setter
-    def delivery_protocol(self, delivery_protocol):
-        """Sets the delivery_protocol of this SubscriptionPayloadDetail.
-
-        The supported delivery protocol of the notification topic.<br><br><span class=\"tablenote\"><b>Note:</b> <code>HTTPS</code> is currently the only supported delivery protocol of all notification topics. </span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/notification/types/api:ProtocolEnum'>eBay API documentation</a>  # noqa: E501
-
-        :param delivery_protocol: The delivery_protocol of this SubscriptionPayloadDetail.  # noqa: E501
-        :type: str
-        """
-
-        self._delivery_protocol = delivery_protocol
 
     def to_dict(self):
         """Returns the model properties as a dict"""
