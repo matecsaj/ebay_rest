@@ -321,7 +321,7 @@ Setup Steps
 ```bash
 python3 -m pip install -r requirements_dev.txt
 ```
-4. Install the current stable 3.x.x version of [Swagger Codegen](https://github.com/swagger-api/swagger-codegen). There is a shortcut for macOS and [Homebrew](https://github.com/swagger-api/swagger-codegenrew).
+4. Install the current stable 3.x.x version of [Swagger Codegen](https://github.com/swagger-api/swagger-codegen). There is a shortcut for macOS and [Homebrew](https://brew.sh).
 ```bash
 brew install swagger-codegen
 ```
