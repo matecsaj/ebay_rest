@@ -210,28 +210,10 @@ class API(metaclass=Multiton):
                 )
 
         # get configuration sections from parameters or the loaded file
-        try:
-            self._application = self._process_config_section(
-                config_contents, "applications", application
-            )
-        except Error:
-            raise
-        try:
-            self._user = self._process_config_section(config_contents, "users", user)
-        except Error:
-            raise
-        try:
-            self._header = self._process_config_section(
-                config_contents, "headers", header
-            )
-        except Error:
-            raise
-        try:
-            self._key_pair = self._process_config_section(
-                config_contents, "key_pairs", key_pair, mandatory=False
-            )
-        except Error:
-            raise
+        self._application = self._process_config_section(config_contents, "applications", application)
+        self._user = self._process_config_section(config_contents, "users", user)
+        self._header = self._process_config_section(config_contents, "headers", header)
+        self._key_pair = self._process_config_section(config_contents, "key_pairs", key_pair, mandatory=False)
         self._use_digital_signatures = digital_signatures
 
         # check the application keys and values
@@ -243,10 +225,7 @@ class API(metaclass=Multiton):
             ("dev_id", False),
             ("redirect_uri", True),
         ]
-        try:
-            self._check_keys(self._application, application_keys, "application")
-        except Error:
-            raise
+        self._check_keys(self._application, application_keys, "application")
 
         # check the user keys and values
         user_keys = [
@@ -256,10 +235,7 @@ class API(metaclass=Multiton):
             ("refresh_token", False),
             ("refresh_token_expiry", False),
         ]
-        try:
-            self._check_keys(self._user, user_keys, "user")
-        except Error:
-            raise
+        self._check_keys(self._user, user_keys, "user")
 
         # check the key pair keys and values
         key_pair_keys = [
@@ -271,10 +247,7 @@ class API(metaclass=Multiton):
             ("signing_key_cipher", False),
             ("signing_key_id", False),
         ]
-        try:
-            self._check_keys(self._key_pair, key_pair_keys, "key_pair")
-        except Error:
-            raise
+        self._check_keys(self._key_pair, key_pair_keys, "key_pair")
 
         # Determine if we are using the sandbox. Of course production is the only alternative.
         self._sandbox = self._application["cert_id"].startswith("SBX-")
@@ -307,10 +280,7 @@ class API(metaclass=Multiton):
             ("marketplace_id", self._marketplace_ids),
             ("zip", None),
         ]
-        try:
-            self._check_header(header_keys_values)
-        except Error:
-            raise
+        self._check_header(header_keys_values)
 
         # check the throttle parameters
         detail = None
@@ -346,11 +316,8 @@ class API(metaclass=Multiton):
             self._rates = None
         else:
             with API._lock_rates:
-                try:
-                    # If sandbox starts return rates, you will need to add a sandbox param to the Rates constructor.
-                    self._rates = Rates(app_id=self._application["app_id"])
-                except Error:
-                    raise
+                # If sandbox starts return rates, you will need to add a sandbox param to the Rates constructor.
+                self._rates = Rates(app_id=self._application["app_id"])
 
         # preload the multipurpose header self._end_user_ctx
         equates = list()
@@ -379,59 +346,50 @@ class API(metaclass=Multiton):
             self._end_user_ctx = None
 
         with API._lock_application_token:
-            try:
-                self._application_token = ApplicationToken(
-                    self._sandbox,
-                    # application/client credentials
-                    client_id=self._application["app_id"],
-                    client_secret=self._application["cert_id"],
-                    ru_name=self._application["redirect_uri"],
-                )
-            except Error:
-                raise
+            self._application_token = ApplicationToken(
+                self._sandbox,
+                # application/client credentials
+                client_id=self._application["app_id"],
+                client_secret=self._application["cert_id"],
+                ru_name=self._application["redirect_uri"],
+            )
 
         with API._lock_user_token:
-            try:
-                self._user_token = UserToken(
-                    self._sandbox,
-                    # application/client credentials
-                    client_id=self._application["app_id"],
-                    client_secret=self._application["cert_id"],
-                    ru_name=self._application["redirect_uri"],
-                    # user credentials
-                    user_id=self._user["email_or_username"],
-                    user_password=self._user["password"],
-                    user_scopes=(
-                        None if "scopes" not in self._user else self._user["scopes"]
-                    ),
-                    # user token supply
-                    user_refresh_token=(
-                        None
-                        if "refresh_token" not in self._user
-                        else self._user["refresh_token"]
-                    ),
-                    user_refresh_token_expiry=(
-                        None
-                        if "refresh_token_expiry" not in self._user
-                        else self._user["refresh_token_expiry"]
-                    ),
-                )
-            except Error:
-                raise
+            self._user_token = UserToken(
+                self._sandbox,
+                # application/client credentials
+                client_id=self._application["app_id"],
+                client_secret=self._application["cert_id"],
+                ru_name=self._application["redirect_uri"],
+                # user credentials
+                user_id=self._user["email_or_username"],
+                user_password=self._user["password"],
+                user_scopes=(
+                    None if "scopes" not in self._user else self._user["scopes"]
+                ),
+                # user token supply
+                user_refresh_token=(
+                    None
+                    if "refresh_token" not in self._user
+                    else self._user["refresh_token"]
+                ),
+                user_refresh_token_expiry=(
+                    None
+                    if "refresh_token_expiry" not in self._user
+                    else self._user["refresh_token_expiry"]
+                ),
+            )
 
         with API._lock_key_pair_token:
-            try:
-                self._key_pair_token = KeyPairToken(
-                    creation_time=self._key_pair.get("creation_time", None),
-                    expiration_time=self._key_pair.get("expiration_time", None),
-                    jwe=self._key_pair.get("jwe", None),
-                    private_key=self._key_pair.get("private_key", None),
-                    public_key=self._key_pair.get("public_key", None),
-                    signing_key_cipher=self._key_pair.get("signing_key_cipher", None),
-                    signing_key_id=self._key_pair.get("signing_key_id", None),
-                )
-            except Error:
-                raise
+            self._key_pair_token = KeyPairToken(
+                creation_time=self._key_pair.get("creation_time", None),
+                expiration_time=self._key_pair.get("expiration_time", None),
+                jwe=self._key_pair.get("jwe", None),
+                private_key=self._key_pair.get("private_key", None),
+                public_key=self._key_pair.get("public_key", None),
+                signing_key_cipher=self._key_pair.get("signing_key_cipher", None),
+                signing_key_id=self._key_pair.get("signing_key_id", None),
+            )
 
         return
 
@@ -667,30 +625,19 @@ class API(metaclass=Multiton):
         :param kwargs: (Dict[str, int], required)
         :return object: (collections)
         """
-        try:
-            swagger_method = self._get_swagger_method(
-                function_configuration,
-                base_path,
-                function_instance,
-                function_client,
-                method,
-                user_access_token,
-                params,
-            )
-        except Error:
-            raise
+        swagger_method = self._get_swagger_method(
+            function_configuration,
+            base_path,
+            function_instance,
+            function_client,
+            method,
+            user_access_token,
+            params,
+        )
 
-        try:
-            self._swagger_throttle(base_path=base_path, rate_keys=rate_keys)
-        except Error:
-            raise
+        self._swagger_throttle(base_path=base_path, rate_keys=rate_keys)
 
-        try:
-            result = self._call_swagger(swagger_method, params, kwargs, object_error)
-        except Error:
-            raise
-        else:
-            return result
+        return self._call_swagger(swagger_method, params, kwargs, object_error)
 
     def _method_paged(
         self,
@@ -760,18 +707,15 @@ class API(metaclass=Multiton):
             records_desired = None  # the user wants all possible records
             kwargs["limit"] = page_limit  # fill pages with as many records as possible
 
-        try:
-            swagger_method = self._get_swagger_method(
-                function_configuration,
-                base_path,
-                function_instance,
-                function_client,
-                method,
-                user_access_token,
-                params,
-            )
-        except Error:
-            raise
+        swagger_method = self._get_swagger_method(
+            function_configuration,
+            base_path,
+            function_instance,
+            function_client,
+            method,
+            user_access_token,
+            params,
+        )
 
         # loop though pages until a reason to stop presents itself
         offset = 0  # start at the first record; yes the record index starts at zero
@@ -779,19 +723,11 @@ class API(metaclass=Multiton):
         loop = True
         result = None
         while loop:
-            try:
-                self._swagger_throttle(base_path=base_path, rate_keys=rate_keys)
-            except Error:
-                raise
+            self._swagger_throttle(base_path=base_path, rate_keys=rate_keys)
 
             kwargs["offset"] = offset  # get the next page of results
-            try:
-                # TODO If the caller does not process all yielded results within five minutes, the token might expire.
-                result = self._call_swagger(
-                    swagger_method, params, kwargs, object_error
-                )
-            except Error:
-                raise
+            # TODO If the caller does not process all yielded results within five minutes, the token might expire.
+            result = self._call_swagger(swagger_method, params, kwargs, object_error)
 
             if result is None:
                 break
@@ -879,13 +815,10 @@ class API(metaclass=Multiton):
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = function_configuration()
-        try:
-            if user_access_token:
-                configuration.access_token = self._user_token.get()
-            else:
-                configuration.access_token = self._application_token.get()
-        except Error:
-            raise
+        if user_access_token:
+            configuration.access_token = self._user_token.get()
+        else:
+            configuration.access_token = self._application_token.get()
 
         # Load key pair for digital signature
         use_digital_signatures = (
@@ -977,22 +910,11 @@ class API(metaclass=Multiton):
             else:
                 # if rates need to be refreshed, then do so.
                 if self._rates.need_refresh():
-                    try:
-                        limits = self.developer_analytics_get_rate_limits()
-                    except Error:
-                        raise
-                    else:
-                        self._rates.refresh_developer_analytics(
-                            rate_limits=limits["rate_limits"]
-                        )
+                    limits = self.developer_analytics_get_rate_limits()
+                    self._rates.refresh_developer_analytics(rate_limits=limits["rate_limits"])
 
                 # decrement the rate, throttling if needed
-                try:
-                    self._rates.decrement_rate_throttled(
-                        base_path=base_path, rate_keys=rate_keys, timeout=self._timeout
-                    )
-                except Error:
-                    raise
+                    self._rates.decrement_rate_throttled(base_path=base_path, rate_keys=rate_keys, timeout=self._timeout)
 
     def _call_swagger(
         self,

@@ -227,13 +227,10 @@ class UserToken(metaclass=Multiton):
                         reason="user_refresh_token_expiry value error",
                         detail=error.reason,
                     )
-                try:
-                    self._user_refresh_token = _OAuthToken(
-                        refresh_token=self._user_refresh_token,
-                        refresh_token_expiry=self._user_refresh_token_expiry,
-                    )
-                except Error:
-                    raise
+                self._user_refresh_token = _OAuthToken(
+                    refresh_token=self._user_refresh_token,
+                    refresh_token_expiry=self._user_refresh_token_expiry,
+                )
             else:
                 raise Error(
                     number=96004,
@@ -317,10 +314,7 @@ class UserToken(metaclass=Multiton):
         if sign_in_url is None:
             raise Error(number=96006, reason="sign_in_url is None.")
 
-        try:
-            code = self._get_authorization_code(sign_in_url)
-        except Error:
-            raise
+        code = self._get_authorization_code(sign_in_url)
 
         refresh_token = self._oauth2api_inst.exchange_code_for_access_token(code)
 
@@ -342,10 +336,7 @@ class UserToken(metaclass=Multiton):
         )
 
         # Give the user a helpful suggestion.
-        try:
-            expiry = DateTime.to_string(refresh_token.refresh_token_expiry)
-        except Error:
-            raise
+        expiry = DateTime.to_string(refresh_token.refresh_token_expiry)
         message = (
             f"Edit to your ebay_rest.json file to avoid the browser pop-up.\n"
             f"For the user with an email or username of {self._user_id}.\n"
@@ -603,7 +594,7 @@ class _OAuth2Api:
     def get_application_token(self, scopes: List[str]) -> _OAuthToken:
         """
         Makes call for application token and stores result in credential object.
-        :param scopes (list(str)), required)
+        :param scopes (list(str), required)
         :return credential_object (_OAuthToken)
         """
         logging.debug("Trying to get a new application access token ... ")
@@ -645,7 +636,7 @@ class _OAuth2Api:
         """
         refresh token call
         :param refresh_token (str, required)
-        :param scopes (list(str)), required)
+        :param scopes (list(str), required)
         :return credential_object (_OAuthToken)
         """
         logging.debug("Trying to get a new user access token ... ")

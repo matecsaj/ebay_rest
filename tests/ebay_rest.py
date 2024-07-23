@@ -26,10 +26,12 @@ from src.ebay_rest import API, DateTime, Error, Reference
 class APIBothEnvironmentsSingleSiteTests(unittest.TestCase):
     def test_start(
         self,
-    ):  # all initialization options and for each the first and second usage
-        for environment in ("production", "sandbox"):
-            for throttle, timeout in ((False, None), (True, None), (True, 60.0)):
-                try:
+    ):
+        try:
+            # all initialization options and for each the first and second usage
+            for environment in ("production", "sandbox"):
+                for throttle, timeout in ((False, None), (True, None), (True, 60.0)):
+
                     if timeout is None:
                         api = API(
                             application=environment + "_1",
@@ -45,36 +47,24 @@ class APIBothEnvironmentsSingleSiteTests(unittest.TestCase):
                             throttle=throttle,
                             timeout=timeout,
                         )
-                except Error as error:
-                    self.fail(
-                        f"Error {error.number} is {error.reason}  {error.detail}.\n"
-                    )
-                else:
-                    try:
-                        item_id = None
-                        for record in api.buy_browse_search(limit=1, q="lego"):
-                            if "record" not in record:
-                                self.assertTrue(
-                                    "total" in record, f"Unexpected non-record{record}."
-                                )
-                            else:
-                                item = record["record"]
-                                self.assertTrue(isinstance(item["item_id"], str))
-                                item_id = item["item_id"]
-                                break
-                    except Error as error:
-                        self.fail(
-                            f"Error {error.number} is {error.reason}  {error.detail}.\n"
-                        )
-                    else:
-                        if item_id:
-                            try:
-                                item = api.buy_browse_get_item(item_id=item_id)
-                                self.assertTrue(isinstance(item, dict))
-                            except Error as error:
-                                self.fail(
-                                    f"Error {error.number} is {error.reason}  {error.detail}.\n"
-                                )
+                    item_id = None
+                    for record in api.buy_browse_search(limit=1, q="lego"):
+                        if "record" not in record:
+                            self.assertTrue(
+                                "total" in record, f"Unexpected non-record{record}."
+                            )
+                        else:
+                            item = record["record"]
+                            self.assertTrue(isinstance(item["item_id"], str))
+                            item_id = item["item_id"]
+                            break
+                    if item_id:
+                        item = api.buy_browse_get_item(item_id=item_id)
+                        self.assertTrue(isinstance(item, dict))
+        except Error as error:
+            self.fail(
+                f"Error {error.number} is {error.reason}  {error.detail}.\n"
+            )
 
 
 class APISandboxMultipleSiteTests(unittest.TestCase):

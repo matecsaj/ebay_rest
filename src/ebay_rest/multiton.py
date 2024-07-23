@@ -2,7 +2,6 @@
 import datetime
 
 # Local imports
-from .error import Error
 
 
 class Multiton(type):
@@ -46,14 +45,10 @@ class Multiton(type):
 
         # if not found then create a new instance
         if return_object is None:
-            try:
-                return_object = super(Multiton, cls).__call__(*args, **kwargs)
-            except Error:
-                raise
-            else:
-                Multiton._instances.append(
-                    {"key": key, "object": return_object, "touched": d_t}
-                )
+            return_object = super(Multiton, cls).__call__(*args, **kwargs)
+            Multiton._instances.append(
+                {"key": key, "object": return_object, "touched": d_t}
+            )
 
         # delete any instances that have not been touched for a while
         # don't panic, if the instance's object is still in use, it will not be garbage collected
