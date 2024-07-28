@@ -385,39 +385,48 @@ class UserToken(metaclass=Multiton):
                 page.wait_for_selector("input[name='pass']").type(self._user_password)
                 page.wait_for_selector("#sgnBt").click()
 
-                # Deal with optional prompts. Iterate over the elements and click if they are found.
-                elements = ["#passkeys-cancel-btn",   # "Simplify your sign-in"; skip it for now
-                            "#submit",                # "I agree"; agree
-                            ]
-                for selector in elements:
+                # Several things may happen on the way to the last page and how we need to respond varies.
+                seconds = 0
+                while seconds < 30:
+
+                    selectors = ["#passkeys-cancel-btn",    # "Simplify your sign-in" prompt; skip it for now
+                                 "#submit",     # "I agree" prompt; agree
+                                 ]
+                    for selector in selectors:
+                        try:
+                            page.wait_for_selector(selector, timeout=1)
+                        except PlaywrightTimeoutError:
+                            pass
+                        else:
+                            seconds = 0  # reset our timer when a click happens
+
+                    # have we reached the final page?
                     try:
-                        page.wait_for_selector(selector, timeout=10000).click()     # default timeout of 30s is too long
+                        page.wait_for_selector("#thnk-wrap", timeout=1000)  # 1 second
                     except PlaywrightTimeoutError:
-                        pass
-
-                # People enable 2FA, wait while they enter their code.
-                try:
-                    page.wait_for_selector("#thnk-wrap")
-                except PlaywrightTimeoutError:
-                    pass
-
-                # Parse the url's query parameters into a dictionary
-                parsed_url = urlparse(page.url)
-                query_params = parse_qs(parsed_url.query)
-
-                # Check isAuthSuccessful is true, if present
-                is_auth_successful = False
-                if "isAuthSuccessful" in query_params:
-                    if "true" == query_params["isAuthSuccessful"][0]:
-                        is_auth_successful = True
-                if is_auth_successful:
-                    if "code" in query_params:
-                        return query_params["code"][0]
+                        # no! Perhaps we need to wait while the user enters their 2FA code.
+                        seconds += 1    # increment out timer
                     else:
-                        raise Error(number=96009, reason="Unable to obtain code.")
-                else:
-                    reason = f"Authorization failed, check userid & password:{self._user_id} {self._user_password}"
-                    raise Error(number=96010, reason=reason)
+                        # yes!
+                        # parse the url's query parameters into a dictionary
+                        parsed_url = urlparse(page.url)
+                        query_params = parse_qs(parsed_url.query)
+
+                        # Check isAuthSuccessful is true, if present
+                        is_auth_successful = False
+                        if "isAuthSuccessful" in query_params:
+                            if "true" == query_params["isAuthSuccessful"][0]:
+                                is_auth_successful = True
+                        if is_auth_successful:
+                            if "code" in query_params:
+                                return query_params["code"][0]
+                            else:
+                                raise Error(number=96009, reason="Unable to obtain code.")
+                        else:
+                            reason = f"Authorization failed, check userid & password:{self._user_id} {self._user_password}"
+                            raise Error(number=96010, reason=reason)
+
+                raise Error(number=96027, reason="Last page not found.", detail="Has eBay's website changed?")
 
             except PlaywrightError:
                 raise Error(number=96015, reason="Element not found.", detail="Has eBay's website changed?")
