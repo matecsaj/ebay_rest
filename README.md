@@ -16,27 +16,11 @@ When installing the library, utilize the 'extra' we named complete.
 ```bash
 pip install ebay_rest[complete]
 ```
-
-Install [Chrome](https://www.google.ca/chrome/).
+And, then with [Playwright](https://playwright.dev/python/) install [Chromium](https://www.chromium.org/Home/).
 ```bash
-pip install selenium
+playwright install chromium
 ```
 
-Install [Webdriver](https://sites.google.com/chromium.org/driver/), aka Chromedriver, for your version of Chrome .
-
-Here is a method for installing Webdriver/Chromedriver on macOS and tweaking security to permit it.
-
-Install [HomeBrew](https://brew.sh)
-```bash
-brew install chromedriver
-```
-```bash
-cd /usr/local/Caskroom/chromedriver
-```
-cd to the subdirectory that matches your Chrome version, e.g., 91.0.4472.101
-```bash
-xattr -d com.apple.quarantine chromedriver
-```
 ## Setup
 
 Follow the instructions [here](https://github.com/matecsaj/ebay_rest/blob/main/tests/ebay_rest_EXAMPLE.json). 

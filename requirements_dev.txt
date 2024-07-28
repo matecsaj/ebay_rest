@@ -21,9 +21,9 @@
 # For production requirements, the following must match what is found in setup.cfg
 certifi
 cryptography
+playwright
 python_dateutil
 requests
-selenium
 six
 urllib3 >= 1.26.0, < 2.0.0
 

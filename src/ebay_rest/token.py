@@ -6,7 +6,7 @@ import logging
 from threading import Lock
 from time import sleep
 from typing import List
-from urllib.parse import parse_qs, urlencode
+from urllib.parse import urlparse, parse_qs, urlencode
 from cryptography.hazmat.primitives.serialization import load_der_private_key
 
 # 3rd party library imports
@@ -353,119 +353,87 @@ class UserToken(metaclass=Multiton):
         :return code (str): Authorization code.
         """
         try:
-            from selenium import webdriver
-            from selenium.common.exceptions import (
-                NoSuchElementException,
-                TimeoutException,
-                WebDriverException,
-            )
-            from selenium.webdriver.chrome.options import Options
-            from selenium.webdriver.common.by import By
-            from selenium.webdriver.support.ui import WebDriverWait
+            from playwright.sync_api import sync_playwright, Error as PlaywrightError, TimeoutError as PlaywrightTimeoutError
         except ModuleNotFoundError:
             reason = f"Supply an 'eBay user token' or install the COMPLETE variant of ebay_rest. Refer to the README.md at https://github.com/matecsaj/ebay_rest."  # noqa: E501
             logging.critical(reason)
             raise Error(number=96019, reason=reason)
         else:
-            # open browser
-            options = Options()
-            # options.add_argument("--headless")      # TODO Put this back in after adding a captcha solver.
-            try:
-                browser = webdriver.Chrome(options=options)
-            except WebDriverException as exc:
-                raise Error(
-                    number=96014,
-                    reason="ChromeDriver instantiation failure.",
-                    detail=exc.msg,
-                )
 
-            # load the initial page
-            browser.get(sign_in_url)
+            # Begin with all Playwright resources set to None.
+            playwright = browser = context = page = None
 
             try:
+                # Initialize Playwright
+                playwright = sync_playwright().start()
+                # Launch the browser in a non-headless mode
+                browser = playwright.chromium.launch(headless=False)
+                # Open a new browser context (equivalent to an incognito window)
+                context = browser.new_context()
+                # Open a new page within the context
+                page = context.new_page()
+
+                # load the initial page
+                page.goto(sign_in_url)
+
                 # fill in the username then click continue
-                # sometimes a captcha appears, so wait an extra 30-seconds for the user to fill it in
-                WebDriverWait(browser, 10 + 30).until(
-                    lambda x: x.find_element(By.NAME, "userid")
-                ).send_keys(
-                    self._user_id
-                )  # noqa: E501
-                WebDriverWait(browser, 10).until(
-                    lambda x: x.find_element(By.ID, "signin-continue-btn")
-                ).click()
+                # sometimes a captcha appears that the user must fill in
+                page.wait_for_selector("input[name='userid']").type(self._user_id)
+                page.wait_for_selector("#signin-continue-btn").click()
 
                 # fill in the password then submit
-                sleep(
-                    5
-                )  # Why? Perhaps an element I'm not aware of needs to finish rendering.
-                WebDriverWait(browser, 10).until(
-                    lambda x: x.find_element(By.NAME, "pass")
-                ).send_keys(
-                    self._user_password
-                )  # noqa: E501
-                WebDriverWait(browser, 10).until(
-                    lambda x: x.find_element(By.ID, "sgnBt")
-                ).submit()
+                page.wait_for_selector("input[name='pass']").type(self._user_password)
+                page.wait_for_selector("#sgnBt").click()
 
-            except NoSuchElementException:
-                raise Error(
-                    number=96015,
-                    reason="ChromeDriver element not found.",
-                    detail="Has eBay's website changed?",
-                )
-            except TimeoutException:
-                raise Error(
-                    number=96016,
-                    reason="ChromeDriver timeout.",
-                    detail="Slow computer or Internet?",
-                )
+                # Deal with optional prompts. Iterate over the elements and click if they are found.
+                elements = ["#passkeys-cancel-btn",   # "Simplify your sign-in"; skip it for now
+                            "#submit",                # "I agree"; agree
+                            ]
+                for selector in elements:
+                    try:
+                        page.wait_for_selector(selector, timeout=10000).click()     # default timeout of 30s is too long
+                    except PlaywrightTimeoutError:
+                        pass
 
-            # in some countries an "I agree" prompt interjects
-            try:
-                element = WebDriverWait(browser, 10).until(
-                    lambda x: x.find_element(By.ID, "submit")
-                )
-            except TimeoutException:
-                pass
-            else:
-                element.click()
+                # People enable 2FA, wait while they enter their code.
+                try:
+                    page.wait_for_selector("#thnk-wrap")
+                except PlaywrightTimeoutError:
+                    pass
 
-            # get the result url and then close browser
-            # some people enable 2FA, so wait an extra 30-seconds for the user interaction
-            try:
-                WebDriverWait(browser, 10 + 30).until(
-                    lambda x: x.find_element(By.ID, "thnk-wrap")
-                )
-            except NoSuchElementException:
-                raise Error(
-                    number=96017,
-                    reason="ChromeDriver element not found.",
-                    detail="Has eBay's website changed?",
-                )
-            except TimeoutException:
-                raise Error(
-                    number=96018,
-                    reason="ChromeDriver timeout.",
-                    detail="Slow computer or Internet?",
-                )
-            qs = browser.current_url.partition("?")[2]
-            parsed = parse_qs(qs, encoding="utf-8")
-            browser.quit()
+                # Parse the url's query parameters into a dictionary
+                parsed_url = urlparse(page.url)
+                query_params = parse_qs(parsed_url.query)
 
-            # Check isAuthSuccessful is true, if present
-            is_auth_successful = False
-            if "isAuthSuccessful" in parsed:
-                if "true" == parsed["isAuthSuccessful"][0]:
-                    is_auth_successful = True
-
-            if is_auth_successful:
-                if "code" in parsed:
-                    return parsed["code"][0]  # recently added [0]
+                # Check isAuthSuccessful is true, if present
+                is_auth_successful = False
+                if "isAuthSuccessful" in query_params:
+                    if "true" == query_params["isAuthSuccessful"][0]:
+                        is_auth_successful = True
+                if is_auth_successful:
+                    if "code" in query_params:
+                        return query_params["code"][0]
+                    else:
+                        raise Error(number=96009, reason="Unable to obtain code.")
                 else:
-                    raise Error(number=96009, reason="Unable to obtain code.")
-            else:
-                reason = f"Authorization unsuccessful, check userid & password:{self._user_id} {self._user_password}"
-                raise Error(number=96010, reason=reason)
+                    reason = f"Authorization failed, check userid & password:{self._user_id} {self._user_password}"
+                    raise Error(number=96010, reason=reason)
+
+            except PlaywrightError:
+                raise Error(number=96015, reason="Element not found.", detail="Has eBay's website changed?")
+            except PlaywrightTimeoutError:
+                raise Error(number=96016, reason="Timeout.", detail="Slow computer or Internet?")
+
+            finally:
+                # Ensure that Playwright resources are cleaned up; don't reorder.
+                if page:
+                    page.close()
+                if context:
+                    context.close()
+                if browser:
+                    browser.close()
+                if playwright:
+                    playwright.stop()
 
     def _refresh_user_token(self) -> None:
         """
