@@ -25,7 +25,7 @@ playwright
 python_dateutil
 requests
 six
-urllib3 >= 1.26.0, < 2.0.0
+urllib3
 
 # Development-specific requirements.
 # For generate_code.py.
