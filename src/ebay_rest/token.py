@@ -1,5 +1,6 @@
 # Standard library imports
 from base64 import b64encode, b64decode
+import binascii
 from datetime import datetime, timedelta, timezone
 from json import loads
 import logging
@@ -781,8 +782,17 @@ class KeyPairToken(metaclass=Multiton):
 
     def key_dict(self):
         """Get the public and private key ready for a request"""
-        pk = load_der_private_key(b64decode(self._private_key), password=None)
-        return {"jwe": self._jwe, "private_key": pk}
+        try:
+            decoded = b64decode(self._private_key)
+        except binascii.Error as e:
+            raise Error(
+                number=96028,
+                reason="The key is not a valid base64 encoded string.",
+                detail=str(e),
+            )
+        else:
+            pk = load_der_private_key(decoded, password=None)
+            return {"jwe": self._jwe, "private_key": pk}
 
     def _current_key_sufficient(self) -> bool:
         """Check if the current key pair is sufficient to call get_signing_key.
