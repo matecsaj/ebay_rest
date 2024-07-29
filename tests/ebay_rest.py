@@ -469,16 +469,14 @@ class APISandboxSingleSiteTests(unittest.TestCase):
 
         The underlying REST call returns the new id in the header; which can't be gotten with the combination of Swagger
         and OpenAPI contract which we rely on here. A workaround uses a related call to retrieve task_id_new.
-        https://developer.ebay.com/api-docs/sell/feed/resources/inventory_task/methods/getInventoryTasks
         """
-        feed_type = "LMS_ACTIVE_INVENTORY_REPORT"
-        body = {"schemaVersion": "1.0", "feedType": feed_type}
-        task_ids_pre = self.get_task_ids(feed_type=feed_type)
+
         try:
-            result = self._api.sell_feed_create_inventory_task(body=body)
-        except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
-        else:
+            feed_type = "LMS_ACTIVE_INVENTORY_REPORT"
+            body = {"schemaVersion": "1.0", "feedType": feed_type}
+            task_ids_pre = self.get_task_ids(feed_type=feed_type)
+
+            result = self._api.sell_feed_create_inventory_task(content_type="application/json", body=body)
             self.assertIsNone(
                 result,
                 "eBay made a change, the call now returns something, can the work around go?",
@@ -492,26 +490,33 @@ class APISandboxSingleSiteTests(unittest.TestCase):
             )
             # task_id_new = task_ids_new.pop()    # the new task id that we worked so hard to get
 
-    def get_task_ids(self, feed_type):
-        task_ids = set()
-        try:
-            for record in self._api.sell_feed_get_inventory_tasks(
-                feed_type=feed_type, look_back_days="1"
-            ):
-                if "record" in record:
-                    task_ids.add(record["record"]["task_id"])
-                elif "total" in record:
-                    self.assertEqual(
-                        record["total"]["records_yielded"],
-                        record["total"]["records_available"],
-                        "We missed some data - narrow the search!",
-                    )
-                else:
-                    self.fail(f"unexpected record {record}")
         except Error as error:
             self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
-        else:
-            return task_ids
+        except Exception as ex:
+            self.fail(f"An unexpected error occurred: {str(ex)}")
+
+    def get_task_ids(self, feed_type: string):
+        """
+        https://developer.ebay.com/api-docs/sell/feed/resources/inventory_task/methods/getInventoryTasks
+
+        :param feed_type: (string)
+        :return: task_ids (set(string))
+        """
+        task_ids = set()
+        for record in self._api.sell_feed_get_inventory_tasks(
+            feed_type=feed_type, look_back_days="1"
+        ):
+            if "record" in record:
+                task_ids.add(record["record"]["task_id"])
+            elif "total" in record:
+                self.assertEqual(
+                    record["total"]["records_yielded"],
+                    record["total"]["records_available"],
+                    "We missed some data - narrow the search!",
+                )
+            else:
+                self.fail(f"unexpected record {record}")
+        return task_ids
 
 
 class APIProductionSingleTests(unittest.TestCase):
