@@ -7,22 +7,24 @@
 
 # Standard library imports
 import hashlib
+from itertools import groupby
 import json
 import logging
+from operator import itemgetter
 import os
 import re
 import shutil
 import sys
 import string
 import time
-from typing import List, Set, Tuple
+from typing import AsyncGenerator, Iterable, List, Set, Tuple
 
 # Third party imports
 import aiofiles
 import aiohttp
 import asyncio
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin, urlsplit, urlunsplit
+from urllib.parse import urljoin, urlsplit
 
 
 # Local imports
@@ -183,6 +185,29 @@ async def generate_marketplace_id_values() -> None:
     return
 
 
+async def generate_link_text_and_urls(urls: Iterable[str]) -> AsyncGenerator[Tuple[str, str], None]:
+    """
+    This function is an asynchronous generator that takes an iterable of URLs and for each URL, it fetches the HTML,
+    parses it to find all anchor tags and yields a tuple of the link text and the absolute link URL.
+
+    :param urls: An iterable of URLs to process.
+    :return: An asynchronous generator that yields tuples of link text and URLs.
+    """
+    async def process_url(url: str) -> AsyncGenerator[Tuple[str, str], None]:
+        soup = await get_soup_via_link(url)
+        for link in soup.find_all('a'):
+            yield link.text, urljoin(url, link.get('href'))
+
+    async def gather_links(url: str) -> List[Tuple[str, str]]:
+        return [link async for link in process_url(url)]
+
+    tasks = [gather_links(url) for url in urls]
+    for task in asyncio.as_completed(tasks):
+        completed_task = await task
+        for link_text, link_url in completed_task:
+            yield link_text, link_url
+
+
 async def get_soup_via_link(url: str) -> BeautifulSoup:
     # Get the html at an url and then make soup of it.
 
@@ -300,21 +325,25 @@ async def ensure_cache():
 
 
 class Contracts:
-    def __init__(self, overview_link) -> None:
-        self.overview_link = overview_link
+    def __init__(self, contract_link) -> None:
+        self.contract_link = contract_link
         self.category = None
         self.call = None
         self.link_href = None
         self.file_name = None
         self.name = None
+        self.version = None
+        self.beta = None
 
     async def process(self):
-        [
+        (
             self.category,
             self.call,
             self.link_href,
             self.file_name,
-        ] = await self.get_contract(self.overview_link)
+            self.version,
+            self.beta,
+        ) = await self.get_contract_info(self.contract_link)
         self.name = await self.get_api_name()
         await self.cache_contract()
         await self.patch_contract()
@@ -324,36 +353,55 @@ class Contracts:
         await self.fix_imports()
 
     @staticmethod
-    async def get_overview_links():
+    async def get_contract_links() -> List[str]:
+        """
+        This asynchronous function is designed to get the contract URLs from eBay's developer site.
+
+        Args: None
+
+        Returns:
+            A sorted list of contract URLs.
+
+        Examples:
+            To use this function, simply call it without any arguments and await its result:
+
+            :return:
+        """
         logging.info(
-            "Get a list of links to overview pages; pages contain links to eBay OpenAPI 3 JSON contracts."
+            "Get a list of links to eBay OpenAPI 3 JSON contracts."
         )
 
-        overview_links = []
-        developer_url = "https://developer.ebay.com/"
-        soup = await get_soup_via_link(urljoin(developer_url, "docs"))
+        # store the urls used while doing a breadth first search; seed with starting urls
+        category_urls = {'https://developer.ebay.com/develop/selling-apps',
+                         'https://developer.ebay.com/develop/buying-apps'}
+        table_urls = {'https://developer.ebay.com/develop/application-settings-and-insights'}
+        overview_urls = set()
+        contract_urls = set()
 
-        for link in soup.find_all(
-            "a", href=lambda href: href and "overview.html" in href
-        ):
-            path = link.get("href")
-            path = path.replace(
-                "/static/", "/"
-            )  # help dup. filter, remove a redundant part that is sometimes present
-            if not re.search(
-                r"/v\d/", path
-            ):  # skip the experimental libraries because few people can use them
-                overview_link = urljoin(developer_url, path)
-                if overview_link not in overview_links:  # skip duplicate links
-                    overview_links.append(overview_link)
+        # use the category urls to find unique links to API table pages with visible text containing 'APIs'
+        async for link_text, link_url in generate_link_text_and_urls(category_urls):
+            if 'APIs' in link_text:
+                table_urls.add(link_url)
+
+        # use the table urls to find unique links to overview pages which have urls ending with overview.html
+        async for link_text, link_url in generate_link_text_and_urls(table_urls):
+            if link_url.endswith('overview.html'):
+                overview_urls.add(link_url)
+
+        # use the overview urls to find unique links to contracts which have urls ending with .json
+        async for link_text, link_url in generate_link_text_and_urls(overview_urls):
+            if link_url.endswith('.json'):
+                contract_urls.add(link_url)
+
+        contract_urls_sorted = sorted(list(contract_urls))
 
         # safety check
-        count = len(overview_links)
-        logging.info(f"Found {count} links to overview pages.")
-        assert 25 < count < 40, f"Having {count} contract overview links is unexpected!"
+        count = len(contract_urls_sorted)
+        logging.info(f"Found contract {count} links.")
+        if not (20 < count < 40):
+            logging.warning(f"Having {count} contract links is unexpected!")
 
-        overview_links.sort()
-        return overview_links
+        return contract_urls_sorted
 
     async def cache_contract(self):
         destination = os.path.join(Locations.cache_path, self.file_name)
@@ -364,29 +412,96 @@ class Contracts:
             await f.write(text_content)
 
     @staticmethod
-    async def get_contract(overview_link: str):
-        # find the path to the json contract with the highest version number
-        soup = await get_soup_via_link(overview_link)
-        paths = []
-        for link in soup.find_all(
-            "a", href=lambda href: href and "oas" in href and ".json" in href
-        ):
-            path = link.get("href")
-            if path not in paths:
-                paths.append(path)
-        assert len(paths) > 0, f"{overview_link} should contain a contract!"
-        paths.sort()
-        path = paths[-1]
-        # get parts
-        path_split = path.split("/")
-        url_split = urlsplit(overview_link)
-        # make a record from the parts
+    async def deduplicate_contract_links(contract_links: Iterable[str]) -> List[str]:
+        """
+        Remove redundant contracts, drop betas and lower versions.
+
+        Args:
+            contract_links (Iterable[str]): A iterable container of contract links.
+
+        Returns:
+            List[str]: A list of 'keeper' links which are unique based on their category, call, beta, and version.
+
+        Raises:
+            AssertionError: If the total number of links is not equal to the sum of 'keepers' and 'junkers'.
+
+        """
+
+        keepers = []
+        junkers = []
+
+        contract_infos = await asyncio.gather(*[Contracts.get_contract_info(link) for link in contract_links])
+
+        # Sort links based on category, call, beta, and version
+        sorted_contract_infos = sorted(
+            contract_infos,
+            key=lambda info: (info[0], info[1], info[5], -info[4])
+        )
+
+        # Group links by category and call
+        for _, group in groupby(sorted_contract_infos, key=itemgetter(0, 1)):
+            group_list = list(group)
+            if len(group_list) > 1:
+                tp = True
+            # The first element is the preferred link
+            keepers.append(group_list[0][2])
+            # Remaining elements are junkers
+            junkers.extend([link_info[2] for link_info in group_list[1:]])
+
+        if len(contract_infos) != len(keepers) + len(junkers):
+            logging.warning("Lengths of links, keepers, and junkers do not add up correctly - possible loss of data.")
+
+        return keepers
+
+    @staticmethod
+    async def get_contract_info(contract_link: str) -> Tuple[str, str, str, str, int, bool]:
+        """
+        Async method to parse a contract link and extract key data components from it.
+
+        This method breaks down the contract link into its constituent parts and retrieves crucial information such
+        as the category, call, link_href, file_name, version and whether it is a beta contract.
+
+        It does so by splitting the URL and path, conducts string manipulations and applies regex pattern matching
+        to decipher the version of the contract.
+
+        Args:
+            contract_link (str): The contract link that needs to be parsed.
+
+        Returns:
+            Tuple[str, str, str, str, int, bool]: A tuple containing 'category', 'call', 'link_href', 'file_name',
+            'version', and 'beta'.
+        """
+        # split in raw parts
+        url_split = urlsplit(contract_link)
+        path_split = url_split.path.split("/")
+
+        # if the path has dedicated version number element, example 'v2", then extract the number and remove from list
+        path_version = None
+        for i in range(len(path_split)):
+            if re.match("^v[0-9]+", path_split[i]):
+                path_version = int(path_split[i][1:])  # extract number part
+                del path_split[i]  # remove the version element
+                break  # exit after first match
+
+        # ensure that the split path had the expected number of elements
+        if len(path_split) != 8:
+            logging.warning(f"The variable path_split should contain 8, not {len(path_split)} items.")
+
+        # get key data from the parts
         category = path_split[-5]
         call = path_split[-4].replace("-", "_")
-        link_href = urlunsplit((url_split.scheme, url_split.hostname, path, "", ""))
+        link_href = contract_link
         file_name = path_split[-1]
-        contract = [category, call, link_href, file_name]
-        return contract
+        beta = True if '_beta_' in contract_link else False
+
+        # extract the version number from the filename; for example version 2 looks like this "_v2_"
+        version_match = re.search(r'_v(\d+)_', file_name)
+        filename_version = int(version_match.group(1)) if version_match else 0
+
+        if path_version and path_version != filename_version:
+            logging.warning(f"Variable path_version {path_version} should equal version {filename_version}.")
+
+        return category, call, link_href, file_name, filename_version, beta
 
     async def patch_contract(self) -> None:
         """If the contract from eBay has an error then patch it before generating code."""
@@ -1076,9 +1191,9 @@ class Insert:
             logging.error(f"Can't find {target_file}")
 
 
-async def process_overview_link(overview_link):
-    logging.info(f"Process overview link {overview_link}.")
-    c = Contracts(overview_link)
+async def process_contract_link(contract_link):
+    logging.info(f"Process overview link {contract_link}.")
+    c = Contracts(contract_link)
     await c.process()
     name = c.name
     requirement_task = asyncio.create_task(c.get_requirements())
@@ -1105,9 +1220,10 @@ async def generate_apis():
     limit = 100  # lower to expedite debugging with a reduced data set
     records = list()
     tasks = list()
-    overview_links = await Contracts.get_overview_links()
-    for overview_link in overview_links[:limit]:
-        task = asyncio.create_task(process_overview_link(overview_link))
+    contract_links = await Contracts.get_contract_links()
+    contract_links_deduplicated = await Contracts.deduplicate_contract_links(contract_links)
+    for contract_link in contract_links_deduplicated[:limit]:
+        task = asyncio.create_task(process_contract_link(contract_link))
         tasks.append(task)
     for task in tasks:
         record = await task
@@ -1140,7 +1256,7 @@ async def main() -> None:
     # while debugging, it is handy to change the log level from WARNING to INFO or DEBUG
     logging.basicConfig(
         format="%(asctime)s %(levelname)s %(filename)s %(lineno)d %(funcName)s: %(message)s",  # noqa:
-        level=logging.WARNING,
+        level=logging.INFO,
     )
 
     await asyncio.gather(generate_apis(), generate_references())

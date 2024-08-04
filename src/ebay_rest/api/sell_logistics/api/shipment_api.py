@@ -127,47 +127,49 @@ class ShipmentApi(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def create_from_shipping_quote(self, body, content_type, **kwargs):  # noqa: E501
+    def create_from_shipping_quote(self, body, content_type, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """create_from_shipping_quote  # noqa: E501
 
         This method creates a shipment based on the <b>shippingQuoteId</b> and <b>rateId</b> values supplied in the request. The rate identified by the <b>rateId</b> value specifies the carrier and service for the package shipment, and the rate ID must be contained in the shipping quote identified by the <b>shippingQuoteId</b> value. Call <b>createShippingQuote</b> to retrieve a set of live shipping rates.<br><br><span class=\"tablenote\"><b>Note:</b> The Logistics API only supports USPS shipping rates and labels.</span><br/>When you create a shipment, eBay generates a shipping label that you can download and use to ship your package.<br/><br/>In a <b>createFromShippingQuote</b> request, sellers can include a list of shipping options they want to add to the base service quoted in the selected rate. The list of available shipping options is specific to each quoted rate and if available, the options are listed in the rate container of the shipping quote.<br/><br/>In addition to a configurable return-to location and other details about the shipment, the response to this method includes:<ul><li>The shipping carrier and service to be used for the package shipment</li><li>A list of selected shipping options, if any</li><li>The shipment tracking number</li><li>The total shipping cost (the sum cost of the base shipping service and any added options)</li></ul>When you create a shipment, your billing agreement account is charged the sum of the <b>baseShippingCost</b> and the total cost of any additional shipping options you might have selected. Use the URL returned in <b>labelDownloadURL</b> field, or call <b>downloadLabelFile</b> with the <b>shipmentId</b> value from the response, to download a shipping label for your package.<br/><br/><div class=\"msgbox_important\"><p class=\"msgbox_importantInDiv\" data-mc-autonum=\"&lt;b&gt;&lt;span style=&quot;color: #dd1e31;&quot; class=&quot;mcFormatColor&quot;&gt;Important! &lt;/span&gt;&lt;/b&gt;\"><span class=\"autonumber\"><span><b><span style=\"color: #dd1e31;\" class=\"mcFormatColor\">Important!</span></b></span></span> Sellers must set up their payment method before they can use this method to create a shipment and the associated shipping label.</p></div><h3 id=\"ba\">Set up a billing agreement</h3>Prior to using this method to create a shipment, sellers must first set up their billing agreement. Failure to do so will return <code>Error 90030 Payment could not be completed.</code><br/><br/>The preferred method for sellers to set up their billing agreement is to go to <a href=\"https://gslblui.ebay.com/gslblui/payments \" target=\"_blank\">Set up billing agreement</a> and follow the on-screen directions.<br/><br/>Alternatively, sellers can do the following:<ul><li>Go to https://www.ebay.com/ship/single/{order_id}, where {order_id} is that of the order for which the label is being printed.</li><li>When prompted, select <b>PayPal</b>.</li><li>Verify that <b>Save PayPal for future purchases</b> is selected.</li><li>Click <b>Set up Payments</b> which will open PayPal in a pop-up window.</li><li>Log in using <i>PayPal credentials</i>, and then follow the on-screen prompts to set up the billing agreement.</li><li>Once the agreement has been set up, sellers can leave this page as there is no need to actually print a label.</li></ul>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_from_shipping_quote(body, content_type, async_req=True)
+        >>> thread = api.create_from_shipping_quote(body, content_type, x_ebay_c_marketplace_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param CreateShipmentFromQuoteRequest body: The create shipment from quote request. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param str x_ebay_c_marketplace_id: This header parameter specifies the eBay marketplace for the shipment being created.<br><br>For a list of valid values, refer to the section <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">Marketplace ID Values</a> in the <b>Using eBay RESTful APIs</b> guide. (required)
         :return: Shipment
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.create_from_shipping_quote_with_http_info(body, content_type, **kwargs)  # noqa: E501
+            return self.create_from_shipping_quote_with_http_info(body, content_type, x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         else:
-            (data) = self.create_from_shipping_quote_with_http_info(body, content_type, **kwargs)  # noqa: E501
+            (data) = self.create_from_shipping_quote_with_http_info(body, content_type, x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
             return data
 
-    def create_from_shipping_quote_with_http_info(self, body, content_type, **kwargs):  # noqa: E501
+    def create_from_shipping_quote_with_http_info(self, body, content_type, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """create_from_shipping_quote  # noqa: E501
 
         This method creates a shipment based on the <b>shippingQuoteId</b> and <b>rateId</b> values supplied in the request. The rate identified by the <b>rateId</b> value specifies the carrier and service for the package shipment, and the rate ID must be contained in the shipping quote identified by the <b>shippingQuoteId</b> value. Call <b>createShippingQuote</b> to retrieve a set of live shipping rates.<br><br><span class=\"tablenote\"><b>Note:</b> The Logistics API only supports USPS shipping rates and labels.</span><br/>When you create a shipment, eBay generates a shipping label that you can download and use to ship your package.<br/><br/>In a <b>createFromShippingQuote</b> request, sellers can include a list of shipping options they want to add to the base service quoted in the selected rate. The list of available shipping options is specific to each quoted rate and if available, the options are listed in the rate container of the shipping quote.<br/><br/>In addition to a configurable return-to location and other details about the shipment, the response to this method includes:<ul><li>The shipping carrier and service to be used for the package shipment</li><li>A list of selected shipping options, if any</li><li>The shipment tracking number</li><li>The total shipping cost (the sum cost of the base shipping service and any added options)</li></ul>When you create a shipment, your billing agreement account is charged the sum of the <b>baseShippingCost</b> and the total cost of any additional shipping options you might have selected. Use the URL returned in <b>labelDownloadURL</b> field, or call <b>downloadLabelFile</b> with the <b>shipmentId</b> value from the response, to download a shipping label for your package.<br/><br/><div class=\"msgbox_important\"><p class=\"msgbox_importantInDiv\" data-mc-autonum=\"&lt;b&gt;&lt;span style=&quot;color: #dd1e31;&quot; class=&quot;mcFormatColor&quot;&gt;Important! &lt;/span&gt;&lt;/b&gt;\"><span class=\"autonumber\"><span><b><span style=\"color: #dd1e31;\" class=\"mcFormatColor\">Important!</span></b></span></span> Sellers must set up their payment method before they can use this method to create a shipment and the associated shipping label.</p></div><h3 id=\"ba\">Set up a billing agreement</h3>Prior to using this method to create a shipment, sellers must first set up their billing agreement. Failure to do so will return <code>Error 90030 Payment could not be completed.</code><br/><br/>The preferred method for sellers to set up their billing agreement is to go to <a href=\"https://gslblui.ebay.com/gslblui/payments \" target=\"_blank\">Set up billing agreement</a> and follow the on-screen directions.<br/><br/>Alternatively, sellers can do the following:<ul><li>Go to https://www.ebay.com/ship/single/{order_id}, where {order_id} is that of the order for which the label is being printed.</li><li>When prompted, select <b>PayPal</b>.</li><li>Verify that <b>Save PayPal for future purchases</b> is selected.</li><li>Click <b>Set up Payments</b> which will open PayPal in a pop-up window.</li><li>Log in using <i>PayPal credentials</i>, and then follow the on-screen prompts to set up the billing agreement.</li><li>Once the agreement has been set up, sellers can leave this page as there is no need to actually print a label.</li></ul>  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_from_shipping_quote_with_http_info(body, content_type, async_req=True)
+        >>> thread = api.create_from_shipping_quote_with_http_info(body, content_type, x_ebay_c_marketplace_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param CreateShipmentFromQuoteRequest body: The create shipment from quote request. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param str x_ebay_c_marketplace_id: This header parameter specifies the eBay marketplace for the shipment being created.<br><br>For a list of valid values, refer to the section <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">Marketplace ID Values</a> in the <b>Using eBay RESTful APIs</b> guide. (required)
         :return: Shipment
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['body', 'content_type']  # noqa: E501
+        all_params = ['body', 'content_type', 'x_ebay_c_marketplace_id']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -190,6 +192,10 @@ class ShipmentApi(object):
         if ('content_type' not in params or
                 params['content_type'] is None):
             raise ValueError("Missing the required parameter `content_type` when calling `create_from_shipping_quote`")  # noqa: E501
+        # verify the required parameter 'x_ebay_c_marketplace_id' is set
+        if ('x_ebay_c_marketplace_id' not in params or
+                params['x_ebay_c_marketplace_id'] is None):
+            raise ValueError("Missing the required parameter `x_ebay_c_marketplace_id` when calling `create_from_shipping_quote`")  # noqa: E501
 
         collection_formats = {}
 
@@ -200,6 +206,8 @@ class ShipmentApi(object):
         header_params = {}
         if 'content_type' in params:
             header_params['Content-Type'] = params['content_type']  # noqa: E501
+        if 'x_ebay_c_marketplace_id' in params:
+            header_params['X-EBAY-C-MARKETPLACE-ID'] = params['x_ebay_c_marketplace_id']  # noqa: E501
 
         form_params = []
         local_var_files = {}
