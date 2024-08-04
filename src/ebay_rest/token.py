@@ -354,7 +354,11 @@ class UserToken(metaclass=Multiton):
         :return code (str): Authorization code.
         """
         try:
-            from playwright.sync_api import sync_playwright, Error as PlaywrightError, TimeoutError as PlaywrightTimeoutError
+            from playwright.sync_api import (
+                sync_playwright,
+                Error as PlaywrightError,
+                TimeoutError as PlaywrightTimeoutError,
+            )
         except ModuleNotFoundError:
             reason = f"Supply an 'eBay user token' or install the COMPLETE variant of ebay_rest. Refer to the README.md at https://github.com/matecsaj/ebay_rest."  # noqa: E501
             logging.critical(reason)
@@ -390,9 +394,10 @@ class UserToken(metaclass=Multiton):
                 seconds = 0
                 while seconds < 30:
 
-                    selectors = ["#passkeys-cancel-btn",    # "Simplify your sign-in" prompt; skip it for now
-                                 "#submit",     # "I agree" prompt; agree
-                                 ]
+                    selectors = [
+                        "#passkeys-cancel-btn",  # "Simplify your sign-in" prompt; skip it for now
+                        "#submit",  # "I agree" prompt; agree
+                    ]
                     for selector in selectors:
                         try:
                             page.wait_for_selector(selector, timeout=1)
@@ -406,7 +411,7 @@ class UserToken(metaclass=Multiton):
                         page.wait_for_selector("#thnk-wrap", timeout=1000)  # 1 second
                     except PlaywrightTimeoutError:
                         # no! Perhaps we need to wait while the user enters their 2FA code.
-                        seconds += 1    # increment out timer
+                        seconds += 1  # increment out timer
                     else:
                         # yes!
                         # parse the url's query parameters into a dictionary
@@ -422,17 +427,29 @@ class UserToken(metaclass=Multiton):
                             if "code" in query_params:
                                 return query_params["code"][0]
                             else:
-                                raise Error(number=96009, reason="Unable to obtain code.")
+                                raise Error(
+                                    number=96009, reason="Unable to obtain code."
+                                )
                         else:
                             reason = f"Authorization failed, check userid & password:{self._user_id} {self._user_password}"
                             raise Error(number=96010, reason=reason)
 
-                raise Error(number=96027, reason="Last page not found.", detail="Has eBay's website changed?")
+                raise Error(
+                    number=96027,
+                    reason="Last page not found.",
+                    detail="Has eBay's website changed?",
+                )
 
             except PlaywrightError:
-                raise Error(number=96015, reason="Element not found.", detail="Has eBay's website changed?")
+                raise Error(
+                    number=96015,
+                    reason="Element not found.",
+                    detail="Has eBay's website changed?",
+                )
             except PlaywrightTimeoutError:
-                raise Error(number=96016, reason="Timeout.", detail="Slow computer or Internet?")
+                raise Error(
+                    number=96016, reason="Timeout.", detail="Slow computer or Internet?"
+                )
 
             finally:
                 # Ensure that Playwright resources are cleaned up; don't reorder.

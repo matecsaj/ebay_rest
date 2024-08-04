@@ -62,9 +62,7 @@ class APIBothEnvironmentsSingleSiteTests(unittest.TestCase):
                         item = api.buy_browse_get_item(item_id=item_id)
                         self.assertTrue(isinstance(item, dict))
         except Error as error:
-            self.fail(
-                f"Error {error.number} is {error.reason}  {error.detail}.\n"
-            )
+            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
 
 
 class APISandboxMultipleSiteTests(unittest.TestCase):
@@ -476,7 +474,9 @@ class APISandboxSingleSiteTests(unittest.TestCase):
             body = {"schemaVersion": "1.0", "feedType": feed_type}
             task_ids_pre = self.get_task_ids(feed_type=feed_type)
 
-            result = self._api.sell_feed_create_inventory_task(content_type="application/json", body=body)
+            result = self._api.sell_feed_create_inventory_task(
+                content_type="application/json", body=body
+            )
             self.assertIsNone(
                 result,
                 "eBay made a change, the call now returns something, can the work around go?",

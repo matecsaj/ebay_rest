@@ -201,10 +201,14 @@ class API(metaclass=Multiton):
                 )
 
         # get configuration sections from parameters or the loaded file
-        self._application = self._process_config_section(config_contents, "applications", application)
+        self._application = self._process_config_section(
+            config_contents, "applications", application
+        )
         self._user = self._process_config_section(config_contents, "users", user)
         self._header = self._process_config_section(config_contents, "headers", header)
-        self._key_pair = self._process_config_section(config_contents, "key_pairs", key_pair, mandatory=False)
+        self._key_pair = self._process_config_section(
+            config_contents, "key_pairs", key_pair, mandatory=False
+        )
         self._use_digital_signatures = digital_signatures
 
         # check the application keys and values
@@ -628,7 +632,9 @@ class API(metaclass=Multiton):
 
         self._swagger_throttle(base_path=base_path, rate_keys=rate_keys)
 
-        return self._call_swagger(swagger_method, params, kwargs, swagger_method_exception)
+        return self._call_swagger(
+            swagger_method, params, kwargs, swagger_method_exception
+        )
 
     def _method_paged(
         self,
@@ -718,7 +724,9 @@ class API(metaclass=Multiton):
 
             kwargs["offset"] = offset  # get the next page of results
             # TODO If the caller does not process all yielded results within five minutes, the token might expire.
-            result = self._call_swagger(swagger_method, params, kwargs, swagger_method_exception)
+            result = self._call_swagger(
+                swagger_method, params, kwargs, swagger_method_exception
+            )
 
             if result is None:
                 break
@@ -902,10 +910,14 @@ class API(metaclass=Multiton):
                 # if rates need to be refreshed, then do so.
                 if self._rates.need_refresh():
                     limits = self.developer_analytics_get_rate_limits()
-                    self._rates.refresh_developer_analytics(rate_limits=limits["rate_limits"])
+                    self._rates.refresh_developer_analytics(
+                        rate_limits=limits["rate_limits"]
+                    )
 
-                # decrement the rate, throttling if needed
-                    self._rates.decrement_rate_throttled(base_path=base_path, rate_keys=rate_keys, timeout=self._timeout)
+                    # decrement the rate, throttling if needed
+                    self._rates.decrement_rate_throttled(
+                        base_path=base_path, rate_keys=rate_keys, timeout=self._timeout
+                    )
 
     def _call_swagger(
         self,

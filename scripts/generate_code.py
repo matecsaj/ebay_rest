@@ -185,7 +185,9 @@ async def generate_marketplace_id_values() -> None:
     return
 
 
-async def generate_link_text_and_urls(urls: Iterable[str]) -> AsyncGenerator[Tuple[str, str], None]:
+async def generate_link_text_and_urls(
+    urls: Iterable[str],
+) -> AsyncGenerator[Tuple[str, str], None]:
     """
     This function is an asynchronous generator that takes an iterable of URLs and for each URL, it fetches the HTML,
     parses it to find all anchor tags and yields a tuple of the link text and the absolute link URL.
@@ -193,10 +195,11 @@ async def generate_link_text_and_urls(urls: Iterable[str]) -> AsyncGenerator[Tup
     :param urls: An iterable of URLs to process.
     :return: An asynchronous generator that yields tuples of link text and URLs.
     """
+
     async def process_url(url: str) -> AsyncGenerator[Tuple[str, str], None]:
         soup = await get_soup_via_link(url)
-        for link in soup.find_all('a'):
-            yield link.text, urljoin(url, link.get('href'))
+        for link in soup.find_all("a"):
+            yield link.text, urljoin(url, link.get("href"))
 
     async def gather_links(url: str) -> List[Tuple[str, str]]:
         return [link async for link in process_url(url)]
@@ -367,30 +370,32 @@ class Contracts:
 
             :return:
         """
-        logging.info(
-            "Get a list of links to eBay OpenAPI 3 JSON contracts."
-        )
+        logging.info("Get a list of links to eBay OpenAPI 3 JSON contracts.")
 
         # store the urls used while doing a breadth first search; seed with starting urls
-        category_urls = {'https://developer.ebay.com/develop/selling-apps',
-                         'https://developer.ebay.com/develop/buying-apps'}
-        table_urls = {'https://developer.ebay.com/develop/application-settings-and-insights'}
+        category_urls = {
+            "https://developer.ebay.com/develop/selling-apps",
+            "https://developer.ebay.com/develop/buying-apps",
+        }
+        table_urls = {
+            "https://developer.ebay.com/develop/application-settings-and-insights"
+        }
         overview_urls = set()
         contract_urls = set()
 
         # use the category urls to find unique links to API table pages with visible text containing 'APIs'
         async for link_text, link_url in generate_link_text_and_urls(category_urls):
-            if 'APIs' in link_text:
+            if "APIs" in link_text:
                 table_urls.add(link_url)
 
         # use the table urls to find unique links to overview pages which have urls ending with overview.html
         async for link_text, link_url in generate_link_text_and_urls(table_urls):
-            if link_url.endswith('overview.html'):
+            if link_url.endswith("overview.html"):
                 overview_urls.add(link_url)
 
         # use the overview urls to find unique links to contracts which have urls ending with .json
         async for link_text, link_url in generate_link_text_and_urls(overview_urls):
-            if link_url.endswith('.json'):
+            if link_url.endswith(".json"):
                 contract_urls.add(link_url)
 
         contract_urls_sorted = sorted(list(contract_urls))
@@ -430,12 +435,13 @@ class Contracts:
         keepers = []
         junkers = []
 
-        contract_infos = await asyncio.gather(*[Contracts.get_contract_info(link) for link in contract_links])
+        contract_infos = await asyncio.gather(
+            *[Contracts.get_contract_info(link) for link in contract_links]
+        )
 
         # Sort links based on category, call, beta, and version
         sorted_contract_infos = sorted(
-            contract_infos,
-            key=lambda info: (info[0], info[1], info[5], -info[4])
+            contract_infos, key=lambda info: (info[0], info[1], info[5], -info[4])
         )
 
         # Group links by category and call
@@ -449,12 +455,16 @@ class Contracts:
             junkers.extend([link_info[2] for link_info in group_list[1:]])
 
         if len(contract_infos) != len(keepers) + len(junkers):
-            logging.warning("Lengths of links, keepers, and junkers do not add up correctly - possible loss of data.")
+            logging.warning(
+                "Lengths of links, keepers, and junkers do not add up correctly - possible loss of data."
+            )
 
         return keepers
 
     @staticmethod
-    async def get_contract_info(contract_link: str) -> Tuple[str, str, str, str, int, bool]:
+    async def get_contract_info(
+        contract_link: str,
+    ) -> Tuple[str, str, str, str, int, bool]:
         """
         Async method to parse a contract link and extract key data components from it.
 
@@ -485,21 +495,25 @@ class Contracts:
 
         # ensure that the split path had the expected number of elements
         if len(path_split) != 8:
-            logging.warning(f"The variable path_split should contain 8, not {len(path_split)} items.")
+            logging.warning(
+                f"The variable path_split should contain 8, not {len(path_split)} items."
+            )
 
         # get key data from the parts
         category = path_split[-5]
         call = path_split[-4].replace("-", "_")
         link_href = contract_link
         file_name = path_split[-1]
-        beta = True if '_beta_' in contract_link else False
+        beta = True if "_beta_" in contract_link else False
 
         # extract the version number from the filename; for example version 2 looks like this "_v2_"
-        version_match = re.search(r'_v(\d+)_', file_name)
+        version_match = re.search(r"_v(\d+)_", file_name)
         filename_version = int(version_match.group(1)) if version_match else 0
 
         if path_version and path_version != filename_version:
-            logging.warning(f"Variable path_version {path_version} should equal version {filename_version}.")
+            logging.warning(
+                f"Variable path_version {path_version} should equal version {filename_version}."
+            )
 
         return category, call, link_href, file_name, filename_version, beta
 
@@ -1221,7 +1235,9 @@ async def generate_apis():
     records = list()
     tasks = list()
     contract_links = await Contracts.get_contract_links()
-    contract_links_deduplicated = await Contracts.deduplicate_contract_links(contract_links)
+    contract_links_deduplicated = await Contracts.deduplicate_contract_links(
+        contract_links
+    )
     for contract_link in contract_links_deduplicated[:limit]:
         task = asyncio.create_task(process_contract_link(contract_link))
         tasks.append(task)

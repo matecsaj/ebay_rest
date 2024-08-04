@@ -34,10 +34,10 @@ aiohttp
 black
 bs4
 CurrencyConverter
+
 # For releasing to PyPI.
 build
 pipreqs
-requests-toolbelt
 setuptools
 twine
 wheel
