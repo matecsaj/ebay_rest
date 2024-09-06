@@ -440,12 +440,22 @@ class UserToken(metaclass=Multiton):
                     detail="Has eBay's website changed?",
                 )
 
-            except PlaywrightError:
-                raise Error(
-                    number=96015,
-                    reason="Element not found.",
-                    detail="Has eBay's website changed?",
-                )
+            except PlaywrightError as e:
+                detail = str(e)
+                # Check for Chromium not installed error
+                if "BrowserType.launch" in detail:
+                    number = 96029
+                    reason = "Chromium is not installed. Run `playwright install chromium` to install it."
+                # Check for "element not found" error
+                elif "No node found for selector" in detail:
+                    number = 96015
+                    reason = "An element was not found on the page. Has eBay's website changed?"
+                else:
+                    number = (96030,)
+                    reason = ("Playwright encountered an unexpected error.",)
+                logging.critical(reason)
+                raise Error(number=number, reason=reason, detail=detail)
+
             except PlaywrightTimeoutError:
                 raise Error(
                     number=96016, reason="Timeout.", detail="Slow computer or Internet?"

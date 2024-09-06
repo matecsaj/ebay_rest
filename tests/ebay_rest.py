@@ -440,7 +440,6 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         else:
             self.assertTrue("credit_count" in result)
 
-
     def test_sell_feed_create_inventory_task(self):
         """
         https://developer.ebay.com/api-docs/sell/feed/resources/inventory_task/methods/createInventoryTask
@@ -1061,6 +1060,31 @@ class DateTimeTests(unittest.TestCase):
             isinstance(DateTime.to_string(DateTime.now()), str),
             msg="Unexpected return type from a DateTime member function.",
         )
+
+
+class TokenTests(unittest.TestCase):
+    def test_get_authorization_code(self):
+        """
+        Notes:
+        1. A web browser window should pop up while this test successfully runs.
+        2. eBay also refers to the authorization code as a token refresh token.
+        """
+        try:
+            # The user sand_box_2 should be a copy of sand_box_1 without refresh token values.
+            api = API(application="sandbox_1", user="sandbox_2", header="US")
+        except Error as error:
+            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+        else:
+            # Try a method that needs a user refresh token.
+            try:
+                result = api.sell_compliance_get_listing_violations_summary(
+                    x_ebay_c_marketplace_id=api._header["marketplace_id"]
+                )
+            except Error as error:
+                self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            else:
+                # Do something that makes use of the result to avoid an IDE warning about not using the variable.
+                self.assertIsNotNone("violation_summaries" in result)
 
 
 class MultitonTests(unittest.TestCase):
