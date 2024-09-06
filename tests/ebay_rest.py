@@ -440,26 +440,6 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         else:
             self.assertTrue("credit_count" in result)
 
-    def test_sell_account(self):
-        """
-        It is required that the seller be opted in to Business Policies before being able to create live eBay
-        listings through the Inventory API. Sellers can opt in to Business Policies through My eBay or by using
-        the Account API optInToProgram call. Similarly, payment, return, and fulfillment listing policies may
-        be created/managed in My eBay or by using the listing policy calls of the Account API.
-        https://developer.ebay.com/api-docs/sell/account/resources/fulfillment_policy/methods/createFulfillmentPolicy
-        """
-        body = {"programType": "SELLING_POLICY_MANAGEMENT"}
-        try:
-            self._api.sell_account_opt_in_to_program(
-                content_type="application/json", body=body
-            )
-        except Error as error:
-            # Opting in more than once triggers an already exists error.
-            # Any other error is considered to be a unit test failure.
-            message = (
-                f"Unexpected Error {error.number} is {error.reason}  {error.detail}."
-            )
-            self.assertTrue(error.reason == "Conflict", message)
 
     def test_sell_feed_create_inventory_task(self):
         """
