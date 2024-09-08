@@ -91,7 +91,7 @@ class ResponsiblePerson(object):
     def address_line1(self):
         """Gets the address_line1 of this ResponsiblePerson.  # noqa: E501
 
-        The city of the Responsible Person's street address.<br><br><b>Max length</b>: 180 characters  # noqa: E501
+        The first line of the Responsible Person's street address.<br><br><b>Max length</b>: 180 characters  # noqa: E501
 
         :return: The address_line1 of this ResponsiblePerson.  # noqa: E501
         :rtype: str
@@ -102,7 +102,7 @@ class ResponsiblePerson(object):
     def address_line1(self, address_line1):
         """Sets the address_line1 of this ResponsiblePerson.
 
-        The city of the Responsible Person's street address.<br><br><b>Max length</b>: 180 characters  # noqa: E501
+        The first line of the Responsible Person's street address.<br><br><b>Max length</b>: 180 characters  # noqa: E501
 
         :param address_line1: The address_line1 of this ResponsiblePerson.  # noqa: E501
         :type: str

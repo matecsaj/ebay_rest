@@ -115,7 +115,7 @@
             ]
         }
     ],
-    "EBAY_MOTORS": [
+    "EBAY_MOTORS_US": [
         "United States",
         {
             "en-US": [
@@ -183,7 +183,7 @@
         {
             "en-US": [
                 "https://www.ebay.com",
-                ""
+                "For items in the US motor vehicles or the P&A\u00a0categories, use EBAY_MOTORS_US."
             ]
         }
     ]

@@ -845,7 +845,7 @@ class TransactionSummaryResponse(object):
     def shipping_label_booking_entry(self):
         """Gets the shipping_label_booking_entry of this TransactionSummaryResponse.  # noqa: E501
 
-        The enumeration value indicates whether the dollar amount in the <strong>shippingLabelAmount</strong> field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be <code>DEBIT</code>, as eBay will charge the seller when eBay shipping labels are purchased, but it can be <code>CREDIT</code> if the seller was refunded for a shipping label or was possibly overcharged for a shipping label. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value indicates whether the dollar amount in the <strong>shippingLabelAmount</strong> field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be <code>DEBIT</code>, as eBay will charge the seller when eBay shipping labels are purchased, but it can be <code>CREDIT</code> if the seller was refunded for a shipping label or was possibly overcharged for a shipping label. <br><br><span class=\"tablenote\"><b>Note:</b> eBay SHIPPING_LABEL transactions paid through PayPal are not currently supported by the Finances API, so those transactions will not be reflected in this field.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The shipping_label_booking_entry of this TransactionSummaryResponse.  # noqa: E501
         :rtype: str
@@ -856,7 +856,7 @@ class TransactionSummaryResponse(object):
     def shipping_label_booking_entry(self, shipping_label_booking_entry):
         """Sets the shipping_label_booking_entry of this TransactionSummaryResponse.
 
-        The enumeration value indicates whether the dollar amount in the <strong>shippingLabelAmount</strong> field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be <code>DEBIT</code>, as eBay will charge the seller when eBay shipping labels are purchased, but it can be <code>CREDIT</code> if the seller was refunded for a shipping label or was possibly overcharged for a shipping label. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
+        The enumeration value indicates whether the dollar amount in the <strong>shippingLabelAmount</strong> field is a charge (debit) to the seller or a credit. Typically, the enumeration value returned here will be <code>DEBIT</code>, as eBay will charge the seller when eBay shipping labels are purchased, but it can be <code>CREDIT</code> if the seller was refunded for a shipping label or was possibly overcharged for a shipping label. <br><br><span class=\"tablenote\"><b>Note:</b> eBay SHIPPING_LABEL transactions paid through PayPal are not currently supported by the Finances API, so those transactions will not be reflected in this field.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/finances/types/pay:BookingEntryEnum'>eBay API documentation</a>  # noqa: E501
 
         :param shipping_label_booking_entry: The shipping_label_booking_entry of this TransactionSummaryResponse.  # noqa: E501
         :type: str
@@ -868,7 +868,7 @@ class TransactionSummaryResponse(object):
     def shipping_label_count(self):
         """Gets the shipping_label_count of this TransactionSummaryResponse.  # noqa: E501
 
-        This is the total number of eBay shipping labels purchased by the seller. The count returned here may depend on the specified input criteria.  # noqa: E501
+        This is the total number of eBay shipping labels purchased by the seller. The count returned here may depend on the specified input criteria.<br><br><span class=\"tablenote\"><b>Note:</b> eBay SHIPPING_LABEL transactions paid through PayPal are not currently supported by the Finances API, so those transactions will not be reflected in the count returned in this container.</span>  # noqa: E501
 
         :return: The shipping_label_count of this TransactionSummaryResponse.  # noqa: E501
         :rtype: int
@@ -879,7 +879,7 @@ class TransactionSummaryResponse(object):
     def shipping_label_count(self, shipping_label_count):
         """Sets the shipping_label_count of this TransactionSummaryResponse.
 
-        This is the total number of eBay shipping labels purchased by the seller. The count returned here may depend on the specified input criteria.  # noqa: E501
+        This is the total number of eBay shipping labels purchased by the seller. The count returned here may depend on the specified input criteria.<br><br><span class=\"tablenote\"><b>Note:</b> eBay SHIPPING_LABEL transactions paid through PayPal are not currently supported by the Finances API, so those transactions will not be reflected in the count returned in this container.</span>  # noqa: E501
 
         :param shipping_label_count: The shipping_label_count of this TransactionSummaryResponse.  # noqa: E501
         :type: int
