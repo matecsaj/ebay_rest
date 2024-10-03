@@ -947,6 +947,9 @@ class Contracts:
         for typo, remedy in typo_remedy:
             docstring = docstring.replace(typo, remedy)
 
+        # Replace single backslash before pipe (if any) with double backslash
+        docstring = docstring.replace(r"\|", r"\\|")
+
         # telling the linter to suppress long line warnings taints the Sphinx generated docs so filter them out
         docstring = docstring.replace("# noqa: E501", "")
 

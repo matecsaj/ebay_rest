@@ -159,7 +159,7 @@ class Rate(object):
     def shipping_region_names(self):
         """Gets the shipping_region_names of this Rate.  # noqa: E501
 
-        An array of Region names to which the shipping rate information applies.<br/><br/>Returned values may be:<ul><li>Geographical Regions (e.g., <code>Worldwide</code>, <code>Europe</code>, and <code>Middle East</code>)</li><li>Individual countries identified by a two-digit code such as <code>US</code> (United States), <code>CA</code> (Canada), and <code>GB</code> (United Kingdom)</li><li>US states and/or Canadian provinces identified by a two-digit code such as <code>NY</code> (New York) or <code>SK</code> (Saskatchewan)</li><li>Domestic Regions such as <code>AK/HI</code> (Alaska/Hawaii)</li></ul>  # noqa: E501
+        An array of Region names to which the shipping rate information applies.<br/><br/>Returned values may be:<ul><li>Geographical Regions (e.g., <code>Worldwide</code>, <code>Europe</code>, and <code>Middle East</code>)</li><li>Individual countries identified by a two-letter code such as <code>US</code> (United States), <code>CA</code> (Canada), and <code>GB</code> (United Kingdom)</li><li>US states and/or Canadian provinces identified by a two-letter code such as <code>NY</code> (New York) or <code>SK</code> (Saskatchewan)</li><li>Domestic Regions such as <code>AK/HI</code> (Alaska/Hawaii)</li></ul>  # noqa: E501
 
         :return: The shipping_region_names of this Rate.  # noqa: E501
         :rtype: list[str]
@@ -170,7 +170,7 @@ class Rate(object):
     def shipping_region_names(self, shipping_region_names):
         """Sets the shipping_region_names of this Rate.
 
-        An array of Region names to which the shipping rate information applies.<br/><br/>Returned values may be:<ul><li>Geographical Regions (e.g., <code>Worldwide</code>, <code>Europe</code>, and <code>Middle East</code>)</li><li>Individual countries identified by a two-digit code such as <code>US</code> (United States), <code>CA</code> (Canada), and <code>GB</code> (United Kingdom)</li><li>US states and/or Canadian provinces identified by a two-digit code such as <code>NY</code> (New York) or <code>SK</code> (Saskatchewan)</li><li>Domestic Regions such as <code>AK/HI</code> (Alaska/Hawaii)</li></ul>  # noqa: E501
+        An array of Region names to which the shipping rate information applies.<br/><br/>Returned values may be:<ul><li>Geographical Regions (e.g., <code>Worldwide</code>, <code>Europe</code>, and <code>Middle East</code>)</li><li>Individual countries identified by a two-letter code such as <code>US</code> (United States), <code>CA</code> (Canada), and <code>GB</code> (United Kingdom)</li><li>US states and/or Canadian provinces identified by a two-letter code such as <code>NY</code> (New York) or <code>SK</code> (Saskatchewan)</li><li>Domestic Regions such as <code>AK/HI</code> (Alaska/Hawaii)</li></ul>  # noqa: E501
 
         :param shipping_region_names: The shipping_region_names of this Rate.  # noqa: E501
         :type: list[str]

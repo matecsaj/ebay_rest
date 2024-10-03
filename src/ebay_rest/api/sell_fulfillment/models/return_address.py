@@ -155,7 +155,7 @@ class ReturnAddress(object):
     def country(self):
         """Gets the country of this ReturnAddress.  # noqa: E501
 
-        The country's two-digit, ISO 3166-1 country code. See the enumeration type for a country's value. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
+        The country's two-letter, ISO 3166-1 country code. See the enumeration type for a country's value. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The country of this ReturnAddress.  # noqa: E501
         :rtype: str
@@ -166,7 +166,7 @@ class ReturnAddress(object):
     def country(self, country):
         """Sets the country of this ReturnAddress.
 
-        The country's two-digit, ISO 3166-1 country code. See the enumeration type for a country's value. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
+        The country's two-letter, ISO 3166-1 country code. See the enumeration type for a country's value. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/fulfillment/types/ba:CountryCodeEnum'>eBay API documentation</a>  # noqa: E501
 
         :param country: The country of this ReturnAddress.  # noqa: E501
         :type: str

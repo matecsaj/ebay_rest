@@ -56,7 +56,7 @@ class ProductSafety(object):
     def component(self):
         """Gets the component of this ProductSafety.  # noqa: E501
 
-        This field is used by the seller to provide product safety component information for the listing. For example, component information can include specific warnings related to product safety, such as 'Tipping hazard'. <br><br><span class=\"tablenote\"><b>Note:</b> Component information can only be specified if used with the <b>pictograms</b> and <b>statements</b> fields; if the component is provided without these fields, an error will occur.</span><br><b>Max length:</b> 120 characters  # noqa: E501
+        This field is used by the seller to provide product safety component information for the listing. For example, component information can include specific warnings related to product safety, such as 'Tipping hazard'. <br><br><span class=\"tablenote\"><b>Note:</b> Component information can only be specified if used with the <b>pictograms</b> and/or <b>statements</b> field; if the component is provided without one or both of these fields, an error will occur.</span><br><b>Max length:</b> 120 characters  # noqa: E501
 
         :return: The component of this ProductSafety.  # noqa: E501
         :rtype: str
@@ -67,7 +67,7 @@ class ProductSafety(object):
     def component(self, component):
         """Sets the component of this ProductSafety.
 
-        This field is used by the seller to provide product safety component information for the listing. For example, component information can include specific warnings related to product safety, such as 'Tipping hazard'. <br><br><span class=\"tablenote\"><b>Note:</b> Component information can only be specified if used with the <b>pictograms</b> and <b>statements</b> fields; if the component is provided without these fields, an error will occur.</span><br><b>Max length:</b> 120 characters  # noqa: E501
+        This field is used by the seller to provide product safety component information for the listing. For example, component information can include specific warnings related to product safety, such as 'Tipping hazard'. <br><br><span class=\"tablenote\"><b>Note:</b> Component information can only be specified if used with the <b>pictograms</b> and/or <b>statements</b> field; if the component is provided without one or both of these fields, an error will occur.</span><br><b>Max length:</b> 120 characters  # noqa: E501
 
         :param component: The component of this ProductSafety.  # noqa: E501
         :type: str

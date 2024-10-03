@@ -51,7 +51,7 @@ class Phone(object):
     def country_code(self):
         """Gets the country_code of this Phone.  # noqa: E501
 
-        The seller's country calling code. This field is needed if the buyer is located in a different country than the seller. It is also OK to provide if the buyer and seller are both located in the same country. For a full list of calling codes for all countries, see the <a href=\"https://countrycode.org/ \" target=\"_blank\">countrycode.org</a> site.  # noqa: E501
+         The two-letter, <a href=\"https://www.iso.org/iso-3166-country-codes.html \" target=\"_blank\">ISO 3166</a> code associated with the seller's phone number. This field is needed if the buyer is located in a different country than the seller. It is also OK to provide if the buyer and seller are both located in the same country<br><br>See <a href=\"/api-docs/sell/fulfillment/types/ba:CountryCodeEnum \" target=\"_blank\">CountryCodeEnum</a> for a list of supported values.  # noqa: E501
 
         :return: The country_code of this Phone.  # noqa: E501
         :rtype: str
@@ -62,7 +62,7 @@ class Phone(object):
     def country_code(self, country_code):
         """Sets the country_code of this Phone.
 
-        The seller's country calling code. This field is needed if the buyer is located in a different country than the seller. It is also OK to provide if the buyer and seller are both located in the same country. For a full list of calling codes for all countries, see the <a href=\"https://countrycode.org/ \" target=\"_blank\">countrycode.org</a> site.  # noqa: E501
+         The two-letter, <a href=\"https://www.iso.org/iso-3166-country-codes.html \" target=\"_blank\">ISO 3166</a> code associated with the seller's phone number. This field is needed if the buyer is located in a different country than the seller. It is also OK to provide if the buyer and seller are both located in the same country<br><br>See <a href=\"/api-docs/sell/fulfillment/types/ba:CountryCodeEnum \" target=\"_blank\">CountryCodeEnum</a> for a list of supported values.  # noqa: E501
 
         :param country_code: The country_code of this Phone.  # noqa: E501
         :type: str
@@ -74,7 +74,7 @@ class Phone(object):
     def number(self):
         """Gets the number of this Phone.  # noqa: E501
 
-        The seller's primary phone number associated with the return address. When this number is provided in a <strong>contestPaymentDispute</strong> or <strong>contestPaymentDispute</strong> method, it is provided as one continuous numeric string, including the area code. So, if the phone number's area code was '408', a number in this field may look something like this: <br><br><code>\"number\" : \"4088084356\"</code><br><br>If the buyer is located in a different country than the seller, the seller's country calling code will need to be specified in the <strong>countryCode</strong> field.  # noqa: E501
+        The seller's primary phone number associated with the return address. When this number is provided in a <strong>contestPaymentDispute</strong> or <strong>contestPaymentDispute</strong> method, it is provided as one continuous numeric string, including the area code. So, if the phone number's area code was '408', a number in this field may look something like this: <br><br><code>\"number\" : \"4088084356\"</code><br><br>If the buyer is located in a different country than the seller, the seller's country code will need to be specified in the <strong>countryCode</strong> field.  # noqa: E501
 
         :return: The number of this Phone.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class Phone(object):
     def number(self, number):
         """Sets the number of this Phone.
 
-        The seller's primary phone number associated with the return address. When this number is provided in a <strong>contestPaymentDispute</strong> or <strong>contestPaymentDispute</strong> method, it is provided as one continuous numeric string, including the area code. So, if the phone number's area code was '408', a number in this field may look something like this: <br><br><code>\"number\" : \"4088084356\"</code><br><br>If the buyer is located in a different country than the seller, the seller's country calling code will need to be specified in the <strong>countryCode</strong> field.  # noqa: E501
+        The seller's primary phone number associated with the return address. When this number is provided in a <strong>contestPaymentDispute</strong> or <strong>contestPaymentDispute</strong> method, it is provided as one continuous numeric string, including the area code. So, if the phone number's area code was '408', a number in this field may look something like this: <br><br><code>\"number\" : \"4088084356\"</code><br><br>If the buyer is located in a different country than the seller, the seller's country code will need to be specified in the <strong>countryCode</strong> field.  # noqa: E501
 
         :param number: The number of this Phone.  # noqa: E501
         :type: str
