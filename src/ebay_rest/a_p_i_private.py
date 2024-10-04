@@ -15,14 +15,15 @@ from .api.developer_key_management.rest import (
     ApiException as DeveloperKeyManagementException,
 )
 from .error import Error
+from .multiton import Multiton
 from .rates import Rates
 from .reference import Reference
 from .token import ApplicationToken, UserToken, KeyPairToken
 
 
-class APIPrivate:
+class APIPrivate(metaclass=Multiton):
     """
-    This class encapsulates the private code and data related to the internal operations of the API.
+    This base class encapsulates the private code and data related to the internal operations of the API.
     It is designed to abstract away the implementation details that are unlikely to be of interest
     to end users, focusing instead on internal functionality.
 
@@ -40,8 +41,6 @@ class APIPrivate:
     - The `APIPrivate` class is typically instantiated by internal components and used to manage
       lower-level API interactions. It is not designed for direct interaction by end users or API clients.
 
-    IMPORTANT:
-    - Avoid making backward incompatible changes to the constructor's signature because that would break end user code.
     """
 
     # TODO Improve efficiency, unique objects could be created in parallel.
@@ -64,6 +63,15 @@ class APIPrivate:
         async_req: bool or None = False,
     ) -> None:
         """
+        VERY IMPORTANT:
+        - Except for unit tests, never use this base class directly; during normal use, it is meant to be inherited.
+        - Avoid making backward-incompatible changes to the constructor’s signature, as this could break end user code.
+        - To ensure proper type hinting and documentation for end users:
+         a. Method parameters must be an exact copy from the API class __init__ method.
+         b. After the dashed line, this docstring should be an exact copy from the API __init__ method.
+
+        ===================================================================================
+
         Instantiate an API object, then use it to call hundreds of eBay APIs.
 
         Load credentials from an ebay_rest.json file or supply dicts that mimic records in said file.

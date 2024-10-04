@@ -3,7 +3,6 @@
 # Local imports
 from .a_p_i_private import APIPrivate
 from .error import Error
-from .multiton import Multiton
 
 # Don't edit the anchors or in-between; instead, edit and run scripts/generate_code.py.
 # ANCHOR-er_imports-START"
@@ -77,15 +76,83 @@ from .api.sell_recommendation.rest import ApiException as SellRecommendationExce
 # ANCHOR-er_imports-END"
 
 
-class API(APIPrivate, metaclass=Multiton):
+class API(APIPrivate):
     """
     A wrapper for all of eBay's REST-ful APIs.
 
     For an overview of the APIs and more see https://developer.ebay.com/docs.
     """
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(
+        self,
+        path: str or None = None,
+        application: str or dict or None = None,
+        user: str or dict or None = None,
+        header: str or dict or None = None,
+        throttle: bool or None = False,
+        timeout: float or None = -1.0,
+        key_pair: str or dict or None = None,
+        digital_signatures: bool or None = False,
+        async_req: bool or None = False,
+    ):
+        """
+        Instantiate an API object, then use it to call hundreds of eBay APIs.
+
+        Load credentials from an ebay_rest.json file or supply dicts that mimic records in said file.
+        See https://github.com/matecsaj/ebay_rest/blob/main/tests/ebay_rest_EXAMPLE.json.
+        Warning, hard coding credentials in code is a security risk.
+
+        :param path (str, optional):
+        If using an ebay_rest.json file that is not in the current working directory, supply a full path.
+
+        :param application (str or dict, optional) :
+        Supply the name of the desired application record in ebay_rest.json or a dict with application credentials.
+        Can omit when ebay_rest.json contains only one application record.
+
+        :param user (str or dict, optional) :
+        Supply the name of the desired user record in ebay_rest.json or a dict with user credentials.
+        Can omit when ebay_rest.json contains only one user record.
+
+        :param header (str or dict, optional) :
+        Supply the name of the desired header record in ebay_rest.json or a dict with header credentials.
+        Can omit when ebay_rest.json contains only one header record.
+
+        :param
+        throttle (bool, optional) : When True block the call if a below the prorated call limit, defaults to False.
+                                    Note, the sandbox has no call limits.
+
+        :param
+        timeout (float, optional) : When invoked with the floating-point timeout argument set to a positive value,
+        throttle for at most the number of seconds specified by timeout and as below the prorated call limit. A timeout
+        argument of -1 specifies an unbounded wait. It is forbidden to specify a timeout when the throttle is False.
+        Defaults to -1.
+
+        :param
+        key_pair (str or dict, optional) :
+        Supply the name of the desired eBay public/private key pair record in ebay_rest.json or a dict with
+        the key pair details.
+        Can omit when ebay_rest.json contains only one record.
+
+        :param
+        digital_signatures (bool, optional): Use eBay digital signatures
+
+        :param
+        async_req (bool, optional) : When True make asynchronous HTTP requests, defaults to False for synchronous.
+        !!!IGNORE THIS OPTION, THE CODE FOR IT IS INCOMPLETE!!!
+
+        :return (object) : An API object.
+        """
+        super().__init__(
+            path=path,
+            application=application,
+            user=user,
+            header=header,
+            throttle=throttle,
+            timeout=timeout,
+            key_pair=key_pair,
+            digital_signatures=digital_signatures,
+            async_req=async_req,
+        )
 
     # Don't edit the anchors or in-between; instead, edit and run scripts/generate_code.py.
     # ANCHOR-er_methods-START"
