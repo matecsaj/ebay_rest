@@ -321,7 +321,7 @@ class Order(object):
     def legacy_order_id(self):
         """Gets the legacy_order_id of this Order.  # noqa: E501
 
-        The unique identifier of the order in legacy format, as traditionally used by the Trading API (and other legacy APIs). Both the <b>orderId</b> field and this field are always returned.  # noqa: E501
+        <span class=\"tablenote\"><strong>Note:</strong> This field is deprecated and will stopped being returned on February 24, 2025. Please exclusively use the <b>orderId</b> field going forward.</span><br>The unique identifier of the order in legacy format, as traditionally used by the Trading API (and other legacy APIs). Both the <b>orderId</b> field and this field are always returned.  # noqa: E501
 
         :return: The legacy_order_id of this Order.  # noqa: E501
         :rtype: str
@@ -332,7 +332,7 @@ class Order(object):
     def legacy_order_id(self, legacy_order_id):
         """Sets the legacy_order_id of this Order.
 
-        The unique identifier of the order in legacy format, as traditionally used by the Trading API (and other legacy APIs). Both the <b>orderId</b> field and this field are always returned.  # noqa: E501
+        <span class=\"tablenote\"><strong>Note:</strong> This field is deprecated and will stopped being returned on February 24, 2025. Please exclusively use the <b>orderId</b> field going forward.</span><br>The unique identifier of the order in legacy format, as traditionally used by the Trading API (and other legacy APIs). Both the <b>orderId</b> field and this field are always returned.  # noqa: E501
 
         :param legacy_order_id: The legacy_order_id of this Order.  # noqa: E501
         :type: str

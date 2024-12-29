@@ -272,7 +272,7 @@ class AdApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param BulkDeleteAdsByInventoryReferenceRequest body: This request works with listings created via the <a href="/api-docs/sell/inventory/resources/methods">Inventory API</a>.<br /><br />The request is to delete a set of ads in bulk, as specified by a list of inventory reference IDs from the specified campaign. (required)
+        :param BulkDeleteAdsByInventoryReferenceRequest body: This request works with listings created via the <a href=\"/api-docs/sell/inventory/resources/methods\">Inventory API</a>.<br /><br />The request is to delete a set of ads in bulk, as specified by a list of inventory reference IDs from the specified campaign. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which to delete a set of ads.<br><br> Use the <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\" target=\"_blank\">getCampaigns</a> method to retrieve campaign IDs. (required)
         :return: BulkDeleteAdsByInventoryReferenceResponse
@@ -296,7 +296,7 @@ class AdApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param BulkDeleteAdsByInventoryReferenceRequest body: This request works with listings created via the <a href="/api-docs/sell/inventory/resources/methods">Inventory API</a>.<br /><br />The request is to delete a set of ads in bulk, as specified by a list of inventory reference IDs from the specified campaign. (required)
+        :param BulkDeleteAdsByInventoryReferenceRequest body: This request works with listings created via the <a href=\"/api-docs/sell/inventory/resources/methods\">Inventory API</a>.<br /><br />The request is to delete a set of ads in bulk, as specified by a list of inventory reference IDs from the specified campaign. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which to delete a set of ads.<br><br> Use the <a href=\"/api-docs/sell/marketing/resources/campaign/methods/getCampaigns\" target=\"_blank\">getCampaigns</a> method to retrieve campaign IDs. (required)
         :return: BulkDeleteAdsByInventoryReferenceResponse

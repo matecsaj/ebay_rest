@@ -35,7 +35,7 @@ class RateTableApi(object):
     def get_rate_table(self, rate_table_id, **kwargs):  # noqa: E501
         """get_rate_table  # noqa: E501
 
-        This method retrieves an existing rate table identified by the <b>rate_table_id</b> path parameter.<br><br><b>getRateTable</b> currently supports the retrieval of rate tables for the following eBay marketplace IDs:<ul><li><code>EBAY_AU</code></li><li><code>EBAY_CA</code></li><li><code>EBAY_DE</code></li><li><code>EBAY_ES</code></li><li><code>EBAY_FR</code></li><li><code>EBAY_GB</code></li><li><code>EBAY_IT</code></li><li><code>EBAY_US</code></li></ul> A successful call returns detailed information for the specified shipping rate table.  # noqa: E501
+        This method retrieves an existing rate table identified by the <b>rate_table_id</b> path parameter.<br><br>Shipping rate tables are currently supported by the following marketplaces: United States, Canada, United Kingdom, Germany, Australia, France, Italy, and Spain. A successful call returns detailed information for the specified shipping rate table.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_rate_table(rate_table_id, async_req=True)
@@ -57,7 +57,7 @@ class RateTableApi(object):
     def get_rate_table_with_http_info(self, rate_table_id, **kwargs):  # noqa: E501
         """get_rate_table  # noqa: E501
 
-        This method retrieves an existing rate table identified by the <b>rate_table_id</b> path parameter.<br><br><b>getRateTable</b> currently supports the retrieval of rate tables for the following eBay marketplace IDs:<ul><li><code>EBAY_AU</code></li><li><code>EBAY_CA</code></li><li><code>EBAY_DE</code></li><li><code>EBAY_ES</code></li><li><code>EBAY_FR</code></li><li><code>EBAY_GB</code></li><li><code>EBAY_IT</code></li><li><code>EBAY_US</code></li></ul> A successful call returns detailed information for the specified shipping rate table.  # noqa: E501
+        This method retrieves an existing rate table identified by the <b>rate_table_id</b> path parameter.<br><br>Shipping rate tables are currently supported by the following marketplaces: United States, Canada, United Kingdom, Germany, Australia, France, Italy, and Spain. A successful call returns detailed information for the specified shipping rate table.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_rate_table_with_http_info(rate_table_id, async_req=True)

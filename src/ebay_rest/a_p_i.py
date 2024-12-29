@@ -1202,7 +1202,7 @@ class API(APIPrivate):
     ):  # noqa: E501
         """upload_document
 
-        This method associates the specified file with the specified document ID and uploads the input file. After the file has been uploaded, the processing of the file begins. Supported file types include .PDF, .JPEG/.JPG, and .PNG.Note: The document ID value returned in the response of the createDocument method is a required input path parameter for this method. This value is also returned in the location header of the createDocument response payload.A successful upload returns the HTTP Status Code 200 OK.See Managing documents for additional information. Note: You must use a Content-Type header with its value set to multipart/form-data.This call does not have a JSON Request payload but uploads the file as form-data. For example: file: @"/C:/Users/.../drone_user_warranty.pdf"See Samples for information.
+        This method associates the specified file with the specified document ID and uploads the input file. After the file has been uploaded, the processing of the file begins. Supported file types include .PDF, .JPEG/.JPG, and .PNG, with a maximum file size of 10 MB (10485760 bytes).Note: The document ID value returned in the response of the createDocument method is a required input path parameter for this method. This value is also returned in the location header of the createDocument response payload.A successful upload returns the HTTP Status Code 200 OK.See Managing documents for additional information. Note: You must use a Content-Type header with its value set to multipart/form-data.This call does not have a JSON Request payload but uploads the file as form-data. For example: file: @"/C:/Users/.../drone_user_warranty.pdf"See Samples for information.
 
         :param str document_id: The unique identifier of the document to be uploaded.This value is returned in the response of the createDocument method. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to multipart/form-data.  For more information, refer to HTTP request headers. (required)
@@ -2326,7 +2326,7 @@ class API(APIPrivate):
     def sell_account_get_rate_table(self, rate_table_id, **kwargs):  # noqa: E501
         """get_rate_table
 
-        This method retrieves an existing rate table identified by the rate_table_id path parameter.getRateTable currently supports the retrieval of rate tables for the following eBay marketplace IDs:EBAY_AUEBAY_CAEBAY_DEEBAY_ESEBAY_FREBAY_GBEBAY_ITEBAY_US A successful call returns detailed information for the specified shipping rate table.
+        This method retrieves an existing rate table identified by the rate_table_id path parameter.Shipping rate tables are currently supported by the following marketplaces: United States, Canada, United Kingdom, Germany, Australia, France, Italy, and Spain. A successful call returns detailed information for the specified shipping rate table.
 
         :param str rate_table_id: This path parameter is the unique identifier for the shipping rate table to retrieve. Use the getRateTables method of the Account API v1 to retrieve rate table IDs. (required)
         :return: RateTableDetails
@@ -4039,12 +4039,95 @@ class API(APIPrivate):
         except Error:
             raise
 
+    def sell_inventory_create_or_replace_sku_location_mapping(
+        self, body, content_type, listing_id, sku, **kwargs
+    ):  # noqa: E501
+        """create_or_replace_sku_location_mapping
+
+        This method allows sellers to map multiple fulfillment center locations to single-SKU listing, or to a single SKU within a multiple-variation listing. This allows eBay to leverage the location metadata associated with a seller’s fulfillment centers to calculate more accurate estimated delivery dates on their listing.Note: While location mappings can be created for listings on any eBay marketplace, the improved delivery date estimate feature is currently only supported for US-based fulfillment centers shipping domestically within the US.The listing for which the locations will be mapped is specified through the listingId and sku values associated with the item. Note that only a single SKU value can be identified; if the seller wishes to map locations to multiple/all SKU values in a multiple-variation listing, this method must be called for each of those SKUs within the listing.Note: Sellers should keep track of listingId/sku pairs that have been used for location mapping, as there is no programmatic way to retrieve or delete these pairs at this time.In the case of replacing/updating existing location mappings, this method will do a complete replacement of the location mappings associated with a SKU. This means that each existing location mappings that the seller wants to continue to associate with the SKU are required in the update call, regardless of if they are affected by the update.This method is only supported for inventory locations that have FULFILLMENT_CENTER as one of their locationTypes. For more information on fulfillment center locations, see Create a fulfillment center location.For more information on location mapping features, see Multi-warehouse program in the Selling Integration Guide.Note: Only listings with SKU values are supported. Sellers using listings creating through the Trading API can add a SKU value to their single variation listing through the Item.SKU field during listing creation or by using the ReviseItem family of calls.
+
+        :param LocationMapping body: (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json. For more information, refer to HTTP request headers. (required)
+        :param str listing_id: This path parameter specifies the unique identifier of the listing for which multiple fulfillment center locations will be mapped to a SKU within that listing.Use the getOffers method of the Inventory API or the GetMyEbaySelling method of the Trading API to retrieve all listing IDs for all active listings. (required)
+        :param str sku: This path parameter specifies the seller-defined SKU value of the item/variation for which multiple fulfillment center locations will be mapped. This SKU value must be defined in the listing specified in listingId parameter.Use the getOffers method of the Inventory API or the GetMyEbaySelling method of the Trading API to retrieve all listing IDs for all active listings.Note: SKU values can be updated by a seller at any time. If a seller updates a SKU value that is being used for location mapping, this change will not be reflected until the mapping is updated through the createOrReplaceSkuLocationMapping method. (required)
+        :return: None
+        """
+        try:
+            return self._method_single(
+                sell_inventory.Configuration,
+                "/sell/inventory/v1",
+                sell_inventory.ListingApi,
+                sell_inventory.ApiClient,
+                "create_or_replace_sku_location_mapping",
+                SellInventoryException,
+                True,
+                ["sell.inventory", "listing"],
+                (body, content_type, listing_id, sku),
+                **kwargs,
+            )  # noqa: E501
+        except Error:
+            raise
+
+    def sell_inventory_delete_sku_location_mapping(
+        self, listing_id, sku, **kwargs
+    ):  # noqa: E501
+        """delete_sku_location_mapping
+
+        This method allows sellers to remove all location mappings associated with a specific SKU within a listing.The listingId and sku of the listing are passed in as path parameters.Important! To remove all location mappings from a multiple-variation listing, this method must be used for each individual SKU in the listing.
+
+        :param str listing_id: This path parameter specifies the unique identifier of the listing that the SKU belongs to for which all mapped locations will be removed.Use the getOffers method of the Inventory API or the GetMyEbaySelling method of the Trading API to retrieve all listing IDs for all active listings. (required)
+        :param str sku: This path parameter specifies the seller-defined SKU value of the item/variation for which location mappings will be removed. This SKU value must be defined in the listing specified in listingId parameterUse the getOffers method of the Inventory API or the GetMyEbaySelling method of the Trading API to retrieve all SKUs for all active listings. (required)
+        :return: None
+        """
+        try:
+            return self._method_single(
+                sell_inventory.Configuration,
+                "/sell/inventory/v1",
+                sell_inventory.ListingApi,
+                sell_inventory.ApiClient,
+                "delete_sku_location_mapping",
+                SellInventoryException,
+                True,
+                ["sell.inventory", "listing"],
+                (listing_id, sku),
+                **kwargs,
+            )  # noqa: E501
+        except Error:
+            raise
+
+    def sell_inventory_get_sku_location_mapping(
+        self, listing_id, sku, **kwargs
+    ):  # noqa: E501
+        """get_sku_location_mapping
+
+        This method allows sellers to retrieve the locations mapped to a specific SKU within a listing.The listingId and sku of the listing are passed in as path parameters. This method only retrieves location mappings for a single SKU value; if a seller wishes to retrieve the location mappings for all items in a multiple-variation listing, this method must be called for each variation in the listing.If there are fulfillment center locations mapped to the SKU, they will be returned in the locations array. If no locations are mapped to the SKU, status code 404 Not Found will be returned.
+
+        :param str listing_id: This path parameter specifies the unique identifier of the listing that the SKU belongs to for which all mapped locations will be retrieved.Use the getOffers method of the Inventory API or the GetMyEbaySelling method of the Trading API to retrieve all listing IDs for all active listings. (required)
+        :param str sku: This path parameter specifies the seller-defined SKU value of the item/variation for which location mappings will be retrieved. This SKU value must be defined in the listing specified in listingId parameterUse the getOffers method of the Inventory API or the GetMyEbaySelling method of the Trading API to retrieve all SKUs for all active listings. (required)
+        :return: LocationMapping
+        """
+        try:
+            return self._method_single(
+                sell_inventory.Configuration,
+                "/sell/inventory/v1",
+                sell_inventory.ListingApi,
+                sell_inventory.ApiClient,
+                "get_sku_location_mapping",
+                SellInventoryException,
+                True,
+                ["sell.inventory", "listing"],
+                (listing_id, sku),
+                **kwargs,
+            )  # noqa: E501
+        except Error:
+            raise
+
     def sell_inventory_create_inventory_location(
         self, body, content_type, merchant_location_key, **kwargs
     ):  # noqa: E501
         """create_inventory_location
 
-        Use this call to create a new inventory location. In order to create and publish an offer (and create an eBay listing), a seller must have at least one inventory location, as every offer must be associated with a location.Important!Publish offer note: Fields may be optional or conditionally required when calling this method, but become required when publishing the offer to create an active listing. For this method, see Location fields for a list of fields required to publish an offer.Upon first creating an inventory location, only a seller-defined location identifier and a physical location is required, and once set, these values can not be changed. The unique identifier value (merchantLocationKey) is passed in at the end of the call URI. This merchantLocationKey value will be used in other Inventory Location calls to identify the inventory location to perform an action against.At this time, location types are either warehouse or store. Warehouse locations are used for traditional shipping, and store locations are generally used by US merchants selling products through the In-Store Pickup program, or used by UK, Australian, and German merchants selling products through the Click and Collect program. A full address is required for store inventory locations. However, for warehouse inventory locations, a full street address is not needed, but the city, state/province, and country of the location must be provided. Note that all inventory locations are \"enabled\" by default when they are created, and you must specifically disable them (by passing in a value of DISABLED in the merchantLocationStatus field) if you want them to be set to the disabled state. The seller's inventory cannot be loaded to inventory locations in the disabled state.Unless one or more errors and/or warnings occur with the call, there is no response payload for this call. A successful call will return an HTTP status value of 204 No Content.
+        Use this call to create a new inventory location. In order to create and publish an offer (and create an eBay listing), a seller must have at least one location, as every offer must be associated with at least one location.Important!Publish offer note: Fields may be optional or conditionally required when calling this method, but become required when publishing the offer to create an active listing. For this method, see Location fields for a list of fields required to publish an offer.Upon first creating an inventory location, only a seller-defined location identifier and a physical location is required, and once set, these values can not be changed. The unique identifier value (merchantLocationKey) is passed in at the end of the call URI. This merchantLocationKey value will be used in other Inventory Location calls to identify the location to perform an action against.When creating an inventory location, the locationTypes can be specified to define the function of a location. At this time, the following locationTypes are supported:Fulfillment center locations are used by sellers selling products through the Multi-warehouse program to get improved estimated delivery dates on their listings. A full address is required when creating a fulfillment center location, as well as the fulfillmentCenterSpecifications of the location. For more information on using the fulfillment center location type to get improved delivery dates, see Multi-warehouse program.Warehouse locations are used for traditional shipping. A full street address is not needed, but the postalCode and country OR city, stateOrProvince, and country of the location must be provided.Store locations are generally used by merchants selling product through the In-Store Pickup program. A full address is required when creating a store location.Note that all inventory locations are \"enabled\" by default when they are created, and you must specifically disable them (by passing in a value of DISABLED in the merchantLocationStatus field) if you want them to be set to the disabled state. The seller's inventory cannot be loaded to inventory locations in the disabled state.Unless one or more errors and/or warnings occur with the call, there is no response payload for this call. A successful call will return an HTTP status value of 204 No Content.
 
         :param InventoryLocationFull body: Inventory Location details (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
@@ -4072,7 +4155,7 @@ class API(APIPrivate):
     ):  # noqa: E501
         """delete_inventory_location
 
-        This call deletes the inventory location that is specified in the merchantLocationKey path parameter. Note that deleting a location will not affect any active eBay listings associated with the deleted location, but the seller will not be able modify the offers associated with the inventory location once it is deleted.The authorization HTTP header is the only required request header for this call. Unless one or more errors and/or warnings occur with the call, there is no response payload for this call. A successful call will return an HTTP status value of 200 OK.
+        This call deletes the inventory location that is specified in the merchantLocationKey path parameter. Note that deleting a location will not affect any active eBay listings associated with the deleted location, but the seller will not be able modify the offers associated with the location once it is deleted.Note: Deletion is not currently supported for fulfillment center locations, as location mappings will still be retained despite the location being deleted. Instead, fulfillment center locations should be disabled using the disableInventoryLocation method.Unless one or more errors and/or warnings occur with the call, there is no response payload for this call. A successful call will return an HTTP status value of 200 OK.
 
         :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for the inventory location that is to be deleted.Use the getInventoryLocations method to retrieve merchant location keys.Max length: 36 (required)
         :return: None
@@ -4098,7 +4181,7 @@ class API(APIPrivate):
     ):  # noqa: E501
         """disable_inventory_location
 
-        This call disables the inventory location that is specified in the merchantLocationKey path parameter. Sellers can not load/modify inventory to disabled inventory locations. Note that disabling an inventory location will not affect any active eBay listings associated with the disabled location, but the seller will not be able modify the offers associated with a disabled inventory location.A successful call will return an HTTP status value of 200 OK.
+        This call disables the inventory location that is specified in the merchantLocationKey path parameter. Sellers can not load/modify inventory to disabled locations. Note that disabling a location will not affect any active eBay listings associated with the disabled location, but the seller will not be able modify the offers associated with a disabled location.A successful call will return an HTTP status value of 200 OK.
 
         :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for an inventory location that is to be disabled. Use the getInventoryLocations method to retrieve merchant location keys.Max length: 36 (required)
         :return: object
@@ -4124,7 +4207,7 @@ class API(APIPrivate):
     ):  # noqa: E501
         """enable_inventory_location
 
-        This call enables a disabled inventory location that is specified in the merchantLocationKey path parameter. Once a disabled inventory location is enabled, sellers can start loading/modifying inventory to that inventory location. A successful call will return an HTTP status value of 200 OK.
+        This call enables a disabled inventory location that is specified in the merchantLocationKey path parameter. Once a disabled location is enabled, sellers can start loading/modifying inventory to that location. A successful call will return an HTTP status value of 200 OK.
 
         :param str merchant_location_key: This path parameter specifies unique merchant-defined key (ID) for a disabled inventory location that is to be enabled.Use the getInventoryLocations method to retrieve merchant location keys.Max length: 36 (required)
         :return: object
@@ -4150,7 +4233,7 @@ class API(APIPrivate):
     ):  # noqa: E501
         """get_inventory_location
 
-        This call retrieves all defined details of the inventory location that is specified by the merchantLocationKey path parameter. The authorization HTTP header is the only required request header for this call. A successful call will return an HTTP status value of 200 OK.
+        This call retrieves all defined details of the inventory location that is specified by the merchantLocationKey path parameter.A successful call will return an HTTP status value of 200 OK.
 
         :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for an inventory location that is being retrieved. Use the getInventoryLocations method to retrieve merchant location keys. Max length: 36 (required)
         :return: InventoryLocationResponse
@@ -4174,7 +4257,7 @@ class API(APIPrivate):
     def sell_inventory_get_inventory_locations(self, **kwargs):  # noqa: E501
         """get_inventory_locations
 
-        This call retrieves all defined details for every inventory location associated with the seller's account. There are no required parameters for this call and no request payload. However, there are two optional query parameters, limit and offset. The limit query parameter sets the maximum number of inventory locations returned on one page of data, and the offset query parameter specifies the page of data to return. These query parameters are discussed more in the URI parameters table below. The authorization HTTP header is the only required request header for this call. A successful call will return an HTTP status value of 200 OK.
+        This call retrieves all defined details for every inventory location associated with the seller's account. There are no required parameters for this call and no request payload. However, there are two optional query parameters, limit and offset. The limit query parameter sets the maximum number of locations returned on one page of data, and the offset query parameter specifies the page of data to return. These query parameters are discussed more in the URI parameters table below. The authorization HTTP header is the only required request header for this call. A successful call will return an HTTP status value of 200 OK.
 
         :param str limit: The value passed in this query parameter sets the maximum number of records to return per page of data. Although this field is a string, the value passed in this field should be a positive integer value. If this query parameter is not set, up to 100 records will be returned on each page of results.  Min: 1
         :param str offset: Specifies the number of locations to skip in the result set before returning the first location in the paginated response.  Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
@@ -4201,9 +4284,9 @@ class API(APIPrivate):
     ):  # noqa: E501
         """update_inventory_location
 
-        Use this call to update non-physical location details for an existing inventory location. Specify the inventory location you want to update using the merchantLocationKey path parameter. You can update the following text-based fields: name, phone, locationWebUrl, locationInstructions and locationAdditionalInformation. Whatever text is passed in for these fields in an updateInventoryLocation call will replace the current text strings defined for these fields. For store inventory locations, the operating hours and/or the special hours can also be updated.  The merchant location key, the physical location of the store, and its geo-location coordinates can not be updated with an updateInventoryLocation call Unless one or more errors and/or warnings occurs with the call, there is no response payload for this call. A successful call will return an HTTP status value of 204 No Content.
+        Use this call to update location details for an existing inventory location. Specify the inventory location you want to update using the merchantLocationKey path parameter. You can update the following text-based fields: name, phone, timeZoneId, geoCoordinates, fulfillmentCenterSpecifications, locationTypes, locationWebUrl, locationInstructions and locationAdditionalInformation any number of times for any location type. For warehouse and store inventory locations, address fields can be updated any number of times. Address fields cannot be updated for fulfillment center locations. However, if any address fields were omitted during the createInventoryLocation call, they can be added through this method.Note: When updating a warehouse location to a fulfillment center, sellers can update any of the address fields a single time during the same call used to make this update. After this, they can no longer be updated.For store locations, the operating hours and/or the special hours can also be updated.Whatever text is passed in for these fields in an updateInventoryLocation call will replace the current text strings defined for these fields.Unless one or more errors and/or warnings occurs with the call, there is no response payload for this call. A successful call will return an HTTP status value of 204 No Content.
 
-        :param InventoryLocation body: The inventory location details to be updated (other than the address and geo co-ordinates). (required)
+        :param InventoryLocation body: The inventory location details to be updated. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for an inventory location that is to be updated. Use the getInventoryLocations method to retrieve merchant location keys. Max length: 36 (required)
         :return: None
@@ -6982,6 +7065,146 @@ class API(APIPrivate):
                 True,
                 ["sell.marketing", "promotion_summary_report"],
                 marketplace_id,
+                **kwargs,
+            )  # noqa: E501
+        except Error:
+            raise
+
+    def sell_metadata_get_compatibilities_by_specification(
+        self, x_ebay_c_marketplace_id, content_type, **kwargs
+    ):  # noqa: E501
+        """get_compatibilities_by_specification
+
+        This method is used to retrieve all compatible application name-value pairs for a part based on the provided specification(s).The part's relevant dimensions and/or characteristics can be provided through the specifications container. For example, when retrieving compatible application name-value pairs for a tire, the tire's dimensions (such as the section width or rim diameter) should be provided.By default, all compatible application name-value pairs for the specifications are returned. You can limit the size of the result set by using the compatibilityPropertyFilters array to specify the properties (such as make, model, year, or trim) you wish to be included in the response.Note: The getCompatibilityPropertyNames and getCompatibilityPropertyValues methods can be used to retrieve valid property names and values that can be used as the name-value pairs to define specifications.
+
+        :param str x_ebay_c_marketplace_id: This header identifies the seller's eBay marketplace.See Metadata API requirements and restrictions for supported values. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client.Its value should be set to application/json.For more information, refer to HTTP request headers in the Using eBay RESTful APIs guide. (required)
+        :param SpecificationRequest body: This type defines the properties and specifications to use to search for compatibilities.
+        :return: SpecificationResponse
+        """
+        try:
+            return self._method_single(
+                sell_metadata.Configuration,
+                "/sell/metadata/v1",
+                sell_metadata.CompatibilitiesApi,
+                sell_metadata.ApiClient,
+                "get_compatibilities_by_specification",
+                SellMetadataException,
+                False,
+                ["sell.metadata", "compatibilities"],
+                (x_ebay_c_marketplace_id, content_type),
+                **kwargs,
+            )  # noqa: E501
+        except Error:
+            raise
+
+    def sell_metadata_get_compatibility_property_names(
+        self, x_ebay_c_marketplace_id, content_type, **kwargs
+    ):  # noqa: E501
+        """get_compatibility_property_names
+
+        This method is used to retrieve product compatibility property names for the specified compatibility-enabled category.Compatibility property names can be used alongside the corresponding compatibility property value (retrieved using the getCompatibilityPropertyValues method) to describe the assembly for which an item is compatible.The categoryId of the compatibility-enabled category for which to retrieve compatibility property names is required in the request body.By default, all property names within the compatibility category of the specified compatibility-enable category are returned. You can limit the size of the result set by using the dataset array to specify the types of properties you want returned.
+
+        :param str x_ebay_c_marketplace_id: This header identifies the seller's eBay marketplace.See Metadata API requirements and restrictions for supported values. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client.Its value should be set to application/json.For more information, refer to HTTP request headers in the Using eBay RESTful APIs guide. (required)
+        :param PropertyNamesRequest body: This type defines the properties used to retrieve compatibility property names.
+        :return: PropertyNamesResponse
+        """
+        try:
+            return self._method_single(
+                sell_metadata.Configuration,
+                "/sell/metadata/v1",
+                sell_metadata.CompatibilitiesApi,
+                sell_metadata.ApiClient,
+                "get_compatibility_property_names",
+                SellMetadataException,
+                False,
+                ["sell.metadata", "compatibilities"],
+                (x_ebay_c_marketplace_id, content_type),
+                **kwargs,
+            )  # noqa: E501
+        except Error:
+            raise
+
+    def sell_metadata_get_compatibility_property_values(
+        self, x_ebay_c_marketplace_id, content_type, **kwargs
+    ):  # noqa: E501
+        """get_compatibility_property_values
+
+        This method is used to retrieve product compatibility property values associated with a single property name, in the specified category.Compatibility property values can be used alongside the corresponding compatibility property name (retrieved using the getCompatibilityPropertyNames method) to describe the assembly for which an item is compatible.The categoryId of the compatibility-enabled category for which to retrieve compatibility property values is required in the request body, as well as the propertyName for which you wish to retrieve associated values.By default, all property values associated with the specified propertyName are returned. You can limit the size of the result set by using the propertyFilter array. Only property values associated with the specified name-value pairs will be returned.
+
+        :param str x_ebay_c_marketplace_id: This header identifies the seller's eBay marketplace.See Metadata API requirements and restrictions for supported values. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client.Its value should be set to application/json.For more information, refer to HTTP request headers in the Using eBay RESTful APIs guide. (required)
+        :param PropertyValuesRequest body: This type defines the category ID and property name for which to retrieve values.
+        :return: PropertyValuesResponse
+        """
+        try:
+            return self._method_single(
+                sell_metadata.Configuration,
+                "/sell/metadata/v1",
+                sell_metadata.CompatibilitiesApi,
+                sell_metadata.ApiClient,
+                "get_compatibility_property_values",
+                SellMetadataException,
+                False,
+                ["sell.metadata", "compatibilities"],
+                (x_ebay_c_marketplace_id, content_type),
+                **kwargs,
+            )  # noqa: E501
+        except Error:
+            raise
+
+    def sell_metadata_get_multi_compatibility_property_values(
+        self, x_ebay_c_marketplace_id, content_type, **kwargs
+    ):  # noqa: E501
+        """get_multi_compatibility_property_values
+
+        This method is used to retrieve product compatibility property values associated with multiple property names, in the specified category.Compatibility property values can be used alongside the corresponding compatibility property name (retrieved using the getCompatibilityPropertyNames method) to describe the assembly for which an item is compatible.The categoryId of the compatibility-enabled category for which to retrieve compatibility property values is required in the request body, as well as the propertyNames for which you wish to retrieve associated property values. The propertyFilter array is also required to constrain the output. Only property values associated with the specified name-value pairs will be returned.
+
+        :param str x_ebay_c_marketplace_id: This header identifies the seller's eBay marketplace.See Metadata API requirements and restrictions for supported values. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client.Its value should be set to application/json.For more information, refer to HTTP request headers in the Using eBay RESTful APIs guide. (required)
+        :param MultiCompatibilityPropertyValuesRequest body: This type defines the category ID and property names for which to retrieve values.
+        :return: MultiCompatibilityPropertyValuesResponse
+        """
+        try:
+            return self._method_single(
+                sell_metadata.Configuration,
+                "/sell/metadata/v1",
+                sell_metadata.CompatibilitiesApi,
+                sell_metadata.ApiClient,
+                "get_multi_compatibility_property_values",
+                SellMetadataException,
+                False,
+                ["sell.metadata", "compatibilities"],
+                (x_ebay_c_marketplace_id, content_type),
+                **kwargs,
+            )  # noqa: E501
+        except Error:
+            raise
+
+    def sell_metadata_get_product_compatibilities(
+        self, x_ebay_c_marketplace_id, content_type, **kwargs
+    ):  # noqa: E501
+        """get_product_compatibilities
+
+        This method is used to retrieve all available item compatibility details for the specified product.Item compatibility details can be used to see the properties for which an item is compatible. For example, if you are searching for a part for a specific vehicle, you can use this method to see the years, engine, and/or trim for which the part is compatible. Item compatibility details are returned as name-value pairs.The product for which to retrieve item compatibility details must be provided through the productIdentifier field. This value can be either an eBay specific identifier (such as an ePID) or an external identifier (such as a UPC).By default, all available item compatibility details for the specified product are returned. You can limit the size of the result set using the dataset or datasetPropertyName fields to specify the types of properties you want returned in the response. The applicationPropertyFilter array can also be used so that only parts compatible with the specified name-value pairs are returned.
+
+        :param str x_ebay_c_marketplace_id: This header identifies the seller's eBay marketplace.See Metadata API requirements and restrictions for supported values. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client.Its value should be set to application/json.For more information, refer to HTTP request headers in the Using eBay RESTful APIs guide. (required)
+        :param ProductRequest body: This type defines properties for which to find compatibilities.
+        :return: ProductResponse
+        """
+        try:
+            return self._method_single(
+                sell_metadata.Configuration,
+                "/sell/metadata/v1",
+                sell_metadata.CompatibilitiesApi,
+                sell_metadata.ApiClient,
+                "get_product_compatibilities",
+                SellMetadataException,
+                False,
+                ["sell.metadata", "compatibilities"],
+                (x_ebay_c_marketplace_id, content_type),
                 **kwargs,
             )  # noqa: E501
         except Error:
