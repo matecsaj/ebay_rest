@@ -65,6 +65,18 @@ class APIBothEnvironmentsSingleSiteTests(unittest.TestCase):
             self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
 
 
+class APIMarketplaceSpecificTests(unittest.TestCase):
+
+    def test_belgium_nederlandse(self):
+        api = API(application="sandbox_1", user="sandbox_1", header="NLBE")
+        for record in api.buy_browse_search(limit=1, q="orange"):
+            if "record" not in record:
+                self.assertTrue("total" in record, f"Unexpected non-record{record}.")
+            else:
+                item = record["record"]
+                self.assertTrue(isinstance(item["item_id"], str))
+
+
 class APISandboxMultipleSiteTests(unittest.TestCase):
     """API test that require multiple marketplaces and that can be done on the sandbox."""
 

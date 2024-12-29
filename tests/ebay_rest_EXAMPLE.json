@@ -57,6 +57,17 @@
             "marketplace_id": "EBAY_ENCA",
             "zip": "K1M 1M4"
         },
+        "NLBE": {
+            "accept_language": "nl-BE",
+            "affiliate_campaign_id": "",
+            "affiliate_reference_id": "",
+            "content_language": "nl-BE",
+            "country" : "BE",
+            "currency": "EUR",
+            "device_id": "",
+            "marketplace_id": "EBAY_NLBE",
+            "zip": "1000"
+        },
         "GB": {
             "accept_language": "en-GB",
             "affiliate_campaign_id": "",
