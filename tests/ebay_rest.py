@@ -9,12 +9,13 @@
 
 # Standard library imports
 import datetime
+from copy import deepcopy
+from json import loads
 import os
 import random
 import string
-from json import loads
+from typing import Optional
 import unittest
-import warnings
 
 # 3rd party libraries
 from currency_converter import CurrencyConverter
@@ -71,22 +72,22 @@ class APIMarketplaceSpecificTests(unittest.TestCase):
         api = API(application="sandbox_1", user="sandbox_1", header="NLBE")
         for record in api.buy_browse_search(limit=1, q="orange"):
             if "record" not in record:
-                self.assertTrue("total" in record, f"Unexpected non-record{record}.")
+                self.fail("No item from Belgium found; try a different q value.")
             else:
                 item = record["record"]
-                self.assertTrue(isinstance(item["item_id"], str))
+                self.assertTrue(item['item_web_url'].startswith("https://www.benl.ebay.be"))
 
 
 class APISandboxMultipleSiteTests(unittest.TestCase):
-    """API test that require multiple marketplaces and that can be done on the sandbox."""
+    """API tests that require multiple marketplaces and that can be done on the sandbox."""
 
     @classmethod
     def setUpClass(cls):
         cls.currency_converter = CurrencyConverter()  # this is slow, so do it once
 
-    def test_credentials_from_dicts(self):
-        """set credentials via dicts"""
-        config_location = os.path.join(os.getcwd(), "ebay_rest.json")
+    def load_credential_file(self, filename: str) -> Optional[dict]:
+        """Try to load a credential file into a dict."""
+        config_location = os.path.join(os.getcwd(), filename)
         try:
             f = open(config_location, "r")
         except FileNotFoundError:
@@ -101,41 +102,135 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
                 )
             else:
                 f.close()
+                return contents
 
-                application = None
-                if "applications" in contents:
-                    if "sandbox_1" in contents["applications"]:
-                        application = contents["applications"]["sandbox_1"]
+    def check_credential_file(self, filename):
+        """Check if a credential file is structured correctly."""
+
+        # These are all the root keys.
+        instructions_key = "***_instructions_***"
+        applications_key = "applications"
+        users_key = "users"
+        headers_key = "headers"
+        key_pairs_key = "key_pairs"
+        root_keys = {
+            instructions_key,
+            applications_key,
+            users_key,
+            headers_key,
+            key_pairs_key,
+        }
+
+        # Can the JSON file be loaded into a dictionary?
+        contents = self.load_credential_file(filename)
+        self.assertIsInstance(
+            contents,
+            dict,
+            "Failed to load {filename} from the test folder into a dict.",
+        )
+
+        # Are the expected root keys present?
+        root_keys_in_contents = list(contents.keys())
+        self.assertEqual(len(root_keys_in_contents), len(root_keys))
+        self.assertEqual(set(root_keys_in_contents), root_keys)
+
+        # Check the common requirements for all root_keys records.
+        for root_key in root_keys:
+            keys = contents[root_key].keys()
+            self.assertGreater(len(keys), 0, f"{filename} has no {root_key} records.")
+            for key in keys:
                 self.assertIsInstance(
-                    application, dict, "Failed to load application credentials."
+                    key,
+                    str,
+                    f"In {filename} the {root_key} record named {key} is not a string.",
                 )
 
-                user = None
-                if "users" in contents:
-                    if "sandbox_1" in contents["users"]:
-                        user = contents["users"]["sandbox_1"]
-                self.assertIsInstance(user, dict, "Failed to load user credentials.")
-
-                header = None
-                if "headers" in contents:
-                    if "US" in contents["headers"]:
-                        header = contents["headers"]["US"]
-                self.assertIsInstance(
-                    header, dict, "Failed to load header credentials."
+        for instruction_key in contents[instructions_key]:
+            try:
+                int(instruction_key)
+            except ValueError:
+                self.fail(
+                    f"In {filename} the instruction key {instruction_key} is not string representing an integer."
                 )
+            self.assertIsInstance(
+                contents[instructions_key][instruction_key],
+                str,
+                f"In {filename} the value for instruction key {instruction_key} is not a string.",
+            )
 
-                try:
-                    api = API(
-                        application=application, user=user, header=header
-                    )  # params are dicts
-                except Error as error:
-                    self.fail(
-                        f"Error {error.number} is {error.reason}  {error.detail}.\n"
-                    )
-                else:
-                    # Ignore the PyCharm linter bug
-                    # 'Expected type 'Union[type, Tuple[type, ...]]', got 'Multiton' instead'
-                    self.assertIsInstance(api, API, "An API object was not returned.")  # type: ignore
+        for application in contents[applications_key]:
+            pass  # TODO
+
+        for user in contents[users_key]:
+            pass  # TODO
+
+        for header in contents[headers_key]:
+            pass  # TODO
+
+        for key_pair in contents[key_pairs_key]:
+            pass  # TODO
+
+    def test_credential_files(self):
+        self.check_credential_file("ebay_rest_EXAMPLE.json")
+        self.check_credential_file("ebay_rest.json")
+
+    def test_credentials_from_dicts(self):
+        """set credentials via dicts"""
+
+        contents = self.load_credential_file("ebay_rest.json")
+        try:
+            application = contents["applications"]["sandbox_1"]
+            user = contents["users"]["sandbox_1"]
+            header = contents["headers"]["US"]
+            key_pair = contents["key_pairs"]["sandbox_1"]
+        except KeyError as e:
+            self.fail(
+                f"The ebay_rest.json file is missing an essential application, user or header record {e}"
+            )
+
+        # use good credentials
+        try:
+            # demonstrate one way to supply dicts during instantiation
+            api = API(
+                application=application, user=user, header=header, key_pair=key_pair
+            )
+        except Error as error:
+            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+        else:
+            self.assertIsInstance(api, API, "An API object was not returned.")
+
+        # try each credential that when bad should raise an exception
+        sensitive_params = {
+            # "application": ("placeholder",),
+            "user": (
+                "refresh_token_expiry",
+            ),
+            "header": (
+                "accept_language",
+                "content_language",
+                "country",
+                "currency",
+                "marketplace_id",
+            ),
+            # "key_pair": ("placeholder",),
+        }
+        good_config = {
+            "user": user,
+            "application": application,
+            "header": header,
+            "key_pair": key_pair,
+        }
+        for key in sensitive_params:
+            for sub_key in sensitive_params[key]:
+                bad_config = deepcopy(good_config)
+                bad_config[key][sub_key] += "@bad"
+                with self.assertRaises(
+                    Error,
+                    msg=f"No error raised on {key} {sub_key} with value {bad_config[key][sub_key]}",
+                ):
+                    # demonstrate another way to supply dicts during instantiation
+                    API(**bad_config)
+
 
     def test_object_reuse(self):
         """Do the same parameters return the same API object?"""
@@ -154,11 +249,10 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
         except Error as error:
             self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
         else:
-            # Ignore the PyCharm linter bug 'Expected type 'Union[type, Tuple[type, ...]]', got 'Multiton' instead'
-            self.assertIsInstance(api, API, "An API object was not returned.")  # type: ignore
+            self.assertIsInstance(api, API, "An API object was not returned.")
 
     def test_shipping_accuracy(self):
-        """Is closer shipping cheaper?"""
+        """Is closer shipping less expensive?"""
 
         # domestic
         # d_market = 'EBAY_ENCA'    # set in header
@@ -175,7 +269,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
         # more constants
         shipping_currency = "USD"
 
-        tally = 0  # how many times domestic shipping is cheaper than foreign
+        tally = 0  # how many times domestic shipping is less expensive than foreign
 
         d_api = API(application="production_1", user="production_1", header="ENCA")
         f_api = API(application="production_1", user="production_1", header="GB")
@@ -237,7 +331,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
                                     tally  # flat rate worldwide shipping is possible
                                 )
                         else:
-                            pass  # self.fail(f"For {item_id} both shipping costs can not be found.")
+                            pass  # self.fail(f"For {item_id} both shipping costs can't be found.")
                     else:
                         self.fail(
                             f"Item {item_id} is supposed to be located in {d_country}."
@@ -389,7 +483,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
             self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
 
     def test_positional_some_kw_some(self):
-        # Redundant, several unit tests call buy_browse_search, so this test case is well covered.
+        # This is redundant, several unit tests call buy_browse_search, so this test case is well covered.
         pass
 
     def test_try_except_else_api(self):
@@ -456,7 +550,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         """
         https://developer.ebay.com/api-docs/sell/feed/resources/inventory_task/methods/createInventoryTask
 
-        The underlying REST call returns the new id in the header; which can't be gotten with the combination of Swagger
+        The underlying REST call returns the new id in the header, which can't be gotten with the combination of Swagger
         and OpenAPI contract which we rely on here. A workaround uses a related call to retrieve task_id_new.
         """
 
@@ -511,7 +605,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
 
 
 class APIProductionSingleTests(unittest.TestCase):
-    """API tests that can be done on a single marketplace and must in be in system production."""
+    """API tests that can be done on a single production marketplace."""
 
     @classmethod
     def setUpClass(cls):
@@ -530,7 +624,7 @@ class APIProductionSingleTests(unittest.TestCase):
 
     def test_hidden_page_boundaries(self):
         """
-        Warning, this can't be run in the sandbox, because searches do not return enough results.
+        Warning, this can't be run in the sandbox because searches do not return enough results.
         """
         limit_and_keywords = (
             (
@@ -804,7 +898,7 @@ class APIProductionSingleTests(unittest.TestCase):
             "schemaVersion": "1.0",
         }
         try:
-            self._api.sell_feed_create_task(body=body)
+            self._api.sell_feed_create_task(body=body, content_type="application/json", x_ebay_c_marketplace_id="placeholder")
         except Error as error:
             self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
         else:
@@ -825,7 +919,7 @@ class APIProductionSingleTests(unittest.TestCase):
             # The Swagger code generated from eBay's OpenAPI contract doesn't support this. Checked on 2022-10-22.
 
             try:
-                self._api.sell_feed_upload_file(task_id=task_id, file_name=file_name)
+                self._api.sell_feed_upload_file(task_id=task_id, file_name=file_name, content_type="application/json")
             except Error as error:
                 self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
 
@@ -857,7 +951,7 @@ class APIProductionSingleTests(unittest.TestCase):
 
         topic_id = "MARKETPLACE_ACCOUNT_DELETION"
 
-        # confirm that the desired topic is available, eBay's recommended workflow does not require this
+        # to confirm that the desired topic is available, eBay's recommended workflow does not require this
         try:
             result = self._api.commerce_notification_get_topics()
         except Error as error:
@@ -882,7 +976,7 @@ class APIProductionSingleTests(unittest.TestCase):
             else:
                 try:
                     config = {"alertEmail": alert_email}
-                    self._api.commerce_notification_update_config(body=config)
+                    self._api.commerce_notification_update_config(body=config, content_type="application/json")
                 except Error as error:
                     self.fail(
                         f"Error {error.number} is {error.reason}  {error.detail}.\n"
@@ -890,7 +984,7 @@ class APIProductionSingleTests(unittest.TestCase):
         else:
             self.assertEqual(result["alert_email"], alert_email)
 
-        # ensure that a destination is correctly configured
+        # Ensure that a destination is correctly configured.
         # Note: The destination should be created and ready to respond with the expected
         # challengeResponse for the endpoint to be registered successfully.
         # Refer to the Notification API Overview for more information.
@@ -910,7 +1004,8 @@ class APIProductionSingleTests(unittest.TestCase):
                         },
                     }
                     self._api.commerce_notification_create_destination(
-                        body=destination_request
+                        body=destination_request,
+                        content_type="application/json"
                     )
                 except Error as error:
                     self.fail(
