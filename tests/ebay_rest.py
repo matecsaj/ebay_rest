@@ -16,6 +16,7 @@ import random
 import string
 from typing import Optional
 import unittest
+from urllib.parse import urlparse
 
 # 3rd party libraries
 from currency_converter import CurrencyConverter
@@ -79,9 +80,8 @@ class APIMarketplaceSpecificTests(unittest.TestCase):
                 )
             else:
                 item = record["record"]
-                self.assertTrue(
-                    item["item_web_url"].startswith("https://www.benl.ebay.be")
-                )
+                host = urlparse(item["item_web_url"]).hostname
+                self.assertEqual(host, "www.benl.ebay.be")
 
 
 class APISandboxMultipleSiteTests(unittest.TestCase):
