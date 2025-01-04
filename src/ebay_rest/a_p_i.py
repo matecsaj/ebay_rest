@@ -2,7 +2,6 @@
 
 # Local imports
 from .a_p_i_private import APIPrivate
-from .error import Error
 
 # Don't edit the anchors or in-between; instead, edit and run scripts/generate_code.py.
 # ANCHOR-er_imports-START"
