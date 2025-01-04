@@ -127,9 +127,11 @@ class APIPrivate(metaclass=Multiton):
             try:
                 with open(self._config_location, "r") as f:
                     config_contents = loads(f.read())
-            except IOError:
+            except IOError as e:
                 raise Error(
-                    number=99001, reason="Unable to open " + self._config_location
+                    number=99001,
+                    reason="Unable to open " + self._config_location,
+                    cause=e,
                 )
         else:
             if not (
@@ -1019,11 +1021,16 @@ class APIPrivate(metaclass=Multiton):
 
         except swagger_method_exception as e:
             # error.status will be 100 to 599, see https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
-            raise Error(number=99000 + e.status, reason=e.reason, detail=e.body)
+            raise Error(
+                number=99000 + e.status, reason=e.reason, detail=e.body, cause=e
+            )
 
         except DeveloperKeyManagementException as e:
             raise Error(
-                number=99018, reason="A Digital Signature problem.", detail=f"{e}"
+                number=99018,
+                reason="A Digital Signature problem.",
+                detail=f"{e}",
+                cause=e,
             )
 
         else:

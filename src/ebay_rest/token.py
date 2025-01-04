@@ -5,7 +5,6 @@ from datetime import datetime, timedelta, timezone
 from json import loads
 import logging
 from threading import Lock
-from time import sleep
 from typing import List
 from urllib.parse import urlparse, parse_qs, urlencode
 from cryptography.hazmat.primitives.serialization import load_der_private_key
@@ -816,6 +815,7 @@ class KeyPairToken(metaclass=Multiton):
                 number=96028,
                 reason="The key is not a valid base64 encoded string.",
                 detail=str(e),
+                cause=e,
             )
         else:
             pk = load_der_private_key(decoded, password=None)
@@ -927,11 +927,12 @@ class KeyPairToken(metaclass=Multiton):
             key = api.developer_key_management_get_signing_key(
                 signing_key_id=self._signing_key_id
             )
-        except Error:
+        except Error as e:
             raise Error(
                 number=96023,
                 reason="Key pair not found",
                 detail="Key {} not found".format(self._signing_key_id),
+                cause=e,
             )
         else:
             self._save_key(key)
@@ -955,6 +956,7 @@ class KeyPairToken(metaclass=Multiton):
                 number=96024,
                 reason="Failed to create key pair",
                 detail="Failed to create key pair: {}".format(e),
+                cause=e,
             )
         else:
             self._save_key(key)

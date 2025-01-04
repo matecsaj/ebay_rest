@@ -48,8 +48,8 @@ class DateTime:
         else:
             try:
                 string = d_t.strftime(DateTime._EBAY_DATE_FORMAT)
-            except ValueError:
-                raise Error(number=98002, reason="Value Error.")
+            except ValueError as e:
+                raise Error(number=98002, reason="Value Error.", cause=e)
             return string[0:10] + "T" + string[11:23] + "Z"
 
     @staticmethod
@@ -71,10 +71,11 @@ class DateTime:
         else:
             try:
                 d_t = datetime.strptime(d_t_string, DateTime._EBAY_DATE_FORMAT)
-            except ValueError as error:
+            except ValueError as e:
                 raise Error(
                     number=98004,
                     reason="date time string formatting error, should be like 2004-08-04T19:09:02.768Z",
-                    detail=error.args[0],
+                    detail=e.args[0],
+                    cause=e,
                 )
             return d_t.replace(tzinfo=timezone.utc)
