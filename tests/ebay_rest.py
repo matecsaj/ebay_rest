@@ -69,13 +69,19 @@ class APIBothEnvironmentsSingleSiteTests(unittest.TestCase):
 class APIMarketplaceSpecificTests(unittest.TestCase):
 
     def test_belgium_nederlandse(self):
-        api = API(application="sandbox_1", user="sandbox_1", header="NLBE")
-        for record in api.buy_browse_search(limit=1, q="orange"):
+        api = API(application="production_1", user="production_1", header="NLBE")
+        for record in api.buy_browse_search(limit=1, q="black"):
             if "record" not in record:
-                self.fail("No item from Belgium found; try a different q value.")
+                self.assertGreater(
+                    record["total"]["records_yielded"],
+                    0,
+                    "No item from Belgium found; try a different q value.",
+                )
             else:
                 item = record["record"]
-                self.assertTrue(item['item_web_url'].startswith("https://www.benl.ebay.be"))
+                self.assertTrue(
+                    item["item_web_url"].startswith("https://www.benl.ebay.be")
+                )
 
 
 class APISandboxMultipleSiteTests(unittest.TestCase):
@@ -202,9 +208,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
         # try each credential that when bad should raise an exception
         sensitive_params = {
             # "application": ("placeholder",),
-            "user": (
-                "refresh_token_expiry",
-            ),
+            "user": ("refresh_token_expiry",),
             "header": (
                 "accept_language",
                 "content_language",
@@ -231,7 +235,6 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
                     # demonstrate another way to supply dicts during instantiation
                     API(**bad_config)
 
-
     def test_object_reuse(self):
         """Do the same parameters return the same API object?"""
         a1 = API(application="sandbox_1", user="sandbox_1", header="ENCA")
@@ -255,7 +258,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
         """Is closer shipping less expensive?"""
 
         # domestic
-        # d_market = 'EBAY_ENCA'    # set in header
+        # d_market = 'EBAY_CA'    # set in header
         d_country = "CA"
         d_currency = "CAD"
         # d_zip = 'K1M 1M4'         # set in header
@@ -898,7 +901,11 @@ class APIProductionSingleTests(unittest.TestCase):
             "schemaVersion": "1.0",
         }
         try:
-            self._api.sell_feed_create_task(body=body, content_type="application/json", x_ebay_c_marketplace_id="placeholder")
+            self._api.sell_feed_create_task(
+                body=body,
+                content_type="application/json",
+                x_ebay_c_marketplace_id="placeholder",
+            )
         except Error as error:
             self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
         else:
@@ -919,7 +926,11 @@ class APIProductionSingleTests(unittest.TestCase):
             # The Swagger code generated from eBay's OpenAPI contract doesn't support this. Checked on 2022-10-22.
 
             try:
-                self._api.sell_feed_upload_file(task_id=task_id, file_name=file_name, content_type="application/json")
+                self._api.sell_feed_upload_file(
+                    task_id=task_id,
+                    file_name=file_name,
+                    content_type="application/json",
+                )
             except Error as error:
                 self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
 
@@ -976,7 +987,9 @@ class APIProductionSingleTests(unittest.TestCase):
             else:
                 try:
                     config = {"alertEmail": alert_email}
-                    self._api.commerce_notification_update_config(body=config, content_type="application/json")
+                    self._api.commerce_notification_update_config(
+                        body=config, content_type="application/json"
+                    )
                 except Error as error:
                     self.fail(
                         f"Error {error.number} is {error.reason}  {error.detail}.\n"
@@ -1004,8 +1017,7 @@ class APIProductionSingleTests(unittest.TestCase):
                         },
                     }
                     self._api.commerce_notification_create_destination(
-                        body=destination_request,
-                        content_type="application/json"
+                        body=destination_request, content_type="application/json"
                     )
                 except Error as error:
                     self.fail(

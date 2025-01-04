@@ -54,7 +54,7 @@
             "country" : "CA",
             "currency": "CAD",
             "device_id": "",
-            "marketplace_id": "EBAY_ENCA",
+            "marketplace_id": "EBAY_CA",
             "zip": "K1M 1M4"
         },
         "NLBE": {
@@ -65,7 +65,7 @@
             "country" : "BE",
             "currency": "EUR",
             "device_id": "",
-            "marketplace_id": "EBAY_NLBE",
+            "marketplace_id": "EBAY_BE",
             "zip": "1000"
         },
         "GB": {

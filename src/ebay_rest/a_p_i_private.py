@@ -199,9 +199,7 @@ class APIPrivate(metaclass=Multiton):
         # check the header keys and values
 
         # get valid marketplace ids
-        self._marketplace_ids = []
-        for global_id_value in Reference.get_global_id_values():
-            self._marketplace_ids.append(global_id_value["global_id"].replace("-", "_"))
+        self._marketplace_ids = list(Reference.get_marketplace_id_values())
 
         # get all the languages that marketplaces use
         marketplace_languages = set()
@@ -613,7 +611,16 @@ class APIPrivate(metaclass=Multiton):
         :param kwargs (Dict[str, int], required):
         :return collection (collections):
         """
-        page_controls = ["href", "limit", "next", "offset", "prev", "total", "warnings", "refinement"]
+        page_controls = [
+            "href",
+            "limit",
+            "next",
+            "offset",
+            "prev",
+            "total",
+            "warnings",
+            "refinement",
+        ]
         page_limit = 200  # the maximum number of records per page, as dictated by eBay
         yield_record_count = 0
         yielded_info = list()
