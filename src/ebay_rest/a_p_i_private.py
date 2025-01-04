@@ -881,21 +881,18 @@ class APIPrivate(metaclass=Multiton):
         """
         TO AVOID CIRCULAR IMPORTS, here in is a copy the API class's method developer_analytics_get_rate_limits.
         """
-        try:
-            return self._method_single(
-                developer_analytics.Configuration,
-                "/developer/analytics/v1_beta",
-                developer_analytics.RateLimitApi,
-                developer_analytics.ApiClient,
-                "get_rate_limits",
-                DeveloperAnalyticsException,
-                False,
-                ["developer.analytics", "rate_limit"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            developer_analytics.Configuration,
+            "/developer/analytics/v1_beta",
+            developer_analytics.RateLimitApi,
+            developer_analytics.ApiClient,
+            "get_rate_limits",
+            DeveloperAnalyticsException,
+            False,
+            ["developer.analytics", "rate_limit"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def _de_swagger(self, obj: collections):
         """Take a Swagger data object and return the Python styled equivalent.

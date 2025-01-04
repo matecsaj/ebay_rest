@@ -171,21 +171,18 @@ class API(APIPrivate):
         :param str accept_language: This header is used to indicate the natural language and locale preferred by the user for the response.This header is required when targeting a specific locale of a marketplace that supports multiple locales. For example:When targeting the French locale of the Belgium marketplace, it is required to pass in fr-BE to specify this. If this locale is not specified, the language will default to Dutch.When targeting the French locale of the Canadian marketplace, it is required to pass in fr-CA to specify this. If this locale is not specified, the language will default to English.
         :return: CompatibilityResponse
         """
-        try:
-            return self._method_single(
-                buy_browse.Configuration,
-                "/buy/browse/v1",
-                buy_browse.ItemApi,
-                buy_browse.ApiClient,
-                "check_compatibility",
-                BuyBrowseException,
-                False,
-                ["buy.browse", "item"],
-                (content_type, item_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_browse.Configuration,
+            "/buy/browse/v1",
+            buy_browse.ItemApi,
+            buy_browse.ApiClient,
+            "check_compatibility",
+            BuyBrowseException,
+            False,
+            ["buy.browse", "item"],
+            (content_type, item_id),
+            **kwargs,
+        )  # noqa: E501
 
     def buy_browse_get_item(self, item_id, **kwargs):  # noqa: E501
         """get_item
@@ -199,21 +196,18 @@ class API(APIPrivate):
         :param str accept_language: This header is used to indicate the natural language and locale preferred by the user for the response.This header is required when targeting a specific locale of a marketplace that supports multiple locales. For example:When targeting the French locale of the Belgium marketplace, it is required to pass in fr-BE to specify this. If this locale is not specified, the language will default to Dutch.When targeting the French locale of the Canadian marketplace, it is required to pass in fr-CA to specify this. If this locale is not specified, the language will default to English.
         :return: Item
         """
-        try:
-            return self._method_single(
-                buy_browse.Configuration,
-                "/buy/browse/v1",
-                buy_browse.ItemApi,
-                buy_browse.ApiClient,
-                "get_item",
-                BuyBrowseException,
-                False,
-                ["buy.browse", "item"],
-                item_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_browse.Configuration,
+            "/buy/browse/v1",
+            buy_browse.ItemApi,
+            buy_browse.ApiClient,
+            "get_item",
+            BuyBrowseException,
+            False,
+            ["buy.browse", "item"],
+            item_id,
+            **kwargs,
+        )  # noqa: E501
 
     def buy_browse_get_item_by_legacy_id(self, legacy_item_id, **kwargs):  # noqa: E501
         """get_item_by_legacy_id
@@ -229,21 +223,18 @@ class API(APIPrivate):
         :param str accept_language: This header is used to indicate the natural language and locale preferred by the user for the response.This header is required when targeting a specific locale of a marketplace that supports multiple locales. For example:When targeting the French locale of the Belgium marketplace, it is required to pass in fr-BE to specify this. If this locale is not specified, the language will default to Dutch.When targeting the French locale of the Canadian marketplace, it is required to pass in fr-CA to specify this. If this locale is not specified, the language will default to English.
         :return: Item
         """
-        try:
-            return self._method_single(
-                buy_browse.Configuration,
-                "/buy/browse/v1",
-                buy_browse.ItemApi,
-                buy_browse.ApiClient,
-                "get_item_by_legacy_id",
-                BuyBrowseException,
-                False,
-                ["buy.browse", "item"],
-                legacy_item_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_browse.Configuration,
+            "/buy/browse/v1",
+            buy_browse.ItemApi,
+            buy_browse.ApiClient,
+            "get_item_by_legacy_id",
+            BuyBrowseException,
+            False,
+            ["buy.browse", "item"],
+            legacy_item_id,
+            **kwargs,
+        )  # noqa: E501
 
     def buy_browse_get_items(self, **kwargs):  # noqa: E501
         """get_items
@@ -257,21 +248,18 @@ class API(APIPrivate):
         :param str accept_language: This header is used to indicate the natural language and locale preferred by the user for the response.This header is required when targeting a specific locale of a marketplace that supports multiple locales. For example:When targeting the French locale of the Belgium marketplace, it is required to pass in fr-BE to specify this. If this locale is not specified, the language will default to Dutch.When targeting the French locale of the Canadian marketplace, it is required to pass in fr-CA to specify this. If this locale is not specified, the language will default to English.
         :return: Items
         """
-        try:
-            return self._method_single(
-                buy_browse.Configuration,
-                "/buy/browse/v1",
-                buy_browse.ItemApi,
-                buy_browse.ApiClient,
-                "get_items",
-                BuyBrowseException,
-                False,
-                ["buy.browse", "item"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_browse.Configuration,
+            "/buy/browse/v1",
+            buy_browse.ItemApi,
+            buy_browse.ApiClient,
+            "get_items",
+            BuyBrowseException,
+            False,
+            ["buy.browse", "item"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def buy_browse_get_items_by_item_group(self, item_group_id, **kwargs):  # noqa: E501
         """get_items_by_item_group
@@ -285,21 +273,18 @@ class API(APIPrivate):
         :param str accept_language: This header is used to indicate the natural language and locale preferred by the user for the response.This header is required when targeting a specific locale of a marketplace that supports multiple locales. For example:When targeting the French locale of the Belgium marketplace, it is required to pass in fr-BE to specify this. If this locale is not specified, the language will default to Dutch.When targeting the French locale of the Canadian marketplace, it is required to pass in fr-CA to specify this. If this locale is not specified, the language will default to English.
         :return: ItemGroup
         """
-        try:
-            return self._method_single(
-                buy_browse.Configuration,
-                "/buy/browse/v1",
-                buy_browse.ItemApi,
-                buy_browse.ApiClient,
-                "get_items_by_item_group",
-                BuyBrowseException,
-                False,
-                ["buy.browse", "item"],
-                item_group_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_browse.Configuration,
+            "/buy/browse/v1",
+            buy_browse.ItemApi,
+            buy_browse.ApiClient,
+            "get_items_by_item_group",
+            BuyBrowseException,
+            False,
+            ["buy.browse", "item"],
+            item_group_id,
+            **kwargs,
+        )  # noqa: E501
 
     def buy_browse_search(self, **kwargs):  # noqa: E501
         """search
@@ -324,21 +309,18 @@ class API(APIPrivate):
         :param str accept_language: This header is used to indicate the natural language and locale preferred by the user for the response.This header is required when targeting a specific locale of a marketplace that supports multiple locales. For example:When targeting the French locale of the Belgium marketplace, it is required to pass in fr-BE to specify this. If this locale is not specified, the language will default to Dutch.When targeting the French locale of the Canadian marketplace, it is required to pass in fr-CA to specify this. If this locale is not specified, the language will default to English.
         :return: SearchPagedCollection
         """
-        try:
-            return self._method_paged(
-                buy_browse.Configuration,
-                "/buy/browse/v1",
-                buy_browse.ItemSummaryApi,
-                buy_browse.ApiClient,
-                "search",
-                BuyBrowseException,
-                False,
-                ["buy.browse", "item_summary"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            buy_browse.Configuration,
+            "/buy/browse/v1",
+            buy_browse.ItemSummaryApi,
+            buy_browse.ApiClient,
+            "search",
+            BuyBrowseException,
+            False,
+            ["buy.browse", "item_summary"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def buy_browse_search_by_image(self, content_type, **kwargs):  # noqa: E501
         """search_by_image
@@ -360,21 +342,18 @@ class API(APIPrivate):
         :param str sort: Note: This call currently returns results in a best-match order. This query parameter presently has no practical use. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/buy/browse/types/cos:SortField
         :return: SearchPagedCollection
         """
-        try:
-            return self._method_paged(
-                buy_browse.Configuration,
-                "/buy/browse/v1",
-                buy_browse.ItemSummaryApi,
-                buy_browse.ApiClient,
-                "search_by_image",
-                BuyBrowseException,
-                False,
-                ["buy.browse", "item_summary"],
-                content_type,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            buy_browse.Configuration,
+            "/buy/browse/v1",
+            buy_browse.ItemSummaryApi,
+            buy_browse.ApiClient,
+            "search_by_image",
+            BuyBrowseException,
+            False,
+            ["buy.browse", "item_summary"],
+            content_type,
+            **kwargs,
+        )  # noqa: E501
 
     def buy_deal_get_deal_items(self, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """get_deal_items
@@ -390,21 +369,18 @@ class API(APIPrivate):
         :param str x_ebay_c_enduserctx: This header is required to support revenue sharing for eBay Partner Network and to improve the accuracy of shipping and delivery time estimations.For additional information, refer to Use request headers section of the Buying Integration Guide.
         :return: DealItemSearchResponse
         """
-        try:
-            return self._method_paged(
-                buy_deal.Configuration,
-                "/buy/deal/v1",
-                buy_deal.DealItemApi,
-                buy_deal.ApiClient,
-                "get_deal_items",
-                BuyDealException,
-                False,
-                ["buy.deal", "deal_item"],
-                x_ebay_c_marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            buy_deal.Configuration,
+            "/buy/deal/v1",
+            buy_deal.DealItemApi,
+            buy_deal.ApiClient,
+            "get_deal_items",
+            BuyDealException,
+            False,
+            ["buy.deal", "deal_item"],
+            x_ebay_c_marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def buy_deal_get_event(
         self, x_ebay_c_marketplace_id, event_id, **kwargs
@@ -418,21 +394,18 @@ class API(APIPrivate):
         :param str x_ebay_c_enduserctx: This header is required to support revenue sharing for eBay Partner Network and to improve the accuracy of shipping and delivery time estimations.For additional information, refer to Use request headers section of the Buying Integration Guide.
         :return: Event
         """
-        try:
-            return self._method_single(
-                buy_deal.Configuration,
-                "/buy/deal/v1",
-                buy_deal.EventApi,
-                buy_deal.ApiClient,
-                "get_event",
-                BuyDealException,
-                False,
-                ["buy.deal", "event"],
-                (x_ebay_c_marketplace_id, event_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_deal.Configuration,
+            "/buy/deal/v1",
+            buy_deal.EventApi,
+            buy_deal.ApiClient,
+            "get_event",
+            BuyDealException,
+            False,
+            ["buy.deal", "event"],
+            (x_ebay_c_marketplace_id, event_id),
+            **kwargs,
+        )  # noqa: E501
 
     def buy_deal_get_events(self, x_ebay_c_marketplace_id, **kwargs):  # noqa: E501
         """get_events
@@ -445,21 +418,18 @@ class API(APIPrivate):
         :param str x_ebay_c_enduserctx: This header is required to support revenue sharing for eBay Partner Network and to improve the accuracy of shipping and delivery time estimations.For additional information, refer to Use request headers section of the Buying Integration Guide.
         :return: EventSearchResponse
         """
-        try:
-            return self._method_paged(
-                buy_deal.Configuration,
-                "/buy/deal/v1",
-                buy_deal.EventApi,
-                buy_deal.ApiClient,
-                "get_events",
-                BuyDealException,
-                False,
-                ["buy.deal", "event"],
-                x_ebay_c_marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            buy_deal.Configuration,
+            "/buy/deal/v1",
+            buy_deal.EventApi,
+            buy_deal.ApiClient,
+            "get_events",
+            BuyDealException,
+            False,
+            ["buy.deal", "event"],
+            x_ebay_c_marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def buy_deal_get_event_items(
         self, event_ids, x_ebay_c_marketplace_id, **kwargs
@@ -477,21 +447,18 @@ class API(APIPrivate):
         :param str x_ebay_c_enduserctx: This header is required to support revenue sharing for eBay Partner Network and to improve the accuracy of shipping and delivery time estimations.For additional information, refer to Use request headers section of the Buying Integration Guide.
         :return: EventItemSearchResponse
         """
-        try:
-            return self._method_paged(
-                buy_deal.Configuration,
-                "/buy/deal/v1",
-                buy_deal.EventItemApi,
-                buy_deal.ApiClient,
-                "get_event_items",
-                BuyDealException,
-                False,
-                ["buy.deal", "event_item"],
-                (event_ids, x_ebay_c_marketplace_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            buy_deal.Configuration,
+            "/buy/deal/v1",
+            buy_deal.EventItemApi,
+            buy_deal.ApiClient,
+            "get_event_items",
+            BuyDealException,
+            False,
+            ["buy.deal", "event_item"],
+            (event_ids, x_ebay_c_marketplace_id),
+            **kwargs,
+        )  # noqa: E501
 
     def buy_feed_get_access(self, **kwargs):  # noqa: E501
         """get_access
@@ -500,21 +467,18 @@ class API(APIPrivate):
 
         :return: ApplicationAccess
         """
-        try:
-            return self._method_single(
-                buy_feed.Configuration,
-                "/buy/feed/v1",
-                buy_feed.AccessApi,
-                buy_feed.ApiClient,
-                "get_access",
-                BuyFeedException,
-                False,
-                ["buy.feed", "access"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_feed.Configuration,
+            "/buy/feed/v1",
+            buy_feed.AccessApi,
+            buy_feed.ApiClient,
+            "get_access",
+            BuyFeedException,
+            False,
+            ["buy.feed", "access"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def buy_feed_get_feed_type(self, feed_type_id, **kwargs):  # noqa: E501
         """get_feed_type
@@ -524,21 +488,18 @@ class API(APIPrivate):
         :param str feed_type_id: This path parameter specifies the unique identifier for the feed type to be used as a search filter.Use the getFeedTypes method to identify available feed types.Note: Refer to Supported feed types to learn more about the feed types supported by the Feed API. (required)
         :return: FeedType
         """
-        try:
-            return self._method_single(
-                buy_feed.Configuration,
-                "/buy/feed/v1",
-                buy_feed.FeedTypeApi,
-                buy_feed.ApiClient,
-                "get_feed_type",
-                BuyFeedException,
-                False,
-                ["buy.feed", "feed_type"],
-                feed_type_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_feed.Configuration,
+            "/buy/feed/v1",
+            buy_feed.FeedTypeApi,
+            buy_feed.ApiClient,
+            "get_feed_type",
+            BuyFeedException,
+            False,
+            ["buy.feed", "feed_type"],
+            feed_type_id,
+            **kwargs,
+        )  # noqa: E501
 
     def buy_feed_get_feed_types(self, **kwargs):  # noqa: E501
         """get_feed_types
@@ -551,21 +512,18 @@ class API(APIPrivate):
         :param str marketplace_ids: Use this query parameter to limit marketplaces you want to see in the result set.To search for multiple marketplaces at once, list them in the URI separated by commas.Example:GET https://api.ebay.com/buy/feed/v1/feedtype?marketplaceids=EBAY_FR,EBAY_AU.See MarketplaceIdEnum for supported values.
         :return: FeedTypeSearchResponse
         """
-        try:
-            return self._method_single(
-                buy_feed.Configuration,
-                "/buy/feed/v1",
-                buy_feed.FeedTypeApi,
-                buy_feed.ApiClient,
-                "get_feed_types",
-                BuyFeedException,
-                False,
-                ["buy.feed", "feed_type"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_feed.Configuration,
+            "/buy/feed/v1",
+            buy_feed.FeedTypeApi,
+            buy_feed.ApiClient,
+            "get_feed_types",
+            BuyFeedException,
+            False,
+            ["buy.feed", "feed_type"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def buy_feed_download_file(
         self, file_id, x_ebay_c_marketplace_id, **kwargs
@@ -579,21 +537,18 @@ class API(APIPrivate):
         :param str range: Indicates where in the full resource this partial chunk of data belongs and the total number of bytes in the file.Example: bytes=0-102400.For more information about using this header, see Retrieving a GZIP feed file.
         :return: OutputStream
         """
-        try:
-            return self._method_single(
-                buy_feed.Configuration,
-                "/buy/feed/v1",
-                buy_feed.FileApi,
-                buy_feed.ApiClient,
-                "download_file",
-                BuyFeedException,
-                False,
-                ["buy.feed", "file"],
-                (file_id, x_ebay_c_marketplace_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_feed.Configuration,
+            "/buy/feed/v1",
+            buy_feed.FileApi,
+            buy_feed.ApiClient,
+            "download_file",
+            BuyFeedException,
+            False,
+            ["buy.feed", "file"],
+            (file_id, x_ebay_c_marketplace_id),
+            **kwargs,
+        )  # noqa: E501
 
     def buy_feed_get_file(
         self, file_id, x_ebay_c_marketplace_id, **kwargs
@@ -606,21 +561,18 @@ class API(APIPrivate):
         :param str x_ebay_c_marketplace_id: Indicates the unique identifier of the eBay marketplace on which the feed file exists. Example: X-EBAY-C-MARKETPLACE-ID: EBAY_US.See MarketplaceIdEnum for supported values. (required)
         :return: FileMetadata
         """
-        try:
-            return self._method_single(
-                buy_feed.Configuration,
-                "/buy/feed/v1",
-                buy_feed.FileApi,
-                buy_feed.ApiClient,
-                "get_file",
-                BuyFeedException,
-                False,
-                ["buy.feed", "file"],
-                (file_id, x_ebay_c_marketplace_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_feed.Configuration,
+            "/buy/feed/v1",
+            buy_feed.FileApi,
+            buy_feed.ApiClient,
+            "get_file",
+            BuyFeedException,
+            False,
+            ["buy.feed", "file"],
+            (file_id, x_ebay_c_marketplace_id),
+            **kwargs,
+        )  # noqa: E501
 
     def buy_feed_get_files(
         self, feed_type_id, x_ebay_c_marketplace_id, **kwargs
@@ -638,21 +590,18 @@ class API(APIPrivate):
         :param str look_back: This filter controls how far back from the current time to limit the returned feed files and is specified in minutes. The returned feed files will be those generated between the current time and the look-back time.Example: A value of 120 will limit the returned feed files to those generated in the past 2 hours (120 minutes). If 3 feed files have been generated in the past 2 hours, those 3 files will be returned. A feed file generated 4 hours earlier will not be returned.Important! Unless the look_back filter is used, available files generated approximately within the last 48 hours are returned in the response. The look_back filter can be used to increase or decrease this time frame. The maximum (minutes) value set for this parameter should not exceed the lookBack threshold for the feed type returned in getFeedType/getFeedTypes.
         :return: FileMetadataSearchResponse
         """
-        try:
-            return self._method_single(
-                buy_feed.Configuration,
-                "/buy/feed/v1",
-                buy_feed.FileApi,
-                buy_feed.ApiClient,
-                "get_files",
-                BuyFeedException,
-                False,
-                ["buy.feed", "file"],
-                (feed_type_id, x_ebay_c_marketplace_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_feed.Configuration,
+            "/buy/feed/v1",
+            buy_feed.FileApi,
+            buy_feed.ApiClient,
+            "get_files",
+            BuyFeedException,
+            False,
+            ["buy.feed", "file"],
+            (feed_type_id, x_ebay_c_marketplace_id),
+            **kwargs,
+        )  # noqa: E501
 
     def buy_marketing_get_merchandised_products(
         self, category_id, metric_name, **kwargs
@@ -667,21 +616,18 @@ class API(APIPrivate):
         :param str limit: This value specifies the maximum number of products to return in a result set.   Note: Maximum value means the method will return up to that many products per set, but it can be less than this value. If the number of products found is less than this value, the method will return all of the products matching the criteria.  Default: 8 Maximum: 100
         :return: BestSellingProductResponse
         """
-        try:
-            return self._method_single(
-                buy_marketing.Configuration,
-                "/buy/marketing/v1_beta",
-                buy_marketing.MerchandisedProductApi,
-                buy_marketing.ApiClient,
-                "get_merchandised_products",
-                BuyMarketingException,
-                False,
-                ["buy.marketing", "merchandised_product"],
-                (category_id, metric_name),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_marketing.Configuration,
+            "/buy/marketing/v1_beta",
+            buy_marketing.MerchandisedProductApi,
+            buy_marketing.ApiClient,
+            "get_merchandised_products",
+            BuyMarketingException,
+            False,
+            ["buy.marketing", "merchandised_product"],
+            (category_id, metric_name),
+            **kwargs,
+        )  # noqa: E501
 
     def buy_marketplace_insights_search(
         self, x_ebay_c_marketplace_id, **kwargs
@@ -704,21 +650,18 @@ class API(APIPrivate):
         :param str x_ebay_c_enduserctx: This header is required to support revenue sharing for eBay Partner Network and to improve the accuracy of shipping and delivery time estimations.If you are an eBay Network Partner you must use affiliateCampaignId=ePNCampaignId,affiliateReferenceId=referenceId in the header in order to be paid for selling eBay items on your site.For additional information, refer to Use request headers.
         :return: SalesHistoryPagedCollection
         """
-        try:
-            return self._method_paged(
-                buy_marketplace_insights.Configuration,
-                "/buy/marketplace_insights/v1_beta",
-                buy_marketplace_insights.ItemSalesApi,
-                buy_marketplace_insights.ApiClient,
-                "search",
-                BuyMarketplaceInsightsException,
-                False,
-                ["buy.marketplace.insights", "item_sales"],
-                x_ebay_c_marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            buy_marketplace_insights.Configuration,
+            "/buy/marketplace_insights/v1_beta",
+            buy_marketplace_insights.ItemSalesApi,
+            buy_marketplace_insights.ApiClient,
+            "search",
+            BuyMarketplaceInsightsException,
+            False,
+            ["buy.marketplace.insights", "item_sales"],
+            x_ebay_c_marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def buy_offer_get_bidding(
         self, item_id, x_ebay_c_marketplace_id, **kwargs
@@ -731,21 +674,18 @@ class API(APIPrivate):
         :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the buyer is based. This value is case sensitive.For example:   X-EBAY-C-MARKETPLACE-ID = EBAY_US  For a list of supported sites see, API Restrictions. (required)
         :return: Bidding
         """
-        try:
-            return self._method_single(
-                buy_offer.Configuration,
-                "/buy/offer/v1_beta",
-                buy_offer.BiddingApi,
-                buy_offer.ApiClient,
-                "get_bidding",
-                BuyOfferException,
-                True,
-                ["buy.offer", "bidding"],
-                (item_id, x_ebay_c_marketplace_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_offer.Configuration,
+            "/buy/offer/v1_beta",
+            buy_offer.BiddingApi,
+            buy_offer.ApiClient,
+            "get_bidding",
+            BuyOfferException,
+            True,
+            ["buy.offer", "bidding"],
+            (item_id, x_ebay_c_marketplace_id),
+            **kwargs,
+        )  # noqa: E501
 
     def buy_offer_place_proxy_bid(
         self, x_ebay_c_marketplace_id, content_type, item_id, **kwargs
@@ -760,21 +700,18 @@ class API(APIPrivate):
         :param PlaceProxyBidRequest body:
         :return: PlaceProxyBidResponse
         """
-        try:
-            return self._method_single(
-                buy_offer.Configuration,
-                "/buy/offer/v1_beta",
-                buy_offer.BiddingApi,
-                buy_offer.ApiClient,
-                "place_proxy_bid",
-                BuyOfferException,
-                True,
-                ["buy.offer", "bidding"],
-                (x_ebay_c_marketplace_id, content_type, item_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_offer.Configuration,
+            "/buy/offer/v1_beta",
+            buy_offer.BiddingApi,
+            buy_offer.ApiClient,
+            "place_proxy_bid",
+            BuyOfferException,
+            True,
+            ["buy.offer", "bidding"],
+            (x_ebay_c_marketplace_id, content_type, item_id),
+            **kwargs,
+        )  # noqa: E501
 
     def buy_order_apply_guest_coupon(
         self, x_ebay_c_marketplace_id, content_type, checkout_session_id, **kwargs
@@ -790,21 +727,18 @@ class API(APIPrivate):
         :param str x_ebay_c_enduserctx: This header is used to specify the deviceId for the device/user attempting to make the call.It contains an alphanumeric string that allows a payment gateway to track an API call attempt and confirm that it is a verified payment attempt by a device/user.
         :return: GuestCheckoutSessionResponseV2
         """
-        try:
-            return self._method_single(
-                buy_order.Configuration,
-                "/buy/order/v2",
-                buy_order.GuestCheckoutSessionApi,
-                buy_order.ApiClient,
-                "apply_guest_coupon",
-                BuyOrderException,
-                False,
-                ["buy.order", "guest_checkout_session"],
-                (x_ebay_c_marketplace_id, content_type, checkout_session_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_order.Configuration,
+            "/buy/order/v2",
+            buy_order.GuestCheckoutSessionApi,
+            buy_order.ApiClient,
+            "apply_guest_coupon",
+            BuyOrderException,
+            False,
+            ["buy.order", "guest_checkout_session"],
+            (x_ebay_c_marketplace_id, content_type, checkout_session_id),
+            **kwargs,
+        )  # noqa: E501
 
     def buy_order_get_guest_checkout_session(
         self, checkout_session_id, x_ebay_c_marketplace_id, **kwargs
@@ -818,21 +752,18 @@ class API(APIPrivate):
         :param str x_ebay_c_enduserctx: This header is used to specify the deviceId for the device/user attempting to make the call.It contains an alphanumeric string that allows a payment gateway to track an API call attempt and confirm that it is a verified payment attempt by a device/user.
         :return: GuestCheckoutSessionResponseV2
         """
-        try:
-            return self._method_single(
-                buy_order.Configuration,
-                "/buy/order/v2",
-                buy_order.GuestCheckoutSessionApi,
-                buy_order.ApiClient,
-                "get_guest_checkout_session",
-                BuyOrderException,
-                False,
-                ["buy.order", "guest_checkout_session"],
-                (checkout_session_id, x_ebay_c_marketplace_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_order.Configuration,
+            "/buy/order/v2",
+            buy_order.GuestCheckoutSessionApi,
+            buy_order.ApiClient,
+            "get_guest_checkout_session",
+            BuyOrderException,
+            False,
+            ["buy.order", "guest_checkout_session"],
+            (checkout_session_id, x_ebay_c_marketplace_id),
+            **kwargs,
+        )  # noqa: E501
 
     def buy_order_initiate_guest_checkout_session(
         self, x_ebay_c_marketplace_id, content_type, **kwargs
@@ -847,21 +778,18 @@ class API(APIPrivate):
         :param str x_ebay_c_enduserctx: This header is used to specify the deviceId for the device/user attempting to make the call.It contains an alphanumeric string that allows a payment gateway to track an API call attempt and confirm that it is a verified payment attempt by a device/user.
         :return: GuestCheckoutSessionResponseV2
         """
-        try:
-            return self._method_single(
-                buy_order.Configuration,
-                "/buy/order/v2",
-                buy_order.GuestCheckoutSessionApi,
-                buy_order.ApiClient,
-                "initiate_guest_checkout_session",
-                BuyOrderException,
-                False,
-                ["buy.order", "guest_checkout_session"],
-                (x_ebay_c_marketplace_id, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_order.Configuration,
+            "/buy/order/v2",
+            buy_order.GuestCheckoutSessionApi,
+            buy_order.ApiClient,
+            "initiate_guest_checkout_session",
+            BuyOrderException,
+            False,
+            ["buy.order", "guest_checkout_session"],
+            (x_ebay_c_marketplace_id, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def buy_order_remove_guest_coupon(
         self, x_ebay_c_marketplace_id, content_type, checkout_session_id, **kwargs
@@ -877,21 +805,18 @@ class API(APIPrivate):
         :param str x_ebay_c_enduserctx: This header is used to specify the deviceId for the device/user attempting to make the call.It contains an alphanumeric string that allows a payment gateway to track an API call attempt and confirm that it is a verified payment attempt by a device/user.
         :return: GuestCheckoutSessionResponseV2
         """
-        try:
-            return self._method_single(
-                buy_order.Configuration,
-                "/buy/order/v2",
-                buy_order.GuestCheckoutSessionApi,
-                buy_order.ApiClient,
-                "remove_guest_coupon",
-                BuyOrderException,
-                False,
-                ["buy.order", "guest_checkout_session"],
-                (x_ebay_c_marketplace_id, content_type, checkout_session_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_order.Configuration,
+            "/buy/order/v2",
+            buy_order.GuestCheckoutSessionApi,
+            buy_order.ApiClient,
+            "remove_guest_coupon",
+            BuyOrderException,
+            False,
+            ["buy.order", "guest_checkout_session"],
+            (x_ebay_c_marketplace_id, content_type, checkout_session_id),
+            **kwargs,
+        )  # noqa: E501
 
     def buy_order_update_guest_quantity(
         self, x_ebay_c_marketplace_id, content_type, checkout_session_id, **kwargs
@@ -907,21 +832,18 @@ class API(APIPrivate):
         :param str x_ebay_c_enduserctx: This header is used to specify the deviceId for the device/user attempting to make the call.It contains an alphanumeric string that allows a payment gateway to track an API call attempt and confirm that it is a verified payment attempt by a device/user.
         :return: GuestCheckoutSessionResponseV2
         """
-        try:
-            return self._method_single(
-                buy_order.Configuration,
-                "/buy/order/v2",
-                buy_order.GuestCheckoutSessionApi,
-                buy_order.ApiClient,
-                "update_guest_quantity",
-                BuyOrderException,
-                False,
-                ["buy.order", "guest_checkout_session"],
-                (x_ebay_c_marketplace_id, content_type, checkout_session_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_order.Configuration,
+            "/buy/order/v2",
+            buy_order.GuestCheckoutSessionApi,
+            buy_order.ApiClient,
+            "update_guest_quantity",
+            BuyOrderException,
+            False,
+            ["buy.order", "guest_checkout_session"],
+            (x_ebay_c_marketplace_id, content_type, checkout_session_id),
+            **kwargs,
+        )  # noqa: E501
 
     def buy_order_update_guest_shipping_address(
         self, x_ebay_c_marketplace_id, content_type, checkout_session_id, **kwargs
@@ -937,21 +859,18 @@ class API(APIPrivate):
         :param str x_ebay_c_enduserctx: This header is used to specify the deviceId for the device/user attempting to make the call.It contains an alphanumeric string that allows a payment gateway to track an API call attempt and confirm that it is a verified payment attempt by a device/user.
         :return: GuestCheckoutSessionResponseV2
         """
-        try:
-            return self._method_single(
-                buy_order.Configuration,
-                "/buy/order/v2",
-                buy_order.GuestCheckoutSessionApi,
-                buy_order.ApiClient,
-                "update_guest_shipping_address",
-                BuyOrderException,
-                False,
-                ["buy.order", "guest_checkout_session"],
-                (x_ebay_c_marketplace_id, content_type, checkout_session_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_order.Configuration,
+            "/buy/order/v2",
+            buy_order.GuestCheckoutSessionApi,
+            buy_order.ApiClient,
+            "update_guest_shipping_address",
+            BuyOrderException,
+            False,
+            ["buy.order", "guest_checkout_session"],
+            (x_ebay_c_marketplace_id, content_type, checkout_session_id),
+            **kwargs,
+        )  # noqa: E501
 
     def buy_order_update_guest_shipping_option(
         self, x_ebay_c_marketplace_id, content_type, checkout_session_id, **kwargs
@@ -967,21 +886,18 @@ class API(APIPrivate):
         :param str x_ebay_c_enduserctx: This header is used to specify the deviceId for the device/user attempting to make the call.It contains an alphanumeric string that allows a payment gateway to track an API call attempt and confirm that it is a verified payment attempt by a device/user.
         :return: GuestCheckoutSessionResponseV2
         """
-        try:
-            return self._method_single(
-                buy_order.Configuration,
-                "/buy/order/v2",
-                buy_order.GuestCheckoutSessionApi,
-                buy_order.ApiClient,
-                "update_guest_shipping_option",
-                BuyOrderException,
-                False,
-                ["buy.order", "guest_checkout_session"],
-                (x_ebay_c_marketplace_id, content_type, checkout_session_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_order.Configuration,
+            "/buy/order/v2",
+            buy_order.GuestCheckoutSessionApi,
+            buy_order.ApiClient,
+            "update_guest_shipping_option",
+            BuyOrderException,
+            False,
+            ["buy.order", "guest_checkout_session"],
+            (x_ebay_c_marketplace_id, content_type, checkout_session_id),
+            **kwargs,
+        )  # noqa: E501
 
     def buy_order_get_guest_purchase_order(
         self, purchase_order_id, **kwargs
@@ -995,21 +911,18 @@ class API(APIPrivate):
         :param str x_ebay_c_enduserctx: This header is used to specify the deviceId for the device/user attempting to make the call.It contains an alphanumeric string that allows a payment gateway to track an API call attempt and confirm that it is a verified payment attempt by a device/user.
         :return: GuestPurchaseOrderV2
         """
-        try:
-            return self._method_single(
-                buy_order.Configuration,
-                "/buy/order/v2",
-                buy_order.GuestPurchaseOrderApi,
-                buy_order.ApiClient,
-                "get_guest_purchase_order",
-                BuyOrderException,
-                False,
-                ["buy.order", "guest_purchase_order"],
-                purchase_order_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            buy_order.Configuration,
+            "/buy/order/v2",
+            buy_order.GuestPurchaseOrderApi,
+            buy_order.ApiClient,
+            "get_guest_purchase_order",
+            BuyOrderException,
+            False,
+            ["buy.order", "guest_purchase_order"],
+            purchase_order_id,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_catalog_get_product(self, epid, **kwargs):  # noqa: E501
         """get_product
@@ -1020,21 +933,18 @@ class API(APIPrivate):
         :param str x_ebay_c_marketplace_id: This method also uses the X-EBAY-C-MARKETPLACE-ID header to identify the seller's eBay marketplace. It is required for all supported marketplaces, except EBAY_US, which is the default.
         :return: Product
         """
-        try:
-            return self._method_single(
-                commerce_catalog.Configuration,
-                "/commerce/catalog/v1_beta",
-                commerce_catalog.ProductApi,
-                commerce_catalog.ApiClient,
-                "get_product",
-                CommerceCatalogException,
-                True,
-                ["commerce.catalog", "product"],
-                epid,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_catalog.Configuration,
+            "/commerce/catalog/v1_beta",
+            commerce_catalog.ProductApi,
+            commerce_catalog.ApiClient,
+            "get_product",
+            CommerceCatalogException,
+            True,
+            ["commerce.catalog", "product"],
+            epid,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_catalog_search(self, **kwargs):  # noqa: E501
         """search
@@ -1052,21 +962,18 @@ class API(APIPrivate):
         :param str q: A string consisting of one or more keywords to use to search for products in the eBay catalog.   Note: This method searches the following product record fields: title, description, brand, and aspects.localizedName, which do not include product IDs. Wildcard characters (e.g. *) are not allowed.   The keywords are handled as follows:  If the keywords are separated by a comma (e.g. iPhone,256GB), the query returns products that have iPhone AND 256GB. If the keywords are separated by a space (e.g. \"iPhone ipad\" or \"iPhone, ipad\"), the query ignores any commas and returns products that have iPhone OR iPad.   Note: Although all query parameters are optional, this method must include at least the q parameter, or the category_ids, gtin, or mpn parameter with a valid value.   You cannot use the q parameter in the same method with either the gtin parameter or the mpn parameter.
         :return: ProductSearchResponse
         """
-        try:
-            return self._method_paged(
-                commerce_catalog.Configuration,
-                "/commerce/catalog/v1_beta",
-                commerce_catalog.ProductSummaryApi,
-                commerce_catalog.ApiClient,
-                "search",
-                CommerceCatalogException,
-                True,
-                ["commerce.catalog", "product_summary"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            commerce_catalog.Configuration,
+            "/commerce/catalog/v1_beta",
+            commerce_catalog.ProductSummaryApi,
+            commerce_catalog.ApiClient,
+            "search",
+            CommerceCatalogException,
+            True,
+            ["commerce.catalog", "product_summary"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_charity_get_charity_org(
         self, charity_org_id, x_ebay_c_marketplace_id, **kwargs
@@ -1079,21 +986,18 @@ class API(APIPrivate):
         :param str x_ebay_c_marketplace_id: A header used to specify the eBay marketplace ID.Valid Values: EBAY_GB and EBAY_US (required)
         :return: CharityOrg
         """
-        try:
-            return self._method_single(
-                commerce_charity.Configuration,
-                "/commerce/charity/v1",
-                commerce_charity.CharityOrgApi,
-                commerce_charity.ApiClient,
-                "get_charity_org",
-                CommerceCharityException,
-                False,
-                ["commerce.charity", "charity_org"],
-                (charity_org_id, x_ebay_c_marketplace_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_charity.Configuration,
+            "/commerce/charity/v1",
+            commerce_charity.CharityOrgApi,
+            commerce_charity.ApiClient,
+            "get_charity_org",
+            CommerceCharityException,
+            False,
+            ["commerce.charity", "charity_org"],
+            (charity_org_id, x_ebay_c_marketplace_id),
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_charity_get_charity_orgs(
         self, x_ebay_c_marketplace_id, **kwargs
@@ -1109,21 +1013,18 @@ class API(APIPrivate):
         :param str registration_ids: A comma-separated list of charitable organization registration IDs.Note: Do not specify this parameter for query-based searches. Specify either the q or registration_ids parameter, but not both.Maximum Limit: 20
         :return: CharitySearchResponse
         """
-        try:
-            return self._method_paged(
-                commerce_charity.Configuration,
-                "/commerce/charity/v1",
-                commerce_charity.CharityOrgApi,
-                commerce_charity.ApiClient,
-                "get_charity_orgs",
-                CommerceCharityException,
-                False,
-                ["commerce.charity", "charity_org"],
-                x_ebay_c_marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            commerce_charity.Configuration,
+            "/commerce/charity/v1",
+            commerce_charity.CharityOrgApi,
+            commerce_charity.ApiClient,
+            "get_charity_orgs",
+            CommerceCharityException,
+            False,
+            ["commerce.charity", "charity_org"],
+            x_ebay_c_marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_identity_get_user(self, **kwargs):  # noqa: E501
         """get_user
@@ -1132,21 +1033,18 @@ class API(APIPrivate):
 
         :return: UserResponse
         """
-        try:
-            return self._method_single(
-                commerce_identity.Configuration,
-                "/commerce/identity/v1",
-                commerce_identity.UserApi,
-                commerce_identity.ApiClient,
-                "get_user",
-                CommerceIdentityException,
-                True,
-                ["commerce.identity", "user"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_identity.Configuration,
+            "/commerce/identity/v1",
+            commerce_identity.UserApi,
+            commerce_identity.ApiClient,
+            "get_user",
+            CommerceIdentityException,
+            True,
+            ["commerce.identity", "user"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_media_create_document(self, content_type, **kwargs):  # noqa: E501
         """create_document
@@ -1157,21 +1055,18 @@ class API(APIPrivate):
         :param CreateDocumentRequest body:
         :return: CreateDocumentResponse
         """
-        try:
-            return self._method_single(
-                commerce_media.Configuration,
-                "/commerce/media/v1_beta",
-                commerce_media.DocumentApi,
-                commerce_media.ApiClient,
-                "create_document",
-                CommerceMediaException,
-                True,
-                ["commerce.media", "document"],
-                content_type,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_media.Configuration,
+            "/commerce/media/v1_beta",
+            commerce_media.DocumentApi,
+            commerce_media.ApiClient,
+            "create_document",
+            CommerceMediaException,
+            True,
+            ["commerce.media", "document"],
+            content_type,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_media_get_document(self, document_id, **kwargs):  # noqa: E501
         """get_document
@@ -1181,21 +1076,18 @@ class API(APIPrivate):
         :param str document_id: The unique identifier of the document for which status and metadata is being retrieved.This value is returned in the response of the createDocument method. (required)
         :return: DocumentResponse
         """
-        try:
-            return self._method_single(
-                commerce_media.Configuration,
-                "/commerce/media/v1_beta",
-                commerce_media.DocumentApi,
-                commerce_media.ApiClient,
-                "get_document",
-                CommerceMediaException,
-                True,
-                ["commerce.media", "document"],
-                document_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_media.Configuration,
+            "/commerce/media/v1_beta",
+            commerce_media.DocumentApi,
+            commerce_media.ApiClient,
+            "get_document",
+            CommerceMediaException,
+            True,
+            ["commerce.media", "document"],
+            document_id,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_media_upload_document(
         self, document_id, content_type, **kwargs
@@ -1208,21 +1100,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to multipart/form-data.  For more information, refer to HTTP request headers. (required)
         :return: DocumentResponse
         """
-        try:
-            return self._method_single(
-                commerce_media.Configuration,
-                "/commerce/media/v1_beta",
-                commerce_media.DocumentApi,
-                commerce_media.ApiClient,
-                "upload_document",
-                CommerceMediaException,
-                True,
-                ["commerce.media", "document"],
-                (document_id, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_media.Configuration,
+            "/commerce/media/v1_beta",
+            commerce_media.DocumentApi,
+            commerce_media.ApiClient,
+            "upload_document",
+            CommerceMediaException,
+            True,
+            ["commerce.media", "document"],
+            (document_id, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_media_create_video(self, content_type, **kwargs):  # noqa: E501
         """create_video
@@ -1233,21 +1122,18 @@ class API(APIPrivate):
         :param CreateVideoRequest body:
         :return: None
         """
-        try:
-            return self._method_single(
-                commerce_media.Configuration,
-                "/commerce/media/v1_beta",
-                commerce_media.VideoApi,
-                commerce_media.ApiClient,
-                "create_video",
-                CommerceMediaException,
-                True,
-                ["commerce.media", "video"],
-                content_type,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_media.Configuration,
+            "/commerce/media/v1_beta",
+            commerce_media.VideoApi,
+            commerce_media.ApiClient,
+            "create_video",
+            CommerceMediaException,
+            True,
+            ["commerce.media", "video"],
+            content_type,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_media_get_video(self, video_id, **kwargs):  # noqa: E501
         """get_video
@@ -1257,21 +1143,18 @@ class API(APIPrivate):
         :param str video_id: The unique identifier of the video to be retrieved. (required)
         :return: Video
         """
-        try:
-            return self._method_single(
-                commerce_media.Configuration,
-                "/commerce/media/v1_beta",
-                commerce_media.VideoApi,
-                commerce_media.ApiClient,
-                "get_video",
-                CommerceMediaException,
-                True,
-                ["commerce.media", "video"],
-                video_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_media.Configuration,
+            "/commerce/media/v1_beta",
+            commerce_media.VideoApi,
+            commerce_media.ApiClient,
+            "get_video",
+            CommerceMediaException,
+            True,
+            ["commerce.media", "video"],
+            video_id,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_media_upload_video(
         self, content_type, video_id, **kwargs
@@ -1287,21 +1170,18 @@ class API(APIPrivate):
         :param str content_range: Use this header to specify the content range for the upload. The Content-Range should be of the following bytes ((?:[0-9]+-[0-9]+)|\\\\\\\\*)/([0-9]+|\\\\\\\\*) pattern.Note: This header is optional and is only required for resumable uploads (when an upload is interrupted and must be resumed from a certain point).
         :return: None
         """
-        try:
-            return self._method_single(
-                commerce_media.Configuration,
-                "/commerce/media/v1_beta",
-                commerce_media.VideoApi,
-                commerce_media.ApiClient,
-                "upload_video",
-                CommerceMediaException,
-                True,
-                ["commerce.media", "video"],
-                (content_type, video_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_media.Configuration,
+            "/commerce/media/v1_beta",
+            commerce_media.VideoApi,
+            commerce_media.ApiClient,
+            "upload_video",
+            CommerceMediaException,
+            True,
+            ["commerce.media", "video"],
+            (content_type, video_id),
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_get_config(self, **kwargs):  # noqa: E501
         """get_config
@@ -1310,21 +1190,18 @@ class API(APIPrivate):
 
         :return: Config
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.ConfigApi,
-                commerce_notification.ApiClient,
-                "get_config",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "config"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.ConfigApi,
+            commerce_notification.ApiClient,
+            "get_config",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "config"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_update_config(self, content_type, **kwargs):  # noqa: E501
         """update_config
@@ -1335,21 +1212,18 @@ class API(APIPrivate):
         :param Config body: The configurations for this application.
         :return: None
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.ConfigApi,
-                commerce_notification.ApiClient,
-                "update_config",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "config"],
-                content_type,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.ConfigApi,
+            commerce_notification.ApiClient,
+            "update_config",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "config"],
+            content_type,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_create_destination(
         self, content_type, **kwargs
@@ -1362,21 +1236,18 @@ class API(APIPrivate):
         :param DestinationRequest body: The create destination request.
         :return: object
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.DestinationApi,
-                commerce_notification.ApiClient,
-                "create_destination",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "destination"],
-                content_type,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.DestinationApi,
+            commerce_notification.ApiClient,
+            "create_destination",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "destination"],
+            content_type,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_delete_destination(
         self, destination_id, **kwargs
@@ -1388,21 +1259,18 @@ class API(APIPrivate):
         :param str destination_id: The unique identifier of the destination to delete. Only disabled or marked down destinations can be deleted, and enabled destinations cannot be deleted. Use getDestination or getDestinations to see the current status of a destination.  (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.DestinationApi,
-                commerce_notification.ApiClient,
-                "delete_destination",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "destination"],
-                destination_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.DestinationApi,
+            commerce_notification.ApiClient,
+            "delete_destination",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "destination"],
+            destination_id,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_get_destination(
         self, destination_id, **kwargs
@@ -1414,21 +1282,18 @@ class API(APIPrivate):
         :param str destination_id: The unique identifier of the destination to retrieve. Use getDestinations to retrieve destination IDs. (required)
         :return: Destination
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.DestinationApi,
-                commerce_notification.ApiClient,
-                "get_destination",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "destination"],
-                destination_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.DestinationApi,
+            commerce_notification.ApiClient,
+            "get_destination",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "destination"],
+            destination_id,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_get_destinations(self, **kwargs):  # noqa: E501
         """get_destinations
@@ -1439,21 +1304,18 @@ class API(APIPrivate):
         :param str limit: The maximum number of destinations to return per page from the result set.Min: 10Max: 100Default: 20
         :return: DestinationSearchResponse
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.DestinationApi,
-                commerce_notification.ApiClient,
-                "get_destinations",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "destination"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.DestinationApi,
+            commerce_notification.ApiClient,
+            "get_destinations",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "destination"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_update_destination(
         self, content_type, destination_id, **kwargs
@@ -1467,21 +1329,18 @@ class API(APIPrivate):
         :param DestinationRequest body: The create subscription request.
         :return: None
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.DestinationApi,
-                commerce_notification.ApiClient,
-                "update_destination",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "destination"],
-                (content_type, destination_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.DestinationApi,
+            commerce_notification.ApiClient,
+            "update_destination",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "destination"],
+            (content_type, destination_id),
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_get_public_key(
         self, public_key_id, **kwargs
@@ -1493,21 +1352,18 @@ class API(APIPrivate):
         :param str public_key_id: The unique key ID that is used to retrieve the public key.Note: This is retrieved from the X-EBAY-SIGNATURE header that is included with the push notification. (required)
         :return: PublicKey
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.PublicKeyApi,
-                commerce_notification.ApiClient,
-                "get_public_key",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "public_key"],
-                public_key_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.PublicKeyApi,
+            commerce_notification.ApiClient,
+            "get_public_key",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "public_key"],
+            public_key_id,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_create_subscription(
         self, content_type, **kwargs
@@ -1520,21 +1376,18 @@ class API(APIPrivate):
         :param CreateSubscriptionRequest body: The create subscription request.
         :return: object
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.SubscriptionApi,
-                commerce_notification.ApiClient,
-                "create_subscription",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "subscription"],
-                content_type,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.SubscriptionApi,
+            commerce_notification.ApiClient,
+            "create_subscription",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "subscription"],
+            content_type,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_create_subscription_filter(
         self, content_type, subscription_id, **kwargs
@@ -1548,21 +1401,18 @@ class API(APIPrivate):
         :param CreateSubscriptionFilterRequest body: The create subscription filter request.
         :return: object
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.SubscriptionApi,
-                commerce_notification.ApiClient,
-                "create_subscription_filter",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "subscription"],
-                (content_type, subscription_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.SubscriptionApi,
+            commerce_notification.ApiClient,
+            "create_subscription_filter",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "subscription"],
+            (content_type, subscription_id),
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_delete_subscription(
         self, subscription_id, **kwargs
@@ -1574,21 +1424,18 @@ class API(APIPrivate):
         :param str subscription_id: The unique identifier of the subscription to delete. Use getSubscriptions to retrieve subscription IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.SubscriptionApi,
-                commerce_notification.ApiClient,
-                "delete_subscription",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "subscription"],
-                subscription_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.SubscriptionApi,
+            commerce_notification.ApiClient,
+            "delete_subscription",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "subscription"],
+            subscription_id,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_delete_subscription_filter(
         self, filter_id, subscription_id, **kwargs
@@ -1601,21 +1448,18 @@ class API(APIPrivate):
         :param str subscription_id: The unique identifier of the subscription associated with the filter to delete. Use getSubscriptions to retrieve subscription IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.SubscriptionApi,
-                commerce_notification.ApiClient,
-                "delete_subscription_filter",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "subscription"],
-                (filter_id, subscription_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.SubscriptionApi,
+            commerce_notification.ApiClient,
+            "delete_subscription_filter",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "subscription"],
+            (filter_id, subscription_id),
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_disable_subscription(
         self, subscription_id, **kwargs
@@ -1627,21 +1471,18 @@ class API(APIPrivate):
         :param str subscription_id: The unique identifier of an enabled subscription that will be disabled. Use getSubscriptions to retrieve subscription IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.SubscriptionApi,
-                commerce_notification.ApiClient,
-                "disable_subscription",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "subscription"],
-                subscription_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.SubscriptionApi,
+            commerce_notification.ApiClient,
+            "disable_subscription",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "subscription"],
+            subscription_id,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_enable_subscription(
         self, subscription_id, **kwargs
@@ -1653,21 +1494,18 @@ class API(APIPrivate):
         :param str subscription_id: The unique identifier of a disabled subscription that will be enabled. Use getSubscriptions to retrieve subscription IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.SubscriptionApi,
-                commerce_notification.ApiClient,
-                "enable_subscription",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "subscription"],
-                subscription_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.SubscriptionApi,
+            commerce_notification.ApiClient,
+            "enable_subscription",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "subscription"],
+            subscription_id,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_get_subscription(
         self, subscription_id, **kwargs
@@ -1679,21 +1517,18 @@ class API(APIPrivate):
         :param str subscription_id: The unique identifier of the subscription to retrieve. Use getSubscriptions to retrieve subscription IDs. (required)
         :return: Subscription
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.SubscriptionApi,
-                commerce_notification.ApiClient,
-                "get_subscription",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "subscription"],
-                subscription_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.SubscriptionApi,
+            commerce_notification.ApiClient,
+            "get_subscription",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "subscription"],
+            subscription_id,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_get_subscription_filter(
         self, filter_id, subscription_id, **kwargs
@@ -1706,21 +1541,18 @@ class API(APIPrivate):
         :param str subscription_id: The unique identifier of the subscription associated with the filter. Use getSubscriptions to retrieve subscription IDs. (required)
         :return: SubscriptionFilter
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.SubscriptionApi,
-                commerce_notification.ApiClient,
-                "get_subscription_filter",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "subscription"],
-                (filter_id, subscription_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.SubscriptionApi,
+            commerce_notification.ApiClient,
+            "get_subscription_filter",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "subscription"],
+            (filter_id, subscription_id),
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_get_subscriptions(self, **kwargs):  # noqa: E501
         """get_subscriptions
@@ -1731,21 +1563,18 @@ class API(APIPrivate):
         :param str limit: The maximum number of subscriptions to return per page from the result set.Min: 10Max: 100Default: 20
         :return: SubscriptionSearchResponse
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.SubscriptionApi,
-                commerce_notification.ApiClient,
-                "get_subscriptions",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "subscription"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.SubscriptionApi,
+            commerce_notification.ApiClient,
+            "get_subscriptions",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "subscription"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_test_subscription(
         self, subscription_id, **kwargs
@@ -1757,21 +1586,18 @@ class API(APIPrivate):
         :param str subscription_id: The unique identifier of the subscription to test. Use getSubscriptions to retrieve subscription IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.SubscriptionApi,
-                commerce_notification.ApiClient,
-                "test_subscription",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "subscription"],
-                subscription_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.SubscriptionApi,
+            commerce_notification.ApiClient,
+            "test_subscription",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "subscription"],
+            subscription_id,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_update_subscription(
         self, content_type, subscription_id, **kwargs
@@ -1785,21 +1611,18 @@ class API(APIPrivate):
         :param UpdateSubscriptionRequest body: The create subscription request.
         :return: None
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.SubscriptionApi,
-                commerce_notification.ApiClient,
-                "update_subscription",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "subscription"],
-                (content_type, subscription_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.SubscriptionApi,
+            commerce_notification.ApiClient,
+            "update_subscription",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "subscription"],
+            (content_type, subscription_id),
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_get_topic(self, topic_id, **kwargs):  # noqa: E501
         """get_topic
@@ -1809,21 +1632,18 @@ class API(APIPrivate):
         :param str topic_id: The unique identifier of the notification topic for which the details are retrieved. Use getTopics to retrieve the topic ID. (required)
         :return: Topic
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.TopicApi,
-                commerce_notification.ApiClient,
-                "get_topic",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "topic"],
-                topic_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.TopicApi,
+            commerce_notification.ApiClient,
+            "get_topic",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "topic"],
+            topic_id,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_notification_get_topics(self, **kwargs):  # noqa: E501
         """get_topics
@@ -1834,21 +1654,18 @@ class API(APIPrivate):
         :param str limit: The maximum number of notification topics to return per page from the result set.Min: 10Max: 100Default: 20
         :return: TopicSearchResponse
         """
-        try:
-            return self._method_single(
-                commerce_notification.Configuration,
-                "/commerce/notification/v1",
-                commerce_notification.TopicApi,
-                commerce_notification.ApiClient,
-                "get_topics",
-                CommerceNotificationException,
-                False,
-                ["commerce.notification", "topic"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_notification.Configuration,
+            "/commerce/notification/v1",
+            commerce_notification.TopicApi,
+            commerce_notification.ApiClient,
+            "get_topics",
+            CommerceNotificationException,
+            False,
+            ["commerce.notification", "topic"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_taxonomy_fetch_item_aspects(
         self, category_tree_id, **kwargs
@@ -1860,21 +1677,18 @@ class API(APIPrivate):
         :param str category_tree_id: The unique identifier of the eBay category tree. The category tree ID for an eBay marketplace can be retrieved using the getDefaultCategoryTreeId method. (required)
         :return: GetCategoriesAspectResponse
         """
-        try:
-            return self._method_single(
-                commerce_taxonomy.Configuration,
-                "/commerce/taxonomy/v1",
-                commerce_taxonomy.CategoryTreeApi,
-                commerce_taxonomy.ApiClient,
-                "fetch_item_aspects",
-                CommerceTaxonomyException,
-                False,
-                ["commerce.taxonomy", "category_tree"],
-                category_tree_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_taxonomy.Configuration,
+            "/commerce/taxonomy/v1",
+            commerce_taxonomy.CategoryTreeApi,
+            commerce_taxonomy.ApiClient,
+            "fetch_item_aspects",
+            CommerceTaxonomyException,
+            False,
+            ["commerce.taxonomy", "category_tree"],
+            category_tree_id,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_taxonomy_get_category_subtree(
         self, category_id, category_tree_id, **kwargs
@@ -1888,21 +1702,18 @@ class API(APIPrivate):
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
         :return: CategorySubtree
         """
-        try:
-            return self._method_single(
-                commerce_taxonomy.Configuration,
-                "/commerce/taxonomy/v1",
-                commerce_taxonomy.CategoryTreeApi,
-                commerce_taxonomy.ApiClient,
-                "get_category_subtree",
-                CommerceTaxonomyException,
-                False,
-                ["commerce.taxonomy", "category_tree"],
-                (category_id, category_tree_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_taxonomy.Configuration,
+            "/commerce/taxonomy/v1",
+            commerce_taxonomy.CategoryTreeApi,
+            commerce_taxonomy.ApiClient,
+            "get_category_subtree",
+            CommerceTaxonomyException,
+            False,
+            ["commerce.taxonomy", "category_tree"],
+            (category_id, category_tree_id),
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_taxonomy_get_category_suggestions(
         self, category_tree_id, q, **kwargs
@@ -1915,21 +1726,18 @@ class API(APIPrivate):
         :param str q: A quoted string that describes or characterizes the item being offered for sale. The string format is free form, and can contain any combination of phrases or keywords. eBay will parse the string and return suggested categories for the item. (required)
         :return: CategorySuggestionResponse
         """
-        try:
-            return self._method_single(
-                commerce_taxonomy.Configuration,
-                "/commerce/taxonomy/v1",
-                commerce_taxonomy.CategoryTreeApi,
-                commerce_taxonomy.ApiClient,
-                "get_category_suggestions",
-                CommerceTaxonomyException,
-                False,
-                ["commerce.taxonomy", "category_tree"],
-                (category_tree_id, q),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_taxonomy.Configuration,
+            "/commerce/taxonomy/v1",
+            commerce_taxonomy.CategoryTreeApi,
+            commerce_taxonomy.ApiClient,
+            "get_category_suggestions",
+            CommerceTaxonomyException,
+            False,
+            ["commerce.taxonomy", "category_tree"],
+            (category_tree_id, q),
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_taxonomy_get_category_tree(
         self, category_tree_id, **kwargs
@@ -1942,21 +1750,18 @@ class API(APIPrivate):
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
         :return: CategoryTree
         """
-        try:
-            return self._method_single(
-                commerce_taxonomy.Configuration,
-                "/commerce/taxonomy/v1",
-                commerce_taxonomy.CategoryTreeApi,
-                commerce_taxonomy.ApiClient,
-                "get_category_tree",
-                CommerceTaxonomyException,
-                False,
-                ["commerce.taxonomy", "category_tree"],
-                category_tree_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_taxonomy.Configuration,
+            "/commerce/taxonomy/v1",
+            commerce_taxonomy.CategoryTreeApi,
+            commerce_taxonomy.ApiClient,
+            "get_category_tree",
+            CommerceTaxonomyException,
+            False,
+            ["commerce.taxonomy", "category_tree"],
+            category_tree_id,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_taxonomy_get_compatibility_properties(
         self, category_tree_id, category_id, **kwargs
@@ -1969,21 +1774,18 @@ class API(APIPrivate):
         :param str category_id: The unique identifier of an eBay category. This eBay category must be a valid eBay category on the specified eBay marketplace, and the category must support parts compatibility for cars, trucks, or motorcycles. The getAutomotivePartsCompatibilityPolicies method of the Selling Metadata API can be used to retrieve all eBay categories for an eBay marketplace that support parts compatibility for vehicles. (required)
         :return: GetCompatibilityMetadataResponse
         """
-        try:
-            return self._method_single(
-                commerce_taxonomy.Configuration,
-                "/commerce/taxonomy/v1",
-                commerce_taxonomy.CategoryTreeApi,
-                commerce_taxonomy.ApiClient,
-                "get_compatibility_properties",
-                CommerceTaxonomyException,
-                False,
-                ["commerce.taxonomy", "category_tree"],
-                (category_tree_id, category_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_taxonomy.Configuration,
+            "/commerce/taxonomy/v1",
+            commerce_taxonomy.CategoryTreeApi,
+            commerce_taxonomy.ApiClient,
+            "get_compatibility_properties",
+            CommerceTaxonomyException,
+            False,
+            ["commerce.taxonomy", "category_tree"],
+            (category_tree_id, category_id),
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_taxonomy_get_compatibility_property_values(
         self, category_tree_id, compatibility_property, category_id, **kwargs
@@ -1998,21 +1800,18 @@ class API(APIPrivate):
         :param str filter: One or more compatible vehicle property name/value pairs are passed in through this query parameter. The compatible vehicle property name and corresponding value are delimited with a colon (:), such as filter=Year:2018, and multiple compatible vehicle property name/value pairs are delimited with a comma (,).Note: Commas are used as delimiters between filter values. If a value includes a comma (e.g., BodyStyle:AWD B9 8W5,C8WD) you must include a backslash (\\) immediately before the comma to prevent it from being evaluated as a delimiter.As with all query parameter values, the filter parameters must be URL encoded. For more information about encoding request parameters, refer to URL encoding query parameter values.For example, to retrieve all vehicle trims for a 2022 Audi A4:Set the compatibility_property filter to compatibility_property=TrimInclude the following name/value filters using one filter parameter:Year:2022Make:AudiModel:A4BodyStyle:AWD B9 8W5\\,8WDThe resulting comma-separated filter query parameter is:filter=Year:2022,Make:Audi,Model:A4,BodyStyle:AWD B9 8W5\\,8WDThe following sample shows the same filter but with URL encoding for the blank spaces.GET https://api.ebay.com/commerce/taxonomy/v1/category_tree/100/get_compatibility_property_values?category_id=6016&compatibility_property=Trim&filter=Year:2022,Make:Audi,Model:A4,BodyStyle:AWD%20B9%208W5%5C%2C8WDNote: While not required, it is strongly recommended that users limit the size of the result set by using the filter query parameter. Failure to do so may result in a timeout error if too much data is attempted to be returned. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/commerce/taxonomy/types/txn:ConstraintFilter
         :return: GetCompatibilityPropertyValuesResponse
         """
-        try:
-            return self._method_single(
-                commerce_taxonomy.Configuration,
-                "/commerce/taxonomy/v1",
-                commerce_taxonomy.CategoryTreeApi,
-                commerce_taxonomy.ApiClient,
-                "get_compatibility_property_values",
-                CommerceTaxonomyException,
-                False,
-                ["commerce.taxonomy", "category_tree"],
-                (category_tree_id, compatibility_property, category_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_taxonomy.Configuration,
+            "/commerce/taxonomy/v1",
+            commerce_taxonomy.CategoryTreeApi,
+            commerce_taxonomy.ApiClient,
+            "get_compatibility_property_values",
+            CommerceTaxonomyException,
+            False,
+            ["commerce.taxonomy", "category_tree"],
+            (category_tree_id, compatibility_property, category_id),
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_taxonomy_get_default_category_tree_id(
         self, marketplace_id, **kwargs
@@ -2024,21 +1823,18 @@ class API(APIPrivate):
         :param str marketplace_id: The unique identifier of the eBay marketplace for which the category tree ID is requested. For a list of supported marketplace IDs, see Marketplaces with Default Category Trees. (required)
         :return: BaseCategoryTree
         """
-        try:
-            return self._method_single(
-                commerce_taxonomy.Configuration,
-                "/commerce/taxonomy/v1",
-                commerce_taxonomy.CategoryTreeApi,
-                commerce_taxonomy.ApiClient,
-                "get_default_category_tree_id",
-                CommerceTaxonomyException,
-                False,
-                ["commerce.taxonomy", "category_tree"],
-                marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_taxonomy.Configuration,
+            "/commerce/taxonomy/v1",
+            commerce_taxonomy.CategoryTreeApi,
+            commerce_taxonomy.ApiClient,
+            "get_default_category_tree_id",
+            CommerceTaxonomyException,
+            False,
+            ["commerce.taxonomy", "category_tree"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_taxonomy_get_expired_categories(
         self, category_tree_id, **kwargs
@@ -2050,21 +1846,18 @@ class API(APIPrivate):
         :param str category_tree_id: The unique identifier of the eBay category tree.The category tree ID for an eBay marketplace can be retrieved using the getDefaultCategoryTreeId method. (required)
         :return: ExpiredCategories
         """
-        try:
-            return self._method_single(
-                commerce_taxonomy.Configuration,
-                "/commerce/taxonomy/v1",
-                commerce_taxonomy.CategoryTreeApi,
-                commerce_taxonomy.ApiClient,
-                "get_expired_categories",
-                CommerceTaxonomyException,
-                False,
-                ["commerce.taxonomy", "category_tree"],
-                category_tree_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_taxonomy.Configuration,
+            "/commerce/taxonomy/v1",
+            commerce_taxonomy.CategoryTreeApi,
+            commerce_taxonomy.ApiClient,
+            "get_expired_categories",
+            CommerceTaxonomyException,
+            False,
+            ["commerce.taxonomy", "category_tree"],
+            category_tree_id,
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_taxonomy_get_item_aspects_for_category(
         self, category_id, category_tree_id, **kwargs
@@ -2077,21 +1870,18 @@ class API(APIPrivate):
         :param str category_tree_id: The unique identifier of the eBay category tree. The category tree ID for an eBay marketplace can be retrieved using the getDefaultCategoryTreeId method. (required)
         :return: AspectMetadata
         """
-        try:
-            return self._method_single(
-                commerce_taxonomy.Configuration,
-                "/commerce/taxonomy/v1",
-                commerce_taxonomy.CategoryTreeApi,
-                commerce_taxonomy.ApiClient,
-                "get_item_aspects_for_category",
-                CommerceTaxonomyException,
-                False,
-                ["commerce.taxonomy", "category_tree"],
-                (category_id, category_tree_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_taxonomy.Configuration,
+            "/commerce/taxonomy/v1",
+            commerce_taxonomy.CategoryTreeApi,
+            commerce_taxonomy.ApiClient,
+            "get_item_aspects_for_category",
+            CommerceTaxonomyException,
+            False,
+            ["commerce.taxonomy", "category_tree"],
+            (category_id, category_tree_id),
+            **kwargs,
+        )  # noqa: E501
 
     def commerce_translation_translate(
         self, body, content_type, **kwargs
@@ -2104,21 +1894,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: TranslateResponse
         """
-        try:
-            return self._method_single(
-                commerce_translation.Configuration,
-                "/commerce/translation/v1_beta",
-                commerce_translation.LanguageApi,
-                commerce_translation.ApiClient,
-                "translate",
-                CommerceTranslationException,
-                False,
-                ["commerce.translation", "language"],
-                (body, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            commerce_translation.Configuration,
+            "/commerce/translation/v1_beta",
+            commerce_translation.LanguageApi,
+            commerce_translation.ApiClient,
+            "translate",
+            CommerceTranslationException,
+            False,
+            ["commerce.translation", "language"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def developer_analytics_get_rate_limits(self, **kwargs):  # noqa: E501
         """get_rate_limits
@@ -2129,21 +1916,18 @@ class API(APIPrivate):
         :param str api_name: This optional query parameter filters the result to include only the APIs specified. Example values:  browse for the Buy APIs inventory for the Sell APIs taxonomy for the Commerce APIs tradingapi for the Trading APIs
         :return: RateLimitsResponse
         """
-        try:
-            return self._method_single(
-                developer_analytics.Configuration,
-                "/developer/analytics/v1_beta",
-                developer_analytics.RateLimitApi,
-                developer_analytics.ApiClient,
-                "get_rate_limits",
-                DeveloperAnalyticsException,
-                False,
-                ["developer.analytics", "rate_limit"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            developer_analytics.Configuration,
+            "/developer/analytics/v1_beta",
+            developer_analytics.RateLimitApi,
+            developer_analytics.ApiClient,
+            "get_rate_limits",
+            DeveloperAnalyticsException,
+            False,
+            ["developer.analytics", "rate_limit"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def developer_analytics_get_user_rate_limits(self, **kwargs):  # noqa: E501
         """get_user_rate_limits
@@ -2154,21 +1938,18 @@ class API(APIPrivate):
         :param str api_name: This optional query parameter filters the result to include only the APIs specified. Example values: browse for the Buy APIs inventory for the Sell APIs taxonomy for the Commerce APIs tradingapi for the Trading APIs
         :return: RateLimitsResponse
         """
-        try:
-            return self._method_single(
-                developer_analytics.Configuration,
-                "/developer/analytics/v1_beta",
-                developer_analytics.UserRateLimitApi,
-                developer_analytics.ApiClient,
-                "get_user_rate_limits",
-                DeveloperAnalyticsException,
-                True,
-                ["developer.analytics", "user_rate_limit"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            developer_analytics.Configuration,
+            "/developer/analytics/v1_beta",
+            developer_analytics.UserRateLimitApi,
+            developer_analytics.ApiClient,
+            "get_user_rate_limits",
+            DeveloperAnalyticsException,
+            True,
+            ["developer.analytics", "user_rate_limit"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def developer_client_registration_register_client(
         self, body, content_type, **kwargs
@@ -2181,21 +1962,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: ClientDetails
         """
-        try:
-            return self._method_single(
-                developer_client_registration.Configuration,
-                "/developer/registration/v1",
-                developer_client_registration.RegisterApi,
-                developer_client_registration.ApiClient,
-                "register_client",
-                DeveloperClientRegistrationException,
-                False,
-                ["developer.client.registration", "register"],
-                (body, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            developer_client_registration.Configuration,
+            "/developer/registration/v1",
+            developer_client_registration.RegisterApi,
+            developer_client_registration.ApiClient,
+            "register_client",
+            DeveloperClientRegistrationException,
+            False,
+            ["developer.client.registration", "register"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def developer_key_management_create_signing_key(
         self, content_type, **kwargs
@@ -2208,21 +1986,18 @@ class API(APIPrivate):
         :param CreateSigningKeyRequest body:
         :return: SigningKey
         """
-        try:
-            return self._method_single(
-                developer_key_management.Configuration,
-                "/developer/key_management/v1",
-                developer_key_management.SigningKeyApi,
-                developer_key_management.ApiClient,
-                "create_signing_key",
-                DeveloperKeyManagementException,
-                False,
-                ["developer.key.management", "signing_key"],
-                content_type,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            developer_key_management.Configuration,
+            "/developer/key_management/v1",
+            developer_key_management.SigningKeyApi,
+            developer_key_management.ApiClient,
+            "create_signing_key",
+            DeveloperKeyManagementException,
+            False,
+            ["developer.key.management", "signing_key"],
+            content_type,
+            **kwargs,
+        )  # noqa: E501
 
     def developer_key_management_get_signing_key(
         self, signing_key_id, **kwargs
@@ -2234,21 +2009,18 @@ class API(APIPrivate):
         :param str signing_key_id: The system-generated eBay ID of the keypairs being requested. (required)
         :return: SigningKey
         """
-        try:
-            return self._method_single(
-                developer_key_management.Configuration,
-                "/developer/key_management/v1",
-                developer_key_management.SigningKeyApi,
-                developer_key_management.ApiClient,
-                "get_signing_key",
-                DeveloperKeyManagementException,
-                False,
-                ["developer.key.management", "signing_key"],
-                signing_key_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            developer_key_management.Configuration,
+            "/developer/key_management/v1",
+            developer_key_management.SigningKeyApi,
+            developer_key_management.ApiClient,
+            "get_signing_key",
+            DeveloperKeyManagementException,
+            False,
+            ["developer.key.management", "signing_key"],
+            signing_key_id,
+            **kwargs,
+        )  # noqa: E501
 
     def developer_key_management_get_signing_keys(self, **kwargs):  # noqa: E501
         """get_signing_keys
@@ -2257,21 +2029,18 @@ class API(APIPrivate):
 
         :return: QuerySigningKeysResponse
         """
-        try:
-            return self._method_single(
-                developer_key_management.Configuration,
-                "/developer/key_management/v1",
-                developer_key_management.SigningKeyApi,
-                developer_key_management.ApiClient,
-                "get_signing_keys",
-                DeveloperKeyManagementException,
-                False,
-                ["developer.key.management", "signing_key"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            developer_key_management.Configuration,
+            "/developer/key_management/v1",
+            developer_key_management.SigningKeyApi,
+            developer_key_management.ApiClient,
+            "get_signing_keys",
+            DeveloperKeyManagementException,
+            False,
+            ["developer.key.management", "signing_key"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_account_get_payout_settings(self, **kwargs):  # noqa: E501
         """get_payout_settings
@@ -2280,21 +2049,18 @@ class API(APIPrivate):
 
         :return: PayoutSettingsResponse
         """
-        try:
-            return self._method_single(
-                sell_account.Configuration,
-                "/sell/account/v2",
-                sell_account.PayoutSettingsApi,
-                sell_account.ApiClient,
-                "get_payout_settings",
-                SellAccountException,
-                True,
-                ["sell.account", "payout_settings"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_account.Configuration,
+            "/sell/account/v2",
+            sell_account.PayoutSettingsApi,
+            sell_account.ApiClient,
+            "get_payout_settings",
+            SellAccountException,
+            True,
+            ["sell.account", "payout_settings"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_account_update_payout_percentage(
         self, content_type, **kwargs
@@ -2307,21 +2073,18 @@ class API(APIPrivate):
         :param UpdatePayoutPercentageRequest body:
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_account.Configuration,
-                "/sell/account/v2",
-                sell_account.PayoutSettingsApi,
-                sell_account.ApiClient,
-                "update_payout_percentage",
-                SellAccountException,
-                True,
-                ["sell.account", "payout_settings"],
-                content_type,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_account.Configuration,
+            "/sell/account/v2",
+            sell_account.PayoutSettingsApi,
+            sell_account.ApiClient,
+            "update_payout_percentage",
+            SellAccountException,
+            True,
+            ["sell.account", "payout_settings"],
+            content_type,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_account_get_rate_table(self, rate_table_id, **kwargs):  # noqa: E501
         """get_rate_table
@@ -2331,21 +2094,18 @@ class API(APIPrivate):
         :param str rate_table_id: This path parameter is the unique identifier for the shipping rate table to retrieve. Use the getRateTables method of the Account API v1 to retrieve rate table IDs. (required)
         :return: RateTableDetails
         """
-        try:
-            return self._method_single(
-                sell_account.Configuration,
-                "/sell/account/v2",
-                sell_account.RateTableApi,
-                sell_account.ApiClient,
-                "get_rate_table",
-                SellAccountException,
-                True,
-                ["sell.account", "rate_table"],
-                rate_table_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_account.Configuration,
+            "/sell/account/v2",
+            sell_account.RateTableApi,
+            sell_account.ApiClient,
+            "get_rate_table",
+            SellAccountException,
+            True,
+            ["sell.account", "rate_table"],
+            rate_table_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_account_update_shipping_cost(
         self, content_type, rate_table_id, **kwargs
@@ -2359,21 +2119,18 @@ class API(APIPrivate):
         :param RateTableUpdate body: Request to update the shipping costs for the identified shipping rate table.
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_account.Configuration,
-                "/sell/account/v2",
-                sell_account.RateTableApi,
-                sell_account.ApiClient,
-                "update_shipping_cost",
-                SellAccountException,
-                True,
-                ["sell.account", "rate_table"],
-                (content_type, rate_table_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_account.Configuration,
+            "/sell/account/v2",
+            sell_account.RateTableApi,
+            sell_account.ApiClient,
+            "update_shipping_cost",
+            SellAccountException,
+            True,
+            ["sell.account", "rate_table"],
+            (content_type, rate_table_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_analytics_get_customer_service_metric(
         self,
@@ -2391,25 +2148,18 @@ class API(APIPrivate):
         :param str evaluation_type: Use this path parameter to specify the evaluation period to use for the performance metrics. See  EvaluationTypeEnum for more information on the supported values. (required)
         :return: GetCustomerServiceMetricResponse
         """
-        try:
-            return self._method_single(
-                sell_analytics.Configuration,
-                "/sell/analytics/v1",
-                sell_analytics.CustomerServiceMetricApi,
-                sell_analytics.ApiClient,
-                "get_customer_service_metric",
-                SellAnalyticsException,
-                True,
-                ["sell.analytics", "customer_service_metric"],
-                (
-                    customer_service_metric_type,
-                    evaluation_marketplace_id,
-                    evaluation_type,
-                ),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_analytics.Configuration,
+            "/sell/analytics/v1",
+            sell_analytics.CustomerServiceMetricApi,
+            sell_analytics.ApiClient,
+            "get_customer_service_metric",
+            SellAnalyticsException,
+            True,
+            ["sell.analytics", "customer_service_metric"],
+            (customer_service_metric_type, evaluation_marketplace_id, evaluation_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_analytics_find_seller_standards_profiles(self, **kwargs):  # noqa: E501
         """find_seller_standards_profiles
@@ -2418,21 +2168,18 @@ class API(APIPrivate):
 
         :return: FindSellerStandardsProfilesResponse
         """
-        try:
-            return self._method_single(
-                sell_analytics.Configuration,
-                "/sell/analytics/v1",
-                sell_analytics.SellerStandardsProfileApi,
-                sell_analytics.ApiClient,
-                "find_seller_standards_profiles",
-                SellAnalyticsException,
-                True,
-                ["sell.analytics", "seller_standards_profile"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_analytics.Configuration,
+            "/sell/analytics/v1",
+            sell_analytics.SellerStandardsProfileApi,
+            sell_analytics.ApiClient,
+            "find_seller_standards_profiles",
+            SellAnalyticsException,
+            True,
+            ["sell.analytics", "seller_standards_profile"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_analytics_get_seller_standards_profile(
         self, cycle, program, **kwargs
@@ -2445,21 +2192,18 @@ class API(APIPrivate):
         :param str program: This path parameter is used to specify the seller standards program for which metrics and metadata will be retrieved. See ProgramEnum for a list of supported values. (required)
         :return: StandardsProfile
         """
-        try:
-            return self._method_single(
-                sell_analytics.Configuration,
-                "/sell/analytics/v1",
-                sell_analytics.SellerStandardsProfileApi,
-                sell_analytics.ApiClient,
-                "get_seller_standards_profile",
-                SellAnalyticsException,
-                True,
-                ["sell.analytics", "seller_standards_profile"],
-                (cycle, program),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_analytics.Configuration,
+            "/sell/analytics/v1",
+            sell_analytics.SellerStandardsProfileApi,
+            sell_analytics.ApiClient,
+            "get_seller_standards_profile",
+            SellAnalyticsException,
+            True,
+            ["sell.analytics", "seller_standards_profile"],
+            (cycle, program),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_analytics_get_traffic_report(self, **kwargs):  # noqa: E501
         """get_traffic_report
@@ -2472,21 +2216,18 @@ class API(APIPrivate):
         :param str sort: This query parameter sorts the report on the specified metric.  You can only specify a single metric in the sort parameter and the specified metric must be included in the configuration of the report's metric parameter.  Sorting is helpful when you want to review how a specific metric is performing, such as the CLICK_THROUGH_RATE.  Most reports can be sorted in ascending or descending order. Precede the value of a descending-order request with a minus sign (\"-\"), for example: sort=-CLICK_THROUGH_RATE.Note: There are a couple of constraints on sorting the report by different metrics:Sorting on the SALES_CONVERSION_RATE metric is not supportedThe TRANSACTION metric can only be sorted in the descending order (sorting in the ascending order is not supported).  For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/analytics/types/csb:SortField
         :return: Report
         """
-        try:
-            return self._method_single(
-                sell_analytics.Configuration,
-                "/sell/analytics/v1",
-                sell_analytics.TrafficReportApi,
-                sell_analytics.ApiClient,
-                "get_traffic_report",
-                SellAnalyticsException,
-                True,
-                ["sell.analytics", "traffic_report"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_analytics.Configuration,
+            "/sell/analytics/v1",
+            sell_analytics.TrafficReportApi,
+            sell_analytics.ApiClient,
+            "get_traffic_report",
+            SellAnalyticsException,
+            True,
+            ["sell.analytics", "traffic_report"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_compliance_get_listing_violations(
         self, x_ebay_c_marketplace_id, compliance_type, **kwargs
@@ -2503,21 +2244,18 @@ class API(APIPrivate):
         :param str filter: This filter allows a user to retrieve only listings that are currently out of compliance, or only listings that are at risk of becoming out of compliance. Although other filters may be added in the future, complianceState is the only supported filter type at this time. See the ComplianceStateEnum type for a list of supported values.Below is an example of how to set up this compliance state filter. Notice that the filter type and filter value are separated with a colon (:) character, and the filter value is wrapped with curly brackets. filter=complianceState:{OUT_OF_COMPLIANCE}
         :return: PagedComplianceViolationCollection
         """
-        try:
-            return self._method_paged(
-                sell_compliance.Configuration,
-                "/sell/compliance/v1",
-                sell_compliance.ListingViolationApi,
-                sell_compliance.ApiClient,
-                "get_listing_violations",
-                SellComplianceException,
-                True,
-                ["sell.compliance", "listing_violation"],
-                (x_ebay_c_marketplace_id, compliance_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_compliance.Configuration,
+            "/sell/compliance/v1",
+            sell_compliance.ListingViolationApi,
+            sell_compliance.ApiClient,
+            "get_listing_violations",
+            SellComplianceException,
+            True,
+            ["sell.compliance", "listing_violation"],
+            (x_ebay_c_marketplace_id, compliance_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_compliance_get_listing_violations_summary(
         self, x_ebay_c_marketplace_id, **kwargs
@@ -2530,21 +2268,18 @@ class API(APIPrivate):
         :param str compliance_type: This query parameter specifies the compliance type(s) of the listing violation counts being retrieved. See ComplianceTypeEnum for more information on the supported compliance types that can be passed in here. If more than one compliance type value is used, delimit these values with a comma. If no compliance type values are passed in, the listing count for all compliance types will be returned.  Note: Only a canned response, with counts for all listing compliance types, is returned in the Sandbox environment. Due to this limitation, the compliance_type query parameter (if used) will not have an effect on the response.
         :return: ComplianceSummary
         """
-        try:
-            return self._method_single(
-                sell_compliance.Configuration,
-                "/sell/compliance/v1",
-                sell_compliance.ListingViolationSummaryApi,
-                sell_compliance.ApiClient,
-                "get_listing_violations_summary",
-                SellComplianceException,
-                True,
-                ["sell.compliance", "listing_violation_summary"],
-                x_ebay_c_marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_compliance.Configuration,
+            "/sell/compliance/v1",
+            sell_compliance.ListingViolationSummaryApi,
+            sell_compliance.ApiClient,
+            "get_listing_violations_summary",
+            SellComplianceException,
+            True,
+            ["sell.compliance", "listing_violation_summary"],
+            x_ebay_c_marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_create_customer_service_metric_task(
         self, body, accept_language, content_type, **kwargs
@@ -2558,21 +2293,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.CustomerServiceMetricTaskApi,
-                sell_feed.ApiClient,
-                "create_customer_service_metric_task",
-                SellFeedException,
-                True,
-                ["sell.feed", "customer_service_metric_task"],
-                (body, accept_language, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.CustomerServiceMetricTaskApi,
+            sell_feed.ApiClient,
+            "create_customer_service_metric_task",
+            SellFeedException,
+            True,
+            ["sell.feed", "customer_service_metric_task"],
+            (body, accept_language, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_get_customer_service_metric_task(
         self, task_id, **kwargs
@@ -2584,21 +2316,18 @@ class API(APIPrivate):
         :param str task_id: This path parameter is the unique identifier of the customer service metric task being retrieved.Use the getCustomerServiceMetricTasks method to retrieve task IDs. (required)
         :return: ServiceMetricsTask
         """
-        try:
-            return self._method_single(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.CustomerServiceMetricTaskApi,
-                sell_feed.ApiClient,
-                "get_customer_service_metric_task",
-                SellFeedException,
-                True,
-                ["sell.feed", "customer_service_metric_task"],
-                task_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.CustomerServiceMetricTaskApi,
+            sell_feed.ApiClient,
+            "get_customer_service_metric_task",
+            SellFeedException,
+            True,
+            ["sell.feed", "customer_service_metric_task"],
+            task_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_get_customer_service_metric_tasks(self, **kwargs):  # noqa: E501
         """get_customer_service_metric_tasks
@@ -2612,21 +2341,18 @@ class API(APIPrivate):
         :param str offset: The number of customer service metric tasks to skip in the result set before returning the first task in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
         :return: CustomerServiceMetricTaskCollection
         """
-        try:
-            return self._method_paged(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.CustomerServiceMetricTaskApi,
-                sell_feed.ApiClient,
-                "get_customer_service_metric_tasks",
-                SellFeedException,
-                True,
-                ["sell.feed", "customer_service_metric_task"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.CustomerServiceMetricTaskApi,
+            sell_feed.ApiClient,
+            "get_customer_service_metric_tasks",
+            SellFeedException,
+            True,
+            ["sell.feed", "customer_service_metric_task"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_create_inventory_task(
         self, body, content_type, **kwargs
@@ -2639,21 +2365,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.InventoryTaskApi,
-                sell_feed.ApiClient,
-                "create_inventory_task",
-                SellFeedException,
-                True,
-                ["sell.feed", "inventory_task"],
-                (body, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.InventoryTaskApi,
+            sell_feed.ApiClient,
+            "create_inventory_task",
+            SellFeedException,
+            True,
+            ["sell.feed", "inventory_task"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_get_inventory_task(self, task_id, **kwargs):  # noqa: E501
         """get_inventory_task
@@ -2663,21 +2386,18 @@ class API(APIPrivate):
         :param str task_id: This path parameter is the unique identifier of the inventory task being retrieved. Use the getInventoryTasks method to retrieve inventory task IDs. (required)
         :return: InventoryTask
         """
-        try:
-            return self._method_single(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.InventoryTaskApi,
-                sell_feed.ApiClient,
-                "get_inventory_task",
-                SellFeedException,
-                True,
-                ["sell.feed", "inventory_task"],
-                task_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.InventoryTaskApi,
+            sell_feed.ApiClient,
+            "get_inventory_task",
+            SellFeedException,
+            True,
+            ["sell.feed", "inventory_task"],
+            task_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_get_inventory_tasks(self, **kwargs):  # noqa: E501
         """get_inventory_tasks
@@ -2692,21 +2412,18 @@ class API(APIPrivate):
         :param str offset: The number of tasks to skip in the result set before returning the first task in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. If this query parameter is not set, the default value is used and the first page of records is returned. Default: 0
         :return: InventoryTaskCollection
         """
-        try:
-            return self._method_paged(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.InventoryTaskApi,
-                sell_feed.ApiClient,
-                "get_inventory_tasks",
-                SellFeedException,
-                True,
-                ["sell.feed", "inventory_task"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.InventoryTaskApi,
+            sell_feed.ApiClient,
+            "get_inventory_tasks",
+            SellFeedException,
+            True,
+            ["sell.feed", "inventory_task"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_create_order_task(self, body, content_type, **kwargs):  # noqa: E501
         """create_order_task
@@ -2717,21 +2434,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.OrderTaskApi,
-                sell_feed.ApiClient,
-                "create_order_task",
-                SellFeedException,
-                True,
-                ["sell.feed", "order_task"],
-                (body, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.OrderTaskApi,
+            sell_feed.ApiClient,
+            "create_order_task",
+            SellFeedException,
+            True,
+            ["sell.feed", "order_task"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_get_order_task(self, task_id, **kwargs):  # noqa: E501
         """get_order_task
@@ -2741,21 +2455,18 @@ class API(APIPrivate):
         :param str task_id: This path parameter is the unique identifier of the order task being retrieved.Use the getOrderTasks method to retrieve order task IDs. (required)
         :return: OrderTask
         """
-        try:
-            return self._method_single(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.OrderTaskApi,
-                sell_feed.ApiClient,
-                "get_order_task",
-                SellFeedException,
-                True,
-                ["sell.feed", "order_task"],
-                task_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.OrderTaskApi,
+            sell_feed.ApiClient,
+            "get_order_task",
+            SellFeedException,
+            True,
+            ["sell.feed", "order_task"],
+            task_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_get_order_tasks(self, **kwargs):  # noqa: E501
         """get_order_tasks
@@ -2770,21 +2481,18 @@ class API(APIPrivate):
         :param str schedule_id: The schedule ID associated with the order tasks being retrieved. A schedule periodically generates a report, and these schedules can be created with the createSchedule method.Note: Do not use with the feed_type parameter. Since schedules are based on feed types, you can specify a schedule (schedule_id) that returns the needed feed_type.Use the getSchedules method to retrieve schedule IDs.
         :return: OrderTaskCollection
         """
-        try:
-            return self._method_paged(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.OrderTaskApi,
-                sell_feed.ApiClient,
-                "get_order_tasks",
-                SellFeedException,
-                True,
-                ["sell.feed", "order_task"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.OrderTaskApi,
+            sell_feed.ApiClient,
+            "get_order_tasks",
+            SellFeedException,
+            True,
+            ["sell.feed", "order_task"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_create_schedule(self, body, content_type, **kwargs):  # noqa: E501
         """create_schedule
@@ -2795,21 +2503,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: object
         """
-        try:
-            return self._method_single(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.ScheduleApi,
-                sell_feed.ApiClient,
-                "create_schedule",
-                SellFeedException,
-                True,
-                ["sell.feed", "schedule"],
-                (body, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.ScheduleApi,
+            sell_feed.ApiClient,
+            "create_schedule",
+            SellFeedException,
+            True,
+            ["sell.feed", "schedule"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_delete_schedule(self, schedule_id, **kwargs):  # noqa: E501
         """delete_schedule
@@ -2819,21 +2524,18 @@ class API(APIPrivate):
         :param str schedule_id: This path parameter is the unique identifier of the schedule being deleted.Use the getSchedules method to retrieve schedule IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.ScheduleApi,
-                sell_feed.ApiClient,
-                "delete_schedule",
-                SellFeedException,
-                True,
-                ["sell.feed", "schedule"],
-                schedule_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.ScheduleApi,
+            sell_feed.ApiClient,
+            "delete_schedule",
+            SellFeedException,
+            True,
+            ["sell.feed", "schedule"],
+            schedule_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_get_latest_result_file(self, schedule_id, **kwargs):  # noqa: E501
         """get_latest_result_file
@@ -2843,21 +2545,18 @@ class API(APIPrivate):
         :param str schedule_id: This path parameter is the unique identifier of the schedule for which to retrieve the latest Order Report.  Use the getSchedules method to retrieve schedule IDs. (required)
         :return: StreamingOutput
         """
-        try:
-            return self._method_single(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.ScheduleApi,
-                sell_feed.ApiClient,
-                "get_latest_result_file",
-                SellFeedException,
-                True,
-                ["sell.feed", "schedule"],
-                schedule_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.ScheduleApi,
+            sell_feed.ApiClient,
+            "get_latest_result_file",
+            SellFeedException,
+            True,
+            ["sell.feed", "schedule"],
+            schedule_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_get_schedule(self, schedule_id, **kwargs):  # noqa: E501
         """get_schedule
@@ -2867,21 +2566,18 @@ class API(APIPrivate):
         :param str schedule_id: This path parameter is the unique identifier of the schedule for which to retrieve details. Use the getSchedules method to retrieve schedule IDs. (required)
         :return: UserScheduleResponse
         """
-        try:
-            return self._method_single(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.ScheduleApi,
-                sell_feed.ApiClient,
-                "get_schedule",
-                SellFeedException,
-                True,
-                ["sell.feed", "schedule"],
-                schedule_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.ScheduleApi,
+            sell_feed.ApiClient,
+            "get_schedule",
+            SellFeedException,
+            True,
+            ["sell.feed", "schedule"],
+            schedule_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_get_schedule_template(
         self, schedule_template_id, **kwargs
@@ -2893,21 +2589,18 @@ class API(APIPrivate):
         :param str schedule_template_id: This path parameter is the unique identifier of the schedule template being retrieved.Use the getScheduleTemplates method to retrieve schedule template IDs.Note: Template schedules are currently only available for LMS_ORDER_REPORT. (required)
         :return: ScheduleTemplateResponse
         """
-        try:
-            return self._method_single(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.ScheduleApi,
-                sell_feed.ApiClient,
-                "get_schedule_template",
-                SellFeedException,
-                True,
-                ["sell.feed", "schedule"],
-                schedule_template_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.ScheduleApi,
+            sell_feed.ApiClient,
+            "get_schedule_template",
+            SellFeedException,
+            True,
+            ["sell.feed", "schedule"],
+            schedule_template_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_get_schedule_templates(self, feed_type, **kwargs):  # noqa: E501
         """get_schedule_templates
@@ -2919,21 +2612,18 @@ class API(APIPrivate):
         :param str offset: The number of schedule templates to skip in the result set before returning the first template in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. If this query parameter is not set, the default value is used and the first page of records is returned.Default: 0
         :return: ScheduleTemplateCollection
         """
-        try:
-            return self._method_paged(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.ScheduleApi,
-                sell_feed.ApiClient,
-                "get_schedule_templates",
-                SellFeedException,
-                True,
-                ["sell.feed", "schedule"],
-                feed_type,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.ScheduleApi,
+            sell_feed.ApiClient,
+            "get_schedule_templates",
+            SellFeedException,
+            True,
+            ["sell.feed", "schedule"],
+            feed_type,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_get_schedules(self, feed_type, **kwargs):  # noqa: E501
         """get_schedules
@@ -2945,21 +2635,18 @@ class API(APIPrivate):
         :param str offset: The number of schedules to skip in the result set before returning the first schedule in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. If this query parameter is not set, the default value is used and the first page of records is returned.Default: 0
         :return: UserScheduleCollection
         """
-        try:
-            return self._method_paged(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.ScheduleApi,
-                sell_feed.ApiClient,
-                "get_schedules",
-                SellFeedException,
-                True,
-                ["sell.feed", "schedule"],
-                feed_type,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.ScheduleApi,
+            sell_feed.ApiClient,
+            "get_schedules",
+            SellFeedException,
+            True,
+            ["sell.feed", "schedule"],
+            feed_type,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_update_schedule(
         self, body, content_type, schedule_id, **kwargs
@@ -2973,21 +2660,18 @@ class API(APIPrivate):
         :param str schedule_id: This path parameter is the unique identifier of the schedule being updated.  Use the getSchedules method to retrieve schedule IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.ScheduleApi,
-                sell_feed.ApiClient,
-                "update_schedule",
-                SellFeedException,
-                True,
-                ["sell.feed", "schedule"],
-                (body, content_type, schedule_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.ScheduleApi,
+            sell_feed.ApiClient,
+            "update_schedule",
+            SellFeedException,
+            True,
+            ["sell.feed", "schedule"],
+            (body, content_type, schedule_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_create_task(
         self, body, x_ebay_c_marketplace_id, content_type, **kwargs
@@ -3001,21 +2685,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.TaskApi,
-                sell_feed.ApiClient,
-                "create_task",
-                SellFeedException,
-                True,
-                ["sell.feed", "task"],
-                (body, x_ebay_c_marketplace_id, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.TaskApi,
+            sell_feed.ApiClient,
+            "create_task",
+            SellFeedException,
+            True,
+            ["sell.feed", "task"],
+            (body, x_ebay_c_marketplace_id, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_get_input_file(self, task_id, **kwargs):  # noqa: E501
         """get_input_file
@@ -3025,21 +2706,18 @@ class API(APIPrivate):
         :param str task_id: This path parameter is the unique identifier of the task associated with the input file to be downloaded.Use the getTasks method to retrieve task IDs. (required)
         :return: StreamingOutput
         """
-        try:
-            return self._method_single(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.TaskApi,
-                sell_feed.ApiClient,
-                "get_input_file",
-                SellFeedException,
-                True,
-                ["sell.feed", "task"],
-                task_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.TaskApi,
+            sell_feed.ApiClient,
+            "get_input_file",
+            SellFeedException,
+            True,
+            ["sell.feed", "task"],
+            task_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_get_result_file(self, task_id, **kwargs):  # noqa: E501
         """get_result_file
@@ -3049,21 +2727,18 @@ class API(APIPrivate):
         :param str task_id: This path parameter is the unique identifier of the task associated with the file to be downloaded. Use the getTasks method to retrieve task IDs. (required)
         :return: StreamingOutput
         """
-        try:
-            return self._method_single(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.TaskApi,
-                sell_feed.ApiClient,
-                "get_result_file",
-                SellFeedException,
-                True,
-                ["sell.feed", "task"],
-                task_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.TaskApi,
+            sell_feed.ApiClient,
+            "get_result_file",
+            SellFeedException,
+            True,
+            ["sell.feed", "task"],
+            task_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_get_task(self, task_id, **kwargs):  # noqa: E501
         """get_task
@@ -3073,21 +2748,18 @@ class API(APIPrivate):
         :param str task_id: This path parameter is the unique identifier of the task being retrieved.Use the getTasks method to retrieve task IDs. (required)
         :return: Task
         """
-        try:
-            return self._method_single(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.TaskApi,
-                sell_feed.ApiClient,
-                "get_task",
-                SellFeedException,
-                True,
-                ["sell.feed", "task"],
-                task_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.TaskApi,
+            sell_feed.ApiClient,
+            "get_task",
+            SellFeedException,
+            True,
+            ["sell.feed", "task"],
+            task_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_get_tasks(self, **kwargs):  # noqa: E501
         """get_tasks
@@ -3102,21 +2774,18 @@ class API(APIPrivate):
         :param str schedule_id: The unique identifier associated with the tasks being returned. A schedule periodically generates a report for the feed type specified by the schedule template.Note: Schedules are currently only available for LMS_ORDER_REPORT.Do not use with the feed_type parameter.
         :return: TaskCollection
         """
-        try:
-            return self._method_paged(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.TaskApi,
-                sell_feed.ApiClient,
-                "get_tasks",
-                SellFeedException,
-                True,
-                ["sell.feed", "task"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.TaskApi,
+            sell_feed.ApiClient,
+            "get_tasks",
+            SellFeedException,
+            True,
+            ["sell.feed", "task"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_feed_upload_file(self, task_id, content_type, **kwargs):  # noqa: E501
         """upload_file
@@ -3127,21 +2796,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to multipart/form-data.  For more information, refer to HTTP request headers. (required)
         :return: object
         """
-        try:
-            return self._method_single(
-                sell_feed.Configuration,
-                "/sell/feed/v1",
-                sell_feed.TaskApi,
-                sell_feed.ApiClient,
-                "upload_file",
-                SellFeedException,
-                True,
-                ["sell.feed", "task"],
-                (task_id, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.TaskApi,
+            sell_feed.ApiClient,
+            "upload_file",
+            SellFeedException,
+            True,
+            ["sell.feed", "task"],
+            (task_id, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_finances_get_payout(
         self, x_ebay_c_marketplace_id, payout_id, **kwargs
@@ -3154,21 +2820,18 @@ class API(APIPrivate):
         :param str payout_id: This path parameter is used to specify the unique identifier of the payout being retrieved. Use the getPayouts method to retrieve payout IDs, or check Seller Hub to get the payout ID.  (required)
         :return: Payout
         """
-        try:
-            return self._method_single(
-                sell_finances.Configuration,
-                "/sell/finances/v1",
-                sell_finances.PayoutApi,
-                sell_finances.ApiClient,
-                "get_payout",
-                SellFinancesException,
-                True,
-                ["sell.finances", "payout"],
-                (x_ebay_c_marketplace_id, payout_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_finances.Configuration,
+            "/sell/finances/v1",
+            sell_finances.PayoutApi,
+            sell_finances.ApiClient,
+            "get_payout",
+            SellFinancesException,
+            True,
+            ["sell.finances", "payout"],
+            (x_ebay_c_marketplace_id, payout_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_finances_get_payout_summary(
         self, x_ebay_c_marketplace_id, **kwargs
@@ -3181,21 +2844,18 @@ class API(APIPrivate):
         :param str filter: The two filter types that can be used here are discussed below. One or both of these filter types can be used. If none of these filters are used, the data returned in the response will reflect all previous payouts in all states:payoutDate: consider payouts processed within a specific range of dates. The date format to use is YYYY-MM-DDTHH:MM:SS.SSSZ. Below is the proper syntax to use if filtering by a date range: https://apiz.ebay.com/sell/finances/v1/payout_summary?filter=payoutDate:[2018-12-17T00:00:01.000Z..2018-12-24T00:00:01.000Z]Alternatively, the user could omit the ending date, and the date range would include the starting date and up to 90 days past that date, or the current date if the starting date is less than 90 days in the past. payoutStatus: consider only the payouts in a particular state. Only one payout state can be specified with this filter. For supported payoutStatus values, see PayoutStatusEnum.Below is the proper syntax to use if filtering by payout status: https://apiz.ebay.com/sell/finances/v1/payout_summary?filter=payoutStatus:{SUCCEEDED}If both the payoutDate and payoutStatus filters are used, only the payouts that satisfy both criteria are considered in the results. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:FilterField
         :return: PayoutSummaryResponse
         """
-        try:
-            return self._method_single(
-                sell_finances.Configuration,
-                "/sell/finances/v1",
-                sell_finances.PayoutApi,
-                sell_finances.ApiClient,
-                "get_payout_summary",
-                SellFinancesException,
-                True,
-                ["sell.finances", "payout"],
-                x_ebay_c_marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_finances.Configuration,
+            "/sell/finances/v1",
+            sell_finances.PayoutApi,
+            sell_finances.ApiClient,
+            "get_payout_summary",
+            SellFinancesException,
+            True,
+            ["sell.finances", "payout"],
+            x_ebay_c_marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_finances_get_payouts(
         self, x_ebay_c_marketplace_id, **kwargs
@@ -3211,21 +2871,18 @@ class API(APIPrivate):
         :param str sort: By default, payouts or failed payouts that match the input criteria are sorted in descending order according to the payout date/last attempted payout date (i.e., most recent payouts returned first).To view payouts in ascending order instead (i.e., oldest payouts/attempted payouts first,) you would include the sort query parameter, and then set the value of its field parameter to payoutDate or lastAttemptedPayoutDate (if searching for failed, retryable payouts). Below is the proper syntax to use if filtering by a payout date range in ascending order:https://apiz.ebay.com/sell/finances/v1/payout?filter=payoutDate:[2018-12-17T00:00:01.000Z..2018-12-24T00:00:01.000Z]&sort=payoutDatePayouts can only be sorted according to payout date, and can not be sorted by payout status. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:SortField
         :return: Payouts
         """
-        try:
-            return self._method_paged(
-                sell_finances.Configuration,
-                "/sell/finances/v1",
-                sell_finances.PayoutApi,
-                sell_finances.ApiClient,
-                "get_payouts",
-                SellFinancesException,
-                True,
-                ["sell.finances", "payout"],
-                x_ebay_c_marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_finances.Configuration,
+            "/sell/finances/v1",
+            sell_finances.PayoutApi,
+            sell_finances.ApiClient,
+            "get_payouts",
+            SellFinancesException,
+            True,
+            ["sell.finances", "payout"],
+            x_ebay_c_marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_finances_get_seller_funds_summary(
         self, x_ebay_c_marketplace_id, **kwargs
@@ -3237,21 +2894,18 @@ class API(APIPrivate):
         :param str x_ebay_c_marketplace_id: This header identifies the seller's eBay marketplace.See HTTP request headers for the marketplace ID values.Note: If a marketplace ID value is not provided, the default value of EBAY_US is used. (required)
         :return: SellerFundsSummaryResponse
         """
-        try:
-            return self._method_single(
-                sell_finances.Configuration,
-                "/sell/finances/v1",
-                sell_finances.SellerFundsSummaryApi,
-                sell_finances.ApiClient,
-                "get_seller_funds_summary",
-                SellFinancesException,
-                True,
-                ["sell.finances", "seller_funds_summary"],
-                x_ebay_c_marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_finances.Configuration,
+            "/sell/finances/v1",
+            sell_finances.SellerFundsSummaryApi,
+            sell_finances.ApiClient,
+            "get_seller_funds_summary",
+            SellFinancesException,
+            True,
+            ["sell.finances", "seller_funds_summary"],
+            x_ebay_c_marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_finances_get_transaction_summary(
         self, x_ebay_c_marketplace_id, **kwargs
@@ -3264,21 +2918,18 @@ class API(APIPrivate):
         :param str filter: Numerous filters are available for the getTransactionSummary method, and these filters are discussed below. One or more of these filter types can be used. The transactionStatus filter must be used. All other filters are optional. transactionStatus: the data returned in the response pertains to the sales, payouts, and transfer status set. For supported transactionStatus values, see TransactionStatusEnum. Below is the proper syntax to use when setting up the transactionStatus filter: https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=transactionStatus:{PAYOUT}transactionDate: only consider monetary transactions that occurred within a specific range of dates.Note: All dates must be input using UTC format (YYYY-MM-DDTHH:MM:SS.SSSZ) and should be adjusted accordingly for the local timezone of the user.Below is the proper syntax to use if filtering by a date range: https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=transactionDate:[2018-10-23T00:00:01.000Z..2018-11-09T00:00:01.000Z]Alternatively, the user could omit the ending date, and the date range would include the starting date and up to 90 days past that date, or the current date if the starting date is less than 90 days in the past. transactionType: only consider a specific type of monetary transaction. For supported transactionType values, see TransactionTypeEnum.Below is the proper syntax to use if filtering by a monetary transaction type: https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=transactionType:{SALE}buyerUsername: only consider monetary transactions involving a specific buyer (specified with the buyer's eBay user ID). Below is the proper syntax to use if filtering by a specific eBay buyer: https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=buyerUsername:{buyer1234} salesRecordReference: only consider monetary transactions corresponding to a specific order (identified with a Selling Manager order identifier). Below is the proper syntax to use if filtering by a specific Selling Manager Sales Record ID: https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=salesRecordReference:{123}Note: For all orders originating after February 1, 2020, a value of 0 will be returned in the salesRecordReference field. So, this filter will only be useful to retrieve orders than occurred before this date. payoutId: only consider monetary transactions related to a specific seller payout (identified with a Payout ID). This value is auto-generated by eBay once the seller payout is set to be processed. Below is the proper syntax to use if filtering by a specific Payout ID: https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=payoutId:{5********8} transactionId: the unique identifier of a monetary transaction. For a sales order, the orderId filter should be used instead. Only the monetary transaction(s) associated with this transactionId value are returned.Note: This filter cannot be used alone; the transactionType must also be specified when filtering by transaction ID.Below is the proper syntax to use if filtering by a specific transaction ID: https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=transactionId:{0*-0***0-3***3}&filter=transactionType:{SALE} orderId: the unique identifier of a sales order. For any other monetary transaction, the transactionId filter should be used instead. Only the monetary transaction(s) associated with this orderId value are returned. Below is the proper syntax to use if filtering by a specific order ID: https://apiz.ebay.com/sell/finances/v1/transaction_summary?filter=orderId:{0*-0***0-3***3}  For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:FilterField
         :return: TransactionSummaryResponse
         """
-        try:
-            return self._method_single(
-                sell_finances.Configuration,
-                "/sell/finances/v1",
-                sell_finances.TransactionApi,
-                sell_finances.ApiClient,
-                "get_transaction_summary",
-                SellFinancesException,
-                True,
-                ["sell.finances", "transaction"],
-                x_ebay_c_marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_finances.Configuration,
+            "/sell/finances/v1",
+            sell_finances.TransactionApi,
+            sell_finances.ApiClient,
+            "get_transaction_summary",
+            SellFinancesException,
+            True,
+            ["sell.finances", "transaction"],
+            x_ebay_c_marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_finances_get_transactions(
         self, x_ebay_c_marketplace_id, **kwargs
@@ -3294,21 +2945,18 @@ class API(APIPrivate):
         :param str sort: By default, monetary transactions that match the input criteria are sorted in descending order according to the transaction date (i.e, most recent transactions returned first).To view transactions in ascending order instead (i.e., oldest transactions first), you would include the sort query parameter and set its value to transactionDate. Below is the proper syntax to use if filtering by a transaction date range in ascending order:https://apiz.ebay.com/sell/finances/v1/transaction?filter=transactionDate:[2023-10-01T00:00:01.000Z..2023-10-12T00:00:01.000Z]&sort=transactionDateTransactions can only be sorted according to transaction date. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/finances/types/cos:SortField
         :return: Transactions
         """
-        try:
-            return self._method_paged(
-                sell_finances.Configuration,
-                "/sell/finances/v1",
-                sell_finances.TransactionApi,
-                sell_finances.ApiClient,
-                "get_transactions",
-                SellFinancesException,
-                True,
-                ["sell.finances", "transaction"],
-                x_ebay_c_marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_finances.Configuration,
+            "/sell/finances/v1",
+            sell_finances.TransactionApi,
+            sell_finances.ApiClient,
+            "get_transactions",
+            SellFinancesException,
+            True,
+            ["sell.finances", "transaction"],
+            x_ebay_c_marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_finances_get_transfer(
         self, x_ebay_c_marketplace_id, transfer_id, **kwargs
@@ -3321,21 +2969,18 @@ class API(APIPrivate):
         :param str transfer_id: This path parameter is used to specify the unique identifier of the TRANSFER transaction type you wish to retrieve.Use the getTransactions method to retrieve this value by setting the transactionType filter to TRANSFER. The transfer_id value will then be returned in the transaction_id field of the response. (required)
         :return: Transfer
         """
-        try:
-            return self._method_single(
-                sell_finances.Configuration,
-                "/sell/finances/v1",
-                sell_finances.TransferApi,
-                sell_finances.ApiClient,
-                "get_transfer",
-                SellFinancesException,
-                True,
-                ["sell.finances", "transfer"],
-                (x_ebay_c_marketplace_id, transfer_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_finances.Configuration,
+            "/sell/finances/v1",
+            sell_finances.TransferApi,
+            sell_finances.ApiClient,
+            "get_transfer",
+            SellFinancesException,
+            True,
+            ["sell.finances", "transfer"],
+            (x_ebay_c_marketplace_id, transfer_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_fulfillment_get_order(self, order_id, **kwargs):  # noqa: E501
         """get_order
@@ -3346,21 +2991,18 @@ class API(APIPrivate):
         :param str field_groups: This parameter lets you control what is returned in the response.Note: The only presently supported value is TAX_BREAKDOWN. This field group adds addition fields to the response that return a breakdown of taxes and fees.
         :return: Order
         """
-        try:
-            return self._method_single(
-                sell_fulfillment.Configuration,
-                "/sell/fulfillment/v1",
-                sell_fulfillment.OrderApi,
-                sell_fulfillment.ApiClient,
-                "get_order",
-                SellFulfillmentException,
-                True,
-                ["sell.fulfillment", "order"],
-                order_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_fulfillment.Configuration,
+            "/sell/fulfillment/v1",
+            sell_fulfillment.OrderApi,
+            sell_fulfillment.ApiClient,
+            "get_order",
+            SellFulfillmentException,
+            True,
+            ["sell.fulfillment", "order"],
+            order_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_fulfillment_get_orders(self, **kwargs):  # noqa: E501
         """get_orders
@@ -3374,21 +3016,18 @@ class API(APIPrivate):
         :param str order_ids: A comma-separated list of the unique identifiers of the orders to retrieve (maximum 50). If one or more order ID values are specified through the orderIds query parameter, all other query parameters will be ignored.Note: getOrders can return orders up to two years old. Do not provide the orderId for an order created more than two years in the past.
         :return: OrderSearchPagedCollection
         """
-        try:
-            return self._method_paged(
-                sell_fulfillment.Configuration,
-                "/sell/fulfillment/v1",
-                sell_fulfillment.OrderApi,
-                sell_fulfillment.ApiClient,
-                "get_orders",
-                SellFulfillmentException,
-                True,
-                ["sell.fulfillment", "order"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_fulfillment.Configuration,
+            "/sell/fulfillment/v1",
+            sell_fulfillment.OrderApi,
+            sell_fulfillment.ApiClient,
+            "get_orders",
+            SellFulfillmentException,
+            True,
+            ["sell.fulfillment", "order"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_fulfillment_issue_refund(
         self, content_type, order_id, **kwargs
@@ -3401,21 +3040,18 @@ class API(APIPrivate):
         :param IssueRefundRequest body:
         :return: Refund
         """
-        try:
-            return self._method_single(
-                sell_fulfillment.Configuration,
-                "/sell/fulfillment/v1",
-                sell_fulfillment.OrderApi,
-                sell_fulfillment.ApiClient,
-                "issue_refund",
-                SellFulfillmentException,
-                True,
-                ["sell.fulfillment", "order"],
-                (content_type, order_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_fulfillment.Configuration,
+            "/sell/fulfillment/v1",
+            sell_fulfillment.OrderApi,
+            sell_fulfillment.ApiClient,
+            "issue_refund",
+            SellFulfillmentException,
+            True,
+            ["sell.fulfillment", "order"],
+            (content_type, order_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_fulfillment_accept_payment_dispute(
         self, content_type, payment_dispute_id, **kwargs
@@ -3429,21 +3065,18 @@ class API(APIPrivate):
         :param AcceptPaymentDisputeRequest body:
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_fulfillment.Configuration,
-                "/sell/fulfillment/v1",
-                sell_fulfillment.PaymentDisputeApi,
-                sell_fulfillment.ApiClient,
-                "accept_payment_dispute",
-                SellFulfillmentException,
-                True,
-                ["sell.fulfillment", "payment_dispute"],
-                (content_type, payment_dispute_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_fulfillment.Configuration,
+            "/sell/fulfillment/v1",
+            sell_fulfillment.PaymentDisputeApi,
+            sell_fulfillment.ApiClient,
+            "accept_payment_dispute",
+            SellFulfillmentException,
+            True,
+            ["sell.fulfillment", "payment_dispute"],
+            (content_type, payment_dispute_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_fulfillment_add_evidence(
         self, content_type, payment_dispute_id, **kwargs
@@ -3457,21 +3090,18 @@ class API(APIPrivate):
         :param AddEvidencePaymentDisputeRequest body:
         :return: AddEvidencePaymentDisputeResponse
         """
-        try:
-            return self._method_single(
-                sell_fulfillment.Configuration,
-                "/sell/fulfillment/v1",
-                sell_fulfillment.PaymentDisputeApi,
-                sell_fulfillment.ApiClient,
-                "add_evidence",
-                SellFulfillmentException,
-                True,
-                ["sell.fulfillment", "payment_dispute"],
-                (content_type, payment_dispute_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_fulfillment.Configuration,
+            "/sell/fulfillment/v1",
+            sell_fulfillment.PaymentDisputeApi,
+            sell_fulfillment.ApiClient,
+            "add_evidence",
+            SellFulfillmentException,
+            True,
+            ["sell.fulfillment", "payment_dispute"],
+            (content_type, payment_dispute_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_fulfillment_contest_payment_dispute(
         self, content_type, payment_dispute_id, **kwargs
@@ -3485,21 +3115,18 @@ class API(APIPrivate):
         :param ContestPaymentDisputeRequest body:
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_fulfillment.Configuration,
-                "/sell/fulfillment/v1",
-                sell_fulfillment.PaymentDisputeApi,
-                sell_fulfillment.ApiClient,
-                "contest_payment_dispute",
-                SellFulfillmentException,
-                True,
-                ["sell.fulfillment", "payment_dispute"],
-                (content_type, payment_dispute_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_fulfillment.Configuration,
+            "/sell/fulfillment/v1",
+            sell_fulfillment.PaymentDisputeApi,
+            sell_fulfillment.ApiClient,
+            "contest_payment_dispute",
+            SellFulfillmentException,
+            True,
+            ["sell.fulfillment", "payment_dispute"],
+            (content_type, payment_dispute_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_fulfillment_fetch_evidence_content(
         self, payment_dispute_id, evidence_id, file_id, **kwargs
@@ -3513,21 +3140,18 @@ class API(APIPrivate):
         :param str file_id: This query parameter is used to specify the unique identifier of an evidential file. This file must belong to the evidential file set identified through the evidence_id query parameter.The identifier of each evidential file is returned under the evidence.files array in the getPaymentDispute response. (required)
         :return: list[str]
         """
-        try:
-            return self._method_single(
-                sell_fulfillment.Configuration,
-                "/sell/fulfillment/v1",
-                sell_fulfillment.PaymentDisputeApi,
-                sell_fulfillment.ApiClient,
-                "fetch_evidence_content",
-                SellFulfillmentException,
-                True,
-                ["sell.fulfillment", "payment_dispute"],
-                (payment_dispute_id, evidence_id, file_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_fulfillment.Configuration,
+            "/sell/fulfillment/v1",
+            sell_fulfillment.PaymentDisputeApi,
+            sell_fulfillment.ApiClient,
+            "fetch_evidence_content",
+            SellFulfillmentException,
+            True,
+            ["sell.fulfillment", "payment_dispute"],
+            (payment_dispute_id, evidence_id, file_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_fulfillment_get_activities(
         self, payment_dispute_id, **kwargs
@@ -3539,21 +3163,18 @@ class API(APIPrivate):
         :param str payment_dispute_id: This parameter is used to specify the unique identifier of the payment dispute associated with the activity log being retrieved. Use the getPaymentDisputeSummaries method to retrieve payment dispute IDs. (required)
         :return: PaymentDisputeActivityHistory
         """
-        try:
-            return self._method_single(
-                sell_fulfillment.Configuration,
-                "/sell/fulfillment/v1",
-                sell_fulfillment.PaymentDisputeApi,
-                sell_fulfillment.ApiClient,
-                "get_activities",
-                SellFulfillmentException,
-                True,
-                ["sell.fulfillment", "payment_dispute"],
-                payment_dispute_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_fulfillment.Configuration,
+            "/sell/fulfillment/v1",
+            sell_fulfillment.PaymentDisputeApi,
+            sell_fulfillment.ApiClient,
+            "get_activities",
+            SellFulfillmentException,
+            True,
+            ["sell.fulfillment", "payment_dispute"],
+            payment_dispute_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_fulfillment_get_payment_dispute(
         self, payment_dispute_id, **kwargs
@@ -3565,21 +3186,18 @@ class API(APIPrivate):
         :param str payment_dispute_id: This parameter is used to specify the unique identifier of the payment dispute being retrieved. Use the getPaymentDisputeSummaries method to retrieve payment dispute IDs. (required)
         :return: PaymentDispute
         """
-        try:
-            return self._method_single(
-                sell_fulfillment.Configuration,
-                "/sell/fulfillment/v1",
-                sell_fulfillment.PaymentDisputeApi,
-                sell_fulfillment.ApiClient,
-                "get_payment_dispute",
-                SellFulfillmentException,
-                True,
-                ["sell.fulfillment", "payment_dispute"],
-                payment_dispute_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_fulfillment.Configuration,
+            "/sell/fulfillment/v1",
+            sell_fulfillment.PaymentDisputeApi,
+            sell_fulfillment.ApiClient,
+            "get_payment_dispute",
+            SellFulfillmentException,
+            True,
+            ["sell.fulfillment", "payment_dispute"],
+            payment_dispute_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_fulfillment_get_payment_dispute_summaries(self, **kwargs):  # noqa: E501
         """Search Payment Dispute by Filters
@@ -3595,21 +3213,18 @@ class API(APIPrivate):
         :param str offset: This field is used to specify the number of records to skip in the result set before returning the first payment dispute in the paginated response. A zero-based index is used, so if you set the offset value to 0 (default value), the first payment dispute in the result set appears at the top of the response. Combine offset with the limit parameter to control the payment disputes returned in the response. For example, if you supply an offset value of 0 and a limit value of 10, the response will contain the first 10 payment disputes from the result set that matches the input criteria. If you supply an offset value of 10 and a limit value of 20, the response will contain payment disputes 11-30 from the result set that matches the input criteria.Min: 0 Default: 0
         :return: DisputeSummaryResponse
         """
-        try:
-            return self._method_paged(
-                sell_fulfillment.Configuration,
-                "/sell/fulfillment/v1",
-                sell_fulfillment.PaymentDisputeApi,
-                sell_fulfillment.ApiClient,
-                "get_payment_dispute_summaries",
-                SellFulfillmentException,
-                True,
-                ["sell.fulfillment", "payment_dispute"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_fulfillment.Configuration,
+            "/sell/fulfillment/v1",
+            sell_fulfillment.PaymentDisputeApi,
+            sell_fulfillment.ApiClient,
+            "get_payment_dispute_summaries",
+            SellFulfillmentException,
+            True,
+            ["sell.fulfillment", "payment_dispute"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_fulfillment_update_evidence(
         self, content_type, payment_dispute_id, **kwargs
@@ -3623,21 +3238,18 @@ class API(APIPrivate):
         :param UpdateEvidencePaymentDisputeRequest body:
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_fulfillment.Configuration,
-                "/sell/fulfillment/v1",
-                sell_fulfillment.PaymentDisputeApi,
-                sell_fulfillment.ApiClient,
-                "update_evidence",
-                SellFulfillmentException,
-                True,
-                ["sell.fulfillment", "payment_dispute"],
-                (content_type, payment_dispute_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_fulfillment.Configuration,
+            "/sell/fulfillment/v1",
+            sell_fulfillment.PaymentDisputeApi,
+            sell_fulfillment.ApiClient,
+            "update_evidence",
+            SellFulfillmentException,
+            True,
+            ["sell.fulfillment", "payment_dispute"],
+            (content_type, payment_dispute_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_fulfillment_upload_evidence_file(
         self, payment_dispute_id, content_type, **kwargs
@@ -3650,21 +3262,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to multipart/form-data.  For more information, refer to HTTP request headers. (required)
         :return: FileEvidence
         """
-        try:
-            return self._method_single(
-                sell_fulfillment.Configuration,
-                "/sell/fulfillment/v1",
-                sell_fulfillment.PaymentDisputeApi,
-                sell_fulfillment.ApiClient,
-                "upload_evidence_file",
-                SellFulfillmentException,
-                True,
-                ["sell.fulfillment", "payment_dispute"],
-                (payment_dispute_id, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_fulfillment.Configuration,
+            "/sell/fulfillment/v1",
+            sell_fulfillment.PaymentDisputeApi,
+            sell_fulfillment.ApiClient,
+            "upload_evidence_file",
+            SellFulfillmentException,
+            True,
+            ["sell.fulfillment", "payment_dispute"],
+            (payment_dispute_id, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_fulfillment_create_shipping_fulfillment(
         self, body, content_type, order_id, **kwargs
@@ -3678,21 +3287,18 @@ class API(APIPrivate):
         :param str order_id: This path parameter is used to specify the unique identifier of the order associated with the shipping fulfillment being created. Use the getOrders method to retrieve order IDs. (required)
         :return: object
         """
-        try:
-            return self._method_single(
-                sell_fulfillment.Configuration,
-                "/sell/fulfillment/v1",
-                sell_fulfillment.ShippingFulfillmentApi,
-                sell_fulfillment.ApiClient,
-                "create_shipping_fulfillment",
-                SellFulfillmentException,
-                True,
-                ["sell.fulfillment", "shipping_fulfillment"],
-                (body, content_type, order_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_fulfillment.Configuration,
+            "/sell/fulfillment/v1",
+            sell_fulfillment.ShippingFulfillmentApi,
+            sell_fulfillment.ApiClient,
+            "create_shipping_fulfillment",
+            SellFulfillmentException,
+            True,
+            ["sell.fulfillment", "shipping_fulfillment"],
+            (body, content_type, order_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_fulfillment_get_shipping_fulfillment(
         self, fulfillment_id, order_id, **kwargs
@@ -3705,21 +3311,18 @@ class API(APIPrivate):
         :param str order_id: This path parameter is used to specify the unique identifier of the order associated with the shipping fulfillment being retrieved. Use the getOrders method to retrieve order IDs. Order ID values are also shown in My eBay/Seller Hub. (required)
         :return: ShippingFulfillment
         """
-        try:
-            return self._method_single(
-                sell_fulfillment.Configuration,
-                "/sell/fulfillment/v1",
-                sell_fulfillment.ShippingFulfillmentApi,
-                sell_fulfillment.ApiClient,
-                "get_shipping_fulfillment",
-                SellFulfillmentException,
-                True,
-                ["sell.fulfillment", "shipping_fulfillment"],
-                (fulfillment_id, order_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_fulfillment.Configuration,
+            "/sell/fulfillment/v1",
+            sell_fulfillment.ShippingFulfillmentApi,
+            sell_fulfillment.ApiClient,
+            "get_shipping_fulfillment",
+            SellFulfillmentException,
+            True,
+            ["sell.fulfillment", "shipping_fulfillment"],
+            (fulfillment_id, order_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_fulfillment_get_shipping_fulfillments(
         self, order_id, **kwargs
@@ -3731,21 +3334,18 @@ class API(APIPrivate):
         :param str order_id: This path parameter is used to specify the unique identifier of the order associated with the shipping fulfillments being retrieved.Use the getOrders method to retrieve order IDs. Order ID values are also shown in My eBay/Seller Hub. (required)
         :return: ShippingFulfillmentPagedCollection
         """
-        try:
-            return self._method_single(
-                sell_fulfillment.Configuration,
-                "/sell/fulfillment/v1",
-                sell_fulfillment.ShippingFulfillmentApi,
-                sell_fulfillment.ApiClient,
-                "get_shipping_fulfillments",
-                SellFulfillmentException,
-                True,
-                ["sell.fulfillment", "shipping_fulfillment"],
-                order_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_fulfillment.Configuration,
+            "/sell/fulfillment/v1",
+            sell_fulfillment.ShippingFulfillmentApi,
+            sell_fulfillment.ApiClient,
+            "get_shipping_fulfillments",
+            SellFulfillmentException,
+            True,
+            ["sell.fulfillment", "shipping_fulfillment"],
+            order_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_bulk_create_or_replace_inventory_item(
         self, body, content_type, content_language, **kwargs
@@ -3759,21 +3359,18 @@ class API(APIPrivate):
         :param str content_language: This header sets the natural language that will be used in the field values of the request payload. For example, the value passed in this header should be en-US for English or de-DE for German.For more information on the Content-Language header, refer to HTTP request headers. (required)
         :return: BulkInventoryItemResponse
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.InventoryItemApi,
-                sell_inventory.ApiClient,
-                "bulk_create_or_replace_inventory_item",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "inventory_item"],
-                (body, content_type, content_language),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.InventoryItemApi,
+            sell_inventory.ApiClient,
+            "bulk_create_or_replace_inventory_item",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "inventory_item"],
+            (body, content_type, content_language),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_bulk_get_inventory_item(
         self, body, content_type, **kwargs
@@ -3786,21 +3383,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json. For more information, refer to HTTP request headers. (required)
         :return: BulkGetInventoryItemResponse
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.InventoryItemApi,
-                sell_inventory.ApiClient,
-                "bulk_get_inventory_item",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "inventory_item"],
-                (body, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.InventoryItemApi,
+            sell_inventory.ApiClient,
+            "bulk_get_inventory_item",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "inventory_item"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_bulk_update_price_quantity(
         self, body, content_type, **kwargs
@@ -3813,21 +3407,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json. For more information, refer to HTTP request headers. (required)
         :return: BulkPriceQuantityResponse
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.InventoryItemApi,
-                sell_inventory.ApiClient,
-                "bulk_update_price_quantity",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "inventory_item"],
-                (body, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.InventoryItemApi,
+            sell_inventory.ApiClient,
+            "bulk_update_price_quantity",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "inventory_item"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_create_or_replace_inventory_item(
         self, body, content_language, content_type, sku, **kwargs
@@ -3842,21 +3433,18 @@ class API(APIPrivate):
         :param str sku: This path parameter specifies the seller-defined SKU value for the inventory item being created or updated. SKU values must be unique across the seller's inventory. Max length: 50 (required)
         :return: BaseResponse
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.InventoryItemApi,
-                sell_inventory.ApiClient,
-                "create_or_replace_inventory_item",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "inventory_item"],
-                (body, content_language, content_type, sku),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.InventoryItemApi,
+            sell_inventory.ApiClient,
+            "create_or_replace_inventory_item",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "inventory_item"],
+            (body, content_language, content_type, sku),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_delete_inventory_item(self, sku, **kwargs):  # noqa: E501
         """delete_inventory_item
@@ -3866,21 +3454,18 @@ class API(APIPrivate):
         :param str sku: This path parameter specifies the seller-defined SKU value of the product whose inventory item record you wish to delete.Use the getInventoryItems method to retrieve SKU values.Max length: 50 (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.InventoryItemApi,
-                sell_inventory.ApiClient,
-                "delete_inventory_item",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "inventory_item"],
-                sku,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.InventoryItemApi,
+            sell_inventory.ApiClient,
+            "delete_inventory_item",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "inventory_item"],
+            sku,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_get_inventory_item(self, sku, **kwargs):  # noqa: E501
         """get_inventory_item
@@ -3890,21 +3475,18 @@ class API(APIPrivate):
         :param str sku: This path parameter specifies the seller-defined SKU value of the product whose inventory item record you wish to retrieve.Use the getInventoryItems method to retrieve SKU values.Max length: 50 (required)
         :return: InventoryItemWithSkuLocaleGroupid
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.InventoryItemApi,
-                sell_inventory.ApiClient,
-                "get_inventory_item",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "inventory_item"],
-                sku,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.InventoryItemApi,
+            sell_inventory.ApiClient,
+            "get_inventory_item",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "inventory_item"],
+            sku,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_get_inventory_items(self, **kwargs):  # noqa: E501
         """get_inventory_items
@@ -3915,21 +3497,18 @@ class API(APIPrivate):
         :param str offset: The value passed in this query parameter sets the page number to retrieve. The first page of records has a value of 0, the second page of records has a value of 1, and so on. If this query parameter is not set, its value defaults to 0, and the first page of records is returned.
         :return: InventoryItems
         """
-        try:
-            return self._method_paged(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.InventoryItemApi,
-                sell_inventory.ApiClient,
-                "get_inventory_items",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "inventory_item"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.InventoryItemApi,
+            sell_inventory.ApiClient,
+            "get_inventory_items",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "inventory_item"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_create_or_replace_inventory_item_group(
         self, body, content_language, content_type, inventory_item_group_key, **kwargs
@@ -3944,21 +3523,18 @@ class API(APIPrivate):
         :param str inventory_item_group_key: This path parameter specifies the unique identifier of the inventory item group being created or updated. This identifier is defined by the seller.This value cannot be changed once it is set.Max Length: 50 (required)
         :return: BaseResponse
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.InventoryItemGroupApi,
-                sell_inventory.ApiClient,
-                "create_or_replace_inventory_item_group",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "inventory_item_group"],
-                (body, content_language, content_type, inventory_item_group_key),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.InventoryItemGroupApi,
+            sell_inventory.ApiClient,
+            "create_or_replace_inventory_item_group",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "inventory_item_group"],
+            (body, content_language, content_type, inventory_item_group_key),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_delete_inventory_item_group(
         self, inventory_item_group_key, **kwargs
@@ -3970,21 +3546,18 @@ class API(APIPrivate):
         :param str inventory_item_group_key: This path parameter specifies the unique identifier of the inventory item group being deleted. This value is assigned by the seller when an inventory item group is created. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.InventoryItemGroupApi,
-                sell_inventory.ApiClient,
-                "delete_inventory_item_group",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "inventory_item_group"],
-                inventory_item_group_key,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.InventoryItemGroupApi,
+            sell_inventory.ApiClient,
+            "delete_inventory_item_group",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "inventory_item_group"],
+            inventory_item_group_key,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_get_inventory_item_group(
         self, inventory_item_group_key, **kwargs
@@ -3996,21 +3569,18 @@ class API(APIPrivate):
         :param str inventory_item_group_key: This path parameter specifies the unique identifier of the inventory item group being retrieved. This value is assigned by the seller when an inventory item group is created. (required)
         :return: InventoryItemGroup
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.InventoryItemGroupApi,
-                sell_inventory.ApiClient,
-                "get_inventory_item_group",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "inventory_item_group"],
-                inventory_item_group_key,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.InventoryItemGroupApi,
+            sell_inventory.ApiClient,
+            "get_inventory_item_group",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "inventory_item_group"],
+            inventory_item_group_key,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_bulk_migrate_listing(
         self, body, content_type, **kwargs
@@ -4023,21 +3593,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json. For more information, refer to HTTP request headers. (required)
         :return: BulkMigrateListingResponse
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.ListingApi,
-                sell_inventory.ApiClient,
-                "bulk_migrate_listing",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "listing"],
-                (body, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.ListingApi,
+            sell_inventory.ApiClient,
+            "bulk_migrate_listing",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "listing"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_create_or_replace_sku_location_mapping(
         self, body, content_type, listing_id, sku, **kwargs
@@ -4052,21 +3619,18 @@ class API(APIPrivate):
         :param str sku: This path parameter specifies the seller-defined SKU value of the item/variation for which multiple fulfillment center locations will be mapped. This SKU value must be defined in the listing specified in listingId parameter.Use the getOffers method of the Inventory API or the GetMyEbaySelling method of the Trading API to retrieve all listing IDs for all active listings.Note: SKU values can be updated by a seller at any time. If a seller updates a SKU value that is being used for location mapping, this change will not be reflected until the mapping is updated through the createOrReplaceSkuLocationMapping method. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.ListingApi,
-                sell_inventory.ApiClient,
-                "create_or_replace_sku_location_mapping",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "listing"],
-                (body, content_type, listing_id, sku),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.ListingApi,
+            sell_inventory.ApiClient,
+            "create_or_replace_sku_location_mapping",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "listing"],
+            (body, content_type, listing_id, sku),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_delete_sku_location_mapping(
         self, listing_id, sku, **kwargs
@@ -4079,21 +3643,18 @@ class API(APIPrivate):
         :param str sku: This path parameter specifies the seller-defined SKU value of the item/variation for which location mappings will be removed. This SKU value must be defined in the listing specified in listingId parameterUse the getOffers method of the Inventory API or the GetMyEbaySelling method of the Trading API to retrieve all SKUs for all active listings. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.ListingApi,
-                sell_inventory.ApiClient,
-                "delete_sku_location_mapping",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "listing"],
-                (listing_id, sku),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.ListingApi,
+            sell_inventory.ApiClient,
+            "delete_sku_location_mapping",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "listing"],
+            (listing_id, sku),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_get_sku_location_mapping(
         self, listing_id, sku, **kwargs
@@ -4106,21 +3667,18 @@ class API(APIPrivate):
         :param str sku: This path parameter specifies the seller-defined SKU value of the item/variation for which location mappings will be retrieved. This SKU value must be defined in the listing specified in listingId parameterUse the getOffers method of the Inventory API or the GetMyEbaySelling method of the Trading API to retrieve all SKUs for all active listings. (required)
         :return: LocationMapping
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.ListingApi,
-                sell_inventory.ApiClient,
-                "get_sku_location_mapping",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "listing"],
-                (listing_id, sku),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.ListingApi,
+            sell_inventory.ApiClient,
+            "get_sku_location_mapping",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "listing"],
+            (listing_id, sku),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_create_inventory_location(
         self, body, content_type, merchant_location_key, **kwargs
@@ -4134,21 +3692,18 @@ class API(APIPrivate):
         :param str merchant_location_key: This path parameter specifies the unique, seller-defined key (ID) for an inventory location.Max length: 36 (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.LocationApi,
-                sell_inventory.ApiClient,
-                "create_inventory_location",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "location"],
-                (body, content_type, merchant_location_key),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.LocationApi,
+            sell_inventory.ApiClient,
+            "create_inventory_location",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "location"],
+            (body, content_type, merchant_location_key),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_delete_inventory_location(
         self, merchant_location_key, **kwargs
@@ -4160,21 +3715,18 @@ class API(APIPrivate):
         :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for the inventory location that is to be deleted.Use the getInventoryLocations method to retrieve merchant location keys.Max length: 36 (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.LocationApi,
-                sell_inventory.ApiClient,
-                "delete_inventory_location",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "location"],
-                merchant_location_key,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.LocationApi,
+            sell_inventory.ApiClient,
+            "delete_inventory_location",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "location"],
+            merchant_location_key,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_disable_inventory_location(
         self, merchant_location_key, **kwargs
@@ -4186,21 +3738,18 @@ class API(APIPrivate):
         :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for an inventory location that is to be disabled. Use the getInventoryLocations method to retrieve merchant location keys.Max length: 36 (required)
         :return: object
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.LocationApi,
-                sell_inventory.ApiClient,
-                "disable_inventory_location",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "location"],
-                merchant_location_key,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.LocationApi,
+            sell_inventory.ApiClient,
+            "disable_inventory_location",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "location"],
+            merchant_location_key,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_enable_inventory_location(
         self, merchant_location_key, **kwargs
@@ -4212,21 +3761,18 @@ class API(APIPrivate):
         :param str merchant_location_key: This path parameter specifies unique merchant-defined key (ID) for a disabled inventory location that is to be enabled.Use the getInventoryLocations method to retrieve merchant location keys.Max length: 36 (required)
         :return: object
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.LocationApi,
-                sell_inventory.ApiClient,
-                "enable_inventory_location",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "location"],
-                merchant_location_key,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.LocationApi,
+            sell_inventory.ApiClient,
+            "enable_inventory_location",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "location"],
+            merchant_location_key,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_get_inventory_location(
         self, merchant_location_key, **kwargs
@@ -4238,21 +3784,18 @@ class API(APIPrivate):
         :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for an inventory location that is being retrieved. Use the getInventoryLocations method to retrieve merchant location keys. Max length: 36 (required)
         :return: InventoryLocationResponse
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.LocationApi,
-                sell_inventory.ApiClient,
-                "get_inventory_location",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "location"],
-                merchant_location_key,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.LocationApi,
+            sell_inventory.ApiClient,
+            "get_inventory_location",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "location"],
+            merchant_location_key,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_get_inventory_locations(self, **kwargs):  # noqa: E501
         """get_inventory_locations
@@ -4263,21 +3806,18 @@ class API(APIPrivate):
         :param str offset: Specifies the number of locations to skip in the result set before returning the first location in the paginated response.  Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
         :return: LocationResponse
         """
-        try:
-            return self._method_paged(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.LocationApi,
-                sell_inventory.ApiClient,
-                "get_inventory_locations",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "location"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.LocationApi,
+            sell_inventory.ApiClient,
+            "get_inventory_locations",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "location"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_update_inventory_location(
         self, body, content_type, merchant_location_key, **kwargs
@@ -4291,21 +3831,18 @@ class API(APIPrivate):
         :param str merchant_location_key: This path parameter specifies the unique merchant-defined key (ID) for an inventory location that is to be updated. Use the getInventoryLocations method to retrieve merchant location keys. Max length: 36 (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.LocationApi,
-                sell_inventory.ApiClient,
-                "update_inventory_location",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "location"],
-                (body, content_type, merchant_location_key),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.LocationApi,
+            sell_inventory.ApiClient,
+            "update_inventory_location",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "location"],
+            (body, content_type, merchant_location_key),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_bulk_create_offer(
         self, body, content_language, content_type, **kwargs
@@ -4319,21 +3856,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json. For more information, refer to HTTP request headers. (required)
         :return: BulkOfferResponse
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.OfferApi,
-                sell_inventory.ApiClient,
-                "bulk_create_offer",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "offer"],
-                (body, content_language, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.OfferApi,
+            sell_inventory.ApiClient,
+            "bulk_create_offer",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "offer"],
+            (body, content_language, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_bulk_publish_offer(
         self, body, content_type, **kwargs
@@ -4346,21 +3880,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json. For more information, refer to HTTP request headers. (required)
         :return: BulkPublishResponse
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.OfferApi,
-                sell_inventory.ApiClient,
-                "bulk_publish_offer",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "offer"],
-                (body, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.OfferApi,
+            sell_inventory.ApiClient,
+            "bulk_publish_offer",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "offer"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_create_offer(
         self, body, content_language, content_type, **kwargs
@@ -4374,21 +3905,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json. For more information, refer to HTTP request headers. (required)
         :return: OfferResponse
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.OfferApi,
-                sell_inventory.ApiClient,
-                "create_offer",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "offer"],
-                (body, content_language, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.OfferApi,
+            sell_inventory.ApiClient,
+            "create_offer",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "offer"],
+            (body, content_language, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_delete_offer(self, offer_id, **kwargs):  # noqa: E501
         """delete_offer
@@ -4398,21 +3926,18 @@ class API(APIPrivate):
         :param str offer_id: This path parameter specifies the unique identifier of the offer being deleted.Use the getOffers method to retrieve offer IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.OfferApi,
-                sell_inventory.ApiClient,
-                "delete_offer",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "offer"],
-                offer_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.OfferApi,
+            sell_inventory.ApiClient,
+            "delete_offer",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "offer"],
+            offer_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_get_listing_fees(self, content_type, **kwargs):  # noqa: E501
         """get_listing_fees
@@ -4423,21 +3948,18 @@ class API(APIPrivate):
         :param OfferKeysWithId body: List of offers that needs fee information
         :return: FeesSummaryResponse
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.OfferApi,
-                sell_inventory.ApiClient,
-                "get_listing_fees",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "offer"],
-                content_type,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.OfferApi,
+            sell_inventory.ApiClient,
+            "get_listing_fees",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "offer"],
+            content_type,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_get_offer(self, offer_id, **kwargs):  # noqa: E501
         """get_offer
@@ -4447,21 +3969,18 @@ class API(APIPrivate):
         :param str offer_id: This path parameter specifies the unique identifier of the offer that is to be retrieved.Use the getOffers method to retrieve offer IDs. (required)
         :return: EbayOfferDetailsWithAll
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.OfferApi,
-                sell_inventory.ApiClient,
-                "get_offer",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "offer"],
-                offer_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.OfferApi,
+            sell_inventory.ApiClient,
+            "get_offer",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "offer"],
+            offer_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_get_offers(self, **kwargs):  # noqa: E501
         """get_offers
@@ -4475,21 +3994,18 @@ class API(APIPrivate):
         :param str sku: The seller-defined SKU value is passed in as a query parameter. All offers associated with this product are returned in the response. Note: The same SKU can be offered through an auction and a fixed-price listing concurrently. If this is the case, getOffers will return two offers. Otherwise, only one offer will be returned.Use the getInventoryItems method to retrieve SKU values.Max length: 50.
         :return: Offers
         """
-        try:
-            return self._method_paged(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.OfferApi,
-                sell_inventory.ApiClient,
-                "get_offers",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "offer"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.OfferApi,
+            sell_inventory.ApiClient,
+            "get_offers",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "offer"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_publish_offer(self, offer_id, **kwargs):  # noqa: E501
         """publish_offer
@@ -4499,21 +4015,18 @@ class API(APIPrivate):
         :param str offer_id: This path parameter specifies the unique identifier of the offer that is to be published.Use the getOffers method to retrieve offer IDs. (required)
         :return: PublishResponse
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.OfferApi,
-                sell_inventory.ApiClient,
-                "publish_offer",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "offer"],
-                offer_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.OfferApi,
+            sell_inventory.ApiClient,
+            "publish_offer",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "offer"],
+            offer_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_publish_offer_by_inventory_item_group(
         self, body, content_type, **kwargs
@@ -4526,21 +4039,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json. For more information, refer to HTTP request headers. (required)
         :return: PublishResponse
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.OfferApi,
-                sell_inventory.ApiClient,
-                "publish_offer_by_inventory_item_group",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "offer"],
-                (body, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.OfferApi,
+            sell_inventory.ApiClient,
+            "publish_offer_by_inventory_item_group",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "offer"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_update_offer(
         self, body, content_language, content_type, offer_id, **kwargs
@@ -4555,21 +4065,18 @@ class API(APIPrivate):
         :param str offer_id: This path parameter specifies the unique identifier of the offer being updated.Use the getOffers method to retrieve offer IDs. (required)
         :return: OfferResponse
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.OfferApi,
-                sell_inventory.ApiClient,
-                "update_offer",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "offer"],
-                (body, content_language, content_type, offer_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.OfferApi,
+            sell_inventory.ApiClient,
+            "update_offer",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "offer"],
+            (body, content_language, content_type, offer_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_withdraw_offer(self, offer_id, **kwargs):  # noqa: E501
         """withdraw_offer
@@ -4579,21 +4086,18 @@ class API(APIPrivate):
         :param str offer_id: This path parameter specifies the unique identifier of the offer that is to be withdrawn.Use the getOffers method to retrieve offer IDs. (required)
         :return: WithdrawResponse
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.OfferApi,
-                sell_inventory.ApiClient,
-                "withdraw_offer",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "offer"],
-                offer_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.OfferApi,
+            sell_inventory.ApiClient,
+            "withdraw_offer",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "offer"],
+            offer_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_withdraw_offer_by_inventory_item_group(
         self, body, content_type, **kwargs
@@ -4606,21 +4110,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json. For more information, refer to HTTP request headers. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.OfferApi,
-                sell_inventory.ApiClient,
-                "withdraw_offer_by_inventory_item_group",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "offer"],
-                (body, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.OfferApi,
+            sell_inventory.ApiClient,
+            "withdraw_offer_by_inventory_item_group",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "offer"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_create_or_replace_product_compatibility(
         self, body, content_language, content_type, sku, **kwargs
@@ -4635,21 +4136,18 @@ class API(APIPrivate):
         :param str sku: This path parameter specifies the SKU (stock keeping unit) of the inventory item associated with the compatibility list being created.Use the getInventoryItems method to retrieve SKU values. (required)
         :return: BaseResponse
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.ProductCompatibilityApi,
-                sell_inventory.ApiClient,
-                "create_or_replace_product_compatibility",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "product_compatibility"],
-                (body, content_language, content_type, sku),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.ProductCompatibilityApi,
+            sell_inventory.ApiClient,
+            "create_or_replace_product_compatibility",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "product_compatibility"],
+            (body, content_language, content_type, sku),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_delete_product_compatibility(self, sku, **kwargs):  # noqa: E501
         """delete_product_compatibility
@@ -4659,21 +4157,18 @@ class API(APIPrivate):
         :param str sku: This path parameter specifies the SKU (stock keeping unit) of the inventory item that is associated with the product compatibility list that is being deleted.Use the getInventoryItems method to retrieve SKU values. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.ProductCompatibilityApi,
-                sell_inventory.ApiClient,
-                "delete_product_compatibility",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "product_compatibility"],
-                sku,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.ProductCompatibilityApi,
+            sell_inventory.ApiClient,
+            "delete_product_compatibility",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "product_compatibility"],
+            sku,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_inventory_get_product_compatibility(self, sku, **kwargs):  # noqa: E501
         """get_product_compatibility
@@ -4683,21 +4178,18 @@ class API(APIPrivate):
         :param str sku: This path parameter specifies the SKU (stock keeping unit) of the inventory item associated with the product compatibility list being retrieved.Use the getInventoryItems method to retrieve SKU values. (required)
         :return: Compatibility
         """
-        try:
-            return self._method_single(
-                sell_inventory.Configuration,
-                "/sell/inventory/v1",
-                sell_inventory.ProductCompatibilityApi,
-                sell_inventory.ApiClient,
-                "get_product_compatibility",
-                SellInventoryException,
-                True,
-                ["sell.inventory", "product_compatibility"],
-                sku,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_inventory.Configuration,
+            "/sell/inventory/v1",
+            sell_inventory.ProductCompatibilityApi,
+            sell_inventory.ApiClient,
+            "get_product_compatibility",
+            SellInventoryException,
+            True,
+            ["sell.inventory", "product_compatibility"],
+            sku,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_logistics_cancel_shipment(self, shipment_id, **kwargs):  # noqa: E501
         """cancel_shipment
@@ -4707,21 +4199,18 @@ class API(APIPrivate):
         :param str shipment_id: This path parameter specifies the unique eBay-assigned ID of the shipment to be canceled.The shipmentId value is generated and returned by the createFromShippingQuote method. (required)
         :return: Shipment
         """
-        try:
-            return self._method_single(
-                sell_logistics.Configuration,
-                "/sell/logistics/v1_beta",
-                sell_logistics.ShipmentApi,
-                sell_logistics.ApiClient,
-                "cancel_shipment",
-                SellLogisticsException,
-                True,
-                ["sell.logistics", "shipment"],
-                shipment_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_logistics.Configuration,
+            "/sell/logistics/v1_beta",
+            sell_logistics.ShipmentApi,
+            sell_logistics.ApiClient,
+            "cancel_shipment",
+            SellLogisticsException,
+            True,
+            ["sell.logistics", "shipment"],
+            shipment_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_logistics_create_from_shipping_quote(
         self, body, content_type, x_ebay_c_marketplace_id, **kwargs
@@ -4735,21 +4224,18 @@ class API(APIPrivate):
         :param str x_ebay_c_marketplace_id: This header parameter specifies the eBay marketplace for the shipment being created.For a list of valid values, refer to the section Marketplace ID Values in the Using eBay RESTful APIs guide. (required)
         :return: Shipment
         """
-        try:
-            return self._method_single(
-                sell_logistics.Configuration,
-                "/sell/logistics/v1_beta",
-                sell_logistics.ShipmentApi,
-                sell_logistics.ApiClient,
-                "create_from_shipping_quote",
-                SellLogisticsException,
-                True,
-                ["sell.logistics", "shipment"],
-                (body, content_type, x_ebay_c_marketplace_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_logistics.Configuration,
+            "/sell/logistics/v1_beta",
+            sell_logistics.ShipmentApi,
+            sell_logistics.ApiClient,
+            "create_from_shipping_quote",
+            SellLogisticsException,
+            True,
+            ["sell.logistics", "shipment"],
+            (body, content_type, x_ebay_c_marketplace_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_logistics_download_label_file(
         self, shipment_id, accept, **kwargs
@@ -4762,21 +4248,18 @@ class API(APIPrivate):
         :param str accept: This header specifies the format of the returned file. For this method, the value of the header should be Accept: application/pdf.  (required)
         :return: list[str]
         """
-        try:
-            return self._method_single(
-                sell_logistics.Configuration,
-                "/sell/logistics/v1_beta",
-                sell_logistics.ShipmentApi,
-                sell_logistics.ApiClient,
-                "download_label_file",
-                SellLogisticsException,
-                True,
-                ["sell.logistics", "shipment"],
-                (shipment_id, accept),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_logistics.Configuration,
+            "/sell/logistics/v1_beta",
+            sell_logistics.ShipmentApi,
+            sell_logistics.ApiClient,
+            "download_label_file",
+            SellLogisticsException,
+            True,
+            ["sell.logistics", "shipment"],
+            (shipment_id, accept),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_logistics_get_shipment(self, shipment_id, **kwargs):  # noqa: E501
         """get_shipment
@@ -4786,21 +4269,18 @@ class API(APIPrivate):
         :param str shipment_id: This path parameter specifies the unique eBay-assigned identifier of the shipment you want to retrieve.The shipmentId value is generated and returned by the createFromShippingQuote method. (required)
         :return: Shipment
         """
-        try:
-            return self._method_single(
-                sell_logistics.Configuration,
-                "/sell/logistics/v1_beta",
-                sell_logistics.ShipmentApi,
-                sell_logistics.ApiClient,
-                "get_shipment",
-                SellLogisticsException,
-                True,
-                ["sell.logistics", "shipment"],
-                shipment_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_logistics.Configuration,
+            "/sell/logistics/v1_beta",
+            sell_logistics.ShipmentApi,
+            sell_logistics.ApiClient,
+            "get_shipment",
+            SellLogisticsException,
+            True,
+            ["sell.logistics", "shipment"],
+            shipment_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_logistics_create_shipping_quote(
         self, body, x_ebay_c_marketplace_id, content_type, **kwargs
@@ -4814,21 +4294,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: ShippingQuote
         """
-        try:
-            return self._method_single(
-                sell_logistics.Configuration,
-                "/sell/logistics/v1_beta",
-                sell_logistics.ShippingQuoteApi,
-                sell_logistics.ApiClient,
-                "create_shipping_quote",
-                SellLogisticsException,
-                True,
-                ["sell.logistics", "shipping_quote"],
-                (body, x_ebay_c_marketplace_id, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_logistics.Configuration,
+            "/sell/logistics/v1_beta",
+            sell_logistics.ShippingQuoteApi,
+            sell_logistics.ApiClient,
+            "create_shipping_quote",
+            SellLogisticsException,
+            True,
+            ["sell.logistics", "shipping_quote"],
+            (body, x_ebay_c_marketplace_id, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_logistics_get_shipping_quote(
         self, shipping_quote_id, **kwargs
@@ -4840,21 +4317,18 @@ class API(APIPrivate):
         :param str shipping_quote_id: This path parameter specifies the unique eBay-assigned ID of the shipping quote you want to retrieve.The shippingQuoteId value is generated and returned by the createShippingQuote method. (required)
         :return: ShippingQuote
         """
-        try:
-            return self._method_single(
-                sell_logistics.Configuration,
-                "/sell/logistics/v1_beta",
-                sell_logistics.ShippingQuoteApi,
-                sell_logistics.ApiClient,
-                "get_shipping_quote",
-                SellLogisticsException,
-                True,
-                ["sell.logistics", "shipping_quote"],
-                shipping_quote_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_logistics.Configuration,
+            "/sell/logistics/v1_beta",
+            sell_logistics.ShippingQuoteApi,
+            sell_logistics.ApiClient,
+            "get_shipping_quote",
+            SellLogisticsException,
+            True,
+            ["sell.logistics", "shipping_quote"],
+            shipping_quote_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_bulk_create_ads_by_inventory_reference(
         self, body, content_type, campaign_id, **kwargs
@@ -4868,21 +4342,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which to associated the ads being created. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkCreateAdsByInventoryReferenceResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdApi,
-                sell_marketing.ApiClient,
-                "bulk_create_ads_by_inventory_reference",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdApi,
+            sell_marketing.ApiClient,
+            "bulk_create_ads_by_inventory_reference",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_bulk_create_ads_by_listing_id(
         self, body, content_type, campaign_id, **kwargs
@@ -4896,21 +4367,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which to associated the ads being created. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkAdResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdApi,
-                sell_marketing.ApiClient,
-                "bulk_create_ads_by_listing_id",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdApi,
+            sell_marketing.ApiClient,
+            "bulk_create_ads_by_listing_id",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_bulk_delete_ads_by_inventory_reference(
         self, body, content_type, campaign_id, **kwargs
@@ -4924,21 +4392,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which to delete a set of ads. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkDeleteAdsByInventoryReferenceResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdApi,
-                sell_marketing.ApiClient,
-                "bulk_delete_ads_by_inventory_reference",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdApi,
+            sell_marketing.ApiClient,
+            "bulk_delete_ads_by_inventory_reference",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_bulk_delete_ads_by_listing_id(
         self, body, content_type, campaign_id, **kwargs
@@ -4952,21 +4417,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the eBay-assigned identifier of the ad campaign for which to delete a set of ads. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkDeleteAdResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdApi,
-                sell_marketing.ApiClient,
-                "bulk_delete_ads_by_listing_id",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdApi,
+            sell_marketing.ApiClient,
+            "bulk_delete_ads_by_listing_id",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_bulk_update_ads_bid_by_inventory_reference(
         self, body, content_type, campaign_id, **kwargs
@@ -4980,21 +4442,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which to update the bid percentage for a set of ads. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkUpdateAdsByInventoryReferenceResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdApi,
-                sell_marketing.ApiClient,
-                "bulk_update_ads_bid_by_inventory_reference",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdApi,
+            sell_marketing.ApiClient,
+            "bulk_update_ads_bid_by_inventory_reference",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_bulk_update_ads_bid_by_listing_id(
         self, body, content_type, campaign_id, **kwargs
@@ -5008,21 +4467,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which to update the bid percentage for a set of ads. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkAdUpdateResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdApi,
-                sell_marketing.ApiClient,
-                "bulk_update_ads_bid_by_listing_id",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdApi,
+            sell_marketing.ApiClient,
+            "bulk_update_ads_bid_by_listing_id",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_bulk_update_ads_status(
         self, body, content_type, campaign_id, **kwargs
@@ -5036,21 +4492,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the ad statuses being updated. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkAdUpdateStatusResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdApi,
-                sell_marketing.ApiClient,
-                "bulk_update_ads_status",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdApi,
+            sell_marketing.ApiClient,
+            "bulk_update_ads_status",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_bulk_update_ads_status_by_listing_id(
         self, body, content_type, campaign_id, **kwargs
@@ -5064,21 +4517,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the ads being updated. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkAdUpdateStatusByListingIdResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdApi,
-                sell_marketing.ApiClient,
-                "bulk_update_ads_status_by_listing_id",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdApi,
+            sell_marketing.ApiClient,
+            "bulk_update_ads_status_by_listing_id",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_create_ad_by_listing_id(
         self, body, content_type, campaign_id, **kwargs
@@ -5092,21 +4542,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which to associate the newly created ad. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: object
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdApi,
-                sell_marketing.ApiClient,
-                "create_ad_by_listing_id",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdApi,
+            sell_marketing.ApiClient,
+            "create_ad_by_listing_id",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_create_ads_by_inventory_reference(
         self, body, content_type, campaign_id, **kwargs
@@ -5120,21 +4567,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which to associate the newly created ads. Use the getCampaigns method to retrieve campaign IDs (required)
         :return: AdReferences
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdApi,
-                sell_marketing.ApiClient,
-                "create_ads_by_inventory_reference",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdApi,
+            sell_marketing.ApiClient,
+            "create_ads_by_inventory_reference",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_delete_ad(self, ad_id, campaign_id, **kwargs):  # noqa: E501
         """delete_ad
@@ -5145,21 +4589,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the ad being deleted. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdApi,
-                sell_marketing.ApiClient,
-                "delete_ad",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad"],
-                (ad_id, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdApi,
+            sell_marketing.ApiClient,
+            "delete_ad",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad"],
+            (ad_id, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_delete_ads_by_inventory_reference(
         self, body, content_type, campaign_id, **kwargs
@@ -5173,21 +4614,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the ads being deleted. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: AdIds
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdApi,
-                sell_marketing.ApiClient,
-                "delete_ads_by_inventory_reference",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdApi,
+            sell_marketing.ApiClient,
+            "delete_ads_by_inventory_reference",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_ad(self, ad_id, campaign_id, **kwargs):  # noqa: E501
         """get_ad
@@ -5198,21 +4636,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the ad being retrieved. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: Ad
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdApi,
-                sell_marketing.ApiClient,
-                "get_ad",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad"],
-                (ad_id, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdApi,
+            sell_marketing.ApiClient,
+            "get_ad",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad"],
+            (ad_id, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_ads(self, campaign_id, **kwargs):  # noqa: E501
         """get_ads
@@ -5227,21 +4662,18 @@ class API(APIPrivate):
         :param str offset: Specifies the number of ads to skip in the result set before returning the first ad in the paginated response.  Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
         :return: AdPagedCollectionResponse
         """
-        try:
-            return self._method_paged(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdApi,
-                sell_marketing.ApiClient,
-                "get_ads",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad"],
-                campaign_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdApi,
+            sell_marketing.ApiClient,
+            "get_ads",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad"],
+            campaign_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_ads_by_inventory_reference(
         self, campaign_id, inventory_reference_id, inventory_reference_type, **kwargs
@@ -5255,21 +4687,18 @@ class API(APIPrivate):
         :param str inventory_reference_type: This query parameter specifies the type of the item the inventory_reference_id references.See InventoryReferenceType for supported values. (required)
         :return: Ads
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdApi,
-                sell_marketing.ApiClient,
-                "get_ads_by_inventory_reference",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad"],
-                (campaign_id, inventory_reference_id, inventory_reference_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdApi,
+            sell_marketing.ApiClient,
+            "get_ads_by_inventory_reference",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad"],
+            (campaign_id, inventory_reference_id, inventory_reference_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_update_bid(
         self, body, content_type, ad_id, campaign_id, **kwargs
@@ -5284,21 +4713,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the ad being updated. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdApi,
-                sell_marketing.ApiClient,
-                "update_bid",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad"],
-                (body, content_type, ad_id, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdApi,
+            sell_marketing.ApiClient,
+            "update_bid",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad"],
+            (body, content_type, ad_id, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_create_ad_group(
         self, body, content_type, campaign_id, **kwargs
@@ -5312,21 +4738,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign to associate with the ad group being created. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: object
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdGroupApi,
-                sell_marketing.ApiClient,
-                "create_ad_group",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad_group"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdGroupApi,
+            sell_marketing.ApiClient,
+            "create_ad_group",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad_group"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_ad_group(
         self, ad_group_id, campaign_id, **kwargs
@@ -5339,21 +4762,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the ad group being retrieved. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: AdGroup
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdGroupApi,
-                sell_marketing.ApiClient,
-                "get_ad_group",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad_group"],
-                (ad_group_id, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdGroupApi,
+            sell_marketing.ApiClient,
+            "get_ad_group",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad_group"],
+            (ad_group_id, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_ad_groups(self, campaign_id, **kwargs):  # noqa: E501
         """get_ad_groups
@@ -5366,21 +4786,18 @@ class API(APIPrivate):
         :param str offset: The number of results that will be skipped in the result set. This is used with the limit field to control the pagination of the output.For example, if the offset is set to 0 and the limit is set to 10, the method will retrieve items 1 through 10 from the list of items returned. If the offset is set to 10 and the limit is set to 10, the method will retrieve items 11 through 20 from the list of items returned.Default: 0
         :return: AdGroupPagedCollectionResponse
         """
-        try:
-            return self._method_paged(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdGroupApi,
-                sell_marketing.ApiClient,
-                "get_ad_groups",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad_group"],
-                campaign_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdGroupApi,
+            sell_marketing.ApiClient,
+            "get_ad_groups",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad_group"],
+            campaign_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_suggest_bids(
         self, body, content_type, ad_group_id, campaign_id, **kwargs
@@ -5395,21 +4812,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign associated with the keywords for which bid suggestions will be provided. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: TargetedBidsPagedCollection
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdGroupApi,
-                sell_marketing.ApiClient,
-                "suggest_bids",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad_group"],
-                (body, content_type, ad_group_id, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdGroupApi,
+            sell_marketing.ApiClient,
+            "suggest_bids",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad_group"],
+            (body, content_type, ad_group_id, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_suggest_keywords(
         self, content_type, ad_group_id, campaign_id, **kwargs
@@ -5424,21 +4838,18 @@ class API(APIPrivate):
         :param TargetedKeywordRequest body: The required data to retrieve suggested keywords.
         :return: TargetedKeywordsPagedCollection
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdGroupApi,
-                sell_marketing.ApiClient,
-                "suggest_keywords",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad_group"],
-                (content_type, ad_group_id, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdGroupApi,
+            sell_marketing.ApiClient,
+            "suggest_keywords",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad_group"],
+            (content_type, ad_group_id, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_update_ad_group(
         self, body, content_type, ad_group_id, campaign_id, **kwargs
@@ -5453,21 +4864,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which the ad group is being updated. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdGroupApi,
-                sell_marketing.ApiClient,
-                "update_ad_group",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad_group"],
-                (body, content_type, ad_group_id, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdGroupApi,
+            sell_marketing.ApiClient,
+            "update_ad_group",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad_group"],
+            (body, content_type, ad_group_id, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_report(self, report_id, **kwargs):  # noqa: E501
         """get_report
@@ -5477,21 +4885,18 @@ class API(APIPrivate):
         :param str report_id: This path parameter specifies the unique ID of the Promoted Listings report being retrieved.Use the getReportTasks method to retrieve report IDs. (required)
         :return: object
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdReportApi,
-                sell_marketing.ApiClient,
-                "get_report",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad_report"],
-                report_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdReportApi,
+            sell_marketing.ApiClient,
+            "get_report",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad_report"],
+            report_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_report_metadata(self, **kwargs):  # noqa: E501
         """get_report_metadata
@@ -5502,21 +4907,18 @@ class API(APIPrivate):
         :param str channel: This query parameter is used only if the user wants to see COST_PER_CLICK report metadata for a specific channel. Refer to the ChannelEnum type for supported values.Note: The channel parameter is only applicable for COST_PER_CLICK funding model.
         :return: ReportMetadatas
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdReportMetadataApi,
-                sell_marketing.ApiClient,
-                "get_report_metadata",
-                SellMarketingException,
-                False,
-                ["sell.marketing", "ad_report_metadata"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdReportMetadataApi,
+            sell_marketing.ApiClient,
+            "get_report_metadata",
+            SellMarketingException,
+            False,
+            ["sell.marketing", "ad_report_metadata"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_report_metadata_for_report_type(
         self, report_type, **kwargs
@@ -5530,21 +4932,18 @@ class API(APIPrivate):
         :param str channel: The channel used in the report. The channel must be compatible with the report type specified in the path parameter. Refer to the ChannelEnum type for supported values. Note: The channel parameter is only applicable for COST_PER_CLICK funding model.
         :return: ReportMetadata
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdReportMetadataApi,
-                sell_marketing.ApiClient,
-                "get_report_metadata_for_report_type",
-                SellMarketingException,
-                False,
-                ["sell.marketing", "ad_report_metadata"],
-                report_type,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdReportMetadataApi,
+            sell_marketing.ApiClient,
+            "get_report_metadata_for_report_type",
+            SellMarketingException,
+            False,
+            ["sell.marketing", "ad_report_metadata"],
+            report_type,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_create_report_task(
         self, body, content_type, **kwargs
@@ -5557,21 +4956,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdReportTaskApi,
-                sell_marketing.ApiClient,
-                "create_report_task",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad_report_task"],
-                (body, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdReportTaskApi,
+            sell_marketing.ApiClient,
+            "create_report_task",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad_report_task"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_delete_report_task(self, report_task_id, **kwargs):  # noqa: E501
         """delete_report_task
@@ -5581,21 +4977,18 @@ class API(APIPrivate):
         :param str report_task_id: This path parameter specifies the unique identifier of the report task being deleted. Use the getReportTasks method to retrieve report task Ids. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdReportTaskApi,
-                sell_marketing.ApiClient,
-                "delete_report_task",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad_report_task"],
-                report_task_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdReportTaskApi,
+            sell_marketing.ApiClient,
+            "delete_report_task",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad_report_task"],
+            report_task_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_report_task(self, report_task_id, **kwargs):  # noqa: E501
         """get_report_task
@@ -5605,21 +4998,18 @@ class API(APIPrivate):
         :param str report_task_id: This path parameter specifies the unique identifier of the report task being retrieved. Use the getReportTasks method to retrieve report task Ids. (required)
         :return: ReportTask
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdReportTaskApi,
-                sell_marketing.ApiClient,
-                "get_report_task",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad_report_task"],
-                report_task_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdReportTaskApi,
+            sell_marketing.ApiClient,
+            "get_report_task",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad_report_task"],
+            report_task_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_report_tasks(self, **kwargs):  # noqa: E501
         """get_report_tasks
@@ -5631,21 +5021,18 @@ class API(APIPrivate):
         :param str report_task_statuses: This query parameter filters the returned report tasks by their status. Supply a comma-separated list of the report statuses you want returned. The results are filtered to include only the report statuses you specify.Note: The results might not include some report tasks if other search conditions exclude them.See TaskStatusEnum for supported values.
         :return: ReportTaskPagedCollection
         """
-        try:
-            return self._method_paged(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.AdReportTaskApi,
-                sell_marketing.ApiClient,
-                "get_report_tasks",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "ad_report_task"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.AdReportTaskApi,
+            sell_marketing.ApiClient,
+            "get_report_tasks",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "ad_report_task"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_clone_campaign(
         self, body, content_type, campaign_id, **kwargs
@@ -5659,21 +5046,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign being cloned. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: object
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "clone_campaign",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "clone_campaign",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_create_campaign(
         self, body, content_type, **kwargs
@@ -5686,21 +5070,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: object
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "create_campaign",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                (body, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "create_campaign",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_delete_campaign(self, campaign_id, **kwargs):  # noqa: E501
         """delete_campaign
@@ -5710,21 +5091,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign being deleted. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "delete_campaign",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                campaign_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "delete_campaign",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            campaign_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_end_campaign(self, campaign_id, **kwargs):  # noqa: E501
         """end_campaign
@@ -5734,21 +5112,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the RUNNING or PAUSED ad campaign that is being ended. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "end_campaign",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                campaign_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "end_campaign",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            campaign_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_find_campaign_by_ad_reference(self, **kwargs):  # noqa: E501
         """find_campaign_by_ad_reference
@@ -5760,21 +5135,18 @@ class API(APIPrivate):
         :param str listing_id: This query parameter specifies the unique identifier of the eBay listing associated with the ad being used to retrieve the campaign.eBay listing IDs are generated by either the Trading API or the Inventory API when you create a listing.
         :return: Campaigns
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "find_campaign_by_ad_reference",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "find_campaign_by_ad_reference",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_campaign(self, campaign_id, **kwargs):  # noqa: E501
         """get_campaign
@@ -5784,21 +5156,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign being retrieved. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: Campaign
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "get_campaign",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                campaign_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "get_campaign",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            campaign_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_campaign_by_name(
         self, campaign_name, **kwargs
@@ -5810,21 +5179,18 @@ class API(APIPrivate):
         :param str campaign_name: This query parameter specifies name of the campaign being retrieved. Use the getCampaigns method to retrieve a list of a seller's campaign names. (required)
         :return: Campaign
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "get_campaign_by_name",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                campaign_name,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "get_campaign_by_name",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            campaign_name,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_campaigns(self, **kwargs):  # noqa: E501
         """get_campaigns
@@ -5842,21 +5208,18 @@ class API(APIPrivate):
         :param str start_date_range: This query parameter specifies the range of a campaign's start date in which to filter the results. The results are filtered to include only campaigns with a start date that is equal to this date or is within specified range.Valid format (UTC):  yyyy-MM-ddThh:mm:ssZ..yyyy-MM-ddThh:mm:ssZ (starts within this range)yyyy-MM-ddThh:mm:ssZ (campaign starts on or after this date)..yyyy-MM-ddThh:mm:ssZ (campaign starts on or before this date)2016-09-08T00:00.00.000Z..2016-09-09T00:00:00Z (campaign starts on September 08, 2016)Note: The results might not include all the campaigns with this start date if other filters exclude them.
         :return: CampaignPagedCollectionResponse
         """
-        try:
-            return self._method_paged(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "get_campaigns",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "get_campaigns",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_launch_campaign(self, campaign_id, **kwargs):  # noqa: E501
         """launch_campaign
@@ -5866,21 +5229,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign being launched.For priority strategy campaigns created with the setupQuickCampaign method, the getCampaign URI for that campaign is returned in the Location response header. That URI will include the campaign_id value, which you will pass in as a path parameter in the launchCampaign method.Note: The campaign ID value used here must be for a priority strategy campaign in DRAFT status.  (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "launch_campaign",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                campaign_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "launch_campaign",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            campaign_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_pause_campaign(self, campaign_id, **kwargs):  # noqa: E501
         """pause_campaign
@@ -5890,21 +5250,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the RUNNING ad campaign being paused. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "pause_campaign",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                campaign_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "pause_campaign",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            campaign_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_resume_campaign(self, campaign_id, **kwargs):  # noqa: E501
         """resume_campaign
@@ -5914,21 +5271,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the paused ad campaign that is being resumed. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "resume_campaign",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                campaign_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "resume_campaign",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            campaign_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_setup_quick_campaign(
         self, body, content_type, **kwargs
@@ -5941,21 +5295,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: object
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "setup_quick_campaign",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                (body, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "setup_quick_campaign",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_suggest_budget(
         self, x_ebay_c_marketplace_id, **kwargs
@@ -5967,21 +5318,18 @@ class API(APIPrivate):
         :param str x_ebay_c_marketplace_id: This header identifies the seller's eBay marketplace.Note: If a marketplace ID value is not provided, the default value of EBAY_US is used.See MarketplaceIdEnum for supported values. (required)
         :return: SuggestBudgetResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "suggest_budget",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                x_ebay_c_marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "suggest_budget",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            x_ebay_c_marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_suggest_items(self, campaign_id, **kwargs):  # noqa: E501
         """suggest_items
@@ -5994,21 +5342,18 @@ class API(APIPrivate):
         :param str offset: Specifies the number of campaigns to skip in the result set before returning the first report in the paginated response.Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
         :return: TargetedAdsPagedCollection
         """
-        try:
-            return self._method_paged(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "suggest_items",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                campaign_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "suggest_items",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            campaign_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_suggest_max_cpc(
         self, body, content_type, **kwargs
@@ -6021,21 +5366,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: SuggestMaxCpcResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "suggest_max_cpc",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                (body, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "suggest_max_cpc",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_update_ad_rate_strategy(
         self, body, content_type, campaign_id, **kwargs
@@ -6049,21 +5391,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which the ad rate strategy is being updated. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "update_ad_rate_strategy",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "update_ad_rate_strategy",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_update_bidding_strategy(
         self, body, content_type, campaign_id, **kwargs
@@ -6077,21 +5416,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which the keyword bidding strategy is being updated. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "update_bidding_strategy",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "update_bidding_strategy",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_update_campaign_budget(
         self, body, content_type, campaign_id, **kwargs
@@ -6105,21 +5441,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which the budget is being updated. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "update_campaign_budget",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "update_campaign_budget",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_update_campaign_identification(
         self, body, content_type, campaign_id, **kwargs
@@ -6133,21 +5466,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign being updated. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.CampaignApi,
-                sell_marketing.ApiClient,
-                "update_campaign_identification",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "campaign"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.CampaignApi,
+            sell_marketing.ApiClient,
+            "update_campaign_identification",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "campaign"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_create_email_campaign(
         self, body, x_ebay_c_marketplace_id, content_type, **kwargs
@@ -6161,21 +5491,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: CreateEmailCampaignResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.EmailCampaignApi,
-                sell_marketing.ApiClient,
-                "create_email_campaign",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "email_campaign"],
-                (body, x_ebay_c_marketplace_id, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.EmailCampaignApi,
+            sell_marketing.ApiClient,
+            "create_email_campaign",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "email_campaign"],
+            (body, x_ebay_c_marketplace_id, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_delete_email_campaign(
         self, email_campaign_id, **kwargs
@@ -6187,21 +5514,18 @@ class API(APIPrivate):
         :param str email_campaign_id: This path parameter specifies the unique eBay-assigned identifier for the email campaign being deleted. You can retrieve the email campaign IDs for a specified seller using the getEmailCampaigns method. (required)
         :return: DeleteEmailCampaignResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.EmailCampaignApi,
-                sell_marketing.ApiClient,
-                "delete_email_campaign",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "email_campaign"],
-                email_campaign_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.EmailCampaignApi,
+            sell_marketing.ApiClient,
+            "delete_email_campaign",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "email_campaign"],
+            email_campaign_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_audiences(self, email_campaign_type, **kwargs):  # noqa: E501
         """get_audiences
@@ -6213,21 +5537,18 @@ class API(APIPrivate):
         :param str offset: The number of results to skip in a pagination query. This value cannot be less than 0.Default value: 0
         :return: GetEmailCampaignAudiencesResponse
         """
-        try:
-            return self._method_paged(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.EmailCampaignApi,
-                sell_marketing.ApiClient,
-                "get_audiences",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "email_campaign"],
-                email_campaign_type,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.EmailCampaignApi,
+            sell_marketing.ApiClient,
+            "get_audiences",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "email_campaign"],
+            email_campaign_type,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_email_campaign(
         self, email_campaign_id, **kwargs
@@ -6239,21 +5560,18 @@ class API(APIPrivate):
         :param str email_campaign_id: This path parameter specifies the unique eBay-assigned identifier of the email campaign being retrieved.Use the getEmailCampaigns method to retrieve a list of email campaign IDs for a seller. (required)
         :return: GetEmailCampaignResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.EmailCampaignApi,
-                sell_marketing.ApiClient,
-                "get_email_campaign",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "email_campaign"],
-                email_campaign_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.EmailCampaignApi,
+            sell_marketing.ApiClient,
+            "get_email_campaign",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "email_campaign"],
+            email_campaign_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_email_campaigns(self, **kwargs):  # noqa: E501
         """get_email_campaigns
@@ -6266,21 +5584,18 @@ class API(APIPrivate):
         :param str sort: The criteria for sorting email campaign results. See ItemSortEnum for sorting options and their enum values.Default: NEWLY_LISTED
         :return: GetEmailCampaignsResponse
         """
-        try:
-            return self._method_paged(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.EmailCampaignApi,
-                sell_marketing.ApiClient,
-                "get_email_campaigns",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "email_campaign"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.EmailCampaignApi,
+            sell_marketing.ApiClient,
+            "get_email_campaigns",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "email_campaign"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_email_preview(
         self, email_campaign_id, **kwargs
@@ -6292,21 +5607,18 @@ class API(APIPrivate):
         :param str email_campaign_id: This path parameter specifies the unique eBay assigned identifier for the email campaign associated with the preview being retrieved.Use the getEmailCampaigns method to retrieve a list of email campaign IDs for a seller. (required)
         :return: GetEmailPreviewResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.EmailCampaignApi,
-                sell_marketing.ApiClient,
-                "get_email_preview",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "email_campaign"],
-                email_campaign_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.EmailCampaignApi,
+            sell_marketing.ApiClient,
+            "get_email_preview",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "email_campaign"],
+            email_campaign_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_email_report(
         self, end_date, start_date, **kwargs
@@ -6319,21 +5631,18 @@ class API(APIPrivate):
         :param str start_date: The start date for the report, given in UTC format. The maximum date range for a report retrieved by this method is one year. (required)
         :return: GetEmailReportResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.EmailCampaignApi,
-                sell_marketing.ApiClient,
-                "get_email_report",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "email_campaign"],
-                (end_date, start_date),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.EmailCampaignApi,
+            sell_marketing.ApiClient,
+            "get_email_report",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "email_campaign"],
+            (end_date, start_date),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_update_email_campaign(
         self, body, content_type, email_campaign_id, **kwargs
@@ -6347,21 +5656,18 @@ class API(APIPrivate):
         :param str email_campaign_id: This path parameter specifies the unique eBay assigned identifier for the email campaign being updated.Use the getEmailCampaigns method to retrieve a list of email campaign IDs for a seller. (required)
         :return: UpdateEmailCampaignResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.EmailCampaignApi,
-                sell_marketing.ApiClient,
-                "update_email_campaign",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "email_campaign"],
-                (body, content_type, email_campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.EmailCampaignApi,
+            sell_marketing.ApiClient,
+            "update_email_campaign",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "email_campaign"],
+            (body, content_type, email_campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_create_item_price_markdown_promotion(
         self, content_type, **kwargs
@@ -6374,21 +5680,18 @@ class API(APIPrivate):
         :param ItemPriceMarkdown body: This type defines the fields that describe an item price markdown discount.
         :return: object
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.ItemPriceMarkdownApi,
-                sell_marketing.ApiClient,
-                "create_item_price_markdown_promotion",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "item_price_markdown"],
-                content_type,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.ItemPriceMarkdownApi,
+            sell_marketing.ApiClient,
+            "create_item_price_markdown_promotion",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "item_price_markdown"],
+            content_type,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_delete_item_price_markdown_promotion(
         self, promotion_id, **kwargs
@@ -6400,21 +5703,18 @@ class API(APIPrivate):
         :param str promotion_id: This path parameter takes a concatenation of the ID of the discount you want to delete plus the marketplace ID on which the discount is hosted. Concatenate the two values by separating them with an \"at sign\" (@). The ID of the discount (promotionId) is a unique eBay-assigned value that's generated when the discount is created. The Marketplace ID is the ENUM value of eBay marketplace where the discount is hosted. Use the getPromotions method to retrieve promotion Ids. See MarketplaceIdEnum for supported Marketplace ID values.Example: 1********5@EBAY_US (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.ItemPriceMarkdownApi,
-                sell_marketing.ApiClient,
-                "delete_item_price_markdown_promotion",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "item_price_markdown"],
-                promotion_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.ItemPriceMarkdownApi,
+            sell_marketing.ApiClient,
+            "delete_item_price_markdown_promotion",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "item_price_markdown"],
+            promotion_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_item_price_markdown_promotion(
         self, promotion_id, **kwargs
@@ -6426,21 +5726,18 @@ class API(APIPrivate):
         :param str promotion_id: This path parameter takes a concatenation of the ID of the discount you want to retrieve plus the marketplace ID on which the discount is hosted. Concatenate the two values by separating them with an \"at sign\" (@). The ID of the discount (promotionId) is a unique eBay-assigned value that's generated when the discount is created. The Marketplace ID is the ENUM value of eBay marketplace where the discoun is hosted. Use the getPromotions method to retrieve promotion Ids. See MarketplaceIdEnum for supported Marketplace ID values.Example: 1********5@EBAY_US (required)
         :return: ItemPriceMarkdown
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.ItemPriceMarkdownApi,
-                sell_marketing.ApiClient,
-                "get_item_price_markdown_promotion",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "item_price_markdown"],
-                promotion_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.ItemPriceMarkdownApi,
+            sell_marketing.ApiClient,
+            "get_item_price_markdown_promotion",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "item_price_markdown"],
+            promotion_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_update_item_price_markdown_promotion(
         self, content_type, promotion_id, **kwargs
@@ -6454,21 +5751,18 @@ class API(APIPrivate):
         :param ItemPriceMarkdown body: This type defines the fields that describe an item price markdown discount.
         :return: object
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.ItemPriceMarkdownApi,
-                sell_marketing.ApiClient,
-                "update_item_price_markdown_promotion",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "item_price_markdown"],
-                (content_type, promotion_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.ItemPriceMarkdownApi,
+            sell_marketing.ApiClient,
+            "update_item_price_markdown_promotion",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "item_price_markdown"],
+            (content_type, promotion_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_create_item_promotion(
         self, content_type, **kwargs
@@ -6481,21 +5775,18 @@ class API(APIPrivate):
         :param ItemPromotion body: This type defines the fields that describe an item discount.
         :return: BaseResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.ItemPromotionApi,
-                sell_marketing.ApiClient,
-                "create_item_promotion",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "item_promotion"],
-                content_type,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.ItemPromotionApi,
+            sell_marketing.ApiClient,
+            "create_item_promotion",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "item_promotion"],
+            content_type,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_delete_item_promotion(
         self, promotion_id, **kwargs
@@ -6507,21 +5798,18 @@ class API(APIPrivate):
         :param str promotion_id: This path parameter takes a concatenation of the ID of the discount you want to delete plus the marketplace ID on which the discount is hosted. Concatenate the two values by separating them with an \"at sign\" (@). The ID of the discount (promotionId) is a unique eBay-assigned value that's generated when the discount is created. The Marketplace ID is the ENUM value of eBay marketplace where the discount is hosted. Use the getPromotions method to retrieve promotion Ids. See MarketplaceIdEnum for supported Marketplace ID values.Example: 1********5@EBAY_US (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.ItemPromotionApi,
-                sell_marketing.ApiClient,
-                "delete_item_promotion",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "item_promotion"],
-                promotion_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.ItemPromotionApi,
+            sell_marketing.ApiClient,
+            "delete_item_promotion",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "item_promotion"],
+            promotion_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_item_promotion(self, promotion_id, **kwargs):  # noqa: E501
         """get_item_promotion
@@ -6531,21 +5819,18 @@ class API(APIPrivate):
         :param str promotion_id: This path parameter takes a concatenation of the ID of the discount you want to retrieve plus the marketplace ID on which the discount is hosted. Concatenate the two values by separating them with an \"at sign\" (@). The ID of the discount (promotionId) is a unique eBay-assigned value that's generated when the discount is created. The Marketplace ID is the ENUM value of eBay marketplace where the discount is hosted. Use the getPromotions method to retrieve promotion Ids. See MarketplaceIdEnum for supported Marketplace ID values.Example: 1********5@EBAY_US (required)
         :return: ItemPromotionResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.ItemPromotionApi,
-                sell_marketing.ApiClient,
-                "get_item_promotion",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "item_promotion"],
-                promotion_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.ItemPromotionApi,
+            sell_marketing.ApiClient,
+            "get_item_promotion",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "item_promotion"],
+            promotion_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_update_item_promotion(
         self, content_type, promotion_id, **kwargs
@@ -6559,21 +5844,18 @@ class API(APIPrivate):
         :param ItemPromotion body: This type defines the fields that describe an item discount.
         :return: BaseResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.ItemPromotionApi,
-                sell_marketing.ApiClient,
-                "update_item_promotion",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "item_promotion"],
-                (content_type, promotion_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.ItemPromotionApi,
+            sell_marketing.ApiClient,
+            "update_item_promotion",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "item_promotion"],
+            (content_type, promotion_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_bulk_create_keyword(
         self, body, content_type, campaign_id, **kwargs
@@ -6587,21 +5869,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which a set of keywords is being created. Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkCreateKeywordResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.KeywordApi,
-                sell_marketing.ApiClient,
-                "bulk_create_keyword",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "keyword"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.KeywordApi,
+            sell_marketing.ApiClient,
+            "bulk_create_keyword",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "keyword"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_bulk_update_keyword(
         self, body, content_type, campaign_id, **kwargs
@@ -6615,21 +5894,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which a set of keywords is being updated.  Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: BulkUpdateKeywordResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.KeywordApi,
-                sell_marketing.ApiClient,
-                "bulk_update_keyword",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "keyword"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.KeywordApi,
+            sell_marketing.ApiClient,
+            "bulk_update_keyword",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "keyword"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_create_keyword(
         self, body, content_type, campaign_id, **kwargs
@@ -6643,21 +5919,18 @@ class API(APIPrivate):
         :param str campaign_id: This path parameter specifies the unique eBay-assigned identifier of the ad campaign for which a keyword is being created.  Use the getCampaigns method to retrieve campaign IDs. (required)
         :return: object
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.KeywordApi,
-                sell_marketing.ApiClient,
-                "create_keyword",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "keyword"],
-                (body, content_type, campaign_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.KeywordApi,
+            sell_marketing.ApiClient,
+            "create_keyword",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "keyword"],
+            (body, content_type, campaign_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_keyword(
         self, campaign_id, keyword_id, **kwargs
@@ -6670,21 +5943,18 @@ class API(APIPrivate):
         :param str keyword_id: This path parameter specifies the unique identifier of the keyword being retrieved. Use the getKeywords method to retrieve keyword IDs. (required)
         :return: Keyword
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.KeywordApi,
-                sell_marketing.ApiClient,
-                "get_keyword",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "keyword"],
-                (campaign_id, keyword_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.KeywordApi,
+            sell_marketing.ApiClient,
+            "get_keyword",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "keyword"],
+            (campaign_id, keyword_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_keywords(self, campaign_id, **kwargs):  # noqa: E501
         """get_keywords
@@ -6698,21 +5968,18 @@ class API(APIPrivate):
         :param str offset: Specifies the number of results to skip in the result set before returning the first report in the paginated response.  Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
         :return: KeywordPagedCollectionResponse
         """
-        try:
-            return self._method_paged(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.KeywordApi,
-                sell_marketing.ApiClient,
-                "get_keywords",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "keyword"],
-                campaign_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.KeywordApi,
+            sell_marketing.ApiClient,
+            "get_keywords",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "keyword"],
+            campaign_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_update_keyword(
         self, body, content_type, campaign_id, keyword_id, **kwargs
@@ -6727,21 +5994,18 @@ class API(APIPrivate):
         :param str keyword_id: This path parameter specifies the unique identifier of the keyword being updated. Use the getKeywords method to retrieve keyword IDs. (required)
         :return: UpdateKeywordResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.KeywordApi,
-                sell_marketing.ApiClient,
-                "update_keyword",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "keyword"],
-                (body, content_type, campaign_id, keyword_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.KeywordApi,
+            sell_marketing.ApiClient,
+            "update_keyword",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "keyword"],
+            (body, content_type, campaign_id, keyword_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_bulk_create_negative_keyword(
         self, body, content_type, **kwargs
@@ -6754,21 +6018,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: BulkCreateNegativeKeywordResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.NegativeKeywordApi,
-                sell_marketing.ApiClient,
-                "bulk_create_negative_keyword",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "negative_keyword"],
-                (body, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.NegativeKeywordApi,
+            sell_marketing.ApiClient,
+            "bulk_create_negative_keyword",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "negative_keyword"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_bulk_update_negative_keyword(
         self, body, content_type, **kwargs
@@ -6781,21 +6042,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: BulkUpdateNegativeKeywordResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.NegativeKeywordApi,
-                sell_marketing.ApiClient,
-                "bulk_update_negative_keyword",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "negative_keyword"],
-                (body, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.NegativeKeywordApi,
+            sell_marketing.ApiClient,
+            "bulk_update_negative_keyword",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "negative_keyword"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_create_negative_keyword(
         self, body, content_type, **kwargs
@@ -6808,21 +6066,18 @@ class API(APIPrivate):
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
         :return: object
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.NegativeKeywordApi,
-                sell_marketing.ApiClient,
-                "create_negative_keyword",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "negative_keyword"],
-                (body, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.NegativeKeywordApi,
+            sell_marketing.ApiClient,
+            "create_negative_keyword",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "negative_keyword"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_negative_keyword(
         self, negative_keyword_id, **kwargs
@@ -6834,21 +6089,18 @@ class API(APIPrivate):
         :param str negative_keyword_id: This path parameter specifies the unique identifier for the negative keyword being retrieved.Use the  getNegativeKeywords method to retrieve negative keyword IDs. (required)
         :return: NegativeKeyword
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.NegativeKeywordApi,
-                sell_marketing.ApiClient,
-                "get_negative_keyword",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "negative_keyword"],
-                negative_keyword_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.NegativeKeywordApi,
+            sell_marketing.ApiClient,
+            "get_negative_keyword",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "negative_keyword"],
+            negative_keyword_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_negative_keywords(self, **kwargs):  # noqa: E501
         """get_negative_keywords
@@ -6862,21 +6114,18 @@ class API(APIPrivate):
         :param str offset: The number of results that will be skipped in the result set. This is used with the limit field to control the pagination of the output.For example, if the offset is set to 0 and the limit is set to 10, the method will retrieve items 1 through 10 from the list of items returned. If the offset is set to 10 and the limit is set to 10, the method will retrieve items 11 through 20 from the list of items returned.
         :return: NegativeKeywordPagedCollectionResponse
         """
-        try:
-            return self._method_paged(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.NegativeKeywordApi,
-                sell_marketing.ApiClient,
-                "get_negative_keywords",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "negative_keyword"],
-                None,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.NegativeKeywordApi,
+            sell_marketing.ApiClient,
+            "get_negative_keywords",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "negative_keyword"],
+            None,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_update_negative_keyword(
         self, body, content_type, negative_keyword_id, **kwargs
@@ -6890,21 +6139,18 @@ class API(APIPrivate):
         :param str negative_keyword_id: The unique identifier for the negative keyword.This value is returned in the Location response header from the createNegativeKeyword method. (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.NegativeKeywordApi,
-                sell_marketing.ApiClient,
-                "update_negative_keyword",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "negative_keyword"],
-                (body, content_type, negative_keyword_id),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.NegativeKeywordApi,
+            sell_marketing.ApiClient,
+            "update_negative_keyword",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "negative_keyword"],
+            (body, content_type, negative_keyword_id),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_listing_set(self, promotion_id, **kwargs):  # noqa: E501
         """get_listing_set
@@ -6919,21 +6165,18 @@ class API(APIPrivate):
         :param str status: This query parameter applies only to markdown discounts. It filters the response based on the indicated status of the discount.Note: Currently, the only supported value for this parameter is MARKED_DOWN, which indicates active markdown discounts. For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/marketing/types/sme:ItemMarkdownStatusEnum
         :return: ItemsPagedCollection
         """
-        try:
-            return self._method_paged(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.PromotionApi,
-                sell_marketing.ApiClient,
-                "get_listing_set",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "promotion"],
-                promotion_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.PromotionApi,
+            sell_marketing.ApiClient,
+            "get_listing_set",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "promotion"],
+            promotion_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_promotions(self, marketplace_id, **kwargs):  # noqa: E501
         """get_promotions
@@ -6949,21 +6192,18 @@ class API(APIPrivate):
         :param str sort: Specifies the order for how to sort the response. If you precede the supplied value with a dash, the response is sorted in reverse order.  Example:    sort=END_DATE   Sorts the discounts in the response by their end dates in ascending order    sort=-PROMOTION_NAME   Sorts the discounts by their name in descending alphabetical order (Z-Az-a)  Valid values:START_DATE END_DATE PROMOTION_NAME For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/sell/marketing/types/csb:SortField
         :return: PromotionsPagedCollection
         """
-        try:
-            return self._method_paged(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.PromotionApi,
-                sell_marketing.ApiClient,
-                "get_promotions",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "promotion"],
-                marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.PromotionApi,
+            sell_marketing.ApiClient,
+            "get_promotions",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "promotion"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_pause_promotion(self, promotion_id, **kwargs):  # noqa: E501
         """pause_promotion
@@ -6973,21 +6213,18 @@ class API(APIPrivate):
         :param str promotion_id: This path parameter takes a concatenation of the ID of the active discount being paused plus the marketplace ID on which the discount is hosted. Concatenate the two values by separating them with an \"at sign\" (@). The ID of the discount (promotionId) is a unique eBay-assigned value that's generated when the discount is created. The Marketplace ID is the ENUM value of eBay marketplace where the discount is hosted. Use the getPromotions method to retrieve promotion Ids. See MarketplaceIdEnum for supported Marketplace ID values.Example: 1********5@EBAY_US (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.PromotionApi,
-                sell_marketing.ApiClient,
-                "pause_promotion",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "promotion"],
-                promotion_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.PromotionApi,
+            sell_marketing.ApiClient,
+            "pause_promotion",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "promotion"],
+            promotion_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_resume_promotion(self, promotion_id, **kwargs):  # noqa: E501
         """resume_promotion
@@ -6997,21 +6234,18 @@ class API(APIPrivate):
         :param str promotion_id: This path parameter takes a concatenation of the ID of the paused discount being resumed with the listing set plus the marketplace ID on which the discount is hosted. Concatenate the two values by separating them with an \"at sign\" (@). The ID of the discount (promotionId) is a unique eBay-assigned value that's generated when the discount is created. The Marketplace ID is the ENUM value of eBay marketplace where the discount is hosted. Use the getPromotions method to retrieve promotion Ids. See MarketplaceIdEnum for supported Marketplace ID values.Example: 1********5@EBAY_US (required)
         :return: None
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.PromotionApi,
-                sell_marketing.ApiClient,
-                "resume_promotion",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "promotion"],
-                promotion_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.PromotionApi,
+            sell_marketing.ApiClient,
+            "resume_promotion",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "promotion"],
+            promotion_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_promotion_reports(
         self, marketplace_id, **kwargs
@@ -7028,21 +6262,18 @@ class API(APIPrivate):
         :param str q: A string consisting of one or more keywords. eBay filters the response by returning only the discounts that contain the supplied keywords in the discount title.  Example: \"iPhone\" or \"Harry Potter.\"  Commas that separate keywords are ignored. For example, a keyword string of \"iPhone, iPad\" equals \"iPhone iPad\", and each results in a response that contains discounts with both \"iPhone\" and \"iPad\" in the title.
         :return: PromotionsReportPagedCollection
         """
-        try:
-            return self._method_paged(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.PromotionReportApi,
-                sell_marketing.ApiClient,
-                "get_promotion_reports",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "promotion_report"],
-                marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.PromotionReportApi,
+            sell_marketing.ApiClient,
+            "get_promotion_reports",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "promotion_report"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_marketing_get_promotion_summary_report(
         self, marketplace_id, **kwargs
@@ -7054,21 +6285,18 @@ class API(APIPrivate):
         :param str marketplace_id: This parameter specifies the eBay marketplace ID of the site for which you want a discount summary report.See MarketplaceIdEnum for supported Marketplace ID values. (required)
         :return: SummaryReportResponse
         """
-        try:
-            return self._method_single(
-                sell_marketing.Configuration,
-                "/sell/marketing/v1",
-                sell_marketing.PromotionSummaryReportApi,
-                sell_marketing.ApiClient,
-                "get_promotion_summary_report",
-                SellMarketingException,
-                True,
-                ["sell.marketing", "promotion_summary_report"],
-                marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_marketing.Configuration,
+            "/sell/marketing/v1",
+            sell_marketing.PromotionSummaryReportApi,
+            sell_marketing.ApiClient,
+            "get_promotion_summary_report",
+            SellMarketingException,
+            True,
+            ["sell.marketing", "promotion_summary_report"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_metadata_get_compatibilities_by_specification(
         self, x_ebay_c_marketplace_id, content_type, **kwargs
@@ -7082,21 +6310,18 @@ class API(APIPrivate):
         :param SpecificationRequest body: This type defines the properties and specifications to use to search for compatibilities.
         :return: SpecificationResponse
         """
-        try:
-            return self._method_single(
-                sell_metadata.Configuration,
-                "/sell/metadata/v1",
-                sell_metadata.CompatibilitiesApi,
-                sell_metadata.ApiClient,
-                "get_compatibilities_by_specification",
-                SellMetadataException,
-                False,
-                ["sell.metadata", "compatibilities"],
-                (x_ebay_c_marketplace_id, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.CompatibilitiesApi,
+            sell_metadata.ApiClient,
+            "get_compatibilities_by_specification",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "compatibilities"],
+            (x_ebay_c_marketplace_id, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_metadata_get_compatibility_property_names(
         self, x_ebay_c_marketplace_id, content_type, **kwargs
@@ -7110,21 +6335,18 @@ class API(APIPrivate):
         :param PropertyNamesRequest body: This type defines the properties used to retrieve compatibility property names.
         :return: PropertyNamesResponse
         """
-        try:
-            return self._method_single(
-                sell_metadata.Configuration,
-                "/sell/metadata/v1",
-                sell_metadata.CompatibilitiesApi,
-                sell_metadata.ApiClient,
-                "get_compatibility_property_names",
-                SellMetadataException,
-                False,
-                ["sell.metadata", "compatibilities"],
-                (x_ebay_c_marketplace_id, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.CompatibilitiesApi,
+            sell_metadata.ApiClient,
+            "get_compatibility_property_names",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "compatibilities"],
+            (x_ebay_c_marketplace_id, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_metadata_get_compatibility_property_values(
         self, x_ebay_c_marketplace_id, content_type, **kwargs
@@ -7138,21 +6360,18 @@ class API(APIPrivate):
         :param PropertyValuesRequest body: This type defines the category ID and property name for which to retrieve values.
         :return: PropertyValuesResponse
         """
-        try:
-            return self._method_single(
-                sell_metadata.Configuration,
-                "/sell/metadata/v1",
-                sell_metadata.CompatibilitiesApi,
-                sell_metadata.ApiClient,
-                "get_compatibility_property_values",
-                SellMetadataException,
-                False,
-                ["sell.metadata", "compatibilities"],
-                (x_ebay_c_marketplace_id, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.CompatibilitiesApi,
+            sell_metadata.ApiClient,
+            "get_compatibility_property_values",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "compatibilities"],
+            (x_ebay_c_marketplace_id, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_metadata_get_multi_compatibility_property_values(
         self, x_ebay_c_marketplace_id, content_type, **kwargs
@@ -7166,21 +6385,18 @@ class API(APIPrivate):
         :param MultiCompatibilityPropertyValuesRequest body: This type defines the category ID and property names for which to retrieve values.
         :return: MultiCompatibilityPropertyValuesResponse
         """
-        try:
-            return self._method_single(
-                sell_metadata.Configuration,
-                "/sell/metadata/v1",
-                sell_metadata.CompatibilitiesApi,
-                sell_metadata.ApiClient,
-                "get_multi_compatibility_property_values",
-                SellMetadataException,
-                False,
-                ["sell.metadata", "compatibilities"],
-                (x_ebay_c_marketplace_id, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.CompatibilitiesApi,
+            sell_metadata.ApiClient,
+            "get_multi_compatibility_property_values",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "compatibilities"],
+            (x_ebay_c_marketplace_id, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_metadata_get_product_compatibilities(
         self, x_ebay_c_marketplace_id, content_type, **kwargs
@@ -7194,21 +6410,18 @@ class API(APIPrivate):
         :param ProductRequest body: This type defines properties for which to find compatibilities.
         :return: ProductResponse
         """
-        try:
-            return self._method_single(
-                sell_metadata.Configuration,
-                "/sell/metadata/v1",
-                sell_metadata.CompatibilitiesApi,
-                sell_metadata.ApiClient,
-                "get_product_compatibilities",
-                SellMetadataException,
-                False,
-                ["sell.metadata", "compatibilities"],
-                (x_ebay_c_marketplace_id, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.CompatibilitiesApi,
+            sell_metadata.ApiClient,
+            "get_product_compatibilities",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "compatibilities"],
+            (x_ebay_c_marketplace_id, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_metadata_get_sales_tax_jurisdictions(
         self, country_code, **kwargs
@@ -7220,21 +6433,18 @@ class API(APIPrivate):
         :param str country_code: This path parameter specifies the two-letter ISO 3166 country code for the country whose jurisdictions you want to retrieve.Note: Sales-tax tables are available only for the US and Canada marketplaces. Therefore, the only supported values are:USCA (required)
         :return: SalesTaxJurisdictions
         """
-        try:
-            return self._method_single(
-                sell_metadata.Configuration,
-                "/sell/metadata/v1",
-                sell_metadata.CountryApi,
-                sell_metadata.ApiClient,
-                "get_sales_tax_jurisdictions",
-                SellMetadataException,
-                False,
-                ["sell.metadata", "country"],
-                country_code,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.CountryApi,
+            sell_metadata.ApiClient,
+            "get_sales_tax_jurisdictions",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "country"],
+            country_code,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_metadata_get_automotive_parts_compatibility_policies(
         self, marketplace_id, **kwargs
@@ -7248,21 +6458,18 @@ class API(APIPrivate):
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
         :return: AutomotivePartsCompatibilityPolicyResponse
         """
-        try:
-            return self._method_single(
-                sell_metadata.Configuration,
-                "/sell/metadata/v1",
-                sell_metadata.MarketplaceApi,
-                sell_metadata.ApiClient,
-                "get_automotive_parts_compatibility_policies",
-                SellMetadataException,
-                False,
-                ["sell.metadata", "marketplace"],
-                marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.MarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_automotive_parts_compatibility_policies",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "marketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_metadata_get_extended_producer_responsibility_policies(
         self, marketplace_id, **kwargs
@@ -7276,21 +6483,18 @@ class API(APIPrivate):
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
         :return: ExtendedProducerResponsibilityPolicyResponse
         """
-        try:
-            return self._method_single(
-                sell_metadata.Configuration,
-                "/sell/metadata/v1",
-                sell_metadata.MarketplaceApi,
-                sell_metadata.ApiClient,
-                "get_extended_producer_responsibility_policies",
-                SellMetadataException,
-                False,
-                ["sell.metadata", "marketplace"],
-                marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.MarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_extended_producer_responsibility_policies",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "marketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_metadata_get_hazardous_materials_labels(
         self, marketplace_id, **kwargs
@@ -7302,21 +6506,18 @@ class API(APIPrivate):
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which hazardous materials label information shall be retrieved.See HTTP Request Headers for a list of supported eBay marketplace ID values. (required)
         :return: HazardousMaterialDetailsResponse
         """
-        try:
-            return self._method_single(
-                sell_metadata.Configuration,
-                "/sell/metadata/v1",
-                sell_metadata.MarketplaceApi,
-                sell_metadata.ApiClient,
-                "get_hazardous_materials_labels",
-                SellMetadataException,
-                False,
-                ["sell.metadata", "marketplace"],
-                marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.MarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_hazardous_materials_labels",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "marketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_metadata_get_item_condition_policies(
         self, marketplace_id, **kwargs
@@ -7330,21 +6531,18 @@ class API(APIPrivate):
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
         :return: ItemConditionPolicyResponse
         """
-        try:
-            return self._method_single(
-                sell_metadata.Configuration,
-                "/sell/metadata/v1",
-                sell_metadata.MarketplaceApi,
-                sell_metadata.ApiClient,
-                "get_item_condition_policies",
-                SellMetadataException,
-                False,
-                ["sell.metadata", "marketplace"],
-                marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.MarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_item_condition_policies",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "marketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_metadata_get_listing_structure_policies(
         self, marketplace_id, **kwargs
@@ -7358,21 +6556,18 @@ class API(APIPrivate):
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
         :return: ListingStructurePolicyResponse
         """
-        try:
-            return self._method_single(
-                sell_metadata.Configuration,
-                "/sell/metadata/v1",
-                sell_metadata.MarketplaceApi,
-                sell_metadata.ApiClient,
-                "get_listing_structure_policies",
-                SellMetadataException,
-                False,
-                ["sell.metadata", "marketplace"],
-                marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.MarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_listing_structure_policies",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "marketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_metadata_get_negotiated_price_policies(
         self, marketplace_id, **kwargs
@@ -7386,21 +6581,18 @@ class API(APIPrivate):
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
         :return: NegotiatedPricePolicyResponse
         """
-        try:
-            return self._method_single(
-                sell_metadata.Configuration,
-                "/sell/metadata/v1",
-                sell_metadata.MarketplaceApi,
-                sell_metadata.ApiClient,
-                "get_negotiated_price_policies",
-                SellMetadataException,
-                False,
-                ["sell.metadata", "marketplace"],
-                marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.MarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_negotiated_price_policies",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "marketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_metadata_get_product_safety_labels(
         self, marketplace_id, **kwargs
@@ -7412,21 +6604,18 @@ class API(APIPrivate):
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.See HTTP Request Headers for a list of supported eBay marketplace ID values. See the following note for exceptions.Note: This method is not supported in the EBAY_HK, EBAY_MY, EBAY_TW, or EBAY_PH marketplaces. (required)
         :return: ProductSafetyLabelsResponse
         """
-        try:
-            return self._method_single(
-                sell_metadata.Configuration,
-                "/sell/metadata/v1",
-                sell_metadata.MarketplaceApi,
-                sell_metadata.ApiClient,
-                "get_product_safety_labels",
-                SellMetadataException,
-                False,
-                ["sell.metadata", "marketplace"],
-                marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.MarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_product_safety_labels",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "marketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_metadata_get_regulatory_policies(
         self, marketplace_id, **kwargs
@@ -7439,21 +6628,18 @@ class API(APIPrivate):
         :param str filter: A query parameter that can be used to limit the response by returning policy information for only the selected sections of the category tree. Supply categoryId values for the sections of the tree that should be returned.Pass in the categoryId values using a URL-encoded, pipe-separated ('|') list. For example: filter=categoryIds%3A%7B100%7C101%7C102%7DMaximum: 50
         :return: RegulatoryPolicyResponse
         """
-        try:
-            return self._method_single(
-                sell_metadata.Configuration,
-                "/sell/metadata/v1",
-                sell_metadata.MarketplaceApi,
-                sell_metadata.ApiClient,
-                "get_regulatory_policies",
-                SellMetadataException,
-                False,
-                ["sell.metadata", "marketplace"],
-                marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.MarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_regulatory_policies",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "marketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_metadata_get_return_policies(self, marketplace_id, **kwargs):  # noqa: E501
         """get_return_policies
@@ -7465,21 +6651,18 @@ class API(APIPrivate):
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
         :return: ReturnPolicyResponse
         """
-        try:
-            return self._method_single(
-                sell_metadata.Configuration,
-                "/sell/metadata/v1",
-                sell_metadata.MarketplaceApi,
-                sell_metadata.ApiClient,
-                "get_return_policies",
-                SellMetadataException,
-                False,
-                ["sell.metadata", "marketplace"],
-                marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.MarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_return_policies",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "marketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_negotiation_find_eligible_items(
         self, x_ebay_c_marketplace_id, **kwargs
@@ -7493,21 +6676,18 @@ class API(APIPrivate):
         :param str offset: This query parameter specifies the number of results to skip in the result set before returning the first result in the paginated response.  Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 results from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
         :return: PagedEligibleItemCollection
         """
-        try:
-            return self._method_paged(
-                sell_negotiation.Configuration,
-                "/sell/negotiation/v1",
-                sell_negotiation.OfferApi,
-                sell_negotiation.ApiClient,
-                "find_eligible_items",
-                SellNegotiationException,
-                True,
-                ["sell.negotiation", "offer"],
-                x_ebay_c_marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_negotiation.Configuration,
+            "/sell/negotiation/v1",
+            sell_negotiation.OfferApi,
+            sell_negotiation.ApiClient,
+            "find_eligible_items",
+            SellNegotiationException,
+            True,
+            ["sell.negotiation", "offer"],
+            x_ebay_c_marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
     def sell_negotiation_send_offer_to_interested_buyers(
         self, x_ebay_c_marketplace_id, content_type, **kwargs
@@ -7521,21 +6701,18 @@ class API(APIPrivate):
         :param CreateOffersRequest body: Send offer to eligible items request.
         :return: SendOfferToInterestedBuyersCollectionResponse
         """
-        try:
-            return self._method_single(
-                sell_negotiation.Configuration,
-                "/sell/negotiation/v1",
-                sell_negotiation.OfferApi,
-                sell_negotiation.ApiClient,
-                "send_offer_to_interested_buyers",
-                SellNegotiationException,
-                True,
-                ["sell.negotiation", "offer"],
-                (x_ebay_c_marketplace_id, content_type),
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_single(
+            sell_negotiation.Configuration,
+            "/sell/negotiation/v1",
+            sell_negotiation.OfferApi,
+            sell_negotiation.ApiClient,
+            "send_offer_to_interested_buyers",
+            SellNegotiationException,
+            True,
+            ["sell.negotiation", "offer"],
+            (x_ebay_c_marketplace_id, content_type),
+            **kwargs,
+        )  # noqa: E501
 
     def sell_recommendation_find_listing_recommendations(
         self, x_ebay_c_marketplace_id, **kwargs
@@ -7551,20 +6728,17 @@ class API(APIPrivate):
         :param str offset: Specifies the number of ads to skip in the result set before returning the first ad in the paginated response.  Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
         :return: PagedListingRecommendationCollection
         """
-        try:
-            return self._method_paged(
-                sell_recommendation.Configuration,
-                "/sell/recommendation/v1",
-                sell_recommendation.ListingRecommendationApi,
-                sell_recommendation.ApiClient,
-                "find_listing_recommendations",
-                SellRecommendationException,
-                True,
-                ["sell.recommendation", "listing_recommendation"],
-                x_ebay_c_marketplace_id,
-                **kwargs,
-            )  # noqa: E501
-        except Error:
-            raise
+        return self._method_paged(
+            sell_recommendation.Configuration,
+            "/sell/recommendation/v1",
+            sell_recommendation.ListingRecommendationApi,
+            sell_recommendation.ApiClient,
+            "find_listing_recommendations",
+            SellRecommendationException,
+            True,
+            ["sell.recommendation", "listing_recommendation"],
+            x_ebay_c_marketplace_id,
+            **kwargs,
+        )  # noqa: E501
 
         # ANCHOR-er_methods-END"

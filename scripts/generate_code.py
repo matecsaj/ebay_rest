@@ -1039,9 +1039,8 @@ class Contracts:
 
         code = f"    def {name}_{method}(self, {params}):{ignore_long}\n"
         code += docstring
-        code += "        try:\n"
         code += (
-            f"            return self._method_{method_type}("
+            f"        return self._method_{method_type}("
             f"{name}.Configuration,"
             f" '{base_path}',"
             f" {name}.{await self._camel(module)},"
@@ -1063,8 +1062,6 @@ class Contracts:
         else:
             code += f" None"
         code += f"){ignore_long}\n"
-        code += "        except Error:\n"
-        code += "            raise\n"
         code += "\n"
 
         return code
