@@ -613,7 +613,7 @@ class APIPrivate(metaclass=Multiton):
         :param kwargs (Dict[str, int], required):
         :return collection (collections):
         """
-        page_controls = ["href", "limit", "next", "offset", "prev", "total", "warnings"]
+        page_controls = ["href", "limit", "next", "offset", "prev", "total", "warnings", "refinement"]
         page_limit = 200  # the maximum number of records per page, as dictated by eBay
         yield_record_count = 0
         yielded_info = list()
