@@ -169,7 +169,7 @@ async def generate_marketplace_id_values() -> None:
                     ","
                 )  # convert comma separated locales to a list of strings
                 sites = re.findall(
-                    "https?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|%[0-9a-fA-F][0-9a-fA-F])+",
+                    r"https?://(?:[a-zA-Z0-9]|[._~:@!$&'()*+,;=%]|/)+",
                     marketplace_site,
                 )
                 comments = re.findall("\\(([^)]*)\\)", marketplace_site)
