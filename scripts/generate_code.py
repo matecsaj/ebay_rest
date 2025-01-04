@@ -4,13 +4,11 @@
 # Wait day if this script intermittently fails to load pages from eBay's website.
 # Perhaps making inhumanly frequent requests triggers eBay's DOS protection system.
 
-
 # Standard library imports
 import hashlib
 from itertools import groupby
 import json
 import logging
-from operator import itemgetter
 import os
 import re
 import shutil
@@ -279,38 +277,7 @@ class Locations:
     target_directory: str = "api"
     target_path: str = os.path.abspath("../src/ebay_rest/" + target_directory)
     cache_path: str = os.path.abspath("./" + target_directory + "_cache")
-
-    state_file: str = "state.json"
-    state_path_file: str = os.path.abspath(os.path.join(cache_path, state_file))
-
     file_ebay_rest = os.path.abspath("../src/ebay_rest/a_p_i.py")
-
-
-class State:
-    """Track the state of progress, even if the program is re-run."""
-
-    def __init__(self) -> None:
-        try:
-            with open(Locations.state_path_file) as file_handle:
-                self._states = json.load(file_handle)
-        except OSError:
-            self._states = dict()
-
-    async def get(self, key: str) -> str or None:
-        if key in self._states:
-            return self._states[key]
-        else:
-            return None
-
-    async def set(self, key: str, value: str) -> None:
-        self._states[key] = value
-        try:
-            with open(Locations.state_path_file, "w") as file_handle:
-                json.dump(self._states, file_handle, sort_keys=True, indent=4)
-        except OSError:
-            message = f"Can't write to {Locations.state_path_file}."
-            logging.fatal(message)
-            sys.exit(message)
 
 
 async def ensure_cache():
@@ -439,19 +406,17 @@ class Contracts:
             *[Contracts.get_contract_info(link) for link in contract_links]
         )
 
-        # Sort links based on category, call, beta, and version
         sorted_contract_infos = sorted(
             contract_infos, key=lambda info: (info[0], info[1], info[5], -info[4])
         )
 
-        # Group links by category and call
-        for _, group in groupby(sorted_contract_infos, key=itemgetter(0, 1)):
+        for _, group in groupby(
+            sorted_contract_infos, key=lambda info: (info[0], info[1])
+        ):
             group_list = list(group)
             if len(group_list) > 1:
-                tp = True
-            # The first element is the preferred link
+                logging.info(f"group_list: {group_list}")
             keepers.append(group_list[0][2])
-            # Remaining elements are junkers
             junkers.extend([link_info[2] for link_info in group_list[1:]])
 
         if len(contract_infos) != len(keepers) + len(junkers):
@@ -485,7 +450,7 @@ class Contracts:
         url_split = urlsplit(contract_link)
         path_split = url_split.path.split("/")
 
-        # if the path has dedicated version number element, example 'v2", then extract the number and remove from list
+        # if the path has dedicated version number element, example "v2", then extract the number and remove from list
         path_version = None
         for i in range(len(path_split)):
             if re.match("^v[0-9]+", path_split[i]):
@@ -848,7 +813,7 @@ class Contracts:
     async def get_methods(self) -> str:
         """For a modules, get all code for its methods."""
 
-        # catalog the module files that contain all method implementations
+        # Catalog the module files that contain all method implementations
         modules = []
         path = os.path.join(Locations.cache_path, self.name, self.name, "api")
         for root, _dirs, files in os.walk(path):
@@ -858,8 +823,8 @@ class Contracts:
                         (self.name, file.replace(".py", ""), os.path.join(root, file))
                     )
 
-        # catalog all methods in all modules
-        methods = list()
+        # Catalog all methods in all modules
+        methods: List[Tuple[str, str, str, str, str, str]] = []
         method_marker_part = "_with_http_info"
         method_marker_whole = method_marker_part + "(self,"
         docstring_marker = '"""'
@@ -869,25 +834,38 @@ class Contracts:
             "async_req",
             "request thread",
         )
+
         for name, module, path in modules:
             step = 0
             with open(path) as file_handle:
                 for line in file_handle:
-                    if step == 0:  # looking for the next method
+                    if step == 0:  # Looking for the next method
                         if method_marker_whole in line:
-                            (method_and_params, _junk) = line.split(")")
-                            (method, params) = method_and_params.split("(")
-                            method = method.replace("    def ", "")
-                            method = method.replace(method_marker_part, "")
-                            params = params.replace("self, ", "")
-                            step += 1
+                            if ")" in line:
+                                method_and_params, _junk = line.split(")", maxsplit=1)
+                                if "(" in method_and_params:
+                                    method, params = method_and_params.split(
+                                        "(", maxsplit=1
+                                    )
+                                    method = method.replace("    def ", "").strip()
+                                    method = method.replace(
+                                        method_marker_part, ""
+                                    ).strip()
+                                    params = params.replace("self, ", "").strip()
+                                    step += 1
+                                else:
+                                    logging.warning(
+                                        f"Expected '(' in method_and_params: {method_and_params}"
+                                    )
+                            else:
+                                logging.warning(f"Expected ')' in line: {line}")
 
-                    elif step == 1:  # looking for the start of the docstring block
+                    elif step == 1:  # Looking for the start of the docstring block
                         if docstring_marker in line:
                             docstring = line
                             step += 1
 
-                    elif step == 2:  # looking for the end of the docstring block
+                    elif step == 2:  # Looking for the end of the docstring block
                         if docstring_marker not in line:
                             bad = False
                             for bad_docstring_marker in bad_docstring_markers:
