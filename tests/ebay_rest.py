@@ -625,6 +625,39 @@ class APIProductionSingleTests(unittest.TestCase):
         if self.number is not None:
             self.fail(f"Error {self.number} is {self.reason}  {self.detail}.\n")
 
+    def test_complex_filtering(self):
+        """Does complex filtering work?
+        Use the production environment because it has vastly more items to work with
+        and some filters are not available in the sandbox."""
+        filters = []
+        buying_option = "BEST_OFFER"   # other options: "FIXED_PRICE", 'AUCTION' and 'CLASSIFIED_AD'
+        filters.append("buyingOptions:{" + buying_option + "}")
+        condition_option = "New"
+        filters.append("itemCondition:{" + condition_option + "}")
+        currency = "USD"
+        filters.append(f"priceCurrency:{currency}")
+        price_max = '50'
+        filters.append('price:[..' +price_max + ']')
+        # TODO add more filters https://developer.ebay.com/api-docs/buy/static/ref-buy-browse-filters.html
+        filter_ = ",".join(filters)
+
+        limit = 25
+        try:
+            for record in self._api.buy_browse_search(q="black", filter=filter_, limit=limit):
+                if "record" in record:
+                    item = record["record"]
+                    self.assertIn(buying_option, item["buying_options"], "Wrong buying option.")
+                    # TODO eBay appears to consider some conditions equivalent so this assert is needs to change
+                    # self.assertEqual(condition_option, item["condition"], "Wrong condition.")
+                    # The following might fail unless your filter also contains a currency.
+                    self.assertLessEqual(float(item["price"]["value"]), float(price_max), "Wrong price.")
+                elif "total" in record:
+                    self.assertEqual(limit, record["total"]["records_yielded"], "Insufficient items.")
+                else:
+                    self.fail(f"Unexpected record {record}")
+        except Error as error:
+            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.")
+
     def test_hidden_page_boundaries(self):
         """
         Warning, this can't be run in the sandbox because searches do not return enough results.
