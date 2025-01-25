@@ -84,6 +84,11 @@ print(help(Reference))
 * Avoid exhausting memory by making the call within a ["for" loop](https://docs.python.org/3/reference/compound_stmts.html#for).
 
 ##
+**Q:** eBay uses [camelCase](https://en.wikipedia.org/wiki/Camel_case) naming conventions, so why does this library mostly use [snake_case](https://en.wikipedia.org/wiki/Snake_case)?
+
+**A:** This library follows the [PEP 8 – Style Guide for Python Code](https://peps.python.org/pep-0008/#function-and-variable-names) to the extent practical.
+
+##
 **Q:** What should I do when the browser automation opens pops a window open on my computer? 
 
 **A:** Watch and be ready to act.
