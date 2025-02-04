@@ -26,7 +26,7 @@ classifiers = [
     "Natural Language :: English",
     "Topic :: Internet"
 ]
-dependencies = ["certifi", "cryptography", "python_dateutil", "requests", "six", "urllib3"]
+dependencies = ["certifi", "cryptography", "requests", "six", "urllib3"]
 
 [project.urls]
 Homepage = "https://github.com/matecsaj/ebay_rest"

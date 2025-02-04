@@ -1218,22 +1218,107 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
 
 
 class DateTimeTests(unittest.TestCase):
-    def test_date_time_now(self):
-        self.assertTrue(
-            isinstance(DateTime.now(), datetime.date),
-            msg="Unexpected return type from a DateTime member function.",
+
+    def test_now_returns_datetime_with_utc(self):
+        dt = DateTime.now()
+        self.assertIsInstance(
+            dt, datetime.datetime, "now() should return a datetime instance."
+        )
+        self.assertIsNotNone(dt.tzinfo, "Returned datetime should have a timezone set.")
+        # Instead of comparing to datetime.timezone.utc directly, verify that the UTC offset is zero.
+        self.assertEqual(
+            dt.tzinfo.utcoffset(dt),
+            datetime.timedelta(0),
+            "Returned datetime should have an offset of zero (UTC).",
         )
 
-    def test_date_time_from_string(self):
-        self.assertTrue(
-            isinstance(DateTime.from_string("2004-08-04T19:09:02.768Z"), datetime.date),
-            msg="Unexpected return type from a DateTime member function.",
+    def test_to_string_format(self):
+        dt = datetime.datetime(
+            2025, 2, 4, 12, 30, 15, 123456, tzinfo=datetime.timezone.utc
+        )
+        s = DateTime.to_string(dt)
+        pattern = r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z"
+        self.assertRegex(
+            s, pattern, "to_string() output did not match the expected format."
         )
 
-    def test_date_time_to_string(self):
-        self.assertTrue(
-            isinstance(DateTime.to_string(DateTime.now()), str),
-            msg="Unexpected return type from a DateTime member function.",
+    def test_from_string_returns_correct_datetime(self):
+        s = "2025-02-04T12:30:15.123Z"
+        dt = DateTime.from_string(s)
+        expected = datetime.datetime(
+            2025, 2, 4, 12, 30, 15, 123000, tzinfo=datetime.timezone.utc
+        )
+        self.assertEqual(
+            dt, expected, "from_string() did not return the expected datetime."
+        )
+
+    def test_round_trip_conversion(self):
+        original = datetime.datetime(
+            2025, 2, 4, 12, 30, 15, 789123, tzinfo=datetime.timezone.utc
+        )
+        s = DateTime.to_string(original)
+        converted = DateTime.from_string(s)
+        expected_microsecond = (original.microsecond // 1000) * 1000
+        expected = datetime.datetime(
+            original.year,
+            original.month,
+            original.day,
+            original.hour,
+            original.minute,
+            original.second,
+            expected_microsecond,
+            tzinfo=datetime.timezone.utc,
+        )
+        self.assertEqual(
+            converted,
+            expected,
+            "Round-trip conversion did not yield the expected datetime.",
+        )
+
+    def test_to_string_known_value(self):
+        dt = datetime.datetime(
+            2004, 8, 4, 19, 9, 2, 768000, tzinfo=datetime.timezone.utc
+        )
+        result = DateTime.to_string(dt)
+        expected = "2004-08-04T19:09:02.768Z"
+        self.assertEqual(
+            result,
+            expected,
+            "to_string() did not produce the expected output for a known value.",
+        )
+
+    def test_to_string_with_invalid_input(self):
+        with self.assertRaises(Error) as context:
+            DateTime.to_string("not a datetime")  # type: ignore
+        self.assertEqual(
+            context.exception.number,
+            98001,
+            "to_string() did not raise the expected error for non-datetime input.",
+        )
+
+    def test_from_string_with_invalid_input_type(self):
+        with self.assertRaises(Error) as context:
+            DateTime.from_string(12345)  # type: ignore
+        self.assertEqual(
+            context.exception.number,
+            98003,
+            "from_string() did not raise the expected error for non-string input.",
+        )
+
+    def test_from_string_with_invalid_format(self):
+        with self.assertRaises(Error) as context:
+            DateTime.from_string("invalid date format")
+        self.assertEqual(
+            context.exception.number,
+            98004,
+            "from_string() did not raise the expected error for an invalid format.",
+        )
+
+    def test_now_increasing(self):
+        dt1 = DateTime.now()
+        dt2 = DateTime.now()
+        self.assertLessEqual(
+            dt1, dt2, "Consecutive calls to now() should yield non-decreasing times."
         )
 
 
