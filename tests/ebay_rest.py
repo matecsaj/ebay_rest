@@ -630,34 +630,52 @@ class APIProductionSingleTests(unittest.TestCase):
         Use the production environment because it has vastly more items to work with
         and some filters are not available in the sandbox."""
         filters = []
-        buying_option = 'FIXED_PRICE'   # options are 'AUCTION', 'BEST_OFFER', 'CLASSIFIED_AD', 'FIXED_PRICE'
+        buying_option = "FIXED_PRICE"  # options are 'AUCTION', 'BEST_OFFER', 'CLASSIFIED_AD', 'FIXED_PRICE'
         filters.append("buyingOptions:{" + buying_option + "}")
         condition_option = "New"
         filters.append("itemCondition:{" + condition_option + "}")
         currency = "USD"
         filters.append(f"priceCurrency:{currency}")
-        price_max = '50'
-        filters.append('price:[..' +price_max + ']')
+        price_max = "50"
+        filters.append("price:[.." + price_max + "]")
         # TODO add more filters https://developer.ebay.com/api-docs/buy/static/ref-buy-browse-filters.html
         filter_ = ",".join(filters)
 
         limit = 25
         try:
-            for record in self._api.buy_browse_search(q="black", filter=filter_, limit=limit):
+            for record in self._api.buy_browse_search(
+                q="black", filter=filter_, limit=limit
+            ):
                 if "record" in record:
                     item = record["record"]
-                    self.assertIn(buying_option, item["buying_options"], "Wrong buying option.")
+                    self.assertIn(
+                        buying_option, item["buying_options"], "Wrong buying option."
+                    )
                     if "AUCTION" in item["buying_options"]:
-                        self.assertIsInstance(item["item_end_date"], str, "Auctions must have an end date.")
+                        self.assertIsInstance(
+                            item["item_end_date"],
+                            str,
+                            "Auctions must have an end date.",
+                        )
                     # TODO eBay appears to consider some conditions equivalent so this assert is needs to change
                     # self.assertEqual(condition_option, item["condition"], "Wrong condition.")
                     if item["price"] is None:
-                        self.assertIn("AUCTION", item["buying_options"], "Non-auctions need prices.")
+                        self.assertIn(
+                            "AUCTION",
+                            item["buying_options"],
+                            "Non-auctions need prices.",
+                        )
                     else:
                         # The following relies on priceCurrency being in the filter.
-                        self.assertLessEqual(float(item["price"]["value"]), float(price_max), "Wrong price.")
+                        self.assertLessEqual(
+                            float(item["price"]["value"]),
+                            float(price_max),
+                            "Wrong price.",
+                        )
                 elif "total" in record:
-                    self.assertEqual(limit, record["total"]["records_yielded"], "Insufficient items.")
+                    self.assertEqual(
+                        limit, record["total"]["records_yielded"], "Insufficient items."
+                    )
                 else:
                     self.fail(f"Unexpected record {record}")
         except Error as error:
