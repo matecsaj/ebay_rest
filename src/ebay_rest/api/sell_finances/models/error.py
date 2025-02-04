@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    eBay Finances API
+    Finances API
 
     This API is used to retrieve seller payouts and monetary transaction details related to those payouts.  # noqa: E501
 

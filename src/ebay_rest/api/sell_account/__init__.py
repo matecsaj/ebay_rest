@@ -3,7 +3,7 @@
 # flake8: noqa
 
 """
-    Rate Table API
+    Account v2 API
 
     This API allows sellers to retrieve and manage their custom shipping rate tables. In addition, this API also provides sellers in mainland China methods to configure split-payouts between two separate payment instruments.  # noqa: E501
 

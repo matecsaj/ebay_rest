@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    eBay Finances API
+    Finances API
 
     This API is used to retrieve seller payouts and monetary transaction details related to those payouts.  # noqa: E501
 
@@ -523,7 +523,7 @@ class Transaction(object):
     def transaction_id(self):
         """Gets the transaction_id of this Transaction.  # noqa: E501
 
-        The unique identifier of the monetary transaction. A monetary transaction can be a sales order, an order refund to the buyer, a credit to the seller's account, a debit to the seller for the purchase of a shipping label, or a transaction where eBay recouped money from the seller if the seller lost a buyer-initiated payment dispute.  # noqa: E501
+        This field, when combined with the <a href=\"#response.transactions.transactionType\" >transactionType</a> field, provide a unique identifier of the monetary transaction. A monetary transaction can be a sales order, an order refund to the buyer, a credit to the seller's account, a debit to the seller for the purchase of a shipping label, or a transaction where eBay recouped money from the seller if the seller lost a buyer-initiated payment dispute.  # noqa: E501
 
         :return: The transaction_id of this Transaction.  # noqa: E501
         :rtype: str
@@ -534,7 +534,7 @@ class Transaction(object):
     def transaction_id(self, transaction_id):
         """Sets the transaction_id of this Transaction.
 
-        The unique identifier of the monetary transaction. A monetary transaction can be a sales order, an order refund to the buyer, a credit to the seller's account, a debit to the seller for the purchase of a shipping label, or a transaction where eBay recouped money from the seller if the seller lost a buyer-initiated payment dispute.  # noqa: E501
+        This field, when combined with the <a href=\"#response.transactions.transactionType\" >transactionType</a> field, provide a unique identifier of the monetary transaction. A monetary transaction can be a sales order, an order refund to the buyer, a credit to the seller's account, a debit to the seller for the purchase of a shipping label, or a transaction where eBay recouped money from the seller if the seller lost a buyer-initiated payment dispute.  # noqa: E501
 
         :param transaction_id: The transaction_id of this Transaction.  # noqa: E501
         :type: str
