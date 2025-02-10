@@ -406,7 +406,7 @@ class UserToken(metaclass=Multiton):
                             seconds = 0  # reset our timer when a click happens
 
                     # have we reached the final page?
-                    if 'AuthSuccessful' not in page.url:
+                    if "AuthSuccessful" not in page.url:
                         # no! Perhaps we need to wait while the user enters their 2FA code.
                         seconds += 1  # increment out timer
                     else:
