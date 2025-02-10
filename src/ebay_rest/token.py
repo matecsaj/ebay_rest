@@ -5,8 +5,8 @@ from datetime import datetime, timedelta, timezone
 from json import loads
 import logging
 from threading import Lock
-from typing import List
-from urllib.parse import urlparse, parse_qs, urlencode
+from typing import List, Optional
+from urllib.parse import urlparse, parse_qs, unquote, urlencode
 from cryptography.hazmat.primitives.serialization import load_der_private_key
 
 # 3rd party library imports
@@ -406,29 +406,14 @@ class UserToken(metaclass=Multiton):
                             seconds = 0  # reset our timer when a click happens
 
                     # have we reached the final page?
-                    try:
-                        page.wait_for_selector("#thnk-wrap", timeout=1000)  # 1 second
-                    except PlaywrightTimeoutError:
+                    if 'AuthSuccessful' not in page.url:
                         # no! Perhaps we need to wait while the user enters their 2FA code.
                         seconds += 1  # increment out timer
                     else:
                         # yes!
-                        # parse the url's query parameters into a dictionary
-                        parsed_url = urlparse(page.url)
-                        query_params = parse_qs(parsed_url.query)
-
-                        # Check isAuthSuccessful is true, if present
-                        is_auth_successful = False
-                        if "isAuthSuccessful" in query_params:
-                            if "true" == query_params["isAuthSuccessful"][0]:
-                                is_auth_successful = True
-                        if is_auth_successful:
-                            if "code" in query_params:
-                                return query_params["code"][0]
-                            else:
-                                raise Error(
-                                    number=96009, reason="Unable to obtain code."
-                                )
+                        code = self.extract_code_from_url(page.url)
+                        if code is not None:
+                            return code
                         else:
                             reason = f"Authorization failed, check userid & password:{self._user_id} {self._user_password}"
                             raise Error(number=96010, reason=reason)
@@ -470,6 +455,40 @@ class UserToken(metaclass=Multiton):
                     browser.close()
                 if playwright:
                     playwright.stop()
+
+    @staticmethod
+    def extract_code_from_url(url: str) -> Optional[str]:
+        """
+        Extract only the 'code' value from an eBay callback URL.
+        Returns the extracted 'code' as a string if found, otherwise returns None.
+        """
+        # 1) Parse the top-level URL
+        parsed = urlparse(url)
+        qs_top = parse_qs(parsed.query)
+
+        # Check if code is directly in the top-level query
+        top_code = qs_top.get("code", [None])[0]
+        if top_code:
+            return unquote(top_code)
+
+        # 2) Otherwise, look for the nested 'ru' parameter
+        ru_encoded = qs_top.get("ru", [""])[0]
+        if not ru_encoded:
+            # If 'ru' is missing, no code can be extracted
+            return None
+
+        # Decode 'ru' once
+        ru_decoded = unquote(ru_encoded)
+
+        # Extract the `code` field directly from the query part
+        # We can't use parse_qs because some codes contain a '&' which is the start delimiter for a query string's key.
+        start_index = ru_decoded.find("&code=") + len("&code=")
+        end_index = ru_decoded.find("&expires_in=", start_index)
+        if start_index > len("&code=") - 1 and end_index != -1:
+            nested_code = unquote(ru_decoded[start_index:end_index])
+            return nested_code
+
+        return None
 
     def _refresh_user_token(self) -> None:
         """
