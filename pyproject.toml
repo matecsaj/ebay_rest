@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 # Metadata about your package.
 [project]
 name = "ebay_rest"
-version = "1.0.8"
+version = "1.0.9"
 license = {text = "MIT"}
 authors = [
     {name = "Peter JOHN Matecsa", email = "matecsaj@gmail.com"}
@@ -36,7 +36,7 @@ Issues = "https://github.com/matecsaj/ebay_rest/issues"
 # Options for building and distributing the package.
 [tool.setuptools]
 package-dir = {"" = "src"}
-packages = {find = true}
+packages = {find = {where = ["src"]}}
 include-package-data = true
 
 # Optional dependencies.
