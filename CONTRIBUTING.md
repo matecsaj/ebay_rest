@@ -95,7 +95,7 @@ We welcome various types of contributions, including:
 We use black to enforce code style. Please format your code before submitting a pull request:
 
 ```bash
-black .
+black --check .
 ```
 
 ## Testing
@@ -128,7 +128,7 @@ black .
 pipreqs --print src
 ```
 2. edit the pyproject.toml file
-   1. update the section install_requires per the output from pipregs
+   1. update the dependencies section in pyproject.toml per the output from pipreqs
    2. advance the [Semantic three-part version number](https://en.wikipedia.org/wiki/Software_versioning)
 3. repeat until error-free 
    1. run /ebay_rest/scripts/generate_code.py

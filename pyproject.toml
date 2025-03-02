@@ -26,7 +26,7 @@ classifiers = [
     "Natural Language :: English",
     "Topic :: Internet"
 ]
-dependencies = ["certifi", "cryptography", "requests", "six", "urllib3"]
+dependencies = ["certifi", "cryptography", "requests", "python-dateutil", "six", "urllib3"]
 
 [project.urls]
 Homepage = "https://github.com/matecsaj/ebay_rest"
@@ -36,12 +36,17 @@ Issues = "https://github.com/matecsaj/ebay_rest/issues"
 # Options for building and distributing the package.
 [tool.setuptools]
 package-dir = {"" = "src"}
-packages = {find = {where = ["src"]}}
+packages = {find = true}
 include-package-data = true
 
 # Optional dependencies.
 [project.optional-dependencies]
+# The 'complete' installation requires an additional step:
+# After installing, run: `playwright install chromium`
 complete = ["playwright"]
+# Swagger Codegen must be installed separately:
+# Mac: `brew install swagger-codegen`
+# Other OS: Install manually from https://github.com/swagger-api/swagger-codegen
 dev = [
     "aiofiles",
     "aiohttp",
