@@ -1,145 +1,155 @@
 # Contributing to ebay_rest
 
-Thank you for your interest in contributing to ebay_rest! We welcome contributions from the community and are excited to work with you to make this project better.
+Thank you for your interest in contributing to `ebay_rest`! We appreciate contributions from the community and look forward to collaborating with you.
 
 ## Table of Contents
-
 - [Getting Started](#getting-started)
 - [Development Setup](#development-setup)
 - [How to Contribute](#how-to-contribute)
-- [Code Style](#code-style)
+- [Code Guidelines](#code-guidelines)
 - [Testing](#testing)
 - [Submitting a Pull Request](#submitting-a-pull-request)
 - [Release Steps](#release-steps)
 - [License](#license)
 
+---
+
 ## Getting Started
+Before contributing, please take a moment to:
 
-Before you begin contributing, please familiarize yourself with the following:
+1. **Read the Project Overview:** Review the [README.md](README.md) to understand the purpose and structure of `ebay_rest`.
+2. **Follow the Code of Conduct:** Please adhere to the [Code of Conduct](CODE_OF_CONDUCT.md) in all interactions.
 
-1. **Project Overview**: Read the [README.md](README.md) to understand the purpose and features of this project.
-2. **Code of Conduct**: Please adhere to the project's [Code of Conduct](CODE_OF_CONDUCT.md) in all interactions.
+---
 
 ## Development Setup
 
-To set up your local development environment, follow these steps:
-
-1. Clone the Repository
-
-Start by cloning the repository to your local machine:
-
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/matecsaj/ebay_rest.git
 cd ebay_rest
 ```
 
-2. Create a virtual environment.
-```bash
-python -m venv myenv
-```
-
-3. Activate the virtual environment:
-- On Linux/Mac:
-```bash
-source myenv/bin/activate
-```
+### 2. Create and Activate a Virtual Environment
+- On Linux/macOS:
+  ```bash
+  python -m venv venv
+  source venv/bin/activate
+  ```
 - On Windows:
-```bash
-myenv\Scripts\activate
-```
+  ```bash
+  python -m venv venv
+  venv\Scripts\activate
+  ```
 
-4. Install Dependencies
-Both end user and developer.
-
+### 3. Install Dependencies
 ```bash
 pip install '.[complete,dev]'
 playwright install chromium
 ```
 
-5. Install the current stable 3.x.x version of [Swagger Codegen](https://github.com/swagger-api/swagger-codegen). 
+### 4. Install Swagger Codegen (Optional, for API updates)
+- **macOS (Homebrew):**
+  ```bash
+  brew install swagger-codegen
+  ```
 
-- On Mac utilizing [Homebrew](https://brew.sh):
+### 5. Set Up Configuration
+Copy the example config file:
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install swagger-codegen
+cp tests/ebay_rest_sample.json tests/ebay_rest.json
+```
+Then, follow the instructions inside `ebay_rest.json`.
+
+### 6. Verify Installation
+Check if dependencies are installed correctly:
+```bash
+black --version  # Should print the installed version
 ```
 
-6. In the test directory, copy "ebay_rest_sample.json" to "ebay_rest.json" and follow the instructions in the file.
-
-7. Verify the Installation
-Ensure that the installation was successful by running the following commands:
-
-```bash
-black --version
-This should return the version of black installed, indicating that the dev dependencies are set up correctly.
-```
+---
 
 ## How to Contribute
+We welcome various types of contributions:
 
-We welcome various types of contributions, including:
+- **Bug Fixes**: If you find a bug, consider fixing it and submitting a pull request.
+- **New Features**: Submit an issue or a pull request with your proposed enhancement.
+- **Documentation**: Improvements to documentation are always welcome.
 
-- Bug Fixes: If you find a bug, please consider fixing it and submitting a pull request.
-- Feature Requests: If you have an idea for a new feature, feel free to submit an issue or a pull request.
-- Documentation: Improvements to documentation are always appreciated.
+### Contribution Tips
+- Review error codes in the `Error` class.
+- Check for `README.md` files in subdirectories; they may contain additional information.
+- Follow test-driven development: modify `tests/ebay_rest.py` while implementing changes.
+- Run `/scripts/generate_code.py` periodically to sync with eBay API updates.
+- Some unit tests may fail due to eBay's sandbox resetting daily—retry the next day if needed.
 
-## Code Hints
+---
 
-* The error number guide is found in the Error class definition.
-* Watch for README.md files in directories; they contain warnings about generated code and perhaps other things.
-* Do test driven development; while adding features or fixing bugs, modify /test/ebay_rest.py and run it.
-* Periodically run /script/generate_code.py to get the latest API information from eBay and generate code.
-* Content-dependent unit tests can randomly fail; eBay's sandbox resets daily, so retry tomorrow.
+## Code Guidelines
 
-## Code Style
-
-We use black to enforce code style. Please format your code before submitting a pull request:
-
+### Formatting
+This project uses `black` for code formatting. Before submitting a pull request, format your code:
 ```bash
-black --check .
+black .
 ```
 
-## Testing
-
-We use unittest for testing. Please ensure that all tests pass before submitting your changes:
-
+### Testing
+Run the test suite before submitting changes:
 ```bash
 python -m unittest discover
 ```
 
+---
+
 ## Submitting a Pull Request
 
-To submit a pull request:
+1. **Fork the repository** on GitHub.
+2. **Create a new branch** for your feature/fix:
+   ```bash
+   git checkout -b my-feature-branch
+   ```
+3. **Make and commit your changes**:
+   ```bash
+   git commit -m "Describe your change concisely"
+   ```
+4. **Push to your fork**:
+   ```bash
+   git push origin my-feature-branch
+   ```
+5. **Open a Pull Request** on GitHub.
 
-Fork the repository: Create your fork on GitHub.
-Create a branch: Create a feature or bugfix branch (git checkout -b my-feature-branch).
-Commit your changes: Use descriptive commit messages.
-Push to your fork: (git push origin my-feature-branch).
-Submit a pull request: Go to the original repository on GitHub and submit a pull request.
+---
 
 ## Release Steps
 
-1. in the root directory of the project, run CLI commands, the first will only work on macOS.
-```bash
-brew update && brew upgrade && brew cleanup
-python3 -m pip install --upgrade pip
-python3 -m pip install --upgrade '.[complete,dev]'
-playwright install chromium
-black .
-pipreqs --print src
-```
-2. edit the pyproject.toml file
-   1. update the dependencies section in pyproject.toml per the output from pipreqs
-   2. advance the [Semantic three-part version number](https://en.wikipedia.org/wiki/Software_versioning)
-3. repeat until error-free 
-   1. run /ebay_rest/scripts/generate_code.py
-   2. run /test/ebay_rest.py
-   3. resolve any errors but don't directly edit the code generated by generate_code.py
-4. in the root directory of the project, run CLI commands
-   1. python3 -m build
-   2. python3 -m twine upload dist/\*1.0.X.\*
-      1. in place of 0.0.xx put the new version number
-      2. paste your token when prompted
+1. **Update dependencies and tools:**
+   ```bash
+   brew update && brew upgrade && brew cleanup  # macOS only
+   python3 -m pip install --upgrade pip
+   python3 -m pip install --upgrade '.[complete,dev]'
+   playwright install chromium
+   black .
+   pipreqs --print src  # Lists required dependencies
+   ```
+
+2. **Update `pyproject.toml`**:
+   - Update dependencies based on `pipreqs` output.
+   - Increment the [Semantic Version](https://semver.org/) accordingly.
+
+3. **Validate changes:**
+   - Run `/scripts/generate_code.py`
+   - Run `tests/ebay_rest.py` and ensure all tests pass.
+   - Fix any issues (avoid editing auto-generated code directly).
+
+4. **Build and publish the package:**
+   ```bash
+   python3 -m build
+   python3 -m twine upload dist/*X.Y.Z*
+   ```
+   Replace `X.Y.Z` with the new version number and provide credentials when prompted.
+
+---
 
 ## License
+By contributing to `ebay_rest`, you agree that your contributions will be licensed under the [MIT License](LICENSE).
 
-By contributing to ebay_rest, you agree that your contributions will be licensed under the [MIT License](LICENSE).
