@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 from json import loads
 import logging
 from threading import Lock
+import time
 from typing import List, Optional
 from urllib.parse import urlparse, parse_qs, unquote, urlencode
 from cryptography.hazmat.primitives.serialization import load_der_private_key
@@ -362,99 +363,109 @@ class UserToken(metaclass=Multiton):
             reason = f"Supply an 'eBay user token' or install the COMPLETE variant of ebay_rest. Refer to the README.md at https://github.com/matecsaj/ebay_rest."  # noqa: E501
             logging.critical(reason)
             raise Error(number=96019, reason=reason)
-        else:
 
-            # Begin with all Playwright resources set to None.
-            playwright = browser = context = page = None
+        # Begin with all Playwright resources set to None.
+        playwright = browser = context = page = None
 
-            try:
-                # Initialize Playwright
-                playwright = sync_playwright().start()
-                # Launch the browser in a non-headless mode
-                browser = playwright.chromium.launch(headless=False)
-                # Open a new browser context (equivalent to an incognito window)
-                context = browser.new_context()
-                # Open a new page within the context
-                page = context.new_page()
+        try:
+            # Initialize Playwright
+            playwright = sync_playwright().start()
+            # Launch the browser in a non-headless mode
+            browser = playwright.chromium.launch(headless=False)
+            # Open a new browser context (equivalent to an incognito window)
+            context = browser.new_context()
+            # Open a new page within the context
+            page = context.new_page()
 
-                # load the initial page
-                page.goto(sign_in_url)
+            # Load the initial page
+            page.goto(sign_in_url)
 
-                # fill in the username then click continue
-                # sometimes a captcha appears that the user must fill in
-                page.wait_for_selector("input[name='userid']").type(self._user_id)
-                page.wait_for_selector("#signin-continue-btn").click()
+            # Fill in the username then click continue
+            page.wait_for_selector("input[name='userid']").type(self._user_id)
+            page.wait_for_selector("#signin-continue-btn").click()
 
-                # fill in the password then submit
-                page.wait_for_selector("input[name='pass']").type(self._user_password)
-                page.wait_for_selector("#sgnBt").click()
+            # Fill in the password then submit
+            page.wait_for_selector("input[name='pass']").type(self._user_password)
+            page.wait_for_selector("#sgnBt").click()
 
-                # Several things may happen on the way to the last page and how we need to respond varies.
-                seconds = 0
-                while seconds < 30:
+            # Handle additional steps like prompts or 2FA
+            seconds = 0
+            while seconds < 30:
 
-                    selectors = [
-                        "#passkeys-cancel-btn",  # "Simplify your sign-in" prompt; skip it for now
-                        "#submit",  # "I agree" prompt; agree
-                    ]
-                    for selector in selectors:
-                        try:
-                            page.wait_for_selector(selector, timeout=1)
-                        except PlaywrightTimeoutError:
-                            pass
-                        else:
-                            seconds = 0  # reset our timer when a click happens
+                selectors = [
+                    "#passkeys-cancel-btn",  # "Simplify your sign-in" prompt; skip it for now
+                    "#submit",  # "I agree" prompt; agree
+                ]
+                for selector in selectors:
+                    try:
+                        page.wait_for_selector(selector, timeout=1)
+                        page.click(selector)
+                        seconds = 0  # Reset our timer when an interaction happens
+                    except PlaywrightTimeoutError:
+                        pass
 
-                    # have we reached the final page?
-                    if "AuthSuccessful" not in page.url:
-                        # no! Perhaps we need to wait while the user enters their 2FA code.
-                        seconds += 1  # increment out timer
+                # Detect if we're on a 2FA input page and wait for user action
+                try:
+                    page.wait_for_selector(
+                        "input[name='otpCode']", timeout=1000
+                    )  # eBay's 2FA input field
+                    logging.info("Waiting for user to enter 2FA code...")
+                    while "AuthSuccessful" not in page.url:
+                        time.sleep(1)  # Give the user time to enter the 2FA code
+                        seconds = 0  # Reset timeout while waiting
+                except PlaywrightTimeoutError:
+                    pass  # No 2FA challenge detected, continue as usual
+
+                # Have we reached the final page?
+                if "AuthSuccessful" in page.url:
+                    code = self.extract_code_from_url(page.url)
+                    if code is not None:
+                        return code
                     else:
-                        # yes!
-                        code = self.extract_code_from_url(page.url)
-                        if code is not None:
-                            return code
-                        else:
-                            reason = f"Authorization failed, check userid & password:{self._user_id} {self._user_password}"
-                            raise Error(number=96010, reason=reason)
+                        reason = f"Authorization failed, check userid & password:{self._user_id} {self._user_password}"
+                        raise Error(number=96010, reason=reason)
 
-                raise Error(
-                    number=96027,
-                    reason="Last page not found.",
-                    detail="Has eBay's website changed?",
+                seconds += 1  # Increment timeout if we're still waiting
+
+            raise Error(
+                number=96027,
+                reason="Last page not found.",
+                detail="Has eBay's website changed?",
+            )
+
+        except PlaywrightError as e:
+            detail = str(e)
+            # Check for Chromium not installed error
+            if "BrowserType.launch" in detail:
+                number = 96029
+                reason = "Chromium is not installed. Run `playwright install chromium` to install it."
+            # Check for "element not found" error
+            elif "No node found for selector" in detail:
+                number = 96015
+                reason = (
+                    "An element was not found on the page. Has eBay's website changed?"
                 )
+            else:
+                number = 96030
+                reason = "Playwright encountered an unexpected error."
+            logging.critical(reason)
+            raise Error(number=number, reason=reason, detail=detail)
 
-            except PlaywrightError as e:
-                detail = str(e)
-                # Check for Chromium not installed error
-                if "BrowserType.launch" in detail:
-                    number = 96029
-                    reason = "Chromium is not installed. Run `playwright install chromium` to install it."
-                # Check for "element not found" error
-                elif "No node found for selector" in detail:
-                    number = 96015
-                    reason = "An element was not found on the page. Has eBay's website changed?"
-                else:
-                    number = (96030,)
-                    reason = ("Playwright encountered an unexpected error.",)
-                logging.critical(reason)
-                raise Error(number=number, reason=reason, detail=detail)
+        except PlaywrightTimeoutError:
+            raise Error(
+                number=96016, reason="Timeout.", detail="Slow computer or Internet?"
+            )
 
-            except PlaywrightTimeoutError:
-                raise Error(
-                    number=96016, reason="Timeout.", detail="Slow computer or Internet?"
-                )
-
-            finally:
-                # Ensure that Playwright resources are cleaned up; don't reorder.
-                if page:
-                    page.close()
-                if context:
-                    context.close()
-                if browser:
-                    browser.close()
-                if playwright:
-                    playwright.stop()
+        finally:
+            # Ensure that Playwright resources are cleaned up; don't reorder.
+            if page:
+                page.close()
+            if context:
+                context.close()
+            if browser:
+                browser.close()
+            if playwright:
+                playwright.stop()
 
     @staticmethod
     def extract_code_from_url(url: str) -> Optional[str]:
