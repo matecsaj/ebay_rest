@@ -143,7 +143,7 @@ async def generate_marketplace_id_values() -> None:
 
     if soup:
         # find the rows regarding Response Fields.
-        tables = soup.findAll("table")
+        tables = soup.find_all("table")
         if len(tables) > 1:
             table = tables[1]  # the second table is index 1
             rows = table.find_all("tr")
@@ -587,7 +587,7 @@ class Contracts:
 
         command = f" generate -l python -o {destination} -DpackageName={self.name} -i {source}"
         if sys.platform == "darwin":  # OS X or MacOS
-            command = "/usr/local/bin/swagger-codegen" + command
+            command = "swagger-codegen" + command
         elif sys.platform == "linux":  # Linux
             command = "java -jar swagger-codegen-cli.jar" + command
         else:
