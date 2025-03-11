@@ -44,7 +44,7 @@ cd ebay_rest
 
 ### 3. Install Dependencies
 ```bash
-pip install '.[complete,dev]'
+pip install -e '.[complete,dev]'
 playwright install chromium
 ```
 
@@ -126,7 +126,7 @@ python -m unittest discover
    ```bash
    brew update && brew upgrade && brew cleanup  # macOS only
    python3 -m pip install --upgrade pip
-   python3 -m pip install --upgrade '.[complete,dev]'
+   python3 -m pip install --upgrade -e '.[complete,dev]'
    playwright install chromium
    black .
    pipreqs --print src  # Lists required dependencies
