@@ -74,7 +74,7 @@ class Dimension(object):
     def values(self):
         """Gets the values of this Dimension.  # noqa: E501
 
-        The dimension value(s) paired with the <b>dimensionKey</b> in the <b>dimensions</b> array. Currently, the only supported dimension is CATEGORY, so the values in this array will be L1 eBay categories.”  # noqa: E501
+        The dimension value(s) paired with the <b>dimensionKey</b> in the <b>dimensions</b> array. Currently, the only supported dimension is CATEGORY, so the values in this array will be L1 eBay categories.‚Äù  # noqa: E501
 
         :return: The values of this Dimension.  # noqa: E501
         :rtype: list[str]
@@ -85,7 +85,7 @@ class Dimension(object):
     def values(self, values):
         """Sets the values of this Dimension.
 
-        The dimension value(s) paired with the <b>dimensionKey</b> in the <b>dimensions</b> array. Currently, the only supported dimension is CATEGORY, so the values in this array will be L1 eBay categories.”  # noqa: E501
+        The dimension value(s) paired with the <b>dimensionKey</b> in the <b>dimensions</b> array. Currently, the only supported dimension is CATEGORY, so the values in this array will be L1 eBay categories.‚Äù  # noqa: E501
 
         :param values: The values of this Dimension.  # noqa: E501
         :type: list[str]

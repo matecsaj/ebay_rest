@@ -6481,7 +6481,7 @@ class API(APIPrivate):
         This method returns the eBay policies that define how to list automotive parts compatibility items in the categories of the specified marketplace.  By default, this method returns all categories that support parts compatibility. You can limit the size of the result set by using the filter query parameter to specify only the category IDs you want to review.Note: To return policy information for the eBay US marketplace, specify EBAY_MOTORS_US as the path parameter for marketplace_id.Tip: This method can potentially return a very large response payload. eBay recommends that the response payload be compressed by passing in the Accept-Encoding request header and setting the value to gzip.If you specify a valid marketplace ID but that marketplace does not contain policy information, or if you filter out all results, a 204 No content status code is returned with an empty response body.
 
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.  Note: Only the following eBay marketplaces support automotive parts compatibility:  EBAY_MOTORS_US EBAY_AU EBAY_CA EBAY_DE EBAY_ES EBAY_FR EBAY_GB EBAY_IT (required)
-        :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply categoryId values for the sections of the tree you want returned. Use the Taxonomy API to retrieve category ID values.When you specify a categoryId value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below the at parent node.  The parameter takes a list of categoryId values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 categoryId values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  Example: filter=categoryIds:{183521|183523|183524} Note: URL-encoding of the parameter list is no longer required.
+        :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply categoryId values for the sections of the tree you want returned. Use the Taxonomy API to retrieve category ID values.The parameter takes a list of categoryId values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 categoryId values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  Example: filter=categoryIds:{183521|183523|183524} Note: URL-encoding of the parameter list is no longer required.
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
         :return: AutomotivePartsCompatibilityPolicyResponse
         """
@@ -6491,6 +6491,54 @@ class API(APIPrivate):
             sell_metadata.MarketplaceApi,
             sell_metadata.ApiClient,
             "get_automotive_parts_compatibility_policies",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "marketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_metadata_get_category_policies(
+        self, marketplace_id, **kwargs
+    ):  # noqa: E501
+        """get_category_policies
+
+        This method returns eBay category policy metadata for all leaf categories on the specified marketplace.By default, this method returns metadata on all leaf categories. You can limit the size of the result set by using the filter query parameter to specify only the leaf category IDs you want to review.If you specify a valid marketplace ID but that marketplace does not contain policy information, or if you filter out all results, a successful call returns a 204 No content status code with an empty response body.
+
+        :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.See HTTP Request Headers for a list of supported eBay marketplace ID values. (required)
+        :param str filter: This query parameter limits the response by only returning metadata for the specified leaf categories. Supply the categoryId for one or more leaf categories. You can verify if a category is a leaf category by using the Taxonomy API and looking for a \"leafCategory\": true tag.  The parameter takes a list of categoryId values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 categoryId values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.Example: filter=categoryIds:{3767|171784}
+        :return: CategoryPolicyResponse
+        """
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.MarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_category_policies",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "marketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_metadata_get_classified_ad_policies(
+        self, marketplace_id, **kwargs
+    ):  # noqa: E501
+        """get_classified_ad_policies
+
+        This method returns eBay classified ad policy metadata for all leaf categories on the specified marketplace.By default, this method returns metadata on all leaf categories. You can limit the size of the result set by using the filter query parameter to specify only the leaf category IDs you want to review.If you specify a valid marketplace ID but that marketplace does not contain policy information, or if you filter out all results, a successful call returns a 204 No content status code with an empty response body.Note: This method does not support classified ads for eBay US Motors categories (EBAY_MOTORS_US). For eBay Motors Pro users, use getMotorsListingPolicies.
+
+        :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.See HTTP Request Headers for a list of supported eBay marketplace ID values. (required)
+        :param str filter: This query parameter limits the response by only returning metadata for the specified leaf categories. Supply the categoryId for one or more leaf categories. You can verify if a category is a leaf category by using the Taxonomy API and looking for a \"leafCategory\": true tag.   <The parameter takes a list of categoryId values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 categoryId values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.Example:filter=categoryIds:{3767|171784}
+        :return: ClassifiedAdPolicyResponse
+        """
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.MarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_classified_ad_policies",
             SellMetadataException,
             False,
             ["sell.metadata", "marketplace"],
@@ -6596,6 +6644,54 @@ class API(APIPrivate):
             **kwargs,
         )  # noqa: E501
 
+    def sell_metadata_get_listing_type_policies(
+        self, marketplace_id, **kwargs
+    ):  # noqa: E501
+        """get_listing_type_policies
+
+        This method returns eBay listing type policy metadata for all leaf categories on the specified marketplace. By default, this method returns metadata on all leaf categories. You can limit the size of the result set by using the filter query parameter to specify only the leaf category IDs you want to review.If you specify a valid marketplace ID but that marketplace does not contain policy information, or if you filter out all results, a successful call returns a 204 No content status code with an empty response body.
+
+        :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.See HTTP Request Headers for a list of supported eBay marketplace ID values. (required)
+        :param str filter: This query parameter limits the response by only returning metadata for the specified leaf categories. Supply the categoryId for one or more leaf categories. You can verify if a category is a leaf category by using the Taxonomy API and looking for a \"leafCategory\": true tag.The parameter takes a list of categoryId values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 categoryId values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.Example: filter=categoryIds:{3767|171784}
+        :return: ListingTypePoliciesResponse
+        """
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.MarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_listing_type_policies",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "marketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_metadata_get_motors_listing_policies(
+        self, marketplace_id, **kwargs
+    ):  # noqa: E501
+        """get_motors_listing_policies
+
+        This method returns eBay Motors policy metadata for all leaf categories on the specified marketplace. By default, this method returns metadata on all leaf categories. You can limit the size of the result set by using the filter query parameter to specify only the leaf category IDs you want to review.If you specify a valid marketplace ID but that marketplace does not contain policy information, or if you filter out all results, a successful call returns a 204 No content status code with an empty response body.Note: To return policy information for eBay US Motors categories, specify marketplace_id as EBAY_MOTORS_US.
+
+        :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.See HTTP Request Headers for a list of supported eBay marketplace ID values. (required)
+        :param str filter: This query parameter limits the response by only returning metadata for the specified leaf categories. Supply the categoryId for one or more leaf categories. You can verify if a category is a leaf category by using the Taxonomy API and looking for a \"leafCategory\": true tag. The parameter takes a list of categoryId values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 categoryId values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.Example: filter=categoryIds:{3767|171784}
+        :return: MotorsListingPoliciesResponse
+        """
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.MarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_motors_listing_policies",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "marketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
+
     def sell_metadata_get_negotiated_price_policies(
         self, marketplace_id, **kwargs
     ):  # noqa: E501
@@ -6684,6 +6780,54 @@ class API(APIPrivate):
             sell_metadata.MarketplaceApi,
             sell_metadata.ApiClient,
             "get_return_policies",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "marketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_metadata_get_shipping_policies(
+        self, marketplace_id, **kwargs
+    ):  # noqa: E501
+        """get_shipping_policies
+
+        This method returns eBay shipping policy metadata for all leaf categories on the specified marketplace.By default, this method returns metadata on all leaf categories. You can limit the size of the result set by using the filter query parameter to specify only the leaf category IDs you want to review.If you specify a valid marketplace ID but that marketplace does not contain policy information, or if you filter out all results, a successful call returns a 204 No content status code with an empty response body.
+
+        :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.See HTTP Request Headers for a list of supported eBay marketplace ID values. (required)
+        :param str filter: This query parameter limits the response by only returning metadata for the specified leaf categories. Supply the categoryId for one or more leaf categories. You can verify if a category is a leaf category by using the Taxonomy API and looking for a \"leafCategory\": true tag. The parameter takes a list of categoryId values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 categoryId values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.Example: filter=categoryIds:{3767|171784}
+        :return: ShippingPoliciesResponse
+        """
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.MarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_shipping_policies",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "marketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_metadata_get_site_visibility_policies(
+        self, marketplace_id, **kwargs
+    ):  # noqa: E501
+        """get_site_visibility_policies
+
+        This method returns eBay international site visibility policy metadata for all leaf categories on the specified marketplace.By default, this method returns metadata on all leaf categories. You can limit the size of the result set by using the filter query parameter to specify only the leaf category IDs you want to review.If you specify a valid marketplace ID but that marketplace does not contain policy information, or if you filter out all results, a successful call returns a 204 No content status code with an empty response body.
+
+        :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.See HTTP Request Headers for a list of supported eBay marketplace ID values. (required)
+        :param str filter: This query parameter limits the response by only returning metadata for the specified leaf categories. Supply the categoryId for one or more leaf categories. You can verify if a category is a leaf category by using the Taxonomy API and looking for a \"leafCategory\": true tag. The parameter takes a list of categoryId values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 categoryId values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.Example:filter=categoryIds:{3767|171784}
+        :return: SiteVisibilityPoliciesResponse
+        """
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.MarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_site_visibility_policies",
             SellMetadataException,
             False,
             ["sell.metadata", "marketplace"],

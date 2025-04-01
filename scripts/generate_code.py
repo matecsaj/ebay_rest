@@ -22,6 +22,7 @@ import aiofiles
 import aiohttp
 import asyncio
 from bs4 import BeautifulSoup
+from chardet import detect
 from urllib.parse import urljoin, urlsplit
 
 
@@ -379,8 +380,26 @@ class Contracts:
         destination = os.path.join(Locations.cache_path, self.file_name)
         async with aiohttp.ClientSession() as session:
             async with session.get(self.link_href) as response:
-                text_content = await response.text()
-        async with aiofiles.open(destination, mode="w") as f:
+                raw_body = await response.read()
+
+                # determine encoding
+                if response.charset:
+                    encoding = response.charset
+                    method = "Declared"
+                else:
+                    detected = detect(raw_body)
+                    if detected["encoding"] is not None:
+                        encoding = detected["encoding"]
+                        method = "Detected"
+                    else:
+                        encoding = "utf-8"
+                        method = "Fallback"
+                logging.debug(f"{method} encoding: {encoding} for {self.file_name}")
+
+        text_content = raw_body.decode(encoding, errors="replace")
+
+        # normalize to UTF-8 when saving
+        async with aiofiles.open(destination, mode="w", encoding="utf-8") as f:
             await f.write(text_content)
 
     @staticmethod
@@ -599,15 +618,16 @@ class Contracts:
         return name
 
     async def get_one_base_paths_and_flows(self):
-        """Process the JSON contract and extract three things for later use.
+        """Process a UTF-8 JSON contract and extract three things for later use.
         1) the base_path for each category_call (e.g. buy_browse)
         2) the security flow for each scope in each category_call
         3) the scopes for each call in each category_call
         """
         source = os.path.join(Locations.cache_path, self.file_name)
         try:
-            async with aiofiles.open(source, mode="r") as f:
+            async with aiofiles.open(source, mode="r", encoding="utf-8") as f:
                 data = await f.read()
+
         except FileNotFoundError:
             message = f"Can't open {source}."
             logging.error(message)
@@ -617,9 +637,7 @@ class Contracts:
                 data = json.loads(data)
             except ValueError:
                 message = "Invalid JSON in " + source
-                logging.fatal(
-                    message
-                )  # Invalid \escape: line 3407 column 90 (char 262143)
+                logging.fatal(message)
                 sys.exit(message)
             else:
                 # Get the contract's major version number
