@@ -93,7 +93,9 @@ class Rates(metaclass=Multiton):
                 )  # abs covers small clock errors
                 threshold = ((delta * limit) / time_window) * 0.5
                 if threshold < 1.0:
-                    threshold = 1.0  # one is the minimum, protect against rounding errors
+                    threshold = (
+                        1.0  # one is the minimum, protect against rounding errors
+                    )
 
                 remaining = rate_dict["remaining"]
                 if remaining >= math.ceil(threshold):

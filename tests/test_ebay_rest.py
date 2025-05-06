@@ -606,6 +606,30 @@ class APISandboxSingleSiteTests(unittest.TestCase):
                 self.fail(f"unexpected record {record}")
         return task_ids
 
+    def get_task_ids(self, feed_type: string):
+        """
+        https://developer.ebay.com/api-docs/sell/feed/resources/inventory_task/methods/getInventoryTasks
+
+        :param feed_type: (string)
+        :return: task_ids (set(string))
+        """
+        task_ids = set()
+        self._api.sell_account_fulfeed_get_inventory_tasks()
+        for record in self._api.sell_feed_get_inventory_tasks(
+            feed_type=feed_type, look_back_days="1"
+        ):
+            if "record" in record:
+                task_ids.add(record["record"]["task_id"])
+            elif "total" in record:
+                self.assertEqual(
+                    record["total"]["records_yielded"],
+                    record["total"]["records_available"],
+                    "We missed some data - narrow the search!",
+                )
+            else:
+                self.fail(f"unexpected record {record}")
+        return task_ids
+
 
 class APIProductionSingleTests(unittest.TestCase):
     """API tests that can be done on a single production marketplace."""

@@ -895,7 +895,7 @@ class APIPrivate(metaclass=Multiton):
         )  # noqa: E501
 
     def _de_swagger(self, obj: collections):
-        """ Convert a Swagger data object and return the Python-styled equivalent.
+        """Convert a Swagger data object and return the Python-styled equivalent.
 
         There is a Java vibe to objects returned from the Swagger-generated code and other issues:
         1. non-eBay attributes are meaningless Swagger artifacts,
