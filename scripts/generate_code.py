@@ -62,126 +62,163 @@ async def get_table_via_link(url: str) -> list:
     return data
 
 
-async def make_json_file(source: dict or list, name: str) -> None:
-    if len(source) > 0:
-        path = "../src/ebay_rest/references/"
-        async with aiofiles.open(path + name + ".json", mode="w") as outfile:
-            await outfile.write(json.dumps(source, sort_keys=True, indent=4))
-    else:
-        logging.error(f"The json file for {name} should not be empty; not created.")
+class Reference:
+    """Class for operations involving a single reference type."""
 
+    @staticmethod
+    async def make_json_file(source: dict or list, name: str) -> None:
+        """
+        Save data to a JSON file in the references directory.
 
-async def generate_country_codes() -> None:
-    logging.info("Find the eBay's Country Codes.")
-
-    # load the target webpage
-    data = await get_table_via_link(await get_ebay_list_url("CountryCodeType"))
-
-    # ignore header, convert to a dict & delete bad values
-    dict_ = {}
-    for datum in data[1:]:
-        dict_[datum[0]] = datum[1]
-    for bad_value in ("CustomCode", "QM", "QN", "QO", "TP", "UM", "YU", "ZZ"):
-        if bad_value in dict_:
-            del dict_[bad_value]
+        Args:
+            source: The data to save (dict or list)
+            name: The name of the file (without extension)
+        """
+        if len(source) > 0:
+            path = "../src/ebay_rest/references/"
+            async with aiofiles.open(path + name + ".json", mode="w") as outfile:
+                await outfile.write(json.dumps(source, sort_keys=True, indent=4))
         else:
-            logging.debug("Bad value " + bad_value + "no longer needs to be deleted.")
+            logging.error(f"The json file for {name} should not be empty; not created.")
 
-    await make_json_file(dict_, "country_codes")
+    @staticmethod
+    async def generate_country_codes() -> None:
+        """Generate a reference file for eBay's Country Codes."""
+        logging.info("Find the eBay's Country Codes.")
 
+        # load the target webpage
+        data = await get_table_via_link(await get_ebay_list_url("CountryCodeType"))
 
-async def generate_currency_codes() -> None:
-    logging.info("Find the eBay's Currency Codes.")
-
-    # load the target webpage
-    data = await get_table_via_link(await get_ebay_list_url("CurrencyCodeType"))
-
-    # ignore header, convert to a dict & delete bad values
-    dict_ = {}
-    for datum in data[1:]:
-        dict_[datum[0]] = datum[1]
-
-    bad_values = ("CustomCode",)
-    to_delete = set()
-    for key, value in dict_.items():
-        if key in bad_values or "replaced" in value:
-            to_delete.add(key)
-    for key in to_delete:
-        del dict_[key]
-
-    await make_json_file(dict_, "currency_codes")
-
-
-async def generate_global_id_values() -> None:
-    logging.info("Find the eBay's Global ID Values.")
-
-    # load the target webpage
-    url = "https://developer.ebay.com/Devzone/merchandising/docs/CallRef/Enums/GlobalIdList.html"
-    data = await get_table_via_link(url)
-
-    # the header got messed up and is unlikely to change, so hardcode it
-    cols = ["global_id", "language", "territory", "site_name", "ebay_site_id"]
-
-    # convert to a list of dicts
-    dicts = []
-    for datum in data[1:]:
-        my_dict = {}
-        for index, column in enumerate(cols):
-            my_dict[column] = datum[index]
-        dicts.append(my_dict)
-
-    await make_json_file(dicts, "global_id_values")
-
-
-async def generate_marketplace_id_values() -> None:
-    logging.info("Find the eBay's Marketplace ID Values.")
-
-    my_dict = dict()
-
-    # load the target webpage
-    url = "https://developer.ebay.com/api-docs/static/rest-request-components.html#marketpl"
-    soup = await get_soup_via_link(url)
-
-    if soup:
-        # find the rows regarding Response Fields.
-        tables = soup.find_all("table")
-        if len(tables) > 1:
-            table = tables[1]  # the second table is index 1
-            rows = table.find_all("tr")
-
-            # put the rows into a table of data
-            data = []
-            for row in rows:
-                cols = row.find_all("td")
-                cols = [ele.text.strip() for ele in cols]
-                data.append([ele for ele in cols if ele])  # Get rid of empty values
-
-            # the header got messed up and is unlikely to change, so hard code it
-            # cols = ['marketplace_id', 'country', 'marketplace_site', 'locale_support']
-
-            # convert to a nested dict
-
-            for datum in data[1:]:
-                [marketplace_id, country, marketplace_site, locale_support] = datum
-                locale_support = locale_support.replace(" ", "")
-                locales = locale_support.split(
-                    ","
-                )  # convert comma-separated locales to a list of strings
-                sites = re.findall(
-                    r"https?://(?:[a-zA-Z0-9]|[._~:@!$&'()*+,;=%]|/)+",
-                    marketplace_site,
+        # ignore header, convert to a dict & delete bad values
+        dict_ = {}
+        for datum in data[1:]:
+            dict_[datum[0]] = datum[1]
+        for bad_value in ("CustomCode", "QM", "QN", "QO", "TP", "UM", "YU", "ZZ"):
+            if bad_value in dict_:
+                del dict_[bad_value]
+            else:
+                logging.debug(
+                    "Bad value " + bad_value + "no longer needs to be deleted."
                 )
-                comments = re.findall("\\(([^)]*)\\)", marketplace_site)
-                comment_shortage = len(locales) - len(comments)
-                for _ in range(comment_shortage):
-                    comments.append("")
-                my_locales = dict()
-                for index, locale in enumerate(locales):
-                    my_locales[locale] = [sites[index], comments[index]]
-                my_dict[marketplace_id] = [country, my_locales]
 
-    await make_json_file(my_dict, "marketplace_id_values")
-    return
+        await Reference.make_json_file(dict_, "country_codes")
+
+    @staticmethod
+    async def generate_currency_codes() -> None:
+        """Generate a reference file for eBay's Currency Codes."""
+        logging.info("Find the eBay's Currency Codes.")
+
+        # load the target webpage
+        data = await get_table_via_link(await get_ebay_list_url("CurrencyCodeType"))
+
+        # ignore header, convert to a dict & delete bad values
+        dict_ = {}
+        for datum in data[1:]:
+            dict_[datum[0]] = datum[1]
+
+        bad_values = ("CustomCode",)
+        to_delete = set()
+        for key, value in dict_.items():
+            if key in bad_values or "replaced" in value:
+                to_delete.add(key)
+        for key in to_delete:
+            del dict_[key]
+
+        await Reference.make_json_file(dict_, "currency_codes")
+
+    @staticmethod
+    async def generate_global_id_values() -> None:
+        """Generate a reference file for eBay's Global ID Values."""
+        logging.info("Find the eBay's Global ID Values.")
+
+        # load the target webpage
+        url = "https://developer.ebay.com/Devzone/merchandising/docs/CallRef/Enums/GlobalIdList.html"
+        data = await get_table_via_link(url)
+
+        # the header got messed up and is unlikely to change, so hardcode it
+        cols = ["global_id", "language", "territory", "site_name", "ebay_site_id"]
+
+        # convert to a list of dicts
+        dicts = []
+        for datum in data[1:]:
+            my_dict = {}
+            for index, column in enumerate(cols):
+                my_dict[column] = datum[index]
+            dicts.append(my_dict)
+
+        await Reference.make_json_file(dicts, "global_id_values")
+
+    @staticmethod
+    async def generate_marketplace_id_values() -> None:
+        """Generate a reference file for eBay's Marketplace ID Values."""
+        logging.info("Find the eBay's Marketplace ID Values.")
+
+        my_dict = dict()
+
+        # load the target webpage
+        url = "https://developer.ebay.com/api-docs/static/rest-request-components.html#marketpl"
+        soup = await get_soup_via_link(url)
+
+        if soup:
+            # find the rows regarding Response Fields.
+            tables = soup.find_all("table")
+            if len(tables) > 1:
+                table = tables[1]  # the second table is index 1
+                rows = table.find_all("tr")
+
+                # put the rows into a table of data
+                data = []
+                for row in rows:
+                    cols = row.find_all("td")
+                    cols = [ele.text.strip() for ele in cols]
+                    data.append([ele for ele in cols if ele])  # Get rid of empty values
+
+                # the header got messed up and is unlikely to change, so hard code it
+                # cols = ['marketplace_id', 'country', 'marketplace_site', 'locale_support']
+
+                # convert to a nested dict
+
+                for datum in data[1:]:
+                    [marketplace_id, country, marketplace_site, locale_support] = datum
+                    locale_support = locale_support.replace(" ", "")
+                    locales = locale_support.split(
+                        ","
+                    )  # convert comma-separated locales to a list of strings
+                    sites = re.findall(
+                        r"https?://(?:[a-zA-Z0-9]|[._~:@!$&'()*+,;=%]|/)+",
+                        marketplace_site,
+                    )
+                    comments = re.findall("\\(([^)]*)\\)", marketplace_site)
+                    comment_shortage = len(locales) - len(comments)
+                    for _ in range(comment_shortage):
+                        comments.append("")
+                    my_locales = dict()
+                    for index, locale in enumerate(locales):
+                        my_locales[locale] = [sites[index], comments[index]]
+                    my_dict[marketplace_id] = [country, my_locales]
+
+        await Reference.make_json_file(my_dict, "marketplace_id_values")
+        return
+
+
+class References:
+    """Class for operations involving multiple reference types."""
+
+    @staticmethod
+    async def generate_all():
+        """
+        Generate all reference JSON files for the 'references' directory found in 'src'.
+
+        If you add, delete, or rename a JSON file, then alter /src/ebay_rest/reference.py accordingly.
+        """
+        # TODO Clear out any junk that happens to be in the target folder.
+
+        await asyncio.gather(
+            Reference.generate_country_codes(),
+            Reference.generate_currency_codes(),
+            Reference.generate_global_id_values(),
+            Reference.generate_marketplace_id_values(),
+        )
 
 
 async def generate_link_text_and_urls(
@@ -233,24 +270,6 @@ async def get_soup_via_link(url: str) -> BeautifulSoup:
         return BeautifulSoup(
             "", "html.parser"
         )  # return an empty soup object instead of None
-
-
-async def generate_references():
-    """
-    Generated JSON files for the 'references' directory found in 'src'.
-
-    If you add, delete, or rename a JSON file, then alter /src/ebay_rest/reference.py accordingly.
-
-    :return:
-    """
-    # TODO Clear out any junk that happens to be in the target folder.
-
-    await asyncio.gather(
-        generate_country_codes(),
-        generate_currency_codes(),
-        generate_global_id_values(),
-        generate_marketplace_id_values(),
-    )
 
 
 async def get_ebay_list_url(code_type: str) -> str:
@@ -1275,7 +1294,7 @@ async def main() -> None:
         level=logging.DEBUG,
     )
 
-    await asyncio.gather(generate_apis(), generate_references())
+    await asyncio.gather(generate_apis(), References.generate_all())
     logging.info(f"Run time was {int(time.time() - start)} seconds.")
     return
 
