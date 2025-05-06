@@ -68,7 +68,7 @@ dev = [
 # This section is used to configure Black, a Python code formatter.
 [tool.black]
 # Extend Black's default exclusion list to ignore certain files and directories.
-# Exclude directories that contain Swagger generated code.
+# Exclude directories that contain Swagger-generated code.
 extend-exclude = """
 (
 src/scripts/api_cache

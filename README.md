@@ -25,7 +25,7 @@ pip install ebay_rest
 If Python 2 is installed, use `pip3` instead.
 
 ### Complete Installation
-The complete installation includes browser automation for obtaining eBay user tokens.
+The complete installation includes browser automation for getting eBay user tokens.
 
 ```bash
 pip install ebay_rest[complete]
@@ -88,7 +88,7 @@ print(help(Reference))
   <ul>
     <li>Basic types: strings, integers, dates.</li>
     <li><code>dict</code> (objects): Groups related elements.</li>
-    <li><code>list</code> (arrays): Repetitive structures with 0 or more elements.</li>
+    <li><code>list</code> (arrays): Repetitive structures with one or more elements.</li>
     <li>Optional elements may be omitted, mandatory elements are set to <code>None</code> if empty.</li>
   </ul>
 </details>
@@ -99,7 +99,7 @@ print(help(Reference))
     <li>A Python <a href="https://www.python.org/dev/peps/pep-0255/">generator</a> is used instead of a list.</li>
     <li>Do <strong>not</strong> supply an "offset" parameter.</li>
     <li>"limit" controls how many records to retrieve.</li>
-    <li>To retrieve all records, omit "limit." Be aware of eBay's 10,000 record limit.</li>
+    <li>To retrieve all records, omit "limit." Be aware of eBay's 10,000 record count limit.</li>
   </ul>
 </details>
 

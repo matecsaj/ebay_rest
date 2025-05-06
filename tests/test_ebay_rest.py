@@ -1,6 +1,6 @@
 # *** A way to run these unit tests. ***
 # 1. (Open a terminal, alternately known as go to the command line.)
-# 2. cd .. (Or, somehow make the project root the current directory.)
+# 2. run "cd .." (Or, somehow make the project root the current directory.)
 # 3. python -m unittest tests.ebay_rest
 
 # Don't repeat API calls with the same parameters, because it appears to trigger an "Internal (Server) Error" at eBay.
@@ -277,8 +277,8 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
         d_api = API(application="production_1", user="production_1", header="ENCA")
         f_api = API(application="production_1", user="production_1", header="GB")
 
-        # in the local marketplace find items located locally that also ship to foreign
-        # low-priced items are targeted because free shipping for them is unlikely
+        # in the local marketplace, find items located locally that also ship to foreign
+        # low-priced items are targeted because they are unlikely to have free shipping
         # black items are targeted because they are plentiful, and the q parameter is mandatory
         try:
             filter_ = (

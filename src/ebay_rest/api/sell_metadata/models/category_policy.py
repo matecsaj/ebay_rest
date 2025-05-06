@@ -290,7 +290,7 @@ class CategoryPolicy(object):
     def orpa(self):
         """Gets the orpa of this CategoryPolicy.  # noqa: E501
 
-        If this field (Override Reserve Price Allowed) is returned as <code>true</code>, all leaf categories on the site allow the seller to completely remove the reserve price for an active auction listing. For information on removing or reducing reserve prices, see <a href=\"https://www.ebay.com/help/selling/listings/selling-auctions/reserve-prices?id=4143\"  target=\"_blank\">Setting a reserve price</a>.  # noqa: E501
+        If this field (Override Reserve Price Allowed) is returned as <code>true</code>, all leaf categories on the site allow the seller to completely remove the reserve price for an active auction listing. For information on removing or reducing reserve prices, see <a href=\"https://www.ebay.com/help/selling/listings/selling-auctions/reserve-prices?id=4143\"  target=\"_blank\">Setting a reserve price</a>.  # noqa: E501
 
         :return: The orpa of this CategoryPolicy.  # noqa: E501
         :rtype: bool
@@ -301,7 +301,7 @@ class CategoryPolicy(object):
     def orpa(self, orpa):
         """Sets the orpa of this CategoryPolicy.
 
-        If this field (Override Reserve Price Allowed) is returned as <code>true</code>, all leaf categories on the site allow the seller to completely remove the reserve price for an active auction listing. For information on removing or reducing reserve prices, see <a href=\"https://www.ebay.com/help/selling/listings/selling-auctions/reserve-prices?id=4143\"  target=\"_blank\">Setting a reserve price</a>.  # noqa: E501
+        If this field (Override Reserve Price Allowed) is returned as <code>true</code>, all leaf categories on the site allow the seller to completely remove the reserve price for an active auction listing. For information on removing or reducing reserve prices, see <a href=\"https://www.ebay.com/help/selling/listings/selling-auctions/reserve-prices?id=4143\"  target=\"_blank\">Setting a reserve price</a>.  # noqa: E501
 
         :param orpa: The orpa of this CategoryPolicy.  # noqa: E501
         :type: bool
@@ -313,7 +313,7 @@ class CategoryPolicy(object):
     def orra(self):
         """Gets the orra of this CategoryPolicy.  # noqa: E501
 
-        If this field (Override Reduce Reserve Allowed) is returned as <code>true</code>, the seller can reduce or remove a reserve price that had already been reduced for an active auction listing.  # noqa: E501
+        If this field (Override Reduce Reserve Allowed) is returned as <code>true</code>, the seller can reduce or remove a reserve price that had already been reduced for an active auction listing.  # noqa: E501
 
         :return: The orra of this CategoryPolicy.  # noqa: E501
         :rtype: bool
@@ -324,7 +324,7 @@ class CategoryPolicy(object):
     def orra(self, orra):
         """Sets the orra of this CategoryPolicy.
 
-        If this field (Override Reduce Reserve Allowed) is returned as <code>true</code>, the seller can reduce or remove a reserve price that had already been reduced for an active auction listing.  # noqa: E501
+        If this field (Override Reduce Reserve Allowed) is returned as <code>true</code>, the seller can reduce or remove a reserve price that had already been reduced for an active auction listing.  # noqa: E501
 
         :param orra: The orra of this CategoryPolicy.  # noqa: E501
         :type: bool

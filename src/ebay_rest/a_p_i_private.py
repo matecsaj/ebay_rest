@@ -74,12 +74,12 @@ class APIPrivate(metaclass=Multiton):
 
         Instantiate an API object, then use it to call hundreds of eBay APIs.
 
-        Load credentials from an ebay_rest.json file or supply dicts that mimic records in said file.
+        Load credentials from an ebay_rest.json file or supply dicts that mimic records in the file.
         See https://github.com/matecsaj/ebay_rest/blob/main/tests/ebay_rest_EXAMPLE.json.
-        Warning, hard coding credentials in code is a security risk.
+        Warning: Hardcoding credentials directly in code is a security risk.
 
         :param path (str, optional):
-        If using an ebay_rest.json file that is not in the current working directory, supply a full path.
+        If using an ebay_rest.json file not in the current working directory, supply a full path.
 
         :param application (str or dict, optional) :
         Supply the name of the desired application record in ebay_rest.json or a dict with application credentials.
@@ -94,14 +94,14 @@ class APIPrivate(metaclass=Multiton):
         Can omit when ebay_rest.json contains only one header record.
 
         :param
-        throttle (bool, optional) : When True block the call if a below the prorated call limit, defaults to False.
+        throttle (bool, optional) : When True, block the call if a below the prorated call limit, defaults to False.
                                     Note, the sandbox has no call limits.
 
         :param
         timeout (float, optional) : When invoked with the floating-point timeout argument set to a positive value,
         throttle for at most the number of seconds specified by timeout and as below the prorated call limit. A timeout
         argument of -1 specifies an unbounded wait. It is forbidden to specify a timeout when the throttle is False.
-        Defaults to -1.
+        It defaults to -1.
 
         :param
         key_pair (str or dict, optional) :
@@ -113,7 +113,7 @@ class APIPrivate(metaclass=Multiton):
         digital_signatures (bool, optional): Use eBay digital signatures
 
         :param
-        async_req (bool, optional) : When True make asynchronous HTTP requests, defaults to False for synchronous.
+        async_req (bool, optional) : When True make, asynchronous HTTP requests. Defaults to False for synchronous.
         !!!IGNORE THIS OPTION, THE CODE FOR IT IS INCOMPLETE!!!
 
         :return (object) : An API object.
@@ -195,7 +195,7 @@ class APIPrivate(metaclass=Multiton):
         ]
         self._check_keys(self._key_pair, key_pair_keys, "key_pair")
 
-        # Determine if we are using the sandbox. Of course production is the only alternative.
+        # Determine if we are using the sandbox. Of course, production is the only alternative.
         self._sandbox = self._application["cert_id"].startswith("SBX-")
 
         # check the header keys and values
@@ -254,7 +254,7 @@ class APIPrivate(metaclass=Multiton):
 
         if (
             self._sandbox
-        ):  # The sandbox will not return rates so there is no point to doing throttling.
+        ):  # The sandbox will not return rates; there is no point in throttling.
             self._throttle = False
             self._timeout = -1.0
             self._rates = None
@@ -555,7 +555,7 @@ class APIPrivate(metaclass=Multiton):
         params: Tuple[str] or str or None,
         **kwargs: Dict[str, int],
     ) -> collections:
-        """Do the work for method that returns a single object.
+        """Do the work for a method that returns a single object.
 
         :param function_configuration (callable, required):
         :param base_path (str, required):
@@ -598,7 +598,7 @@ class APIPrivate(metaclass=Multiton):
         params: Tuple[str] or str or None,
         **kwargs,  # TODO Is it wrong to put Dict[str, int] or is PyCharm's warning system buggy?
     ) -> collections:
-        """Do the work for method that yields objects from repeated calls which is termed Paging by eBay.
+        """Do the work for a method that yields objects from repeated calls which is termed Paging by eBay.
 
         Across all pages, eBay has a hard limit on how many records it will return. This is subject to change
         and can vary by call. The swagger call will raise an exception at the limit. 10,000 is a common hard limit.
@@ -652,7 +652,7 @@ class APIPrivate(metaclass=Multiton):
                 raise Error(number=99014, reason=reason)
             if records_desired < page_limit:
                 kwargs["limit"] = (
-                    records_desired  # just get enough records to satisfy what is desired
+                    records_desired  # get enough records to satisfy what is desired
                 )
             else:
                 kwargs["limit"] = (
@@ -673,7 +673,7 @@ class APIPrivate(metaclass=Multiton):
         )
 
         # loop though pages until a reason to stop presents itself
-        offset = 0  # start at the first record; yes the record index starts at zero
+        offset = 0  # start at the first record; yes, the record index starts at zero
         record_list_key = None  # a placeholder for the dictionary key that will refer to the list of records
         loop = True
         result = None
@@ -709,10 +709,10 @@ class APIPrivate(metaclass=Multiton):
                             yield yield_info
                             yielded_info.append(yield_info)
 
-            # Determine the number of records in the current page.
+            # Determine the number of records on the current page.
             records_in_page = 0
             if record_list_key is not None:  # is the record set totally empty?
-                if record_list_key in result:  # is the current page a well-formed?
+                if record_list_key in result:  # is the current page well-formed?
                     if (
                         result[record_list_key] is not None
                     ):  # does the current page have > zero results?
@@ -720,7 +720,7 @@ class APIPrivate(metaclass=Multiton):
                             result[record_list_key]
                         )  # all good, get the record count
 
-            # Yield each record then stop looping and prepare the next page's offset.
+            # Yield each record, then stop looping and prepare the next page's offset.
             if records_in_page:
                 for element in result[record_list_key]:
                     yield {"record": element}
@@ -736,7 +736,7 @@ class APIPrivate(metaclass=Multiton):
             else:
                 loop = False
 
-        # Warning, if the caller stopped this generator prematurely then the following will not happen.
+        # Warning, if the caller stopped this generator prematurely, then the following will not happen.
         if result is None:
             yield_max = 0
         else:
@@ -790,7 +790,7 @@ class APIPrivate(metaclass=Multiton):
             configuration.host = configuration.host.replace(
                 ".ebay.com", ".sandbox.ebay.com"
             )
-        # check for flawed host and if so compensate
+        # check for flawed host and if so, compensate
         if "{basePath}" in configuration.host:
             configuration.host = configuration.host.replace("{basePath}", base_path)
         else:
@@ -805,7 +805,7 @@ class APIPrivate(metaclass=Multiton):
         # https://developer.ebay.com/api-docs/static/rest-request-components.html#headers
 
         # Accept, Accept-Charset & Accept-Encoding
-        # Do nothing because the Swagger generated code handles them.
+        # There is nothing to do, the Swagger-generated code handles them.
 
         # Accept-Language
         if self._header["accept_language"]:
@@ -814,7 +814,7 @@ class APIPrivate(metaclass=Multiton):
             ]
 
         # Authorization
-        # Do nothing because the Swagger generated code handles it.
+        # There is nothing to do, the Swagger-generated code handles it.
 
         # Digital signatures
         # Add 'x-ebay-enforce-signature', and then the rest is handled in the modified Swagger code.
@@ -840,7 +840,7 @@ class APIPrivate(metaclass=Multiton):
         )
 
         # X-EBAY-C-ENDUSERCTX
-        # beware that the site_id is a bit different for the Buy API
+        # beware: the site_id is a bit different in the Buy API
         # https://developer.ebay.com/api-docs/buy/static/ref-marketplace-supported.html
 
         # header for shipping information accuracy per https://developer.ebay.com/api-docs/buy/static/api-browse.html
@@ -879,7 +879,7 @@ class APIPrivate(metaclass=Multiton):
 
     def copy_of_developer_analytics_get_rate_limits(self, **kwargs):
         """
-        TO AVOID CIRCULAR IMPORTS, here in is a copy the API class's method developer_analytics_get_rate_limits.
+        TO AVOID CIRCULAR IMPORTS, here in is a copy of the API class's method developer_analytics_get_rate_limits.
         """
         return self._method_single(
             developer_analytics.Configuration,
@@ -895,11 +895,11 @@ class APIPrivate(metaclass=Multiton):
         )  # noqa: E501
 
     def _de_swagger(self, obj: collections):
-        """Take a Swagger data object and return the Python styled equivalent.
+        """ Convert a Swagger data object and return the Python-styled equivalent.
 
-        There is a Java vibe to objects returned from Swagger generated code and other issues:
+        There is a Java vibe to objects returned from the Swagger-generated code and other issues:
         1. non-eBay attributes are meaningless Swagger artifacts,
-        2. public attributes should not have leading underscores,
+        2. public attributes should not have underscore prefixes,
         3. the class objects are effectively dicts,
         4. class names are in CamelCase.
 
@@ -907,7 +907,7 @@ class APIPrivate(metaclass=Multiton):
 
         To learn more about Swagger, visit https://swagger.io.
 
-        :param obj (collections, required): The object returned by a Swagger call.
+        :param obj (collections, required): A Swagger call object.
         :return obj (collections)
         """
         basic_types = (
@@ -1046,7 +1046,7 @@ class APIPrivate(metaclass=Multiton):
         """Load the details of the current public/private key pair suitable for
         entering into ebay_rest.json or as an API parameter.
 
-        If create_new is True, creates a new public/private key pair if
+        If create_new is True, create a new public/private key pair if
         (and only if) required. Otherwise, if no private key is supplied,
         return an error.
         """

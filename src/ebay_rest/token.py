@@ -298,9 +298,8 @@ class UserToken(metaclass=Multiton):
 
     def _authorization_flow(self) -> None:
         """
-        Get an authorization code by running the authorization_flow, and
-        then exchange that for a refresh token (which also contains a
-        user token).
+        Get an authorization code by running authorization-flow.
+        Exchange that for a refresh token (which also contains a user token).
 
         :return None (None)
         """
@@ -347,7 +346,7 @@ class UserToken(metaclass=Multiton):
         logging.info(message)
 
     def _get_authorization_code(self, sign_in_url: str) -> str:
-        """Run the authorization flow in order to get an authorization code,
+        """Run the authorization flow to get an authorization code,
         which can subsequently be exchanged for a refresh (and user) token.
 
         :param sign_in_url (str): The redirect URL for gaining user consent.
@@ -380,11 +379,11 @@ class UserToken(metaclass=Multiton):
             # Load the initial page
             page.goto(sign_in_url)
 
-            # Fill in the username then click continue
+            # Fill in the username, then click continue
             page.wait_for_selector("input[name='userid']").type(self._user_id)
             page.wait_for_selector("#signin-continue-btn").click()
 
-            # Fill in the password then submit
+            # Fill in the password, then submit
             page.wait_for_selector("input[name='pass']").type(self._user_password)
             page.wait_for_selector("#sgnBt").click()
 
@@ -439,7 +438,7 @@ class UserToken(metaclass=Multiton):
             if "BrowserType.launch" in detail:
                 number = 96029
                 reason = "Chromium is not installed. Run `playwright install chromium` to install it."
-            # Check for "element not found" error
+            # Check for an "element not found" error
             elif "No node found for selector" in detail:
                 number = 96015
                 reason = (
@@ -627,7 +626,7 @@ class _OAuth2Api:
 
     def get_application_token(self, scopes: List[str]) -> _OAuthToken:
         """
-        Makes call for application token and stores result in credential object.
+        Makes call for application token and stores result in a credential object.
         :param scopes (list(str), required)
         :return credential_object (_OAuthToken)
         """
@@ -776,8 +775,7 @@ class _OAuth2Api:
 
 
 class KeyPairToken(metaclass=Multiton):
-    """An eBay private/public key pair created using
-    the eBay Key Management API.
+    """An eBay private-public key pair created using the eBay Key Management API.
     Digital signature credentials are optional if you don't make API
     calls that need a public/private key pair.
     """
@@ -852,7 +850,7 @@ class KeyPairToken(metaclass=Multiton):
             return {"jwe": self._jwe, "private_key": pk}
 
     def _current_key_sufficient(self) -> bool:
-        """Check if the current key pair is sufficient to call get_signing_key.
+        """Check if the current key pair are enough to call get_signing_key.
 
         Returns True if so, else False
 
@@ -877,7 +875,7 @@ class KeyPairToken(metaclass=Multiton):
     def _has_valid_key(self, api) -> bool:
         """
         Check we have enough information to request a new key pair.
-        Load the new key pair, and check it is valid.
+        Load the new key-pair and check it is valid.
 
         :param api (API): A valid API instance that can be used to make
             a KeyManagementAPI call
@@ -904,10 +902,9 @@ class KeyPairToken(metaclass=Multiton):
         :return None (None)
 
         - If the key is out of date, create a new key pair.
-        - If the necessary details for making an API call and the expiration
-            time are provided, do nothing (assume the key pair is OK).
-        - If the private key and the signing key ID are provided but details
-          are not complete, load the key info.
+        - If the necessary details for making an API call and the expiration time are provided.
+            Do nothing (assume the key pair is OK).
+        - If the private key and the signing key ID are provided but details are incomplete, load the key info.
         """
 
         in_date = self._expiration_time and (
@@ -1020,7 +1017,7 @@ class KeyPairToken(metaclass=Multiton):
         )
         self._jwe = key["jwe"]
         if key["private_key"]:
-            # Only write private key if supplied (i.e. just created)
+            # Only write a private key if supplied (i.e., just created)
             self._private_key = key["private_key"]
         self._public_key = key["public_key"]
         self._signing_key_cipher = key["signing_key_cipher"]

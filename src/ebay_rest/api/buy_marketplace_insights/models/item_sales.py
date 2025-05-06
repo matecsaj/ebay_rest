@@ -266,7 +266,7 @@ class ItemSales(object):
     def condition(self):
         """Gets the condition of this ItemSales.  # noqa: E501
 
-        The text describing the condition of the item, such as New or Used. For a list of condition names, see <a href=\"/devzone/finding/callref/enums/conditionIdList.html \" target=\"_blank\">Item Condition IDs and Names</a>.  <br><br>Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        The text describing the condition of the item, such as New or Used. For a list of condition names, see <a href=\"/api-docs/sell/static/metadata/condition-id-values.html \" target=\"_blank\">Item Condition IDs and Names</a>.  <br><br>Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :return: The condition of this ItemSales.  # noqa: E501
         :rtype: str
@@ -277,7 +277,7 @@ class ItemSales(object):
     def condition(self, condition):
         """Sets the condition of this ItemSales.
 
-        The text describing the condition of the item, such as New or Used. For a list of condition names, see <a href=\"/devzone/finding/callref/enums/conditionIdList.html \" target=\"_blank\">Item Condition IDs and Names</a>.  <br><br>Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        The text describing the condition of the item, such as New or Used. For a list of condition names, see <a href=\"/api-docs/sell/static/metadata/condition-id-values.html \" target=\"_blank\">Item Condition IDs and Names</a>.  <br><br>Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :param condition: The condition of this ItemSales.  # noqa: E501
         :type: str
@@ -289,7 +289,7 @@ class ItemSales(object):
     def condition_id(self):
         """Gets the condition_id of this ItemSales.  # noqa: E501
 
-        The identifier of the condition of the item. For example, 1000 is the identifier for NEW. For a list of condition names and IDs, see <a href=\"/devzone/finding/callref/enums/conditionIdList.html \" target=\"_blank\">Item Condition IDs and Names</a>. <br><br>Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        The identifier of the condition of the item. For example, 1000 is the identifier for NEW. For a list of condition names and IDs, see <a href=\"/api-docs/sell/static/metadata/condition-id-values.html \" target=\"_blank\">Item Condition IDs and Names</a>. <br><br>Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :return: The condition_id of this ItemSales.  # noqa: E501
         :rtype: str
@@ -300,7 +300,7 @@ class ItemSales(object):
     def condition_id(self, condition_id):
         """Sets the condition_id of this ItemSales.
 
-        The identifier of the condition of the item. For example, 1000 is the identifier for NEW. For a list of condition names and IDs, see <a href=\"/devzone/finding/callref/enums/conditionIdList.html \" target=\"_blank\">Item Condition IDs and Names</a>. <br><br>Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        The identifier of the condition of the item. For example, 1000 is the identifier for NEW. For a list of condition names and IDs, see <a href=\"/api-docs/sell/static/metadata/condition-id-values.html \" target=\"_blank\">Item Condition IDs and Names</a>. <br><br>Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :param condition_id: The condition_id of this ItemSales.  # noqa: E501
         :type: str

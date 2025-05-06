@@ -125,10 +125,8 @@ python -m unittest discover
 1. **Update dependencies and tools:**
    ```bash
    brew update && brew upgrade && brew cleanup  # macOS only
-   python3 -m pip install --upgrade pip
-   python3 -m pip install --upgrade -e '.[complete,dev]'
+   python -m pip install --upgrade pip && python -m pip install --upgrade -e ".[complete,dev]"
    playwright install chromium
-   black .
    pipreqs --print src  # Lists required dependencies
    ```
 
@@ -137,12 +135,19 @@ python -m unittest discover
    - Increment the [Semantic Version](https://semver.org/) accordingly.
 
 3. **Validate changes:**
-   - Run `/scripts/generate_code.py`
-   - Run `tests/ebay_rest.py` and ensure all tests pass.
-   - Fix any issues (avoid editing auto-generated code directly).
+   - Regenerate code from the latest eBay OpenAPI contracts. This updates [a_p_i.py](src/ebay_rest/a_p_i.py) and the [api](src/ebay_rest/api) package:
+   ```bash
+   /scripts/generate_code.py
+   ```
+   - Run all unit tests:
+   ```bash
+   pytest tests/ --tb=short -q
+   ```
+   - Fix any issues without modifying the generated code directly.
 
 4. **Build and publish the package:**
    ```bash
+   black .
    python3 -m build
    python3 -m twine upload dist/*X.Y.Z*
    ```

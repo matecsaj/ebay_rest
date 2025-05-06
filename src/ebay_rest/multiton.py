@@ -13,7 +13,7 @@ class Multiton(type):
 
     Don't use this with any class that, excepting __init__, has public setter methods.
 
-    When using treading, the creation of duplicate instances is possible, you may want to use locking.
+    When using treading, the creation of duplicate instances is possible; you may want to use locking.
 
     In ebay_rest, Multiton helps avoid making redundant REST calls to eBay.
     Redundant calls waste time, erode daily call limits and can trigger an "Internal Server Error" at eBay.
@@ -24,7 +24,7 @@ class Multiton(type):
     class YourClass(metaclass=Multiton):
         pass
 
-    Debugging tip, temporarily remove "metaclass=Multiton" if object reuse is confusing diagnosis.
+    Debugging tip, temporarily remove "metaclass=Multiton" if object reuse is causing confusion.
 
     To learn about the Multiton Creation (Anti)Pattern, visit https://en.wikipedia.org/wiki/Multiton_pattern.
     """
@@ -43,7 +43,7 @@ class Multiton(type):
                 return_object = instance["object"]
                 break
 
-        # if not found then create a new instance
+        # if not found, then create a new instance
         if return_object is None:
             return_object = super(Multiton, cls).__call__(*args, **kwargs)
             Multiton._instances.append(

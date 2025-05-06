@@ -19,7 +19,7 @@ class DateTime:
 
         Date-time values are in the ISO 8601 date and time format.
         Hours are in 24-hour format (e.g., 2:00:00pm is 14:00:00).
-        Universal Coordinated Time (UTC), also known as Greenwich Mean Time (GMT),
+        Universal Coordinated Time (UTC), also known as: Greenwich MeanTime (GMT),
         also known as Zulu because the time portion of the time stamp ends with a Z.
 
         :return: datetime (datetime)

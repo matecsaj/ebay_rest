@@ -5,8 +5,8 @@ import urllib.parse
 
 
 def signed_request(pool_manager, key_pair, method, url, *_args, **kwargs):
-    """If x-ebay-enforce_signature has been set, add digital signature.
-    This function replaces the normal pool_manager.request function,
+    """If x-ebay-enforce_signature has been set, add digital-signature.
+    This function replaces the standard function "pool_manager.request,"
     and calls it with the same arguments after adding a digital
     signature (if requested).
     """
@@ -43,24 +43,24 @@ def signed_request(pool_manager, key_pair, method, url, *_args, **kwargs):
     # if url_parts.query:
     #     signature_fields['query'] = f'?{url_parts.query}'
 
-    # Create Signature-Input header showing what components are included
+    # Create a Signature-Input header showing what components are included
     covered_components = " ".join(f'"{key}"' for key in signature_fields)
     signature_input = f"({covered_components});created={created_time}"
     headers["Signature-Input"] = f"sig1={signature_input}"
 
-    # Create signature base to be signed
+    # Create a signature base to be signed
     signature_parameters = [
         f'"{key}": {value}' for key, value in signature_fields.items()
     ]
     signature_parameters.append(f'"@signature-params": {signature_input}')
     signature_base = "\n".join(signature_parameters)
 
-    # Create signature by signing signature base with private key
+    # Create signature by signing signature base with a private key
     signature = base64.b64encode(
         key_pair["private_key"].sign(signature_base.encode("utf-8"))
     ).decode("ascii")
 
-    # Create Signature header from signature
+    # Create a Signature header from signature
     headers["Signature"] = f"sig1=:{signature}:"
 
     return pool_manager.request(method, url, headers=headers, **kwargs)

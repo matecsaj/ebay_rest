@@ -2,7 +2,10 @@
 
 ## Our Pledge
 
-We, as contributors and maintainers, pledge to foster an open, inclusive, and harassment-free community. We are committed to ensuring that participation in this project is welcoming for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
+We, as contributors and maintainers, pledge to foster an open, inclusive, and harassment-free community.
+We are committed to making participation in this project welcoming for everyone—regardless of age,
+body size, disability, ethnicity, gender identity or expression, level of experience, education,
+socio-economic status, nationality, personal appearance, race, religion, or sexual orientation and identity.
 
 ## Our Standards
 

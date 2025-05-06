@@ -96,7 +96,7 @@ class Reference:
     @staticmethod
     def _get(name) -> dict:
         """
-        Get information from the json files.
+        Get information from the JSON files.
 
         :param name (str, required)
         :return information (dict)

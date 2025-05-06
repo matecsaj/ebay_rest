@@ -61,7 +61,7 @@ class ConditionDistribution(object):
     def condition(self):
         """Gets the condition of this ConditionDistribution.  # noqa: E501
 
-        The text describing the condition of the item, such as New or Used. For a list of condition names, see <a href=\"/devzone/finding/callref/enums/conditionIdList.html \" target=\"_blank\">ConditionEnum</a>.  <br><br>Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        The text describing the condition of the item, such as New or Used. For a list of condition names, see <a href=\"/api-docs/sell/static/metadata/condition-id-values.html \" target=\"_blank\">ConditionEnum</a>.  <br><br>Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :return: The condition of this ConditionDistribution.  # noqa: E501
         :rtype: str
@@ -72,7 +72,7 @@ class ConditionDistribution(object):
     def condition(self, condition):
         """Sets the condition of this ConditionDistribution.
 
-        The text describing the condition of the item, such as New or Used. For a list of condition names, see <a href=\"/devzone/finding/callref/enums/conditionIdList.html \" target=\"_blank\">ConditionEnum</a>.  <br><br>Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        The text describing the condition of the item, such as New or Used. For a list of condition names, see <a href=\"/api-docs/sell/static/metadata/condition-id-values.html \" target=\"_blank\">ConditionEnum</a>.  <br><br>Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :param condition: The condition of this ConditionDistribution.  # noqa: E501
         :type: str

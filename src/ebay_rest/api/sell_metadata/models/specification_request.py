@@ -81,7 +81,7 @@ class SpecificationRequest(object):
     def category_id(self):
         """Gets the category_id of this SpecificationRequest.  # noqa: E501
 
-        The unique identifier of the eBay leaf category for which compatibility details are being retrieved. This category must be a valid eBay category on the specified eBay marketplace, and the category must support parts compatibility for cars, trucks, or motorcycles.<br><br>Use the <a href=\"/api-docs/sell/metadata/resources/marketplace/methods/getAutomotivePartsCompatibilityPolicies\" target=\"_blank \">getAutomotivePartsCompatibilityPolicies</a> method to retrieve a list of categories that support parts compatibility by specification. For the categories in the response that support compatibility by specification, you’ll see <code>SPECIFICATIONS</code> as the value for the <b>compatibilityBasedOn</b> field   # noqa: E501
+        The unique identifier of the eBay leaf category for which compatibility details are being retrieved. This category must be a valid eBay category on the specified eBay marketplace, and the category must support parts compatibility for cars, trucks, or motorcycles.<br><br>Use the <a href=\"/api-docs/sell/metadata/resources/marketplace/methods/getAutomotivePartsCompatibilityPolicies\" target=\"_blank \">getAutomotivePartsCompatibilityPolicies</a> method to retrieve a list of categories that support parts compatibility by specification. For the categories in the response that support compatibility by specification, you'll see <code>SPECIFICATIONS</code> as the value for the <b>compatibilityBasedOn</b> field   # noqa: E501
 
         :return: The category_id of this SpecificationRequest.  # noqa: E501
         :rtype: str
@@ -92,7 +92,7 @@ class SpecificationRequest(object):
     def category_id(self, category_id):
         """Sets the category_id of this SpecificationRequest.
 
-        The unique identifier of the eBay leaf category for which compatibility details are being retrieved. This category must be a valid eBay category on the specified eBay marketplace, and the category must support parts compatibility for cars, trucks, or motorcycles.<br><br>Use the <a href=\"/api-docs/sell/metadata/resources/marketplace/methods/getAutomotivePartsCompatibilityPolicies\" target=\"_blank \">getAutomotivePartsCompatibilityPolicies</a> method to retrieve a list of categories that support parts compatibility by specification. For the categories in the response that support compatibility by specification, you’ll see <code>SPECIFICATIONS</code> as the value for the <b>compatibilityBasedOn</b> field   # noqa: E501
+        The unique identifier of the eBay leaf category for which compatibility details are being retrieved. This category must be a valid eBay category on the specified eBay marketplace, and the category must support parts compatibility for cars, trucks, or motorcycles.<br><br>Use the <a href=\"/api-docs/sell/metadata/resources/marketplace/methods/getAutomotivePartsCompatibilityPolicies\" target=\"_blank \">getAutomotivePartsCompatibilityPolicies</a> method to retrieve a list of categories that support parts compatibility by specification. For the categories in the response that support compatibility by specification, you'll see <code>SPECIFICATIONS</code> as the value for the <b>compatibilityBasedOn</b> field   # noqa: E501
 
         :param category_id: The category_id of this SpecificationRequest.  # noqa: E501
         :type: str

@@ -74,7 +74,7 @@ class Rates(metaclass=Multiton):
         # Further, imagine lowering the threshold half when throttled.
         # If not throttled, imagine lowering the threshold to 1.
         # It is OK to proceed when the remaining count is above the threshold.
-        # If we need to wait, wait in proportion to how far the threshold is out of reach or until period end.
+        # If we need to wait, wait in proportion to how far the threshold is out of reach or until the period ends.
 
         timeout_used = 0
         redo = True
@@ -93,7 +93,7 @@ class Rates(metaclass=Multiton):
                 )  # abs covers small clock errors
                 threshold = ((delta * limit) / time_window) * 0.5
                 if threshold < 1.0:
-                    threshold = 1.0  # 1 is as low is it should go, protect against rounding errors
+                    threshold = 1.0  # one is the minimum, protect against rounding errors
 
                 remaining = rate_dict["remaining"]
                 if remaining >= math.ceil(threshold):
@@ -108,7 +108,7 @@ class Rates(metaclass=Multiton):
                         # then wait until the end of the period
                         wait_seconds = abs((DateTime.now() - reset).total_seconds())
                     else:
-                        # otherwise wait for the remaining-threshold delta proportioned by remaining time
+                        # otherwise, wait for the remaining-threshold delta proportioned by remaining time
                         wait_seconds = ((threshold - remaining) * time_window) / limit
 
                     if timeout != -1.0:
@@ -190,7 +190,7 @@ class Rates(metaclass=Multiton):
                     soonest_reset = reset
                     break
 
-            # use which ever is sooner
+            # use whichever is sooner
             if periodic <= soonest_reset:
                 refresh_date_time = periodic
             else:
@@ -209,7 +209,7 @@ class Rates(metaclass=Multiton):
         https://developer.ebay.com/api-docs/developer/analytics/resources/rate_limit/methods/getRateLimits
 
         :param base_path (str)
-        :param rate_keys (list(str() keys used to look up a rate
+        :param rate_keys (list(str() keys used to look up a rate))
         :return rates (dict or None)
         """
         cache = self._cache

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # Run this script from the command-line to get info from https://developer.ebay.com and generate code in the src folder.
 
-# Wait day if this script intermittently fails to load pages from eBay's website.
+# Wait a day if this script intermittently fails to load pages from eBay's website.
 # Perhaps making inhumanly frequent requests triggers eBay's DOS protection system.
 
 # Standard library imports
@@ -119,7 +119,7 @@ async def generate_global_id_values() -> None:
     url = "https://developer.ebay.com/Devzone/merchandising/docs/CallRef/Enums/GlobalIdList.html"
     data = await get_table_via_link(url)
 
-    # the header got messed up and is unlikely to change, so hard code it
+    # the header got messed up and is unlikely to change, so hardcode it
     cols = ["global_id", "language", "territory", "site_name", "ebay_site_id"]
 
     # convert to a list of dicts
@@ -166,7 +166,7 @@ async def generate_marketplace_id_values() -> None:
                 locale_support = locale_support.replace(" ", "")
                 locales = locale_support.split(
                     ","
-                )  # convert comma separated locales to a list of strings
+                )  # convert comma-separated locales to a list of strings
                 sites = re.findall(
                     r"https?://(?:[a-zA-Z0-9]|[._~:@!$&'()*+,;=%]|/)+",
                     marketplace_site,
@@ -188,11 +188,10 @@ async def generate_link_text_and_urls(
     urls: Iterable[str],
 ) -> AsyncGenerator[Tuple[str, str], None]:
     """
-    This function is an asynchronous generator that takes an iterable of URLs and for each URL, it fetches the HTML,
-    parses it to find all anchor tags and yields a tuple of the link text and the absolute link URL.
+    Asynchronously fetch and parse anchor tags from a sequence of URLs.
 
-    :param urls: An iterable of URLs to process.
-    :return: An asynchronous generator that yields tuples of link text and URLs.
+    :param urls: Iterable of URLs to process.
+    :return: An asynchronous generator that yields tuples of 'link text' and URLs.
     """
 
     async def process_url(url: str) -> AsyncGenerator[Tuple[str, str], None]:
@@ -211,7 +210,7 @@ async def generate_link_text_and_urls(
 
 
 async def get_soup_via_link(url: str) -> BeautifulSoup:
-    # Get the html at an url and then make soup of it.
+    # Get the HTML from a URL and then make soup of it.
 
     # the header is meant to prevent the exception 'Response payload is not completed'
     headers = {"Connection": "keep-alive"}
@@ -221,7 +220,7 @@ async def get_soup_via_link(url: str) -> BeautifulSoup:
             async with session.get(url) as response:
                 response.raise_for_status()  # this will raise an exception for 4xx and 5xx status
                 html_content = await response.text()
-                # Parse the html content
+                # Parse the HTML content
                 return BeautifulSoup(html_content, "html.parser")
     except aiohttp.ClientConnectorError as e:
         logging.fatal(
@@ -240,7 +239,7 @@ async def generate_references():
     """
     Generated JSON files for the 'references' directory found in 'src'.
 
-    If you add, delete or rename a json file, then alter /src/ebay_rest/reference.py accordingly.
+    If you add, delete, or rename a JSON file, then alter /src/ebay_rest/reference.py accordingly.
 
     :return:
     """
@@ -256,13 +255,13 @@ async def generate_references():
 
 async def get_ebay_list_url(code_type: str) -> str:
     """
-    Make an url to an ebay "code type" list
+    Make a URL to an ebay "code type" list
 
     Here is the complete list of possible code types.
     https://developer.ebay.com/devzone/xml/docs/Reference/eBay/enumindex.html#EnumerationIndex
 
-    If eBay modified the url you need to determine the new pattern;
-    at https://developer.ebay.com/ search for "countrycodetype" and study the result.
+    If eBay modifies the URL, you need to determine the new pattern;
+    at https://developer.ebay.com/ search for 'countrycodetype' and study the result.
 
     example: https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/countrycodetype.html
     """
@@ -334,7 +333,7 @@ class Contracts:
             A sorted list of contract URLs.
 
         Examples:
-            To use this function, simply call it without any arguments and await its result:
+            To use this function, call it without any arguments and await its result:
 
             :return:
         """
@@ -405,7 +404,7 @@ class Contracts:
     @staticmethod
     async def deduplicate_contract_links(contract_links: Iterable[str]) -> List[str]:
         """
-        Remove redundant contracts, drop betas and lower versions.
+        Remove redundant contracts, drop Betas, and, lower versions.
 
         Args:
             contract_links (Iterable[str]): A iterable container of contract links.
@@ -450,12 +449,12 @@ class Contracts:
         contract_link: str,
     ) -> Tuple[str, str, str, str, int, bool]:
         """
-        Async method to parse a contract link and extract key data components from it.
+        Async method to parse a contract link and extract key data parts from it.
 
         This method breaks down the contract link into its constituent parts and retrieves crucial information such
         as the category, call, link_href, file_name, version and whether it is a beta contract.
 
-        It does so by splitting the URL and path, conducts string manipulations and applies regex pattern matching
+        It does so by splitting the URL and path, conducts string manipulations, and applies regex pattern matching
         to decipher the version of the contract.
 
         Args:
@@ -469,7 +468,8 @@ class Contracts:
         url_split = urlsplit(contract_link)
         path_split = url_split.path.split("/")
 
-        # if the path has dedicated version number element, example "v2", then extract the number and remove from list
+        # if the path has a dedicated version number element, example "v2",
+        # then extract the number and remove from the list
         path_version = None
         for i in range(len(path_split)):
             if re.match("^v[0-9]+", path_split[i]):
@@ -490,7 +490,7 @@ class Contracts:
         file_name = path_split[-1]
         beta = True if "_beta_" in contract_link else False
 
-        # extract the version number from the filename; for example version 2 looks like this "_v2_"
+        # extract the version number from the filename; for example, version 2 looks like this "_v2_"
         version_match = re.search(r"_v(\d+)_", file_name)
         filename_version = int(version_match.group(1)) if version_match else 0
 
@@ -502,7 +502,7 @@ class Contracts:
         return category, call, link_href, file_name, filename_version, beta
 
     async def patch_contract(self) -> None:
-        """If the contract from eBay has an error then patch it before generating code."""
+        """If the contract from eBay has an error, then patch it before generating code."""
         # This is no longer needed, ebay fixed the problem, but I'm leaving it here for reference.
         # if self.category == 'sell' and self.call == 'fulfillment':
         #     await Contracts.patch_contract_sell_fulfillment(self.file_name)
@@ -510,8 +510,8 @@ class Contracts:
     # This is no longer needed, ebay fixed the problem, but I'm leaving it here for reference.
     @staticmethod
     async def patch_contract_sell_fulfillment(file_name):
-        # In the Sell Fulfillment API, the model 'Address' is returned with attribute 'countryCode'.
-        # However, the JSON specifies 'country' instead, thus Swagger generates the wrong API.
+        # In the Sell Fulfillment API, the model 'Address' is returned with the attribute 'countryCode'.
+        # However, the JSON specifies 'country' instead; thus Swagger generates the wrong API.
         file_location = os.path.join(Locations.cache_path, file_name)
         try:
             async with aiofiles.open(file_location, mode="r") as f:
@@ -532,11 +532,11 @@ class Contracts:
                 logging.warning(f"Patching {file_name} is no longer needed.")
 
     async def patch_generated(self) -> None:
-        """If the generated code has an error then patch it before making use of it."""
+        """If the generated code has an error, then patch it before making use of it."""
 
         # API calls that have a return type fail when there is no content. This is because
-        # there in attempt to de-serialize an empty string. If there is no content, indicated
-        # by a 204 status then don't de-serialize.
+        # there is an attempt to deserialize an empty string. If there is no content indicated
+        # by a 204 status, then don't deserialize.
         bad_code = "if response_type:"
         file_location = os.path.join(
             Locations.cache_path, self.name, self.name, "api_client.py"
@@ -619,7 +619,7 @@ class Contracts:
 
     async def get_one_base_paths_and_flows(self):
         """Process a UTF-8 JSON contract and extract three things for later use.
-        1) the base_path for each category_call (e.g. buy_browse)
+        1) the base_path for each category_call (e.g., buy_browse)
         2) the security flow for each scope in each category_call
         3) the scopes for each call in each category_call
         """
@@ -653,7 +653,7 @@ class Contracts:
                         message
                     )  # Invalid \escape: line 3407 column 90 (char 262143)
                     sys.exit(message)
-                # Get base path
+                # Get the base path
                 if version_major == "2":
                     base_path = data["basePath"]
                 elif version_major == "3":
@@ -829,7 +829,7 @@ class Contracts:
         return includes
 
     async def get_methods(self) -> str:
-        """For a modules, get all code for its methods."""
+        """For modules, get all code for its methods."""
 
         # Catalog the module files that contain all method implementations
         modules = []
@@ -943,7 +943,7 @@ class Contracts:
         for typo, remedy in typo_remedy:
             docstring = docstring.replace(typo, remedy)
 
-        # Replace single backslash before pipe (if any) with double backslash
+        # Replace a single backslash before pipe (if any) with a double backslash
         docstring = docstring.replace(r"\|", r"\\|")
 
         # telling the linter to suppress long line warnings taints the Sphinx generated docs so filter them out
@@ -1007,7 +1007,7 @@ class Contracts:
                 logging.warning("scopes: ", scopes)
                 logging.warning("flows: ", flows)
                 raise ValueError(message)
-        (auth_method,) = flows  # note tuple unpacking of set
+        (auth_method,) = flows  # note tuple unpacking of a set
         user_access_token = auth_method == "authorizationCode"
 
         # identify and prep for parameter possibilities
@@ -1063,8 +1063,8 @@ class Contracts:
         return code
 
     async def remove_duplicates(self, names) -> None:
-        """Deduplicate identical .py files found in all APIs.
-        for example when comments are ignored the rest.py files appear identical."""
+        """De-duplicate identical .py files found in all APIs.
+        for example, when comments are ignored, the rest.py files appear identical."""
 
         # build a catalog that includes a hashed file signature
         catalog = []
@@ -1118,7 +1118,7 @@ class Contracts:
 
     @staticmethod
     async def _camel(name: str) -> str:
-        """Convert a name with underscore separators to upper camel case."""
+        """Convert a name with underscore separators to upper-camel-case."""
         camel = ""
         for part in name.split("_"):
             camel += part.capitalize()
@@ -1166,7 +1166,7 @@ class Insert:
     async def _put_anchored_lines(
         target_file: str, anchor: str, insert_lines: str
     ) -> None:
-        """In the file replace what is between anchors with new lines of code."""
+        """In the file, replace what is between anchors with new lines of code."""
 
         if os.path.isfile(target_file):
             new_lines = ""
@@ -1219,9 +1219,9 @@ async def generate_apis():
     """
     Generate the contents of the api folder in src/ebay_rest and some code in a_p_i.py.
 
-    For a complete directory of eBay's APIs visit https://developer.ebay.com/docs. Ignore the "Traditional" APIs.
+    For a complete directory of eBay's APIs, visit https://developer.ebay.com/docs. Ignore the "Traditional" APIs.
 
-    For an introduction to OpenAPI and how to use eBay's REST-ful APIs
+    For an introduction to OpenAPI and how to use eBay's Restful APIs,
     visit https://developer.ebay.com/api-docs/static/openapi-swagger-codegen.html.
     :return:
     """
