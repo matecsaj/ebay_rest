@@ -294,7 +294,7 @@ async def ensure_cache():
         file_handle.write(readme)
 
 
-class Contracts:
+class Contract:
     def __init__(self, contract_link) -> None:
         self.contract_link = contract_link
         self.category = None
@@ -313,7 +313,7 @@ class Contracts:
             self.file_name,
             self.version,
             self.beta,
-        ) = await self.get_contract_info(self.contract_link)
+        ) = await Contracts.get_contract_info(self.contract_link)
         self.name = await self.get_api_name()
         await self.cache_contract()
         await self.patch_contract()
@@ -321,59 +321,6 @@ class Contracts:
         await self.patch_generated()
         await self.copy_library()
         await self.fix_imports()
-
-    @staticmethod
-    async def get_contract_links() -> List[str]:
-        """
-        This asynchronous function is designed to get the contract URLs from eBay's developer site.
-
-        Args: None
-
-        Returns:
-            A sorted list of contract URLs.
-
-        Examples:
-            To use this function, call it without any arguments and await its result:
-
-            :return:
-        """
-        logging.info("Get a list of links to eBay OpenAPI 3 JSON contracts.")
-
-        # store the urls used while doing a breadth first search; seed with starting urls
-        category_urls = {
-            "https://developer.ebay.com/develop/selling-apps",
-            "https://developer.ebay.com/develop/buying-apps",
-        }
-        table_urls = {
-            "https://developer.ebay.com/develop/application-settings-and-insights"
-        }
-        overview_urls = set()
-        contract_urls = set()
-
-        # use the category urls to find unique links to API table pages with visible text containing 'APIs'
-        async for link_text, link_url in generate_link_text_and_urls(category_urls):
-            if "APIs" in link_text:
-                table_urls.add(link_url)
-
-        # use the table urls to find unique links to overview pages which have urls ending with overview.html
-        async for link_text, link_url in generate_link_text_and_urls(table_urls):
-            if link_url.endswith("overview.html"):
-                overview_urls.add(link_url)
-
-        # use the overview urls to find unique links to contracts which have urls ending with .json
-        async for link_text, link_url in generate_link_text_and_urls(overview_urls):
-            if link_url.endswith(".json"):
-                contract_urls.add(link_url)
-
-        contract_urls_sorted = sorted(list(contract_urls))
-
-        # safety check
-        count = len(contract_urls_sorted)
-        logging.info(f"Found contract {count} links.")
-        if not (20 < count < 40):
-            logging.warning(f"Having {count} contract links is unexpected!")
-
-        return contract_urls_sorted
 
     async def cache_contract(self):
         destination = os.path.join(Locations.cache_path, self.file_name)
@@ -401,135 +348,11 @@ class Contracts:
         async with aiofiles.open(destination, mode="w", encoding="utf-8") as f:
             await f.write(text_content)
 
-    @staticmethod
-    async def deduplicate_contract_links(contract_links: Iterable[str]) -> List[str]:
-        """
-        Remove redundant contracts, drop Betas, and, lower versions.
-
-        Args:
-            contract_links (Iterable[str]): A iterable container of contract links.
-
-        Returns:
-            List[str]: A list of 'keeper' links which are unique based on their category, call, beta, and version.
-
-        Raises:
-            AssertionError: If the total number of links is not equal to the sum of 'keepers' and 'junkers'.
-
-        """
-
-        keepers = []
-        junkers = []
-
-        contract_infos = await asyncio.gather(
-            *[Contracts.get_contract_info(link) for link in contract_links]
-        )
-
-        sorted_contract_infos = sorted(
-            contract_infos, key=lambda info: (info[0], info[1], info[5], -info[4])
-        )
-
-        for _, group in groupby(
-            sorted_contract_infos, key=lambda info: (info[0], info[1])
-        ):
-            group_list = list(group)
-            if len(group_list) > 1:
-                logging.info(f"group_list: {group_list}")
-            keepers.append(group_list[0][2])
-            junkers.extend([link_info[2] for link_info in group_list[1:]])
-
-        if len(contract_infos) != len(keepers) + len(junkers):
-            logging.warning(
-                "Lengths of links, keepers, and junkers do not add up correctly - possible loss of data."
-            )
-
-        return keepers
-
-    @staticmethod
-    async def get_contract_info(
-        contract_link: str,
-    ) -> Tuple[str, str, str, str, int, bool]:
-        """
-        Async method to parse a contract link and extract key data parts from it.
-
-        This method breaks down the contract link into its constituent parts and retrieves crucial information such
-        as the category, call, link_href, file_name, version and whether it is a beta contract.
-
-        It does so by splitting the URL and path, conducts string manipulations, and applies regex pattern matching
-        to decipher the version of the contract.
-
-        Args:
-            contract_link (str): The contract link that needs to be parsed.
-
-        Returns:
-            Tuple[str, str, str, str, int, bool]: A tuple containing 'category', 'call', 'link_href', 'file_name',
-            'version', and 'beta'.
-        """
-        # split in raw parts
-        url_split = urlsplit(contract_link)
-        path_split = url_split.path.split("/")
-
-        # if the path has a dedicated version number element, example "v2",
-        # then extract the number and remove from the list
-        path_version = None
-        for i in range(len(path_split)):
-            if re.match("^v[0-9]+", path_split[i]):
-                path_version = int(path_split[i][1:])  # extract number part
-                del path_split[i]  # remove the version element
-                break  # exit after first match
-
-        # ensure that the split path had the expected number of elements
-        if len(path_split) != 8:
-            logging.warning(
-                f"The variable path_split should contain 8, not {len(path_split)} items."
-            )
-
-        # get key data from the parts
-        category = path_split[-5]
-        call = path_split[-4].replace("-", "_")
-        link_href = contract_link
-        file_name = path_split[-1]
-        beta = True if "_beta_" in contract_link else False
-
-        # extract the version number from the filename; for example, version 2 looks like this "_v2_"
-        version_match = re.search(r"_v(\d+)_", file_name)
-        filename_version = int(version_match.group(1)) if version_match else 0
-
-        if path_version and path_version != filename_version:
-            logging.warning(
-                f"Variable path_version {path_version} should equal version {filename_version}."
-            )
-
-        return category, call, link_href, file_name, filename_version, beta
-
     async def patch_contract(self) -> None:
         """If the contract from eBay has an error, then patch it before generating code."""
         # This is no longer needed, ebay fixed the problem, but I'm leaving it here for reference.
         # if self.category == 'sell' and self.call == 'fulfillment':
         #     await Contracts.patch_contract_sell_fulfillment(self.file_name)
-
-    # This is no longer needed, ebay fixed the problem, but I'm leaving it here for reference.
-    @staticmethod
-    async def patch_contract_sell_fulfillment(file_name):
-        # In the Sell Fulfillment API, the model 'Address' is returned with the attribute 'countryCode'.
-        # However, the JSON specifies 'country' instead; thus Swagger generates the wrong API.
-        file_location = os.path.join(Locations.cache_path, file_name)
-        try:
-            async with aiofiles.open(file_location, mode="r") as f:
-                data = await f.read()
-        except FileNotFoundError:
-            logging.error(f"Can't open {file_location}.")
-        else:
-            data = json.loads(data)
-            properties = data["components"]["schemas"]["Address"]["properties"]
-            if "country" in properties:
-                properties["countryCode"] = properties.pop(
-                    "country"
-                )  # Warning, alphabetical key order spoiled.
-                data = json.dumps(data, sort_keys=True, indent=4)
-                async with aiofiles.open(file_location, mode="w") as f:
-                    await f.write(data)
-            else:
-                logging.warning(f"Patching {file_name} is no longer needed.")
 
     async def patch_generated(self) -> None:
         """If the generated code has an error, then patch it before making use of it."""
@@ -727,26 +550,6 @@ class Contracts:
                 # look for this  "in": "header",
                 name = self.category + "_" + self.call
         return base_path, flow_by_scope, name, operation_id_scopes
-
-    @staticmethod
-    async def delete_folder_contents(path_to_folder: str):
-        list_dir = os.listdir(path_to_folder)
-        for filename in list_dir:
-            file_path = os.path.join(path_to_folder, filename)
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                logging.debug(f"deleting file: {file_path}")
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                logging.debug(f"deleting folder: {file_path}")
-                shutil.rmtree(file_path)
-
-    @staticmethod
-    async def purge_existing():
-        # purge what might already be there
-        for filename in os.listdir(Locations.target_path):
-            file_path = os.path.join(Locations.target_path, filename)
-            if os.path.isdir(file_path):
-                shutil.rmtree(file_path)
 
     async def copy_library(self) -> None:
         """Copy the essential parts of the generated eBay library to within the src folder."""
@@ -1062,6 +865,215 @@ class Contracts:
 
         return code
 
+    @staticmethod
+    async def _camel(name: str) -> str:
+        """Convert a name with underscore separators to upper-camel-case."""
+        camel = ""
+        for part in name.split("_"):
+            camel += part.capitalize()
+        return camel
+
+
+class Contracts:
+    """Class for operations involving multiple contracts."""
+
+    @staticmethod
+    async def get_contract_links() -> List[str]:
+        """
+        This asynchronous function is designed to get the contract URLs from eBay's developer site.
+
+        Args: None
+
+        Returns:
+            A sorted list of contract URLs.
+
+        Examples:
+            To use this function, call it without any arguments and await its result:
+
+            :return:
+        """
+        logging.info("Get a list of links to eBay OpenAPI 3 JSON contracts.")
+
+        # store the urls used while doing a breadth first search; seed with starting urls
+        category_urls = {
+            "https://developer.ebay.com/develop/selling-apps",
+            "https://developer.ebay.com/develop/buying-apps",
+        }
+        table_urls = {
+            "https://developer.ebay.com/develop/application-settings-and-insights"
+        }
+        overview_urls = set()
+        contract_urls = set()
+
+        # use the category urls to find unique links to API table pages with visible text containing 'APIs'
+        async for link_text, link_url in generate_link_text_and_urls(category_urls):
+            if "APIs" in link_text:
+                table_urls.add(link_url)
+
+        # use the table urls to find unique links to overview pages which have urls ending with overview.html
+        async for link_text, link_url in generate_link_text_and_urls(table_urls):
+            if link_url.endswith("overview.html"):
+                overview_urls.add(link_url)
+
+        # use the overview urls to find unique links to contracts which have urls ending with .json
+        async for link_text, link_url in generate_link_text_and_urls(overview_urls):
+            if link_url.endswith(".json"):
+                contract_urls.add(link_url)
+
+        contract_urls_sorted = sorted(list(contract_urls))
+
+        # safety check
+        count = len(contract_urls_sorted)
+        logging.info(f"Found contract {count} links.")
+        if not (20 < count < 40):
+            logging.warning(f"Having {count} contract links is unexpected!")
+
+        return contract_urls_sorted
+
+    @staticmethod
+    async def deduplicate_contract_links(contract_links: Iterable[str]) -> List[str]:
+        """
+        Remove redundant contracts, drop Betas, and, lower versions.
+
+        Args:
+            contract_links (Iterable[str]): A iterable container of contract links.
+
+        Returns:
+            List[str]: A list of 'keeper' links which are unique based on their category, call, beta, and version.
+
+        Raises:
+            AssertionError: If the total number of links is not equal to the sum of 'keepers' and 'junkers'.
+
+        """
+
+        keepers = []
+        junkers = []
+
+        contract_infos = await asyncio.gather(
+            *[Contracts.get_contract_info(link) for link in contract_links]
+        )
+
+        sorted_contract_infos = sorted(
+            contract_infos, key=lambda info: (info[0], info[1], info[5], -info[4])
+        )
+
+        for _, group in groupby(
+            sorted_contract_infos, key=lambda info: (info[0], info[1])
+        ):
+            group_list = list(group)
+            if len(group_list) > 1:
+                logging.info(f"group_list: {group_list}")
+            keepers.append(group_list[0][2])
+            junkers.extend([link_info[2] for link_info in group_list[1:]])
+
+        if len(contract_infos) != len(keepers) + len(junkers):
+            logging.warning(
+                "Lengths of links, keepers, and junkers do not add up correctly - possible loss of data."
+            )
+
+        return keepers
+
+    @staticmethod
+    async def get_contract_info(
+        contract_link: str,
+    ) -> Tuple[str, str, str, str, int, bool]:
+        """
+        Async method to parse a contract link and extract key data parts from it.
+
+        This method breaks down the contract link into its constituent parts and retrieves crucial information such
+        as the category, call, link_href, file_name, version and whether it is a beta contract.
+
+        It does so by splitting the URL and path, conducts string manipulations, and applies regex pattern matching
+        to decipher the version of the contract.
+
+        Args:
+            contract_link (str): The contract link that needs to be parsed.
+
+        Returns:
+            Tuple[str, str, str, str, int, bool]: A tuple containing 'category', 'call', 'link_href', 'file_name',
+            'version', and 'beta'.
+        """
+        # split in raw parts
+        url_split = urlsplit(contract_link)
+        path_split = url_split.path.split("/")
+
+        # if the path has a dedicated version number element, example "v2",
+        # then extract the number and remove from the list
+        path_version = None
+        for i in range(len(path_split)):
+            if re.match("^v[0-9]+", path_split[i]):
+                path_version = int(path_split[i][1:])  # extract number part
+                del path_split[i]  # remove the version element
+                break  # exit after first match
+
+        # ensure that the split path had the expected number of elements
+        if len(path_split) != 8:
+            logging.warning(
+                f"The variable path_split should contain 8, not {len(path_split)} items."
+            )
+
+        # get key data from the parts
+        category = path_split[-5]
+        call = path_split[-4].replace("-", "_")
+        link_href = contract_link
+        file_name = path_split[-1]
+        beta = True if "_beta_" in contract_link else False
+
+        # extract the version number from the filename; for example, version 2 looks like this "_v2_"
+        version_match = re.search(r"_v(\d+)_", file_name)
+        filename_version = int(version_match.group(1)) if version_match else 0
+
+        if path_version and path_version != filename_version:
+            logging.warning(
+                f"Variable path_version {path_version} should equal version {filename_version}."
+            )
+
+        return category, call, link_href, file_name, filename_version, beta
+
+    # This is no longer needed, ebay fixed the problem, but I'm leaving it here for reference.
+    @staticmethod
+    async def patch_contract_sell_fulfillment(file_name):
+        # In the Sell Fulfillment API, the model 'Address' is returned with the attribute 'countryCode'.
+        # However, the JSON specifies 'country' instead; thus Swagger generates the wrong API.
+        file_location = os.path.join(Locations.cache_path, file_name)
+        try:
+            async with aiofiles.open(file_location, mode="r") as f:
+                data = await f.read()
+        except FileNotFoundError:
+            logging.error(f"Can't open {file_location}.")
+        else:
+            data = json.loads(data)
+            properties = data["components"]["schemas"]["Address"]["properties"]
+            if "country" in properties:
+                properties["countryCode"] = properties.pop(
+                    "country"
+                )  # Warning, alphabetical key order spoiled.
+                data = json.dumps(data, sort_keys=True, indent=4)
+                async with aiofiles.open(file_location, mode="w") as f:
+                    await f.write(data)
+            else:
+                logging.warning(f"Patching {file_name} is no longer needed.")
+
+    @staticmethod
+    async def delete_folder_contents(path_to_folder: str):
+        list_dir = os.listdir(path_to_folder)
+        for filename in list_dir:
+            file_path = os.path.join(path_to_folder, filename)
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                logging.debug(f"deleting file: {file_path}")
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                logging.debug(f"deleting folder: {file_path}")
+                shutil.rmtree(file_path)
+
+    @staticmethod
+    async def purge_existing():
+        # purge what might already be there
+        for filename in os.listdir(Locations.target_path):
+            file_path = os.path.join(Locations.target_path, filename)
+            if os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+
     async def remove_duplicates(self, names) -> None:
         """De-duplicate identical .py files found in all APIs.
         for example, when comments are ignored, the rest.py files appear identical."""
@@ -1115,14 +1127,6 @@ class Contracts:
                 )
 
             return catalog
-
-    @staticmethod
-    async def _camel(name: str) -> str:
-        """Convert a name with underscore separators to upper-camel-case."""
-        camel = ""
-        for part in name.split("_"):
-            camel += part.capitalize()
-        return camel
 
 
 class Insert:
@@ -1203,7 +1207,7 @@ class Insert:
 
 async def process_contract_link(contract_link):
     logging.info(f"Process overview link {contract_link}.")
-    c = Contracts(contract_link)
+    c = Contract(contract_link)
     await c.process()
     name = c.name
     requirement_task = asyncio.create_task(c.get_requirements())
@@ -1268,7 +1272,7 @@ async def main() -> None:
     # while debugging, it is handy to change the log level from WARNING to INFO or DEBUG
     logging.basicConfig(
         format="%(asctime)s %(levelname)s %(filename)s %(lineno)d %(funcName)s: %(message)s",  # noqa:
-        level=logging.INFO,
+        level=logging.DEBUG,
     )
 
     await asyncio.gather(generate_apis(), generate_references())
