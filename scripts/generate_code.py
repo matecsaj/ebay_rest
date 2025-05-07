@@ -31,20 +31,6 @@ from urllib.parse import urljoin, urlsplit
 # Globals
 
 
-async def run_command(cmd):
-    """Run a command line in a subprocess."""
-    logger = logging.getLogger(__name__)
-    proc = await asyncio.create_subprocess_shell(
-        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
-    )
-    stdout, stderr = await proc.communicate()
-    logger.debug(f"[{cmd!r} exited with {proc.returncode}]")
-    if stdout:
-        logger.debug(f"[stdout]\n{stdout.decode()}")
-    if stderr:
-        logger.error(f"[stderr]\n{stderr.decode()}")
-
-
 async def get_table_via_link(url: str) -> list:
     data = []
     soup = await get_soup_via_link(url)
@@ -433,6 +419,19 @@ class Contract:
             async with aiofiles.open(file_location, mode="w") as f:
                 await f.write(data)
 
+    async def run_command(self, cmd):
+        """Run a command line in a subprocess."""
+        logger = logging.getLogger(__name__)
+        proc = await asyncio.create_subprocess_shell(
+            cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+        )
+        stdout, stderr = await proc.communicate()
+        logger.debug(f"[{cmd!r} exited with {proc.returncode}]")
+        if stdout:
+            logger.debug(f"[stdout]\n{stdout.decode()}")
+        if stderr:
+            logger.error(f"[stderr]\n{stderr.decode()}")
+
     async def swagger_codegen(self):
         source = os.path.join(Locations.cache_path, self.file_name)
         destination = f"{Locations.cache_path}/{self.name}"
@@ -453,7 +452,7 @@ class Contract:
             command = "java -jar swagger-codegen-cli.jar" + command
         else:
             assert False, f"Please extend main() for your {sys.platform} platform."
-        await run_command(command)
+        await self.run_command(command)
 
     async def get_api_name(self):
         name = f"{self.category}_{self.call}"
@@ -892,6 +891,29 @@ class Contract:
             camel += part.capitalize()
         return camel
 
+    @staticmethod
+    async def process_link(contract_link):
+        """
+        Process a contract link to extract includes, methods, name, and requirements.
+
+        Args:
+            contract_link (str): The contract link to process.
+
+        Returns:
+            Tuple: A tuple containing (include, method, name, requirement).
+        """
+        logging.info(f"Process overview link {contract_link}.")
+        c = Contract(contract_link)
+        await c.process()
+        name = c.name
+        requirement_task = asyncio.create_task(c.get_requirements())
+        include_task = asyncio.create_task(c.get_includes())
+        method_task = asyncio.create_task(c.get_methods())
+        requirement = await requirement_task
+        include = await include_task
+        method = await method_task
+        return include, method, name, requirement
+
 
 class Contracts:
     """Class for operations involving multiple contracts."""
@@ -1147,8 +1169,55 @@ class Contracts:
 
             return catalog
 
+    @staticmethod
+    async def generate_all():
+        """
+        Generate the contents of the api folder in src/ebay_rest and some code in a_p_i.py.
 
-class Insert:
+        For a complete directory of eBay's APIs, visit https://developer.ebay.com/docs. Ignore the "Traditional" APIs.
+
+        For an introduction to OpenAPI and how to use eBay's Restful APIs,
+        visit https://developer.ebay.com/api-docs/static/openapi-swagger-codegen.html.
+        :return:
+        """
+        await asyncio.gather(ensure_cache(), Contracts.purge_existing())
+
+        limit = 100  # lower to expedite debugging with a reduced data set
+        records = list()
+        tasks = list()
+        contract_links = await Contracts.get_contract_links()
+        contract_links_deduplicated = await Contracts.deduplicate_contract_links(
+            contract_links
+        )
+        for contract_link in contract_links_deduplicated[:limit]:
+            task = asyncio.create_task(Contract.process_link(contract_link))
+            tasks.append(task)
+        for task in tasks:
+            record = await task
+            records.append(record)
+
+        names = list()
+        requirements = set()
+        includes = list()
+        methods = str()
+        for record in records:
+            include, method, name, requirement = record
+            if include == "":
+                logging.error(f"There are no includes for {name}.")
+            elif method == "":
+                logging.error(f"There are no methods for {name}.")
+            elif requirement == "":
+                logging.error(f"There are no requirements for {name}.")
+            else:
+                names.append(name)
+                requirements.update(requirement)
+                includes.extend(include)
+                methods += method
+            await CodeInjector().do(requirements, includes, methods)
+        # await Contracts().remove_duplicates(names)     # TODO uncomment the method call when work on it resumes
+
+
+class CodeInjector:
     async def do(self, requirements, includes, methods):
         await self.insert_requirements(requirements)
         await self.insert_includes(includes)
@@ -1224,67 +1293,6 @@ class Insert:
             logging.error(f"Can't find {target_file}")
 
 
-async def process_contract_link(contract_link):
-    logging.info(f"Process overview link {contract_link}.")
-    c = Contract(contract_link)
-    await c.process()
-    name = c.name
-    requirement_task = asyncio.create_task(c.get_requirements())
-    include_task = asyncio.create_task(c.get_includes())
-    method_task = asyncio.create_task(c.get_methods())
-    requirement = await requirement_task
-    include = await include_task
-    method = await method_task
-    return include, method, name, requirement
-
-
-async def generate_apis():
-    """
-    Generate the contents of the api folder in src/ebay_rest and some code in a_p_i.py.
-
-    For a complete directory of eBay's APIs, visit https://developer.ebay.com/docs. Ignore the "Traditional" APIs.
-
-    For an introduction to OpenAPI and how to use eBay's Restful APIs,
-    visit https://developer.ebay.com/api-docs/static/openapi-swagger-codegen.html.
-    :return:
-    """
-    await asyncio.gather(ensure_cache(), Contracts.purge_existing())
-
-    limit = 100  # lower to expedite debugging with a reduced data set
-    records = list()
-    tasks = list()
-    contract_links = await Contracts.get_contract_links()
-    contract_links_deduplicated = await Contracts.deduplicate_contract_links(
-        contract_links
-    )
-    for contract_link in contract_links_deduplicated[:limit]:
-        task = asyncio.create_task(process_contract_link(contract_link))
-        tasks.append(task)
-    for task in tasks:
-        record = await task
-        records.append(record)
-
-    names = list()
-    requirements = set()
-    includes = list()
-    methods = str()
-    for record in records:
-        include, method, name, requirement = record
-        if include == "":
-            logging.error(f"There are no includes for {name}.")
-        elif method == "":
-            logging.error(f"There are no methods for {name}.")
-        elif requirement == "":
-            logging.error(f"There are no requirements for {name}.")
-        else:
-            names.append(name)
-            requirements.update(requirement)
-            includes.extend(include)
-            methods += method
-        await Insert().do(requirements, includes, methods)
-    # p.remove_duplicates(names)     # TODO uncomment the method call when work on it resumes
-
-
 async def main() -> None:
     start = time.time()
 
@@ -1294,7 +1302,7 @@ async def main() -> None:
         level=logging.DEBUG,
     )
 
-    await asyncio.gather(generate_apis(), References.generate_all())
+    await asyncio.gather(Contracts.generate_all(), References.generate_all())
     logging.info(f"Run time was {int(time.time() - start)} seconds.")
     return
 
