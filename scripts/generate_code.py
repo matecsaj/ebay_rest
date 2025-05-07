@@ -284,19 +284,19 @@ class Locations:
     cache_path: str = os.path.abspath("./" + target_directory + "_cache")
     file_ebay_rest = os.path.abspath("../src/ebay_rest/a_p_i.py")
 
-
-async def ensure_cache():
-    # ensure that we have an empty cache
-    if os.path.isdir(Locations.cache_path):
-        await Contracts.delete_folder_contents(Locations.cache_path)
-    else:
-        os.mkdir(Locations.cache_path)
-    # warn developers that they should not edit the files in the cache
-    readme = "# READ ME\n"
-    readme += "Don't change the contents of this folder directly; instead, edit and run scripts/generate_code.py"
-    path_file = os.path.abspath(os.path.join(Locations.cache_path, "README.md"))
-    with open(path_file, "w") as file_handle:
-        file_handle.write(readme)
+    @staticmethod
+    async def ensure_cache():
+        # ensure that we have an empty cache
+        if os.path.isdir(Locations.cache_path):
+            await Contracts.delete_folder_contents(Locations.cache_path)
+        else:
+            os.mkdir(Locations.cache_path)
+        # warn developers that they should not edit the files in the cache
+        readme = "# READ ME\n"
+        readme += "Don't change the contents of this folder directly; instead, edit and run scripts/generate_code.py"
+        path_file = os.path.abspath(os.path.join(Locations.cache_path, "README.md"))
+        with open(path_file, "w") as file_handle:
+            file_handle.write(readme)
 
 
 class Contract:
@@ -1180,7 +1180,7 @@ class Contracts:
         visit https://developer.ebay.com/api-docs/static/openapi-swagger-codegen.html.
         :return:
         """
-        await asyncio.gather(ensure_cache(), Contracts.purge_existing())
+        await asyncio.gather(Locations.ensure_cache(), Contracts.purge_existing())
 
         limit = 100  # lower to expedite debugging with a reduced data set
         records = list()
