@@ -129,7 +129,7 @@ class Reference:
     @staticmethod
     async def make_json_file(source: dict or list, name: str) -> None:
         """
-        Save data to a JSON file in the references directory.
+        Save data to a JSON file, stored in the 'references' directory.
 
         Args:
             source: The data to save (dict or list)
@@ -429,7 +429,8 @@ class Contract:
             async with aiofiles.open(file_location, mode="w") as f:
                 await f.write(data)
 
-    async def run_command(self, cmd):
+    @staticmethod
+    async def run_command(cmd):
         """Run a command line in a subprocess."""
         logger = logging.getLogger(__name__)
         proc = await asyncio.create_subprocess_shell(
@@ -907,7 +908,7 @@ class Contract:
         Process a contract link to extract includes, methods, name, and requirements.
 
         Args:
-            contract_link (str): The contract link to process.
+            contract_link (str): The contract link to a process.
 
         Returns:
             Tuple: A tuple containing (include, method, name, requirement).
@@ -1163,7 +1164,6 @@ class Contracts:
 
     async def _remove_duplicates_recursive_catalog(self, name: str, path: str) -> list:
         """This does the recursive part of cataloging for remove_duplicates."""
-
         catalog = []
         for _root, dirs, files in os.walk(path):
             for file in files:
@@ -1171,7 +1171,6 @@ class Contracts:
                     target_file = os.path.join(path, file)
                     with open(target_file) as file_handle:
                         code_text = file_handle.read()
-                        # TODO Remove whitespace and comments from the Python code before hashing.
                         m = hashlib.sha256()
                         m.update(code_text.encode())
                         catalog.append((name, file, target_file, m.digest()))
@@ -1183,7 +1182,7 @@ class Contracts:
                     )
                 )
 
-            return catalog
+        return catalog
 
     @staticmethod
     async def generate_all():
