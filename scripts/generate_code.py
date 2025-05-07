@@ -31,21 +31,96 @@ from urllib.parse import urljoin, urlsplit
 # Globals
 
 
-async def get_table_via_link(url: str) -> list:
-    data = []
-    soup = await get_soup_via_link(url)
-    # find the rows regarding Response Fields.
-    table = soup.find("table")
-    if table:
-        rows = table.find_all("tr")
-        # put the rows into a table of data
-        for row in rows:
-            cols = row.find_all("td")
-            cols = [ele.text.strip() for ele in cols]
-            data.append([ele for ele in cols if ele])  # Get rid of empty values
-    if len(data) == 0:
-        logging.warning(f"No data was extracted from {url}.")
-    return data
+class WebScraper:
+    """Class for web scraping operations."""
+
+    @staticmethod
+    async def get_table_via_link(url: str) -> list:
+        data = []
+        soup = await WebScraper.get_soup_via_link(url)
+        # find the rows regarding Response Fields.
+        table = soup.find("table")
+        if table:
+            rows = table.find_all("tr")
+            # put the rows into a table of data
+            for row in rows:
+                cols = row.find_all("td")
+                cols = [ele.text.strip() for ele in cols]
+                data.append([ele for ele in cols if ele])  # Get rid of empty values
+        if len(data) == 0:
+            logging.warning(f"No data was extracted from {url}.")
+        return data
+
+    @staticmethod
+    async def generate_link_text_and_urls(
+        urls: Iterable[str],
+    ) -> AsyncGenerator[Tuple[str, str], None]:
+        """
+        Asynchronously fetch and parse anchor tags from a sequence of URLs.
+
+        :param urls: Iterable of URLs to process.
+        :return: An asynchronous generator that yields tuples of 'link text' and URLs.
+        """
+
+        async def process_url(url: str) -> AsyncGenerator[Tuple[str, str], None]:
+            soup = await WebScraper.get_soup_via_link(url)
+            for link in soup.find_all("a"):
+                yield link.text, urljoin(url, link.get("href"))
+
+        async def gather_links(url: str) -> List[Tuple[str, str]]:
+            return [link async for link in process_url(url)]
+
+        tasks = [gather_links(url) for url in urls]
+        for task in asyncio.as_completed(tasks):
+            completed_task = await task
+            for link_text, link_url in completed_task:
+                yield link_text, link_url
+
+    @staticmethod
+    async def get_soup_via_link(url: str) -> BeautifulSoup:
+        # Get the HTML from a URL and then make soup of it.
+
+        # the header is meant to prevent the exception 'Response payload is not completed'
+        headers = {"Connection": "keep-alive"}
+
+        try:
+            async with aiohttp.ClientSession(headers=headers) as session:
+                async with session.get(url) as response:
+                    response.raise_for_status()  # this will raise an exception for 4xx and 5xx status
+                    html_content = await response.text()
+                    # Parse the HTML content
+                    return BeautifulSoup(html_content, "html.parser")
+        except aiohttp.ClientConnectorError as e:
+            logging.fatal(
+                "The server dropped the connection on the TCP level; it may think we are a "
+                f"denial-of-service attacker; try again tomorrow. {url}: {e}"
+            )
+            sys.exit()
+        except Exception as e:
+            logging.error(
+                f"An error occurred while trying to get content from {url}: {e}"
+            )
+            return BeautifulSoup(
+                "", "html.parser"
+            )  # return an empty soup object instead of None
+
+    @staticmethod
+    async def get_ebay_list_url(code_type: str) -> str:
+        """
+        Make a URL to an ebay "code type" list
+
+        Here is the complete list of possible code types.
+        https://developer.ebay.com/devzone/xml/docs/Reference/eBay/enumindex.html#EnumerationIndex
+
+        If eBay modifies the URL, you need to determine the new pattern;
+        at https://developer.ebay.com/ search for 'countrycodetype' and study the result.
+
+        example: https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/countrycodetype.html
+        """
+        if not code_type:
+            raise ValueError("code_type can't be None or empty")
+        else:
+            return f"https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/{code_type}.html"
 
 
 class Reference:
@@ -73,7 +148,9 @@ class Reference:
         logging.info("Find the eBay's Country Codes.")
 
         # load the target webpage
-        data = await get_table_via_link(await get_ebay_list_url("CountryCodeType"))
+        data = await WebScraper.get_table_via_link(
+            await WebScraper.get_ebay_list_url("CountryCodeType")
+        )
 
         # ignore header, convert to a dict & delete bad values
         dict_ = {}
@@ -95,7 +172,9 @@ class Reference:
         logging.info("Find the eBay's Currency Codes.")
 
         # load the target webpage
-        data = await get_table_via_link(await get_ebay_list_url("CurrencyCodeType"))
+        data = await WebScraper.get_table_via_link(
+            await WebScraper.get_ebay_list_url("CurrencyCodeType")
+        )
 
         # ignore header, convert to a dict & delete bad values
         dict_ = {}
@@ -119,7 +198,7 @@ class Reference:
 
         # load the target webpage
         url = "https://developer.ebay.com/Devzone/merchandising/docs/CallRef/Enums/GlobalIdList.html"
-        data = await get_table_via_link(url)
+        data = await WebScraper.get_table_via_link(url)
 
         # the header got messed up and is unlikely to change, so hardcode it
         cols = ["global_id", "language", "territory", "site_name", "ebay_site_id"]
@@ -143,7 +222,7 @@ class Reference:
 
         # load the target webpage
         url = "https://developer.ebay.com/api-docs/static/rest-request-components.html#marketpl"
-        soup = await get_soup_via_link(url)
+        soup = await WebScraper.get_soup_via_link(url)
 
         if soup:
             # find the rows regarding Response Fields.
@@ -205,75 +284,6 @@ class References:
             Reference.generate_global_id_values(),
             Reference.generate_marketplace_id_values(),
         )
-
-
-async def generate_link_text_and_urls(
-    urls: Iterable[str],
-) -> AsyncGenerator[Tuple[str, str], None]:
-    """
-    Asynchronously fetch and parse anchor tags from a sequence of URLs.
-
-    :param urls: Iterable of URLs to process.
-    :return: An asynchronous generator that yields tuples of 'link text' and URLs.
-    """
-
-    async def process_url(url: str) -> AsyncGenerator[Tuple[str, str], None]:
-        soup = await get_soup_via_link(url)
-        for link in soup.find_all("a"):
-            yield link.text, urljoin(url, link.get("href"))
-
-    async def gather_links(url: str) -> List[Tuple[str, str]]:
-        return [link async for link in process_url(url)]
-
-    tasks = [gather_links(url) for url in urls]
-    for task in asyncio.as_completed(tasks):
-        completed_task = await task
-        for link_text, link_url in completed_task:
-            yield link_text, link_url
-
-
-async def get_soup_via_link(url: str) -> BeautifulSoup:
-    # Get the HTML from a URL and then make soup of it.
-
-    # the header is meant to prevent the exception 'Response payload is not completed'
-    headers = {"Connection": "keep-alive"}
-
-    try:
-        async with aiohttp.ClientSession(headers=headers) as session:
-            async with session.get(url) as response:
-                response.raise_for_status()  # this will raise an exception for 4xx and 5xx status
-                html_content = await response.text()
-                # Parse the HTML content
-                return BeautifulSoup(html_content, "html.parser")
-    except aiohttp.ClientConnectorError as e:
-        logging.fatal(
-            "The server dropped the connection on the TCP level; it may think we are a "
-            f"denial-of-service attacker; try again tomorrow. {url}: {e}"
-        )
-        sys.exit()
-    except Exception as e:
-        logging.error(f"An error occurred while trying to get content from {url}: {e}")
-        return BeautifulSoup(
-            "", "html.parser"
-        )  # return an empty soup object instead of None
-
-
-async def get_ebay_list_url(code_type: str) -> str:
-    """
-    Make a URL to an ebay "code type" list
-
-    Here is the complete list of possible code types.
-    https://developer.ebay.com/devzone/xml/docs/Reference/eBay/enumindex.html#EnumerationIndex
-
-    If eBay modifies the URL, you need to determine the new pattern;
-    at https://developer.ebay.com/ search for 'countrycodetype' and study the result.
-
-    example: https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/countrycodetype.html
-    """
-    if not code_type:
-        raise ValueError("code_type can't be None or empty")
-    else:
-        return f"https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/{code_type}.html"
 
 
 class Locations:
@@ -947,17 +957,23 @@ class Contracts:
         contract_urls = set()
 
         # use the category urls to find unique links to API table pages with visible text containing 'APIs'
-        async for link_text, link_url in generate_link_text_and_urls(category_urls):
+        async for link_text, link_url in WebScraper.generate_link_text_and_urls(
+            category_urls
+        ):
             if "APIs" in link_text:
                 table_urls.add(link_url)
 
         # use the table urls to find unique links to overview pages which have urls ending with overview.html
-        async for link_text, link_url in generate_link_text_and_urls(table_urls):
+        async for link_text, link_url in WebScraper.generate_link_text_and_urls(
+            table_urls
+        ):
             if link_url.endswith("overview.html"):
                 overview_urls.add(link_url)
 
         # use the overview urls to find unique links to contracts which have urls ending with .json
-        async for link_text, link_url in generate_link_text_and_urls(overview_urls):
+        async for link_text, link_url in WebScraper.generate_link_text_and_urls(
+            overview_urls
+        ):
             if link_url.endswith(".json"):
                 contract_urls.add(link_url)
 
