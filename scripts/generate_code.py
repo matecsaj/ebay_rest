@@ -1217,18 +1217,19 @@ class Contracts:
         methods = str()
         for record in records:
             include, method, name, requirement = record
-            if include == "":
-                logging.error(f"There are no includes for {name}.")
-            elif method == "":
-                logging.error(f"There are no methods for {name}.")
-            elif requirement == "":
-                logging.error(f"There are no requirements for {name}.")
+            if len(include) == 0 or method == "" or len(requirement) == 0:
+                if len(include) == 0:
+                    logging.error(f"{name} has no includes.")
+                if method == "":
+                    logging.error(f"{name} has no methods.")
+                if len(requirement):
+                    logging.error(f"{name} has no requirements.")
             else:
                 names.append(name)
                 requirements.update(requirement)
                 includes.extend(include)
                 methods += method
-            await CodeInjector().do(requirements, includes, methods)
+        await CodeInjector().do(requirements, includes, methods)
         # await Contracts().remove_duplicates(names)     # TODO uncomment the method call when work on it resumes
 
 
