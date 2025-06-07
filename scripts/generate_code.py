@@ -5,6 +5,7 @@
 # Perhaps making inhumanly frequent requests triggers eBay's DOS protection system.
 
 # Standard library imports
+from dataclasses import dataclass
 import hashlib
 from itertools import groupby
 import json
@@ -15,7 +16,7 @@ import shutil
 import sys
 import string
 import time
-from typing import AsyncGenerator, Iterable, List, Set, Tuple
+from typing import AsyncGenerator, Iterable, List, Optional, Set
 
 # Third party imports
 import aiofiles
@@ -29,6 +30,158 @@ from urllib.parse import urljoin, urlsplit
 # Local imports
 
 # Globals
+
+# Data Classes
+
+
+@dataclass
+class BasePathsAndFlows:
+    base_path: str
+    flow_by_scope: dict
+    name: str
+    operation_id_scopes: dict
+
+
+@dataclass
+class CatalogItem:
+    file: str
+    name: str
+    path: str
+    signature: bytes
+
+
+@dataclass
+class ContractData:
+    contract_url: str
+    category: Optional[str] = None
+    call: Optional[str] = None
+    url: Optional[str] = None
+    file_name: Optional[str] = None
+    name: Optional[str] = None
+    version: Optional[int] = None
+    beta: Optional[bool] = None
+
+
+@dataclass
+class ContractInfo:
+    category: str
+    call: str
+    url: str
+    file_name: str
+    version: int
+    beta: bool
+
+
+@dataclass
+class CountryCode:
+    code: str
+    description: str
+
+
+@dataclass
+class CurrencyCode:
+    code: str
+    description: str
+
+
+@dataclass
+class GlobalIdValue:
+    ebay_site_id: str
+    global_id: str
+    language: str
+    site_name: str
+    territory: str
+
+
+@dataclass
+class HeaderParameter:
+    description: str
+    name: str
+    required: bool
+    type: str
+
+
+@dataclass
+class LocaleDetail:
+    site_url: str
+    comment: str
+
+
+@dataclass
+class MarketplaceIdValue:
+    country: str
+    locale_details: dict
+    marketplace_id: str
+
+
+@dataclass
+class MethodInfo:
+    docstring: str
+    method: str
+    module: str
+    name: str
+    params: str
+    path: str
+
+    def __lt__(self, other):
+        """Compare MethodInfo objects for sorting."""
+        if self.module != other.module:
+            return self.module < other.module
+        return self.method < other.method
+
+    def __eq__(self, other):
+        """Check if two MethodInfo objects are equal."""
+        return self.module == other.module and self.method == other.method
+
+
+@dataclass
+class ModuleInfo:
+    module: str
+    name: str
+    path: str
+
+
+@dataclass
+class ProcessResult:
+    include: List[str]
+    method: str
+    name: str
+    requirement: Set[str]
+
+
+@dataclass
+class RateInfo:
+    resource_name_base: str
+    resource_name_module: str
+
+
+@dataclass
+class SecurityInfo:
+    flow_type: str
+    operation_id: str
+    security_scopes: Optional[List[str]]
+    user_access_token: bool
+
+
+@dataclass
+class SwapInfo:
+    original: str
+    replacement: str
+
+
+@dataclass
+class TypoRemedy:
+    typo: str
+    remedy: str
+
+
+@dataclass
+class UrlPair:
+    text: str
+    url: str
+
+
+# Standard Classes
 
 
 class WebScraper:
@@ -54,27 +207,29 @@ class WebScraper:
     @staticmethod
     async def generate_url_text_and_urls(
         urls: Iterable[str],
-    ) -> AsyncGenerator[Tuple[str, str], None]:
+    ) -> AsyncGenerator[UrlPair, None]:
         """
         Asynchronously fetch and parse anchor tags from a sequence of URLs.
 
         :param urls: Iterable of URLs to process.
-        :return: An asynchronous generator that yields tuples of URL text and URLs.
+        :return: An asynchronous generator that yields UrlPair objects containing text and URL.
         """
 
-        async def process_url(url: str) -> AsyncGenerator[Tuple[str, str], None]:
+        async def process_url(url: str) -> AsyncGenerator[UrlPair, None]:
             soup = await WebScraper.get_soup_via_url(url)
             for url_link in soup.find_all("a"):
-                yield url_link.text, urljoin(url, url_link.get("href"))
+                yield UrlPair(
+                    text=url_link.text, url=urljoin(url, url_link.get("href"))
+                )
 
-        async def gather_urls(url: str) -> List[Tuple[str, str]]:
+        async def gather_urls(url: str) -> List[UrlPair]:
             return [url_item async for url_item in process_url(url)]
 
         tasks = [gather_urls(url) for url in urls]
         for task in asyncio.as_completed(tasks):
             completed_task = await task
-            for url_text, url in completed_task:
-                yield url_text, url
+            for url_pair in completed_task:
+                yield url_pair
 
     @staticmethod
     async def get_soup_via_url(url: str) -> BeautifulSoup:
@@ -152,17 +307,24 @@ class Reference:
             await WebScraper.get_ebay_list_url("CountryCodeType")
         )
 
-        # ignore header, convert to a dict & delete bad values
-        country_codes_dict = {}
+        # ignore the header, convert to a list of CountryCode objects and delete bad values
+        country_codes = []
+        bad_values = ("CustomCode", "QM", "QN", "QO", "TP", "UM", "YU", "ZZ")
+
         for datum in data[1:]:
-            country_codes_dict[datum[0]] = datum[1]
-        for bad_value in ("CustomCode", "QM", "QN", "QO", "TP", "UM", "YU", "ZZ"):
-            if bad_value in country_codes_dict:
-                del country_codes_dict[bad_value]
+            code = datum[0]
+            if code not in bad_values:
+                country_code = CountryCode(code=code, description=datum[1])
+                # Convert to dict for JSON serialization
+                country_codes_dict = {country_code.code: country_code.description}
+                country_codes.append(country_codes_dict)
             else:
-                logging.debug(
-                    "Bad value " + bad_value + "no longer needs to be deleted."
-                )
+                logging.debug(f"Bad value {code} skipped.")
+
+        # Convert a list of dicts to a single dict for backward compatibility
+        country_codes_dict = {}
+        for country_code_dict in country_codes:
+            country_codes_dict.update(country_code_dict)
 
         await Reference.make_json_file(country_codes_dict, "country_codes")
 
@@ -176,18 +338,25 @@ class Reference:
             await WebScraper.get_ebay_list_url("CurrencyCodeType")
         )
 
-        # ignore header, convert to a dict & delete bad values
-        currency_codes_dict = {}
-        for datum in data[1:]:
-            currency_codes_dict[datum[0]] = datum[1]
-
+        # ignore the header, convert to a list of CurrencyCode objects and delete bad values
+        currency_codes = []
         bad_values = ("CustomCode",)
-        to_delete = set()
-        for key, value in currency_codes_dict.items():
-            if key in bad_values or "replaced" in value:
-                to_delete.add(key)
-        for key in to_delete:
-            del currency_codes_dict[key]
+
+        for datum in data[1:]:
+            code = datum[0]
+            description = datum[1]
+            if code not in bad_values and "replaced" not in description:
+                currency_code = CurrencyCode(code=code, description=description)
+                # Convert to dict for JSON serialization
+                currency_codes_dict = {currency_code.code: currency_code.description}
+                currency_codes.append(currency_codes_dict)
+            else:
+                logging.debug(f"Bad value {code} skipped.")
+
+        # Convert a list of dicts to a single dict for backward compatibility
+        currency_codes_dict = {}
+        for currency_code_dict in currency_codes:
+            currency_codes_dict.update(currency_code_dict)
 
         await Reference.make_json_file(currency_codes_dict, "currency_codes")
 
@@ -203,15 +372,27 @@ class Reference:
         # The header got messed up and is unlikely to change, so hardcode it
         cols = ["global_id", "language", "territory", "site_name", "ebay_site_id"]
 
-        # convert to a list of dicts
-        dicts = []
+        # convert to a list of GlobalIdValue objects
+        global_id_values = []
         for datum in data[1:]:
-            global_id_dict = {}
-            for index, column in enumerate(cols):
-                global_id_dict[column] = datum[index]
-            dicts.append(global_id_dict)
+            global_id_value = GlobalIdValue(
+                global_id=datum[0],
+                language=datum[1],
+                territory=datum[2],
+                site_name=datum[3],
+                ebay_site_id=datum[4],
+            )
+            # Convert to dict for JSON serialization
+            global_id_dict = {
+                "global_id": global_id_value.global_id,
+                "language": global_id_value.language,
+                "territory": global_id_value.territory,
+                "site_name": global_id_value.site_name,
+                "ebay_site_id": global_id_value.ebay_site_id,
+            }
+            global_id_values.append(global_id_dict)
 
-        await Reference.make_json_file(dicts, "global_id_values")
+        await Reference.make_json_file(global_id_values, "global_id_values")
 
     @staticmethod
     async def generate_marketplace_id_values() -> None:
@@ -241,7 +422,7 @@ class Reference:
                 # The header got messed up and is unlikely to change, so hardcode it
                 # cols = ['marketplace_id', 'country', 'marketplace_site', 'locale_support']
 
-                # convert to a nested dict
+                # convert to a nested dict using dataclasses
 
                 for datum in data[1:]:
                     [marketplace_id, country, marketplace_site, locale_support] = datum
@@ -257,13 +438,33 @@ class Reference:
                     comment_shortage = len(locales) - len(comments)
                     for _ in range(comment_shortage):
                         comments.append("")
+
+                    # Create LocaleDetail objects and store them in a dictionary
                     locale_details_dict = dict()
                     for index, locale in enumerate(locales):
-                        locale_details_dict[locale] = [sites[index], comments[index]]
-                    marketplace_id_dict[marketplace_id] = [country, locale_details_dict]
+                        locale_detail = LocaleDetail(
+                            site_url=sites[index], comment=comments[index]
+                        )
+                        # Convert to a list for backward compatibility with existing code
+                        locale_details_dict[locale] = [
+                            locale_detail.site_url,
+                            locale_detail.comment,
+                        ]
+
+                    # Create a MarketplaceIdValue object
+                    marketplace_value = MarketplaceIdValue(
+                        marketplace_id=marketplace_id,
+                        country=country,
+                        locale_details=locale_details_dict,
+                    )
+
+                    # Store in a dictionary for backward compatibility
+                    marketplace_id_dict[marketplace_value.marketplace_id] = [
+                        marketplace_value.country,
+                        marketplace_value.locale_details,
+                    ]
 
         await Reference.make_json_file(marketplace_id_dict, "marketplace_id_values")
-        return
 
 
 class References:
@@ -311,25 +512,17 @@ class Locations:
 
 class Contract:
     def __init__(self, contract_url) -> None:
-        self.contract_url = contract_url
-        self.category = None
-        self.call = None
-        self.url = None
-        self.file_name = None
-        self.name = None
-        self.version = None
-        self.beta = None
+        self.data = ContractData(contract_url=contract_url)
 
     async def process(self):
-        (
-            self.category,
-            self.call,
-            self.url,
-            self.file_name,
-            self.version,
-            self.beta,
-        ) = await Contracts.get_contract_info(self.contract_url)
-        self.name = await self.get_api_name()
+        contract_info = await Contracts.get_contract_info(self.data.contract_url)
+        self.data.category = contract_info.category
+        self.data.call = contract_info.call
+        self.data.url = contract_info.url
+        self.data.file_name = contract_info.file_name
+        self.data.version = contract_info.version
+        self.data.beta = contract_info.beta
+        self.data.name = await self.get_api_name()
         await self.cache_contract()
         await self.patch_contract()
         await self.swagger_codegen()
@@ -338,9 +531,9 @@ class Contract:
         await self.fix_imports()
 
     async def cache_contract(self):
-        destination = os.path.join(Locations.cache_path, self.file_name)
+        destination = os.path.join(Locations.cache_path, self.data.file_name)
         async with aiohttp.ClientSession() as session:
-            async with session.get(self.url) as response:
+            async with session.get(self.data.url) as response:
                 response_body = await response.read()
 
                 # determine encoding
@@ -355,7 +548,9 @@ class Contract:
                     else:
                         encoding = "utf-8"
                         method = "Fallback"
-                logging.debug(f"{method} encoding: {encoding} for {self.file_name}")
+                logging.debug(
+                    f"{method} encoding: {encoding} for {self.data.file_name}"
+                )
 
         decoded_content = response_body.decode(encoding, errors="replace")
 
@@ -366,8 +561,8 @@ class Contract:
     async def patch_contract(self) -> None:
         """If the contract from eBay has an error, then patch it before generating code."""
         # This is no longer needed, ebay fixed the problem, but I'm leaving it here for reference.
-        # if self.category == 'sell' and self.call == 'fulfillment':
-        #     await Contracts.patch_contract_sell_fulfillment(self.file_name)
+        # if self.data.category == 'sell' and self.data.call == 'fulfillment':
+        #     await Contracts.patch_contract_sell_fulfillment(self.data.file_name)
 
     async def patch_generated(self) -> None:
         """If the generated code has an error, then patch it before making use of it."""
@@ -377,7 +572,7 @@ class Contract:
         # by a 204 status, then don't deserialize.
         bad_code = "if response_type:"
         file_path = os.path.join(
-            Locations.cache_path, self.name, self.name, "api_client.py"
+            Locations.cache_path, self.data.name, self.data.name, "api_client.py"
         )
         try:
             async with aiofiles.open(file_path, mode="r") as f:
@@ -400,7 +595,9 @@ class Contract:
                     await f.write(data)
 
         # Patch in code for Digital Signatures
-        file_path = os.path.join(Locations.cache_path, self.name, self.name, "rest.py")
+        file_path = os.path.join(
+            Locations.cache_path, self.data.name, self.data.name, "rest.py"
+        )
         try:
             async with aiofiles.open(file_path, mode="r") as f:
                 data = await f.read()
@@ -442,8 +639,8 @@ class Contract:
             logger.error(f"[stderr]\n{stderr.decode()}")
 
     async def swagger_codegen(self):
-        source = os.path.join(Locations.cache_path, self.file_name)
-        destination = f"{Locations.cache_path}/{self.name}"
+        source = os.path.join(Locations.cache_path, self.data.file_name)
+        destination = f"{Locations.cache_path}/{self.data.name}"
 
         # The generator will warn if there is no .swagger-codegen-ignore file
         if not os.path.isdir(destination):
@@ -454,7 +651,7 @@ class Contract:
         with open(file_path, "w") as file_handle:
             file_handle.write("")
 
-        command = f" generate -l python -o {destination} -DpackageName={self.name} -i {source}"
+        command = f" generate -l python -o {destination} -DpackageName={self.data.name} -i {source}"
         if sys.platform == "darwin":  # OS X or MacOS
             command = "swagger-codegen" + command
         elif sys.platform == "linux":  # Linux
@@ -464,7 +661,7 @@ class Contract:
         await self.run_command(command)
 
     async def get_api_name(self):
-        name = f"{self.category}_{self.call}"
+        name = f"{self.data.category}_{self.data.call}"
         return name
 
     async def get_one_base_paths_and_flows(self):
@@ -473,7 +670,7 @@ class Contract:
         2) the security flow for each scope in each category_call
         3) the scopes for each call in each category_call
         """
-        source = os.path.join(Locations.cache_path, self.file_name)
+        source = os.path.join(Locations.cache_path, self.data.file_name)
         try:
             async with aiofiles.open(source, mode="r", encoding="utf-8") as f:
                 data = await f.read()
@@ -575,19 +772,24 @@ class Contract:
                         operation_id_scopes[operation_id] = security
                 # TODO Get headers parameters
                 # look for this  "in": "header",
-                name = self.category + "_" + self.call
-        return base_path, flow_by_scope, name, operation_id_scopes
+                name = self.data.category + "_" + self.data.call
+        return BasePathsAndFlows(
+            base_path=base_path,
+            flow_by_scope=flow_by_scope,
+            name=name,
+            operation_id_scopes=operation_id_scopes,
+        )
 
     async def copy_library(self) -> None:
         """Copy the essential parts of the generated eBay library to within the src folder."""
-        source_path = os.path.join(Locations.cache_path, self.name, self.name)
-        destination_path = os.path.join(Locations.target_path, self.name)
+        source_path = os.path.join(Locations.cache_path, self.data.name, self.data.name)
+        destination_path = os.path.join(Locations.target_path, self.data.name)
         _destination = shutil.copytree(source_path, destination_path)
 
     async def fix_imports(self) -> None:
         """The deeper the directory, the more dots are needed to make the correct relative path."""
         await self._fix_imports_recursive(
-            self.name, "..", os.path.join(Locations.target_path, self.name)
+            self.data.name, "..", os.path.join(Locations.target_path, self.data.name)
         )
 
     async def _fix_imports_recursive(self, name: str, dots: str, path: str) -> None:
@@ -595,20 +797,27 @@ class Contract:
 
         for _root, dirs, files in os.walk(path):
             swaps = [  # order is crucial, put more specific swaps before less
-                (f"import {name}.models", f"from {dots}{name} import models"),
-                (f"from models", f"from {dots}{name}.models"),
-                (f"import {name}", f"import {dots}{name}"),
-                (f"from {name}", f"from {dots}{name}"),
-                (f"{name}.models", f"models"),
+                SwapInfo(
+                    original=f"import {name}.models",
+                    replacement=f"from {dots}{name} import models",
+                ),
+                SwapInfo(
+                    original=f"from models", replacement=f"from {dots}{name}.models"
+                ),
+                SwapInfo(original=f"import {name}", replacement=f"import {dots}{name}"),
+                SwapInfo(original=f"from {name}", replacement=f"from {dots}{name}"),
+                SwapInfo(original=f"{name}.models", replacement=f"models"),
             ]
             for file in files:
                 target_file = os.path.join(path, file)
                 new_lines = ""
                 with open(target_file) as file_handle:
                     for old_line in file_handle:
-                        for original, replacement in swaps:
-                            if original in old_line:
-                                old_line = old_line.replace(original, replacement)
+                        for swap_info in swaps:
+                            if swap_info.original in old_line:
+                                old_line = old_line.replace(
+                                    swap_info.original, swap_info.replacement
+                                )
                                 break  # only the first matching swap should happen
                         new_lines += old_line
                 with open(target_file, "w") as file_handle:
@@ -629,7 +838,7 @@ class Contract:
         start_tag = "REQUIRES = ["
         end_tag = "]\n"
         requirements = set()
-        source_path = os.path.join(Locations.cache_path, self.name, "setup.py")
+        source_path = os.path.join(Locations.cache_path, self.data.name, "setup.py")
         try:
             with open(source_path) as file:
                 for line in file:
@@ -642,7 +851,7 @@ class Contract:
                         break
         except FileNotFoundError:
             logging.error(
-                f"The requirements for library {self.name} are unknown because a file is missing {source_path}."
+                f"The requirements for library {self.data.name} are unknown because a file is missing {source_path}."
             )
 
         return requirements
@@ -650,10 +859,10 @@ class Contract:
     async def get_includes(self) -> List[str]:
         """Get the includes for a library."""
         includes = list()
-        includes.append(f"from .{Locations.target_directory} import {self.name}")
+        includes.append(f"from .{Locations.target_directory} import {self.data.name}")
         line = (
-            f"from .{Locations.target_directory}.{self.name}.rest import ApiException as "
-            f"{await self._camel(self.name)}Exception"
+            f"from .{Locations.target_directory}.{self.data.name}.rest import ApiException as "
+            f"{await self._camel(self.data.name)}Exception"
         )
         includes.append(line)
         return includes
@@ -663,16 +872,20 @@ class Contract:
 
         # Catalog the module files that contain all method implementations
         modules = []
-        path = os.path.join(Locations.cache_path, self.name, self.name, "api")
+        path = os.path.join(Locations.cache_path, self.data.name, self.data.name, "api")
         for root, _dirs, files in os.walk(path):
             for file in files:
                 if file != "__init__.py":
                     modules.append(
-                        (self.name, file.replace(".py", ""), os.path.join(root, file))
+                        ModuleInfo(
+                            name=self.data.name,
+                            module=file.replace(".py", ""),
+                            path=os.path.join(root, file),
+                        )
                     )
 
         # Catalog all methods in all modules
-        methods: List[Tuple[str, str, str, str, str, str]] = []
+        methods: List[MethodInfo] = []
         method_marker_part = "_with_http_info"
         method_marker_whole = method_marker_part + "(self,"
         docstring_marker = '"""'
@@ -683,9 +896,9 @@ class Contract:
             "request thread",
         )
 
-        for name, module, path in modules:
+        for module_info in modules:
             step = 0
-            with open(path) as file_handle:
+            with open(module_info.path) as file_handle:
                 for line in file_handle:
                     if step == 0:  # Looking for the next method
                         if method_marker_whole in line:
@@ -726,7 +939,14 @@ class Contract:
                             docstring += line
                             docstring = await self.clean_docstring(docstring)
                             methods.append(
-                                (name, module, path, method, params, docstring)
+                                MethodInfo(
+                                    name=module_info.name,
+                                    module=module_info.module,
+                                    path=module_info.path,
+                                    method=method,
+                                    params=params,
+                                    docstring=docstring,
+                                )
                             )
                             step = 0
 
@@ -744,34 +964,33 @@ class Contract:
         docstring = BeautifulSoup(docstring, features="html.parser").get_text()
 
         # fix typos
-        typo_remedy = (  # pairs of typos found in docstrings and their remedy
-            (
-                "AustraliaeBay",
-                "Australia eBay",
+        typo_remedies = [  # pairs of typos found in docstrings and their remedy
+            TypoRemedy(
+                typo="AustraliaeBay", remedy="Australia eBay"  # noqa:
             ),  # noqa: - suppress flake8 compatible linters, misspelling is intended
-            ("cerate", "create"),  # noqa:
-            ("distibuted", "distributed"),  # noqa:
-            ("FranceeBay", "Francee Bay"),  # noqa:
-            ("GermanyeBay", "Germany eBay"),  # noqa:
-            ("http:", "https:"),  # noqa:
-            ("identfier", "identifier"),  # noqa:
-            ("ItalyeBay", "Italy eBay"),  # noqa:
-            ("Limt", "Limit"),  # noqa:
-            ("lisitng", "listing"),  # noqa:
-            ("maketplace", "marketplace"),  # noqa:
-            ("markeplace", "marketplace"),  # noqa:
-            ("motorcyles", "motorcycles"),  # noqa:
-            ("parmeter", "parameter"),  # noqa:
-            ("publlish", "publish"),  # noqa:
-            ("qroup", "group"),  # noqa:
-            ("retrybable", "retryable"),  # noqa:
-            ("takeback", "take back"),  # noqa:
-            ("Takeback", "Take back"),  # noqa:
-            ("theste", "these"),  # noqa:
-            ("UKeBay", "UK eBay"),  # noqa:
-        )
-        for typo, remedy in typo_remedy:
-            docstring = docstring.replace(typo, remedy)
+            TypoRemedy(typo="cerate", remedy="create"),  # noqa:
+            TypoRemedy(typo="distibuted", remedy="distributed"),  # noqa:
+            TypoRemedy(typo="FranceeBay", remedy="Francee Bay"),  # noqa:
+            TypoRemedy(typo="GermanyeBay", remedy="Germany eBay"),  # noqa:
+            TypoRemedy(typo="http:", remedy="https:"),  # noqa:
+            TypoRemedy(typo="identfier", remedy="identifier"),  # noqa:
+            TypoRemedy(typo="ItalyeBay", remedy="Italy eBay"),  # noqa:
+            TypoRemedy(typo="Limt", remedy="Limit"),  # noqa:
+            TypoRemedy(typo="lisitng", remedy="listing"),  # noqa:
+            TypoRemedy(typo="maketplace", remedy="marketplace"),  # noqa:
+            TypoRemedy(typo="markeplace", remedy="marketplace"),  # noqa:
+            TypoRemedy(typo="motorcyles", remedy="motorcycles"),  # noqa:
+            TypoRemedy(typo="parmeter", remedy="parameter"),  # noqa:
+            TypoRemedy(typo="publlish", remedy="publish"),  # noqa:
+            TypoRemedy(typo="qroup", remedy="group"),  # noqa:
+            TypoRemedy(typo="retrybable", remedy="retryable"),  # noqa:
+            TypoRemedy(typo="takeback", remedy="take back"),  # noqa:
+            TypoRemedy(typo="Takeback", remedy="Take back"),  # noqa:
+            TypoRemedy(typo="theste", remedy="these"),  # noqa:
+            TypoRemedy(typo="UKeBay", remedy="UK eBay"),  # noqa:
+        ]
+        for typo_remedy in typo_remedies:
+            docstring = docstring.replace(typo_remedy.typo, typo_remedy.remedy)
 
         # Replace a single backslash before pipe (if any) with a double backslash
         docstring = docstring.replace(r"\|", r"\\|")
@@ -781,16 +1000,20 @@ class Contract:
 
         return docstring
 
-    async def _make_method(self, method: Tuple[str, str, str, str, str, str]) -> str:
+    async def _make_method(self, method_info: MethodInfo) -> str:
         """Return the code for one python method."""
 
-        (name, module, path, method, params, docstring) = method
-        (
-            base_path,
-            flow_by_scope,
-            name,
-            operation_id_scopes,
-        ) = await self.get_one_base_paths_and_flows()
+        name = method_info.name
+        module = method_info.module
+        path = method_info.path
+        method = method_info.method
+        params = method_info.params
+        docstring = method_info.docstring
+        base_paths_and_flows = await self.get_one_base_paths_and_flows()
+        base_path = base_paths_and_flows.base_path
+        flow_by_scope = base_paths_and_flows.flow_by_scope
+        name = base_paths_and_flows.name
+        operation_id_scopes = base_paths_and_flows.operation_id_scopes
 
         ignore_long = "  # noqa: E501"  # flake8 compatible linters should not warn about long lines
 
@@ -840,6 +1063,14 @@ class Contract:
         (auth_method,) = flows  # note tuple unpacking of a set
         user_access_token = auth_method == "authorizationCode"
 
+        # Create a SecurityInfo object to encapsulate security-related information
+        security_info = SecurityInfo(
+            operation_id=operation_id,
+            security_scopes=scopes,
+            flow_type=auth_method,
+            user_access_token=user_access_token,
+        )
+
         # identify and prep for parameter possibilities
         stars_kwargs = "**kwargs"
         params_modified = params.split(", ")
@@ -858,10 +1089,13 @@ class Contract:
             else:
                 has_args = False
 
-        # Prepare the list of rate lookup information that will be used for throttling.
+        # Prepare the rate lookup information that will be used for throttling.
         resource_name_base = name.replace("_", ".")
         resource_name_module = module.replace("_api", "")
-        rate = [resource_name_base, resource_name_module]
+        rate_info = RateInfo(
+            resource_name_base=resource_name_base,
+            resource_name_module=resource_name_module,
+        )
 
         code = f"    def {name}_{method}(self, {params}):{ignore_long}\n"
         code += docstring
@@ -873,8 +1107,8 @@ class Contract:
             f" {name}.ApiClient,"
             f" '{method}',"
             f" {await self._camel(name)}Exception,"
-            f" {user_access_token},"
-            f" {rate},"
+            f" {security_info.user_access_token},"
+            f" ['{resource_name_base}', '{resource_name_module}'],"
         )
         if has_args:
             if "," in params_modified:
@@ -909,19 +1143,21 @@ class Contract:
             contract_url (str): The contract URL to process.
 
         Returns:
-            Tuple: A tuple containing (include, method, name, requirement).
+            ProcessResult: An object containing include, method, name, and requirement.
         """
         logging.info(f"Process overview URL {contract_url}.")
         c = Contract(contract_url)
         await c.process()
-        name = c.name
+        name = c.data.name
         requirement_task = asyncio.create_task(c.get_requirements())
         include_task = asyncio.create_task(c.get_includes())
         method_task = asyncio.create_task(c.get_methods())
         requirement = await requirement_task
         include = await include_task
         method = await method_task
-        return include, method, name, requirement
+        return ProcessResult(
+            include=include, method=method, name=name, requirement=requirement
+        )
 
 
 class Contracts:
@@ -956,19 +1192,19 @@ class Contracts:
         contract_urls = set()
 
         # use the category urls to find unique URLs to API table pages with visible text containing 'APIs'
-        async for url_text, url in WebScraper.generate_url_text_and_urls(category_urls):
-            if "APIs" in url_text:
-                table_urls.add(url)
+        async for url_pair in WebScraper.generate_url_text_and_urls(category_urls):
+            if "APIs" in url_pair.text:
+                table_urls.add(url_pair.url)
 
         # use the table urls to find unique URLs to overview pages which have urls ending with overview.html
-        async for url_text, url in WebScraper.generate_url_text_and_urls(table_urls):
-            if url.endswith("overview.html"):
-                overview_urls.add(url)
+        async for url_pair in WebScraper.generate_url_text_and_urls(table_urls):
+            if url_pair.url.endswith("overview.html"):
+                overview_urls.add(url_pair.url)
 
         # use the overview urls to find unique URLs to contracts which have urls ending with .json
-        async for url_text, url in WebScraper.generate_url_text_and_urls(overview_urls):
-            if url.endswith(".json"):
-                contract_urls.add(url)
+        async for url_pair in WebScraper.generate_url_text_and_urls(overview_urls):
+            if url_pair.url.endswith(".json"):
+                contract_urls.add(url_pair.url)
 
         contract_urls_sorted = sorted(list(contract_urls))
 
@@ -1004,17 +1240,18 @@ class Contracts:
         )
 
         sorted_contract_infos = sorted(
-            contract_infos, key=lambda info: (info[0], info[1], info[5], -info[4])
+            contract_infos,
+            key=lambda info: (info.category, info.call, info.beta, -info.version),
         )
 
         for _, group in groupby(
-            sorted_contract_infos, key=lambda info: (info[0], info[1])
+            sorted_contract_infos, key=lambda info: (info.category, info.call)
         ):
             group_list = list(group)
             if len(group_list) > 1:
                 logging.info(f"group_list: {group_list}")
-            keepers.append(group_list[0][2])
-            junkers.extend([url_info[2] for url_info in group_list[1:]])
+            keepers.append(group_list[0].url)
+            junkers.extend([url_info.url for url_info in group_list[1:]])
 
         if len(contract_infos) != len(keepers) + len(junkers):
             logging.warning(
@@ -1026,7 +1263,7 @@ class Contracts:
     @staticmethod
     async def get_contract_info(
         contract_url: str,
-    ) -> Tuple[str, str, str, str, int, bool]:
+    ) -> ContractInfo:
         """
         Async method to parse a contract link and extract key data parts from it.
 
@@ -1040,7 +1277,7 @@ class Contracts:
             contract_url (str): The contract link that needs to be parsed.
 
         Returns:
-            Tuple[str, str, str, str, int, bool]: A tuple containing 'category', 'call', 'url', 'file_name',
+            ContractInfo: An object containing 'category', 'call', 'url', 'file_name',
             'version', and 'beta'.
         """
         # split in raw parts
@@ -1078,7 +1315,14 @@ class Contracts:
                 f"Variable path_version {path_version} should equal version {filename_version}."
             )
 
-        return category, call, url, file_name, filename_version, beta
+        return ContractInfo(
+            category=category,
+            call=call,
+            url=url,
+            file_name=file_name,
+            version=filename_version,
+            beta=beta,
+        )
 
     # This is no longer needed, ebay fixed the problem, but I'm leaving it here for reference.
     @staticmethod
@@ -1139,18 +1383,20 @@ class Contracts:
 
         # count how many times each signature appears
         signature_tally = {}
-        for name, file, path, signature in catalog:
-            if signature in signature_tally:
-                signature_tally[signature] = +1
+        for item in catalog:
+            if item.signature in signature_tally:
+                signature_tally[item.signature] += 1
             else:
-                signature_tally[signature] = 1
+                signature_tally[item.signature] = 1
 
         # make a sub catalog that just includes signature repeaters
         catalog_repeaters = []
-        for values in catalog:
-            (name, file, path, signature) = values
-            if signature_tally[signature] > 1:
-                catalog_repeaters.append(values)
+        for item in catalog:
+            if (
+                item.signature in signature_tally
+                and signature_tally[item.signature] > 1
+            ):
+                catalog_repeaters.append(item)
 
         # TODO apply the DRY principle to the repeaters
 
@@ -1165,7 +1411,14 @@ class Contracts:
                         code_text = file_handle.read()
                         m = hashlib.sha256()
                         m.update(code_text.encode())
-                        catalog.append((name, file, target_file, m.digest()))
+                        catalog.append(
+                            CatalogItem(
+                                name=name,
+                                file=file,
+                                path=target_file,
+                                signature=m.digest(),
+                            )
+                        )
 
             for directory in dirs:
                 catalog.extend(
@@ -1208,19 +1461,22 @@ class Contracts:
         includes = list()
         methods = str()
         for record in records:
-            include, method, name, requirement = record
-            if len(include) == 0 or method == "" or len(requirement) == 0:
-                if len(include) == 0:
-                    logging.error(f"{name} has no includes.")
-                if method == "":
-                    logging.error(f"{name} has no methods.")
-                if len(requirement):
-                    logging.error(f"{name} has no requirements.")
+            if (
+                len(record.include) == 0
+                or record.method == ""
+                or len(record.requirement) == 0
+            ):
+                if len(record.include) == 0:
+                    logging.error(f"{record.name} has no includes.")
+                if record.method == "":
+                    logging.error(f"{record.name} has no methods.")
+                if len(record.requirement):
+                    logging.error(f"{record.name} has no requirements.")
             else:
-                names.append(name)
-                requirements.update(requirement)
-                includes.extend(include)
-                methods += method
+                names.append(record.name)
+                requirements.update(record.requirement)
+                includes.extend(record.include)
+                methods += record.method
         await CodeInjector().do(requirements, includes, methods)
         # await Contracts().remove_duplicates(names)     # TODO uncomment the method call when work on it resumes
 
