@@ -35,9 +35,9 @@ class WebScraper:
     """Class for web scraping operations."""
 
     @staticmethod
-    async def get_table_via_link(url: str) -> list:
+    async def get_table_via_url(url: str) -> list:
         data = []
-        soup = await WebScraper.get_soup_via_link(url)
+        soup = await WebScraper.get_soup_via_url(url)
         # find the rows regarding Response Fields.
         table = soup.find("table")
         if table:
@@ -52,32 +52,32 @@ class WebScraper:
         return data
 
     @staticmethod
-    async def generate_link_text_and_urls(
+    async def generate_url_text_and_urls(
         urls: Iterable[str],
     ) -> AsyncGenerator[Tuple[str, str], None]:
         """
         Asynchronously fetch and parse anchor tags from a sequence of URLs.
 
         :param urls: Iterable of URLs to process.
-        :return: An asynchronous generator that yields tuples of 'link text' and URLs.
+        :return: An asynchronous generator that yields tuples of URL text and URLs.
         """
 
         async def process_url(url: str) -> AsyncGenerator[Tuple[str, str], None]:
-            soup = await WebScraper.get_soup_via_link(url)
-            for link in soup.find_all("a"):
-                yield link.text, urljoin(url, link.get("href"))
+            soup = await WebScraper.get_soup_via_url(url)
+            for url_link in soup.find_all("a"):
+                yield url_link.text, urljoin(url, url_link.get("href"))
 
-        async def gather_links(url: str) -> List[Tuple[str, str]]:
-            return [link async for link in process_url(url)]
+        async def gather_urls(url: str) -> List[Tuple[str, str]]:
+            return [url_item async for url_item in process_url(url)]
 
-        tasks = [gather_links(url) for url in urls]
+        tasks = [gather_urls(url) for url in urls]
         for task in asyncio.as_completed(tasks):
             completed_task = await task
-            for link_text, link_url in completed_task:
-                yield link_text, link_url
+            for url_text, url in completed_task:
+                yield url_text, url
 
     @staticmethod
-    async def get_soup_via_link(url: str) -> BeautifulSoup:
+    async def get_soup_via_url(url: str) -> BeautifulSoup:
         # Get the HTML from a URL and then make soup of it.
 
         # the header is meant to prevent the exception 'Response payload is not completed'
@@ -148,23 +148,23 @@ class Reference:
         logging.info("Find the eBay's Country Codes.")
 
         # load the target webpage
-        data = await WebScraper.get_table_via_link(
+        data = await WebScraper.get_table_via_url(
             await WebScraper.get_ebay_list_url("CountryCodeType")
         )
 
         # ignore header, convert to a dict & delete bad values
-        dict_ = {}
+        country_codes_dict = {}
         for datum in data[1:]:
-            dict_[datum[0]] = datum[1]
+            country_codes_dict[datum[0]] = datum[1]
         for bad_value in ("CustomCode", "QM", "QN", "QO", "TP", "UM", "YU", "ZZ"):
-            if bad_value in dict_:
-                del dict_[bad_value]
+            if bad_value in country_codes_dict:
+                del country_codes_dict[bad_value]
             else:
                 logging.debug(
                     "Bad value " + bad_value + "no longer needs to be deleted."
                 )
 
-        await Reference.make_json_file(dict_, "country_codes")
+        await Reference.make_json_file(country_codes_dict, "country_codes")
 
     @staticmethod
     async def generate_currency_codes() -> None:
@@ -172,24 +172,24 @@ class Reference:
         logging.info("Find the eBay's Currency Codes.")
 
         # load the target webpage
-        data = await WebScraper.get_table_via_link(
+        data = await WebScraper.get_table_via_url(
             await WebScraper.get_ebay_list_url("CurrencyCodeType")
         )
 
         # ignore header, convert to a dict & delete bad values
-        dict_ = {}
+        currency_codes_dict = {}
         for datum in data[1:]:
-            dict_[datum[0]] = datum[1]
+            currency_codes_dict[datum[0]] = datum[1]
 
         bad_values = ("CustomCode",)
         to_delete = set()
-        for key, value in dict_.items():
+        for key, value in currency_codes_dict.items():
             if key in bad_values or "replaced" in value:
                 to_delete.add(key)
         for key in to_delete:
-            del dict_[key]
+            del currency_codes_dict[key]
 
-        await Reference.make_json_file(dict_, "currency_codes")
+        await Reference.make_json_file(currency_codes_dict, "currency_codes")
 
     @staticmethod
     async def generate_global_id_values() -> None:
@@ -198,18 +198,18 @@ class Reference:
 
         # load the target webpage
         url = "https://developer.ebay.com/Devzone/merchandising/docs/CallRef/Enums/GlobalIdList.html"
-        data = await WebScraper.get_table_via_link(url)
+        data = await WebScraper.get_table_via_url(url)
 
-        # the header got messed up and is unlikely to change, so hardcode it
+        # The header got messed up and is unlikely to change, so hardcode it
         cols = ["global_id", "language", "territory", "site_name", "ebay_site_id"]
 
         # convert to a list of dicts
         dicts = []
         for datum in data[1:]:
-            my_dict = {}
+            global_id_dict = {}
             for index, column in enumerate(cols):
-                my_dict[column] = datum[index]
-            dicts.append(my_dict)
+                global_id_dict[column] = datum[index]
+            dicts.append(global_id_dict)
 
         await Reference.make_json_file(dicts, "global_id_values")
 
@@ -218,11 +218,11 @@ class Reference:
         """Generate a reference file for eBay's Marketplace ID Values."""
         logging.info("Find the eBay's Marketplace ID Values.")
 
-        my_dict = dict()
+        marketplace_id_dict = dict()
 
         # load the target webpage
         url = "https://developer.ebay.com/api-docs/static/rest-request-components.html#marketpl"
-        soup = await WebScraper.get_soup_via_link(url)
+        soup = await WebScraper.get_soup_via_url(url)
 
         if soup:
             # find the rows regarding Response Fields.
@@ -238,7 +238,7 @@ class Reference:
                     cols = [ele.text.strip() for ele in cols]
                     data.append([ele for ele in cols if ele])  # Get rid of empty values
 
-                # the header got messed up and is unlikely to change, so hard code it
+                # The header got messed up and is unlikely to change, so hardcode it
                 # cols = ['marketplace_id', 'country', 'marketplace_site', 'locale_support']
 
                 # convert to a nested dict
@@ -257,12 +257,12 @@ class Reference:
                     comment_shortage = len(locales) - len(comments)
                     for _ in range(comment_shortage):
                         comments.append("")
-                    my_locales = dict()
+                    locale_details_dict = dict()
                     for index, locale in enumerate(locales):
-                        my_locales[locale] = [sites[index], comments[index]]
-                    my_dict[marketplace_id] = [country, my_locales]
+                        locale_details_dict[locale] = [sites[index], comments[index]]
+                    marketplace_id_dict[marketplace_id] = [country, locale_details_dict]
 
-        await Reference.make_json_file(my_dict, "marketplace_id_values")
+        await Reference.make_json_file(marketplace_id_dict, "marketplace_id_values")
         return
 
 
@@ -304,17 +304,17 @@ class Locations:
         # warn developers that they should not edit the files in the cache
         readme = "# READ ME\n"
         readme += "Don't change the contents of this folder directly; instead, edit and run scripts/generate_code.py"
-        path_file = os.path.abspath(os.path.join(Locations.cache_path, "README.md"))
-        with open(path_file, "w") as file_handle:
+        file_path = os.path.abspath(os.path.join(Locations.cache_path, "README.md"))
+        with open(file_path, "w") as file_handle:
             file_handle.write(readme)
 
 
 class Contract:
-    def __init__(self, contract_link) -> None:
-        self.contract_link = contract_link
+    def __init__(self, contract_url) -> None:
+        self.contract_url = contract_url
         self.category = None
         self.call = None
-        self.link_href = None
+        self.url = None
         self.file_name = None
         self.name = None
         self.version = None
@@ -324,11 +324,11 @@ class Contract:
         (
             self.category,
             self.call,
-            self.link_href,
+            self.url,
             self.file_name,
             self.version,
             self.beta,
-        ) = await Contracts.get_contract_info(self.contract_link)
+        ) = await Contracts.get_contract_info(self.contract_url)
         self.name = await self.get_api_name()
         await self.cache_contract()
         await self.patch_contract()
@@ -340,15 +340,15 @@ class Contract:
     async def cache_contract(self):
         destination = os.path.join(Locations.cache_path, self.file_name)
         async with aiohttp.ClientSession() as session:
-            async with session.get(self.link_href) as response:
-                raw_body = await response.read()
+            async with session.get(self.url) as response:
+                response_body = await response.read()
 
                 # determine encoding
                 if response.charset:
                     encoding = response.charset
                     method = "Declared"
                 else:
-                    detected = detect(raw_body)
+                    detected = detect(response_body)
                     if detected["encoding"] is not None:
                         encoding = detected["encoding"]
                         method = "Detected"
@@ -357,11 +357,11 @@ class Contract:
                         method = "Fallback"
                 logging.debug(f"{method} encoding: {encoding} for {self.file_name}")
 
-        text_content = raw_body.decode(encoding, errors="replace")
+        decoded_content = response_body.decode(encoding, errors="replace")
 
         # normalize to UTF-8 when saving
         async with aiofiles.open(destination, mode="w", encoding="utf-8") as f:
-            await f.write(text_content)
+            await f.write(decoded_content)
 
     async def patch_contract(self) -> None:
         """If the contract from eBay has an error, then patch it before generating code."""
@@ -376,18 +376,18 @@ class Contract:
         # there is an attempt to deserialize an empty string. If there is no content indicated
         # by a 204 status, then don't deserialize.
         bad_code = "if response_type:"
-        file_location = os.path.join(
+        file_path = os.path.join(
             Locations.cache_path, self.name, self.name, "api_client.py"
         )
         try:
-            async with aiofiles.open(file_location, mode="r") as f:
+            async with aiofiles.open(file_path, mode="r") as f:
                 data = await f.read()
         except FileNotFoundError:
-            logging.error(f"Can't open {file_location}.")
+            logging.error(f"Can't open {file_path}.")
         else:
             if bad_code not in data:
                 logging.error(
-                    f"Maybe for {file_location} the 204 patch is not needed any longer."
+                    f"Maybe for {file_path} the 204 patch is not needed any longer."
                 )
             else:
                 # add a new condition before the colon
@@ -396,18 +396,16 @@ class Contract:
                     bad_code[:-1]
                     + " and response_data.status != 204:       # ebay_rest patch",
                 )
-                async with aiofiles.open(file_location, mode="w") as f:
+                async with aiofiles.open(file_path, mode="w") as f:
                     await f.write(data)
 
         # Patch in code for Digital Signatures
-        file_location = os.path.join(
-            Locations.cache_path, self.name, self.name, "rest.py"
-        )
+        file_path = os.path.join(Locations.cache_path, self.name, self.name, "rest.py")
         try:
-            async with aiofiles.open(file_location, mode="r") as f:
+            async with aiofiles.open(file_path, mode="r") as f:
                 data = await f.read()
         except FileNotFoundError:
-            logging.error(f"Can't open {file_location}.")
+            logging.error(f"Can't open {file_path}.")
         else:
             # Add a new import
             target = "from six.moves.urllib.parse import urlencode"  # noqa:
@@ -426,7 +424,7 @@ class Contract:
             target = "r = self.pool_manager.request(method, url,\n"
             replace_code = "r = signed_request(self.pool_manager, self.key_pair, method, url,  # ebay_rest patch\n"
             data = data.replace(target, replace_code)
-            async with aiofiles.open(file_location, mode="w") as f:
+            async with aiofiles.open(file_path, mode="w") as f:
                 await f.write(data)
 
     @staticmethod
@@ -450,10 +448,10 @@ class Contract:
         # The generator will warn if there is no .swagger-codegen-ignore file
         if not os.path.isdir(destination):
             os.mkdir(destination)
-        path_file = os.path.abspath(
+        file_path = os.path.abspath(
             os.path.join(Locations.cache_path, ".swagger-codegen-ignore")
         )
-        with open(path_file, "w") as file_handle:
+        with open(file_path, "w") as file_handle:
             file_handle.write("")
 
         command = f" generate -l python -o {destination} -DpackageName={self.name} -i {source}"
@@ -582,9 +580,9 @@ class Contract:
 
     async def copy_library(self) -> None:
         """Copy the essential parts of the generated eBay library to within the src folder."""
-        src = os.path.join(Locations.cache_path, self.name, self.name)
-        dst = os.path.join(Locations.target_path, self.name)
-        _destination = shutil.copytree(src, dst)
+        source_path = os.path.join(Locations.cache_path, self.name, self.name)
+        destination_path = os.path.join(Locations.target_path, self.name)
+        _destination = shutil.copytree(source_path, destination_path)
 
     async def fix_imports(self) -> None:
         """The deeper the directory, the more dots are needed to make the correct relative path."""
@@ -631,9 +629,9 @@ class Contract:
         start_tag = "REQUIRES = ["
         end_tag = "]\n"
         requirements = set()
-        src = os.path.join(Locations.cache_path, self.name, "setup.py")
+        source_path = os.path.join(Locations.cache_path, self.name, "setup.py")
         try:
-            with open(src) as file:
+            with open(source_path) as file:
                 for line in file:
                     if line.startswith(start_tag):
                         line = line.replace(start_tag, "")
@@ -644,7 +642,7 @@ class Contract:
                         break
         except FileNotFoundError:
             logging.error(
-                f"The requirements for library {self.name} are unknown because a file is missing {src}."
+                f"The requirements for library {self.name} are unknown because a file is missing {source_path}."
             )
 
         return requirements
@@ -903,18 +901,18 @@ class Contract:
         return camel
 
     @staticmethod
-    async def process_link(contract_link):
+    async def process_url(contract_url):
         """
-        Process a contract link to extract includes, methods, name, and requirements.
+        Process a contract URL to extract includes, methods, name, and requirements.
 
         Args:
-            contract_link (str): The contract link to a process.
+            contract_url (str): The contract URL to process.
 
         Returns:
             Tuple: A tuple containing (include, method, name, requirement).
         """
-        logging.info(f"Process overview link {contract_link}.")
-        c = Contract(contract_link)
+        logging.info(f"Process overview URL {contract_url}.")
+        c = Contract(contract_url)
         await c.process()
         name = c.name
         requirement_task = asyncio.create_task(c.get_requirements())
@@ -930,7 +928,7 @@ class Contracts:
     """Class for operations involving multiple contracts."""
 
     @staticmethod
-    async def get_contract_links() -> List[str]:
+    async def get_contract_urls() -> List[str]:
         """
         This asynchronous function is designed to get the contract URLs from eBay's developer site.
 
@@ -944,7 +942,7 @@ class Contracts:
 
             :return:
         """
-        logging.info("Get a list of links to eBay OpenAPI 3 JSON contracts.")
+        logging.info("Get a list of URLs to eBay OpenAPI 3 JSON contracts.")
 
         # store the urls used while doing a breadth first search; seed with starting urls
         category_urls = {
@@ -957,50 +955,44 @@ class Contracts:
         overview_urls = set()
         contract_urls = set()
 
-        # use the category urls to find unique links to API table pages with visible text containing 'APIs'
-        async for link_text, link_url in WebScraper.generate_link_text_and_urls(
-            category_urls
-        ):
-            if "APIs" in link_text:
-                table_urls.add(link_url)
+        # use the category urls to find unique URLs to API table pages with visible text containing 'APIs'
+        async for url_text, url in WebScraper.generate_url_text_and_urls(category_urls):
+            if "APIs" in url_text:
+                table_urls.add(url)
 
-        # use the table urls to find unique links to overview pages which have urls ending with overview.html
-        async for link_text, link_url in WebScraper.generate_link_text_and_urls(
-            table_urls
-        ):
-            if link_url.endswith("overview.html"):
-                overview_urls.add(link_url)
+        # use the table urls to find unique URLs to overview pages which have urls ending with overview.html
+        async for url_text, url in WebScraper.generate_url_text_and_urls(table_urls):
+            if url.endswith("overview.html"):
+                overview_urls.add(url)
 
-        # use the overview urls to find unique links to contracts which have urls ending with .json
-        async for link_text, link_url in WebScraper.generate_link_text_and_urls(
-            overview_urls
-        ):
-            if link_url.endswith(".json"):
-                contract_urls.add(link_url)
+        # use the overview urls to find unique URLs to contracts which have urls ending with .json
+        async for url_text, url in WebScraper.generate_url_text_and_urls(overview_urls):
+            if url.endswith(".json"):
+                contract_urls.add(url)
 
         contract_urls_sorted = sorted(list(contract_urls))
 
         # safety check
         count = len(contract_urls_sorted)
-        logging.info(f"Found contract {count} links.")
+        logging.info(f"Found contract {count} URLs.")
         if not (20 < count < 40):
-            logging.warning(f"Having {count} contract links is unexpected!")
+            logging.warning(f"Having {count} contract URLs is unexpected!")
 
         return contract_urls_sorted
 
     @staticmethod
-    async def deduplicate_contract_links(contract_links: Iterable[str]) -> List[str]:
+    async def deduplicate_contract_urls(contract_urls: Iterable[str]) -> List[str]:
         """
         Remove redundant contracts, drop Betas, and, lower versions.
 
         Args:
-            contract_links (Iterable[str]): A iterable container of contract links.
+            contract_urls (Iterable[str]): A iterable container of contract URLs.
 
         Returns:
-            List[str]: A list of 'keeper' links which are unique based on their category, call, beta, and version.
+            List[str]: A list of 'keeper' URLs which are unique based on their category, call, beta, and version.
 
         Raises:
-            AssertionError: If the total number of links is not equal to the sum of 'keepers' and 'junkers'.
+            AssertionError: If the total number of URLs is not equal to the sum of 'keepers' and 'junkers'.
 
         """
 
@@ -1008,7 +1000,7 @@ class Contracts:
         junkers = []
 
         contract_infos = await asyncio.gather(
-            *[Contracts.get_contract_info(link) for link in contract_links]
+            *[Contracts.get_contract_info(url) for url in contract_urls]
         )
 
         sorted_contract_infos = sorted(
@@ -1022,37 +1014,37 @@ class Contracts:
             if len(group_list) > 1:
                 logging.info(f"group_list: {group_list}")
             keepers.append(group_list[0][2])
-            junkers.extend([link_info[2] for link_info in group_list[1:]])
+            junkers.extend([url_info[2] for url_info in group_list[1:]])
 
         if len(contract_infos) != len(keepers) + len(junkers):
             logging.warning(
-                "Lengths of links, keepers, and junkers do not add up correctly - possible loss of data."
+                "Lengths of URLs, keepers, and junkers do not add up correctly - possible loss of data."
             )
 
         return keepers
 
     @staticmethod
     async def get_contract_info(
-        contract_link: str,
+        contract_url: str,
     ) -> Tuple[str, str, str, str, int, bool]:
         """
         Async method to parse a contract link and extract key data parts from it.
 
         This method breaks down the contract link into its constituent parts and retrieves crucial information such
-        as the category, call, link_href, file_name, version and whether it is a beta contract.
+        as the category, call, url, file_name, version and whether it is a beta contract.
 
         It does so by splitting the URL and path, conducts string manipulations, and applies regex pattern matching
         to decipher the version of the contract.
 
         Args:
-            contract_link (str): The contract link that needs to be parsed.
+            contract_url (str): The contract link that needs to be parsed.
 
         Returns:
-            Tuple[str, str, str, str, int, bool]: A tuple containing 'category', 'call', 'link_href', 'file_name',
+            Tuple[str, str, str, str, int, bool]: A tuple containing 'category', 'call', 'url', 'file_name',
             'version', and 'beta'.
         """
         # split in raw parts
-        url_split = urlsplit(contract_link)
+        url_split = urlsplit(contract_url)
         path_split = url_split.path.split("/")
 
         # if the path has a dedicated version number element, example "v2",
@@ -1073,9 +1065,9 @@ class Contracts:
         # get key data from the parts
         category = path_split[-5]
         call = path_split[-4].replace("-", "_")
-        link_href = contract_link
+        url = contract_url
         file_name = path_split[-1]
-        beta = True if "_beta_" in contract_link else False
+        beta = True if "_beta_" in contract_url else False
 
         # extract the version number from the filename; for example, version 2 looks like this "_v2_"
         version_match = re.search(r"_v(\d+)_", file_name)
@@ -1086,19 +1078,19 @@ class Contracts:
                 f"Variable path_version {path_version} should equal version {filename_version}."
             )
 
-        return category, call, link_href, file_name, filename_version, beta
+        return category, call, url, file_name, filename_version, beta
 
     # This is no longer needed, ebay fixed the problem, but I'm leaving it here for reference.
     @staticmethod
     async def patch_contract_sell_fulfillment(file_name):
         # In the Sell Fulfillment API, the model 'Address' is returned with the attribute 'countryCode'.
         # However, the JSON specifies 'country' instead; thus Swagger generates the wrong API.
-        file_location = os.path.join(Locations.cache_path, file_name)
+        file_path = os.path.join(Locations.cache_path, file_name)
         try:
-            async with aiofiles.open(file_location, mode="r") as f:
+            async with aiofiles.open(file_path, mode="r") as f:
                 data = await f.read()
         except FileNotFoundError:
-            logging.error(f"Can't open {file_location}.")
+            logging.error(f"Can't open {file_path}.")
         else:
             data = json.loads(data)
             properties = data["components"]["schemas"]["Address"]["properties"]
@@ -1107,7 +1099,7 @@ class Contracts:
                     "country"
                 )  # Warning, alphabetical key order spoiled.
                 data = json.dumps(data, sort_keys=True, indent=4)
-                async with aiofiles.open(file_location, mode="w") as f:
+                async with aiofiles.open(file_path, mode="w") as f:
                     await f.write(data)
             else:
                 logging.warning(f"Patching {file_name} is no longer needed.")
@@ -1200,12 +1192,12 @@ class Contracts:
         limit = 100  # lower to expedite debugging with a reduced data set
         records = list()
         tasks = list()
-        contract_links = await Contracts.get_contract_links()
-        contract_links_deduplicated = await Contracts.deduplicate_contract_links(
-            contract_links
+        contract_urls = await Contracts.get_contract_urls()
+        contract_urls_deduplicated = await Contracts.deduplicate_contract_urls(
+            contract_urls
         )
-        for contract_link in contract_links_deduplicated[:limit]:
-            task = asyncio.create_task(Contract.process_link(contract_link))
+        for contract_url in contract_urls_deduplicated[:limit]:
+            task = asyncio.create_task(Contract.process_url(contract_url))
             tasks.append(task)
         for task in tasks:
             record = await task

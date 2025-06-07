@@ -220,7 +220,7 @@ class ItemSales(object):
     def buying_options(self):
         """Gets the buying_options of this ItemSales.  # noqa: E501
 
-        A comma separated list of the purchase options available for the item, such as FIXED_PRICE, AUCTION.  <ul> <li><code>FIXED_PRICE</code> - Returned for fixed-price items (non-auction)</li>  <li><code>AUCTION</code> - Returned for auction items without Buy It Now feature</li>  <li><code>FIXED_PRICE</code> and <code>AUCTION</code> - Returned for auction items enabled with the Buy It Now feature</li> </ul> Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        A comma separated list of the purchase options available for the item, such as FIXED_PRICE, AUCTION, BEST_OFFER.  <ul> <li><code>FIXED_PRICE</code> - Returned for fixed-price items (non-auction)</li>  <li><code>AUCTION</code> - Returned for auction items without Buy It Now feature</li>  <li><code>FIXED_PRICE</code> and <code>AUCTION</code> - Returned for auction items enabled with the Buy It Now feature</li><li><code>BEST_OFFER</code><br>Items where the buyer can send the seller a price they are willing to pay for the item. The seller can accept, reject, or send a counter offer. For additional information about Best Offer, refer to <a href=\"https://www.ebay.com/help/selling/listings/selling-buy-now/adding-best-offer-listing?id=4144 \" target=\"_blank\">Adding Best Offer to your listing and sending offers to buyers</a>.</li> </ul> Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :return: The buying_options of this ItemSales.  # noqa: E501
         :rtype: list[str]
@@ -231,7 +231,7 @@ class ItemSales(object):
     def buying_options(self, buying_options):
         """Sets the buying_options of this ItemSales.
 
-        A comma separated list of the purchase options available for the item, such as FIXED_PRICE, AUCTION.  <ul> <li><code>FIXED_PRICE</code> - Returned for fixed-price items (non-auction)</li>  <li><code>AUCTION</code> - Returned for auction items without Buy It Now feature</li>  <li><code>FIXED_PRICE</code> and <code>AUCTION</code> - Returned for auction items enabled with the Buy It Now feature</li> </ul> Code so that your app gracefully handles any future changes to this list.  # noqa: E501
+        A comma separated list of the purchase options available for the item, such as FIXED_PRICE, AUCTION, BEST_OFFER.  <ul> <li><code>FIXED_PRICE</code> - Returned for fixed-price items (non-auction)</li>  <li><code>AUCTION</code> - Returned for auction items without Buy It Now feature</li>  <li><code>FIXED_PRICE</code> and <code>AUCTION</code> - Returned for auction items enabled with the Buy It Now feature</li><li><code>BEST_OFFER</code><br>Items where the buyer can send the seller a price they are willing to pay for the item. The seller can accept, reject, or send a counter offer. For additional information about Best Offer, refer to <a href=\"https://www.ebay.com/help/selling/listings/selling-buy-now/adding-best-offer-listing?id=4144 \" target=\"_blank\">Adding Best Offer to your listing and sending offers to buyers</a>.</li> </ul> Code so that your app gracefully handles any future changes to this list.  # noqa: E501
 
         :param buying_options: The buying_options of this ItemSales.  # noqa: E501
         :type: list[str]

@@ -84,7 +84,7 @@ class InventoryCriterion(object):
     def inventory_items(self):
         """Gets the inventory_items of this InventoryCriterion.  # noqa: E501
 
-        An array of containers for the seller's inventory reference IDs (also known as an \"SKU\" or \"custom label\") to be added to the discount.<br><p class=\"tablenote\"><b>Note:</b> The request can have either <b>inventoryItems</b> or <b>listingIds</b>, but not both.</p><br><b>Maximum:</b> 500 parent items <br><br><b>Maximum SKU or custom label length:</b> 50 characters <br><br><i>Required if</i> <b>InventoryCriterionType</b> is set to <code>INVENTORY_BY_VALUE</code>, you must specify either <b>inventoryItems</b> or <b>listingIds</b>.  # noqa: E501
+        An array of containers for the seller's inventory reference IDs (also known as an \"SKU\" or \"custom label\") to be added to the discount.<br><p class=\"tablenote\"><b>Note:</b> The request can have either <b>inventoryItems</b> or <b>listingIds</b>, but not both.</p><br><b>Maximum:</b> 2000 parent items <br><br><b>Maximum SKU or custom label length:</b> 50 characters <br><br><i>Required if</i> <b>InventoryCriterionType</b> is set to <code>INVENTORY_BY_VALUE</code>, you must specify either <b>inventoryItems</b> or <b>listingIds</b>.  # noqa: E501
 
         :return: The inventory_items of this InventoryCriterion.  # noqa: E501
         :rtype: list[InventoryItem]
@@ -95,7 +95,7 @@ class InventoryCriterion(object):
     def inventory_items(self, inventory_items):
         """Sets the inventory_items of this InventoryCriterion.
 
-        An array of containers for the seller's inventory reference IDs (also known as an \"SKU\" or \"custom label\") to be added to the discount.<br><p class=\"tablenote\"><b>Note:</b> The request can have either <b>inventoryItems</b> or <b>listingIds</b>, but not both.</p><br><b>Maximum:</b> 500 parent items <br><br><b>Maximum SKU or custom label length:</b> 50 characters <br><br><i>Required if</i> <b>InventoryCriterionType</b> is set to <code>INVENTORY_BY_VALUE</code>, you must specify either <b>inventoryItems</b> or <b>listingIds</b>.  # noqa: E501
+        An array of containers for the seller's inventory reference IDs (also known as an \"SKU\" or \"custom label\") to be added to the discount.<br><p class=\"tablenote\"><b>Note:</b> The request can have either <b>inventoryItems</b> or <b>listingIds</b>, but not both.</p><br><b>Maximum:</b> 2000 parent items <br><br><b>Maximum SKU or custom label length:</b> 50 characters <br><br><i>Required if</i> <b>InventoryCriterionType</b> is set to <code>INVENTORY_BY_VALUE</code>, you must specify either <b>inventoryItems</b> or <b>listingIds</b>.  # noqa: E501
 
         :param inventory_items: The inventory_items of this InventoryCriterion.  # noqa: E501
         :type: list[InventoryItem]
@@ -107,7 +107,7 @@ class InventoryCriterion(object):
     def listing_ids(self):
         """Gets the listing_ids of this InventoryCriterion.  # noqa: E501
 
-        An array of eBay listing IDs to be discounted. <br><p class=\"tablenote\"><b>Note:</b> The request can have either <b>inventoryItems</b> or <b>listingIds</b>, but not both.</p>  <br><b>Required:</b> All listings being discounted must offer an electronic payment method.<br><br><b>Maximum:</b> 500 parent items <br><br><b>Maximum SKU or custom label length:</b> 50 characters <br><br><i>Required if</i> <b>InventoryCriterionType</b> is set to <code>INVENTORY_BY_VALUE</code>, you must specify either <b>inventoryItems</b> or <b>listingIds</b>.  # noqa: E501
+        An array of eBay listing IDs to be discounted. <br><p class=\"tablenote\"><b>Note:</b> The request can have either <b>inventoryItems</b> or <b>listingIds</b>, but not both.</p>  <br><b>Required:</b> All listings being discounted must offer an electronic payment method.<br><br><b>Maximum:</b> 2000 parent items <br><br><b>Maximum SKU or custom label length:</b> 50 characters <br><br><i>Required if</i> <b>InventoryCriterionType</b> is set to <code>INVENTORY_BY_VALUE</code>, you must specify either <b>inventoryItems</b> or <b>listingIds</b>.  # noqa: E501
 
         :return: The listing_ids of this InventoryCriterion.  # noqa: E501
         :rtype: list[str]
@@ -118,7 +118,7 @@ class InventoryCriterion(object):
     def listing_ids(self, listing_ids):
         """Sets the listing_ids of this InventoryCriterion.
 
-        An array of eBay listing IDs to be discounted. <br><p class=\"tablenote\"><b>Note:</b> The request can have either <b>inventoryItems</b> or <b>listingIds</b>, but not both.</p>  <br><b>Required:</b> All listings being discounted must offer an electronic payment method.<br><br><b>Maximum:</b> 500 parent items <br><br><b>Maximum SKU or custom label length:</b> 50 characters <br><br><i>Required if</i> <b>InventoryCriterionType</b> is set to <code>INVENTORY_BY_VALUE</code>, you must specify either <b>inventoryItems</b> or <b>listingIds</b>.  # noqa: E501
+        An array of eBay listing IDs to be discounted. <br><p class=\"tablenote\"><b>Note:</b> The request can have either <b>inventoryItems</b> or <b>listingIds</b>, but not both.</p>  <br><b>Required:</b> All listings being discounted must offer an electronic payment method.<br><br><b>Maximum:</b> 2000 parent items <br><br><b>Maximum SKU or custom label length:</b> 50 characters <br><br><i>Required if</i> <b>InventoryCriterionType</b> is set to <code>INVENTORY_BY_VALUE</code>, you must specify either <b>inventoryItems</b> or <b>listingIds</b>.  # noqa: E501
 
         :param listing_ids: The listing_ids of this InventoryCriterion.  # noqa: E501
         :type: list[str]

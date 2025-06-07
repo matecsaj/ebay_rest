@@ -161,7 +161,7 @@ class QuickSetupRequest(object):
     def marketplace_id(self):
         """Gets the marketplace_id of this QuickSetupRequest.  # noqa: E501
 
-        The Id of the marketplace where the campaign is hosted. See the <a href= \"/api-docs/sell/marketing/types/ba:MarketplaceIdEnum\">MarkeplaceIdEnum</a> type for more details.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+        The Id of the marketplace where the campaign is hosted. See the <a href= \"/api-docs/sell/marketing/types/api:MarketplaceIdEnum\">MarkeplaceIdEnum</a> type for more details.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The marketplace_id of this QuickSetupRequest.  # noqa: E501
         :rtype: str
@@ -172,7 +172,7 @@ class QuickSetupRequest(object):
     def marketplace_id(self, marketplace_id):
         """Sets the marketplace_id of this QuickSetupRequest.
 
-        The Id of the marketplace where the campaign is hosted. See the <a href= \"/api-docs/sell/marketing/types/ba:MarketplaceIdEnum\">MarkeplaceIdEnum</a> type for more details.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+        The Id of the marketplace where the campaign is hosted. See the <a href= \"/api-docs/sell/marketing/types/api:MarketplaceIdEnum\">MarkeplaceIdEnum</a> type for more details.  For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :param marketplace_id: The marketplace_id of this QuickSetupRequest.  # noqa: E501
         :type: str

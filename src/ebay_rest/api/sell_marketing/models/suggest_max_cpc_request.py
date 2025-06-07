@@ -74,7 +74,7 @@ class SuggestMaxCpcRequest(object):
     def marketplace_id(self):
         """Gets the marketplace_id of this SuggestMaxCpcRequest.  # noqa: E501
 
-        The unique identifier of the marketplace where the listings are hosted. See <a href=\"/api-docs/sell/marketing/types/ba:MarketplaceIdEnum\" target=\"_blank \">MarketplaceIdEnum</a> for supported values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+        The unique identifier of the marketplace where the listings are hosted. See <a href=\"/api-docs/sell/marketing/types/api:MarketplaceIdEnum\" target=\"_blank \">MarketplaceIdEnum</a> for supported values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The marketplace_id of this SuggestMaxCpcRequest.  # noqa: E501
         :rtype: str
@@ -85,7 +85,7 @@ class SuggestMaxCpcRequest(object):
     def marketplace_id(self, marketplace_id):
         """Sets the marketplace_id of this SuggestMaxCpcRequest.
 
-        The unique identifier of the marketplace where the listings are hosted. See <a href=\"/api-docs/sell/marketing/types/ba:MarketplaceIdEnum\" target=\"_blank \">MarketplaceIdEnum</a> for supported values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
+        The unique identifier of the marketplace where the listings are hosted. See <a href=\"/api-docs/sell/marketing/types/api:MarketplaceIdEnum\" target=\"_blank \">MarketplaceIdEnum</a> for supported values. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/marketing/types/ba:MarketplaceIdEnum'>eBay API documentation</a>  # noqa: E501
 
         :param marketplace_id: The marketplace_id of this SuggestMaxCpcRequest.  # noqa: E501
         :type: str
