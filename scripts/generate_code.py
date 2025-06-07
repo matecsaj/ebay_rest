@@ -14,9 +14,8 @@ import os
 import re
 import shutil
 import sys
-import string
 import time
-from typing import AsyncGenerator, Iterable, List, Optional, Set
+from typing import AsyncGenerator, Dict, Iterable, List, Optional, Set, Union
 
 # Third party imports
 import aiofiles
@@ -150,12 +149,6 @@ class ProcessResult:
 
 
 @dataclass
-class RateInfo:
-    resource_name_base: str
-    resource_name_module: str
-
-
-@dataclass
 class SecurityInfo:
     flow_type: str
     operation_id: str
@@ -282,7 +275,7 @@ class Reference:
     """Class for operations involving a single reference type."""
 
     @staticmethod
-    async def make_json_file(source: dict or list, name: str) -> None:
+    async def make_json_file(source: Union[Dict, List], name: str) -> None:
         """
         Save data to a JSON file, stored in the 'references' directory.
 
@@ -368,9 +361,6 @@ class Reference:
         # load the target webpage
         url = "https://developer.ebay.com/Devzone/merchandising/docs/CallRef/Enums/GlobalIdList.html"
         data = await WebScraper.get_table_via_url(url)
-
-        # The header got messed up and is unlikely to change, so hardcode it
-        cols = ["global_id", "language", "territory", "site_name", "ebay_site_id"]
 
         # convert to a list of GlobalIdValue objects
         global_id_values = []
@@ -471,7 +461,7 @@ class References:
     """Class for operations involving multiple reference types."""
 
     @staticmethod
-    async def generate_all():
+    async def generate_all() -> None:
         """
         Generate all reference JSON files for the 'references' directory found in 'src'.
 
@@ -493,7 +483,7 @@ class Locations:
     target_directory: str = "api"
     target_path: str = os.path.abspath("../src/ebay_rest/" + target_directory)
     cache_path: str = os.path.abspath("./" + target_directory + "_cache")
-    file_ebay_rest = os.path.abspath("../src/ebay_rest/a_p_i.py")
+    file_ebay_rest: str = os.path.abspath("../src/ebay_rest/a_p_i.py")
 
     @staticmethod
     async def ensure_cache():
@@ -514,7 +504,7 @@ class Contract:
     def __init__(self, contract_url) -> None:
         self.data = ContractData(contract_url=contract_url)
 
-    async def process(self):
+    async def process(self) -> None:
         contract_info = await Contract.get_contract_info(self.data.contract_url)
         self.data.category = contract_info.category
         self.data.call = contract_info.call
@@ -594,7 +584,7 @@ class Contract:
             beta=beta,
         )
 
-    async def cache_contract(self):
+    async def cache_contract(self) -> None:
         destination = os.path.join(Locations.cache_path, self.data.file_name)
         async with aiohttp.ClientSession() as session:
             async with session.get(self.data.url) as response:
@@ -689,7 +679,7 @@ class Contract:
                 await f.write(data)
 
     @staticmethod
-    async def run_command(cmd):
+    async def run_command(cmd: str) -> None:
         """Run a command line in a subprocess."""
         logger = logging.getLogger(__name__)
         proc = await asyncio.create_subprocess_shell(
@@ -702,7 +692,7 @@ class Contract:
         if stderr:
             logger.error(f"[stderr]\n{stderr.decode()}")
 
-    async def swagger_codegen(self):
+    async def swagger_codegen(self) -> None:
         source = os.path.join(Locations.cache_path, self.data.file_name)
         destination = f"{Locations.cache_path}/{self.data.name}"
 
@@ -724,11 +714,11 @@ class Contract:
             assert False, f"Please extend main() for your {sys.platform} platform."
         await self.run_command(command)
 
-    async def get_api_name(self):
+    async def get_api_name(self) -> str:
         name = f"{self.data.category}_{self.data.call}"
         return name
 
-    async def get_one_base_paths_and_flows(self):
+    async def get_one_base_paths_and_flows(self) -> BasePathsAndFlows:
         """Process a UTF-8 JSON contract and extract three things for later use.
         1) the base_path for each category_call (e.g., buy_browse)
         2) the security flow for each scope in each category_call
@@ -1023,7 +1013,7 @@ class Contract:
         return code
 
     @staticmethod
-    async def clean_docstring(docstring: string) -> string:
+    async def clean_docstring(docstring: str) -> str:
         # strip HTML
         docstring = BeautifulSoup(docstring, features="html.parser").get_text()
 
@@ -1067,9 +1057,7 @@ class Contract:
     async def _make_method(self, method_info: MethodInfo) -> str:
         """Return the code for one python method."""
 
-        name = method_info.name
         module = method_info.module
-        path = method_info.path
         method = method_info.method
         params = method_info.params
         docstring = method_info.docstring
@@ -1156,10 +1144,6 @@ class Contract:
         # Prepare the rate lookup information that will be used for throttling.
         resource_name_base = name.replace("_", ".")
         resource_name_module = module.replace("_api", "")
-        rate_info = RateInfo(
-            resource_name_base=resource_name_base,
-            resource_name_module=resource_name_module,
-        )
 
         code = f"    def {name}_{method}(self, {params}):{ignore_long}\n"
         code += docstring
@@ -1202,10 +1186,10 @@ class Contract:
 class Contracts:
     """Class for operations involving multiple contracts."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.contracts = []
 
-    async def load_contracts(self, contract_urls):
+    async def load_contracts(self, contract_urls: List[str]) -> None:
         """
         Load Contract instances from the provided URLs.
 
@@ -1216,7 +1200,7 @@ class Contracts:
             contract = Contract(url)
             self.contracts.append(contract)
 
-    async def process_all_contracts(self):
+    async def process_all_contracts(self) -> List[ProcessResult]:
         """
         Process all loaded contracts and return the results.
 
@@ -1235,7 +1219,8 @@ class Contracts:
 
         return results
 
-    async def _process_contract(self, contract):
+    @staticmethod
+    async def _process_contract(contract: Contract) -> ProcessResult:
         """
         Process a single contract and return the result.
 
@@ -1354,8 +1339,7 @@ class Contracts:
 
         return keepers
 
-    @staticmethod
-    async def process_url(contract_url):
+    async def process_url(self, contract_url: str) -> ProcessResult:
         """
         Process a contract URL to extract includes, methods, name, and requirements.
 
@@ -1367,21 +1351,11 @@ class Contracts:
         """
         logging.info(f"Process overview URL {contract_url}.")
         c = Contract(contract_url)
-        await c.process()
-        name = c.data.name
-        requirement_task = asyncio.create_task(c.get_requirements())
-        include_task = asyncio.create_task(c.get_includes())
-        method_task = asyncio.create_task(c.get_methods())
-        requirement = await requirement_task
-        include = await include_task
-        method = await method_task
-        return ProcessResult(
-            include=include, method=method, name=name, requirement=requirement
-        )
+        return await self._process_contract(c)
 
     # This is no longer needed, ebay fixed the problem, but I'm leaving it here for reference.
     @staticmethod
-    async def patch_contract_sell_fulfillment(file_name):
+    async def patch_contract_sell_fulfillment(file_name: str) -> None:
         # In the Sell Fulfillment API, the model 'Address' is returned with the attribute 'countryCode'.
         # However, the JSON specifies 'country' instead; thus Swagger generates the wrong API.
         file_path = os.path.join(Locations.cache_path, file_name)
@@ -1404,7 +1378,7 @@ class Contracts:
                 logging.warning(f"Patching {file_name} is no longer needed.")
 
     @staticmethod
-    async def delete_folder_contents(path_to_folder: str):
+    async def delete_folder_contents(path_to_folder: str) -> None:
         list_dir = os.listdir(path_to_folder)
         for filename in list_dir:
             file_path = os.path.join(path_to_folder, filename)
@@ -1416,7 +1390,7 @@ class Contracts:
                 shutil.rmtree(file_path)
 
     @staticmethod
-    async def purge_existing():
+    async def purge_existing() -> None:
         # purge what might already be there
         for filename in os.listdir(Locations.target_path):
             file_path = os.path.join(Locations.target_path, filename)
@@ -1484,7 +1458,7 @@ class Contracts:
 
         return catalog
 
-    async def generate_all(self):
+    async def generate_all(self) -> None:
         """
         Generate the contents of the api folder in src/ebay_rest and some code in a_p_i.py.
 
@@ -1534,13 +1508,15 @@ class Contracts:
 
 
 class CodeInjector:
-    async def do(self, requirements, includes, methods):
+    async def do(
+        self, requirements: Set[str], includes: List[str], methods: str
+    ) -> None:
         await self.insert_requirements(requirements)
         await self.insert_includes(includes)
         await self.insert_methods(methods)
 
     @staticmethod
-    async def insert_requirements(requirements):
+    async def insert_requirements(requirements: Set[str]) -> None:
         """Merge the required libraries into the master."""
         requirements = list(requirements)
         requirements.sort()
