@@ -515,7 +515,7 @@ class Contract:
         self.data = ContractData(contract_url=contract_url)
 
     async def process(self):
-        contract_info = await Contracts.get_contract_info(self.data.contract_url)
+        contract_info = await Contract.get_contract_info(self.data.contract_url)
         self.data.category = contract_info.category
         self.data.call = contract_info.call
         self.data.url = contract_info.url
@@ -529,6 +529,70 @@ class Contract:
         await self.patch_generated()
         await self.copy_library()
         await self.fix_imports()
+
+    @staticmethod
+    async def get_contract_info(
+        contract_url: str,
+    ) -> ContractInfo:
+        """
+        Async method to parse a contract link and extract key data parts from it.
+
+        This method breaks down the contract link into its constituent parts and retrieves crucial information such
+        as the category, call, url, file_name, version and whether it is a beta contract.
+
+        It does so by splitting the URL and path, conducts string manipulations, and applies regex pattern matching
+        to decipher the version of the contract.
+
+        Args:
+            contract_url (str): The contract link that needs to be parsed.
+
+        Returns:
+            ContractInfo: An object containing 'category', 'call', 'url', 'file_name',
+            'version', and 'beta'.
+        """
+        # split in raw parts
+        url_split = urlsplit(contract_url)
+        path_split = url_split.path.split("/")
+
+        # if the path has a dedicated version number element, example "v2",
+        # then extract the number and remove from the list
+        path_version = None
+        for i in range(len(path_split)):
+            if re.match("^v[0-9]+", path_split[i]):
+                path_version = int(path_split[i][1:])  # extract number part
+                del path_split[i]  # remove the version element
+                break  # exit after first match
+
+        # ensure that the split path had the expected number of elements
+        if len(path_split) != 8:
+            logging.warning(
+                f"The variable path_split should contain 8, not {len(path_split)} items."
+            )
+
+        # get key data from the parts
+        category = path_split[-5]
+        call = path_split[-4].replace("-", "_")
+        url = contract_url
+        file_name = path_split[-1]
+        beta = True if "_beta_" in contract_url else False
+
+        # extract the version number from the filename; for example, version 2 looks like this "_v2_"
+        version_match = re.search(r"_v(\d+)_", file_name)
+        filename_version = int(version_match.group(1)) if version_match else 0
+
+        if path_version and path_version != filename_version:
+            logging.warning(
+                f"Variable path_version {path_version} should equal version {filename_version}."
+            )
+
+        return ContractInfo(
+            category=category,
+            call=call,
+            url=url,
+            file_name=file_name,
+            version=filename_version,
+            beta=beta,
+        )
 
     async def cache_contract(self):
         destination = os.path.join(Locations.cache_path, self.data.file_name)
@@ -1134,34 +1198,64 @@ class Contract:
             camel += part.capitalize()
         return camel
 
-    @staticmethod
-    async def process_url(contract_url):
+
+class Contracts:
+    """Class for operations involving multiple contracts."""
+
+    def __init__(self):
+        self.contracts = []
+
+    async def load_contracts(self, contract_urls):
         """
-        Process a contract URL to extract includes, methods, name, and requirements.
+        Load Contract instances from the provided URLs.
 
         Args:
-            contract_url (str): The contract URL to process.
+            contract_urls (List[str]): List of contract URLs to load.
+        """
+        for url in contract_urls:
+            contract = Contract(url)
+            self.contracts.append(contract)
+
+    async def process_all_contracts(self):
+        """
+        Process all loaded contracts and return the results.
 
         Returns:
-            ProcessResult: An object containing include, method, name, and requirement.
+            List[ProcessResult]: List of processing results.
         """
-        logging.info(f"Process overview URL {contract_url}.")
-        c = Contract(contract_url)
-        await c.process()
-        name = c.data.name
-        requirement_task = asyncio.create_task(c.get_requirements())
-        include_task = asyncio.create_task(c.get_includes())
-        method_task = asyncio.create_task(c.get_methods())
+        tasks = []
+        for contract in self.contracts:
+            task = asyncio.create_task(self._process_contract(contract))
+            tasks.append(task)
+
+        results = []
+        for task in tasks:
+            result = await task
+            results.append(result)
+
+        return results
+
+    async def _process_contract(self, contract):
+        """
+        Process a single contract and return the result.
+
+        Args:
+            contract (Contract): The contract to process.
+
+        Returns:
+            ProcessResult: The processing result.
+        """
+        await contract.process()
+        name = contract.data.name
+        requirement_task = asyncio.create_task(contract.get_requirements())
+        include_task = asyncio.create_task(contract.get_includes())
+        method_task = asyncio.create_task(contract.get_methods())
         requirement = await requirement_task
         include = await include_task
         method = await method_task
         return ProcessResult(
             include=include, method=method, name=name, requirement=requirement
         )
-
-
-class Contracts:
-    """Class for operations involving multiple contracts."""
 
     @staticmethod
     async def get_contract_urls() -> List[str]:
@@ -1236,7 +1330,7 @@ class Contracts:
         junkers = []
 
         contract_infos = await asyncio.gather(
-            *[Contracts.get_contract_info(url) for url in contract_urls]
+            *[Contract.get_contract_info(url) for url in contract_urls]
         )
 
         sorted_contract_infos = sorted(
@@ -1261,67 +1355,28 @@ class Contracts:
         return keepers
 
     @staticmethod
-    async def get_contract_info(
-        contract_url: str,
-    ) -> ContractInfo:
+    async def process_url(contract_url):
         """
-        Async method to parse a contract link and extract key data parts from it.
-
-        This method breaks down the contract link into its constituent parts and retrieves crucial information such
-        as the category, call, url, file_name, version and whether it is a beta contract.
-
-        It does so by splitting the URL and path, conducts string manipulations, and applies regex pattern matching
-        to decipher the version of the contract.
+        Process a contract URL to extract includes, methods, name, and requirements.
 
         Args:
-            contract_url (str): The contract link that needs to be parsed.
+            contract_url (str): The contract URL to process.
 
         Returns:
-            ContractInfo: An object containing 'category', 'call', 'url', 'file_name',
-            'version', and 'beta'.
+            ProcessResult: An object containing include, method, name, and requirement.
         """
-        # split in raw parts
-        url_split = urlsplit(contract_url)
-        path_split = url_split.path.split("/")
-
-        # if the path has a dedicated version number element, example "v2",
-        # then extract the number and remove from the list
-        path_version = None
-        for i in range(len(path_split)):
-            if re.match("^v[0-9]+", path_split[i]):
-                path_version = int(path_split[i][1:])  # extract number part
-                del path_split[i]  # remove the version element
-                break  # exit after first match
-
-        # ensure that the split path had the expected number of elements
-        if len(path_split) != 8:
-            logging.warning(
-                f"The variable path_split should contain 8, not {len(path_split)} items."
-            )
-
-        # get key data from the parts
-        category = path_split[-5]
-        call = path_split[-4].replace("-", "_")
-        url = contract_url
-        file_name = path_split[-1]
-        beta = True if "_beta_" in contract_url else False
-
-        # extract the version number from the filename; for example, version 2 looks like this "_v2_"
-        version_match = re.search(r"_v(\d+)_", file_name)
-        filename_version = int(version_match.group(1)) if version_match else 0
-
-        if path_version and path_version != filename_version:
-            logging.warning(
-                f"Variable path_version {path_version} should equal version {filename_version}."
-            )
-
-        return ContractInfo(
-            category=category,
-            call=call,
-            url=url,
-            file_name=file_name,
-            version=filename_version,
-            beta=beta,
+        logging.info(f"Process overview URL {contract_url}.")
+        c = Contract(contract_url)
+        await c.process()
+        name = c.data.name
+        requirement_task = asyncio.create_task(c.get_requirements())
+        include_task = asyncio.create_task(c.get_includes())
+        method_task = asyncio.create_task(c.get_methods())
+        requirement = await requirement_task
+        include = await include_task
+        method = await method_task
+        return ProcessResult(
+            include=include, method=method, name=name, requirement=requirement
         )
 
     # This is no longer needed, ebay fixed the problem, but I'm leaving it here for reference.
@@ -1429,8 +1484,7 @@ class Contracts:
 
         return catalog
 
-    @staticmethod
-    async def generate_all():
+    async def generate_all(self):
         """
         Generate the contents of the api folder in src/ebay_rest and some code in a_p_i.py.
 
@@ -1443,18 +1497,16 @@ class Contracts:
         await asyncio.gather(Locations.ensure_cache(), Contracts.purge_existing())
 
         limit = 100  # lower to expedite debugging with a reduced data set
-        records = list()
-        tasks = list()
         contract_urls = await Contracts.get_contract_urls()
         contract_urls_deduplicated = await Contracts.deduplicate_contract_urls(
             contract_urls
         )
-        for contract_url in contract_urls_deduplicated[:limit]:
-            task = asyncio.create_task(Contract.process_url(contract_url))
-            tasks.append(task)
-        for task in tasks:
-            record = await task
-            records.append(record)
+
+        # Load contracts from URLs
+        await self.load_contracts(contract_urls_deduplicated[:limit])
+
+        # Process all loaded contracts
+        records = await self.process_all_contracts()
 
         names = list()
         requirements = set()
@@ -1478,7 +1530,7 @@ class Contracts:
                 includes.extend(record.include)
                 methods += record.method
         await CodeInjector().do(requirements, includes, methods)
-        # await Contracts().remove_duplicates(names)     # TODO uncomment the method call when work on it resumes
+        # await self.remove_duplicates(names)     # TODO uncomment the method call when work on it resumes
 
 
 class CodeInjector:
@@ -1566,7 +1618,8 @@ async def main() -> None:
         level=logging.DEBUG,
     )
 
-    await asyncio.gather(Contracts.generate_all(), References.generate_all())
+    contracts = Contracts()
+    await asyncio.gather(contracts.generate_all(), References.generate_all())
     logging.info(f"Run time was {int(time.time() - start)} seconds.")
     return
 
