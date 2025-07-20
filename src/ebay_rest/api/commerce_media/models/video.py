@@ -142,7 +142,7 @@ class Video(object):
     def expiration_date(self):
         """Gets the expiration_date of this Video.  # noqa: E501
 
-        The expiration date of the video in Coordinated Universal Time (UTC). The video's expiration date is automatically set to 30 days after the video's initial upload.  # noqa: E501
+        The date and time when an unused video will expire and be removed from the eBay Video Services server, in Coordinated Universal Time (UTC).<br><br>As long as a video is being used in an active listing, that video will remain on the server and be accessible. If a video is not being used on an active listing, its expiration date is automatically set to 30 days after the video's initial upload.  # noqa: E501
 
         :return: The expiration_date of this Video.  # noqa: E501
         :rtype: str
@@ -153,7 +153,7 @@ class Video(object):
     def expiration_date(self, expiration_date):
         """Sets the expiration_date of this Video.
 
-        The expiration date of the video in Coordinated Universal Time (UTC). The video's expiration date is automatically set to 30 days after the video's initial upload.  # noqa: E501
+        The date and time when an unused video will expire and be removed from the eBay Video Services server, in Coordinated Universal Time (UTC).<br><br>As long as a video is being used in an active listing, that video will remain on the server and be accessible. If a video is not being used on an active listing, its expiration date is automatically set to 30 days after the video's initial upload.  # noqa: E501
 
         :param expiration_date: The expiration_date of this Video.  # noqa: E501
         :type: str

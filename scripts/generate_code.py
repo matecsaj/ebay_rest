@@ -1012,6 +1012,25 @@ class Contract:
 
         return code
 
+    async def get_process_result(self) -> ProcessResult:
+        """
+        Get a ProcessResult object containing the processed contract data.
+
+        Returns:
+            ProcessResult: An object containing include, method, name, and requirement.
+        """
+        await self.process()
+        name = self.data.name
+        requirement_task = asyncio.create_task(self.get_requirements())
+        include_task = asyncio.create_task(self.get_includes())
+        method_task = asyncio.create_task(self.get_methods())
+        requirement = await requirement_task
+        include = await include_task
+        method = await method_task
+        return ProcessResult(
+            include=include, method=method, name=name, requirement=requirement
+        )
+
     @staticmethod
     async def clean_docstring(docstring: str) -> str:
         # strip HTML
@@ -1230,17 +1249,7 @@ class Contracts:
         Returns:
             ProcessResult: The processing result.
         """
-        await contract.process()
-        name = contract.data.name
-        requirement_task = asyncio.create_task(contract.get_requirements())
-        include_task = asyncio.create_task(contract.get_includes())
-        method_task = asyncio.create_task(contract.get_methods())
-        requirement = await requirement_task
-        include = await include_task
-        method = await method_task
-        return ProcessResult(
-            include=include, method=method, name=name, requirement=requirement
-        )
+        return await contract.get_process_result()
 
     @staticmethod
     async def get_contract_urls() -> List[str]:
@@ -1351,7 +1360,7 @@ class Contracts:
         """
         logging.info(f"Process overview URL {contract_url}.")
         c = Contract(contract_url)
-        return await self._process_contract(c)
+        return await c.get_process_result()
 
     # This is no longer needed, ebay fixed the problem, but I'm leaving it here for reference.
     @staticmethod
@@ -1591,7 +1600,7 @@ async def main() -> None:
     # while debugging, it is handy to change the log level from WARNING to INFO or DEBUG
     logging.basicConfig(
         format="%(asctime)s %(levelname)s %(filename)s %(lineno)d %(funcName)s: %(message)s",  # noqa:
-        level=logging.DEBUG,
+        level=logging.INFO,
     )
 
     contracts = Contracts()

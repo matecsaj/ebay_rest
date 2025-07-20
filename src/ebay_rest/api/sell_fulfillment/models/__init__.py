@@ -55,6 +55,7 @@ from ...sell_fulfillment.models.line_item_properties import LineItemProperties
 from ...sell_fulfillment.models.line_item_reference import LineItemReference
 from ...sell_fulfillment.models.line_item_refund import LineItemRefund
 from ...sell_fulfillment.models.linked_order_line_item import LinkedOrderLineItem
+from ...sell_fulfillment.models.model_property import ModelProperty
 from ...sell_fulfillment.models.monetary_transaction import MonetaryTransaction
 from ...sell_fulfillment.models.name_value_pair import NameValuePair
 from ...sell_fulfillment.models.order import Order

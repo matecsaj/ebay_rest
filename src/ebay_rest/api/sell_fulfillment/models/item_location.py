@@ -79,7 +79,7 @@ class ItemLocation(object):
     def location(self):
         """Gets the location of this ItemLocation.  # noqa: E501
 
-        Indicates the geographical location of the item (along with the value in the <strong>countryCode</strong> field). This field provides city, province, state, or similar information.  # noqa: E501
+        Indicates the geographical location of the item (along with the values in the <strong>countryCode</strong> and <b>postalCode</b> fields).<br><br><span class=\"tablenote\"><b>Note:</b> If the item is shipped from a fulfillment center location through the Multi-Warehouse Program, this field will return the geographical location of the fulfillment center closest to the buyer.</span><br>This field provides city, province, state, or similar information.  # noqa: E501
 
         :return: The location of this ItemLocation.  # noqa: E501
         :rtype: str
@@ -90,7 +90,7 @@ class ItemLocation(object):
     def location(self, location):
         """Sets the location of this ItemLocation.
 
-        Indicates the geographical location of the item (along with the value in the <strong>countryCode</strong> field). This field provides city, province, state, or similar information.  # noqa: E501
+        Indicates the geographical location of the item (along with the values in the <strong>countryCode</strong> and <b>postalCode</b> fields).<br><br><span class=\"tablenote\"><b>Note:</b> If the item is shipped from a fulfillment center location through the Multi-Warehouse Program, this field will return the geographical location of the fulfillment center closest to the buyer.</span><br>This field provides city, province, state, or similar information.  # noqa: E501
 
         :param location: The location of this ItemLocation.  # noqa: E501
         :type: str

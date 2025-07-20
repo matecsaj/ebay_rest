@@ -29,6 +29,7 @@ class LineItem(object):
     """
     swagger_types = {
         'applied_promotions': 'list[AppliedPromotion]',
+        'compatibility_properties': 'list[ModelProperty]',
         'delivery_cost': 'DeliveryCost',
         'discounted_line_item_cost': 'Amount',
         'ebay_collect_and_remit_taxes': 'list[EbayCollectAndRemitTax]',
@@ -57,6 +58,7 @@ class LineItem(object):
 
     attribute_map = {
         'applied_promotions': 'appliedPromotions',
+        'compatibility_properties': 'compatibilityProperties',
         'delivery_cost': 'deliveryCost',
         'discounted_line_item_cost': 'discountedLineItemCost',
         'ebay_collect_and_remit_taxes': 'ebayCollectAndRemitTaxes',
@@ -83,9 +85,10 @@ class LineItem(object):
         'variation_aspects': 'variationAspects'
     }
 
-    def __init__(self, applied_promotions=None, delivery_cost=None, discounted_line_item_cost=None, ebay_collect_and_remit_taxes=None, ebay_collected_charges=None, gift_details=None, item_location=None, legacy_item_id=None, legacy_variation_id=None, line_item_cost=None, line_item_fulfillment_instructions=None, line_item_fulfillment_status=None, line_item_id=None, linked_order_line_items=None, listing_marketplace_id=None, properties=None, purchase_marketplace_id=None, quantity=None, refunds=None, sku=None, sold_format=None, taxes=None, title=None, total=None, variation_aspects=None):  # noqa: E501
+    def __init__(self, applied_promotions=None, compatibility_properties=None, delivery_cost=None, discounted_line_item_cost=None, ebay_collect_and_remit_taxes=None, ebay_collected_charges=None, gift_details=None, item_location=None, legacy_item_id=None, legacy_variation_id=None, line_item_cost=None, line_item_fulfillment_instructions=None, line_item_fulfillment_status=None, line_item_id=None, linked_order_line_items=None, listing_marketplace_id=None, properties=None, purchase_marketplace_id=None, quantity=None, refunds=None, sku=None, sold_format=None, taxes=None, title=None, total=None, variation_aspects=None):  # noqa: E501
         """LineItem - a model defined in Swagger"""  # noqa: E501
         self._applied_promotions = None
+        self._compatibility_properties = None
         self._delivery_cost = None
         self._discounted_line_item_cost = None
         self._ebay_collect_and_remit_taxes = None
@@ -113,6 +116,8 @@ class LineItem(object):
         self.discriminator = None
         if applied_promotions is not None:
             self.applied_promotions = applied_promotions
+        if compatibility_properties is not None:
+            self.compatibility_properties = compatibility_properties
         if delivery_cost is not None:
             self.delivery_cost = delivery_cost
         if discounted_line_item_cost is not None:
@@ -184,6 +189,29 @@ class LineItem(object):
         """
 
         self._applied_promotions = applied_promotions
+
+    @property
+    def compatibility_properties(self):
+        """Gets the compatibility_properties of this LineItem.  # noqa: E501
+
+        This array is only returned for a Parts & Accessory item, and identifies the buyer's motor vehicle that is compatible with the part or accessory.  # noqa: E501
+
+        :return: The compatibility_properties of this LineItem.  # noqa: E501
+        :rtype: list[ModelProperty]
+        """
+        return self._compatibility_properties
+
+    @compatibility_properties.setter
+    def compatibility_properties(self, compatibility_properties):
+        """Sets the compatibility_properties of this LineItem.
+
+        This array is only returned for a Parts & Accessory item, and identifies the buyer's motor vehicle that is compatible with the part or accessory.  # noqa: E501
+
+        :param compatibility_properties: The compatibility_properties of this LineItem.  # noqa: E501
+        :type: list[ModelProperty]
+        """
+
+        self._compatibility_properties = compatibility_properties
 
     @property
     def delivery_cost(self):

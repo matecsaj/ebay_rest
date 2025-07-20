@@ -646,7 +646,7 @@ class ItemSummary(object):
     def item_end_date(self):
         """Gets the item_end_date of this ItemSummary.  # noqa: E501
 
-        A timestamp that indicates the date and time an auction listing will end.<br><br>This value is returned in UTC format (<code>yyyy-MM-ddThh:mm:ss.sssZ</code>), which can be converted into the local time of the buyer.  # noqa: E501
+        A timestamp that indicates the date and time a listing is scheduled to end.<br><br>This value is returned in UTC format (<code>yyyy-MM-ddThh:mm:ss.sssZ</code>), which can be converted into the local time of the buyer.  # noqa: E501
 
         :return: The item_end_date of this ItemSummary.  # noqa: E501
         :rtype: str
@@ -657,7 +657,7 @@ class ItemSummary(object):
     def item_end_date(self, item_end_date):
         """Sets the item_end_date of this ItemSummary.
 
-        A timestamp that indicates the date and time an auction listing will end.<br><br>This value is returned in UTC format (<code>yyyy-MM-ddThh:mm:ss.sssZ</code>), which can be converted into the local time of the buyer.  # noqa: E501
+        A timestamp that indicates the date and time a listing is scheduled to end.<br><br>This value is returned in UTC format (<code>yyyy-MM-ddThh:mm:ss.sssZ</code>), which can be converted into the local time of the buyer.  # noqa: E501
 
         :param item_end_date: The item_end_date of this ItemSummary.  # noqa: E501
         :type: str
