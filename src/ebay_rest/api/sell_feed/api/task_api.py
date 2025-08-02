@@ -43,8 +43,9 @@ class TaskApi(object):
 
         :param async_req bool
         :param CreateTaskRequest body: description not needed (required)
-        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. <br><br>For example:<br><br><code>X-EBAY-C-MARKETPLACE-ID:EBAY_US</code><br><br>This identifies the eBay marketplace that applies to this task. See <a href=\"/api-docs/sell/feed/types/bas:MarketplaceIdEnum\">MarketplaceIdEnum</a> for supported values.</p> (required)
+        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. <br><br>For example:<br><br><code>X-EBAY-C-MARKETPLACE-ID:EBAY_US</code><br><br>This identifies the eBay marketplace that applies to this task. See <a href=\"/api-docs/sell/feed/types/bas:MarketplaceIdEnum\">MarketplaceIdEnum</a> for supported values.<br><br><span class=\"tablenote\"><b>Note:</b> When listing the items in the feed file on the French Canada and French Belgium marketplaces, also set the <b>Accept-Language</b> header as needed.</span> (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param str accept_language: The Accept-Language header is required for listing items in the French Canada and French Belgium marketplaces. Set the following headers to list items on these marketplaces:<br><ul><li><b>French Canada</b>: Set the <b>X-EBAY-C-MARKETPLACE-ID</b> header value to <code>EBAY_CA</code> and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li><li><b>French Belgium</b>: Set the <b>X-EBAY-C-MARKETPLACE-ID</b> header value to <code>EBAY_BE</code> and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li></ul>
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -67,14 +68,15 @@ class TaskApi(object):
 
         :param async_req bool
         :param CreateTaskRequest body: description not needed (required)
-        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. <br><br>For example:<br><br><code>X-EBAY-C-MARKETPLACE-ID:EBAY_US</code><br><br>This identifies the eBay marketplace that applies to this task. See <a href=\"/api-docs/sell/feed/types/bas:MarketplaceIdEnum\">MarketplaceIdEnum</a> for supported values.</p> (required)
+        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. <br><br>For example:<br><br><code>X-EBAY-C-MARKETPLACE-ID:EBAY_US</code><br><br>This identifies the eBay marketplace that applies to this task. See <a href=\"/api-docs/sell/feed/types/bas:MarketplaceIdEnum\">MarketplaceIdEnum</a> for supported values.<br><br><span class=\"tablenote\"><b>Note:</b> When listing the items in the feed file on the French Canada and French Belgium marketplaces, also set the <b>Accept-Language</b> header as needed.</span> (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>application/json</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param str accept_language: The Accept-Language header is required for listing items in the French Canada and French Belgium marketplaces. Set the following headers to list items on these marketplaces:<br><ul><li><b>French Canada</b>: Set the <b>X-EBAY-C-MARKETPLACE-ID</b> header value to <code>EBAY_CA</code> and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li><li><b>French Belgium</b>: Set the <b>X-EBAY-C-MARKETPLACE-ID</b> header value to <code>EBAY_BE</code> and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li></ul>
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['body', 'x_ebay_c_marketplace_id', 'content_type']  # noqa: E501
+        all_params = ['body', 'x_ebay_c_marketplace_id', 'content_type', 'accept_language']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -113,6 +115,8 @@ class TaskApi(object):
             header_params['X-EBAY-C-MARKETPLACE-ID'] = params['x_ebay_c_marketplace_id']  # noqa: E501
         if 'content_type' in params:
             header_params['Content-Type'] = params['content_type']  # noqa: E501
+        if 'accept_language' in params:
+            header_params['Accept-Language'] = params['accept_language']  # noqa: E501
 
         form_params = []
         local_var_files = {}

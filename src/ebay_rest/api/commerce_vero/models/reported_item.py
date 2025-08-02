@@ -3,7 +3,7 @@
 """
     Vero Public API's
 
-    The VeRO API has methods that allow owners of an intellectual property to report eBay listings that infringe on their intellectual property rights. It contains methods to report a listing, retrieve supported VeRO reason codes, and retrieve the status of submitted and items.  # noqa: E501
+    The VeRO API has methods that allow owners of an intellectual property to report eBay listings that infringe on their intellectual property rights. It contains methods to report a listing, retrieve supported VeRO reason codes, and retrieve the status of reported items.  # noqa: E501
 
     OpenAPI spec version: 1.0.0
     

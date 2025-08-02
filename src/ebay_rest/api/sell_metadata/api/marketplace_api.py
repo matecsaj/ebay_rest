@@ -147,6 +147,7 @@ class MarketplaceApi(object):
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by only returning metadata for the specified leaf categories. Supply the <b>categoryId</b> for one or more leaf categories. You can verify if a category is a leaf category by using the <a href=\"/api-docs/commerce/taxonomy/overview.html\" target=\"_blank \">Taxonomy API</a> and looking for a <code>\"leafCategory\": true</code> tag.  <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.<br><br><b>Example:</b> <code>filter=categoryIds:{3767|171784}</code>
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: CategoryPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -170,12 +171,13 @@ class MarketplaceApi(object):
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by only returning metadata for the specified leaf categories. Supply the <b>categoryId</b> for one or more leaf categories. You can verify if a category is a leaf category by using the <a href=\"/api-docs/commerce/taxonomy/overview.html\" target=\"_blank \">Taxonomy API</a> and looking for a <code>\"leafCategory\": true</code> tag.  <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.<br><br><b>Example:</b> <code>filter=categoryIds:{3767|171784}</code>
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: CategoryPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['marketplace_id', 'filter']  # noqa: E501
+        all_params = ['marketplace_id', 'filter', 'accept_language']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -206,6 +208,8 @@ class MarketplaceApi(object):
             query_params.append(('filter', params['filter']))  # noqa: E501
 
         header_params = {}
+        if 'accept_language' in params:
+            header_params['Accept-Language'] = params['accept_language']  # noqa: E501
 
         form_params = []
         local_var_files = {}
@@ -246,6 +250,7 @@ class MarketplaceApi(object):
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.<br><br>See <a href=\"/api-docs/sell/metadata/types/bas:MarketplaceIdEnum\" target=\"_blank\">MarketplaceIdEnum</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by only returning metadata for the specified leaf categories. Supply the <b>categoryId</b> for one or more leaf categories. You can verify if a category is a leaf category by using the <a href=\"/api-docs/commerce/taxonomy/overview.html\" target=\"_blank \">Taxonomy API</a> and looking for a <code>\"leafCategory\": true</code> tag.   <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.<br><br><b>Example:</b><code>filter=categoryIds:{3767|171784}</code>
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: ClassifiedAdPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -269,12 +274,13 @@ class MarketplaceApi(object):
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.<br><br>See <a href=\"/api-docs/sell/metadata/types/bas:MarketplaceIdEnum\" target=\"_blank\">MarketplaceIdEnum</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by only returning metadata for the specified leaf categories. Supply the <b>categoryId</b> for one or more leaf categories. You can verify if a category is a leaf category by using the <a href=\"/api-docs/commerce/taxonomy/overview.html\" target=\"_blank \">Taxonomy API</a> and looking for a <code>\"leafCategory\": true</code> tag.   <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.<br><br><b>Example:</b><code>filter=categoryIds:{3767|171784}</code>
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: ClassifiedAdPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['marketplace_id', 'filter']  # noqa: E501
+        all_params = ['marketplace_id', 'filter', 'accept_language']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -305,6 +311,8 @@ class MarketplaceApi(object):
             query_params.append(('filter', params['filter']))  # noqa: E501
 
         header_params = {}
+        if 'accept_language' in params:
+            header_params['Accept-Language'] = params['accept_language']  # noqa: E501
 
         form_params = []
         local_var_files = {}
@@ -344,7 +352,7 @@ class MarketplaceApi(object):
 
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which currency information is retrieved.<br><br>See the <a href=\"/api-docs/sell/metadata/types/bas:MarketplaceIdEnum\" target=\"_blank\">MarketplaceIdEnum</a> type for a list of supported eBay marketplace ID values. (required)
-        :param str accept_language: This header is used to indicate the natural language and locale for the response and is used when targeting a specific locale of a marketplace that supports multiple locales. <br><br>For the eBay Belgium and eBay Canada marketplaces, make sure to add this header as required. For example:<ul><li>When targeting the French locale of the Belgium marketplace, pass in <code>fr-BE</code> to specify this. If this locale is not specified, the language will default to Dutch.</li><li>When targeting the French locale of the Canadian marketplace, pass in <code>fr-CA</code> to specify this. If this locale is not specified, the language will default to English.</li></ul>
+        :param str accept_language: This header is required to retrieve metadata for the French Canada and French Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.<br><br><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_BE</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the Dutch Belgium marketplace.</span></li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code> and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span></ul>
         :return: GetCurrenciesResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -367,7 +375,7 @@ class MarketplaceApi(object):
 
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which currency information is retrieved.<br><br>See the <a href=\"/api-docs/sell/metadata/types/bas:MarketplaceIdEnum\" target=\"_blank\">MarketplaceIdEnum</a> type for a list of supported eBay marketplace ID values. (required)
-        :param str accept_language: This header is used to indicate the natural language and locale for the response and is used when targeting a specific locale of a marketplace that supports multiple locales. <br><br>For the eBay Belgium and eBay Canada marketplaces, make sure to add this header as required. For example:<ul><li>When targeting the French locale of the Belgium marketplace, pass in <code>fr-BE</code> to specify this. If this locale is not specified, the language will default to Dutch.</li><li>When targeting the French locale of the Canadian marketplace, pass in <code>fr-CA</code> to specify this. If this locale is not specified, the language will default to English.</li></ul>
+        :param str accept_language: This header is required to retrieve metadata for the French Canada and French Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.<br><br><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_BE</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the Dutch Belgium marketplace.</span></li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code> and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span></ul>
         :return: GetCurrenciesResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -445,6 +453,7 @@ class MarketplaceApi(object):
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information shall be retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: A query parameter that can be used to limit the response by returning policy information for only the selected sections of the category tree. Supply <b>categoryId</b> values for the sections of the tree that should be returned.<br><br>When a <b>categoryId</b> value is specified, the returned category tree includes the policies for that parent node, as well as the policies for any child nodes below that parent node.<br><br>Pass in the <b>categoryId</b> values using a URL-encoded, pipe-separated ('|') list. For example:<br><br><code>filter=categoryIds%3A%7B100%7C101%7C102%7D</code><br><br><b>Maximum:</b> 50
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to <code>gzip</code>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>.
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: ExtendedProducerResponsibilityPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -469,12 +478,13 @@ class MarketplaceApi(object):
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information shall be retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: A query parameter that can be used to limit the response by returning policy information for only the selected sections of the category tree. Supply <b>categoryId</b> values for the sections of the tree that should be returned.<br><br>When a <b>categoryId</b> value is specified, the returned category tree includes the policies for that parent node, as well as the policies for any child nodes below that parent node.<br><br>Pass in the <b>categoryId</b> values using a URL-encoded, pipe-separated ('|') list. For example:<br><br><code>filter=categoryIds%3A%7B100%7C101%7C102%7D</code><br><br><b>Maximum:</b> 50
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to <code>gzip</code>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>.
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: ExtendedProducerResponsibilityPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['marketplace_id', 'filter', 'accept_encoding']  # noqa: E501
+        all_params = ['marketplace_id', 'filter', 'accept_encoding', 'accept_language']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -507,6 +517,8 @@ class MarketplaceApi(object):
         header_params = {}
         if 'accept_encoding' in params:
             header_params['Accept-Encoding'] = params['accept_encoding']  # noqa: E501
+        if 'accept_language' in params:
+            header_params['Accept-Language'] = params['accept_language']  # noqa: E501
 
         form_params = []
         local_var_files = {}
@@ -546,6 +558,7 @@ class MarketplaceApi(object):
 
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which hazardous materials label information shall be retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: HazardousMaterialDetailsResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -568,12 +581,13 @@ class MarketplaceApi(object):
 
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which hazardous materials label information shall be retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: HazardousMaterialDetailsResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['marketplace_id']  # noqa: E501
+        all_params = ['marketplace_id', 'accept_language']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -602,6 +616,8 @@ class MarketplaceApi(object):
         query_params = []
 
         header_params = {}
+        if 'accept_language' in params:
+            header_params['Accept-Language'] = params['accept_language']  # noqa: E501
 
         form_params = []
         local_var_files = {}
@@ -643,6 +659,7 @@ class MarketplaceApi(object):
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply <b>categoryId</b> values for the sections of the tree you want returned.  <br><br>When you specify a <b>categoryId</b> value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  <br><br><b>Example:</b> <code>filter=categoryIds:{100|101|102}</code>  <br><br>Note that you must URL-encode the parameter list, which results in the following filter for the above example: <br><br> &nbsp;&nbsp;<code>filter=categoryIds%3A%7B100%7C101%7C102%7D</code>
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to <code>gzip</code>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>.
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: ItemConditionPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -667,12 +684,13 @@ class MarketplaceApi(object):
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply <b>categoryId</b> values for the sections of the tree you want returned.  <br><br>When you specify a <b>categoryId</b> value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  <br><br><b>Example:</b> <code>filter=categoryIds:{100|101|102}</code>  <br><br>Note that you must URL-encode the parameter list, which results in the following filter for the above example: <br><br> &nbsp;&nbsp;<code>filter=categoryIds%3A%7B100%7C101%7C102%7D</code>
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to <code>gzip</code>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>.
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: ItemConditionPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['marketplace_id', 'filter', 'accept_encoding']  # noqa: E501
+        all_params = ['marketplace_id', 'filter', 'accept_encoding', 'accept_language']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -705,6 +723,8 @@ class MarketplaceApi(object):
         header_params = {}
         if 'accept_encoding' in params:
             header_params['Accept-Encoding'] = params['accept_encoding']  # noqa: E501
+        if 'accept_language' in params:
+            header_params['Accept-Language'] = params['accept_language']  # noqa: E501
 
         form_params = []
         local_var_files = {}
@@ -746,6 +766,7 @@ class MarketplaceApi(object):
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved. <br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply <b>categoryId</b> values for the sections of the tree you want returned.  <br><br>When you specify a <b>categoryId</b> value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  <br><br><b>Example:</b> <code>filter=categoryIds:{100|101|102}</code>  <br><br>Note that you must URL-encode the parameter list, which results in the following filter for the above example: <br><br> &nbsp;&nbsp;<code>filter=categoryIds%3A%7B100%7C101%7C102%7D</code>
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to <code>gzip</code>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>.
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: ListingStructurePolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -770,12 +791,13 @@ class MarketplaceApi(object):
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved. <br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply <b>categoryId</b> values for the sections of the tree you want returned.  <br><br>When you specify a <b>categoryId</b> value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  <br><br><b>Example:</b> <code>filter=categoryIds:{100|101|102}</code>  <br><br>Note that you must URL-encode the parameter list, which results in the following filter for the above example: <br><br> &nbsp;&nbsp;<code>filter=categoryIds%3A%7B100%7C101%7C102%7D</code>
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to <code>gzip</code>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>.
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: ListingStructurePolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['marketplace_id', 'filter', 'accept_encoding']  # noqa: E501
+        all_params = ['marketplace_id', 'filter', 'accept_encoding', 'accept_language']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -808,6 +830,8 @@ class MarketplaceApi(object):
         header_params = {}
         if 'accept_encoding' in params:
             header_params['Accept-Encoding'] = params['accept_encoding']  # noqa: E501
+        if 'accept_language' in params:
+            header_params['Accept-Language'] = params['accept_language']  # noqa: E501
 
         form_params = []
         local_var_files = {}
@@ -848,6 +872,7 @@ class MarketplaceApi(object):
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by only returning metadata for the specified leaf categories. Supply the <b>categoryId</b> for one or more leaf categories. You can verify if a category is a leaf category by using the <a href=\"/api-docs/commerce/taxonomy/overview.html\" target=\"_blank \">Taxonomy API</a> and looking for a <code>\"leafCategory\": true</code> tag.<br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.<br><br><b>Example:</b> <code>filter=categoryIds:{3767|171784}</code>
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: ListingTypePoliciesResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -871,12 +896,13 @@ class MarketplaceApi(object):
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by only returning metadata for the specified leaf categories. Supply the <b>categoryId</b> for one or more leaf categories. You can verify if a category is a leaf category by using the <a href=\"/api-docs/commerce/taxonomy/overview.html\" target=\"_blank \">Taxonomy API</a> and looking for a <code>\"leafCategory\": true</code> tag.<br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.<br><br><b>Example:</b> <code>filter=categoryIds:{3767|171784}</code>
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: ListingTypePoliciesResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['marketplace_id', 'filter']  # noqa: E501
+        all_params = ['marketplace_id', 'filter', 'accept_language']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -907,6 +933,8 @@ class MarketplaceApi(object):
             query_params.append(('filter', params['filter']))  # noqa: E501
 
         header_params = {}
+        if 'accept_language' in params:
+            header_params['Accept-Language'] = params['accept_language']  # noqa: E501
 
         form_params = []
         local_var_files = {}
@@ -947,6 +975,7 @@ class MarketplaceApi(object):
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by only returning metadata for the specified leaf categories. Supply the <b>categoryId</b> for one or more leaf categories. You can verify if a category is a leaf category by using the <a href=\"/api-docs/commerce/taxonomy/overview.html\" target=\"_blank \">Taxonomy API</a> and looking for a <code>\"leafCategory\": true</code> tag. <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.<br><br><b>Example:</b> <code>filter=categoryIds:{3767|171784}</code>
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: MotorsListingPoliciesResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -970,12 +999,13 @@ class MarketplaceApi(object):
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by only returning metadata for the specified leaf categories. Supply the <b>categoryId</b> for one or more leaf categories. You can verify if a category is a leaf category by using the <a href=\"/api-docs/commerce/taxonomy/overview.html\" target=\"_blank \">Taxonomy API</a> and looking for a <code>\"leafCategory\": true</code> tag. <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.<br><br><b>Example:</b> <code>filter=categoryIds:{3767|171784}</code>
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: MotorsListingPoliciesResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['marketplace_id', 'filter']  # noqa: E501
+        all_params = ['marketplace_id', 'filter', 'accept_language']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -1006,6 +1036,8 @@ class MarketplaceApi(object):
             query_params.append(('filter', params['filter']))  # noqa: E501
 
         header_params = {}
+        if 'accept_language' in params:
+            header_params['Accept-Language'] = params['accept_language']  # noqa: E501
 
         form_params = []
         local_var_files = {}
@@ -1047,6 +1079,7 @@ class MarketplaceApi(object):
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply <b>categoryId</b> values for the sections of the tree you want returned.  <br><br>When you specify a <b>categoryId</b> value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  <br><br><b>Example:</b> <code>filter=categoryIds:{100|101|102}</code>  <br><br>Note that you must URL-encode the parameter list, which results in the following filter for the above example: <br><br> &nbsp;&nbsp;<code>filter=categoryIds%3A%7B100%7C101%7C102%7D</code>
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to <code>gzip</code>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>.
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: NegotiatedPricePolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1071,12 +1104,13 @@ class MarketplaceApi(object):
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply <b>categoryId</b> values for the sections of the tree you want returned.  <br><br>When you specify a <b>categoryId</b> value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  <br><br><b>Example:</b> <code>filter=categoryIds:{100|101|102}</code>  <br><br>Note that you must URL-encode the parameter list, which results in the following filter for the above example: <br><br> &nbsp;&nbsp;<code>filter=categoryIds%3A%7B100%7C101%7C102%7D</code>
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to <code>gzip</code>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>.
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: NegotiatedPricePolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['marketplace_id', 'filter', 'accept_encoding']  # noqa: E501
+        all_params = ['marketplace_id', 'filter', 'accept_encoding', 'accept_language']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -1109,6 +1143,8 @@ class MarketplaceApi(object):
         header_params = {}
         if 'accept_encoding' in params:
             header_params['Accept-Encoding'] = params['accept_encoding']  # noqa: E501
+        if 'accept_language' in params:
+            header_params['Accept-Language'] = params['accept_language']  # noqa: E501
 
         form_params = []
         local_var_files = {}
@@ -1244,6 +1280,7 @@ class MarketplaceApi(object):
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information shall be retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values.<span class=\"tablenote\"><span style=\"color:#478415\"><strong>Note: </strong></span>This method is not supported in the <code>EBAY_HK</code>, <code>EBAY_MY</code>, <code>EBAY_TW</code>, or <code>EBAY_PH</code> marketplaces.</span> (required)
         :param str filter: A query parameter that can be used to limit the response by returning policy information for only the selected sections of the category tree. Supply <b>categoryId</b> values for the sections of the tree that should be returned.<br><br>Pass in the <b>categoryId</b> values using a URL-encoded, pipe-separated ('|') list. For example: <br><br><code>filter=categoryIds%3A%7B100%7C101%7C102%7D</code><br><br><b>Maximum:</b> 50
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: RegulatoryPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1267,12 +1304,13 @@ class MarketplaceApi(object):
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information shall be retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values.<span class=\"tablenote\"><span style=\"color:#478415\"><strong>Note: </strong></span>This method is not supported in the <code>EBAY_HK</code>, <code>EBAY_MY</code>, <code>EBAY_TW</code>, or <code>EBAY_PH</code> marketplaces.</span> (required)
         :param str filter: A query parameter that can be used to limit the response by returning policy information for only the selected sections of the category tree. Supply <b>categoryId</b> values for the sections of the tree that should be returned.<br><br>Pass in the <b>categoryId</b> values using a URL-encoded, pipe-separated ('|') list. For example: <br><br><code>filter=categoryIds%3A%7B100%7C101%7C102%7D</code><br><br><b>Maximum:</b> 50
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: RegulatoryPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['marketplace_id', 'filter']  # noqa: E501
+        all_params = ['marketplace_id', 'filter', 'accept_language']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -1303,6 +1341,8 @@ class MarketplaceApi(object):
             query_params.append(('filter', params['filter']))  # noqa: E501
 
         header_params = {}
+        if 'accept_language' in params:
+            header_params['Accept-Language'] = params['accept_language']  # noqa: E501
 
         form_params = []
         local_var_files = {}
@@ -1344,6 +1384,7 @@ class MarketplaceApi(object):
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply <b>categoryId</b> values for the sections of the tree you want returned.  <br><br>When you specify a <b>categoryId</b> value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  <br><br><b>Example:</b> <code>filter=categoryIds:{100|101|102}</code>  <br><br>Note that you must URL-encode the parameter list, which results in the following filter for the above example: <br><br> &nbsp;&nbsp;<code>filter=categoryIds%3A%7B100%7C101%7C102%7D</code>
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to <code>gzip</code>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>.
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: ReturnPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1368,12 +1409,13 @@ class MarketplaceApi(object):
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply <b>categoryId</b> values for the sections of the tree you want returned.  <br><br>When you specify a <b>categoryId</b> value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  <br><br><b>Example:</b> <code>filter=categoryIds:{100|101|102}</code>  <br><br>Note that you must URL-encode the parameter list, which results in the following filter for the above example: <br><br> &nbsp;&nbsp;<code>filter=categoryIds%3A%7B100%7C101%7C102%7D</code>
         :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to <code>gzip</code>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>.
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: ReturnPolicyResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['marketplace_id', 'filter', 'accept_encoding']  # noqa: E501
+        all_params = ['marketplace_id', 'filter', 'accept_encoding', 'accept_language']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -1406,6 +1448,8 @@ class MarketplaceApi(object):
         header_params = {}
         if 'accept_encoding' in params:
             header_params['Accept-Encoding'] = params['accept_encoding']  # noqa: E501
+        if 'accept_language' in params:
+            header_params['Accept-Language'] = params['accept_language']  # noqa: E501
 
         form_params = []
         local_var_files = {}
@@ -1446,6 +1490,7 @@ class MarketplaceApi(object):
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by only returning metadata for the specified leaf categories. Supply the <b>categoryId</b> for one or more leaf categories. You can verify if a category is a leaf category by using the <a href=\"/api-docs/commerce/taxonomy/overview.html\" target=\"_blank \">Taxonomy API</a> and looking for a <code>\"leafCategory\": true</code> tag. <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.<br><br><b>Example:</b> <code>filter=categoryIds:{3767|171784}</code>
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: ShippingPoliciesResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1469,12 +1514,13 @@ class MarketplaceApi(object):
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by only returning metadata for the specified leaf categories. Supply the <b>categoryId</b> for one or more leaf categories. You can verify if a category is a leaf category by using the <a href=\"/api-docs/commerce/taxonomy/overview.html\" target=\"_blank \">Taxonomy API</a> and looking for a <code>\"leafCategory\": true</code> tag. <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.<br><br><b>Example:</b> <code>filter=categoryIds:{3767|171784}</code>
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: ShippingPoliciesResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['marketplace_id', 'filter']  # noqa: E501
+        all_params = ['marketplace_id', 'filter', 'accept_language']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -1505,6 +1551,8 @@ class MarketplaceApi(object):
             query_params.append(('filter', params['filter']))  # noqa: E501
 
         header_params = {}
+        if 'accept_language' in params:
+            header_params['Accept-Language'] = params['accept_language']  # noqa: E501
 
         form_params = []
         local_var_files = {}
@@ -1545,6 +1593,7 @@ class MarketplaceApi(object):
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by only returning metadata for the specified leaf categories. Supply the <b>categoryId</b> for one or more leaf categories. You can verify if a category is a leaf category by using the <a href=\"/api-docs/commerce/taxonomy/overview.html\" target=\"_blank \">Taxonomy API</a> and looking for a <code>\"leafCategory\": true</code> tag. <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.<br><br><b>Example:</b><code>filter=categoryIds:{3767|171784}</code>
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: SiteVisibilityPoliciesResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1568,12 +1617,13 @@ class MarketplaceApi(object):
         :param async_req bool
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.<br><br>See <a href=\"/api-docs/static/rest-request-components.html#marketpl\" target=\"_blank\">HTTP Request Headers</a> for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by only returning metadata for the specified leaf categories. Supply the <b>categoryId</b> for one or more leaf categories. You can verify if a category is a leaf category by using the <a href=\"/api-docs/commerce/taxonomy/overview.html\" target=\"_blank \">Taxonomy API</a> and looking for a <code>\"leafCategory\": true</code> tag. <br><br>The parameter takes a list of <b>categoryId</b> values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 <code>categoryId</code> values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.<br><br><b>Example:</b><code>filter=categoryIds:{3767|171784}</code>
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.<br><br>Follow the instructions below to retrieve metadata for these three marketplaces:<ul><li><b>French Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-BE</code>.</li><li><b>Dutch Belgium</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_BE</code>, and include the <b>Accept-Language</b> header with a value of <code>nl-BE</code>.</li><li><b>French Canada</b>: Set the <b>marketplace_id</b> path parameter value to <code>EBAY_CA</code>, and include the <b>Accept-Language</b> header with a value of <code>fr-CA</code>.</li></ul><span class=\"tablenote\"><b>Note:</b> If <code>EBAY_CA</code> is set as the <b>marketplace_id</b> path parameter and the <b>Accept-Language</b> header is not used, the marketplace will default to the English Canada marketplace.</span>
         :return: SiteVisibilityPoliciesResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['marketplace_id', 'filter']  # noqa: E501
+        all_params = ['marketplace_id', 'filter', 'accept_language']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -1604,6 +1654,8 @@ class MarketplaceApi(object):
             query_params.append(('filter', params['filter']))  # noqa: E501
 
         header_params = {}
+        if 'accept_language' in params:
+            header_params['Accept-Language'] = params['accept_language']  # noqa: E501
 
         form_params = []
         local_var_files = {}

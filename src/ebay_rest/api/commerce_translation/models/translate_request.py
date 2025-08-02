@@ -61,7 +61,7 @@ class TranslateRequest(object):
     def _from(self):
         """Gets the _from of this TranslateRequest.  # noqa: E501
 
-        The language of the input text to be translated. Not all <b>LanguageEnum</b> values are supported in this field. For a full list of supported language pairings, see the Supported languages table in the <a href=\"/api-docs/commerce/translation/overview.html#supported-languages\">API Overview</a> page. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/translation/types/api:LanguageEnum'>eBay API documentation</a>  # noqa: E501
+        The language of the input text to be translated. Not all <b>LanguageEnum</b> values are supported in this field. For a full list of supported language pairings, see the Supported languages <a href=\"/develop/guides-v2/other-apis/other-apis-guide#supported-languages\"target=\"_blank \">table</a>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/translation/types/api:LanguageEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The _from of this TranslateRequest.  # noqa: E501
         :rtype: str
@@ -72,7 +72,7 @@ class TranslateRequest(object):
     def _from(self, _from):
         """Sets the _from of this TranslateRequest.
 
-        The language of the input text to be translated. Not all <b>LanguageEnum</b> values are supported in this field. For a full list of supported language pairings, see the Supported languages table in the <a href=\"/api-docs/commerce/translation/overview.html#supported-languages\">API Overview</a> page. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/translation/types/api:LanguageEnum'>eBay API documentation</a>  # noqa: E501
+        The language of the input text to be translated. Not all <b>LanguageEnum</b> values are supported in this field. For a full list of supported language pairings, see the Supported languages <a href=\"/develop/guides-v2/other-apis/other-apis-guide#supported-languages\"target=\"_blank \">table</a>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/translation/types/api:LanguageEnum'>eBay API documentation</a>  # noqa: E501
 
         :param _from: The _from of this TranslateRequest.  # noqa: E501
         :type: str
@@ -107,7 +107,7 @@ class TranslateRequest(object):
     def to(self):
         """Gets the to of this TranslateRequest.  # noqa: E501
 
-        The target language for the translation of the input text. Not all <b>LanguageEnum</b> values are supported in this field. For a full list of supported language pairings, see the Supported languages table in the <a href=\"/api-docs/commerce/translation/overview.html#supported-languages\">API Overview</a> page. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/translation/types/api:LanguageEnum'>eBay API documentation</a>  # noqa: E501
+        The target language for the translation of the input text. Not all <b>LanguageEnum</b> values are supported in this field. For a full list of supported language pairings, see the Supported languages <a href=\"/develop/guides-v2/other-apis/other-apis-guide#supported-languages\"target=\"_blank \">table</a>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/translation/types/api:LanguageEnum'>eBay API documentation</a>  # noqa: E501
 
         :return: The to of this TranslateRequest.  # noqa: E501
         :rtype: str
@@ -118,7 +118,7 @@ class TranslateRequest(object):
     def to(self, to):
         """Sets the to of this TranslateRequest.
 
-        The target language for the translation of the input text. Not all <b>LanguageEnum</b> values are supported in this field. For a full list of supported language pairings, see the Supported languages table in the <a href=\"/api-docs/commerce/translation/overview.html#supported-languages\">API Overview</a> page. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/translation/types/api:LanguageEnum'>eBay API documentation</a>  # noqa: E501
+        The target language for the translation of the input text. Not all <b>LanguageEnum</b> values are supported in this field. For a full list of supported language pairings, see the Supported languages <a href=\"/develop/guides-v2/other-apis/other-apis-guide#supported-languages\"target=\"_blank \">table</a>. For implementation help, refer to <a href='https://developer.ebay.com/api-docs/commerce/translation/types/api:LanguageEnum'>eBay API documentation</a>  # noqa: E501
 
         :param to: The to of this TranslateRequest.  # noqa: E501
         :type: str

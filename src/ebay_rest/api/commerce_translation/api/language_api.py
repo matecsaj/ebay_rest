@@ -35,7 +35,7 @@ class LanguageApi(object):
     def translate(self, body, content_type, **kwargs):  # noqa: E501
         """translate  # noqa: E501
 
-        This method translates listing title and listing description text from one language into another. For a full list of supported language translations, see the table in the <a href=\"/api-docs/commerce/translation/overview.html\">API Overview</a> page.  # noqa: E501
+        This method translates listing title and listing description text from one language into another. For a full list of supported language translations, see the <a href=\"/develop/guides-v2/other-apis/other-apis-guide#supported-languages\"target=\"_blank \">table</a>.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.translate(body, content_type, async_req=True)
@@ -58,7 +58,7 @@ class LanguageApi(object):
     def translate_with_http_info(self, body, content_type, **kwargs):  # noqa: E501
         """translate  # noqa: E501
 
-        This method translates listing title and listing description text from one language into another. For a full list of supported language translations, see the table in the <a href=\"/api-docs/commerce/translation/overview.html\">API Overview</a> page.  # noqa: E501
+        This method translates listing title and listing description text from one language into another. For a full list of supported language translations, see the <a href=\"/develop/guides-v2/other-apis/other-apis-guide#supported-languages\"target=\"_blank \">table</a>.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.translate_with_http_info(body, content_type, async_req=True)
