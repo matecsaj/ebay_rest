@@ -678,6 +678,56 @@ class Contract:
             async with aiofiles.open(file_path, mode="w") as f:
                 await f.write(data)
 
+        # Patch file upload methods to support files parameter
+        # This fixes the issue where local_var_files = {} and files parameter is not accepted
+        # Repurposes existing parameters to pass file information
+        file_upload_methods = [
+            "create_image_from_file",
+            "upload_file", 
+            "create_video",
+            "upload_video"
+        ]
+
+        for method_name in file_upload_methods:
+            # Find and patch API files that contain file upload methods
+            api_files = []
+            for root, _dirs, files in os.walk(os.path.join(Locations.cache_path, self.data.name)):
+                api_files.extend(os.path.join(root, file) for file in files if file.endswith("_api.py"))
+
+            for api_file in api_files:
+                try:
+                    async with aiofiles.open(api_file) as f:
+                        data = await f.read()
+                except FileNotFoundError:
+                    continue
+
+                # Check if this file contains the method we want to patch
+                if f"def {method_name}" in data:
+                    # Patch 1: Add 'files' to all_params list (handles any pattern automatically)
+                    # Find any all_params pattern and add 'files' to it
+                    pattern = r"all_params = \[([^\]]*)\]  # noqa: E501"
+                    match = re.search(pattern, data)
+                    if match:
+                        existing_params = match.group(1)
+                        new_params = existing_params + ", 'files'" if existing_params.strip() else "'files'"
+                        new_pattern = f"all_params = [{new_params}]  # noqa: E501 - ebay_rest patch: added files support"
+                        data = re.sub(pattern, new_pattern, data, count=1)
+
+                    # Patch 2: Handle files parameter in local_var_files (repurposes existing file handling)
+                    target = "local_var_files = {}"
+                    if target in data:
+                        new_code = """local_var_files = {}
+        # ebay_rest patch: Handle file uploads by repurposing existing file handling
+        if 'files' in params and params['files']:
+            local_var_files = params['files']"""
+                        data = data.replace(target, new_code, 1)
+
+                    # Write the patched file
+                    async with aiofiles.open(api_file, mode="w") as f:
+                        await f.write(data)
+                    logger = logging.getLogger(__name__)
+                    logger.info("Patched file upload support in %s", api_file)
+
     @staticmethod
     async def run_command(cmd: str) -> None:
         """Run a command line in a subprocess."""
