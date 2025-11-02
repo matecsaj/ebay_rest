@@ -409,22 +409,9 @@ class APISandboxSingleSiteTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        try:
-            # TODO Change to async_req=True.
-            cls._api = API(
-                application="sandbox_1", user="sandbox_1", header="US", async_req=False
-            )
-        except Error as error:
-            cls.number = error.number
-            cls.reason = error.reason
-            cls.detail = error.detail
-        else:
-            cls.number = None
+        # TODO Change to async_req=True.
+        cls._api = API(application="sandbox_1", user="sandbox_1", header="US", async_req=False)
         cls.marketplace_id = cls._api._header["marketplace_id"]
-
-    def setUp(self):
-        if self.number is not None:
-            self.fail(f"Error {self.number} is {self.reason}  {self.detail}.\n")
 
     def test_paging_no_results(self):
         try:
@@ -606,48 +593,13 @@ class APISandboxSingleSiteTests(unittest.TestCase):
                 self.fail(f"unexpected record {record}")
         return task_ids
 
-    def get_task_ids(self, feed_type: string):
-        """
-        https://developer.ebay.com/api-docs/sell/feed/resources/inventory_task/methods/getInventoryTasks
-
-        :param feed_type: (string)
-        :return: task_ids (set(string))
-        """
-        task_ids = set()
-        self._api.sell_account_fulfeed_get_inventory_tasks()
-        for record in self._api.sell_feed_get_inventory_tasks(
-            feed_type=feed_type, look_back_days="1"
-        ):
-            if "record" in record:
-                task_ids.add(record["record"]["task_id"])
-            elif "total" in record:
-                self.assertEqual(
-                    record["total"]["records_yielded"],
-                    record["total"]["records_available"],
-                    "We missed some data - narrow the search!",
-                )
-            else:
-                self.fail(f"unexpected record {record}")
-        return task_ids
-
 
 class APIProductionSingleTests(unittest.TestCase):
     """API tests that can be done on a single production marketplace."""
 
     @classmethod
     def setUpClass(cls):
-        try:
-            cls._api = API(application="production_1", user="production_1", header="US")
-        except Error as error:
-            cls.number = error.number
-            cls.reason = error.reason
-            cls.detail = error.detail
-        else:
-            cls.number = None
-
-    def setUp(self):
-        if self.number is not None:
-            self.fail(f"Error {self.number} is {self.reason}  {self.detail}.\n")
+        cls._api = API(application="production_1", user="production_1", header="US")
 
     def test_complex_filtering(self):
         """Does complex filtering work?
@@ -1353,6 +1305,12 @@ class TokenTests(unittest.TestCase):
         1. A web browser window should pop up while this test successfully runs.
         2. eBay also refers to the authorization code as a token refresh token.
         """
+        # TODO remove the 'path' test code when the working directory problem with debug vs. regular run is resolved
+        path = os.getcwd()
+        path2 = os.path.dirname(__file__)
+        print(f"{path=} {path2=}")
+        self.assertEqual(path, path2)
+
         try:
             # The user sand_box_2 should be a copy of sand_box_1 without refresh token values.
             api = API(application="sandbox_1", user="sandbox_2", header="US")
