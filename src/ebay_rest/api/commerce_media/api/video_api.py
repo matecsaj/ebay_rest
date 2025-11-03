@@ -72,7 +72,7 @@ class VideoApi(object):
                  returns the request thread.
         """
 
-        all_params = ['content_type', 'body']  # noqa: E501
+        all_params = ['content_type', 'body', 'files']  # noqa: E501 - ebay_rest patch: added files support
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -104,6 +104,9 @@ class VideoApi(object):
 
         form_params = []
         local_var_files = {}
+        # ebay_rest patch: Handle file uploads by repurposing existing file handling
+        if 'files' in params and params['files']:
+            local_var_files = params['files']
 
         body_params = None
         if 'body' in params:
