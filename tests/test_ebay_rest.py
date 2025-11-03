@@ -412,7 +412,9 @@ class APISandboxSingleSiteTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # TODO Change to async_req=True.
-        cls._api = API(application="sandbox_1", user="sandbox_1", header="US", async_req=False)
+        cls._api = API(
+            application="sandbox_1", user="sandbox_1", header="US", async_req=False
+        )
         cls.marketplace_id = cls._api._header["marketplace_id"]
 
     def test_paging_no_results(self):
@@ -443,8 +445,10 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         except Error as error:
             self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
         else:
-            if result is not None:      # If there are listing violations
-                self.assertIn("violation_summaries", result)    # the dict should have this key
+            if result is not None:  # If there are listing violations
+                self.assertIn(
+                    "violation_summaries", result
+                )  # the dict should have this key
 
     def test_positional_some_kw_none(self):
         # https://developer.ebay.com/api-docs/commerce/taxonomy/resources/category_tree/methods/getDefaultCategoryTreeId

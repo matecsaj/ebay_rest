@@ -3,7 +3,7 @@
 """
     Compliance API
 
-    <span class=\"tablenote\"><b>Note:</b> The <a href=\"https://developer.ebay.com/api-docs/sell/compliance/types/com:ComplianceTypeEnum\" target=\"_blank\" rel=\"noopener\">ASPECTS_ADOPTION</a> compliance type has been deprecated and will be decommissioned on August 31, 2025.</span> <br><br>Service for providing information to sellers about their listings being non-compliant, or at risk for becoming non-compliant, against eBay listing policies.  # noqa: E501
+    <span class=\"tablenote\"><b>Note:</b> The <a href=\"https://developer.ebay.com/api-docs/sell/compliance/types/com:ComplianceTypeEnum\" target=\"_blank\" rel=\"noopener\">ASPECTS_ADOPTION</a> compliance type has been deprecated and will be decommissioned on September 9th, 2025.</span><br>Service for providing information to sellers about their listings being non-compliant, or at risk for becoming non-compliant, against eBay listing policies.  # noqa: E501
 
     OpenAPI spec version: 1.4.4
     
