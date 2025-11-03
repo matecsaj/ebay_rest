@@ -1,11 +1,13 @@
-# *** A way to run these unit tests. ***
-# 1. (Open a terminal, alternately known as go to the command line.)
-# 2. run "cd .." (Or, somehow make the project root the current directory.)
-# 3. python -m unittest tests.ebay_rest
-
-# Don't repeat API calls with the same parameters, because it appears to trigger an "Internal (Server) Error" at eBay.
-
-# Whenever possible, run tests on the sandbox instead of production.
+# === How to Run These Unit Tests ===
+# 1. Open a terminal (command line).
+# 2. Change directory to the project root.
+# 3. Run:
+#       python -m unittest tests.test_ebay_rest
+#
+# Notes:
+# - Avoid repeating the same API call with identical parameters, as eBay may return an "Internal Server Error."
+# - Use the eBay sandbox environment whenever possible instead of production.
+# - If sandbox tests fail unexpectedly, don't panic — eBay's sandbox had is unreliable. Try again later.
 
 # Standard library imports
 import datetime
@@ -433,6 +435,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
 
     def test_positional_none_kw_none(self):
         """Try a call with no positional arguments and no keyword arguments."""
+        # https://developer.ebay.com/api-docs/sell/compliance/resources/listing_violation_summary/methods/getListingViolationsSummary
         try:
             result = self._api.sell_compliance_get_listing_violations_summary(
                 x_ebay_c_marketplace_id=self.marketplace_id
@@ -440,8 +443,8 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         except Error as error:
             self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
         else:
-            msg = "A call with zero positional and no kw arguments failed."
-            self.assertIsNotNone("violation_summaries" in result, msg=msg)
+            if result is not None:      # If there are listing violations
+                self.assertIn("violation_summaries", result)    # the dict should have this key
 
     def test_positional_some_kw_none(self):
         # https://developer.ebay.com/api-docs/commerce/taxonomy/resources/category_tree/methods/getDefaultCategoryTreeId
@@ -1305,12 +1308,6 @@ class TokenTests(unittest.TestCase):
         1. A web browser window should pop up while this test successfully runs.
         2. eBay also refers to the authorization code as a token refresh token.
         """
-        # TODO remove the 'path' test code when the working directory problem with debug vs. regular run is resolved
-        path = os.getcwd()
-        path2 = os.path.dirname(__file__)
-        print(f"{path=} {path2=}")
-        self.assertEqual(path, path2)
-
         try:
             # The user sand_box_2 should be a copy of sand_box_1 without refresh token values.
             api = API(application="sandbox_1", user="sandbox_2", header="US")

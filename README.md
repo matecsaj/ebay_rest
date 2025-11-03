@@ -22,7 +22,6 @@ The basic installation provides core functionality without browser automation. I
 ```bash
 pip install ebay_rest
 ```
-If Python 2 is installed, use `pip3` instead.
 
 ### Complete Installation
 The complete installation includes browser automation for getting eBay user tokens.
@@ -39,7 +38,7 @@ playwright install chromium
 ---
 
 ## Setup
-Follow the setup instructions in the [example configuration file](https://github.com/matecsaj/ebay_rest/blob/main/tests/ebay_rest_EXAMPLE.json).
+Follow the setup instructions in the [example configuration file](https://github.com/matecsaj/ebay_rest/blob/main/ebay_rest_EXAMPLE.json).
 
 ---
 

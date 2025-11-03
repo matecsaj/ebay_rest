@@ -57,7 +57,7 @@ playwright install chromium
 ### 5. Set Up Configuration
 Copy the example config file:
 ```bash
-cp tests/ebay_rest_sample.json tests/ebay_rest.json
+cp tests/ebay_rest_EXAMPLE.json ebay_rest.json
 ```
 Then, follow the instructions inside `ebay_rest.json`.
 
