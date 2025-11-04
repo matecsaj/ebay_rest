@@ -681,18 +681,26 @@ class Contract:
         # Patch file upload methods to support files parameter
         # This fixes the issue where local_var_files = {} and files parameter is not accepted
         # Repurposes existing parameters to pass file information
+        # TODO Can this be made more resilient by pattern matching on '_from_file' and 'upload_'?
         file_upload_methods = [
             "create_image_from_file",
-            "upload_file", 
-            "create_video",
-            "upload_video"
+            "upload_document",
+            "upload_evidence_file",
+            "upload_file",
+            "upload_video",
         ]
 
         for method_name in file_upload_methods:
             # Find and patch API files that contain file upload methods
             api_files = []
-            for root, _dirs, files in os.walk(os.path.join(Locations.cache_path, self.data.name)):
-                api_files.extend(os.path.join(root, file) for file in files if file.endswith("_api.py"))
+            for root, _dirs, files in os.walk(
+                os.path.join(Locations.cache_path, self.data.name)
+            ):
+                api_files.extend(
+                    os.path.join(root, file)
+                    for file in files
+                    if file.endswith("_api.py")
+                )
 
             for api_file in api_files:
                 try:
@@ -709,7 +717,11 @@ class Contract:
                     match = re.search(pattern, data)
                     if match:
                         existing_params = match.group(1)
-                        new_params = existing_params + ", 'files'" if existing_params.strip() else "'files'"
+                        new_params = (
+                            existing_params + ", 'files'"
+                            if existing_params.strip()
+                            else "'files'"
+                        )
                         new_pattern = f"all_params = [{new_params}]  # noqa: E501 - ebay_rest patch: added files support"
                         data = re.sub(pattern, new_pattern, data, count=1)
 
@@ -1660,4 +1672,13 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
-    asyncio.run(main())  # Python 3.7+
+
+    async def run_main():
+        await main()
+
+    # Use asyncio.Runner for better control in Python 3.14
+    if sys.version_info >= (3, 11):
+        with asyncio.Runner() as runner:
+            runner.run(run_main())
+    else:
+        asyncio.run(main())  # Python 3.7-3.10

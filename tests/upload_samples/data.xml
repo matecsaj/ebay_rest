@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BulkDataExchangeRequests>
+  <ReviseInventoryStatusRequest xmlns="urn:ebay:apis:eBLBaseComponents">
+    <ErrorLanguage>en_US</ErrorLanguage>
+    <WarningLevel>High</WarningLevel>
+    <Version>1235</Version>
+    <InventoryStatus>
+      <ItemID>3**********3</ItemID>
+      <StartPrice>190.00</StartPrice>
+      <Quantity>15</Quantity>
+    </InventoryStatus>
+  </ReviseInventoryStatusRequest>
+  <ReviseInventoryStatusRequest xmlns="urn:ebay:apis:eBLBaseComponents">
+    <ErrorLanguage>en_US</ErrorLanguage>
+    <WarningLevel>High</WarningLevel>
+    <Version>1235</Version>
+    <InventoryStatus>
+      <ItemID>4**********4</ItemID>
+      <StartPrice>200.00</StartPrice>
+      <Quantity>20</Quantity>
+    </InventoryStatus>
+  </ReviseInventoryStatusRequest>
+  <!-- ... More ReviseInventoryStatusRequest nodes here ... -->
+</BulkDataExchangeRequests>

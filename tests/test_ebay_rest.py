@@ -18,6 +18,7 @@ import random
 import string
 from typing import Optional
 import unittest
+import uuid
 from urllib.parse import urlparse
 
 # 3rd party libraries
@@ -599,6 +600,99 @@ class APISandboxSingleSiteTests(unittest.TestCase):
             else:
                 self.fail(f"unexpected record {record}")
         return task_ids
+
+    def test_sell_commerce_media_create_image_from_file(self):
+        """
+        https://developer.ebay.com/api-docs/sell/feed/resources/task/methods/uploadFile
+        """
+        try:
+            result = self._api.commerce_media_create_image_from_file(
+                content_type="multipart/form-data",
+                files={"image": self.get_upload_sample_path_file("image.jpg")},
+            )
+        except Error as error:
+            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+        else:
+            self.assertIn("expiration_date", result)
+            self.assertIn("image_url", result)
+
+    # TODO get this working, see https://github.com/matecsaj/ebay_rest/issues/60
+    def test_commerce_media_upload_document(self):
+        """
+        https://developer.ebay.com/api-docs/commerce/media/resources/document/methods/uploadDocument
+        """
+        try:
+            result = self._api.commerce_media_upload_document(
+                document_id=uuid.uuid4().hex,  # unique identification string
+                content_type="multipart/form-data",
+                files={"image": self.get_upload_sample_path_file("document.pdf")},
+            )
+        except Error as error:
+            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+        else:
+            self.assertIn("expiration_date", result)
+            self.assertIn("image_url", result)
+
+    # TODO get this working, see https://github.com/matecsaj/ebay_rest/issues/60
+    def test_commerce_media_upload_video(self):
+        """
+        https://developer.ebay.com/api-docs/commerce/media/resources/video/methods/uploadVideo
+        """
+        try:
+            result = self._api.commerce_media_upload_video(
+                video_id=uuid.uuid4().hex,  # unique identification string
+                content_type="multipart/form-data",
+                files={"image": self.get_upload_sample_path_file("video.jpg")},
+            )
+        except Error as error:
+            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+        else:
+            self.assertIn("expiration_date", result)
+            self.assertIn("image_url", result)
+
+    # TODO get this working, see https://github.com/matecsaj/ebay_rest/issues/60
+    def test_sell_feed_upload_file(self):
+        """
+        https://developer.ebay.com/api-docs/sell/feed/resources/task/methods/uploadFile
+        """
+        try:
+            result = self._api.sell_feed_upload_file(
+                task_id=uuid.uuid4().hex,  # unique identification string
+                content_type="multipart/form-data",
+                files={"image": self.get_upload_sample_path_file("data.xml")},
+            )
+        except Error as error:
+            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+        else:
+            self.assertIn("credit_count", result)
+
+    # TODO get this working, see https://github.com/matecsaj/ebay_rest/issues/60
+    def test_sell_fulfillment_upload_evidence_file(self):
+        """
+        https://developer.ebay.com/api-docs/sell/fulfillment/resources/payment_dispute/methods/uploadEvidenceFile
+        """
+        try:
+            result = self._api.sell_fulfillment_upload_evidence_file(
+                payment_dispute_id=uuid.uuid4().hex,  # unique identification string
+                content_type="multipart/form-data",
+                files={"image": self.get_upload_sample_path_file("image.jpg")},
+            )
+        except Error as error:
+            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+        else:
+            self.assertIn("credit_count", result)
+
+    @staticmethod
+    def get_upload_sample_path_file(file_name: str) -> str:
+        """Get the full path to a sample file for upload testing.
+
+        Args:
+            file_name: The name of the file in the upload_samples directory
+
+        Returns:
+            The absolute path to the upload sample file
+        """
+        return os.path.join(os.path.dirname(__file__), "upload_samples", file_name)
 
 
 class APIProductionSingleTests(unittest.TestCase):

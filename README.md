@@ -78,6 +78,9 @@ print(help(Error))
 print(help(Reference))
 ```
 
+Look to the [unit tests](https://github.com/matecsaj/ebay_rest/blob/main/tests/test_ebay_rest.py) for more example code.
+
+
 ---
 
 ## FAQ
