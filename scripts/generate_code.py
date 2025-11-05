@@ -684,10 +684,11 @@ class Contract:
         # TODO Can this be made more resilient by pattern matching on '_from_file' and 'upload_'?
         file_upload_methods = [
             "create_image_from_file",
+            "upload_file",
+            "create_video",
+            "upload_video",
             "upload_document",
             "upload_evidence_file",
-            "upload_file",
-            "upload_video",
         ]
 
         for method_name in file_upload_methods:
@@ -711,7 +712,7 @@ class Contract:
 
                 # Check if this file contains the method we want to patch
                 if f"def {method_name}" in data:
-                    # Patch 1: Add 'files' to all_params list (handles any pattern automatically)
+                    # Patch 1: Add 'files' to the all_params list (handles any pattern automatically)
                     # Find any all_params pattern and add 'files' to it
                     pattern = r"all_params = \[([^\]]*)\]  # noqa: E501"
                     match = re.search(pattern, data)

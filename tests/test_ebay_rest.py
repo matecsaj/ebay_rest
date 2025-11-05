@@ -1,6 +1,6 @@
 # === How to Run These Unit Tests ===
 # 1. Open a terminal (command line).
-# 2. Change directory to the project root.
+# 2. Change the current directory to the project root.
 # 3. Run:
 #       python -m unittest tests.test_ebay_rest
 #
@@ -578,7 +578,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         except Exception as ex:
             self.fail(f"An unexpected error occurred: {str(ex)}")
 
-    def get_task_ids(self, feed_type: string):
+    def get_task_ids(self, feed_type: str):
         """
         https://developer.ebay.com/api-docs/sell/feed/resources/inventory_task/methods/getInventoryTasks
 
@@ -642,7 +642,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
             result = self._api.commerce_media_upload_video(
                 video_id=uuid.uuid4().hex,  # unique identification string
                 content_type="multipart/form-data",
-                files={"image": self.get_upload_sample_path_file("video.jpg")},
+                files={"image": self.get_upload_sample_path_file("video.mp4")},
             )
         except Error as error:
             self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
