@@ -76,7 +76,7 @@ class TaskApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body', 'x_ebay_c_marketplace_id', 'content_type', 'accept_language', 'files']  # noqa: E501 - ebay_rest patch: added files support
+        all_params = ['body', 'x_ebay_c_marketplace_id', 'content_type', 'accept_language']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -120,9 +120,6 @@ class TaskApi(object):
 
         form_params = []
         local_var_files = {}
-        # ebay_rest patch: Handle file uploads by repurposing existing file handling
-        if 'files' in params and params['files']:
-            local_var_files = params['files']
 
         body_params = None
         if 'body' in params:
@@ -586,7 +583,7 @@ class TaskApi(object):
                  returns the request thread.
         """
 
-        all_params = ['task_id', 'content_type']  # noqa: E501
+        all_params = ['task_id', 'content_type', 'files']  # noqa: E501 - ebay_rest patch: added files support
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -624,6 +621,9 @@ class TaskApi(object):
 
         form_params = []
         local_var_files = {}
+        # ebay_rest patch: Handle file uploads by repurposing existing file handling
+        if 'files' in params and params['files']:
+            local_var_files = params['files']
 
         body_params = None
         # HTTP header `Accept`

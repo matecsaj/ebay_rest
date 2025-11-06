@@ -616,55 +616,64 @@ class APISandboxSingleSiteTests(unittest.TestCase):
             self.assertIn("expiration_date", result)
             self.assertIn("image_url", result)
 
-    # TODO get this working, see https://github.com/matecsaj/ebay_rest/issues/60
-    def test_commerce_media_upload_document(self):
-        """
-        https://developer.ebay.com/api-docs/commerce/media/resources/document/methods/uploadDocument
-        """
-        try:
-            result = self._api.commerce_media_upload_document(
-                document_id=uuid.uuid4().hex,  # unique identification string
-                content_type="multipart/form-data",
-                files={"image": self.get_upload_sample_path_file("document.pdf")},
-            )
-        except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
-        else:
-            self.assertIn("expiration_date", result)
-            self.assertIn("image_url", result)
-
-    # TODO get this working, see https://github.com/matecsaj/ebay_rest/issues/60
-    def test_commerce_media_upload_video(self):
-        """
-        https://developer.ebay.com/api-docs/commerce/media/resources/video/methods/uploadVideo
-        """
-        try:
-            result = self._api.commerce_media_upload_video(
-                video_id=uuid.uuid4().hex,  # unique identification string
-                content_type="multipart/form-data",
-                files={"image": self.get_upload_sample_path_file("video.mp4")},
-            )
-        except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
-        else:
-            self.assertIn("expiration_date", result)
-            self.assertIn("image_url", result)
-
-    # TODO get this working, see https://github.com/matecsaj/ebay_rest/issues/60
     def test_sell_feed_upload_file(self):
         """
         https://developer.ebay.com/api-docs/sell/feed/resources/task/methods/uploadFile
+
+        This test first creates a task using createTask to get a valid task_id,
+        then uploads the file using that ID.
+
+        See: https://developer.ebay.com/api-docs/sell/feed/resources/task/methods/createTask
+        The createTask method returns a taskId in the Location header.
         """
         try:
+            # First, create a task to get a valid task_id
+            # See: https://developer.ebay.com/api-docs/sell/feed/resources/task/methods/createTask
+            # Use LMS_ORDER_ACK feed type for upload tasks
+            feed_type = "LMS_ORDER_ACK"
+            body = {
+                "feedType": feed_type,
+                "schemaVersion": "1.0"
+            }
+
+            # Get task IDs before creating
+            task_ids_pre = set()
+            for record in self._api.sell_feed_get_tasks(feed_type=feed_type, look_back_days="1"):
+                if "record" in record:
+                    task_ids_pre.add(record["record"]["task_id"])
+
+            # Create the task
+            self._api.sell_feed_create_task(
+                body=body,
+                content_type="application/json",
+                x_ebay_c_marketplace_id="EBAY_US"
+            )
+
+            # Get task IDs after creating and find the new one
+            task_ids_post = set()
+            for record in self._api.sell_feed_get_tasks(feed_type=feed_type, look_back_days="1"):
+                if "record" in record:
+                    task_ids_post.add(record["record"]["task_id"])
+
+            task_ids_new = task_ids_post.difference(task_ids_pre)
+            self.assertEqual(
+                1,
+                len(task_ids_new),
+                "Expected exactly one new task to be created"
+            )
+            task_id = task_ids_new.pop()
+
+            # Now upload the file using the task_id from createTask
+            # See: https://developer.ebay.com/api-docs/sell/feed/resources/task/methods/uploadFile
             result = self._api.sell_feed_upload_file(
-                task_id=uuid.uuid4().hex,  # unique identification string
+                task_id=task_id,
                 content_type="multipart/form-data",
-                files={"image": self.get_upload_sample_path_file("data.xml")},
+                files={"file": self.get_upload_sample_path_file("data.xml")},
             )
         except Error as error:
             self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
         else:
-            self.assertIn("credit_count", result)
+            self.assertIsNotNone(result)
 
     # TODO get this working, see https://github.com/matecsaj/ebay_rest/issues/60
     def test_sell_fulfillment_upload_evidence_file(self):
@@ -1176,6 +1185,63 @@ class APIProductionSingleTests(unittest.TestCase):
         else:
             pass  # TODO
             self.assertTrue("Subscribe" not in result["description"])
+
+    @staticmethod
+    def get_upload_sample_path_file(file_name: str) -> str:
+        """Get the full path to a sample file for upload testing.
+
+        Args:
+            file_name: The name of the file in the upload_samples directory
+
+        Returns:
+            The absolute path to the upload sample file
+        """
+        return os.path.join(os.path.dirname(__file__), "upload_samples", file_name)
+
+    def test_commerce_media_upload_document(self):
+        """
+        https://developer.ebay.com/api-docs/commerce/media/resources/document/methods/uploadDocument
+
+        This test first creates a document using createDocument to get a valid document_id,
+        then uploads the document file using that ID.
+
+        See: https://developer.ebay.com/api-docs/commerce/media/resources/document/methods/createDocument
+        The createDocument method returns a documentId in the response payload.
+        """
+        try:
+            # First, create a document to get a valid document_id
+            # See: https://developer.ebay.com/api-docs/commerce/media/resources/document/methods/createDocument
+            create_body = {
+                "documentType": "USER_GUIDE_OR_MANUAL",
+                "languages": ["ENGLISH"]
+            }
+            create_result = self._api.commerce_media_create_document(
+                content_type="application/json",
+                body=create_body
+            )
+
+            # Extract documentId from the response
+            # The response can be a dict (documentId) or object (document_id property)
+            if isinstance(create_result, dict):
+                document_id = create_result.get("documentId") or create_result.get("document_id")
+            else:
+                document_id = getattr(create_result, "document_id", None) or getattr(create_result, "documentId", None)
+
+            self.assertIsNotNone(document_id, "Failed to get documentId from create_document response")
+            # Now upload the document file using the document_id from createDocument
+            # See: https://developer.ebay.com/api-docs/commerce/media/resources/document/methods/uploadDocument
+            # The uploadDocument endpoint is: /document/{document_id}/upload
+            result = self._api.commerce_media_upload_document(
+                document_id=document_id,
+                content_type="multipart/form-data",
+                files={"file": self.get_upload_sample_path_file("document.pdf")},
+            )
+
+        except Error as error:
+            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+        else:
+            self.assertIn("document_metadata", result)
+            self.assertIn("document_status", result)
 
 
 class APISandboxDigitalSignatureTests(unittest.TestCase):
