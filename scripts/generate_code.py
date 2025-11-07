@@ -662,8 +662,11 @@ class Contract:
                 # Check if 'files' is already in the params or if patch comment already exists
                 all_params_line = match.group(0)
                 patch_comment = "ebay_rest patch: added files support"
-                if ("'files'" not in existing_params and '"files"' not in existing_params and
-                    patch_comment not in all_params_line):
+                if (
+                    "'files'" not in existing_params
+                    and '"files"' not in existing_params
+                    and patch_comment not in all_params_line
+                ):
                     new_params = (
                         existing_params + ", 'files'"
                         if existing_params.strip()
@@ -673,7 +676,11 @@ class Contract:
                     # Replace in the method body
                     method_body = re.sub(pattern, new_pattern, method_body, count=1)
                     # Replace the method in the full data
-                    data = data[:method_match.start()] + method_body + data[method_match.end():]
+                    data = (
+                        data[: method_match.start()]
+                        + method_body
+                        + data[method_match.end() :]
+                    )
                     file_was_modified = True
 
         # Patch 2: Handle files parameter in local_var_files (repurposes existing file handling)
@@ -692,7 +699,11 @@ class Contract:
                 # Only replace the first occurrence within this method
                 method_body = method_body.replace(target, new_code, 1)
                 # Replace the method in the full data
-                data = data[:method_match.start()] + method_body + data[method_match.end():]
+                data = (
+                    data[: method_match.start()]
+                    + method_body
+                    + data[method_match.end() :]
+                )
                 file_was_modified = True
 
         # Write the patched file if it was modified
@@ -700,7 +711,9 @@ class Contract:
             async with aiofiles.open(api_file_path, mode="w") as f:
                 await f.write(data)
             logger = logging.getLogger(__name__)
-            logger.info("Patched file upload support for %s in %s", method_name, api_file_path)
+            logger.info(
+                "Patched file upload support for %s in %s", method_name, api_file_path
+            )
 
         return file_was_modified
 

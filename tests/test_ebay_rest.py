@@ -631,14 +631,13 @@ class APISandboxSingleSiteTests(unittest.TestCase):
             # See: https://developer.ebay.com/api-docs/sell/feed/resources/task/methods/createTask
             # Use LMS_ORDER_ACK feed type for upload tasks
             feed_type = "LMS_ORDER_ACK"
-            body = {
-                "feedType": feed_type,
-                "schemaVersion": "1.0"
-            }
+            body = {"feedType": feed_type, "schemaVersion": "1.0"}
 
             # Get task IDs before creating
             task_ids_pre = set()
-            for record in self._api.sell_feed_get_tasks(feed_type=feed_type, look_back_days="1"):
+            for record in self._api.sell_feed_get_tasks(
+                feed_type=feed_type, look_back_days="1"
+            ):
                 if "record" in record:
                     task_ids_pre.add(record["record"]["task_id"])
 
@@ -646,20 +645,20 @@ class APISandboxSingleSiteTests(unittest.TestCase):
             self._api.sell_feed_create_task(
                 body=body,
                 content_type="application/json",
-                x_ebay_c_marketplace_id="EBAY_US"
+                x_ebay_c_marketplace_id="EBAY_US",
             )
 
             # Get task IDs after creating and find the new one
             task_ids_post = set()
-            for record in self._api.sell_feed_get_tasks(feed_type=feed_type, look_back_days="1"):
+            for record in self._api.sell_feed_get_tasks(
+                feed_type=feed_type, look_back_days="1"
+            ):
                 if "record" in record:
                     task_ids_post.add(record["record"]["task_id"])
 
             task_ids_new = task_ids_post.difference(task_ids_pre)
             self.assertEqual(
-                1,
-                len(task_ids_new),
-                "Expected exactly one new task to be created"
+                1, len(task_ids_new), "Expected exactly one new task to be created"
             )
             task_id = task_ids_new.pop()
 
@@ -1213,21 +1212,26 @@ class APIProductionSingleTests(unittest.TestCase):
             # See: https://developer.ebay.com/api-docs/commerce/media/resources/document/methods/createDocument
             create_body = {
                 "documentType": "USER_GUIDE_OR_MANUAL",
-                "languages": ["ENGLISH"]
+                "languages": ["ENGLISH"],
             }
             create_result = self._api.commerce_media_create_document(
-                content_type="application/json",
-                body=create_body
+                content_type="application/json", body=create_body
             )
 
             # Extract documentId from the response
             # The response can be a dict (documentId) or object (document_id property)
             if isinstance(create_result, dict):
-                document_id = create_result.get("documentId") or create_result.get("document_id")
+                document_id = create_result.get("documentId") or create_result.get(
+                    "document_id"
+                )
             else:
-                document_id = getattr(create_result, "document_id", None) or getattr(create_result, "documentId", None)
+                document_id = getattr(create_result, "document_id", None) or getattr(
+                    create_result, "documentId", None
+                )
 
-            self.assertIsNotNone(document_id, "Failed to get documentId from create_document response")
+            self.assertIsNotNone(
+                document_id, "Failed to get documentId from create_document response"
+            )
             # Now upload the document file using the document_id from createDocument
             # See: https://developer.ebay.com/api-docs/commerce/media/resources/document/methods/uploadDocument
             # The uploadDocument endpoint is: /document/{document_id}/upload
