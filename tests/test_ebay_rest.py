@@ -603,7 +603,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
 
     def test_sell_commerce_media_create_image_from_file(self):
         """
-        https://developer.ebay.com/api-docs/sell/feed/resources/task/methods/uploadFile
+        https://developer.ebay.com/api-docs/commerce/media/resources/image/methods/createImageFromFile
         """
         try:
             result = self._api.commerce_media_create_image_from_file(

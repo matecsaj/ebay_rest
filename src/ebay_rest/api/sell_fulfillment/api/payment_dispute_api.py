@@ -892,6 +892,7 @@ class PaymentDisputeApi(object):
         :param async_req bool
         :param str payment_dispute_id: This parameter is used to specify the unique identifier of the contested payment dispute for which the user intends to upload an evidence file.<br><br> Use the <a href=\"/api-docs/sell/fulfillment/resources/payment_dispute/methods/getPaymentDisputeSummaries\" target=\"_blank \">getPaymentDisputeSummaries</a> method to retrieve payment dispute IDs. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>multipart/form-data</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param dict files: Dictionary mapping form field names to file paths. For example: {'image': 'path/to/image.jpg'} or {'file': 'path/to/document.pdf'}. This parameter is used to upload files in multipart/form-data requests. (optional)  # ebay_rest patch: multipart/form-data file uploads
         :return: FileEvidence
                  If the method is called asynchronously,
                  returns the request thread.
@@ -915,12 +916,13 @@ class PaymentDisputeApi(object):
         :param async_req bool
         :param str payment_dispute_id: This parameter is used to specify the unique identifier of the contested payment dispute for which the user intends to upload an evidence file.<br><br> Use the <a href=\"/api-docs/sell/fulfillment/resources/payment_dispute/methods/getPaymentDisputeSummaries\" target=\"_blank \">getPaymentDisputeSummaries</a> method to retrieve payment dispute IDs. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>multipart/form-data</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param dict files: Dictionary mapping form field names to file paths. For example: {'image': 'path/to/image.jpg'} or {'file': 'path/to/document.pdf'}. This parameter is used to upload files in multipart/form-data requests. (optional)  # ebay_rest patch: multipart/form-data file uploads
         :return: FileEvidence
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['payment_dispute_id', 'content_type', 'files']  # noqa: E501 - ebay_rest patch: added files support
+        all_params = ['payment_dispute_id', 'content_type', 'files']  # noqa: E501 - ebay_rest patch: multipart/form-data file uploads
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -958,7 +960,7 @@ class PaymentDisputeApi(object):
 
         form_params = []
         local_var_files = {}
-        # ebay_rest patch: Handle file uploads by repurposing existing file handling
+        # ebay_rest patch: multipart/form-data file uploads
         if 'files' in params and params['files']:
             local_var_files = params['files']
 

@@ -555,6 +555,7 @@ class TaskApi(object):
         :param async_req bool
         :param str task_id: This path parameter is the unique identifier of the task associated with the file that will be uploaded.<br><br>Use the <a href=\"/api-docs/sell/feed/resources/task/methods/getTasks\" target=\"_blank \">getTasks</a> method to retrieve task IDs. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>multipart/form-data</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param dict files: Dictionary mapping form field names to file paths. For example: {'image': 'path/to/image.jpg'} or {'file': 'path/to/document.pdf'}. This parameter is used to upload files in multipart/form-data requests. (optional)  # ebay_rest patch: multipart/form-data file uploads
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -578,12 +579,13 @@ class TaskApi(object):
         :param async_req bool
         :param str task_id: This path parameter is the unique identifier of the task associated with the file that will be uploaded.<br><br>Use the <a href=\"/api-docs/sell/feed/resources/task/methods/getTasks\" target=\"_blank \">getTasks</a> method to retrieve task IDs. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>multipart/form-data</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param dict files: Dictionary mapping form field names to file paths. For example: {'image': 'path/to/image.jpg'} or {'file': 'path/to/document.pdf'}. This parameter is used to upload files in multipart/form-data requests. (optional)  # ebay_rest patch: multipart/form-data file uploads
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['task_id', 'content_type', 'files']  # noqa: E501 - ebay_rest patch: added files support
+        all_params = ['task_id', 'content_type', 'files']  # noqa: E501 - ebay_rest patch: multipart/form-data file uploads
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -621,7 +623,7 @@ class TaskApi(object):
 
         form_params = []
         local_var_files = {}
-        # ebay_rest patch: Handle file uploads by repurposing existing file handling
+        # ebay_rest patch: multipart/form-data file uploads
         if 'files' in params and params['files']:
             local_var_files = params['files']
 
