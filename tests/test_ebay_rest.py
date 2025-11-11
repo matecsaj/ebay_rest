@@ -1199,17 +1199,15 @@ class APIProductionSingleTests(unittest.TestCase):
 
     def test_commerce_media_upload_document(self):
         """
-        https://developer.ebay.com/api-docs/commerce/media/resources/document/methods/uploadDocument
-
-        This test first creates a document using createDocument to get a valid document_id,
-        then uploads the document file using that ID.
+        First get a valid document_id using createDocument, then upload the document using that ID.
 
         See: https://developer.ebay.com/api-docs/commerce/media/resources/document/methods/createDocument
-        The createDocument method returns a documentId in the response payload.
+        See: https://developer.ebay.com/api-docs/commerce/media/resources/document/methods/uploadDocument
+
+        Warning: On 2025-11-11 the sandbox lacked support for this.
         """
         try:
             # First, create a document to get a valid document_id
-            # See: https://developer.ebay.com/api-docs/commerce/media/resources/document/methods/createDocument
             create_body = {
                 "documentType": "USER_GUIDE_OR_MANUAL",
                 "languages": ["ENGLISH"],
@@ -1218,8 +1216,7 @@ class APIProductionSingleTests(unittest.TestCase):
                 content_type="application/json", body=create_body
             )
 
-            # Extract documentId from the response
-            # The response can be a dict (documentId) or object (document_id property)
+            # Extract documentId from the response; it can be a dict (documentId) or object (document_id property)
             if isinstance(create_result, dict):
                 document_id = create_result.get("documentId") or create_result.get(
                     "document_id"
@@ -1233,8 +1230,6 @@ class APIProductionSingleTests(unittest.TestCase):
                 document_id, "Failed to get documentId from create_document response"
             )
             # Now upload the document file using the document_id from createDocument
-            # See: https://developer.ebay.com/api-docs/commerce/media/resources/document/methods/uploadDocument
-            # The uploadDocument endpoint is: /document/{document_id}/upload
             result = self._api.commerce_media_upload_document(
                 document_id=document_id,
                 content_type="multipart/form-data",
@@ -1246,6 +1241,52 @@ class APIProductionSingleTests(unittest.TestCase):
         else:
             self.assertIn("document_metadata", result)
             self.assertIn("document_status", result)
+
+    # TODO get this working, see https://github.com/matecsaj/ebay_rest/issues/60
+    def test_commerce_media_upload_video(self):
+        """
+        First get a valid video_id using createVideo, then upload the video file using that ID.
+
+        See: https://developer.ebay.com/api-docs/commerce/media/resources/video/methods/createVideo
+        See: https://developer.ebay.com/api-docs/commerce/media/resources/video/methods/uploadVideo
+
+        TODO If this will also run in the sandbox then move it there, otherwise convert this line to a warning.
+        """
+        try:
+            # First, get a valid video_id
+            create_body = {
+                "classification": ["ITEM"],
+                "description": "test video description",
+                "size": os.path.getsize(self.get_upload_sample_path_file("video.mp4")),
+                "title": "test video title",
+            }
+            create_result = self._api.commerce_media_create_video(
+                content_type="application/json", body=create_body
+            )
+
+            # Extract videoId from the response; it can be a dict (videoId) or object (video_id property)
+            if isinstance(create_result, dict):
+                video_id = create_result.get("videoId") or create_result.get("video_id")
+            else:
+                video_id = getattr(create_result, "video_id", None) or getattr(
+                    create_result, "videoId", None
+                )
+
+            self.assertIsNotNone(
+                video_id, "Failed to get videoId from create_video response"
+            )
+            # Now upload the video file using the video_id from createVideo
+            result = self._api.commerce_media_upload_video(
+                video_id=video_id,
+                content_type="application/octet-stream",
+                files={"file": self.get_upload_sample_path_file("video.mp4")},
+            )
+
+        except Error as error:
+            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+        else:
+            self.assertIn("video_metadata", result)
+            self.assertIn("video_status", result)
 
 
 class APISandboxDigitalSignatureTests(unittest.TestCase):
