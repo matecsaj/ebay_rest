@@ -48,7 +48,8 @@ class DestinationApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_destination_with_http_info(content_type, **kwargs)  # noqa: E501
         else:
@@ -150,7 +151,8 @@ class DestinationApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.delete_destination_with_http_info(destination_id, **kwargs)  # noqa: E501
         else:
@@ -241,7 +243,8 @@ class DestinationApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_destination_with_http_info(destination_id, **kwargs)  # noqa: E501
         else:
@@ -337,7 +340,8 @@ class DestinationApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_destinations_with_http_info(**kwargs)  # noqa: E501
         else:
@@ -433,7 +437,8 @@ class DestinationApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.update_destination_with_http_info(content_type, destination_id, **kwargs)  # noqa: E501
         else:

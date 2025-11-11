@@ -49,7 +49,8 @@ class MarketplaceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_automotive_parts_compatibility_policies_with_http_info(marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -152,7 +153,8 @@ class MarketplaceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_category_policies_with_http_info(marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -255,7 +257,8 @@ class MarketplaceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_classified_ad_policies_with_http_info(marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -357,7 +360,8 @@ class MarketplaceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_currencies_with_http_info(marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -458,7 +462,8 @@ class MarketplaceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_extended_producer_responsibility_policies_with_http_info(marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -563,7 +568,8 @@ class MarketplaceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_hazardous_materials_labels_with_http_info(marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -664,7 +670,8 @@ class MarketplaceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_item_condition_policies_with_http_info(marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -771,7 +778,8 @@ class MarketplaceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_listing_structure_policies_with_http_info(marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -877,7 +885,8 @@ class MarketplaceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_listing_type_policies_with_http_info(marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -980,7 +989,8 @@ class MarketplaceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_motors_listing_policies_with_http_info(marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -1084,7 +1094,8 @@ class MarketplaceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_negotiated_price_policies_with_http_info(marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -1188,7 +1199,8 @@ class MarketplaceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_product_safety_labels_with_http_info(marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -1285,7 +1297,8 @@ class MarketplaceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_regulatory_policies_with_http_info(marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -1389,7 +1402,8 @@ class MarketplaceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_return_policies_with_http_info(marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -1495,7 +1509,8 @@ class MarketplaceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_shipping_policies_with_http_info(marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -1598,7 +1613,8 @@ class MarketplaceApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_site_visibility_policies_with_http_info(marketplace_id, **kwargs)  # noqa: E501
         else:

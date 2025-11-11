@@ -18,6 +18,7 @@ import re  # noqa: F401
 import six
 
 from ...commerce_media.api_client import ApiClient
+import os  # noqa: F401  # ebay_rest patch: application/octet-stream file uploads
 
 
 class VideoApi(object):
@@ -48,7 +49,8 @@ class VideoApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_video_with_http_info(content_type, **kwargs)  # noqa: E501
         else:
@@ -146,7 +148,8 @@ class VideoApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_video_with_http_info(video_id, **kwargs)  # noqa: E501
         else:
@@ -237,6 +240,7 @@ class VideoApi(object):
 
         :param async_req bool
         :param str content_type: Use this header to specify the content type for the upload. The Content-Type should be set to <code>application/octet-stream</code>. (required)
+        :param dict files: Dictionary mapping field names to file paths. For example: {'file': 'path/to/video.mp4'}. The file will be read and sent as the request body for application/octet-stream uploads. (optional)  # ebay_rest patch: application/octet-stream file uploads
         :param str video_id: The unique identifier of the video to be uploaded. (required)
         :param InputStream body: The request payload for this method is the input stream for the video source. The input source must be an .mp4 file of the type MPEG-4 Part 10 or Advanced Video Coding (MPEG-4 AVC).
         :param str content_length: Use this header to specify the content length for the upload. Use Content-Range: bytes {1}-{2}/{3} and Content-Length:{4} headers.<br /><br /><span class=\"tablenote\"><span style=\"color:#004680\"><strong>Note:</strong></span> This header is optional and is only required for <i>resumable</i> uploads (when an upload is interrupted and must be resumed from a certain point).</span>
@@ -245,7 +249,8 @@ class VideoApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.upload_video_with_http_info(content_type, video_id, **kwargs)  # noqa: E501
         else:
@@ -263,6 +268,7 @@ class VideoApi(object):
 
         :param async_req bool
         :param str content_type: Use this header to specify the content type for the upload. The Content-Type should be set to <code>application/octet-stream</code>. (required)
+        :param dict files: Dictionary mapping field names to file paths. For example: {'file': 'path/to/video.mp4'}. The file will be read and sent as the request body for application/octet-stream uploads. (optional)  # ebay_rest patch: application/octet-stream file uploads
         :param str video_id: The unique identifier of the video to be uploaded. (required)
         :param InputStream body: The request payload for this method is the input stream for the video source. The input source must be an .mp4 file of the type MPEG-4 Part 10 or Advanced Video Coding (MPEG-4 AVC).
         :param str content_length: Use this header to specify the content length for the upload. Use Content-Range: bytes {1}-{2}/{3} and Content-Length:{4} headers.<br /><br /><span class=\"tablenote\"><span style=\"color:#004680\"><strong>Note:</strong></span> This header is optional and is only required for <i>resumable</i> uploads (when an upload is interrupted and must be resumed from a certain point).</span>
@@ -272,7 +278,7 @@ class VideoApi(object):
                  returns the request thread.
         """
 
-        all_params = ['content_type', 'video_id', 'body', 'content_length', 'content_range']  # noqa: E501
+        all_params = ['content_type', 'video_id', 'body', 'content_length', 'content_range', 'files']  # noqa: E501 - ebay_rest patch: application/octet-stream file uploads
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -316,8 +322,17 @@ class VideoApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        # ebay_rest patch: application/octet-stream file uploads
+        files = params.get('files')
+        if files:
+            # Read file from files dict and convert to body
+            file_path = next(iter(files.values()))
+            if os.path.isfile(file_path):
+                with open(file_path, 'rb') as f:
+                    body_params = f.read()
+        body = params.get('body')
+        if body:
+            body_params = body
         # HTTP header `Content-Type`
         header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
             ['application/octet-stream'])  # noqa: E501

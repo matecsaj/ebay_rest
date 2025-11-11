@@ -48,7 +48,8 @@ class DocumentApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_document_with_http_info(content_type, **kwargs)  # noqa: E501
         else:
@@ -151,7 +152,8 @@ class DocumentApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_document_from_url_with_http_info(content_type, **kwargs)  # noqa: E501
         else:
@@ -253,7 +255,8 @@ class DocumentApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_document_with_http_info(document_id, **kwargs)  # noqa: E501
         else:
@@ -350,7 +353,8 @@ class DocumentApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.upload_document_with_http_info(document_id, content_type, **kwargs)  # noqa: E501
         else:

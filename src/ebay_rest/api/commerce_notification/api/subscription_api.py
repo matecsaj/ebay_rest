@@ -48,7 +48,8 @@ class SubscriptionApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_subscription_with_http_info(content_type, **kwargs)  # noqa: E501
         else:
@@ -152,7 +153,8 @@ class SubscriptionApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_subscription_filter_with_http_info(content_type, subscription_id, **kwargs)  # noqa: E501
         else:
@@ -261,7 +263,8 @@ class SubscriptionApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.delete_subscription_with_http_info(subscription_id, **kwargs)  # noqa: E501
         else:
@@ -353,7 +356,8 @@ class SubscriptionApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.delete_subscription_filter_with_http_info(filter_id, subscription_id, **kwargs)  # noqa: E501
         else:
@@ -451,7 +455,8 @@ class SubscriptionApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.disable_subscription_with_http_info(subscription_id, **kwargs)  # noqa: E501
         else:
@@ -542,7 +547,8 @@ class SubscriptionApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.enable_subscription_with_http_info(subscription_id, **kwargs)  # noqa: E501
         else:
@@ -633,7 +639,8 @@ class SubscriptionApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_subscription_with_http_info(subscription_id, **kwargs)  # noqa: E501
         else:
@@ -729,7 +736,8 @@ class SubscriptionApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_subscription_filter_with_http_info(filter_id, subscription_id, **kwargs)  # noqa: E501
         else:
@@ -832,7 +840,8 @@ class SubscriptionApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_subscriptions_with_http_info(**kwargs)  # noqa: E501
         else:
@@ -926,7 +935,8 @@ class SubscriptionApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.test_subscription_with_http_info(subscription_id, **kwargs)  # noqa: E501
         else:
@@ -1019,7 +1029,8 @@ class SubscriptionApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.update_subscription_with_http_info(content_type, subscription_id, **kwargs)  # noqa: E501
         else:

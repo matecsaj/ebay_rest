@@ -47,7 +47,8 @@ class CategoryTreeApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.fetch_item_aspects_with_http_info(category_tree_id, **kwargs)  # noqa: E501
         else:
@@ -144,7 +145,8 @@ class CategoryTreeApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_category_subtree_with_http_info(category_id, category_tree_id, **kwargs)  # noqa: E501
         else:
@@ -250,7 +252,8 @@ class CategoryTreeApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_category_suggestions_with_http_info(category_tree_id, q, **kwargs)  # noqa: E501
         else:
@@ -353,7 +356,8 @@ class CategoryTreeApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_category_tree_with_http_info(category_tree_id, **kwargs)  # noqa: E501
         else:
@@ -452,7 +456,8 @@ class CategoryTreeApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_compatibility_properties_with_http_info(category_tree_id, category_id, **kwargs)  # noqa: E501
         else:
@@ -557,7 +562,8 @@ class CategoryTreeApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_compatibility_property_values_with_http_info(category_tree_id, compatibility_property, category_id, **kwargs)  # noqa: E501
         else:
@@ -669,7 +675,8 @@ class CategoryTreeApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_default_category_tree_id_with_http_info(marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -764,7 +771,8 @@ class CategoryTreeApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_expired_categories_with_http_info(category_tree_id, **kwargs)  # noqa: E501
         else:
@@ -860,7 +868,8 @@ class CategoryTreeApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_item_aspects_for_category_with_http_info(category_id, category_tree_id, **kwargs)  # noqa: E501
         else:

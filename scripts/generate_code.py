@@ -754,6 +754,211 @@ class Contract:
 
         return file_was_modified
 
+    @staticmethod
+    async def patch_octet_stream_upload_method(
+        api_file_path: str, method_name: str
+    ) -> bool:
+        """
+        Patch a file upload method in an API file to support the 'files' parameter for application/octet-stream.
+
+        This function adds 'files' to the all_params list, reads the file from the files dict,
+        and converts it to body_params for application/octet-stream uploads.
+
+        Args:
+            api_file_path: Path to the API file to patch
+            method_name: Name of the method to patch (e.g., 'upload_video')
+
+        Returns:
+            bool: True if the file was patched, False otherwise
+        """
+        try:
+            async with aiofiles.open(api_file_path) as f:
+                data = await f.read()
+        except FileNotFoundError:
+            return False
+
+        # Check if this file contains the method we want to patch
+        # We need to patch the _with_http_info method, not the wrapper
+        method_with_http_info = f"{method_name}_with_http_info"
+        if f"def {method_with_http_info}" not in data:
+            return False
+
+        file_was_modified = False
+
+        # Patch 1: Add 'files' to the all_params list within the _with_http_info method
+        method_pattern = rf"def {method_with_http_info}\(.*?\):.*?(?=def |\Z)"
+        method_match = re.search(method_pattern, data, re.DOTALL)
+        if method_match:
+            method_body = method_match.group(0)
+            # Find all_params within this method
+            pattern = r"all_params = \[([^\]]*)\]  # noqa: E501"
+            match = re.search(pattern, method_body)
+            if match:
+                existing_params = match.group(1)
+                # Check if 'files' is already in the params or if patch comment already exists
+                all_params_line = match.group(0)
+                patch_comment = "ebay_rest patch: application/octet-stream file uploads"
+                if (
+                    "'files'" not in existing_params
+                    and '"files"' not in existing_params
+                    and patch_comment not in all_params_line
+                ):
+                    new_params = (
+                        existing_params + ", 'files'"
+                        if existing_params.strip()
+                        else "'files'"
+                    )
+                    new_pattern = f"all_params = [{new_params}]  # noqa: E501 - ebay_rest patch: application/octet-stream file uploads"
+                    # Replace in the method body
+                    method_body = re.sub(pattern, new_pattern, method_body, count=1)
+                    # Replace the method in the full data
+                    data = (
+                        data[: method_match.start()]
+                        + method_body
+                        + data[method_match.end() :]
+                    )
+                    file_was_modified = True
+
+        # Patch 2: Add 'import os' after the last import if not already present
+        if "import os" not in data:
+            # Find all import lines
+            import_lines = re.findall(r"^import .+|^from .+", data, re.MULTILINE)
+            if import_lines:
+                # Get the last import line
+                last_import = import_lines[-1]
+                # Add os import after the last import
+                data = data.replace(
+                    last_import,
+                    last_import
+                    + "\nimport os  # noqa: F401  # ebay_rest patch: application/octet-stream file uploads",
+                    1,
+                )
+                file_was_modified = True
+
+        # Patch 3: Handle files parameter by reading file and converting to body_params
+        # Find the method again after the first patch
+        method_match = re.search(method_pattern, data, re.DOTALL)
+        if method_match:
+            method_body = method_match.group(0)
+            # Find where body_params is set
+            target = "body_params = None\n        if 'body' in params:\n            body_params = params['body']"
+            # Check if patch already exists to avoid duplicates
+            patch_marker = "# ebay_rest patch: application/octet-stream file uploads"
+            if target in method_body and patch_marker not in method_body:
+                new_code = """body_params = None
+        # ebay_rest patch: application/octet-stream file uploads
+        files = params.get('files')
+        if files:
+            # Read file from files dict and convert to body
+            file_path = next(iter(files.values()))
+            if os.path.isfile(file_path):
+                with open(file_path, 'rb') as f:
+                    body_params = f.read()
+        body = params.get('body')
+        if body:
+            body_params = body"""
+                # Only replace the first occurrence within this method
+                method_body = method_body.replace(target, new_code, 1)
+                # Replace the method in the full data
+                data = (
+                    data[: method_match.start()]
+                    + method_body
+                    + data[method_match.end() :]
+                )
+                file_was_modified = True
+
+        # Patch 4: Add 'files' parameter documentation to docstrings
+        # Patch docs for both the public method (for user docs) and the _with_http_info method (for consistency)
+        for method_to_patch in [method_name, method_with_http_info]:
+            method_def_pattern = rf"def {method_to_patch}\(.*?\):.*?(?=def |\Z)"
+            method_match = re.search(method_def_pattern, data, re.DOTALL)
+            if method_match:
+                method_body = method_match.group(0)
+                # Check if files parameter already documented in the docstring
+                if re.search(
+                    r":param\s+(dict\s+)?files.*?ebay_rest patch: application/octet-stream file uploads",
+                    method_body,
+                    re.DOTALL,
+                ):
+                    continue
+                # Look for content_type parameter in docstring with application/octet-stream
+                content_type_pattern = r"(:param str content_type:.*?application/octet-stream.*?\(required\))(\n)"
+                match = re.search(content_type_pattern, method_body, re.DOTALL)
+                if match:
+                    content_type_line = match.group(1)
+                    newline = match.group(2)
+                    # Add files parameter documentation after content_type
+                    files_doc = (
+                        "\n        :param dict files: Dictionary mapping field names to file paths. "
+                        "For example: {'file': 'path/to/video.mp4'}. "
+                        "The file will be read and sent as the request body for application/octet-stream uploads. (optional)  # ebay_rest patch: application/octet-stream file uploads"
+                    )
+                    new_content_type_line = content_type_line + files_doc + newline
+                    method_body = method_body.replace(
+                        content_type_line + newline, new_content_type_line, 1
+                    )
+                    data = (
+                        data[: method_match.start()]
+                        + method_body
+                        + data[method_match.end() :]
+                    )
+                    file_was_modified = True
+
+        # Write the patched file if it was modified
+        if file_was_modified:
+            async with aiofiles.open(api_file_path, mode="w") as f:
+                await f.write(data)
+            logger = logging.getLogger(__name__)
+            logger.info(
+                "Patched application/octet-stream file upload support for %s in %s",
+                method_name,
+                api_file_path,
+            )
+
+        return file_was_modified
+
+    @staticmethod
+    async def patch_wrapper_methods_preserve_return_http_data_only(
+        api_file_path: str,
+    ) -> bool:
+        """
+        Patch wrapper methods to only set _return_http_data_only=True if not already in kwargs.
+        This allows users to pass _return_http_data_only=False to get headers.
+
+        Args:
+            api_file_path: Path to the API file to patch
+
+        Returns:
+            bool: True if the file was patched, False otherwise
+        """
+        try:
+            async with aiofiles.open(api_file_path) as f:
+                data = await f.read()
+        except FileNotFoundError:
+            return False
+
+        file_was_modified = False
+
+        # Find all wrapper methods (methods that call _with_http_info)
+        pattern = "kwargs['_return_http_data_only'] = True"
+        new_code = "if '_return_http_data_only' not in kwargs:  # ebay_rest patch\n            kwargs['_return_http_data_only'] = True"
+
+        # Check if patch already exists to avoid duplicates
+        if pattern in data and new_code not in data:
+            data = data.replace(pattern, new_code)
+            file_was_modified = True
+
+        if file_was_modified:
+            async with aiofiles.open(api_file_path, mode="w") as f:
+                await f.write(data)
+            logger = logging.getLogger(__name__)
+            logger.info(
+                "Patched wrapper methods to preserve _return_http_data_only in %s",
+                api_file_path,
+            )
+
+        return file_was_modified
+
     async def patch_generated(self) -> None:
         """If the generated code has an error, then patch it before making use of it."""
 
@@ -811,6 +1016,23 @@ class Contract:
             target = "r = self.pool_manager.request(method, url,\n"
             replace_code = "r = signed_request(self.pool_manager, self.key_pair, method, url,  # ebay_rest patch\n"
             data = data.replace(target, replace_code)
+            # Patch to handle bytes body for application/octet-stream
+            # Add support for bytes body before the else clause that raises exception
+            # Find the else clause after the isinstance(body, str) block and insert before it
+            target = """                else:
+                    # Cannot generate the request from given parameters"""
+            new_part = """                # ebay_rest patch: Handle bytes body for application/octet-stream
+                elif isinstance(body, bytes):
+                    r = signed_request(self.pool_manager, self.key_pair,  # ebay_rest patch
+                        method, url,
+                        body=body,
+                        preload_content=_preload_content,
+                        timeout=timeout,
+                        headers=headers)
+                else:
+                    # Cannot generate the request from given parameters"""
+            if target in data and new_part not in data:
+                data = data.replace(target, new_part, 1)
             async with aiofiles.open(file_path, mode="w") as f:
                 await f.write(data)
 
@@ -827,7 +1049,9 @@ class Contract:
             )
 
         # Find all methods that need patching by scanning for content_type with multipart/form-data
-        methods_to_patch = set()
+        methods_to_patch_multipart = set()
+        # Find all methods that need patching for application/octet-stream
+        methods_to_patch_octet_stream = set()
         for api_file in api_files:
             try:
                 async with aiofiles.open(api_file) as f:
@@ -849,14 +1073,38 @@ class Contract:
                             and not method_name.startswith("__")
                             and method_name not in ["__init__", "__new__", "__del__"]
                         ):
-                            methods_to_patch.add(method_name)
+                            methods_to_patch_multipart.add(method_name)
+
+                    # Check if this method has content_type with application/octet-stream in its docstring
+                    if re.search(
+                        r":param str content_type:.*?application/octet-stream",
+                        method_body,
+                        re.DOTALL,
+                    ):
+                        if (
+                            not method_name.endswith("_with_http_info")
+                            and not method_name.startswith("__")
+                            and method_name not in ["__init__", "__new__", "__del__"]
+                        ):
+                            methods_to_patch_octet_stream.add(method_name)
             except (FileNotFoundError, Exception):
                 continue
 
-        # Patch each detected method
-        for method_name in methods_to_patch:
+        # Patch each detected method for multipart/form-data
+        for method_name in methods_to_patch_multipart:
             for api_file in api_files:
                 await Contract.patch_file_upload_method(api_file, method_name)
+
+        # Patch each detected method for application/octet-stream
+        for method_name in methods_to_patch_octet_stream:
+            for api_file in api_files:
+                await Contract.patch_octet_stream_upload_method(api_file, method_name)
+
+        # This allows users to pass _return_http_data_only=False to get headers
+        for api_file in api_files:
+            await Contract.patch_wrapper_methods_preserve_return_http_data_only(
+                api_file
+            )
 
     @staticmethod
     async def run_command(cmd: str) -> None:

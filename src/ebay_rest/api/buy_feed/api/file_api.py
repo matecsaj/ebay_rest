@@ -49,7 +49,8 @@ class FileApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.download_file_with_http_info(file_id, x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -155,7 +156,8 @@ class FileApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_file_with_http_info(file_id, x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -263,7 +265,8 @@ class FileApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_files_with_http_info(feed_type_id, x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         else:

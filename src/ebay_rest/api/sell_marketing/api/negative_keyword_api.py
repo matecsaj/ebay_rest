@@ -48,7 +48,8 @@ class NegativeKeywordApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.bulk_create_negative_keyword_with_http_info(body, content_type, **kwargs)  # noqa: E501
         else:
@@ -155,7 +156,8 @@ class NegativeKeywordApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.bulk_update_negative_keyword_with_http_info(body, content_type, **kwargs)  # noqa: E501
         else:
@@ -262,7 +264,8 @@ class NegativeKeywordApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_negative_keyword_with_http_info(body, content_type, **kwargs)  # noqa: E501
         else:
@@ -368,7 +371,8 @@ class NegativeKeywordApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_negative_keyword_with_http_info(negative_keyword_id, **kwargs)  # noqa: E501
         else:
@@ -467,7 +471,8 @@ class NegativeKeywordApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_negative_keywords_with_http_info(**kwargs)  # noqa: E501
         else:
@@ -572,7 +577,8 @@ class NegativeKeywordApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.update_negative_keyword_with_http_info(body, content_type, negative_keyword_id, **kwargs)  # noqa: E501
         else:

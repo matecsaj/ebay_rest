@@ -48,7 +48,8 @@ class BiddingApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_bidding_with_http_info(item_id, x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -153,7 +154,8 @@ class BiddingApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.place_proxy_bid_with_http_info(x_ebay_c_marketplace_id, content_type, item_id, **kwargs)  # noqa: E501
         else:

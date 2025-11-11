@@ -48,7 +48,8 @@ class ListingApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.bulk_migrate_listing_with_http_info(body, content_type, **kwargs)  # noqa: E501
         else:
@@ -157,7 +158,8 @@ class ListingApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_or_replace_sku_location_mapping_with_http_info(body, content_type, listing_id, sku, **kwargs)  # noqa: E501
         else:
@@ -274,7 +276,8 @@ class ListingApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.delete_sku_location_mapping_with_http_info(listing_id, sku, **kwargs)  # noqa: E501
         else:
@@ -373,7 +376,8 @@ class ListingApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_sku_location_mapping_with_http_info(listing_id, sku, **kwargs)  # noqa: E501
         else:

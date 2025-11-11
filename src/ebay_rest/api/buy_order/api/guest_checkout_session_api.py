@@ -51,7 +51,8 @@ class GuestCheckoutSessionApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.apply_guest_coupon_with_http_info(x_ebay_c_marketplace_id, content_type, checkout_session_id, **kwargs)  # noqa: E501
         else:
@@ -172,7 +173,8 @@ class GuestCheckoutSessionApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_guest_checkout_session_with_http_info(checkout_session_id, x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -280,7 +282,8 @@ class GuestCheckoutSessionApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.initiate_guest_checkout_session_with_http_info(x_ebay_c_marketplace_id, content_type, **kwargs)  # noqa: E501
         else:
@@ -396,7 +399,8 @@ class GuestCheckoutSessionApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.remove_guest_coupon_with_http_info(x_ebay_c_marketplace_id, content_type, checkout_session_id, **kwargs)  # noqa: E501
         else:
@@ -519,7 +523,8 @@ class GuestCheckoutSessionApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.update_guest_quantity_with_http_info(x_ebay_c_marketplace_id, content_type, checkout_session_id, **kwargs)  # noqa: E501
         else:
@@ -642,7 +647,8 @@ class GuestCheckoutSessionApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.update_guest_shipping_address_with_http_info(x_ebay_c_marketplace_id, content_type, checkout_session_id, **kwargs)  # noqa: E501
         else:
@@ -765,7 +771,8 @@ class GuestCheckoutSessionApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.update_guest_shipping_option_with_http_info(x_ebay_c_marketplace_id, content_type, checkout_session_id, **kwargs)  # noqa: E501
         else:

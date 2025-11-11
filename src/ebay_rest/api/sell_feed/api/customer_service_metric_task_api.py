@@ -49,7 +49,8 @@ class CustomerServiceMetricTaskApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_customer_service_metric_task_with_http_info(body, accept_language, content_type, **kwargs)  # noqa: E501
         else:
@@ -158,7 +159,8 @@ class CustomerServiceMetricTaskApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_customer_service_metric_task_with_http_info(task_id, **kwargs)  # noqa: E501
         else:
@@ -257,7 +259,8 @@ class CustomerServiceMetricTaskApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_customer_service_metric_tasks_with_http_info(**kwargs)  # noqa: E501
         else:

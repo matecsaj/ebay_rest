@@ -49,7 +49,8 @@ class LocationApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_inventory_location_with_http_info(body, content_type, merchant_location_key, **kwargs)  # noqa: E501
         else:
@@ -158,7 +159,8 @@ class LocationApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.delete_inventory_location_with_http_info(merchant_location_key, **kwargs)  # noqa: E501
         else:
@@ -249,7 +251,8 @@ class LocationApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.disable_inventory_location_with_http_info(merchant_location_key, **kwargs)  # noqa: E501
         else:
@@ -344,7 +347,8 @@ class LocationApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.enable_inventory_location_with_http_info(merchant_location_key, **kwargs)  # noqa: E501
         else:
@@ -439,7 +443,8 @@ class LocationApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_inventory_location_with_http_info(merchant_location_key, **kwargs)  # noqa: E501
         else:
@@ -535,7 +540,8 @@ class LocationApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_inventory_locations_with_http_info(**kwargs)  # noqa: E501
         else:
@@ -631,7 +637,8 @@ class LocationApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.update_inventory_location_with_http_info(body, content_type, merchant_location_key, **kwargs)  # noqa: E501
         else:

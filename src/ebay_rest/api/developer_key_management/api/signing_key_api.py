@@ -48,7 +48,8 @@ class SigningKeyApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_signing_key_with_http_info(content_type, **kwargs)  # noqa: E501
         else:
@@ -150,7 +151,8 @@ class SigningKeyApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_signing_key_with_http_info(signing_key_id, **kwargs)  # noqa: E501
         else:
@@ -244,7 +246,8 @@ class SigningKeyApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_signing_keys_with_http_info(**kwargs)  # noqa: E501
         else:
