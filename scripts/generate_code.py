@@ -618,6 +618,142 @@ class Contract:
         # if self.data.category == 'sell' and self.data.call == 'fulfillment':
         #     await Contracts.patch_contract_sell_fulfillment(self.data.file_name)
 
+    @staticmethod
+    async def patch_file_upload_method(api_file_path: str, method_name: str) -> bool:
+        """
+        Patch a file upload method in an API file to support the 'files' parameter.
+
+        This function adds 'files' to the all_params list, handles file uploads
+        by repurposing the existing local_var_files parameter, and updates docstrings.
+
+        Args:
+            api_file_path: Path to the API file to patch
+            method_name: Name of the method to patch (e.g., 'upload_video', 'create_image_from_file')
+
+        Returns:
+            bool: True if the file was patched, False otherwise
+        """
+        try:
+            async with aiofiles.open(api_file_path) as f:
+                data = await f.read()
+        except FileNotFoundError:
+            return False
+
+        # Check if this file contains the method we want to patch
+        # We need to patch the _with_http_info method, not the wrapper
+        method_with_http_info = f"{method_name}_with_http_info"
+        if f"def {method_with_http_info}" not in data:
+            return False
+
+        file_was_modified = False
+
+        # Patch 1: Add 'files' to the all_params list within the _with_http_info method
+        # Find the method definition and patch the all_params within its scope
+        # Use a more specific pattern that finds all_params after the method definition
+        method_pattern = rf"def {method_with_http_info}\(.*?\):.*?(?=def |\Z)"
+        method_match = re.search(method_pattern, data, re.DOTALL)
+        if method_match:
+            method_body = method_match.group(0)
+            # Find all_params within this method
+            pattern = r"all_params = \[([^\]]*)\]  # noqa: E501"
+            match = re.search(pattern, method_body)
+            if match:
+                existing_params = match.group(1)
+                # Check if 'files' is already in the params or if patch comment already exists
+                all_params_line = match.group(0)
+                patch_comment = "ebay_rest patch: multipart/form-data file uploads"
+                if (
+                    "'files'" not in existing_params
+                    and '"files"' not in existing_params
+                    and patch_comment not in all_params_line
+                ):
+                    new_params = (
+                        existing_params + ", 'files'"
+                        if existing_params.strip()
+                        else "'files'"
+                    )
+                    new_pattern = f"all_params = [{new_params}]  # noqa: E501 - ebay_rest patch: multipart/form-data file uploads"
+                    # Replace in the method body
+                    method_body = re.sub(pattern, new_pattern, method_body, count=1)
+                    # Replace the method in the full data
+                    data = (
+                        data[: method_match.start()]
+                        + method_body
+                        + data[method_match.end() :]
+                    )
+                    file_was_modified = True
+
+        # Patch 2: Handle files parameter in local_var_files (repurposes existing file handling)
+        # Find the method again after the first patch
+        method_match = re.search(method_pattern, data, re.DOTALL)
+        if method_match:
+            method_body = method_match.group(0)
+            target = "local_var_files = {}"
+            # Check if patch already exists to avoid duplicates
+            patch_marker = "# ebay_rest patch: multipart/form-data file uploads"
+            if target in method_body and patch_marker not in method_body:
+                new_code = """local_var_files = {}
+        # ebay_rest patch: multipart/form-data file uploads
+        if 'files' in params and params['files']:
+            local_var_files = params['files']"""
+                # Only replace the first occurrence within this method
+                method_body = method_body.replace(target, new_code, 1)
+                # Replace the method in the full data
+                data = (
+                    data[: method_match.start()]
+                    + method_body
+                    + data[method_match.end() :]
+                )
+                file_was_modified = True
+
+        # Patch 3: Add 'files' parameter documentation to docstrings
+        # Patch docs for both the public method (for user docs) and the _with_http_info method (for consistency)
+        for method_to_patch in [method_name, method_with_http_info]:
+            method_def_pattern = rf"def {method_to_patch}\(.*?\):.*?(?=def |\Z)"
+            method_match = re.search(method_def_pattern, data, re.DOTALL)
+            if method_match:
+                method_body = method_match.group(0)
+                # Check if files parameter already documented in the docstring
+                if re.search(
+                    r":param\s+(dict\s+)?files.*?ebay_rest patch: multipart/form-data file uploads",
+                    method_body,
+                    re.DOTALL,
+                ):
+                    continue
+                # Look for content_type parameter in docstring
+                content_type_pattern = r"(:param str content_type:.*?multipart/form-data.*?\(required\))(\n)"
+                match = re.search(content_type_pattern, method_body, re.DOTALL)
+                if match:
+                    content_type_line = match.group(1)
+                    newline = match.group(2)
+                    # Add files parameter documentation after content_type
+                    files_doc = (
+                        "\n        :param dict files: Dictionary mapping form field names to file paths. "
+                        "For example: {'image': 'path/to/image.jpg'} or {'file': 'path/to/document.pdf'}. "
+                        "This parameter is used to upload files in multipart/form-data requests. (optional)  # ebay_rest patch: multipart/form-data file uploads"
+                    )
+                    new_content_type_line = content_type_line + files_doc + newline
+                    method_body = method_body.replace(
+                        content_type_line + newline, new_content_type_line, 1
+                    )
+                    data = (
+                        data[: method_match.start()]
+                        + method_body
+                        + data[method_match.end() :]
+                    )
+                    file_was_modified = True
+
+        # Write the patched file if it was modified
+        if file_was_modified:
+            async with aiofiles.open(api_file_path, mode="w") as f:
+                await f.write(data)
+            logger = logging.getLogger(__name__)
+            logger.info(
+                "Patched file upload support for %s in %s", method_name, api_file_path
+            )
+
+        return file_was_modified
+
     async def patch_generated(self) -> None:
         """If the generated code has an error, then patch it before making use of it."""
 
@@ -681,65 +817,46 @@ class Contract:
         # Patch file upload methods to support files parameter
         # This fixes the issue where local_var_files = {} and files parameter is not accepted
         # Repurposes existing parameters to pass file information
-        # TODO Can this be made more resilient by pattern matching on '_from_file' and 'upload_'?
-        file_upload_methods = [
-            "create_image_from_file",
-            "upload_file",
-            "create_video",
-            "upload_video",
-            "upload_document",
-            "upload_evidence_file",
-        ]
+        # Auto-detect methods by finding those with content_type parameter mentioning multipart/form-data
+        api_files = []
+        for root, _dirs, files in os.walk(
+            os.path.join(Locations.cache_path, self.data.name)
+        ):
+            api_files.extend(
+                os.path.join(root, file) for file in files if file.endswith("_api.py")
+            )
 
-        for method_name in file_upload_methods:
-            # Find and patch API files that contain file upload methods
-            api_files = []
-            for root, _dirs, files in os.walk(
-                os.path.join(Locations.cache_path, self.data.name)
-            ):
-                api_files.extend(
-                    os.path.join(root, file)
-                    for file in files
-                    if file.endswith("_api.py")
-                )
+        # Find all methods that need patching by scanning for content_type with multipart/form-data
+        methods_to_patch = set()
+        for api_file in api_files:
+            try:
+                async with aiofiles.open(api_file) as f:
+                    file_content = await f.read()
+                method_pattern = r"def (\w+)\([^)]*\):(.*?)(?=def |\Z)"
+                all_methods = re.finditer(method_pattern, file_content, re.DOTALL)
+                for method_match in all_methods:
+                    method_name = method_match.group(1)
+                    method_body = method_match.group(2)
 
+                    # Check if this method has content_type with multipart/form-data in its docstring
+                    if re.search(
+                        r":param str content_type:.*?multipart/form-data",
+                        method_body,
+                        re.DOTALL,
+                    ):
+                        if (
+                            not method_name.endswith("_with_http_info")
+                            and not method_name.startswith("__")
+                            and method_name not in ["__init__", "__new__", "__del__"]
+                        ):
+                            methods_to_patch.add(method_name)
+            except (FileNotFoundError, Exception):
+                continue
+
+        # Patch each detected method
+        for method_name in methods_to_patch:
             for api_file in api_files:
-                try:
-                    async with aiofiles.open(api_file) as f:
-                        data = await f.read()
-                except FileNotFoundError:
-                    continue
-
-                # Check if this file contains the method we want to patch
-                if f"def {method_name}" in data:
-                    # Patch 1: Add 'files' to the all_params list (handles any pattern automatically)
-                    # Find any all_params pattern and add 'files' to it
-                    pattern = r"all_params = \[([^\]]*)\]  # noqa: E501"
-                    match = re.search(pattern, data)
-                    if match:
-                        existing_params = match.group(1)
-                        new_params = (
-                            existing_params + ", 'files'"
-                            if existing_params.strip()
-                            else "'files'"
-                        )
-                        new_pattern = f"all_params = [{new_params}]  # noqa: E501 - ebay_rest patch: added files support"
-                        data = re.sub(pattern, new_pattern, data, count=1)
-
-                    # Patch 2: Handle files parameter in local_var_files (repurposes existing file handling)
-                    target = "local_var_files = {}"
-                    if target in data:
-                        new_code = """local_var_files = {}
-        # ebay_rest patch: Handle file uploads by repurposing existing file handling
-        if 'files' in params and params['files']:
-            local_var_files = params['files']"""
-                        data = data.replace(target, new_code, 1)
-
-                    # Write the patched file
-                    async with aiofiles.open(api_file, mode="w") as f:
-                        await f.write(data)
-                    logger = logging.getLogger(__name__)
-                    logger.info("Patched file upload support in %s", api_file)
+                await Contract.patch_file_upload_method(api_file, method_name)
 
     @staticmethod
     async def run_command(cmd: str) -> None:

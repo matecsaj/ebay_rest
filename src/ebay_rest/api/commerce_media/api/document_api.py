@@ -72,7 +72,7 @@ class DocumentApi(object):
                  returns the request thread.
         """
 
-        all_params = ['content_type', 'body', 'files']  # noqa: E501 - ebay_rest patch: added files support
+        all_params = ['content_type', 'body']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -104,9 +104,6 @@ class DocumentApi(object):
 
         form_params = []
         local_var_files = {}
-        # ebay_rest patch: Handle file uploads by repurposing existing file handling
-        if 'files' in params and params['files']:
-            local_var_files = params['files']
 
         body_params = None
         if 'body' in params:
@@ -348,6 +345,7 @@ class DocumentApi(object):
         :param async_req bool
         :param str document_id: The unique identifier of the document to be uploaded.<br><br>This value is returned in the response of the <a href=\"/api-docs/commerce/media/resources/document/methods/createDocument\" target=\"_blank\">createDocument</a> method. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>multipart/form-data</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param dict files: Dictionary mapping form field names to file paths. For example: {'image': 'path/to/image.jpg'} or {'file': 'path/to/document.pdf'}. This parameter is used to upload files in multipart/form-data requests. (optional)  # ebay_rest patch: multipart/form-data file uploads
         :return: DocumentResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -371,12 +369,13 @@ class DocumentApi(object):
         :param async_req bool
         :param str document_id: The unique identifier of the document to be uploaded.<br><br>This value is returned in the response of the <a href=\"/api-docs/commerce/media/resources/document/methods/createDocument\" target=\"_blank\">createDocument</a> method. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to <b>multipart/form-data</b>. <br><br> For more information, refer to <a href=\"/api-docs/static/rest-request-components.html#HTTP\" target=\"_blank \">HTTP request headers</a>. (required)
+        :param dict files: Dictionary mapping form field names to file paths. For example: {'image': 'path/to/image.jpg'} or {'file': 'path/to/document.pdf'}. This parameter is used to upload files in multipart/form-data requests. (optional)  # ebay_rest patch: multipart/form-data file uploads
         :return: DocumentResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['document_id', 'content_type']  # noqa: E501
+        all_params = ['document_id', 'content_type', 'files']  # noqa: E501 - ebay_rest patch: multipart/form-data file uploads
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -414,6 +413,9 @@ class DocumentApi(object):
 
         form_params = []
         local_var_files = {}
+        # ebay_rest patch: multipart/form-data file uploads
+        if 'files' in params and params['files']:
+            local_var_files = params['files']
 
         body_params = None
         # HTTP header `Accept`
