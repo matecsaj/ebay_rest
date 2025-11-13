@@ -49,7 +49,8 @@ class ShippingFulfillmentApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_shipping_fulfillment_with_http_info(body, content_type, order_id, **kwargs)  # noqa: E501
         else:
@@ -163,7 +164,8 @@ class ShippingFulfillmentApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_shipping_fulfillment_with_http_info(fulfillment_id, order_id, **kwargs)  # noqa: E501
         else:
@@ -265,7 +267,8 @@ class ShippingFulfillmentApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_shipping_fulfillments_with_http_info(order_id, **kwargs)  # noqa: E501
         else:

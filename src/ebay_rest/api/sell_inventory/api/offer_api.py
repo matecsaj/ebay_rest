@@ -49,7 +49,8 @@ class OfferApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.bulk_create_offer_with_http_info(body, content_language, content_type, **kwargs)  # noqa: E501
         else:
@@ -163,7 +164,8 @@ class OfferApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.bulk_publish_offer_with_http_info(body, content_type, **kwargs)  # noqa: E501
         else:
@@ -271,7 +273,8 @@ class OfferApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_offer_with_http_info(body, content_language, content_type, **kwargs)  # noqa: E501
         else:
@@ -384,7 +387,8 @@ class OfferApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.delete_offer_with_http_info(offer_id, **kwargs)  # noqa: E501
         else:
@@ -476,7 +480,8 @@ class OfferApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_listing_fees_with_http_info(content_type, **kwargs)  # noqa: E501
         else:
@@ -578,7 +583,8 @@ class OfferApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_offer_with_http_info(offer_id, **kwargs)  # noqa: E501
         else:
@@ -677,7 +683,8 @@ class OfferApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_offers_with_http_info(**kwargs)  # noqa: E501
         else:
@@ -780,7 +787,8 @@ class OfferApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.publish_offer_with_http_info(offer_id, **kwargs)  # noqa: E501
         else:
@@ -876,7 +884,8 @@ class OfferApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.publish_offer_by_inventory_item_group_with_http_info(body, content_type, **kwargs)  # noqa: E501
         else:
@@ -985,7 +994,8 @@ class OfferApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.update_offer_with_http_info(body, content_language, content_type, offer_id, **kwargs)  # noqa: E501
         else:
@@ -1105,7 +1115,8 @@ class OfferApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.withdraw_offer_with_http_info(offer_id, **kwargs)  # noqa: E501
         else:
@@ -1201,7 +1212,8 @@ class OfferApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.withdraw_offer_by_inventory_item_group_with_http_info(body, content_type, **kwargs)  # noqa: E501
         else:

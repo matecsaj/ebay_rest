@@ -49,7 +49,8 @@ class AdGroupApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_ad_group_with_http_info(body, content_type, campaign_id, **kwargs)  # noqa: E501
         else:
@@ -163,7 +164,8 @@ class AdGroupApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_ad_group_with_http_info(ad_group_id, campaign_id, **kwargs)  # noqa: E501
         else:
@@ -268,7 +270,8 @@ class AdGroupApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_ad_groups_with_http_info(campaign_id, **kwargs)  # noqa: E501
         else:
@@ -375,7 +378,8 @@ class AdGroupApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.suggest_bids_with_http_info(body, content_type, ad_group_id, campaign_id, **kwargs)  # noqa: E501
         else:
@@ -498,7 +502,8 @@ class AdGroupApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.suggest_keywords_with_http_info(content_type, ad_group_id, campaign_id, **kwargs)  # noqa: E501
         else:
@@ -617,7 +622,8 @@ class AdGroupApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.update_ad_group_with_http_info(body, content_type, ad_group_id, campaign_id, **kwargs)  # noqa: E501
         else:

@@ -49,7 +49,8 @@ class KeywordApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.bulk_create_keyword_with_http_info(body, content_type, campaign_id, **kwargs)  # noqa: E501
         else:
@@ -164,7 +165,8 @@ class KeywordApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.bulk_update_keyword_with_http_info(body, content_type, campaign_id, **kwargs)  # noqa: E501
         else:
@@ -279,7 +281,8 @@ class KeywordApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_keyword_with_http_info(body, content_type, campaign_id, **kwargs)  # noqa: E501
         else:
@@ -393,7 +396,8 @@ class KeywordApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_keyword_with_http_info(campaign_id, keyword_id, **kwargs)  # noqa: E501
         else:
@@ -499,7 +503,8 @@ class KeywordApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_keywords_with_http_info(campaign_id, **kwargs)  # noqa: E501
         else:
@@ -609,7 +614,8 @@ class KeywordApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.update_keyword_with_http_info(body, content_type, campaign_id, keyword_id, **kwargs)  # noqa: E501
         else:

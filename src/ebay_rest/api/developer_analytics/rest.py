@@ -197,6 +197,14 @@ class RESTClientObject(object):
                         preload_content=_preload_content,
                         timeout=timeout,
                         headers=headers)
+                # ebay_rest patch: Handle bytes body for application/octet-stream
+                elif isinstance(body, bytes):
+                    r = signed_request(self.pool_manager, self.key_pair,  # ebay_rest patch
+                        method, url,
+                        body=body,
+                        preload_content=_preload_content,
+                        timeout=timeout,
+                        headers=headers)
                 else:
                     # Cannot generate the request from given parameters
                     msg = """Cannot prepare a request message for provided

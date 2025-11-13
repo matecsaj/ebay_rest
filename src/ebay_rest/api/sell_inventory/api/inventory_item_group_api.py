@@ -50,7 +50,8 @@ class InventoryItemGroupApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_or_replace_inventory_item_group_with_http_info(body, content_language, content_type, inventory_item_group_key, **kwargs)  # noqa: E501
         else:
@@ -170,7 +171,8 @@ class InventoryItemGroupApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.delete_inventory_item_group_with_http_info(inventory_item_group_key, **kwargs)  # noqa: E501
         else:
@@ -261,7 +263,8 @@ class InventoryItemGroupApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_inventory_item_group_with_http_info(inventory_item_group_key, **kwargs)  # noqa: E501
         else:

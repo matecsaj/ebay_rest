@@ -48,7 +48,8 @@ class ScheduleApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_schedule_with_http_info(body, content_type, **kwargs)  # noqa: E501
         else:
@@ -154,7 +155,8 @@ class ScheduleApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.delete_schedule_with_http_info(schedule_id, **kwargs)  # noqa: E501
         else:
@@ -245,7 +247,8 @@ class ScheduleApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_latest_result_file_with_http_info(schedule_id, **kwargs)  # noqa: E501
         else:
@@ -340,7 +343,8 @@ class ScheduleApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_schedule_with_http_info(schedule_id, **kwargs)  # noqa: E501
         else:
@@ -435,7 +439,8 @@ class ScheduleApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_schedule_template_with_http_info(schedule_template_id, **kwargs)  # noqa: E501
         else:
@@ -532,7 +537,8 @@ class ScheduleApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_schedule_templates_with_http_info(feed_type, **kwargs)  # noqa: E501
         else:
@@ -635,7 +641,8 @@ class ScheduleApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_schedules_with_http_info(feed_type, **kwargs)  # noqa: E501
         else:
@@ -738,7 +745,8 @@ class ScheduleApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.update_schedule_with_http_info(body, content_type, schedule_id, **kwargs)  # noqa: E501
         else:

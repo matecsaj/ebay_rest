@@ -48,7 +48,8 @@ class ImageApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_image_from_file_with_http_info(content_type, **kwargs)  # noqa: E501
         else:
@@ -148,7 +149,8 @@ class ImageApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_image_from_url_with_http_info(body, content_type, **kwargs)  # noqa: E501
         else:
@@ -254,7 +256,8 @@ class ImageApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_image_with_http_info(image_id, **kwargs)  # noqa: E501
         else:

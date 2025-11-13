@@ -49,7 +49,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.clone_campaign_with_http_info(body, content_type, campaign_id, **kwargs)  # noqa: E501
         else:
@@ -163,7 +164,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_campaign_with_http_info(body, content_type, **kwargs)  # noqa: E501
         else:
@@ -269,7 +271,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.delete_campaign_with_http_info(campaign_id, **kwargs)  # noqa: E501
         else:
@@ -360,7 +363,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.end_campaign_with_http_info(campaign_id, **kwargs)  # noqa: E501
         else:
@@ -453,7 +457,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.find_campaign_by_ad_reference_with_http_info(**kwargs)  # noqa: E501
         else:
@@ -550,7 +555,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_campaign_with_http_info(campaign_id, **kwargs)  # noqa: E501
         else:
@@ -645,7 +651,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_campaign_by_name_with_http_info(campaign_name, **kwargs)  # noqa: E501
         else:
@@ -748,7 +755,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_campaigns_with_http_info(**kwargs)  # noqa: E501
         else:
@@ -863,7 +871,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.launch_campaign_with_http_info(campaign_id, **kwargs)  # noqa: E501
         else:
@@ -954,7 +963,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.pause_campaign_with_http_info(campaign_id, **kwargs)  # noqa: E501
         else:
@@ -1045,7 +1055,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.resume_campaign_with_http_info(campaign_id, **kwargs)  # noqa: E501
         else:
@@ -1137,7 +1148,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.setup_quick_campaign_with_http_info(body, content_type, **kwargs)  # noqa: E501
         else:
@@ -1243,7 +1255,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.suggest_budget_with_http_info(x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -1341,7 +1354,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.suggest_items_with_http_info(campaign_id, **kwargs)  # noqa: E501
         else:
@@ -1446,7 +1460,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.suggest_max_cpc_with_http_info(body, content_type, **kwargs)  # noqa: E501
         else:
@@ -1554,7 +1569,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.update_ad_rate_strategy_with_http_info(body, content_type, campaign_id, **kwargs)  # noqa: E501
         else:
@@ -1665,7 +1681,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.update_bidding_strategy_with_http_info(body, content_type, campaign_id, **kwargs)  # noqa: E501
         else:
@@ -1776,7 +1793,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.update_campaign_budget_with_http_info(body, content_type, campaign_id, **kwargs)  # noqa: E501
         else:
@@ -1891,7 +1909,8 @@ class CampaignApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.update_campaign_identification_with_http_info(body, content_type, campaign_id, **kwargs)  # noqa: E501
         else:

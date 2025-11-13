@@ -49,7 +49,8 @@ class CompatibilitiesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_compatibilities_by_specification_with_http_info(x_ebay_c_marketplace_id, content_type, **kwargs)  # noqa: E501
         else:
@@ -160,7 +161,8 @@ class CompatibilitiesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_compatibility_property_names_with_http_info(x_ebay_c_marketplace_id, content_type, **kwargs)  # noqa: E501
         else:
@@ -271,7 +273,8 @@ class CompatibilitiesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_compatibility_property_values_with_http_info(x_ebay_c_marketplace_id, content_type, **kwargs)  # noqa: E501
         else:
@@ -382,7 +385,8 @@ class CompatibilitiesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_multi_compatibility_property_values_with_http_info(x_ebay_c_marketplace_id, content_type, **kwargs)  # noqa: E501
         else:
@@ -493,7 +497,8 @@ class CompatibilitiesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_product_compatibilities_with_http_info(x_ebay_c_marketplace_id, content_type, **kwargs)  # noqa: E501
         else:

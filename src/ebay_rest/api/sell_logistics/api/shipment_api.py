@@ -47,7 +47,8 @@ class ShipmentApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.cancel_shipment_with_http_info(shipment_id, **kwargs)  # noqa: E501
         else:
@@ -144,7 +145,8 @@ class ShipmentApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_from_shipping_quote_with_http_info(body, content_type, x_ebay_c_marketplace_id, **kwargs)  # noqa: E501
         else:
@@ -258,7 +260,8 @@ class ShipmentApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.download_label_file_with_http_info(shipment_id, accept, **kwargs)  # noqa: E501
         else:
@@ -360,7 +363,8 @@ class ShipmentApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_shipment_with_http_info(shipment_id, **kwargs)  # noqa: E501
         else:

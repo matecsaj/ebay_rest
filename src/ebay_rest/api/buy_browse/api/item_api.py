@@ -51,7 +51,8 @@ class ItemApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.check_compatibility_with_http_info(content_type, item_id, **kwargs)  # noqa: E501
         else:
@@ -171,7 +172,8 @@ class ItemApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_item_with_http_info(item_id, **kwargs)  # noqa: E501
         else:
@@ -288,7 +290,8 @@ class ItemApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_item_by_legacy_id_with_http_info(legacy_item_id, **kwargs)  # noqa: E501
         else:
@@ -409,7 +412,8 @@ class ItemApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_items_with_http_info(**kwargs)  # noqa: E501
         else:
@@ -520,7 +524,8 @@ class ItemApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_items_by_item_group_with_http_info(item_group_id, **kwargs)  # noqa: E501
         else:

@@ -48,7 +48,8 @@ class RegisterApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.register_client_with_http_info(body, content_type, **kwargs)  # noqa: E501
         else:

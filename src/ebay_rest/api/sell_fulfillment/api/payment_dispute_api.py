@@ -49,7 +49,8 @@ class PaymentDisputeApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.accept_payment_dispute_with_http_info(content_type, payment_dispute_id, **kwargs)  # noqa: E501
         else:
@@ -156,7 +157,8 @@ class PaymentDisputeApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.add_evidence_with_http_info(content_type, payment_dispute_id, **kwargs)  # noqa: E501
         else:
@@ -267,7 +269,8 @@ class PaymentDisputeApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.contest_payment_dispute_with_http_info(content_type, payment_dispute_id, **kwargs)  # noqa: E501
         else:
@@ -374,7 +377,8 @@ class PaymentDisputeApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.fetch_evidence_content_with_http_info(payment_dispute_id, evidence_id, file_id, **kwargs)  # noqa: E501
         else:
@@ -483,7 +487,8 @@ class PaymentDisputeApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_activities_with_http_info(payment_dispute_id, **kwargs)  # noqa: E501
         else:
@@ -578,7 +583,8 @@ class PaymentDisputeApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_payment_dispute_with_http_info(payment_dispute_id, **kwargs)  # noqa: E501
         else:
@@ -679,7 +685,8 @@ class PaymentDisputeApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_payment_dispute_summaries_with_http_info(**kwargs)  # noqa: E501
         else:
@@ -790,7 +797,8 @@ class PaymentDisputeApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.update_evidence_with_http_info(content_type, payment_dispute_id, **kwargs)  # noqa: E501
         else:
@@ -897,7 +905,8 @@ class PaymentDisputeApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.upload_evidence_file_with_http_info(payment_dispute_id, content_type, **kwargs)  # noqa: E501
         else:

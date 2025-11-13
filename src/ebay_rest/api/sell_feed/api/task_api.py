@@ -50,7 +50,8 @@ class TaskApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.create_task_with_http_info(body, x_ebay_c_marketplace_id, content_type, **kwargs)  # noqa: E501
         else:
@@ -162,7 +163,8 @@ class TaskApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_input_file_with_http_info(task_id, **kwargs)  # noqa: E501
         else:
@@ -257,7 +259,8 @@ class TaskApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_result_file_with_http_info(task_id, **kwargs)  # noqa: E501
         else:
@@ -352,7 +355,8 @@ class TaskApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_task_with_http_info(task_id, **kwargs)  # noqa: E501
         else:
@@ -452,7 +456,8 @@ class TaskApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.get_tasks_with_http_info(**kwargs)  # noqa: E501
         else:
@@ -560,7 +565,8 @@ class TaskApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        if '_return_http_data_only' not in kwargs:  # ebay_rest patch
+            kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
             return self.upload_file_with_http_info(task_id, content_type, **kwargs)  # noqa: E501
         else:

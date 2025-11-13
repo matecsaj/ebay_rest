@@ -983,7 +983,7 @@ class APIPrivate(metaclass=Multiton):
             return new_dict
 
         else:
-            logging.debug("Unexpected object of type " + type(obj) + ".")
+            logging.debug(f"Unexpected object of type {type(obj)}.")
             return obj  # something needs to be returned, hopefully it is useful as is
 
     def _call_swagger(

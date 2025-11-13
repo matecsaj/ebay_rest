@@ -702,6 +702,64 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         """
         return os.path.join(os.path.dirname(__file__), "upload_samples", file_name)
 
+    def test_commerce_media_upload_video(self):
+        """
+        First get a valid video_id using create_video, upload the video file (upload_video) using that ID, then verify info using get_video
+
+        See: https://developer.ebay.com/api-docs/commerce/media/resources/video/methods/createVideo
+        See: https://developer.ebay.com/api-docs/commerce/media/resources/video/methods/uploadVideo
+        """
+        try:
+            create_body = {
+                "classification": ["ITEM"],
+                "description": "test video description",
+                "size": os.path.getsize(self.get_upload_sample_path_file("video.mp4")),
+                "title": "test video title",
+            }
+            # Call with _return_http_data_only=False to get headers
+            _api_response, _status, headers = self._api.commerce_media_create_video(
+                content_type="application/json",
+                body=create_body,
+                _return_http_data_only=False,
+            )
+
+            # Extract video_id from Location header Format: /commerce/media/v1_beta/video/{video_id} or full URL
+            video_id = None
+            if headers:
+                location_header = headers.get("Location")
+                if location_header:
+                    parts = location_header.rstrip("/").split("/")
+                    if parts:
+                        video_id = parts[-1]
+
+            self.assertIsNotNone(
+                video_id, "Failed to get videoId from create_video Location header"
+            )
+            # Now upload the video file using the video_id from createVideo
+            result = self._api.commerce_media_upload_video(
+                content_type="application/octet-stream",
+                video_id=video_id,
+                files={"file": self.get_upload_sample_path_file("video.mp4")},
+            )
+
+            # Verify upload succeeded by calling get_video to check video status
+            # upload_video returns None, so we need to get the video info to verify it was uploaded
+            video_info = self._api.commerce_media_get_video(video_id=video_id)
+
+        except Error as error:
+            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+        else:
+            self.assertIsNone(result, "upload_video should return None on success")
+            self.assertIsNotNone(
+                video_info, "get_video should return video information"
+            )
+            # Check that video_info has the expected structure
+            if isinstance(video_info, dict):
+                self.assertIn("video_id", video_info, "Video ID should be present")
+                self.assertIn("status", video_info, "Video status should be present")
+                self.assertIn("title", video_info, "Video title should be present")
+                self.assertIn("size", video_info, "Video size should be present")
+
 
 class APIProductionSingleTests(unittest.TestCase):
     """API tests that can be done on a single production marketplace."""
@@ -1241,52 +1299,6 @@ class APIProductionSingleTests(unittest.TestCase):
         else:
             self.assertIn("document_metadata", result)
             self.assertIn("document_status", result)
-
-    # TODO get this working, see https://github.com/matecsaj/ebay_rest/issues/60
-    def test_commerce_media_upload_video(self):
-        """
-        First get a valid video_id using createVideo, then upload the video file using that ID.
-
-        See: https://developer.ebay.com/api-docs/commerce/media/resources/video/methods/createVideo
-        See: https://developer.ebay.com/api-docs/commerce/media/resources/video/methods/uploadVideo
-
-        TODO If this will also run in the sandbox then move it there, otherwise convert this line to a warning.
-        """
-        try:
-            # First, get a valid video_id
-            create_body = {
-                "classification": ["ITEM"],
-                "description": "test video description",
-                "size": os.path.getsize(self.get_upload_sample_path_file("video.mp4")),
-                "title": "test video title",
-            }
-            create_result = self._api.commerce_media_create_video(
-                content_type="application/json", body=create_body
-            )
-
-            # Extract videoId from the response; it can be a dict (videoId) or object (video_id property)
-            if isinstance(create_result, dict):
-                video_id = create_result.get("videoId") or create_result.get("video_id")
-            else:
-                video_id = getattr(create_result, "video_id", None) or getattr(
-                    create_result, "videoId", None
-                )
-
-            self.assertIsNotNone(
-                video_id, "Failed to get videoId from create_video response"
-            )
-            # Now upload the video file using the video_id from createVideo
-            result = self._api.commerce_media_upload_video(
-                video_id=video_id,
-                content_type="application/octet-stream",
-                files={"file": self.get_upload_sample_path_file("video.mp4")},
-            )
-
-        except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
-        else:
-            self.assertIn("video_metadata", result)
-            self.assertIn("video_status", result)
 
 
 class APISandboxDigitalSignatureTests(unittest.TestCase):
