@@ -124,6 +124,17 @@ Look to the [unit tests](https://github.com/matecsaj/ebay_rest/blob/main/tests/t
   <p>Making repeated calls with the same parameters in a short time can trigger this error.</p>
 </details>
 
+<details>
+  <summary><strong>How can I upload a file?</strong></summary>
+  <p>See the sample code in the <a href="https://github.com/matecsaj/ebay_rest/blob/main/tests/test_ebay_rest.py">unit tests</a>. Search for usages of <code>get_upload_sample_path_file</code> to find working examples.</p>
+</details>
+
+<details>
+  <summary><strong>How can I get data from a response header?</strong></summary>
+  <p>See the sample code in the <a href="https://github.com/matecsaj/ebay_rest/blob/main/tests/test_ebay_rest.py">unit tests</a>. Search for <code>test_commerce_media_upload_video</code> to find a working example.</p>
+</details>
+
+
 ---
 
 ## Optimization & Performance
