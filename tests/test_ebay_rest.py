@@ -674,16 +674,36 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         else:
             self.assertIsNotNone(result)
 
-    # TODO get this working, see https://github.com/matecsaj/ebay_rest/issues/60
+    # Today, 2025-11-12, the Fulfillment API is in Beta - it is glitchy, so try again later.
+    # If the second step, the actual upload, fails, then see https://github.com/matecsaj/ebay_rest/issues/60.
+    @unittest.skip
     def test_sell_fulfillment_upload_evidence_file(self):
         """
-        https://developer.ebay.com/api-docs/sell/fulfillment/resources/payment_dispute/methods/uploadEvidenceFile
+        First, get a valid payment_dispute_id,
+        Second, upload the evidence, an image file, using that ID
+        Third, verify
+
+        See: https://developer.ebay.com/api-docs/sell/fulfillment/resources/payment_dispute/methods/getPaymentDisputeSummaries
+        See: https://developer.ebay.com/api-docs/sell/fulfillment/resources/payment_dispute/methods/uploadEvidenceFile
         """
+        # get the first payment_dispute_id
+        payment_dispute_id = None
+        for record in self._api.sell_fulfillment_get_payment_dispute_summaries():
+            if "record" not in record:
+                self.assertTrue("total" in record, f"Unexpected non-record{record}.")
+            else:
+                item = record["record"]
+                self.assertTrue(isinstance(item["payment_dispute_id"], str))
+                payment_dispute_id = item["payment_dispute_id"]
+                break
+        if payment_dispute_id is None:
+            self.fail("No payment dispute found")
+
         try:
             result = self._api.sell_fulfillment_upload_evidence_file(
-                payment_dispute_id=uuid.uuid4().hex,  # unique identification string
+                payment_dispute_id=payment_dispute_id,  # unique identification string
                 content_type="multipart/form-data",
-                files={"image": self.get_upload_sample_path_file("image.jpg")},
+                files={"image": self.get_upload_sample_path_file("image.jpg")},     # try "file" instead of "image"
             )
         except Error as error:
             self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
@@ -1087,161 +1107,6 @@ class APIProductionSingleTests(unittest.TestCase):
             )
         except Error as error:
             self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
-
-    @unittest.skip  # TODO Finish the unit test and then attempt to relocate it to the APISandboxSingleSiteTests class.
-    def test_file_upload(self):
-        """
-        Test uploading a file. Relevant eBay documentation:
-        https://developer.ebay.com/api-docs/sell/feed/resources/task/methods/createTask
-        https://developer.ebay.com/api-docs/sell/feed/resources/task/methods/uploadFile.
-        """
-        body = {
-            "feedType": "LMS_ORDER_ACK",  # TODO Is this the correct feed type for use with sell_feed_upload_file?.
-            "schemaVersion": "1.0",
-        }
-        try:
-            self._api.sell_feed_create_task(
-                body=body,
-                content_type="application/json",
-                x_ebay_c_marketplace_id="placeholder",
-            )
-        except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
-        else:
-            # TODO Somehow, get the task id from the sell_feed_create_task response header. Example from the header.
-            # location:https://api.ebay.com/sell/feed/v1/task/task-11-1271150479
-            # As of 2022-10-22, the Swagger code generated from eBay's OpenAPI contract doesn't support this.
-            task_id = "task-11-1271150479"
-
-            file_name = "test_file_upload.json"
-
-            # TODO Somehow pass along the path and file name for the file to be uploaded.
-            path_and_file_name = self._config_location = os.path.join(
-                os.getcwd(), "test_file_upload.json"
-            )
-            # Lines like "local_var_files = {}" are found in src/ebay_rest/api/sell_feed/api/task_api.py
-            # Instead of an empty dictionary, how do we make this happen?
-            local_var_files = {"filename", path_and_file_name}
-            # The Swagger code generated from eBay's OpenAPI contract doesn't support this. Checked on 2022-10-22.
-
-            try:
-                self._api.sell_feed_upload_file(
-                    task_id=task_id,
-                    file_name=file_name,
-                    content_type="application/json",
-                )
-            except Error as error:
-                self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
-
-    @unittest.skip  # TODO finish it
-    def test_marketplace_account_deletion(self):
-        """
-        See https://developer.ebay.com/marketplace-account-deletion
-        and https://developer.ebay.com/api-docs/commerce/notification/overview.html.
-
-        # AsyncAPI specification
-        # https://developer.ebay.com/cms/files/asyncapi/marketplace_account_deletion.yaml
-        # https://www.asyncapi.com
-        # https://github.com/dedoussis/asynction
-        # https://github.com/dutradda/asyncapi-python
-
-        :return:
-        """
-        # TODO get this from ebay_rest.json
-        end_point = "https://e***********4.s*************.com/notification-endpoint"
-        alert_email = "**@**.com"
-
-        # The verification token has to be between 32 and 80 characters,
-        # and allowed characters include alphanumeric characters, underscore (_),  and hyphen (-).
-        # No other characters are allowed.
-        # verification_token = "7*******-d***-***c-b***-***********a"
-        length = random.randint(32, 80)
-        allowed = string.ascii_letters + string.digits + "_" + "-"
-        verification_token = "".join(random.choice(allowed) for _i in range(length))
-
-        topic_id = "MARKETPLACE_ACCOUNT_DELETION"
-
-        # to confirm that the desired topic is available, eBay's recommended workflow does not require this
-        try:
-            result = self._api.commerce_notification_get_topics()
-        except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
-        else:
-            success = False
-            key = "topics"
-            if key in result:
-                for topic in result[key]:
-                    if topic["topic_id"] == topic_id:
-                        if topic["status"] == "ENABLED":
-                            success = True
-                            break
-            self.assertTrue(success)
-
-        # ensure that an alert email is correctly configured
-        try:
-            result = self._api.commerce_notification_get_config()
-        except Error as error:
-            if error.reason != "Not Found":
-                self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
-            else:
-                try:
-                    config = {"alertEmail": alert_email}
-                    self._api.commerce_notification_update_config(
-                        body=config, content_type="application/json"
-                    )
-                except Error as error:
-                    self.fail(
-                        f"Error {error.number} is {error.reason}  {error.detail}.\n"
-                    )
-        else:
-            self.assertEqual(result["alert_email"], alert_email)
-
-        # Ensure that a destination is correctly configured.
-        # Note: The destination should be created and ready to respond with the expected
-        # challengeResponse for the endpoint to be registered successfully.
-        # Refer to the Notification API Overview for more information.
-        # https://developer.ebay.com/api-docs/commerce/notification/overview.html
-        try:
-            result = self._api.commerce_notification_get_destinations()
-        except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
-        else:
-            if result["total"] == 0:
-                try:
-                    destination_request = {
-                        "status": "ENABLED",
-                        "deliveryConfig": {
-                            "endpoint": end_point,
-                            "verificationToken": verification_token,
-                        },
-                    }
-                    self._api.commerce_notification_create_destination(
-                        body=destination_request, content_type="application/json"
-                    )
-                except Error as error:
-                    self.fail(
-                        f"Error {error.number} is {error.reason}  {error.detail}.\n"
-                    )
-                else:
-                    pass  # TODO
-            else:
-                pass  # TODO
-
-        # ensure subscribed
-        # TODO
-
-        # get notices
-        # description: 'The Account Deletion payload.'
-        #     username, string, The username for the user.
-        #     userId, string, The immutable public userId for the user
-        #     eiasToken, string, The legacy eiasToken specific to the user
-        try:
-            result = self._api.commerce_notification_get_topic(topic_id)
-        except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
-        else:
-            pass  # TODO
-            self.assertTrue("Subscribe" not in result["description"])
 
     @staticmethod
     def get_upload_sample_path_file(file_name: str) -> str:
