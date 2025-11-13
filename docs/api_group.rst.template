@@ -1,0 +1,7 @@
+{group_title}
+{group_title_underline}
+
+.. currentmodule:: ebay_rest.API
+
+{methods}
+

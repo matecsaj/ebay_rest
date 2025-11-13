@@ -1,0 +1,27 @@
+# Read the Docs configuration file
+# https://docs.readthedocs.io/en/stable/config-file/v2.html
+
+version: 2
+
+# Install dependencies
+python:
+  install:
+    - method: pip
+      path: .
+      extra_requirements:
+        - dev
+
+# Build configuration and commands
+build:
+  os: ubuntu-24.04
+  tools:
+    python: "3.12"
+  commands:
+    # Generate documentation source files before Sphinx builds
+    - python -c "import sys; sys.path.insert(0, '.'); from docs.build_docs import generate_documentation_source; generate_documentation_source()"
+
+# Build documentation
+sphinx:
+  configuration: docs/source/conf.py
+  builder: html
+

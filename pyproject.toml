@@ -61,8 +61,11 @@ dev = [
     "build",
     "chardet",
     "CurrencyConverter",
+    "myst-parser",
     "pipreqs",
     "setuptools",
+    "sphinx",
+    "sphinx-rtd-theme",
     "twine",
     "wheel"
 ]
