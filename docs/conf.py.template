@@ -1,0 +1,56 @@
+# Configuration file for the Sphinx documentation builder.
+#
+
+# -- Project information -----------------------------------------------------
+project = 'ebay_rest'
+copyright = '2025, Peter JOHN Matecsa & ebay_rest contributors'
+author = 'Peter JOHN Matecsa & ebay_rest contributors'
+
+# -- General configuration ---------------------------------------------------
+import os
+import sys
+
+# Add the project source to the path
+sys.path.insert(0, os.path.abspath('{src_path}'))
+
+extensions = [
+    'myst_parser',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.viewcode',
+    'sphinx_rtd_theme',
+]
+
+# Markdown configuration
+myst_enable_extensions = [
+    'colon_fence',
+    'deflist',
+    'html_admonition',
+    'html_image',
+    'replacements',
+    'smartquotes',
+    'strikethrough',
+    'substitution',
+    'tasklist',
+]
+
+# Paths relative to this conf.py file (in source/)
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+
+# -- Options for HTML output -------------------------------------------------
+html_theme = 'sphinx_rtd_theme'
+html_theme_options = {{
+    'style_nav_header_background': '#2b2b2b',
+    'style_external_links': True,
+    'navigation_depth': 4,
+}}
+
+autodoc_member_order = 'bysource'
+autodoc_typehints = 'description'
+autodoc_default_options = {{
+    'members': True,
+    'undoc-members': True,
+    'show-inheritance': True,
+    'special-members': '__init__',
+}}
+
