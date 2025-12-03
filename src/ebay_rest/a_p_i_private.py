@@ -730,7 +730,7 @@ class APIPrivate(metaclass=Multiton):
                         if records_desired <= 0:
                             loop = False
                             break
-                offset += records_in_page
+                offset += kwargs["limit"]   # The offset must be either zero or a multiple of the limit value.
                 if result["total"] <= offset:
                     loop = False
             else:
