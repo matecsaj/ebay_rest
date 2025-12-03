@@ -528,7 +528,7 @@ class Contract:
         Async method to parse a contract link and extract key data parts from it.
 
         This method breaks down the contract link into its constituent parts and retrieves crucial information such
-        as the category, call, url, file_name, version and whether it is a beta contract.
+        as the category, call, url, file_name, version, and whether it is a beta contract.
 
         It does so by splitting the URL and path, conducts string manipulations, and applies regex pattern matching
         to decipher the version of the contract.
@@ -659,7 +659,7 @@ class Contract:
             match = re.search(pattern, method_body)
             if match:
                 existing_params = match.group(1)
-                # Check if 'files' is already in the params or if patch comment already exists
+                # Check if 'files' is already in the params or if a patch comment already exists
                 all_params_line = match.group(0)
                 patch_comment = "ebay_rest patch: multipart/form-data file uploads"
                 if (
@@ -673,7 +673,7 @@ class Contract:
                         else "'files'"
                     )
                     new_pattern = f"all_params = [{new_params}]  # noqa: E501 - ebay_rest patch: multipart/form-data file uploads"
-                    # Replace in the method body
+                    # Replace it in the method body
                     method_body = re.sub(pattern, new_pattern, method_body, count=1)
                     # Replace the method in the full data
                     data = (
@@ -689,7 +689,7 @@ class Contract:
         if method_match:
             method_body = method_match.group(0)
             target = "local_var_files = {}"
-            # Check if patch already exists to avoid duplicates
+            # Check if a patch already exists to avoid duplicates
             patch_marker = "# ebay_rest patch: multipart/form-data file uploads"
             if target in method_body and patch_marker not in method_body:
                 new_code = """local_var_files = {}
@@ -761,7 +761,7 @@ class Contract:
         """
         Patch a file upload method in an API file to support the 'files' parameter for application/octet-stream.
 
-        This function adds 'files' to the all_params list, reads the file from the files dict,
+        This function adds 'files' to the all_params list, reads the file from the 'files' dict,
         and converts it to body_params for application/octet-stream uploads.
 
         Args:
@@ -795,7 +795,7 @@ class Contract:
             match = re.search(pattern, method_body)
             if match:
                 existing_params = match.group(1)
-                # Check if 'files' is already in the params or if patch comment already exists
+                # Check if 'files' is already in the params or if a patch comment already exists
                 all_params_line = match.group(0)
                 patch_comment = "ebay_rest patch: application/octet-stream file uploads"
                 if (
@@ -809,7 +809,7 @@ class Contract:
                         else "'files'"
                     )
                     new_pattern = f"all_params = [{new_params}]  # noqa: E501 - ebay_rest patch: application/octet-stream file uploads"
-                    # Replace in the method body
+                    # Replace it in the method body
                     method_body = re.sub(pattern, new_pattern, method_body, count=1)
                     # Replace the method in the full data
                     data = (
@@ -842,7 +842,7 @@ class Contract:
             method_body = method_match.group(0)
             # Find where body_params is set
             target = "body_params = None\n        if 'body' in params:\n            body_params = params['body']"
-            # Check if patch already exists to avoid duplicates
+            # Check if a patch already exists to avoid duplicates
             patch_marker = "# ebay_rest patch: application/octet-stream file uploads"
             if target in method_body and patch_marker not in method_body:
                 new_code = """body_params = None
@@ -943,7 +943,7 @@ class Contract:
         pattern = "kwargs['_return_http_data_only'] = True"
         new_code = "if '_return_http_data_only' not in kwargs:  # ebay_rest patch\n            kwargs['_return_http_data_only'] = True"
 
-        # Check if patch already exists to avoid duplicates
+        # Check if a patch already exists to avoid duplicates
         if pattern in data and new_code not in data:
             data = data.replace(pattern, new_code)
             file_was_modified = True
@@ -1016,8 +1016,8 @@ class Contract:
             target = "r = self.pool_manager.request(method, url,\n"
             replace_code = "r = signed_request(self.pool_manager, self.key_pair, method, url,  # ebay_rest patch\n"
             data = data.replace(target, replace_code)
-            # Patch to handle bytes body for application/octet-stream
-            # Add support for bytes body before the else clause that raises exception
+            # Patch to handle a bytes-body for application/octet-stream
+            # Add support for a bytes-body before the else clause that raises exception
             # Find the else clause after the isinstance(body, str) block and insert before it
             target = """                else:
                     # Cannot generate the request from given parameters"""
@@ -1037,7 +1037,7 @@ class Contract:
                 await f.write(data)
 
         # Patch file upload methods to support files parameter
-        # This fixes the issue where local_var_files = {} and files parameter is not accepted
+        # This fixes the issue where local_var_files = {} and 'files' parameter is not accepted
         # Repurposes existing parameters to pass file information
         # Auto-detect methods by finding those with content_type parameter mentioning multipart/form-data
         api_files = []
@@ -1545,7 +1545,17 @@ class Contract:
             # Assume application keys
             flows = {"clientCredentials"}
         else:
-            flows = {flow_by_scope[scope] for scope in scopes}
+            flows = set()
+            for scope in scopes:
+                if scope in flow_by_scope:
+                    flows.add(flow_by_scope[scope])
+                else:
+                    logging.warning(
+                        f"Scope {scope} not found in flow_by_scope for method {method}."
+                    )
+                    flows.add(
+                        "clientCredentials"
+                    )  # work around, assume the most common value
         if len(flows) != 1:
             if operation_id in ("getitemconditionpolicies",) or module in (
                 "subscription_api",
@@ -1776,7 +1786,8 @@ class Contracts:
 
         return keepers
 
-    async def process_url(self, contract_url: str) -> ProcessResult:
+    @staticmethod
+    async def process_url(contract_url: str) -> ProcessResult:
         """
         Process a contract URL to extract includes, methods, name, and requirements.
 

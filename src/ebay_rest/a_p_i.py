@@ -617,7 +617,7 @@ class API(APIPrivate):
         """
         return self._method_single(
             buy_marketing.Configuration,
-            "/buy/marketing/v1_beta",
+            "/buy/marketing/v1",
             buy_marketing.MerchandisedProductApi,
             buy_marketing.ApiClient,
             "get_merchandised_products",
@@ -625,6 +625,59 @@ class API(APIPrivate):
             False,
             ["buy.marketing", "merchandised_product"],
             (category_id, metric_name),
+            **kwargs,
+        )  # noqa: E501
+
+    def buy_marketing_get_most_watched_items(self, category_id, **kwargs):  # noqa: E501
+        """get_most_watched_items
+
+        This method retrieves items with the highest watch counts in a specific category. The leaf category for which to retrieve items with the highest watch counts is specified by its category_id value. Up to 50 items can be returned for a specific category using this method. The number of items to return using this method can be specified through the max_result query parameter. If this parameter is not used, the top 20 most watched items will be returned for the specified category. A successful call returns details about the most watched items in a specific category, such as the watch count, current price, shipping cost, and basic information about the listing. Returned items are ranked in descending order with the highest watch count appearing first.
+
+        :param str category_id: This query parameter can be used to specify the leaf category from which to retrieve most watched items. The list of eBay category IDs is not published and category IDs are not all the same across all the eBay marketplaces. You can use the following techniques to find a category by site:  Use the Category Changes page. Use the Taxonomy API. For details on using this API, see Get Categories for Buy APIs.  Use the following Browse API method to get the  dominantCategoryId for an item:/buy/browse/v1/item_summary/search?q= keyword&fieldgroups=ASPECT_REFINEMENTSNote: If no category ID is input though this parameter, category 9355 will be used by default. Maximum:  1 (required)
+        :param str accept_language: This header is used to indicate the natural language and locale preferred by the user for the response.This header is required when targeting a specific locale of a marketplace that supports multiple locales. For example:When targeting the French locale of the Belgium marketplace, it is required to pass in fr-BE to specify this. If this locale is not specified, the language will default to Dutch.When targeting the French locale of the Canadian marketplace, it is required to pass in fr-CA to specify this. If this locale is not specified, the language will default to English.
+        :param str max_results: This query parameter can be used to specify the maximum number of most watched items to return from the specified category.Default value: 20Min value: 1Max value: 50
+        :param str x_ebay_c_enduserctx: This header can be used to pass in affiliate credentials to return item affiliate information. For more information, see Header for affiliate information.
+        :param str x_ebay_c_marketplace_id: This header identifies the seller's eBay marketplace. It is required for all marketplaces outside of the US.Note: If the marketplace ID value is invalid or missing, the default value of EBAY_US is used.See MarketplaceIdEnum for a list of supported marketplaces.Default: EBAY_US
+        :return: MostWatchedItemsResponse
+        """
+        return self._method_single(
+            buy_marketing.Configuration,
+            "/buy/marketing/v1",
+            buy_marketing.MostWatchedItemsApi,
+            buy_marketing.ApiClient,
+            "get_most_watched_items",
+            BuyMarketingException,
+            False,
+            ["buy.marketing", "most_watched_items"],
+            category_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def buy_marketing_get_similar_items(self, item_id, **kwargs):  # noqa: E501
+        """get_similar_items
+
+        This method retrieves items that are similar to the specified item.Items are considered similar if they can serve as a replacement or alternative for the specified item. Similar items from a catalog are associated with the same product. For items not associated with a product, similarity is determined by keywords in the title and attribute value matches.The item for which to retrieve similar items is specified by its item_id value, input as a required query parameter. A successful call returns a list of items similar to the specified item, as well as details about each item. This includes the current price and shipping costs are returned for each item, as well as basic information about the listing, such as its item ID, price, shipping cost, and time left on the listing.
+
+        :param str item_id: This query parameter specifies the unique RESTful identifier of the item for which to retrieve similar items. RESTful Item ID Format: v1|#|#For a single SKU listing, pass in the item ID: v1|2**********2|0For a multi-SKU listing, pass in the identifier of the variation:v1|1**********2|4**********2For more information about item IDs for RESTful APIs, refer to Item ID legacy API compatibility overview in the Buying Integration Guide. (required)
+        :param str accept_language: This header is used to indicate the natural language and locale preferred by the user for the response.This header is required when targeting a specific locale of a marketplace that supports multiple locales. For example:When targeting the French locale of the Belgium marketplace, it is required to pass in fr-BE to specify this. If this locale is not specified, the language will default to Dutch.When targeting the French locale of the Canadian marketplace, it is required to pass in fr-CA to specify this. If this locale is not specified, the language will default to English.
+        :param str buying_option: This query parameter can be used to filter the result set based on the item's buying option type.Valid Values:FIXED_PRICEAUCTIONBEST_OFFERCLASSIFIED_AD
+        :param str excluded_category_ids: This query parameter can be used to specify categories to exclude from the result set.Because the list of eBay category IDs is not published and category IDs are not the same across all eBay marketplaces, category IDs may be determined by:Visiting the Category Changes pageUsing the Taxonomy API. Refer to Get Categories for Buy APIs for complete information.Issuing the following call to retrieve the dominantCategoryId for an item:/buy/browse/v1/item_summary/search?q= keyword&fieldgroups=ASPECT_REFINEMENTSUp to three categories to be excluded can be specified through this parameter.
+        :param str filter: An array of field filters that can be used to limit/customize the result set.Currently, only itemEndDate is supported. This filter limits the result set to include only items scheduled to end before the specified date and time. For example, filter=itemEndDate:[..2025-12-14T07:47:48Z] For implementation help, refer to eBay API documentation at https://developer.ebay.com/api-docs/buy/marketing/types/api:FilterField
+        :param str max_results: This query parameter can be used to specify the max number of items to display from the result set.Default: 20Max value: 50
+        :param str x_ebay_c_enduserctx: This header can be used to pass in affiliate credentials to return item affiliate information. For more information, see Header for affiliate information.
+        :param str x_ebay_c_marketplace_id: This header identifies the seller's eBay marketplace. It is required for all marketplaces outside of the US.Note: If the marketplace ID value is invalid or missing, the default value of EBAY_US is used.See MarketplaceIdEnum for a list of supported marketplaces.Default: EBAY_US
+        :return: SimilarItemsResponse
+        """
+        return self._method_single(
+            buy_marketing.Configuration,
+            "/buy/marketing/v1",
+            buy_marketing.SimilarItemsApi,
+            buy_marketing.ApiClient,
+            "get_similar_items",
+            BuyMarketingException,
+            False,
+            ["buy.marketing", "similar_items"],
+            item_id,
             **kwargs,
         )  # noqa: E501
 
@@ -1087,6 +1140,7 @@ class API(APIPrivate):
 
         :param str document_id: The unique identifier of the document to be uploaded.This value is returned in the response of the createDocument method. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to multipart/form-data.  For more information, refer to HTTP request headers. (required)
+        :param dict files: Dictionary mapping form field names to file paths. For example: {'image': 'path/to/image.jpg'} or {'file': 'path/to/document.pdf'}. This parameter is used to upload files in multipart/form-data requests. (optional)  # ebay_rest patch: multipart/form-data file uploads
         :return: DocumentResponse
         """
         return self._method_single(
@@ -1110,6 +1164,7 @@ class API(APIPrivate):
         This method uploads a picture file to eBay Picture Services (EPS) using multipart/form-data. All images must comply with eBay's picture requirements, such as dimension and file size restrictions. For more information, see Picture policy. The image formats supported are JPG, GIF, PNG, BMP, TIFF, AVIF, HEIC, and WEBP. For more information, see Image requirements.Note: Animated GIF, and multi-page PNG/TIFF files, are not supported. Any animation effect of supported formats will be lost upon upload.This call does not have a JSON Request payload but uploads the file as form-data. For example:  image: "sample_picture.jpg" See Samples for information.Note: You must use a Content-Type header with its value set to 'multipart/form-data'.When an EPS image is successfully created, the method returns the HTTP Status Code 201 Created. The method also returns the getImage URI in the Location response header.Important! Make sure to capture the image ID URI returned in the response location header provided in the following format:https://apim.ebay.com/commerce/media/v1_beta/image/{image_id} You can capture the entire URI, or just save the {image_id} only. Pass the {image_id} as a path parameter in the getImage method to return the value needed to associate an image to a listing using the Trading and Inventory APIs.See Managing images for additional details.Important!All POST methods in the Media API, including this method, are subject to short-duration rate limits at the user level: 50 requests per 5 seconds.
 
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to multipart/form-data.  For more information, refer to HTTP request headers. (required)
+        :param dict files: Dictionary mapping form field names to file paths. For example: {'image': 'path/to/image.jpg'} or {'file': 'path/to/document.pdf'}. This parameter is used to upload files in multipart/form-data requests. (optional)  # ebay_rest patch: multipart/form-data file uploads
         :return: ImageResponse
         """
         return self._method_single(
@@ -1221,6 +1276,7 @@ class API(APIPrivate):
         This method associates the specified file with the specified video ID and uploads the input file. After the file has been uploaded the processing of the file begins.Note: The size of the video to be uploaded must exactly match the size of the video's input stream that was set in the createVideo method. If the sizes do not match, the video will not upload successfully.When a video is successfully uploaded, it returns the HTTP Status Code 200 OK.The status flow is PENDING_UPLOAD > PROCESSING > LIVE,  PROCESSING_FAILED, or BLOCKED. After a video upload is successfully completed, the status will show as PROCESSING until the video reaches one of the terminal states of LIVE, BLOCKED, or PROCESSING_FAILED. If the size information (in bytes) provided is incorrect, the API will throw an error.Tip: See Adding a video to your listing in the eBay Seller Center for details about video formatting requirements and restrictions, or visit the relevant eBay site help pages for the region in which the listings will be posted.To retrieve an uploaded video, use the getVideo method.Important!All POST methods in the Media API, including this method, are subject to short-duration rate limits at the user level: 50 requests per 5 seconds.
 
         :param str content_type: Use this header to specify the content type for the upload. The Content-Type should be set to application/octet-stream. (required)
+        :param dict files: Dictionary mapping field names to file paths. For example: {'file': 'path/to/video.mp4'}. The file will be read and sent as the request body for application/octet-stream uploads. (optional)  # ebay_rest patch: application/octet-stream file uploads
         :param str video_id: The unique identifier of the video to be uploaded. (required)
         :param InputStream body: The request payload for this method is the input stream for the video source. The input source must be an .mp4 file of the type MPEG-4 Part 10 or Advanced Video Coding (MPEG-4 AVC).
         :param str content_length: Use this header to specify the content length for the upload. Use Content-Range: bytes {1}-{2}/{3} and Content-Length:{4} headers.Note: This header is optional and is only required for resumable uploads (when an upload is interrupted and must be resumed from a certain point).
@@ -2852,6 +2908,7 @@ class API(APIPrivate):
 
         :param str task_id: This path parameter is the unique identifier of the task associated with the file that will be uploaded.Use the getTasks method to retrieve task IDs. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to multipart/form-data.  For more information, refer to HTTP request headers. (required)
+        :param dict files: Dictionary mapping form field names to file paths. For example: {'image': 'path/to/image.jpg'} or {'file': 'path/to/document.pdf'}. This parameter is used to upload files in multipart/form-data requests. (optional)  # ebay_rest patch: multipart/form-data file uploads
         :return: object
         """
         return self._method_single(
@@ -3318,6 +3375,7 @@ class API(APIPrivate):
 
         :param str payment_dispute_id: This parameter is used to specify the unique identifier of the contested payment dispute for which the user intends to upload an evidence file. Use the getPaymentDisputeSummaries method to retrieve payment dispute IDs. (required)
         :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to multipart/form-data.  For more information, refer to HTTP request headers. (required)
+        :param dict files: Dictionary mapping form field names to file paths. For example: {'image': 'path/to/image.jpg'} or {'file': 'path/to/document.pdf'}. This parameter is used to upload files in multipart/form-data requests. (optional)  # ebay_rest patch: multipart/form-data file uploads
         :return: FileEvidence
         """
         return self._method_single(
@@ -6656,7 +6714,7 @@ class API(APIPrivate):
     ):  # noqa: E501
         """get_item_condition_policies
 
-        This method returns item condition metadata on one, multiple, or all eBay categories on an eBay marketplace. This metadata consists of the different item conditions (with IDs) that an eBay category supports, and a boolean to indicate if an eBay category requires an item condition. If applicable, this metadata also shows the different condition descriptors (with IDs) that an eBay category supports.Note: Currently, condition grading is only applicable to the following trading card categories: Non-Sport Trading Card SinglesCCG Individual CardsSports Trading Cards SinglesThe identifier of the eBay marketplace is passed in as a path parameter, and unless one or more eBay category IDs are passed in through the filter query parameter, this method will return metadata on every single category for the specified marketplace. If you only want to view item condition metadata for one eBay category or a select group of eBay categories, you can pass in up to 50 eBay category ID through the filter query parameter.Important: Certified - Refurbished-eligible sellers, and sellers who are eligible to list with the new values (EXCELLENT_REFURBISHED, VERY_GOOD_REFURBISHED, and GOOD_REFURBISHED) must use an OAuth token created with the authorization code grant flow and https://api.ebay.com/oauth/api_scope/sell.inventory scope in order to retrieve the refurbished conditions for the relevant categories.See the eBay Refurbished Program - Category and marketplace support topic for the categories and marketplaces that support these refurbished conditionsThese restricted item conditions will not be returned if an OAuth token created with the client credentials grant flow and https://api.ebay.com/oauth/api_scope scope is used, or if any seller is not eligible to list with that item condition.  See the Specifying OAuth scopes topic for more information about specifying scopes.Tip: This method can potentially return a very large response payload. eBay recommends that the response payload be compressed by passing in the Accept-Encoding request header and setting the value to gzip.
+        This method returns item condition metadata on one, multiple, or all eBay categories on an eBay marketplace. This metadata consists of the different item conditions (with IDs) that an eBay category supports, and a boolean to indicate if an eBay category requires an item condition. If applicable, this metadata also shows the different condition descriptors (with IDs) that an eBay category supports.Note: Currently, condition grading is only applicable to the following trading card categories: Non-Sport Trading Card SinglesCCG Individual CardsSports Trading Cards SinglesThe identifier of the eBay marketplace is passed in as a path parameter, and unless one or more eBay category IDs are passed in through the filter query parameter, this method will return metadata on every single category for the specified marketplace. If you only want to view item condition metadata for one eBay category or a select group of eBay categories, you can pass in up to 50 eBay category ID through the filter query parameter.Important: Certified - Refurbished-eligible sellers, and sellers who are eligible to list with the new values (EXCELLENT_REFURBISHED, VERY_GOOD_REFURBISHED, and GOOD_REFURBISHED) must use an OAuth token created with the authorization code grant flow and https://api.ebay.com/oauth/api_scope/sell.inventory scope in order to retrieve the refurbished conditions for the relevant categories.Refurbished item conditions are only supported in the Australia, Canada, French Canada, Germany, France, Italy, UK, and US marketplaces. See the eBay Refurbished Program page in help center for the categories that support refurbished conditions. These restricted item conditions will not be returned if an OAuth token created with the client credentials grant flow and https://api.ebay.com/oauth/api_scope scope is used, or if any seller is not eligible to list with that item condition.  See the Specifying OAuth scopes topic for more information about specifying scopes.Tip: This method can potentially return a very large response payload. eBay recommends that the response payload be compressed by passing in the Accept-Encoding request header and setting the value to gzip.
 
         :param str marketplace_id: This path parameter specifies the eBay marketplace for which policy information is retrieved.See HTTP Request Headers for a list of supported eBay marketplace ID values. (required)
         :param str filter: This query parameter limits the response by returning policy information for only the selected sections of the category tree. Supply categoryId values for the sections of the tree you want returned.  When you specify a categoryId value, the returned category tree includes the policies for that parent node, plus the policies for any leaf nodes below that parent node.  The parameter takes a list of categoryId values and you can specify up to 50 separate category IDs. Separate multiple values with a pipe character ('|'). If you specify more than 50 categoryId values, eBay returns the policies for the first 50 IDs and a warning that not all categories were returned.  Example: filter=categoryIds:{100|101|102} Note that you must URL-encode the parameter list, which results in the following filter for the above example:    filter=categoryIds%3A%7B100%7C101%7C102%7D
@@ -6897,6 +6955,124 @@ class API(APIPrivate):
             SellMetadataException,
             False,
             ["sell.metadata", "marketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_metadata_get_exclude_shipping_locations(
+        self, marketplace_id, **kwargs
+    ):  # noqa: E501
+        """get_exclude_shipping_locations
+
+        This method retrieves a list of locations that the seller can use as excluded shipping locations within their listings or in their fulfillment business policies for the specified marketplace. These are locations that a seller designates as areas where they will not ship items. Excluded shipping locations and ship-to locations are used in tandem at the listing level and in fulfillment business policies. Excluded shipping locations and ship-to locations share a lot of the same values and they should not contradict each other.Manage excluded shipping locations using business policies through the fulfillment_policy resource of the Account v1 API.
+
+        :param str marketplace_id: This path parameter specifies the eBay marketplace for which excluded shipping locations information is retrieved.See MarketplaceIdEnum for supported eBay marketplace ID values. Note:  When listing the items on the French Canada, French Belgium, and Dutch Belgium marketplaces, also set the Accept-Language header as needed. (required)
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.Follow the instructions below to retrieve metadata for these three marketplaces:French Belgium: Set the marketplace_id path parameter value to EBAY_BE, and include the Accept-Language header with a value of fr-BE.Dutch Belgium: Set the marketplace_id path parameter value to EBAY_BE, and include the Accept-Language header with a value of nl-BE.French Canada: Set the marketplace_id path parameter value to EBAY_CA, and include the Accept-Language header with a value of fr-CA.Note: If EBAY_CA is set as the marketplace_id path parameter and the Accept-Language header is not used, the marketplace will default to the English Canada marketplace.
+        :return: ShippingExcludeLocationResponse
+        """
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.ShippingmarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_exclude_shipping_locations",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "shippingmarketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_metadata_get_handling_times(self, marketplace_id, **kwargs):  # noqa: E501
+        """get_handling_times
+
+        This method retrieves a list of supported handling times for the specified marketplace. The handling time returned specifies the maximum number of business days the eBay site allows for shipping an item to domestic buyers after receiving a cleared payment. Handling times apply to both domestic and international orders. If the handling time is 1 day, the seller commits to dropping the item off for shipment one business day after payment clears. Manage handing times using business policies through the fulfillment_policy resource of the Account v1 API.
+
+        :param str marketplace_id: This path parameter specifies the eBay marketplace for which handling times information is retrieved.See MarketplaceIdEnum for supported eBay marketplace ID values. Note:  When listing the items on the French Canada, French Belgium, and Dutch Belgium marketplaces, also set the Accept-Language header as needed. (required)
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.Follow the instructions below to retrieve metadata for these three marketplaces:French Belgium: Set the marketplace_id path parameter value to EBAY_BE, and include the Accept-Language header with a value of fr-BE.Dutch Belgium: Set the marketplace_id path parameter value to EBAY_BE, and include the Accept-Language header with a value of nl-BE.French Canada: Set the marketplace_id path parameter value to EBAY_CA, and include the Accept-Language header with a value of fr-CA.Note: If EBAY_CA is set as the marketplace_id path parameter and the Accept-Language header is not used, the marketplace will default to the English Canada marketplace.
+        :return: ShippingHandlingTimeResponse
+        """
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.ShippingmarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_handling_times",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "shippingmarketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_metadata_get_shipping_carriers(
+        self, marketplace_id, **kwargs
+    ):  # noqa: E501
+        """get_shipping_carriers
+
+        This method retrieves a list of supported shipping carriers for the specified marketplace. It provides essential information for sellers to understand which shipping carriers are available for use when listing items on that eBay marketplace. Knowing the supported carriers can help sellers optimize their shipping options and ensure efficient delivery to buyers.The value returned in the shippingCarrier field is the enumerated value required when providing shipment tracking information for that carrier.Tip:  Use the getShippingServices method to explore available shipping services for each carrier.Manage shipping carriers using business policies through the fulfillment_policy resource of the Account v1 API.
+
+        :param str marketplace_id: This path parameter specifies the eBay marketplace for which shipping carriers information is retrieved.See MarketplaceIdEnum for supported eBay marketplace ID values. Note:  When listing the items on the French Canada, French Belgium, and Dutch Belgium marketplaces, also set the Accept-Language header as needed. (required)
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.Follow the instructions below to retrieve metadata for these three marketplaces:French Belgium: Set the marketplace_id path parameter value to EBAY_BE, and include the Accept-Language header with a value of fr-BE.Dutch Belgium: Set the marketplace_id path parameter value to EBAY_BE, and include the Accept-Language header with a value of nl-BE.French Canada: Set the marketplace_id path parameter value to EBAY_CA, and include the Accept-Language header with a value of fr-CA.Note: If EBAY_CA is set as the marketplace_id path parameter and the Accept-Language header is not used, the marketplace will default to the English Canada marketplace.
+        :return: ShippingCarrierResponse
+        """
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.ShippingmarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_shipping_carriers",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "shippingmarketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_metadata_get_shipping_locations(
+        self, marketplace_id, **kwargs
+    ):  # noqa: E501
+        """get_shipping_locations
+
+        This method retrieves a list of supported shipping locations for the specified marketplace. It provides sellers with information on where they can ship their items. Sellers can use this information to configure their shipping settings. Tip:  Use the getExcludeShippingLocations method to return locations where the seller does not ship.Manage shipping locations using business policies through the fulfillment_policy resource of the Account v1 API.
+
+        :param str marketplace_id: This path parameter specifies the eBay marketplace for which shipping locations information is retrieved.See MarketplaceIdEnum for supported eBay marketplace ID values. Note:  When listing the items on the French Canada, French Belgium, and Dutch Belgium marketplaces, also set the Accept-Language header as needed. (required)
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.Follow the instructions below to retrieve metadata for these three marketplaces:French Belgium: Set the marketplace_id path parameter value to EBAY_BE, and include the Accept-Language header with a value of fr-BE.Dutch Belgium: Set the marketplace_id path parameter value to EBAY_BE, and include the Accept-Language header with a value of nl-BE.French Canada: Set the marketplace_id path parameter value to EBAY_CA, and include the Accept-Language header with a value of fr-CA.Note: If EBAY_CA is set as the marketplace_id path parameter and the Accept-Language header is not used, the marketplace will default to the English Canada marketplace.
+        :return: ShippingLocationResponse
+        """
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.ShippingmarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_shipping_locations",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "shippingmarketplace"],
+            marketplace_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_metadata_get_shipping_services(
+        self, marketplace_id, **kwargs
+    ):  # noqa: E501
+        """get_shipping_services
+
+        This method retrieves a list of shipping services supported for the specified marketplace, including valid shipping services, shipping times, and package constraints such as size and weight.Manage shipping services using business policies through the fulfillment_policy resource of the Account v1 API.
+
+        :param str marketplace_id: This path parameter specifies the eBay marketplace for which shipping services information is retrieved.See MarketplaceIdEnum for supported eBay marketplace ID values. Note:  When listing the items on the French Canada, French Belgium, and Dutch Belgium marketplaces, also set the Accept-Language header as needed. (required)
+        :param str accept_language: This header is required to retrieve metadata for the French Canada, French Belgium, and Dutch Belgium marketplaces.Follow the instructions below to retrieve metadata for these three marketplaces:French Belgium: Set the marketplace_id path parameter value to EBAY_BE, and include the Accept-Language header with a value of fr-BE.Dutch Belgium: Set the marketplace_id path parameter value to EBAY_BE, and include the Accept-Language header with a value of nl-BE.French Canada: Set the marketplace_id path parameter value to EBAY_CA, and include the Accept-Language header with a value of fr-CA.Note: If EBAY_CA is set as the marketplace_id path parameter and the Accept-Language header is not used, the marketplace will default to the English Canada marketplace.
+        :return: ShippingServiceResponse
+        """
+        return self._method_single(
+            sell_metadata.Configuration,
+            "/sell/metadata/v1",
+            sell_metadata.ShippingmarketplaceApi,
+            sell_metadata.ApiClient,
+            "get_shipping_services",
+            SellMetadataException,
+            False,
+            ["sell.metadata", "shippingmarketplace"],
             marketplace_id,
             **kwargs,
         )  # noqa: E501

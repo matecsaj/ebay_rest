@@ -18,7 +18,6 @@ import random
 import string
 from typing import Optional
 import unittest
-import uuid
 from urllib.parse import urlparse
 
 # 3rd party libraries
@@ -703,7 +702,9 @@ class APISandboxSingleSiteTests(unittest.TestCase):
             result = self._api.sell_fulfillment_upload_evidence_file(
                 payment_dispute_id=payment_dispute_id,  # unique identification string
                 content_type="multipart/form-data",
-                files={"image": self.get_upload_sample_path_file("image.jpg")},     # try "file" instead of "image"
+                files={
+                    "image": self.get_upload_sample_path_file("image.jpg")
+                },  # try "file" instead of "image"
             )
         except Error as error:
             self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
