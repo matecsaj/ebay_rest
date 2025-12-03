@@ -1,4 +1,5 @@
 # Standard library imports
+from typing import Optional, Union, Dict
 
 # Local imports
 from .a_p_i_private import APIPrivate
@@ -80,15 +81,15 @@ class API(APIPrivate):
 
     def __init__(
         self,
-        path: str or None = None,
-        application: str or dict or None = None,
-        user: str or dict or None = None,
-        header: str or dict or None = None,
-        throttle: bool or None = False,
-        timeout: float or None = -1.0,
-        key_pair: str or dict or None = None,
-        digital_signatures: bool or None = False,
-        async_req: bool or None = False,
+        path: Optional[str] = None,
+        application: Optional[Union[str, Dict]] = None,
+        user: Optional[Union[str, Dict]] = None,
+        header: Optional[Union[str, Dict]] = None,
+        throttle: bool = False,
+        timeout: float = -1.0,
+        key_pair: Optional[Union[str, Dict]] = None,
+        digital_signatures: bool = False,
+        async_req: bool = False,
     ):
         """
         Instantiate an API object, then use it to call hundreds of eBay APIs.

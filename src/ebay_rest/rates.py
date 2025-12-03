@@ -4,7 +4,7 @@ import threading
 import logging
 import math
 import time
-from typing import List
+from typing import Any, Dict, List, Optional
 
 
 # Local imports
@@ -202,7 +202,9 @@ class Rates(metaclass=Multiton):
             self._cache = cache
             self._refresh_date_time = refresh_date_time
 
-    def _find_rate_dict(self, base_path: str, rate_keys: List[str]) -> dict or None:
+    def _find_rate_dict(
+        self, base_path: str, rate_keys: List[str]
+    ) -> Optional[Dict[str, Any]]:
         """
         Get the index so the rate object associated with a name.
 

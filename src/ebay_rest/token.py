@@ -39,10 +39,10 @@ class ApplicationToken(metaclass=Multiton):
     def __init__(
         self,
         sandbox: bool,
-        client_id: str or None = None,
-        client_secret: str or None = None,
-        ru_name: str or None = None,
-        application_scopes: List[str] or None = None,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        ru_name: Optional[str] = None,
+        application_scopes: Optional[List[str]] = None,
     ) -> None:
         """
         :param sandbox (bool, required): The system to use, True for Sandbox/Testing and False for Production.
@@ -154,14 +154,14 @@ class UserToken(metaclass=Multiton):
     def __init__(
         self,
         sandbox: bool,
-        client_id: str or None = None,
-        client_secret: str or None = None,
-        ru_name: str or None = None,
-        user_id: str or None = None,
-        user_password: str or None = None,
-        user_scopes: List[str] or None = None,
-        user_refresh_token: str or None = None,
-        user_refresh_token_expiry: str or None = None,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        ru_name: Optional[str] = None,
+        user_id: Optional[str] = None,
+        user_password: Optional[str] = None,
+        user_scopes: Optional[List[str]] = None,
+        user_refresh_token: Optional[str] = None,
+        user_refresh_token_expiry: Optional[str] = None,
     ) -> None:
         """
         :param sandbox (bool, required): The system to use, True for Sandbox/Testing and False for Production.
@@ -533,12 +533,12 @@ class _OAuthToken(object):
 
     def __init__(
         self,
-        error: str or None = None,
-        access_token: str or None = None,
-        refresh_token: str or None = None,
-        refresh_token_expiry: datetime or None = None,
-        token_expiry: datetime or None = None,
-    ):
+        error: Optional[str] = None,
+        access_token: Optional[str] = None,
+        refresh_token: Optional[str] = None,
+        refresh_token_expiry: Optional[datetime] = None,
+        token_expiry: Optional[datetime] = None,
+    ) -> None:
         """
         :param error (str, optional):
         :param access_token (str, optional):
@@ -600,7 +600,9 @@ class _OAuth2Api:
         self._ru_name = ru_name
 
     def generate_user_authorization_url(
-        self, scopes: List[str], state: str or None = None
+        self,
+        scopes: List[str],
+        state: Optional[str] = None,
     ) -> str:
         """
         :param scopes (list(str)), required)
@@ -793,13 +795,13 @@ class KeyPairToken(metaclass=Multiton):
 
     def __init__(
         self,
-        creation_time: int or None = None,
-        expiration_time: int or None = None,
-        jwe: str or None = None,
-        private_key: str or None = None,
-        public_key: str or None = None,
-        signing_key_cipher: str or None = None,
-        signing_key_id: str or None = None,
+        creation_time: Optional[str] = None,
+        expiration_time: Optional[str] = None,
+        jwe: Optional[str] = None,
+        private_key: Optional[str] = None,
+        public_key: Optional[str] = None,
+        signing_key_cipher: Optional[str] = None,
+        signing_key_id: Optional[str] = None,
     ) -> None:
         """
         # eBay key pair details
@@ -856,9 +858,9 @@ class KeyPairToken(metaclass=Multiton):
 
         :return bool
         """
-        return self._private_key and self._signing_key_id
+        return bool(self._private_key) and bool(self._signing_key_id)
 
-    def _current_key_in_date(self) -> bool or None:
+    def _current_key_in_date(self) -> Optional[bool]:
         """Check if the current key pair has a date and, if it does, if
         the key pair is in date.
         Returns True if the key has an expiry date and is in date.

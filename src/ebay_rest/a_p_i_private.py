@@ -1,11 +1,10 @@
 # Standard library imports
-import collections
 import datetime
 from json import loads
 import logging
 import os
 from threading import Lock
-from typing import Callable, Dict, List, Tuple, Type, Union
+from typing import Any, Callable, Dict, List, Tuple, Type, Optional, Union
 from urllib.parse import urlparse
 
 
@@ -53,15 +52,15 @@ class APIPrivate(metaclass=Multiton):
 
     def __init__(
         self,
-        path: str or None = None,
-        application: str or dict or None = None,
-        user: str or dict or None = None,
-        header: str or dict or None = None,
-        throttle: bool or None = False,
-        timeout: float or None = -1.0,
-        key_pair: str or dict or None = None,
-        digital_signatures: bool or None = False,
-        async_req: bool or None = False,
+        path: Optional[str] = None,
+        application: Optional[Union[str, Dict[str, Any]]] = None,
+        user: Optional[Union[str, Dict[str, Any]]] = None,
+        header: Optional[Union[str, Dict[str, Any]]] = None,
+        throttle: bool = False,
+        timeout: float = -1.0,
+        key_pair: Optional[Union[str, Dict[str, Any]]] = None,
+        digital_signatures: bool = False,
+        async_req: bool = False,
     ) -> None:
         """
         VERY IMPORTANT:
@@ -340,11 +339,11 @@ class APIPrivate(metaclass=Multiton):
 
     @staticmethod
     def _process_config_section(
-        config_contents: dict,
+        config_contents: Dict[str, Any],
         section: str,
-        parameter: str or dict or None,
+        parameter: Optional[Union[str, Dict[str, Any]]] = None,
         mandatory: bool = True,
-    ) -> dict or None:
+    ) -> Optional[Dict[str, Any]]:
         """
         Get a configuration section from the parameter or the loaded config file.
 
@@ -545,17 +544,17 @@ class APIPrivate(metaclass=Multiton):
 
     def _method_single(
         self,
-        function_configuration: callable,
+        function_configuration: Callable[..., Any],
         base_path: str,
-        function_instance: type,
-        function_client: callable or type,
+        function_instance: Type[Any],
+        function_client: Union[Callable[..., Any], Type[Any]],
         method: str,
         swagger_method_exception: Type[Exception],
         user_access_token: bool,
         rate_keys: List[str],
-        params: Tuple[str] or str or None,
-        **kwargs: Dict[str, int],
-    ) -> collections:
+        params: Optional[Union[str, Tuple[str, ...]]] = None,
+        **kwargs: int,
+    ) -> Any:
         """Do the work for a method that returns a single object.
 
         :param function_configuration (callable, required):
@@ -588,17 +587,17 @@ class APIPrivate(metaclass=Multiton):
 
     def _method_paged(
         self,
-        function_configuration: callable,
+        function_configuration: Callable[..., Any],
         base_path: str,
-        function_instance: type,
-        function_client: Callable or type,
+        function_instance: Type[Any],
+        function_client: Union[Callable[..., Any], Type[Any]],
         method: str,
         swagger_method_exception: Type[Exception],
         user_access_token: bool,
         rate_keys: List[str],
-        params: Tuple[str] or str or None,
-        **kwargs,  # TODO Is it wrong to put Dict[str, int] or is PyCharm's warning system buggy?
-    ) -> collections:
+        params: Optional[Union[str, Tuple[str, ...]]] = None,
+        **kwargs: Any,
+    ) -> Any:
         """Do the work for a method that yields objects from repeated calls which is termed Paging by eBay.
 
         Across all pages, eBay has a hard limit on how many records it will return. This is subject to change
@@ -753,14 +752,14 @@ class APIPrivate(metaclass=Multiton):
 
     def _get_swagger_method(
         self,
-        function_configuration: callable,
+        function_configuration: Callable[..., Any],
         base_path: str,
-        function_instance: type,
-        function_client: callable or type,
+        function_instance: Type[Any],
+        function_client: Union[Callable[..., Any], Type[Any]],
         method: str,
         user_access_token: bool,
-        params: Tuple[str] or str or None,
-    ) -> callable:
+        params: Optional[Union[str, Tuple[str, ...]]] = None,
+    ) -> Callable[..., Any]:
         """
         Get a callable Swagger method that is ready to use.
 
@@ -907,7 +906,7 @@ class APIPrivate(metaclass=Multiton):
             **kwargs,
         )  # noqa: E501
 
-    def _de_swagger(self, obj: collections):
+    def _de_swagger(self, obj: Any):
         """Convert a Swagger data object and return the Python-styled equivalent.
 
         There is a Java vibe to objects returned from the Swagger-generated code and other issues:
@@ -994,11 +993,11 @@ class APIPrivate(metaclass=Multiton):
 
     def _call_swagger(
         self,
-        swagger_method: Callable,
-        params: Tuple[str] or str or None,
-        kwargs: Dict[str, Dict[str, int]],
-        swagger_method_exception: Type[Exception],
-    ) -> collections:
+        swagger_method: Callable[..., Any],
+        params: Optional[Union[str, Tuple[str, ...]]] = None,
+        kwargs: Dict[str, Any] = None,
+        swagger_method_exception: Type[Exception] = Exception,
+    ) -> Any:
         """
         Call the API method generated by Swagger and tidy the result.
 
