@@ -6,6 +6,7 @@ import logging
 import os
 from threading import Lock
 from typing import Callable, Dict, List, Tuple, Type, Union
+from urllib.parse import urlparse
 
 
 # Local imports
@@ -792,13 +793,16 @@ class APIPrivate(metaclass=Multiton):
             configuration.host = configuration.host.replace(
                 ".ebay.com", ".sandbox.ebay.com"
             )
-        # ebay_rest patch: Fix apim.ebay.com to api.ebay.com for commerce_media API
+
+        # TODO Instead of patching here, it would be more efficient to patch the OpenAPI spec in generate.py.
+        # patch: Fix apim.ebay.com to api.ebay.com for commerce_media API
         # The OpenAPI spec incorrectly uses apim.ebay.com, but the actual endpoint is api.ebay.com
-        if (
-            "apim.ebay.com" in configuration.host
-            or "apim.sandbox.ebay.com" in configuration.host
-        ):
+        host = urlparse(
+            configuration.host
+        ).hostname  # Sanitizing to prevent attacks such as request forgeries and malicious redirections.
+        if "apim.ebay.com" in host or "apim.sandbox.ebay.com" in host:
             configuration.host = configuration.host.replace("apim.", "api.")
+
         # check for flawed host and if so, compensate
         if "{basePath}" in configuration.host:
             configuration.host = configuration.host.replace("{basePath}", base_path)
