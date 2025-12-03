@@ -5,10 +5,11 @@ import urllib.parse
 
 
 def signed_request(pool_manager, key_pair, method, url, *_args, **kwargs):
-    """If x-ebay-enforce_signature has been set, add digital-signature.
-    This function replaces the standard function "pool_manager.request,"
-    and calls it with the same arguments after adding a digital
-    signature (if requested).
+    """
+    If x-ebay-enforce_signature has been set, add digital-signature.
+        This function replaces the standard function "pool_manager.request,"
+        and calls it with the same arguments after adding a digital
+        signature (if requested).
     """
     headers = kwargs.pop("headers")
     if "x-ebay-enforce-signature" not in headers:

@@ -14,7 +14,8 @@ from .multiton import Multiton
 
 
 class Rates(metaclass=Multiton):
-    """Manages call limit and utilization data for an eBay application.
+    """
+    Manages call limit and utilization data for an eBay application.
 
     https://developer.ebay.com/api-docs/developer/analytics/resources/rate_limit/methods/getRateLimits
     """
@@ -25,8 +26,7 @@ class Rates(metaclass=Multiton):
         """
         Maintain a set of daily limits for each app_id. Be lazy about it when throttling is not used.
 
-        :param app_id (str, required): eBay keeps a set of daily limits for each app_id.
-        :return None (None)
+        :param app_id: eBay keeps a set of daily limits for each app_id.
         """
         self._app_id = app_id  # save because it eases debugging
 
@@ -46,9 +46,8 @@ class Rates(metaclass=Multiton):
 
         Warning, avoid endless recursion, don't merge this with the throttled version of the method.
 
-        :param base_path (str, required)
-        :param rate_keys (list(str), required) keys used to look up a rate
-        :return: None
+        :param base_path:
+        :param rate_keys: Keys used to look up a rate.
         """
         with self._lock:
             rate_dict = self._find_rate_dict(base_path, rate_keys)
@@ -62,12 +61,9 @@ class Rates(metaclass=Multiton):
         """
         Decrement the remaining count of calls associated with a name.
 
-        :param base_path (str, required)
-        :param rate_keys (list(str), required) Strings, keys used to look up a rate
-        :param timeout (float, required) When invoked with the floating-point timeout argument set to a positive val,
-        throttle for at most the number of seconds specified by timeout and as below the prorated call limit. A timeout
-        argument of -1 specifies an unbounded wait.
-        :return: None (none)
+        :param base_path:
+        :param rate_keys: Keys used to look up a rate.
+        :param timeout: When invoked with the floating-point timeout argument set to a positive val, throttle for at most the number of seconds specified by timeout and as below the prorated call limit. A timeout argument of -1 specifies an unbounded wait.
         """
         # The algorithm relies upon the geometrical properties of right-angled triangles.
         # Threshold is a line that extends from the height of the limit at the period start to zero at the end.
@@ -130,7 +126,7 @@ class Rates(metaclass=Multiton):
         """
         Return True if the rates need refreshing.
 
-        :return need_refresh (bool)
+        :return:
         """
         with self._lock:
             if self._refresh_date_time:
@@ -146,8 +142,7 @@ class Rates(metaclass=Multiton):
         """
         Refresh the local Developer Analytics values and when the next refresh is recommended.
 
-        :param rate_limits (list(dict), required)
-        :result None (None)
+        :param rate_limits: (list(dict), required)
         """
         if not rate_limits:
             cache = None
@@ -212,9 +207,9 @@ class Rates(metaclass=Multiton):
 
         https://developer.ebay.com/api-docs/developer/analytics/resources/rate_limit/methods/getRateLimits
 
-        :param base_path (str)
-        :param rate_keys (list(str() keys used to look up a rate))
-        :return rates (dict or None)
+        :param base_path:
+        :param rate_keys: The keys used to look up a rate.
+        :return: A rate.
         """
         cache = self._cache
         if not cache:

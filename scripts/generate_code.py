@@ -123,13 +123,17 @@ class MethodInfo:
     path: str
 
     def __lt__(self, other):
-        """Compare MethodInfo objects for sorting."""
+        """
+        Compare MethodInfo objects for sorting.
+        """
         if self.module != other.module:
             return self.module < other.module
         return self.method < other.method
 
     def __eq__(self, other):
-        """Check if two MethodInfo objects are equal."""
+        """
+        Check if two MethodInfo objects are equal.
+        """
         return self.module == other.module and self.method == other.method
 
 
@@ -178,7 +182,9 @@ class UrlPair:
 
 
 class WebScraper:
-    """Class for web scraping operations."""
+    """
+    Class for web scraping operations.
+    """
 
     @staticmethod
     async def get_table_via_url(url: str) -> list:
@@ -272,16 +278,17 @@ class WebScraper:
 
 
 class Reference:
-    """Class for operations involving a single reference type."""
+    """
+    Class for operations involving a single reference type.
+    """
 
     @staticmethod
     async def make_json_file(source: Union[Dict, List], name: str) -> None:
         """
         Save data to a JSON file, stored in the 'references' directory.
 
-        Args:
-            source: The data to save (dict or list)
-            name: The name of the file (without extension)
+        :param source: The data to save
+        :param name: The name of the file without extension
         """
         if len(source) > 0:
             path = "../src/ebay_rest/references/"
@@ -292,7 +299,9 @@ class Reference:
 
     @staticmethod
     async def generate_country_codes() -> None:
-        """Generate a reference file for eBay's Country Codes."""
+        """
+        Generate a reference file for eBay's Country Codes.
+        """
         logging.info("Find the eBay's Country Codes.")
 
         # load the target webpage
@@ -323,7 +332,9 @@ class Reference:
 
     @staticmethod
     async def generate_currency_codes() -> None:
-        """Generate a reference file for eBay's Currency Codes."""
+        """
+        Generate a reference file for eBay's Currency Codes.
+        """
         logging.info("Find the eBay's Currency Codes.")
 
         # load the target webpage
@@ -355,7 +366,9 @@ class Reference:
 
     @staticmethod
     async def generate_global_id_values() -> None:
-        """Generate a reference file for eBay's Global ID Values."""
+        """
+        Generate a reference file for eBay's Global ID Values.
+        """
         logging.info("Find the eBay's Global ID Values.")
 
         # load the target webpage
@@ -386,7 +399,9 @@ class Reference:
 
     @staticmethod
     async def generate_marketplace_id_values() -> None:
-        """Generate a reference file for eBay's Marketplace ID Values."""
+        """
+        Generate a reference file for eBay's Marketplace ID Values.
+        """
         logging.info("Find the eBay's Marketplace ID Values.")
 
         marketplace_id_dict = dict()
@@ -458,7 +473,9 @@ class Reference:
 
 
 class References:
-    """Class for operations involving multiple reference types."""
+    """
+    Class for operations involving multiple reference types.
+    """
 
     @staticmethod
     async def generate_all() -> None:
@@ -478,7 +495,9 @@ class References:
 
 
 class Locations:
-    """Where things are located in the locale file store."""
+    """
+    Where things are located in the locale file store.
+    """
 
     target_directory: str = "api"
     target_path: str = os.path.abspath("../src/ebay_rest/" + target_directory)
@@ -533,10 +552,9 @@ class Contract:
         It does so by splitting the URL and path, conducts string manipulations, and applies regex pattern matching
         to decipher the version of the contract.
 
-        Args:
-            contract_url (str): The contract link that needs to be parsed.
+        :param contract_url: The contract link that needs to be parsed.
 
-        Returns:
+        :return:
             ContractInfo: An object containing 'category', 'call', 'url', 'file_name',
             'version', and 'beta'.
         """
@@ -613,7 +631,9 @@ class Contract:
             await f.write(decoded_content)
 
     async def patch_contract(self) -> None:
-        """If the contract from eBay has an error, then patch it before generating code."""
+        """
+        If the contract from eBay has an error, then patch it before generating code.
+        """
         # This is no longer needed, ebay fixed the problem, but I'm leaving it here for reference.
         # if self.data.category == 'sell' and self.data.call == 'fulfillment':
         #     await Contracts.patch_contract_sell_fulfillment(self.data.file_name)
@@ -764,12 +784,9 @@ class Contract:
         This function adds 'files' to the all_params list, reads the file from the 'files' dict,
         and converts it to body_params for application/octet-stream uploads.
 
-        Args:
-            api_file_path: Path to the API file to patch
-            method_name: Name of the method to patch (e.g., 'upload_video')
-
-        Returns:
-            bool: True if the file was patched, False otherwise
+        :param api_file_path: Path to the API file to patch
+        :param method_name: The name of the method to patch (e.g., 'upload_video')
+        :return: True if the file was patched, False otherwise
         """
         try:
             async with aiofiles.open(api_file_path) as f:
@@ -925,11 +942,8 @@ class Contract:
         Patch wrapper methods to only set _return_http_data_only=True if not already in kwargs.
         This allows users to pass _return_http_data_only=False to get headers.
 
-        Args:
-            api_file_path: Path to the API file to patch
-
-        Returns:
-            bool: True if the file was patched, False otherwise
+        :param api_file_path: Path to the API file to patch
+        :return: True if the file was patched, False otherwise
         """
         try:
             async with aiofiles.open(api_file_path) as f:
@@ -960,7 +974,9 @@ class Contract:
         return file_was_modified
 
     async def patch_generated(self) -> None:
-        """If the generated code has an error, then patch it before making use of it."""
+        """
+        If the generated code has an error, then patch it before making use of it.
+        """
 
         # API calls that have a return type fail when there is no content. This is because
         # there is an attempt to deserialize an empty string. If there is no content indicated
@@ -1108,7 +1124,9 @@ class Contract:
 
     @staticmethod
     async def run_command(cmd: str) -> None:
-        """Run a command line in a subprocess."""
+        """
+        Run a command line in a subprocess.
+        """
         logger = logging.getLogger(__name__)
         proc = await asyncio.create_subprocess_shell(
             cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
@@ -1147,10 +1165,11 @@ class Contract:
         return name
 
     async def get_one_base_paths_and_flows(self) -> BasePathsAndFlows:
-        """Process a UTF-8 JSON contract and extract three things for later use.
-        1) the base_path for each category_call (e.g., buy_browse)
-        2) the security flow for each scope in each category_call
-        3) the scopes for each call in each category_call
+        """
+        Process a UTF-8 JSON contract and extract three things for later use.
+                1) the base_path for each category_call (e.g., buy_browse)
+                2) the security flow for each scope in each category_call
+                3) the scopes for each call in each category_call
         """
         source = os.path.join(Locations.cache_path, self.data.file_name)
         try:
@@ -1263,19 +1282,25 @@ class Contract:
         )
 
     async def copy_library(self) -> None:
-        """Copy the essential parts of the generated eBay library to within the src folder."""
+        """
+        Copy the essential parts of the generated eBay library to within the src folder.
+        """
         source_path = os.path.join(Locations.cache_path, self.data.name, self.data.name)
         destination_path = os.path.join(Locations.target_path, self.data.name)
         _destination = shutil.copytree(source_path, destination_path)
 
     async def fix_imports(self) -> None:
-        """The deeper the directory, the more dots are needed to make the correct relative path."""
+        """
+        The deeper the directory, the more dots are needed to make the correct relative path.
+        """
         await self._fix_imports_recursive(
             self.data.name, "..", os.path.join(Locations.target_path, self.data.name)
         )
 
     async def _fix_imports_recursive(self, name: str, dots: str, path: str) -> None:
-        """This does the recursive part of fix_imports."""
+        """
+        This does the recursive part of fix_imports.
+        """
 
         for _root, dirs, files in os.walk(path):
             swaps = [  # order is crucial, put more specific swaps before less
@@ -1314,7 +1339,9 @@ class Contract:
             break
 
     async def get_requirements(self) -> Set[str]:
-        """Get the library's requirements."""
+        """
+        Get the library's requirements.
+        """
 
         # compile the set of all unique requirements from the generated library
         start_tag = "REQUIRES = ["
@@ -1339,7 +1366,9 @@ class Contract:
         return requirements
 
     async def get_includes(self) -> List[str]:
-        """Get the includes for a library."""
+        """
+        Get the includes for a library.
+        """
         includes = list()
         includes.append(f"from .{Locations.target_directory} import {self.data.name}")
         line = (
@@ -1350,7 +1379,9 @@ class Contract:
         return includes
 
     async def get_methods(self) -> str:
-        """For modules, get all code for its methods."""
+        """
+        For modules, get all code for its methods.
+        """
 
         # Catalog the module files that contain all method implementations
         modules = []
@@ -1444,8 +1475,7 @@ class Contract:
         """
         Get a ProcessResult object containing the processed contract data.
 
-        Returns:
-            ProcessResult: An object containing include, method, name, and requirement.
+        :return: ProcessResult: An object containing include, method, name, and requirement.
         """
         await self.process()
         name = self.data.name
@@ -1502,7 +1532,9 @@ class Contract:
         return docstring
 
     async def _make_method(self, method_info: MethodInfo) -> str:
-        """Return the code for one python method."""
+        """
+        Return the code for one python method.
+        """
 
         module = method_info.module
         method = method_info.method
@@ -1633,7 +1665,9 @@ class Contract:
 
     @staticmethod
     async def _camel(name: str) -> str:
-        """Convert a name with underscore separators to upper-camel-case."""
+        """
+        Convert a name with underscore separators to upper-camel-case.
+        """
         camel = ""
         for part in name.split("_"):
             camel += part.capitalize()
@@ -1641,7 +1675,9 @@ class Contract:
 
 
 class Contracts:
-    """Class for operations involving multiple contracts."""
+    """
+    Class for operations involving multiple contracts.
+    """
 
     def __init__(self) -> None:
         self.contracts = []
@@ -1681,11 +1717,8 @@ class Contracts:
         """
         Process a single contract and return the result.
 
-        Args:
-            contract (Contract): The contract to process.
-
-        Returns:
-            ProcessResult: The processing result.
+        :param contract: The contract to process.
+        :return: ProcessResult: The processing result.
         """
         return await contract.get_process_result()
 
@@ -1694,15 +1727,7 @@ class Contracts:
         """
         This asynchronous function is designed to get the contract URLs from eBay's developer site.
 
-        Args: None
-
-        Returns:
-            A sorted list of contract URLs.
-
-        Examples:
-            To use this function, call it without any arguments and await its result:
-
-            :return:
+        :return: A sorted list of contract URLs.
         """
         logging.info("Get a list of URLs to eBay OpenAPI 3 JSON contracts.")
 
@@ -1747,15 +1772,9 @@ class Contracts:
         """
         Remove redundant contracts, drop Betas, and, lower versions.
 
-        Args:
-            contract_urls (Iterable[str]): A iterable container of contract URLs.
-
-        Returns:
-            List[str]: A list of 'keeper' URLs which are unique based on their category, call, beta, and version.
-
-        Raises:
-            AssertionError: If the total number of URLs is not equal to the sum of 'keepers' and 'junkers'.
-
+        :param contract_urls: An iterable container of contract URLs.
+        :return: A list of 'keeper' URLs which are unique based on their category, call, beta, and version.
+        :raises AssertionError: If the total number of URLs is not equal to the sum of 'keepers' and 'junkers'.
         """
 
         keepers = []
@@ -1791,11 +1810,8 @@ class Contracts:
         """
         Process a contract URL to extract includes, methods, name, and requirements.
 
-        Args:
-            contract_url (str): The contract URL to process.
-
-        Returns:
-            ProcessResult: An object containing include, method, name, and requirement.
+        :param contract_url: The contract URL to process.
+        :return: ProcessResult: An object containing include, method, name, and requirement.
         """
         logging.info(f"Process overview URL {contract_url}.")
         c = Contract(contract_url)
@@ -1846,8 +1862,10 @@ class Contracts:
                 shutil.rmtree(file_path)
 
     async def remove_duplicates(self, names) -> None:
-        """De-duplicate identical .py files found in all APIs.
-        for example, when comments are ignored, the rest.py files appear identical."""
+        """
+        De-duplicate identical .py files found in all APIs.
+        For example, when comments are ignored, the rest.py files appear identical.
+        """
 
         # build a catalog that includes a hashed file signature
         catalog = []
@@ -1878,7 +1896,9 @@ class Contracts:
         # TODO apply the DRY principle to the repeaters
 
     async def _remove_duplicates_recursive_catalog(self, name: str, path: str) -> list:
-        """This does the recursive part of cataloging for remove_duplicates."""
+        """
+        This does the recursive part of cataloging for remove_duplicates.
+        """
         catalog = []
         for _root, dirs, files in os.walk(path):
             for file in files:
@@ -1914,7 +1934,6 @@ class Contracts:
 
         For an introduction to OpenAPI and how to use eBay's Restful APIs,
         visit https://developer.ebay.com/api-docs/static/openapi-swagger-codegen.html.
-        :return:
         """
         await asyncio.gather(Locations.ensure_cache(), Contracts.purge_existing())
 
@@ -1965,7 +1984,9 @@ class CodeInjector:
 
     @staticmethod
     async def insert_requirements(requirements: Set[str]) -> None:
-        """Merge the required libraries into the master."""
+        """
+        Merge the required libraries into the master.
+        """
         requirements = list(requirements)
         requirements.sort()
         # include these with the other requirements for our package
@@ -1976,7 +1997,9 @@ class CodeInjector:
         # self._put_anchored_lines(target_file=self.file_setup, anchor='setup.cfg', insert_lines=insert_lines)
 
     async def insert_includes(self, includes):
-        """Insert the includes for all libraries."""
+        """
+        Insert the includes for all libraries.
+        """
         insert_lines = "\n".join(includes) + "\n"
         await self._put_anchored_lines(
             target_file=Locations.file_ebay_rest,
@@ -1985,7 +2008,9 @@ class CodeInjector:
         )
 
     async def insert_methods(self, methods: str) -> None:
-        """Make all the python methods and insert them where needed."""
+        """
+        Make all the python methods and insert them where needed.
+        """
 
         methods = "\n" + methods
         await self._put_anchored_lines(
@@ -1998,7 +2023,9 @@ class CodeInjector:
     async def _put_anchored_lines(
         target_file: str, anchor: str, insert_lines: str
     ) -> None:
-        """In the file, replace what is between anchors with new lines of code."""
+        """
+        In the file, replace what is between anchors with new lines of code.
+        """
 
         if os.path.isfile(target_file):
             new_lines = ""

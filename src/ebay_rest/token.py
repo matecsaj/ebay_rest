@@ -45,13 +45,13 @@ class ApplicationToken(metaclass=Multiton):
         application_scopes: Optional[List[str]] = None,
     ) -> None:
         """
-        :param sandbox (bool, required): The system to use, True for Sandbox/Testing and False for Production.
+        application/client credentials are optional if you don't make API calls that need an application/client token
 
-        # application/client credentials are optional if you don't make API calls that need an application/client token
-        :param client_id (str, optional):
-        :param client_secret (str, optional):
-        :param ru_name (str, optional):
-        :param application_scopes (list, optional):
+        :param sandbox: The system to use, True for Sandbox/Testing and False for Production.
+        :param client_id:
+        :param client_secret:
+        :param ru_name:
+        :param application_scopes:
         :return: None (None)
         """
         self._lock = Lock()
@@ -72,7 +72,7 @@ class ApplicationToken(metaclass=Multiton):
         """
         Get an eBay Application Token.
 
-        :return: token (str)
+        :return: token
         """
         with self._lock:
             if self._application_scopes is None:
@@ -93,8 +93,6 @@ class ApplicationToken(metaclass=Multiton):
     def _determine_application_scopes(self) -> None:
         """
         Determine the application scopes that are currently allowed.
-
-        return: None (None)
         """
         if self._sandbox:
             # permission is always granted for all
@@ -113,8 +111,6 @@ class ApplicationToken(metaclass=Multiton):
     def _refresh_application(self) -> None:
         """
         Refresh the eBay Application Token and update all that comes with it.
-
-        :return None (None)
         """
         token_application = self._oauth2api_inst.get_application_token(
             self._application_scopes
@@ -164,23 +160,21 @@ class UserToken(metaclass=Multiton):
         user_refresh_token_expiry: Optional[str] = None,
     ) -> None:
         """
-        :param sandbox (bool, required): The system to use, True for Sandbox/Testing and False for Production.
+        :param sandbox: The system to use, True for Sandbox/Testing and False for Production.
 
         # application/client credentials, optional if you don't make API calls that need an application/client token
-        :param client_id (str, optional):
-        :param client_secret (str, optional):
-        :param ru_name (str, optional):
+        :param client_id:
+        :param client_secret:
+        :param ru_name:
 
         # user credentials, optional if you don't make API calls that need a user token
-        :param user_id (str, optional):
-        :param user_password (str, optional):
-        :param user_scopes (str, optional):
+        :param user_id:
+        :param user_password:
+        :param user_scopes:
 
         # user token supply, optional if you don't mind a Chrome browser opening when getting a user token
-        :param user_refresh_token (str, optional):
-        :param user_refresh_token_expiry (str, optional):
-
-        :return None (None)
+        :param user_refresh_token:
+        :param user_refresh_token_expiry:
         """
 
         self._lock = Lock()
@@ -239,9 +233,10 @@ class UserToken(metaclass=Multiton):
                 )
 
     def get(self) -> str:
-        """Get an eBay User Access Token.
+        """
+        Get an eBay User Access Token.
 
-        : return token (str)
+        :return: token
         """
         with self._lock:
             if self._user_scopes is None:
@@ -261,7 +256,6 @@ class UserToken(metaclass=Multiton):
     def _determine_user_scopes(self) -> None:
         """
         Determine the user access scopes that are currently allowed.
-        :return None (None)
         """
         if self._sandbox:
             # permission is always granted for all
@@ -281,8 +275,6 @@ class UserToken(metaclass=Multiton):
         """
         Refresh the eBay User Access Token and update all that comes with it.
         If we don't have a current refresh token, run the authorization flow.
-
-        :return None (None)
         """
         if self._user_refresh_token is None:
             # We don't have a refresh token; run authorization flow
@@ -300,8 +292,6 @@ class UserToken(metaclass=Multiton):
         """
         Get an authorization code by running authorization-flow.
         Exchange that for a refresh token (which also contains a user token).
-
-        :return None (None)
         """
         if not self._allow_get_user_consent:
             raise Error(
@@ -346,11 +336,11 @@ class UserToken(metaclass=Multiton):
         logging.info(message)
 
     def _get_authorization_code(self, sign_in_url: str) -> str:
-        """Run the authorization flow to get an authorization code,
-        which can subsequently be exchanged for a refresh (and user) token.
+        """
+        Run the authorization flow to get an authorization code, which can subsequently be exchanged for a refresh (and user) token.
 
-        :param sign_in_url (str): The redirect URL for gaining user consent.
-        :return code (str): Authorization code.
+        :param sign_in_url: The redirect URL for gaining user consent.
+        :return: Authorization code.
         """
         try:
             from playwright.sync_api import (
@@ -503,6 +493,7 @@ class UserToken(metaclass=Multiton):
     def _refresh_user_token(self) -> None:
         """
         Exchange a refresh token for a current user token.
+
         :return: None (None)
         """
         user_token = self._oauth2api_inst.get_access_token(
@@ -540,12 +531,11 @@ class _OAuthToken(object):
         token_expiry: Optional[datetime] = None,
     ) -> None:
         """
-        :param error (str, optional):
-        :param access_token (str, optional):
-        :param refresh_token (str, optional):
-        :param refresh_token_expiry (datetime, optional): datetime in UTC
-        :param token_expiry (datetime, optional): datetime in UTC
-        :return None (None)
+        :param error:
+        :param access_token:
+        :param refresh_token:
+        :param refresh_token_expiry: datetime in UTC
+        :param token_expiry: datetime in UTC
         """
         self.access_token = access_token
         self.token_expiry = token_expiry
@@ -556,7 +546,7 @@ class _OAuthToken(object):
 
     def __str__(self) -> str:
         """
-        :return token_str: (str)
+        :return: token_str:
         """
         token_str = "{"
         if self.error is not None:
@@ -585,12 +575,13 @@ class _OAuth2Api:
     __slots__ = "_sandbox", "_client_id", "_client_secret", "_ru_name"
 
     def __init__(self, sandbox: bool, client_id: str, client_secret: str, ru_name: str):
-        """Initialize OAuth2Api instance
+        """
+        Initialize OAuth2Api instance
 
-        :param sandbox (bool, required):
-        :param client_id (str, required):
-        :param client_secret (str, required):
-        :param ru_name (str, required):
+        :param sandbox:
+        :param client_id:
+        :param client_secret:
+        :param ru_name:
         """
         self._sandbox = sandbox
 
@@ -605,8 +596,8 @@ class _OAuth2Api:
         state: Optional[str] = None,
     ) -> str:
         """
-        :param scopes (list(str)), required)
-        :param state (str, optional)
+        :param scopes:
+        :param state:
         """
         param = {
             "client_id": self._client_id,
@@ -629,8 +620,9 @@ class _OAuth2Api:
     def get_application_token(self, scopes: List[str]) -> _OAuthToken:
         """
         Makes call for application token and stores result in a credential object.
-        :param scopes (list(str), required)
-        :return credential_object (_OAuthToken)
+
+        :param scopes:
+        :return: credential_object _OAuthToken
         """
         logging.debug("Trying to get a new application access token ... ")
         headers = self._generate_request_headers()
@@ -644,8 +636,8 @@ class _OAuth2Api:
 
     def exchange_code_for_access_token(self, code: str) -> _OAuthToken:
         """
-        :param code (str, required)
-        :return credential_object (_OAuthToken)
+        :param code:
+        :return: credential_object _OAuthToken
         """
         logging.debug("Trying to get a new user access token ... ")
 
@@ -670,9 +662,9 @@ class _OAuth2Api:
     def get_access_token(self, refresh_token: str, scopes: List[str]) -> _OAuthToken:
         """
         refresh token call
-        :param refresh_token (str, required)
-        :param scopes (list(str), required)
-        :return credential_object (_OAuthToken)
+        :param refresh_token:
+        :param scopes:
+        :return: credential_object _OAuthToken
         """
         logging.debug("Trying to get a new user access token ... ")
 
@@ -688,8 +680,7 @@ class _OAuth2Api:
 
     def _get_endpoint(self) -> str:
         """
-        :return url (str)
-        :return:
+        :return: url
         """
         if self._sandbox:
             return "https://api.sandbox.ebay.com/identity/v1/oauth2/token"
@@ -698,7 +689,7 @@ class _OAuth2Api:
 
     def _generate_request_headers(self) -> dict:
         """
-        :return headers (dict)
+        :return: headers
         """
         b64_encoded_credential = b64encode(
             (self._client_id + ":" + self._client_secret).encode()
@@ -711,8 +702,8 @@ class _OAuth2Api:
 
     def _generate_application_request_body(self, scopes: List[str]) -> dict:
         """
-        :param scopes list(str)
-        :return body (dict)
+        :param scopes: list
+        :return: body
         """
         body = {
             "grant_type": "client_credentials",
@@ -724,9 +715,9 @@ class _OAuth2Api:
     @staticmethod
     def _generate_refresh_request_body(scopes: List[str], refresh_token: str) -> dict:
         """
-        :param scopes (list(str), required):
-        :param refresh_token (str, required):
-        :return body (dict):
+        :param scopes: (list(str), required):
+        :param refresh_token:
+        :return: body (dict):
         """
         if refresh_token is None:
             raise Error(
@@ -742,8 +733,8 @@ class _OAuth2Api:
 
     def _generate_oauth_request_body(self, code: str) -> dict:
         """
-        :param code (str):
-        :return body (dict):
+        :param code:
+        :return: body dict:
         """
         body = {
             "grant_type": "authorization_code",
@@ -755,9 +746,9 @@ class _OAuth2Api:
     @staticmethod
     def _finish(resp: Response, token: _OAuthToken, content: dict) -> _OAuthToken:
         """
-        :param resp (Response, required):
-        :param token (_OAuthToken:, required):
-        :param content (dict, required):
+        :param resp:
+        :param token:
+        :param content:
         :return:
         """
         if resp.status_code == codes.ok:
@@ -777,9 +768,10 @@ class _OAuth2Api:
 
 
 class KeyPairToken(metaclass=Multiton):
-    """An eBay private-public key pair created using the eBay Key Management API.
-    Digital signature credentials are optional if you don't make API
-    calls that need a public/private key pair.
+    """
+    An eBay private-public key pair created using the eBay Key Management API.
+        Digital signature credentials are optional if you don't make API
+        calls that need a public/private key pair.
     """
 
     __slots__ = (
@@ -805,14 +797,14 @@ class KeyPairToken(metaclass=Multiton):
     ) -> None:
         """
         # eBay key pair details
-        :param creation_time (int, optional):
-        :param expiration_time (int, optional):
-        :param jwe (str, optional):
-        :param private_key (str, optional):
-        :param public_key (str, optional):
-        :param signing_key_cipher (str, optional):
-        :param signing_key_id (str, optional):
-        :return: None (None)
+
+        :param creation_time:
+        :param expiration_time:
+        :param jwe:
+        :param private_key:
+        :param public_key:
+        :param signing_key_cipher:
+        :param signing_key_id:
         """
         self._lock = Lock()
         # The Multiton decorator wraps this initializer with a thread lock; it is safe to skip using self._lock.
@@ -837,7 +829,9 @@ class KeyPairToken(metaclass=Multiton):
                 )
 
     def key_dict(self):
-        """Get the public and private key ready for a request"""
+        """
+        Get the public and private key ready for a request
+        """
         try:
             decoded = b64decode(self._private_key)
         except binascii.Error as e:
@@ -852,22 +846,22 @@ class KeyPairToken(metaclass=Multiton):
             return {"jwe": self._jwe, "private_key": pk}
 
     def _current_key_sufficient(self) -> bool:
-        """Check if the current key pair are enough to call get_signing_key.
+        """
+        Check if the current key pair are enough to call get_signing_key.
 
-        Returns True if so, else False
-
-        :return bool
+        :return: True if sufficient
         """
         return bool(self._private_key) and bool(self._signing_key_id)
 
     def _current_key_in_date(self) -> Optional[bool]:
-        """Check if the current key pair has a date and, if it does, if
-        the key pair is in date.
-        Returns True if the key has an expiry date and is in date.
-        Returns False if the key has and expiry date and is expired.
-        Returns None if the key has no expiry date.
+        """
+        Check if the current key pair has a date and, if it does, if
+                the key pair is in date.
+                Returns True if the key has an expiry date and is in date.
+                Returns False if the key has and expiry date and is expired.
+                Returns None if the key has no expiry date.
 
-        :return bool
+        :return: True if it has a date
         """
         if self._expiration_time:
             return (DateTime.now() - timedelta(seconds=90)) < self._expiration_time
@@ -879,9 +873,8 @@ class KeyPairToken(metaclass=Multiton):
         Check we have enough information to request a new key pair.
         Load the new key-pair and check it is valid.
 
-        :param api (API): A valid API instance that can be used to make
-            a KeyManagementAPI call
-        :return dict
+        :param api: A valid API instance that can be used to make a KeyManagementAPI call
+        :return: dict
         """
 
         if not self._current_key_sufficient():
@@ -898,15 +891,11 @@ class KeyPairToken(metaclass=Multiton):
     def _ensure_key_pair(self, api) -> None:
         """
         Ensures a valid key pair is available.
-
-        :param api (API): A valid API instance that can be used to make
-            a KeyManagementAPI call
-        :return None (None)
-
         - If the key is out of date, create a new key pair.
-        - If the necessary details for making an API call and the expiration time are provided.
-            Do nothing (assume the key pair is OK).
+        - If the necessary details for making an API call and the expiration time are provided. Do nothing (assume the key pair is OK).
         - If the private key and the signing key ID are provided but details are incomplete, load the key info.
+
+        :param api: A valid API instance that can be used to make a KeyManagementAPI call
         """
 
         in_date = self._expiration_time and (
@@ -945,12 +934,9 @@ class KeyPairToken(metaclass=Multiton):
 
     def _get_signing_key(self, api) -> None:
         """
-        Use the eBay Key Pair Management API to load an existing eBay
-        public/private key pair.
+        Use the eBay Key Pair Management API to load an existing eBay public/private key pair.
 
-        :param api (API): A valid API instance that can be used to make
-            a KeyManagementAPI call
-        :return None (None)
+        :param api: A valid API instance that can be used to make a KeyManagementAPI call
         """
         try:
             key = api.developer_key_management_get_signing_key(
@@ -968,12 +954,9 @@ class KeyPairToken(metaclass=Multiton):
 
     def _create_key_pair(self, api) -> None:
         """
-        Use the eBay Key Pair Management API to generate a new eBay
-        public/private key pair
+        Use the eBay Key Pair Management API to generate a new eBay public/private key pair
 
-        :param api (API): A valid API instance that can be used to make
-            a KeyManagementAPI call
-        :return None (None)
+        :param api: A valid API instance that can be used to make a KeyManagementAPI call
         """
         body = CreateSigningKeyRequest(signing_key_cipher="ED25519")
         try:
@@ -1009,7 +992,8 @@ class KeyPairToken(metaclass=Multiton):
     def _save_key(self, key) -> None:
         """
         Save a loaded key dictionary to this KeyPairToken
-        :param key (dict): A dict of key properties
+
+        :param key: A dict of key properties
         """
         self._creation_time = datetime.fromtimestamp(
             key["creation_time"], tz=timezone.utc

@@ -7,7 +7,9 @@ from .error import Error
 
 
 class DateTime:
-    """Helpers for the specific way that eBay does date-time."""
+    """
+    Helpers for the specific way that eBay does date-time.
+    """
 
     _EBAY_DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%fZ"
     _UTC = ZoneInfo("UTC")
@@ -22,7 +24,7 @@ class DateTime:
         Universal Coordinated Time (UTC), also known as: Greenwich MeanTime (GMT),
         also known as Zulu because the time portion of the time stamp ends with a Z.
 
-        :return: datetime (datetime)
+        :return:
         """
         # TODO Precisely synchronize with eBay's clock.
         # https://ofr.ebay.ca/ws/eBayISAPI.dll?EbayTime  (only accurate to the second)
@@ -36,8 +38,8 @@ class DateTime:
 
         Expected format: YYYY-MM-DDTHH:MM:SS.SSSZ (e.g., 2004-08-04T19:09:02.768Z)
 
-        :param d_t: datetime (required)
-        :return: dateTime string (str)
+        :param d_t:
+        :return:
         """
         if not isinstance(d_t, datetime):
             reason = (
@@ -61,8 +63,8 @@ class DateTime:
 
         Expected format: YYYY-MM-DDTHH:MM:SS.SSSZ (e.g., 2004-08-04T19:09:02.768Z)
 
-        :param d_t_string: dateTime string (required)
-        :return: datetime (datetime)
+        :param d_t_string: dateTime string
+        :return: datetime
         """
         if not isinstance(d_t_string, str):
             reason = (

@@ -7,11 +7,10 @@ class Error(Exception):
     and backward compatibility.
 
     Attributes:
-        number (int): A unique natural number code identifying the error.
-        reason (str): A short description of the error's cause.
-        detail (str, optional): Additional details about the error, if available.
-        __cause__ (Exception, optional): The original exception causing this error,
-                                         if applicable.
+        number: A unique natural number code identifying the error.
+        reason: A short description of the error's cause.
+        detail: Additional details about the error, if available.
+        __cause__ : The original exception causing this error, if applicable.
 
     Usage Notes for Library Users:
         - Handle exceptions based on the `number` attribute for precise error handling.
@@ -49,14 +48,12 @@ class Error(Exception):
         """
         Instantiate a new Error object.
 
-        Args:
-            number (int): A unique natural number code.
-            reason (str): A short description of the reason for the error.
-            detail (str, optional): Additional details about the failure.
-            cause (Exception, optional): The original exception causing this error.
+        :param number: A unique natural number code.
+        :param reason: A short description of the reason for the error.
+        :param detail: Additional details about the failure.
+        :param cause: The original exception causing this error.
 
-        Returns:
-            None
+        :return:
         """
         super().__init__()
         self.number = number
@@ -68,9 +65,7 @@ class Error(Exception):
         """
         Returns the error message as a string.
 
-        Returns:
-            str: A formatted error message including the number, reason, detail,
-                 and cause (if applicable).
+        :return:
         """
         message = f"Error number {self.number}. {self.reason or ''} {self.detail or ''}".strip()
         if self.__cause__:
@@ -81,8 +76,7 @@ class Error(Exception):
         """
         Returns a dictionary representation of the error.
 
-        Returns:
-            dict: A dictionary with the error's attributes.
+        :return: A dictionary with the error's attributes.
         """
         return {
             "number": self.number,
@@ -95,10 +89,8 @@ class Error(Exception):
         """
         Logs the error message using the provided logger instance.
 
-        Args:
-            logger: A logger instance with a `error` method.
+        :param logger: A logger instance with an `error` method.
 
-        Returns:
-            None
+        :return:
         """
         logger.error(self.__str__())

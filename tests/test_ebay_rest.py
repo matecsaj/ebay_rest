@@ -87,14 +87,18 @@ class APIMarketplaceSpecificTests(unittest.TestCase):
 
 
 class APISandboxMultipleSiteTests(unittest.TestCase):
-    """API tests that require multiple marketplaces and that can be done on the sandbox."""
+    """
+    API tests that require multiple marketplaces and that can be done on the sandbox.
+    """
 
     @classmethod
     def setUpClass(cls):
         cls.currency_converter = CurrencyConverter()  # this is slow, so do it once
 
     def load_credential_file(self, filename: str) -> Optional[dict]:
-        """Try to load a credential file into a dict."""
+        """
+        Try to load a credential file into a dict.
+        """
         config_location = os.path.join(os.getcwd(), filename)
         try:
             f = open(config_location, "r")
@@ -113,7 +117,9 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
                 return contents
 
     def check_credential_file(self, filename):
-        """Check if a credential file is structured correctly."""
+        """
+        Check if a credential file is structured correctly.
+        """
 
         # These are all the root keys.
         instructions_key = "***_instructions_***"
@@ -183,7 +189,9 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
         self.check_credential_file("ebay_rest.json")
 
     def test_credentials_from_dicts(self):
-        """set credentials via dicts"""
+        """
+        set credentials via dicts
+        """
 
         contents = self.load_credential_file("ebay_rest.json")
         try:
@@ -238,7 +246,9 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
                     API(**bad_config)
 
     def test_object_reuse(self):
-        """Do the same parameters return the same API object?"""
+        """
+        Do the same parameters return the same API object?
+        """
         a1 = API(application="sandbox_1", user="sandbox_1", header="ENCA")
         a2 = API(application="sandbox_1", user="sandbox_1", header="ENCA")
         b = API(application="sandbox_1", user="sandbox_1", header="GB")
@@ -246,7 +256,9 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
         self.assertNotEqual(a1, b)
 
     def test_credential_path(self):
-        """supply a path to ebay_rest.json"""
+        """
+        supply a path to ebay_rest.json
+        """
         try:
             api = API(
                 path=os.getcwd(), application="sandbox_1", user="sandbox_1", header="US"
@@ -257,7 +269,9 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
             self.assertIsInstance(api, API, "An API object was not returned.")
 
     def test_shipping_accuracy(self):
-        """Is closer shipping less expensive?"""
+        """
+        Is closer shipping less expensive?
+        """
 
         # domestic
         # d_market = 'EBAY_CA'    # set in header
@@ -405,7 +419,8 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
 
 
 class APISandboxSingleSiteTests(unittest.TestCase):
-    """API tests that can be done on a single marketplace and in the sandbox.
+    """
+    API tests that can be done on a single marketplace and in the sandbox.
     Also, try the non-default option of making asynchronous HTTP requests.
     """
 
@@ -436,7 +451,9 @@ class APISandboxSingleSiteTests(unittest.TestCase):
             self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
 
     def test_positional_none_kw_none(self):
-        """Try a call with no positional arguments and no keyword arguments."""
+        """
+        Try a call with no positional arguments and no keyword arguments.
+        """
         # https://developer.ebay.com/api-docs/sell/compliance/resources/listing_violation_summary/methods/getListingViolationsSummary
         try:
             result = self._api.sell_compliance_get_listing_violations_summary(
@@ -484,7 +501,9 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         pass
 
     def test_try_except_else_api(self):
-        """Test that an exception occurs when expected."""
+        """
+        Test that an exception occurs when expected.
+        """
         try:
             self._api.buy_browse_get_item(item_id="invalid")
         except Error as error:
@@ -495,7 +514,9 @@ class APISandboxSingleSiteTests(unittest.TestCase):
             self.assertIsNotNone(None, msg="Failed to raise an exception.")
 
     def test_buying_options(self):
-        """Does buying option filtering work?"""
+        """
+        Does buying option filtering work?
+        """
         options = [
             "BEST_OFFER",
             "FIXED_PRICE",
@@ -713,13 +734,12 @@ class APISandboxSingleSiteTests(unittest.TestCase):
 
     @staticmethod
     def get_upload_sample_path_file(file_name: str) -> str:
-        """Get the full path to a sample file for upload testing.
+        """
+        Get the full path to a sample file for upload testing.
 
-        Args:
-            file_name: The name of the file in the upload_samples directory
+        :param file_name: The name of the file in the upload_samples directory
 
-        Returns:
-            The absolute path to the upload sample file
+        :return: The absolute path to the upload sample file
         """
         return os.path.join(os.path.dirname(__file__), "upload_samples", file_name)
 
@@ -783,16 +803,21 @@ class APISandboxSingleSiteTests(unittest.TestCase):
 
 
 class APIProductionSingleTests(unittest.TestCase):
-    """API tests that can be done on a single production marketplace."""
+    """
+    API tests that can be done on a single production marketplace.
+    """
 
     @classmethod
     def setUpClass(cls):
         cls._api = API(application="production_1", user="production_1", header="US")
 
     def test_complex_filtering(self):
-        """Does complex filtering work?
+        """
+        Does complex filtering work?
+
         Use the production environment because it has vastly more items to work with
-        and some filters are not available in the sandbox."""
+        and some filters are not available in the sandbox.
+        """
         filters = []
         buying_option = "FIXED_PRICE"  # options are 'AUCTION', 'BEST_OFFER', 'CLASSIFIED_AD', 'FIXED_PRICE'
         filters.append("buyingOptions:{" + buying_option + "}")
@@ -897,9 +922,7 @@ class APIProductionSingleTests(unittest.TestCase):
 
     def test_sell_inventory(self):
         """
-        See https://developer.ebay.com/api-docs/sell/inventory/static/overview.html
-
-        :return:
+        https://developer.ebay.com/api-docs/sell/inventory/static/overview.html
         """
         # A unique, merchant-defined key (ID) for an inventory location.
         # This unique identifier, or key, is used in other Inventory API calls to identify an inventory location.
@@ -995,8 +1018,6 @@ class APIProductionSingleTests(unittest.TestCase):
         """
         See https://developer.ebay.com/api-docs/sell/inventory/static/overview.html &
         https://developer.ebay.com/api-docs/sell/inventory/resources/inventory_item/methods/createOrReplaceInventoryItem#h2-samples
-
-        :return:
         """
         # Create a new inventory item.
         # A template for supplying all possible information about an inventory item.
@@ -1111,13 +1132,11 @@ class APIProductionSingleTests(unittest.TestCase):
 
     @staticmethod
     def get_upload_sample_path_file(file_name: str) -> str:
-        """Get the full path to a sample file for upload testing.
+        """
+        Get the full path to a sample file for upload testing.
 
-        Args:
-            file_name: The name of the file in the upload_samples directory
-
-        Returns:
-            The absolute path to the upload sample file
+        :param file_name: The name of the file in the upload_samples directory
+        :return: The absolute path to the upload sample file
         """
         return os.path.join(os.path.dirname(__file__), "upload_samples", file_name)
 
@@ -1168,7 +1187,9 @@ class APIProductionSingleTests(unittest.TestCase):
 
 
 class APISandboxDigitalSignatureTests(unittest.TestCase):
-    """API tests that test eBay Digital Signatures and public/private key pairs"""
+    """
+    API tests that test eBay Digital Signatures and public/private key pairs
+    """
 
     @classmethod
     def setUpClass(cls):
@@ -1206,8 +1227,8 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
             self.fail(self.key_fail)
 
     def test_001_get_signing_key(self):
-        """Check that we can load all the remaining key information
-        given the private key and signing_key_id.
+        """
+        Check that we can load all the remaining key information given the private key and signing_key_id.
         """
         key_pair = {
             "private_key": self.original_private_key,
@@ -1229,7 +1250,9 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
             self.assertEqual(key["signing_key_id"], self.original_signing_key_id)
 
     def test_002_make_call_with_signature(self):
-        """Check that we can make a call using the Digital Signature"""
+        """
+        Check that we can make a call using the Digital Signature.
+        """
         try:
             result = self._api.sell_finances_get_transaction_summary(
                 filter="transactionStatus:{PAYOUT}",
@@ -1264,7 +1287,9 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
     # be removed, hence it is skipped by default.
     @unittest.skip
     def test_003_create_signing_key(self):
-        """Check that we can create a new public/private key."""
+        """
+        Check that we can create a new public/private key.
+        """
         self._api._key_pair_token._private_key = None
         self._api._key_pair_token._signing_key_id = None
         with self.assertRaises(Error):
@@ -1415,7 +1440,9 @@ class TokenTests(unittest.TestCase):
 
 class MultitonTests(unittest.TestCase):
     def test_help(self):
-        """Documentation from the wrapped class should be returned instead of Multiton."""
+        """
+        Documentation from the wrapped class should be returned instead of Multiton.
+        """
         doc_string = API.__doc__
         self.assertTrue(
             "Multiton" not in doc_string and "API" in doc_string,

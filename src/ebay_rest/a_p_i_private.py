@@ -40,7 +40,6 @@ class APIPrivate(metaclass=Multiton):
     Use case:
     - The `APIPrivate` class is typically instantiated by internal components and used to manage
       lower-level API interactions. It is not designed for direct interaction by end users or API clients.
-
     """
 
     # TODO Improve efficiency, unique objects could be created in parallel.
@@ -67,8 +66,8 @@ class APIPrivate(metaclass=Multiton):
         - Except for unit tests, never use this base class directly; during normal use, it is meant to be inherited.
         - Avoid making backward-incompatible changes to the constructor’s signature, as this could break end user code.
         - To ensure proper type hinting and documentation for end users:
-         a. Method parameters must be an exact copy from the API class __init__ method.
-         b. After the dashed line, this docstring should be an exact copy from the API __init__ method.
+         1. Method parameters must be an exact copy from the API class __init__ method.
+         2. After the dashed line, this docstring should be an exact copy from the API __init__ method.
 
         ===================================================================================
 
@@ -78,45 +77,16 @@ class APIPrivate(metaclass=Multiton):
         See https://github.com/matecsaj/ebay_rest/blob/main/tests/ebay_rest_EXAMPLE.json.
         Warning: Hardcoding credentials directly in code is a security risk.
 
-        :param path (str, optional):
-        If using an ebay_rest.json file not in the current working directory, supply a full path.
-
-        :param application (str or dict, optional) :
-        Supply the name of the desired application record in ebay_rest.json or a dict with application credentials.
-        Can omit when ebay_rest.json contains only one application record.
-
-        :param user (str or dict, optional) :
-        Supply the name of the desired user record in ebay_rest.json or a dict with user credentials.
-        Can omit when ebay_rest.json contains only one user record.
-
-        :param header (str or dict, optional) :
-        Supply the name of the desired header record in ebay_rest.json or a dict with header credentials.
-        Can omit when ebay_rest.json contains only one header record.
-
-        :param
-        throttle (bool, optional) : When True, block the call if a below the prorated call limit, defaults to False.
-                                    Note, the sandbox has no call limits.
-
-        :param
-        timeout (float, optional) : When invoked with the floating-point timeout argument set to a positive value,
-        throttle for at most the number of seconds specified by timeout and as below the prorated call limit. A timeout
-        argument of -1 specifies an unbounded wait. It is forbidden to specify a timeout when the throttle is False.
-        It defaults to -1.
-
-        :param
-        key_pair (str or dict, optional) :
-        Supply the name of the desired eBay public/private key pair record in ebay_rest.json or a dict with
-        the key pair details.
-        Can omit when ebay_rest.json contains only one record.
-
-        :param
-        digital_signatures (bool, optional): Use eBay digital signatures
-
-        :param
-        async_req (bool, optional) : When True make, asynchronous HTTP requests. Defaults to False for synchronous.
-        !!!IGNORE THIS OPTION, THE CODE FOR IT IS INCOMPLETE!!!
-
-        :return (object) : An API object.
+        :param path: If using an ebay_rest.json file not in the current working directory, supply a full path.
+        :param application: Supply the name of the desired application record in ebay_rest.json or a dict with application credentials. Can omit when ebay_rest.json contains only one application record.
+        :param user: Supply the name of the desired user record in ebay_rest.json or a dict with user credentials. Can omit when ebay_rest.json contains only one user record.
+        :param header: Supply the name of the desired header record in ebay_rest.json or a dict with header credentials. Can omit when ebay_rest.json contains only one header record.
+        :param throttle: When True, block the call if a below the prorated call limit, defaults to False. Note, the sandbox has no call limits.
+        :param timeout: When invoked with the floating-point timeout argument set to a positive value, throttle for at most the number of seconds specified by timeout and as below the prorated call limit. A timeout argument of -1 specifies an unbounded wait. It is forbidden to specify a timeout when the throttle is False. It defaults to -1.
+        :param key_pair: Supply the name of the desired eBay public/private key pair record in ebay_rest.json or a dict with the key pair details. Can omit when ebay_rest.json contains only one record.
+        :param digital_signatures: Use eBay digital signatures
+        :param async_req: When True make, asynchronous HTTP requests. Defaults to False for synchronous. !!!IGNORE THIS OPTION, THE CODE FOR IT IS INCOMPLETE!!!
+        :return: An API object.
         """
         # if present, load the configuration file
         config_contents = None
@@ -347,11 +317,11 @@ class APIPrivate(metaclass=Multiton):
         """
         Get a configuration section from the parameter or the loaded config file.
 
-        :param config_contents (dict, required)
-        :param section (str, required)
-        :param parameter (str or dict or None, required)
-        :param mandatory (bool, optional)
-        :return result (dict or None)
+        :param config_contents:
+        :param section:
+        :param parameter:
+        :param mandatory:
+        :return:
         """
         result = None
         detail = None
@@ -454,10 +424,10 @@ class APIPrivate(metaclass=Multiton):
     def _check_keys(dict_: dict, keys: List[Tuple[str, bool]], name: str) -> None:
         """
         True if the dictionary key is required and False when optional.
-        :param dict_ (dict, required)
-        :param keys (List[Tuple[str, bool]], required)
-        :param name (str, required)
-        :return None (None)
+
+        :param dict_:
+        :param keys:
+        :param name:
         """
         valid_keys = []
         for key, required in keys:
@@ -506,7 +476,8 @@ class APIPrivate(metaclass=Multiton):
     ) -> None:
         """
         Check header keys and values.
-        :param keys_values (List[Union[Tuple[str, list], Tuple[str, None]]], required)
+
+        :param keys_values:
         """
         header = self._header
         valid_keys = []
@@ -555,19 +526,20 @@ class APIPrivate(metaclass=Multiton):
         params: Optional[Union[str, Tuple[str, ...]]] = None,
         **kwargs: int,
     ) -> Any:
-        """Do the work for a method that returns a single object.
+        """
+        Do the work for a method that returns a single object.
 
-        :param function_configuration (callable, required):
-        :param base_path (str, required):
-        :param function_instance (type, required):
-        :param function_client (class or type, required):
-        :param method (str, required):
-        :param swagger_method_exception (Type[Exception], required):
-        :param user_access_token (bool, required):
-        :param rate_keys (List[str]: required:
-        :param params: (Tuple[str] or str or None, required)
-        :param kwargs: (Dict[str, int], required)
-        :return object: (collections)
+        :param function_configuration:
+        :param base_path:
+        :param function_instance:
+        :param function_client:
+        :param method:
+        :param swagger_method_exception:
+        :param user_access_token:
+        :param rate_keys:
+        :param params:
+        :param kwargs:
+        :return:
         """
         swagger_method = self._get_swagger_method(
             function_configuration,
@@ -598,20 +570,21 @@ class APIPrivate(metaclass=Multiton):
         params: Optional[Union[str, Tuple[str, ...]]] = None,
         **kwargs: Any,
     ) -> Any:
-        """Do the work for a method that yields objects from repeated calls which is termed Paging by eBay.
+        """
+        Do the work for a method that yields objects from repeated calls which is termed Paging by eBay.
 
         Across all pages, eBay has a hard limit on how many records it will return. This is subject to change
         and can vary by call. The swagger call will raise an exception at the limit. 10,000 is a common hard limit.
 
-        :param function_configuration (callable, required):
-        :param base_path (str, required):
-        :param function_instance (type, required):
-        :param function_client (Callable or type, required):
-        :param method (str, required):
-        :param swagger_method_exception (Type[Exception], required):
-        :param params (Tuple[str] or str or None, required):
-        :param kwargs (Dict[str, int], required):
-        :return collection (collections):
+        :param function_configuration:
+        :param base_path:
+        :param function_instance:
+        :param function_client:
+        :param method:
+        :param swagger_method_exception:
+        :param params:
+        :param kwargs:
+        :return:
         """
         page_controls = [
             "href",
@@ -763,14 +736,14 @@ class APIPrivate(metaclass=Multiton):
         """
         Get a callable Swagger method that is ready to use.
 
-        :param function_configuration (Callable, required):
-        :param base_path (str, required):
-        :param function_instance (type, required):
-        :param function_client (Callable or type, required):
-        :param method (str, required):
-        :param user_access_token (bool, required):
-        :param params (Tuple[str] or str or None, required):
-        :return function (callable)
+        :param function_configuration:
+        :param base_path:
+        :param function_instance:
+        :param function_client:
+        :param method:
+        :param user_access_token:
+        :param params:
+        :return:
         """
         # Configure OAuth2 access token for authorization: api_auth
         configuration = function_configuration()
@@ -865,12 +838,13 @@ class APIPrivate(metaclass=Multiton):
         return getattr(api_instance, method)
 
     def _swagger_throttle(self, base_path: str, rate_keys: list) -> None:
-        """Block when the swagger method is below it's prorated call limit.
+        """
+        Block when the swagger method is below it's prorated call limit.
 
         Call this just before calling a swagger method. Only do for the first paging call.
 
-        :param base_path (str, required):
-        :param rate (list, required) : Strings, keys used to look up a rate
+        :param base_path:
+        :param rate_keys: Strings, keys used to look up a rate
         """
         if not self._sandbox:  # eBay does not limit calls to the sandbox
             # the base_path check prevents endless recursive calls to self.developer_analytics_get_rate_limits()
@@ -907,20 +881,21 @@ class APIPrivate(metaclass=Multiton):
         )  # noqa: E501
 
     def _de_swagger(self, obj: Any):
-        """Convert a Swagger data object and return the Python-styled equivalent.
+        """
+        Convert a Swagger data object and return the Python-styled equivalent.
 
         There is a Java vibe to objects returned from the Swagger-generated code and other issues:
-        1. non-eBay attributes are meaningless Swagger artifacts,
-        2. public attributes should not have underscore prefixes,
-        3. the class objects are effectively dicts,
-        4. class names are in CamelCase.
+        1. Non-eBay attributes are meaningless Swagger artifacts
+        2. Public attributes should not have underscore prefixes
+        3. The class objects are effectively dicts
+        4. Class names are in CamelCase.
 
         Do a "deep copy" and fix problems along the way.
 
         To learn more about Swagger, visit https://swagger.io.
 
-        :param obj (collections, required): A Swagger call object.
-        :return obj (collections)
+        :param obj: A Swagger call object.
+        :return:
         """
         basic_types = (
             bool,
@@ -1001,11 +976,11 @@ class APIPrivate(metaclass=Multiton):
         """
         Call the API method generated by Swagger and tidy the result.
 
-        :param swagger_method (Callable, required)
-        :param params (Tuple[str] or str or None, required)
-        :param kwargs (Dict[str, Dict[str, int]], required)
-        :param swagger_method_exception (Type[Exception, required)
-        :return collection (collections)
+        :param swagger_method:
+        :param params:
+        :param kwargs:
+        :param swagger_method_exception:
+        :return:
         """
         # Swagger defaults to False, only add the key word argument if need be.
         if self._async_req:
@@ -1055,12 +1030,12 @@ class APIPrivate(metaclass=Multiton):
             return self._de_swagger(api_response)
 
     def get_digital_signature_key(self, create_new=False):
-        """Load the details of the current public/private key pair suitable for
-        entering into ebay_rest.json or as an API parameter.
+        """
+        Load the details of the current public/private key pair suitable for
+                entering into ebay_rest.json or as an API parameter.
 
-        If create_new is True, create a new public/private key pair if
-        (and only if) required. Otherwise, if no private key is supplied,
-        return an error.
+        :param create_new: If True, create a new key pair if one does not exist.
+        :raises: Error if the key pair cannot be loaded.
         """
         if not self._use_digital_signatures:
             raise Error(
