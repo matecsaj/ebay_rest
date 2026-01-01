@@ -134,6 +134,10 @@ Look to the [unit tests](https://github.com/matecsaj/ebay_rest/blob/main/tests/t
   <p>See the sample code in the <a href="https://github.com/matecsaj/ebay_rest/blob/main/tests/test_ebay_rest.py">unit tests</a>. Search for <code>test_commerce_media_upload_video</code> to find a working example.</p>
 </details>
 
+<details>
+  <summary><strong>How can I implement eBay’s publish/subscribe workflow?</strong></summary>
+  <p>Push delivery is not possible with this library; a workaround is to use the <em>Client Alerts (poll)</em> option seen on a screenshot on <a href="https://developer.ebay.com/develop/guides-v2/marketplace-user-account-deletion/marketplace-user-account-deletion#overview">this page</a>.</p>
+</details>
 
 ---
 
