@@ -776,13 +776,13 @@ class APIPrivate(metaclass=Multiton):
         sub_domain_good = "api."
         if host.startswith(sub_domain_bad):
             configuration.host = configuration.host.replace(
-                sub_domain_bad, sub_domain_good
+                sub_domain_bad, sub_domain_good, 1
             )
 
         # check for an unfinished host and if so, compensate
         place_holder = "{basePath}"
         if configuration.host.endswith(place_holder):
-            configuration.host = configuration.host.replace(place_holder, base_path)
+            configuration.host = configuration.host.replace(place_holder, base_path, 1)
         else:
             logging.debug(
                 "eBay or Swagger has fixed the flaw so remove the compensating code."
