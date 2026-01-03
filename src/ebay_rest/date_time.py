@@ -33,6 +33,7 @@ class DateTime:
 
     @staticmethod
     def to_string(d_t: datetime) -> str:
+        # noinspection SpellCheckingInspection
         """
         Convert a python datetime object with eBay's timezone to an eBay dateTime string.
 
@@ -58,6 +59,7 @@ class DateTime:
 
     @staticmethod
     def from_string(d_t_string: str) -> datetime:
+        # noinspection SpellCheckingInspection
         """
         Convert an eBay dateTime string to a python datetime object with eBay's timezone.
 

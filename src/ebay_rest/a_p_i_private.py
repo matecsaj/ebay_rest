@@ -767,13 +767,15 @@ class APIPrivate(metaclass=Multiton):
             )
 
         # TODO Instead of patching here, it would be more efficient to patch the OpenAPI spec in generate.py.
-        # patch: Fix apim.ebay.com to api.ebay.com for commerce_media API
-        # The OpenAPI spec incorrectly uses apim.ebay.com, but the actual endpoint is api.ebay.com
+        # patch: Fix apim.ebay.com to api.ebay.com for commerce_media API   # noqa: typo
+        # The OpenAPI spec incorrectly uses apim.ebay.com, but the actual endpoint is api.ebay.com  # noqa: typo
         host = urlparse(
             configuration.host
         ).hostname  # Sanitizing to prevent attacks such as request forgeries and malicious redirections.
-        if "apim.ebay.com" in host or "apim.sandbox.ebay.com" in host:
-            configuration.host = configuration.host.replace("apim.", "api.")
+        if "apim.ebay.com" in host or "apim.sandbox.ebay.com" in host:  # noqa: typo
+            configuration.host = configuration.host.replace(
+                "apim.", "api."
+            )  # noqa: typo
 
         # check for flawed host and if so, compensate
         if "{basePath}" in configuration.host:
@@ -824,12 +826,13 @@ class APIPrivate(metaclass=Multiton):
             marketplace_id
         )
 
-        # X-EBAY-C-ENDUSERCTX
-        # beware: the site_id is a bit different in the Buy API
+        # X-EBAY-C-ENDUSERCTX   # noqa: typo
+        # beware: the site_id is a bit different from the Buy API
         # https://developer.ebay.com/api-docs/buy/static/ref-marketplace-supported.html
 
         # header for shipping information accuracy per https://developer.ebay.com/api-docs/buy/static/api-browse.html
         if "/buy/browse" in base_path and self._end_user_ctx:
+            # noinspection SpellCheckingInspection
             api_instance.api_client.default_headers["X-EBAY-C-ENDUSERCTX"] = (
                 self._end_user_ctx
             )

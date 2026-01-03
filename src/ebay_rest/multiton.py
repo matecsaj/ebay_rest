@@ -16,7 +16,7 @@ class Multiton(type):
     When using treading, the creation of duplicate instances is possible; you may want to use locking.
 
     In ebay_rest, Multiton helps avoid making redundant REST calls to eBay.
-    Redundant calls waste time, erode daily call limits and can trigger an "Internal Server Error" at eBay.
+    Redundant calls waste time, erode daily call limits, and can trigger an "Internal Server Error" at eBay.
     I suspect the latter is eBay protecting itself from customer code stuck in an endless loop.
 
     Multiton is a metaclass, and here is an example of how to use it.

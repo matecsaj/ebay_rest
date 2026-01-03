@@ -72,6 +72,7 @@ class APIBothEnvironmentsSingleSiteTests(unittest.TestCase):
 class APIMarketplaceSpecificTests(unittest.TestCase):
 
     def test_belgium_nederlandse(self):
+        # noinspection SpellCheckingInspection
         api = API(application="production_1", user="production_1", header="NLBE")
         for record in api.buy_browse_search(limit=1, q="black"):
             if "record" not in record:
@@ -83,7 +84,7 @@ class APIMarketplaceSpecificTests(unittest.TestCase):
             else:
                 item = record["record"]
                 host = urlparse(item["item_web_url"]).hostname
-                self.assertEqual(host, "www.benl.ebay.be")
+                self.assertEqual(host, "www.benl.ebay.be")  # noqa: typo
 
 
 class APISandboxMultipleSiteTests(unittest.TestCase):
@@ -172,17 +173,11 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
                 f"In {filename} the value for instruction key {instruction_key} is not a string.",
             )
 
-        for application in contents[applications_key]:
-            pass  # TODO
-
-        for user in contents[users_key]:
-            pass  # TODO
-
-        for header in contents[headers_key]:
-            pass  # TODO
-
-        for key_pair in contents[key_pairs_key]:
-            pass  # TODO
+        # TODO
+        # for application in contents[applications_key]:
+        # for user in contents[users_key]:
+        # for header in contents[headers_key]:
+        # for key_pair in contents[key_pairs_key]:
 
     def test_credential_files(self):
         self.check_credential_file("ebay_rest_EXAMPLE.json")
@@ -694,7 +689,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         else:
             self.assertIsNotNone(result)
 
-    # Today, 2025-11-12, the Fulfillment API is in Beta - it is glitchy, so try again later.
+    # As of 2025-11-12, the Fulfillment API is in Beta - it is glitchy, so try again later.
     # If the second step, the actual upload, fails, then see https://github.com/matecsaj/ebay_rest/issues/60.
     @unittest.skip
     def test_sell_fulfillment_upload_evidence_file(self):
@@ -1066,7 +1061,7 @@ class APIProductionSingleTests(unittest.TestCase):
                     "width": "number",
                 },
                 "packageType": "PackageTypeEnum : [LETTER,BULKY_GOODS,CARAVAN,CARS,"
-                "EUROPALLET,EXPANDABLE_TOUGH_BAGS,EXTRA_LARGE_PACK,"  # noqa: E501
+                "EUROPALLET,EXPANDABLE_TOUGH_BAGS,EXTRA_LARGE_PACK,"  # noqa: typo
                 "FURNITURE,INDUSTRY_VEHICLES,LARGE_CANADA_POSTBOX,"
                 "LARGE_CANADA_POST_BUBBLE_MAILER,LARGE_ENVELOPE,"
                 "MAILING_BOX,MEDIUM_CANADA_POST_BOX,MEDIUM_CANADA_POST_BUBBLE_MAILER,"
@@ -1084,7 +1079,7 @@ class APIProductionSingleTests(unittest.TestCase):
                 "brand": "string",
                 "description": "string",
                 "ean": ["string"],
-                "epid": "string",
+                "epid": "string",  # noqa: typo
                 "imageUrls": ["string"],
                 "isbn": ["string"],
                 "mpn": "string",
@@ -1264,9 +1259,8 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
             self.assertTrue("credit_count" in result)
             # Break the private key and try again
             # This is an example key from draft-ietf-httpbis-message-signatures-15
-            self._api._key_pair_token._private_key = (
-                "MC4CAQAwBQYDK2VwBCIEIJ+DYvh6SEqVTm50DFtMDoQikTmiCqirVv9mWG9qfSnF"
-            )
+            # noinspection SpellCheckingInspection
+            self._api._key_pair_token._private_key = "MC4CAQAwBQYDK2VwBCIEIJ+DYvh6SEqVTm50DFtMDoQikTmiCqirVv9mWG9qfSnF"  # noqa: typo
             try:
                 self._api.sell_finances_get_transaction_summary(
                     filter="transactionStatus:{PAYOUT}",

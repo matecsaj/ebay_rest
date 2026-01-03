@@ -23,7 +23,7 @@ from .reference import Reference
 
 class ApplicationToken(metaclass=Multiton):
     """
-    Initialize, refresh and supply an eBay OAuth ***application*** token.
+    Initialize, refresh, and supply an eBay OAuth ***application*** token.
 
     This is a facade for the oath module.
     """
@@ -130,7 +130,7 @@ class ApplicationToken(metaclass=Multiton):
 
 class UserToken(metaclass=Multiton):
     """
-    Initialize, refresh and supply an eBay OAuth ***user*** token.
+    Initialize, refresh, and supply an eBay OAuth ***user*** token.
     This is a facade for the oath module.
     """
 
@@ -422,6 +422,11 @@ class UserToken(metaclass=Multiton):
                 detail="Has eBay's website changed?",
             )
 
+        except PlaywrightTimeoutError:
+            raise Error(
+                number=96016, reason="Timeout.", detail="Slow computer or Internet?"
+            )
+
         except PlaywrightError as e:
             detail = str(e)
             # Check for Chromium not installed error
@@ -439,11 +444,6 @@ class UserToken(metaclass=Multiton):
                 reason = "Playwright encountered an unexpected error."
             logging.critical(reason)
             raise Error(number=number, reason=reason, detail=detail)
-
-        except PlaywrightTimeoutError:
-            raise Error(
-                number=96016, reason="Timeout.", detail="Slow computer or Internet?"
-            )
 
         finally:
             # Ensure that Playwright resources are cleaned up; don't reorder.
@@ -619,10 +619,10 @@ class _OAuth2Api:
 
     def get_application_token(self, scopes: List[str]) -> _OAuthToken:
         """
-        Makes call for application token and stores result in a credential object.
+        Makes call for application token and stores the result in a credential object.
 
         :param scopes:
-        :return: credential_object _OAuthToken
+        :return: Credential object _OAuthToken
         """
         logging.debug("Trying to get a new application access token ... ")
         headers = self._generate_request_headers()
@@ -858,7 +858,7 @@ class KeyPairToken(metaclass=Multiton):
         Check if the current key pair has a date and, if it does, if
                 the key pair is in date.
                 Returns True if the key has an expiry date and is in date.
-                Returns False if the key has and expiry date and is expired.
+                Returns False if the key has an expiry date and is expired.
                 Returns None if the key has no expiry date.
 
         :return: True if it has a date

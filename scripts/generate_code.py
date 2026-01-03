@@ -1731,7 +1731,7 @@ class Contracts:
         """
         logging.info("Get a list of URLs to eBay OpenAPI 3 JSON contracts.")
 
-        # store the urls used while doing a breadth first search; seed with starting urls
+        # store the urls used while doing a breadth-first search; seed with starting urls
         category_urls = {
             "https://developer.ebay.com/develop/selling-apps",
             "https://developer.ebay.com/develop/buying-apps",

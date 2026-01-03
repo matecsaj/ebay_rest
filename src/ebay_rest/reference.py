@@ -25,7 +25,7 @@ class Reference:
 
         Source https://developer.ebay.com/my/keys, Sandbox column, click OAuth Scopes, second section
 
-        :return: application scopes
+        :return: Application scopes
         """
         return Reference._get("application_scopes")
 
@@ -38,7 +38,7 @@ class Reference:
 
         Source https://developer.ebay.com/devzone/xml/docs/reference/ebay/types/countrycodetype.html.
 
-        :return: country_codes
+        :return: Country codes
         """
         return Reference._get("country_codes")
 
@@ -51,7 +51,7 @@ class Reference:
 
         Source https://developer.ebay.com/devzone/xml/docs/Reference/eBay/types/CurrencyCodeType.html.
 
-        :return: currency_codes
+        :return: Currency codes
         """
         return Reference._get("currency_codes")
 
@@ -68,7 +68,7 @@ class Reference:
 
         Source https://developer.ebay.com/Devzone/merchandising/docs/CallRef/Enums/GlobalIdList.html.
 
-        :return: global_id_values
+        :return: Global id values
         """
         return Reference._get("global_id_values")
 
@@ -82,7 +82,7 @@ class Reference:
 
         Source https://developer.ebay.com/api-docs/static/rest-request-components.html#marketpl.
 
-        :return: marketplace_id_values
+        :return: Marketplace id values
         """
         return Reference._get("marketplace_id_values")
 
@@ -95,7 +95,7 @@ class Reference:
 
         Source https://developer.ebay.com/my/keys, Sandbox column, click OAuth Scopes, first section
 
-        :return: user_scopes
+        :return: User scopes
         """
         return Reference._get("user_scopes")
 
@@ -105,7 +105,7 @@ class Reference:
         Get information from the JSON files.
 
         :param name:
-        :return: information
+        :return: Information
         """
         if name not in Reference._cache:
             # get the path to this python file, which is also where the data file directory is
