@@ -772,14 +772,17 @@ class APIPrivate(metaclass=Multiton):
         host = urlparse(
             configuration.host
         ).hostname  # Sanitizing to prevent attacks such as request forgeries and malicious redirections.
-        if "apim.ebay.com" in host or "apim.sandbox.ebay.com" in host:  # noqa: typo
+        sub_domain_bad = "apim."    # noqa: typo
+        sub_domain_good = "api."
+        if host.startswith(sub_domain_bad):
             configuration.host = configuration.host.replace(
-                "apim.", "api."
-            )  # noqa: typo
+                sub_domain_bad, sub_domain_good
+            )
 
-        # check for flawed host and if so, compensate
-        if "{basePath}" in configuration.host:
-            configuration.host = configuration.host.replace("{basePath}", base_path)
+        # check for an unfinished host and if so, compensate
+        place_holder = "{basePath}"
+        if configuration.host.endswith(place_holder):
+            configuration.host = configuration.host.replace(place_holder, base_path)
         else:
             logging.debug(
                 "eBay or Swagger has fixed the flaw so remove the compensating code."
