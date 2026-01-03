@@ -772,7 +772,7 @@ class APIPrivate(metaclass=Multiton):
         host = urlparse(
             configuration.host
         ).hostname  # Sanitizing to prevent attacks such as request forgeries and malicious redirections.
-        sub_domain_bad = "apim."    # noqa: typo
+        sub_domain_bad = "apim."  # noqa: typo
         sub_domain_good = "api."
         if host.startswith(sub_domain_bad):
             configuration.host = configuration.host.replace(
