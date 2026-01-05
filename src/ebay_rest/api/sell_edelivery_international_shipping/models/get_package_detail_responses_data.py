@@ -42,8 +42,8 @@ class GetPackageDetailResponsesData(object):
         'package_width': 'float',
         'payment_cost': 'Amount',
         'ship_from_address_id': 'str',
-        'shipping_service_id': 'str',
         'ship_to_address': 'ShipToAddressResponsesData',
+        'shipping_service_id': 'str',
         'special_service_detail': 'SpecialServiceDetail',
         'value_for_carriage': 'str'
     }
@@ -63,13 +63,13 @@ class GetPackageDetailResponsesData(object):
         'package_width': 'packageWidth',
         'payment_cost': 'paymentCost',
         'ship_from_address_id': 'shipFromAddressId',
-        'shipping_service_id': 'shippingServiceId',
         'ship_to_address': 'shipToAddress',
+        'shipping_service_id': 'shippingServiceId',
         'special_service_detail': 'specialServiceDetail',
         'value_for_carriage': 'valueForCarriage'
     }
 
-    def __init__(self, agent_info_response=None, consign_preference_id=None, incoterm=None, items=None, last_mile_tracking_number=None, package_comment=None, package_height=None, package_id=None, package_length=None, package_status=None, package_weight=None, package_width=None, payment_cost=None, ship_from_address_id=None, shipping_service_id=None, ship_to_address=None, special_service_detail=None, value_for_carriage=None):  # noqa: E501
+    def __init__(self, agent_info_response=None, consign_preference_id=None, incoterm=None, items=None, last_mile_tracking_number=None, package_comment=None, package_height=None, package_id=None, package_length=None, package_status=None, package_weight=None, package_width=None, payment_cost=None, ship_from_address_id=None, ship_to_address=None, shipping_service_id=None, special_service_detail=None, value_for_carriage=None):  # noqa: E501
         """GetPackageDetailResponsesData - a model defined in Swagger"""  # noqa: E501
         self._agent_info_response = None
         self._consign_preference_id = None
@@ -85,8 +85,8 @@ class GetPackageDetailResponsesData(object):
         self._package_width = None
         self._payment_cost = None
         self._ship_from_address_id = None
-        self._shipping_service_id = None
         self._ship_to_address = None
+        self._shipping_service_id = None
         self._special_service_detail = None
         self._value_for_carriage = None
         self.discriminator = None
@@ -118,10 +118,10 @@ class GetPackageDetailResponsesData(object):
             self.payment_cost = payment_cost
         if ship_from_address_id is not None:
             self.ship_from_address_id = ship_from_address_id
-        if shipping_service_id is not None:
-            self.shipping_service_id = shipping_service_id
         if ship_to_address is not None:
             self.ship_to_address = ship_to_address
+        if shipping_service_id is not None:
+            self.shipping_service_id = shipping_service_id
         if special_service_detail is not None:
             self.special_service_detail = special_service_detail
         if value_for_carriage is not None:
@@ -446,6 +446,27 @@ class GetPackageDetailResponsesData(object):
         self._ship_from_address_id = ship_from_address_id
 
     @property
+    def ship_to_address(self):
+        """Gets the ship_to_address of this GetPackageDetailResponsesData.  # noqa: E501
+
+
+        :return: The ship_to_address of this GetPackageDetailResponsesData.  # noqa: E501
+        :rtype: ShipToAddressResponsesData
+        """
+        return self._ship_to_address
+
+    @ship_to_address.setter
+    def ship_to_address(self, ship_to_address):
+        """Sets the ship_to_address of this GetPackageDetailResponsesData.
+
+
+        :param ship_to_address: The ship_to_address of this GetPackageDetailResponsesData.  # noqa: E501
+        :type: ShipToAddressResponsesData
+        """
+
+        self._ship_to_address = ship_to_address
+
+    @property
     def shipping_service_id(self):
         """Gets the shipping_service_id of this GetPackageDetailResponsesData.  # noqa: E501
 
@@ -467,27 +488,6 @@ class GetPackageDetailResponsesData(object):
         """
 
         self._shipping_service_id = shipping_service_id
-
-    @property
-    def ship_to_address(self):
-        """Gets the ship_to_address of this GetPackageDetailResponsesData.  # noqa: E501
-
-
-        :return: The ship_to_address of this GetPackageDetailResponsesData.  # noqa: E501
-        :rtype: ShipToAddressResponsesData
-        """
-        return self._ship_to_address
-
-    @ship_to_address.setter
-    def ship_to_address(self, ship_to_address):
-        """Sets the ship_to_address of this GetPackageDetailResponsesData.
-
-
-        :param ship_to_address: The ship_to_address of this GetPackageDetailResponsesData.  # noqa: E501
-        :type: ShipToAddressResponsesData
-        """
-
-        self._ship_to_address = ship_to_address
 
     @property
     def special_service_detail(self):

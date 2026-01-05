@@ -26,6 +26,8 @@ from .api import commerce_identity
 from .api.commerce_identity.rest import ApiException as CommerceIdentityException
 from .api import commerce_media
 from .api.commerce_media.rest import ApiException as CommerceMediaException
+from .api import commerce_message
+from .api.commerce_message.rest import ApiException as CommerceMessageException
 from .api import commerce_notification
 from .api.commerce_notification.rest import (
     ApiException as CommerceNotificationException,
@@ -34,6 +36,8 @@ from .api import commerce_taxonomy
 from .api.commerce_taxonomy.rest import ApiException as CommerceTaxonomyException
 from .api import commerce_translation
 from .api.commerce_translation.rest import ApiException as CommerceTranslationException
+from .api import commerce_vero
+from .api.commerce_vero.rest import ApiException as CommerceVeroException
 from .api import developer_analytics
 from .api.developer_analytics.rest import ApiException as DeveloperAnalyticsException
 from .api import developer_client_registration
@@ -50,12 +54,20 @@ from .api import sell_analytics
 from .api.sell_analytics.rest import ApiException as SellAnalyticsException
 from .api import sell_compliance
 from .api.sell_compliance.rest import ApiException as SellComplianceException
+from .api import sell_edelivery_international_shipping
+from .api.sell_edelivery_international_shipping.rest import (
+    ApiException as SellEdeliveryInternationalShippingException,
+)
+from .api import sell_feed
+from .api.sell_feed.rest import ApiException as SellFeedException
 from .api import sell_finances
 from .api.sell_finances.rest import ApiException as SellFinancesException
 from .api import sell_fulfillment
 from .api.sell_fulfillment.rest import ApiException as SellFulfillmentException
 from .api import sell_inventory
 from .api.sell_inventory.rest import ApiException as SellInventoryException
+from .api import sell_leads
+from .api.sell_leads.rest import ApiException as SellLeadsException
 from .api import sell_logistics
 from .api.sell_logistics.rest import ApiException as SellLogisticsException
 from .api import sell_marketing
@@ -66,6 +78,8 @@ from .api import sell_negotiation
 from .api.sell_negotiation.rest import ApiException as SellNegotiationException
 from .api import sell_recommendation
 from .api.sell_recommendation.rest import ApiException as SellRecommendationException
+from .api import sell_stores
+from .api.sell_stores.rest import ApiException as SellStoresException
 
 # ANCHOR-er_imports-END"
 
@@ -1286,6 +1300,133 @@ class API(APIPrivate):
             **kwargs,
         )  # noqa: E501
 
+    def commerce_message_bulk_update_conversation(
+        self, content_type, **kwargs
+    ):  # noqa: E501
+        """bulk_update_conversation
+
+        This method can be used to update the conversationStatus of up to 10 conversations.The conversationId, existing conversationType, and updated conversationStatus for each conversation to modify are required in the conversations array.Important! Though it cannot be updated, the conversationType field is required for each conversation being updated.If the updates were successful, the conversationId of each conversation will be returned with an associated updateStatus value of SUCCESSFUL.
+
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json. For more information, refer to HTTP request headers. (required)
+        :param BulkUpdateConversationsRequest body:
+        :return: BulkUpdateConversationsResponse
+        """
+        return self._method_single(
+            commerce_message.Configuration,
+            "/commerce/message/v1",
+            commerce_message.ConversationApi,
+            commerce_message.ApiClient,
+            "bulk_update_conversation",
+            CommerceMessageException,
+            False,
+            ["commerce.message", "conversation"],
+            content_type,
+            **kwargs,
+        )  # noqa: E501
+
+    def commerce_message_get_conversation(
+        self, conversation_id, conversation_type, **kwargs
+    ):  # noqa: E501
+        """get_conversation
+
+        This method can be used to retrieve messages within a specific conversation.The conversation_id of the conversation for which to retrieve messages is required as path parameters, and the and conversation_type of the conversation is required as a query parameter.
+
+        :param str conversation_id: This path parameters specifies the unique identifier of the conversation that is to be retrieved.Use the getConversations method to retrieve conversation ID values. (required)
+        :param str conversation_type: This query parameter specifies the type of the conversation being retrieved.This parameter is always required when using the this method.Valid values:FROM_EBAYFROM_MEMBERS (required)
+        :param str limit: The maximum number of entries that can be returned on each page of the paginated response.Use this parameter in conjunction with the offset parameter to control the pagination of the output. For example, if offset is set to 10 and limit is set to 10, the call retrieves entries 11 through 20 from the result set.Note: This feature employs a zero-based list, where the first item in the list has an offset of 0.If this parameter is omitted, the default value is used.Default: 25Maximum: 50
+        :param str offset: The number of reports to skip in the result set before returning the first entry in the paginated response.Use this parameter in conjunction with the limit parameter to control the pagination of the output. For example, if offset is set to 0 and limit is set to 10, the first page of the response will contain the first 10 entries from the complete list retrieved by the call.Note: This feature employs a zero-based list, where the first item in the list has an offset of 0.If this parameter is omitted, the default value is used.Default: 0
+        :return: GetMessagesByConversationIdResponse
+        """
+        return self._method_paged(
+            commerce_message.Configuration,
+            "/commerce/message/v1",
+            commerce_message.ConversationApi,
+            commerce_message.ApiClient,
+            "get_conversation",
+            CommerceMessageException,
+            False,
+            ["commerce.message", "conversation"],
+            (conversation_id, conversation_type),
+            **kwargs,
+        )  # noqa: E501
+
+    def commerce_message_get_conversations(
+        self, conversation_type, **kwargs
+    ):  # noqa: E501
+        """get_conversations
+
+        This method can be used to retrieve one or more conversations associated with a user.The conversation_type query parameter is required when using this method to specify if the retrieved conversations are from eBay or from members.The result set can also optionally be filtered by conversation status, reference, username, and/or time range. The limit and offset path parameters can be used to paginate the result set and control how many conversations are returned in the response.
+
+        :param str conversation_type: This query parameter specifies the type of the conversations being retrieved. Only conversations of the specified type will be returned.This parameter is always required when using this method.Valid values:FROM_EBAYFROM_MEMBERS (required)
+        :param str conversation_status: This query parameter specifies the status of the conversations being retrieved. Only conversations in the specified status will be returned.Valid values:ACTIVEARCHIVEDELETEREADUNREAD
+        :param str end_time: This query parameter specifies the end time (in ISO 8601 format) for which to stop retrieving conversations.For example, if set to 2024-11-06T10:00:00.000Z, only messages sent before this time will be retrieved.Format: yyyy-MM-ddThh:mm.ss.sssZNote: Currently, this parameter is only available if the conversation_type of the conversation is FROM_MEMBERS.
+        :param str limit: The maximum number of entries that can be returned on each page of the paginated response.Use this parameter in conjunction with the offset parameter to control the pagination of the output. For example, if offset is set to 10 and limit is set to 10, the call retrieves entries 11 through 20 from the result set.Note: This feature employs a zero-based list, where the first item in the list has an offset of 0.If this parameter is omitted, the default value is used.Default: 25Maximum: 50
+        :param str offset: The number of reports to skip in the result set before returning the first entry in the paginated response.Use this parameter in conjunction with the limit parameter to control the pagination of the output. For example, if offset is set to 0 and limit is set to 10, the first page of the response will contain the first 10 entries from the complete list retrieved by the call.Note: This feature employs a zero-based list, where the first item in the list has an offset of 0.If this parameter is omitted, the default value is used.Default: 0
+        :param str other_party_username: This query parameter specifies the user name (login name) of an eBay user for which to retrieve conversations.If this filter is used, only conversation(s) from the other eBay user specified through this parameter will be returned.
+        :param str reference_id: This query parameter specifies the unique identifier of the reference (specified by the corresponding reference_type value) associated with the conversation. Only conversations associated with the specified reference ID will be returned.For example, in the case of a LISTING reference, this value will be the item ID value of the listing.Note: If this query parameter is used, the reference_type parameter must also be used to specify the type of reference this ID is associated with.
+        :param str reference_type: This query parameter specifies the type of reference associated with a conversation.The reference type is used to specify what the conversation is in reference to. For example, a value of LISTING specifies that the conversation is associated with a specific listing. The item ID associated with this listing can then be specified through the reference_id query parameter.Currently, only the LISTING reference type is supported.
+        :param str start_time: This query parameter specifies the start time (in ISO 8601 format) for which to start retrieving conversations.For example, if set to 2024-11-06T10:00:00.000Z, only messages sent after this time will be retrieved.Format: yyyy-MM-ddThh:mm.ss.sssZNote: Currently, this parameter is only available if the conversation_type of the conversation is FROM_MEMBERS.
+        :return: GetAllMyConversationsResponse
+        """
+        return self._method_paged(
+            commerce_message.Configuration,
+            "/commerce/message/v1",
+            commerce_message.ConversationApi,
+            commerce_message.ApiClient,
+            "get_conversations",
+            CommerceMessageException,
+            False,
+            ["commerce.message", "conversation"],
+            conversation_type,
+            **kwargs,
+        )  # noqa: E501
+
+    def commerce_message_send_message(self, content_type, **kwargs):  # noqa: E501
+        """send_message
+
+        This method can be used to start a conversation with another user or send a message in an existing conversation with another user based on the information provided in the request.To send a message, one of the conversationId or otherPartyUsername request fields are required. The conversationId must be used when sending a message in an existing conversation and specifies the conversation for which to send the message. For a new conversation, the otherPartyUsername field must be used to send the message to a specific user. In addition, the messageText field is required as it contains the body text of the message.Optionally, media (such as images or documents) can be attached to the message using the messageMedia container. The reference container can also be used to associate a message with a listing.
+
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json. For more information, refer to HTTP request headers. (required)
+        :param SendMessageRequest body:
+        :return: SendMessageResponse
+        """
+        return self._method_single(
+            commerce_message.Configuration,
+            "/commerce/message/v1",
+            commerce_message.ConversationApi,
+            commerce_message.ApiClient,
+            "send_message",
+            CommerceMessageException,
+            False,
+            ["commerce.message", "conversation"],
+            content_type,
+            **kwargs,
+        )  # noqa: E501
+
+    def commerce_message_update_conversation(
+        self, content_type, **kwargs
+    ):  # noqa: E501
+        """update_conversation
+
+        This method can be used to update the conversationStatus or the read status of a specified conversation.Note: Only one of these statuses can be updated at a time using this method. If both fields are included, only the read status of the specified conversation will be updated and the conversationStatus field will be ignored.The conversationId of the conversation to modify, as well as the existing conversationType of the specified conversation are required as part of the request payload.Important! Though it cannot be updated, the existing conversationType of the specified conversation to be updated is required in the request payload. If this value is not provided, an error will occur.To update a conversation's status (for example, updating an ACTIVE conversation to ARCHIVE), include the conversationStatus field in the request with the updated value. To update a conversation's read status (for example, updating an UNREAD conversation to READ), include the read boolean in the request with the updated value.
+
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json. For more information, refer to HTTP request headers. (required)
+        :param UpdateConversationRequest body:
+        :return: None
+        """
+        return self._method_single(
+            commerce_message.Configuration,
+            "/commerce/message/v1",
+            commerce_message.ConversationApi,
+            commerce_message.ApiClient,
+            "update_conversation",
+            CommerceMessageException,
+            False,
+            ["commerce.message", "conversation"],
+            content_type,
+            **kwargs,
+        )  # noqa: E501
+
     def commerce_notification_get_config(self, **kwargs):  # noqa: E501
         """get_config
 
@@ -2010,6 +2151,118 @@ class API(APIPrivate):
             **kwargs,
         )  # noqa: E501
 
+    def commerce_vero_get_vero_reason_code(
+        self, vero_reason_code_id, **kwargs
+    ):  # noqa: E501
+        """get_vero_reason_code
+
+        Important! You must be a member of the Verified Rights Owner (VeRO) Program to use this call.This method is used to retrieve the details of a specific VeRO reason code, including a description of the code and the marketplace associated with the code.The vero_reason_code_id of the VeRO reason code for which to retrieve details is required as a path parameter.
+
+        :param str vero_reason_code_id: This path parameter specifies the unique identifier of the VeRO reason code that is to be retrieved.Use the getVeroReasonCodes method to retrieve supported VeRO reason code IDs. (required)
+        :return: VeroReasonCodeResponse
+        """
+        return self._method_single(
+            commerce_vero.Configuration,
+            "/commerce/vero/v1",
+            commerce_vero.VeroReasonCodeApi,
+            commerce_vero.ApiClient,
+            "get_vero_reason_code",
+            CommerceVeroException,
+            False,
+            ["commerce.vero", "vero_reason_code"],
+            vero_reason_code_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def commerce_vero_get_vero_reason_codes(self, **kwargs):  # noqa: E501
+        """get_vero_reason_codes
+
+        Important! You must be a member of the Verified Rights Owner (VeRO) Program to use this call.This method is used to retrieve the details of an array of VeRO reason codes. This information includes the descriptions of each code, as well as the marketplace associated with each code. If the X-EBAY-C-MARKETPLACE-ID header is present, only VeRO reason codes for that specific site will be returned. If this header is not included, all reason codes for all sites are returned.
+
+        :param str x_ebay_c_marketplace_id: This header identifies the eBay marketplace for which to retrieve VeRO reason codes. If this header is used, only VeRO reason codes for the specified marketplace will be returned in the response.See MarketplaceIdEnum for a list of supported values.
+        :return: VeroReasonCodeDetailResponse
+        """
+        return self._method_single(
+            commerce_vero.Configuration,
+            "/commerce/vero/v1",
+            commerce_vero.VeroReasonCodeApi,
+            commerce_vero.ApiClient,
+            "get_vero_reason_codes",
+            CommerceVeroException,
+            False,
+            ["commerce.vero", "vero_reason_code"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def commerce_vero_create_vero_report(self, content_type, **kwargs):  # noqa: E501
+        """create_vero_report
+
+        Important! You must be a member of the Verified Rights Owner (VeRO) Program to use this call.This method can be used to create a VeRO report for a listing. VeRO reports can be used to report items that your copyright, trademark, or other intellectual property rights.The itemId of the item being reported must be provided in the request, as well as the veroReasonCodeId of the claimed infringement.You can report one or more items at a time using this method. A maximum of 150 items can be reported using this method.
+
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json. For more information, refer to HTTP request headers. (required)
+        :param VeroReportItemsRequest body:
+        :return: VeroReportItemsResponse
+        """
+        return self._method_single(
+            commerce_vero.Configuration,
+            "/commerce/vero/v1",
+            commerce_vero.VeroReportApi,
+            commerce_vero.ApiClient,
+            "create_vero_report",
+            CommerceVeroException,
+            False,
+            ["commerce.vero", "vero_report"],
+            content_type,
+            **kwargs,
+        )  # noqa: E501
+
+    def commerce_vero_get_vero_report(self, vero_report_id, **kwargs):  # noqa: E501
+        """get_vero_report
+
+        Important! You must be a member of the Verified Rights Owner (VeRO) Program to use this call.This method can be used to retrieve status information about a VeRO report you have submitted to eBay for copyright, trademark, or other intellectual property rights infringement.The vero_report_id path parameter is used to specify the eBay report for which to retrieve status information.
+
+        :param str vero_report_id: This path parameter specifies the unique identifier of the VeRO report being retrieved.This value is returned when creating a VeRO report through the createVeroReport method. (required)
+        :param str include_item_details: Include this query and set it to true if you want to retrieve the reportedItemDetails container in the response, which contains item-level status information. This container may be helpful if you have reported violations on more than one eBay item in the report.By default, this boolean is set to false.
+        :return: ReportStatusResponse
+        """
+        return self._method_single(
+            commerce_vero.Configuration,
+            "/commerce/vero/v1",
+            commerce_vero.VeroReportApi,
+            commerce_vero.ApiClient,
+            "get_vero_report",
+            CommerceVeroException,
+            False,
+            ["commerce.vero", "vero_report"],
+            vero_report_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def commerce_vero_get_vero_report_items(self, **kwargs):  # noqa: E501
+        """Retrieves status for VERO infringement reports by Brand.
+
+        Important! You must be a member of the Verified Rights Owner (VeRO) Program to use this call.This method can be used to retrieve status information about one or more VeRO reported items you have submitted.Without the use of any query parameters, the default behavior of this method is to return the status of all VeRO reported items submitted by the seller during the last two years. Use the itemId query parameter to see a specific reported item, and use the filter query to retrieve the status of reported items submitted within a specific date range. Pagination is also available to limit the number of reported items that are retrieved per page of data.
+
+        :param str filter: This query parameter can be used to filter the result set by a date range. Only items reported within the specified time period will be returned.This parameter will be ignored if itemId has been specified.Format: YYYY-MM-DD HH:MM:SSExample: reportSubmittedDate:[2024-11-14T07:47:48Z..2024-12-14T07:47:48Z].
+        :param str item_id: This query parameter specifies the unique identifier of an eBay listing. Only the specified reported item will be returned.
+        :param str limit: The maximum number of entries that can be returned on each page of the paginated response. Use this parameter in conjunction with the offset parameter to control the pagination of the output.Note: This feature employs a zero-based list, where the first item in the list has an offset of 0.For example, if offset is set to 10 and limit is set to 10, the call retrieves entries 11 through 20 from the result set.If this parameter is omitted, the default value is used.Default: 25
+        :param str offset: The number of reports to skip in the result set before returning the first report in the paginated response. Combine offset with the limit query parameter to control the reports returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 reports from the complete list of reports retrieved by the call. If this query parameter is not set, the default value is used and the first page of reports is returned.Default: 0
+        :return: VeroReportStatusResponse
+        """
+        return self._method_paged(
+            commerce_vero.Configuration,
+            "/commerce/vero/v1",
+            commerce_vero.VeroReportItemsApi,
+            commerce_vero.ApiClient,
+            "get_vero_report_items",
+            CommerceVeroException,
+            False,
+            ["commerce.vero", "vero_report_items"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
     def developer_analytics_get_rate_limits(self, **kwargs):  # noqa: E501
         """get_rate_limits
 
@@ -2381,6 +2634,1161 @@ class API(APIPrivate):
             True,
             ["sell.compliance", "listing_violation_summary"],
             x_ebay_c_marketplace_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_get_actual_costs(
+        self, **kwargs
+    ):  # noqa: E501
+        """get_actual_costs
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method is used to retrieve the actual weight and cost for one or more packages based on the provided input criteria.Responses can be filtered by the tracking_numbers query parameter. If this parameter is used, actual costs for each package associated with the provided tracking numbers are returned.Alternatively, responses can be filtered by the trans_begin_time and trans_end_time query parameters. If these parameters are used, the actual costs of all packages created within this date range are returned.Only one filtering method can be used per call.
+
+        :param str tracking_numbers: This query parameter specifies the tracking number(s) of the package(s) for which to retrieve the actual weight and cost. Tracking numbers are returned when creating packages through the createPackage method.Up to 200 tracking numbers can be provided.Note: This query parameter is required if trans_begin_time and trans_end_time is not provided.
+        :param str trans_begin_time: This query parameter specifies the start time of a transaction in UTC format.If the the trans_begin_time and trans_end_time query parameters are used, the actual costs of all packages created within this date range are returned.Note: This query parameter and trans_end_time are required if tracking_numbers is not provided.Format: YYYY-MM-DDTHH:MM:SS.SSSZ
+        :param str trans_end_time: This query parameter specifies ending time of a transaction in UTC format.If the the trans_begin_time and trans_end_time query parameters are used, the actual costs of all packages created within this date range are returned.Note: This query parameter and trans_start_time are required if tracking_numbers is not provided.Format: YYYY-MM-DDTHH:MM:SS.SSSZ
+        :return: GetActualCostResponses
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.ActualCostsApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "get_actual_costs",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "actual_costs"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_create_address_preference(
+        self, **kwargs
+    ):  # noqa: E501
+        """create_address_preference
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to create an address on your eDIS account.The following types of addresses can be created through this method:SHIP_FROM_ADDRESSRETURN_ADDRESSThe address information for the address, including location details, contact information, and address type, must be provided in the shipFromAddress container. If the call is successful, the addressId for the newly created address will be returned. This identifier can then be used when creating a package to specify the address to use for the shipment.
+
+        :param CreateAddressPreferenceRequest body:
+        :return: CreateAddressPreferenceResponses
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.AddressPreferenceApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "create_address_preference",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "address_preference"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_get_address_preferences(
+        self, **kwargs
+    ):  # noqa: E501
+        """get_address_preferences
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to retrieve information about all the ship-from and/or return addresses associated with a seller's eDIS account.
+
+        :return: GetAddressPreferenceListResponses
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.AddressPreferenceApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "get_address_preferences",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "address_preference"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_get_agents(self, **kwargs):  # noqa: E501
+        """get_agents
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to retrieve information about the EU Authorized Representative (AR) agent(s) associated with a seller's eDIS account.An EU AR agent acts as a liaison between non-EU manufacturers and European regulatory authorities to ensure compliance with EU regulations. This method returns contact information about each agent, as well as their eBay ID and the countries that they support.
+
+        :param str limit: This query parameter sets the maximum number of agents to return on each page of the paginated response.Use this parameter in conjunction with the offset parameter to control the pagination of the output. For example, if offset is set to 10 and limit is set to 10, the call retrieves orders 11 through 20 from the result set.Max: 200Default: 50
+        :param str offset: This query parameter specifies the number of agents to skip in the result set before returning the first agent in the paginated response.Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call.Default: 0
+        :return: GetAgentListResponses
+        """
+        return self._method_paged(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.AgentsApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "get_agents",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "agents"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_get_battery_qualifications(
+        self, **kwargs
+    ):  # noqa: E501
+        """get_battery_qualifications
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method is used to retrieve all battery qualifications associated with your eDIS account. This includes the type, electronic qualification ID and name, and expiration date for each battery.
+
+        :param str limit: This query parameter sets the maximum number of qualifications to return on each page of the paginated response.Use this parameter in conjunction with the offset parameter to control the pagination of the output. For example, if offset is set to 10 and limit is set to 10, the call retrieves orders 11 through 20 from the result set.Max: 200Default: 50
+        :param str offset: This query parameter specifies the number of qualifications to skip in the result set before returning the first qualification in the paginated response.Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call.Default: 0
+        :return: GetBatteryQualListResponses
+        """
+        return self._method_paged(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.BatteryQualificationsApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "get_battery_qualifications",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "battery_qualifications"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_cancel_bundle(
+        self, bundle_id, **kwargs
+    ):  # noqa: E501
+        """cancel_bundle
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method is used to cancel a bundle.The bundleId value of the bundle to be canceled must be input as a path parameter in the request. Note: Bundles cannot be canceled if they are currently being processed.
+
+        :param str bundle_id: This path parameter specifies the unique identifier of the bundle being canceled.This ID value is returned when creating a bundle through the createBundle method. (required)
+        :return: None
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.BundleApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "cancel_bundle",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "bundle"],
+            bundle_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_create_bundle(
+        self, **kwargs
+    ):  # noqa: E501
+        """create_bundle
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method is used to create a bundle for multiple packages in an order.To create a bundle, the consign address to be associated with the bundle and the tracking numbers of the packages to be used in the bundle must be specified in the request. If the call is successful, the bundleId for the newly created bundle will be returned.Note: Sellers should keep track of the returned bundleId, as there is no programmatic way to retrieve this value at this time.
+
+        :param CreateBundleRequest body:
+        :return: CreateBundleResponse
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.BundleApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "create_bundle",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "bundle"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_get_bundle(
+        self, bundle_id, **kwargs
+    ):  # noqa: E501
+        """get_bundle
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method is used to retrieved information about a specific bundle based on the provided bundle ID value.The bundle_id value of the bundle to be retrieved must be input as a path parameter in the request. If the call is successful, information about the bundle is returned, such as its associated consign preference ID and the tracking numbers of each package in the bundle.
+
+        :param str bundle_id: This path parameter specifies the unique identifier of the bundle being retrieved.This ID value is returned when creating a bundle through the createBundle method. (required)
+        :return: BundleDetailResponse
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.BundleApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "get_bundle",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "bundle"],
+            bundle_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_get_bundle_label(
+        self, bundle_id, **kwargs
+    ):  # noqa: E501
+        """get_bundle_label
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to retrieve the bundle label for a bundle of packages.The bundle for which to retrieve a bundle label is specified through the bundleId path parameter.Bundle labels will be returned as base64 string values which can be converted to PDF files.
+
+        :param str bundle_id: This path parameter specifies the unique identifier of the bundle for which to retrieve a label.This ID value is returned when creating a bundle through the createBundle method. (required)
+        :return: BundleLabelResponse
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.BundleApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "get_bundle_label",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "bundle"],
+            bundle_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_create_complaint(
+        self, **kwargs
+    ):  # noqa: E501
+        """create_complaint
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to create a complaint about a shipment order. Complaints can be filed if there is a pickup delay on an order or if an item has been lost in transit.The complaint reason, complaint type, and the date the issue occurred must be specified in the request. If the complaint is being filed for a missing package, the affected packageId values must also be specified in the affectedPackages array.If the call was successful, HTTP status code 201 Created will be returned, and the complaint will be created.
+
+        :param AddComplaintRequest body:
+        :return: object
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.ComplaintApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "create_complaint",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "complaint"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_create_consign_preference(
+        self, **kwargs
+    ):  # noqa: E501
+        """create_consign_preference
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to create a consign address.The following types of address preferences can be created via this method:PICK_UPDROP_OFFFORWARD_DEPLOYMENTRDCCN_POST_DROP_OFFCN_POST_PICK_UPHK_POST_DROP_OFFThe address information for the consign address must be provided in the consignAddress container. If the call is successful, the addressId for the newly created address will be returned. This ID can then be used when creating a package to specify the consign address to use for the shipment.
+
+        :param CreateConsignPreferenceRequest body:
+        :return: CreateConsignPreferenceResponses
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.ConsignPreferenceApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "create_consign_preference",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "consign_preference"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_get_consign_preferences(
+        self, **kwargs
+    ):  # noqa: E501
+        """get_consign_preferences
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to retrieve information about all the pickup, drop-off, and/or forward deployment consign addresses associated with a seller's eDIS account.
+
+        :return: GetConsignPreferenceListResponses
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.ConsignPreferenceApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "get_consign_preferences",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "consign_preference"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_get_dropoff_sites(
+        self, **kwargs
+    ):  # noqa: E501
+        """get_dropoff_sites
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to retrieve metadata for one or more drop-off sites associated with a seller's eDIS account.Pagination query parameters are provided that allow users to control how many drop-off site locations are returned in the response.
+
+        :param str limit: This query parameter sets the maximum number of drop-off site locations to return on each page of the paginated response.Use this parameter in conjunction with the offset parameter to control the pagination of the output. For example, if offset is set to 10 and limit is set to 10, the call retrieves orders 11 through 20 from the result set.Max: 200Default: 50
+        :param str offset: This query parameter specifies the number of drop-off site locations to skip in the result set before returning the first location in the paginated response.Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call.Default: 0
+        :return: GetDropoffSiteListResponses
+        """
+        return self._method_paged(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.DropoffSitesApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "get_dropoff_sites",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "dropoff_sites"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_get_handover_sheet(
+        self, tracking_numbers, **kwargs
+    ):  # noqa: E501
+        """get_handover_sheet
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to retrieve the handover sheet for one or more packages in a pickup request.The tracking numbers for the packages for which to retrieve handover sheets are specified through the tracking_numbers query parameter.The retrieved handover sheet will be returned as a base64 string value, and can be used for confirmation with a pickup contact. Only one handover sheet will be returned for the specified packages.
+
+        :param str tracking_numbers: This query parameter specifies an array of tracking numbers for the packages for which to retrieve a handover sheet.Tracking numbers are returned when creating packages through the createPackage method.Up to 200 tracking numbers can be provided. Multiple tracking numbers can be input as individual query parameters. For example,tracking_numbers=E***********************N&tracking_numbers=E***********************Q (required)
+        :return: GetHandoverSheetResponses
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.HandoverSheetApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "get_handover_sheet",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "handover_sheet"],
+            tracking_numbers,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_get_labels(
+        self, tracking_numbers, **kwargs
+    ):  # noqa: E501
+        """get_labels
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to retrieve shipping labels for the one or more specified packages.The packages for which to retrieve shipping labels can be specified through the tracking_numbers query parameter. The page size and print preference settings for the shipping label(s) can also be specified through the query parameters.Shipping labels are returned as base64 string values which can be converted to PDF files. A separate file will be returned for each tracking number specified in the request.
+
+        :param str tracking_numbers: This query parameter specifies an array of tracking numbers of the packages for which to retrieve shipping labels.Tracking numbers are returned when creating packages through the createPackage method.Up to 200 tracking numbers can be provided. Multiple tracking numbers can be input as individual query parameters.For example,tracking_numbers=E***********************N&tracking_numbers=E***********************Q (required)
+        :param str page_size: This query parameter specifies the page size of the retrieved shipping labels.Valid values:A4THERMAL_PAPER
+        :param str print_preference: This query parameter specifies one or more printing preferences to be set when retrieving shipping labels. Multiple values can be delimited by a comma.Valid values:nameZhnameEnremarkskuPriceskuNoquantitylistingIdsellerIdbuyerId
+        :return: GetLabelListResponses
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.LabelsApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "get_labels",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "labels"],
+            tracking_numbers,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_bulk_cancel_packages(
+        self, **kwargs
+    ):  # noqa: E501
+        """bulk_cancel_packages
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to cancel multiple packages and their associated tracking numbers.The package ID values for the packages to be canceled must be input in the packageIds array of the request.Note: Packages cannot be cancelled if they are currently being processed.
+
+        :param CancelPackagesRequest body:
+        :return: CancelPackagesResponses
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.PackageApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "bulk_cancel_packages",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "package"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_bulk_confirm_packages(
+        self, **kwargs
+    ):  # noqa: E501
+        """bulk_confirm_packages
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to confirm the shipping order for multiple packages.The package ID values for the packages to be confirmed must be input in the packageIds array of the request.After a package is confirmed, the estimated cost will be frozen in your wallet and the pickup request will be submitted.
+
+        :param ConfirmPackagesRequest body:
+        :return: ConfirmPackagesResponses
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.PackageApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "bulk_confirm_packages",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "package"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_bulk_delete_packages(
+        self, **kwargs
+    ):  # noqa: E501
+        """bulk_delete_packages
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to delete multiple packages.The package ID values for the packages to be deleted must be input in the packageIds array of the request.Note: Packages can only be deleted once they have been cancelled through the cancelPackage or bulkCancelPackages methods and no longer have a tracking number associated with them.
+
+        :param DeletePackagesRequest body:
+        :return: DeletePackagesResponses
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.PackageApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "bulk_delete_packages",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "package"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_cancel_package(
+        self, package_id, **kwargs
+    ):  # noqa: E501
+        """cancel_package
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to cancel a package and its associated tracking number.The packageId value of the package to be canceled must be input as a path parameter in the request.Note: Packages cannot be canceled if they are currently being processed.
+
+        :param str package_id: This path parameter specifies the unique identifier of the package being canceled.This ID value is returned when creating a package through the createPackage method. (required)
+        :return: None
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.PackageApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "cancel_package",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "package"],
+            package_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_clone_package(
+        self, package_id, **kwargs
+    ):  # noqa: E501
+        """clone_package
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to clone a package for redelivery, resending the package with the same information input during the createPackage call.The packageId value of the package to be cloned must be input as a path parameter in the request.
+
+        :param str package_id: This path parameter specifies the packageId value of the package to be cloned.This ID value is returned when creating a package through the createPackage method. (required)
+        :return: ClonePackageResponses
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.PackageApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "clone_package",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "package"],
+            package_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_confirm_package(
+        self, package_id, **kwargs
+    ):  # noqa: E501
+        """confirm_package
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to confirm the shipping order for a package.The packageId value of the package to be confirmed must be input as a path parameter in the request.After confirmation the estimated cost will be frozen in your wallet and the pickup request will be submitted.
+
+        :param str package_id: This path parameter specifies the unique identifier of the package you wish to be confirmed.This ID value is returned when creating a package through the createPackage method. (required)
+        :return: None
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.PackageApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "confirm_package",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "package"],
+            package_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_create_package(
+        self, **kwargs
+    ):  # noqa: E501
+        """create_package
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to create a package for an order.To create a package, the package's shipping information, such as the dimensions, weight, ship from, and ship to address, as well as information about the item(s) it contains must be specified in the request.If the call is successful, the packageId and tracking number for the newly created package will be returned.Note: Sellers should keep track of the returned packageId, as there is no programmatic way to retrieve this value at this time.
+
+        :param AddPackageRequest body:
+        :return: AddPackageResponses
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.PackageApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "create_package",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "package"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_delete_package(
+        self, package_id, **kwargs
+    ):  # noqa: E501
+        """delete_package
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to delete a package.The packageId value of the package to be deleted must be input as a path parameter in the request. If the call is successful, HTTP status code 204 No Content will be returned, and the package will be deleted.Note: Packages can only be deleted once they have been cancelled through the cancelPackage or bulkCancelPackages methods and no longer have a tracking number associated with them.
+
+        :param str package_id: This path parameter specifies the unique identifier of the package being deleted. This package must already be cancelled and have no tracking number associated with it.This ID value is returned when creating a package through the createPackage method. (required)
+        :return: None
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.PackageApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "delete_package",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "package"],
+            package_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_get_package(
+        self, package_id, **kwargs
+    ):  # noqa: E501
+        """get_package
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to retrieve a package based on the provided package ID value.The packageId value of the package to be retrieved must be input as a path parameter in the request. If the call is successful, information about the package is returned, such as the package's shipping information (its dimensions, weight, ship from, and ship to address) and information about the item(s) it contains.
+
+        :param str package_id: This path parameter specifies the unique identifier of the package being retrieved.This ID value is returned when creating a package through the createPackage method. (required)
+        :return: GetPackageDetailResponses
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.PackageApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "get_package",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "package"],
+            package_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_get_packages_by_line_item_id(
+        self, order_line_item_id, **kwargs
+    ):  # noqa: E501
+        """get_packages_by_line_item_id
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to retrieve one or more packages based on the provided order line item ID.This method can be followed up with getPackage call to retrieve more detailed information about a specific package.
+
+        :param str order_line_item_id: This path parameter can be used to specify the unique identifier of the line item that is part of the package being retrieved.This value is returned in the lineItemId field of the getOrders method of the Fulfillment API or the GetOrders method of the Trading API. (required)
+        :return: GetItemPackageIdResponses
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.PackageApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "get_packages_by_line_item_id",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "package"],
+            order_line_item_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_get_services(
+        self, **kwargs
+    ):  # noqa: E501
+        """get_services
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to retrieve metadata on available shipping services, such as the name, description, and directions.
+
+        :param str limit: This query parameter sets the maximum number of shipping services to return on each page of the paginated response.Use this parameter in conjunction with the offset parameter to control the pagination of the output. For example, if offset is set to 10 and limit is set to 10, the call retrieves orders 11 through 20 from the result set.Max: 200Default: 50
+        :param str offset: This query parameter specifies the number of shipping services to skip in the result set before returning the first shipping service in the paginated response.Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call.Default: 0
+        :return: GetServiceListResponses
+        """
+        return self._method_paged(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.ServicesApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "get_services",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "services"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_edelivery_international_shipping_get_tracking(
+        self, tracking_number, **kwargs
+    ):  # noqa: E501
+        """get_tracking
+
+        Important! This method is only available for Greater-China based sellers with an active eDIS account.This method can be used to retrieve tracking event details for a package associated with the provided tracking number.Each tracking event is returned in the trackingDetails array and includes the description, location, time, and status of the event.
+
+        :param str tracking_number: This query parameter specifies the tracking number for which to retrieve current tracking event details.This value is returned when creating a package through the createPackage method. (required)
+        :return: GetTrackingDetailResponses
+        """
+        return self._method_single(
+            sell_edelivery_international_shipping.Configuration,
+            "/sell/edelivery_international_shipping/v1",
+            sell_edelivery_international_shipping.TrackingApi,
+            sell_edelivery_international_shipping.ApiClient,
+            "get_tracking",
+            SellEdeliveryInternationalShippingException,
+            False,
+            ["sell.edelivery.international.shipping", "tracking"],
+            tracking_number,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_create_customer_service_metric_task(
+        self, body, accept_language, content_type, **kwargs
+    ):  # noqa: E501
+        """create_customer_service_metric_task
+
+        Use this method to create a customer service metrics download task with filter criteria for the customer service metrics report. When using this method, specify the feedType and filterCriteria including both evaluationMarketplaceId and customerServiceMetricType for the report. The method returns the location response header containing the call URI to use with getCustomerServiceMetricTask to retrieve status and details on the task.Only CURRENT Customer Service Metrics reports can be generated with the Sell Feed API. PROJECTED reports are not supported at this time. See the getCustomerServiceMetric method document in the Analytics API for more information about these two types of reports.Note: Before calling this API, retrieve the summary of the seller's performance and rating for the customer service metric by calling getCustomerServiceMetric (part of the Analytics API). You can then populate the create task request fields with the values from the response. This technique eliminates failed tasks that request a report for a customerServiceMetricType and evaluationMarketplaceId that are without evaluation.
+
+        :param CreateServiceMetricsTaskRequest body: Request payload containing version, feedType, and optional filterCriteria. (required)
+        :param str accept_language: Use this header to specify the natural language in which the authenticated user desires the response. For example, en-US for English or de-DE for German. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
+        :return: None
+        """
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.CustomerServiceMetricTaskApi,
+            sell_feed.ApiClient,
+            "create_customer_service_metric_task",
+            SellFeedException,
+            True,
+            ["sell.feed", "customer_service_metric_task"],
+            (body, accept_language, content_type),
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_get_customer_service_metric_task(
+        self, task_id, **kwargs
+    ):  # noqa: E501
+        """get_customer_service_metric_task
+
+        Use this method to retrieve customer service metric task details for the specified task. The input is task_id.
+
+        :param str task_id: This path parameter is the unique identifier of the customer service metric task being retrieved.Use the getCustomerServiceMetricTasks method to retrieve task IDs. (required)
+        :return: ServiceMetricsTask
+        """
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.CustomerServiceMetricTaskApi,
+            sell_feed.ApiClient,
+            "get_customer_service_metric_task",
+            SellFeedException,
+            True,
+            ["sell.feed", "customer_service_metric_task"],
+            task_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_get_customer_service_metric_tasks(self, **kwargs):  # noqa: E501
+        """get_customer_service_metric_tasks
+
+        Use this method to return an array of customer service metric tasks. You can limit the tasks returned by specifying a date range.   Note: You can pass in either the look_back_days or date_range, but not both.
+
+        :param str date_range: The task creation date range. The results are filtered to include only tasks with a creation date that is equal to the dates specified or is within the specified range. Do not use with the look_back_days parameter.Format: UTCFor example, tasks within a range: yyyy-MM-ddThh:mm:ss.SSSZ..yyyy-MM-ddThh:mm:ss.SSSZ Tasks created on March 8, 20202020-03-08T00:00.00.000Z..2020-03-09T00:00:00.000ZMaximum: 90 days
+        :param str feed_type: The feed type associated with the tasks being retrieved. The only presently supported value is CUSTOMER_SERVICE_METRICS_REPORT.
+        :param str limit: The number of customer service metric tasks to return per page of the result set. Use this parameter in conjunction with the offset parameter to control the pagination of the output. For example, if offset is set to 10 and limit is set to 10, the call retrieves tasks 11 thru 20 from the result set.If this parameter is omitted, the default value is used. Note:This feature employs a zero-based list, where the first item in the list has an offset of 0.Default: 10 Maximum: 500
+        :param str look_back_days: The number of previous days in which to search for tasks. Do not use with the date_range parameter. If both date_range and look_back_days are omitted, this parameter's default value is used. Default value: 7Range: 1-90 (inclusive)
+        :param str offset: The number of customer service metric tasks to skip in the result set before returning the first task in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. Default: 0
+        :return: CustomerServiceMetricTaskCollection
+        """
+        return self._method_paged(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.CustomerServiceMetricTaskApi,
+            sell_feed.ApiClient,
+            "get_customer_service_metric_tasks",
+            SellFeedException,
+            True,
+            ["sell.feed", "customer_service_metric_task"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_create_inventory_task(
+        self, body, content_type, **kwargs
+    ):  # noqa: E501
+        """create_inventory_task
+
+        This method creates an inventory-related download task for a specified feed type with optional filter criteria. When using this method, specify the feedType. This method returns the location response header containing the getInventoryTask call URI to retrieve the inventory task you just created. The URL includes the eBay-assigned task ID, which you can use to reference the inventory task.To retrieve the status of the task, use the getInventoryTask method to retrieve a single task ID or the getInventoryTasks method to retrieve multiple task IDs. Note: The scope depends on the feed type. An error message results when an unsupported scope or feed type is specified.Presently, this method supports Active Inventory Report. The ActiveInventoryReport returns a report that contains price and quantity information for all of the active listings for a specific seller. A seller can use this information to maintain their inventory on eBay.
+
+        :param CreateInventoryTaskRequest body: The request payload containing the version, feedType, and optional filterCriteria. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
+        :return: None
+        """
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.InventoryTaskApi,
+            sell_feed.ApiClient,
+            "create_inventory_task",
+            SellFeedException,
+            True,
+            ["sell.feed", "inventory_task"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_get_inventory_task(self, task_id, **kwargs):  # noqa: E501
+        """get_inventory_task
+
+        This method retrieves the task details and status of the specified inventory-related task. The input is task_id.
+
+        :param str task_id: This path parameter is the unique identifier of the inventory task being retrieved. Use the getInventoryTasks method to retrieve inventory task IDs. (required)
+        :return: InventoryTask
+        """
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.InventoryTaskApi,
+            sell_feed.ApiClient,
+            "get_inventory_task",
+            SellFeedException,
+            True,
+            ["sell.feed", "inventory_task"],
+            task_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_get_inventory_tasks(self, **kwargs):  # noqa: E501
+        """get_inventory_tasks
+
+        This method searches for multiple tasks of a specific feed type, and includes date filters and pagination.
+
+        :param str feed_type: The feed type associated with the inventory tasks being retrieved. Presently, only one feed type is available:LMS_ACTIVE_INVENTORY_REPORTSee Report value feed types for more information.
+        :param str schedule_id: Note: Schedule functionality for ActiveInventoryReport is currently unavailable, so this field is not usable.
+        :param str look_back_days: The number of previous days in which to search for tasks. Do not use with the date_range parameter. If both date_range and look_back_days are omitted, this parameter's default value is used.  Default:  7 Range:  1-90 (inclusive)
+        :param str date_range: Specifies the range of task creation dates used to filter the results. The results are filtered to include only tasks with a creation date that is equal to this date or is within specified range.  Note: Maximum date range window size is 90 days.Valid Format (UTC): yyyy-MM-ddThh:mm:ss.SSSZ..yyyy-MM-ddThh:mm:ss.SSSZFor example: Tasks created on March 31, 2021 2021-03-31T00:00:00.000Z..2021-03-31T00:00:00.000Z
+        :param str limit: The maximum number of tasks that can be returned on each page of the paginated response. Use this parameter in conjunction with the offset parameter to control the pagination of the output.  Note: This feature employs a zero-based list, where the first item in the list has an offset of 0.For example, if offset is set to 10 and limit is set to 10, the call retrieves tasks 11 thru 20 from the result set.If this parameter is omitted, the default value is used. Default:  10 Maximum: 500
+        :param str offset: The number of tasks to skip in the result set before returning the first task in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. If this query parameter is not set, the default value is used and the first page of records is returned. Default: 0
+        :return: InventoryTaskCollection
+        """
+        return self._method_paged(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.InventoryTaskApi,
+            sell_feed.ApiClient,
+            "get_inventory_tasks",
+            SellFeedException,
+            True,
+            ["sell.feed", "inventory_task"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_create_order_task(self, body, content_type, **kwargs):  # noqa: E501
+        """create_order_task
+
+        This method creates an order download task with filter criteria for the order report. When using this method, specify the  feedType,  schemaVersion, and  filterCriteria for the report. The method returns the  location response header containing the getOrderTask call URI to retrieve the order task you just created. The URL includes the eBay-assigned task ID, which you can use to reference the order task. To retrieve the status of the task, use the getOrderTask method to retrieve a single task ID or the getOrderTasks method to retrieve multiple order task IDs. Note: The scope depends on the feed type. An error message results when an unsupported scope or feed type is specified.The following list contains this method's authorization scope and its corresponding feed type:https://api.ebay.com/oauth/api_scope/sell.fulfillment: LMS_ORDER_REPORT For details about how this method is used, see General feed types in the Selling Integration Guide.  Note: At this time, the createOrderTask method only supports order creation date filters and not modified order date filters. Do not include the modifiedDateRange filter in your request payload.
+
+        :param CreateOrderTaskRequest body: description not needed (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
+        :return: None
+        """
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.OrderTaskApi,
+            sell_feed.ApiClient,
+            "create_order_task",
+            SellFeedException,
+            True,
+            ["sell.feed", "order_task"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_get_order_task(self, task_id, **kwargs):  # noqa: E501
+        """get_order_task
+
+        This method retrieves the task details and status of the specified task. The input is task_id. For details about how this method is used, see Working with Order Feeds in the Selling Integration Guide.
+
+        :param str task_id: This path parameter is the unique identifier of the order task being retrieved.Use the getOrderTasks method to retrieve order task IDs. (required)
+        :return: OrderTask
+        """
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.OrderTaskApi,
+            sell_feed.ApiClient,
+            "get_order_task",
+            SellFeedException,
+            True,
+            ["sell.feed", "order_task"],
+            task_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_get_order_tasks(self, **kwargs):  # noqa: E501
+        """get_order_tasks
+
+        This method returns the details and status for an array of order tasks based on a specified feed_type or schedule_id. Specifying both feed_type and schedule_id results in an error. Since schedules are based on feed types, you can specify a schedule (schedule_id) that returns the needed feed_type.If specifying the feed_type, limit which order tasks are returned by specifying filters such as the creation date range or period of time using look_back_days. If specifying a schedule_id, the schedule template (that the schedule_id is based on) determines which order tasks are returned (see schedule_id for additional information). Each schedule_id applies to one feed_type.
+
+        :param str date_range: The order tasks creation date range. This range is used to filter the results. The filtered results are filtered to include only tasks with a creation date that is equal to this date or is within specified range. Only orders less than 90 days old can be retrieved. Do not use with the look_back_days parameter. Format: UTC     For example:  Tasks within a range   yyyy-MM-ddThh:mm:ss.SSSZ..yyyy-MM-ddThh:mm:ss.SSSZ   Tasks created on September 8, 2019 2019-09-08T00:00:00.000Z..2019-09-09T00:00:00.000Z
+        :param str feed_type: The feed type associated with the order tasks being retrieved. The only presently supported value is LMS_ORDER_REPORTSee Report download feed types for more information.Note: Do not use with the schedule_id parameter. Since schedules are based on feed types, you can specify a schedule (schedule_id) that returns the needed feed_type.
+        :param str limit: The maximum number of order tasks that can be returned on each page of the paginated response. Use this parameter in conjunction with the offset parameter to control the pagination of the output.  Note: This feature employs a zero-based list, where the first item in the list has an offset of 0.For example, if offset is set to 10 and limit is set to 10, the call retrieves order tasks 11 thru 20 from the result set.If this parameter is omitted, the default value is used.Default: 10 Maximum: 500
+        :param str look_back_days: The number of previous days in which to search for tasks. Do not use with the date_range parameter. If both date_range and look_back_days are omitted, this parameter's default value is used.  Default:  7 Range:  1-90 (inclusive)
+        :param str offset: The number of order tasks to skip in the result set before returning the first order in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. If this query parameter is not set, the default value is used and the first page of records is returned.Default: 0
+        :param str schedule_id: The schedule ID associated with the order tasks being retrieved. A schedule periodically generates a report, and these schedules can be created with the createSchedule method.Note: Do not use with the feed_type parameter. Since schedules are based on feed types, you can specify a schedule (schedule_id) that returns the needed feed_type.Use the getSchedules method to retrieve schedule IDs.
+        :return: OrderTaskCollection
+        """
+        return self._method_paged(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.OrderTaskApi,
+            sell_feed.ApiClient,
+            "get_order_tasks",
+            SellFeedException,
+            True,
+            ["sell.feed", "order_task"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_create_schedule(self, body, content_type, **kwargs):  # noqa: E501
+        """create_schedule
+
+        This method creates a schedule, which is a subscription to the specified schedule template. A schedule periodically generates a report for the feedType specified by the template. Specify the same feedType as the feedType of the associated schedule template. When creating the schedule, if available from the template, you can specify a preferred trigger hour, day of the week, or day of the month. These and other fields are conditionally available as specified by the template. Note: Make sure to include all fields required by the schedule template (scheduleTemplateId). Call the getScheduleTemplate method (or the getScheduleTemplates method), to find out which fields are required or optional. If a field is optional and a default value is provided by the template, the default value will be used if omitted from the payload.A successful call returns the location response header containing the getSchedule call URI to retrieve the schedule you just created. The URL includes the eBay-assigned schedule ID, which you can use to reference the schedule task. To retrieve the details of the create schedule task, use the getSchedule method for a single schedule ID or the getSchedules method to retrieve all schedule details for the specified feed_type. The number of schedules for each feedType is limited. Error code 160031 is returned when you have reached this maximum. Note: Except for schedules with a HALF-HOUR frequency, all schedules will ideally run at the start of each hour ('00' minutes). Actual start time may vary time may vary due to load and other factors.
+
+        :param CreateUserScheduleRequest body: In the request payload: feedType and scheduleTemplateId are required; scheduleName is optional; preferredTriggerHour, preferredTriggerDayOfWeek, preferredTriggerDayOfMonth, scheduleStartDate, scheduleEndDate, and schemaVersion are conditional. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
+        :return: object
+        """
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.ScheduleApi,
+            sell_feed.ApiClient,
+            "create_schedule",
+            SellFeedException,
+            True,
+            ["sell.feed", "schedule"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_delete_schedule(self, schedule_id, **kwargs):  # noqa: E501
+        """delete_schedule
+
+        This method deletes an existing schedule. Specify the schedule to delete using the schedule_id path parameter.
+
+        :param str schedule_id: This path parameter is the unique identifier of the schedule being deleted.Use the getSchedules method to retrieve schedule IDs. (required)
+        :return: None
+        """
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.ScheduleApi,
+            sell_feed.ApiClient,
+            "delete_schedule",
+            SellFeedException,
+            True,
+            ["sell.feed", "schedule"],
+            schedule_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_get_latest_result_file(self, schedule_id, **kwargs):  # noqa: E501
+        """get_latest_result_file
+
+        This method downloads the latest Order Report generated by the schedule. The response of this call is a compressed or uncompressed CSV, XML, or JSON file, with the applicable file extension (for example: csv.gz). Specify the schedule_id path parameter to download its last generated file.
+
+        :param str schedule_id: This path parameter is the unique identifier of the schedule for which to retrieve the latest Order Report.  Use the getSchedules method to retrieve schedule IDs. (required)
+        :return: StreamingOutput
+        """
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.ScheduleApi,
+            sell_feed.ApiClient,
+            "get_latest_result_file",
+            SellFeedException,
+            True,
+            ["sell.feed", "schedule"],
+            schedule_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_get_schedule(self, schedule_id, **kwargs):  # noqa: E501
+        """get_schedule
+
+        This method retrieves schedule details and status of the specified schedule. Specify the schedule to retrieve using the schedule_id. Use the getSchedules method to find a schedule if you do not know the schedule_id.
+
+        :param str schedule_id: This path parameter is the unique identifier of the schedule for which to retrieve details. Use the getSchedules method to retrieve schedule IDs. (required)
+        :return: UserScheduleResponse
+        """
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.ScheduleApi,
+            sell_feed.ApiClient,
+            "get_schedule",
+            SellFeedException,
+            True,
+            ["sell.feed", "schedule"],
+            schedule_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_get_schedule_template(
+        self, schedule_template_id, **kwargs
+    ):  # noqa: E501
+        """get_schedule_template
+
+        This method retrieves the details of the specified template. Specify the template to retrieve using the schedule_template_id path parameter. Use the getScheduleTemplates method to find a schedule template if you do not know the schedule_template_id.
+
+        :param str schedule_template_id: This path parameter is the unique identifier of the schedule template being retrieved.Use the getScheduleTemplates method to retrieve schedule template IDs.Note: Template schedules are currently only available for LMS_ORDER_REPORT. (required)
+        :return: ScheduleTemplateResponse
+        """
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.ScheduleApi,
+            sell_feed.ApiClient,
+            "get_schedule_template",
+            SellFeedException,
+            True,
+            ["sell.feed", "schedule"],
+            schedule_template_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_get_schedule_templates(self, feed_type, **kwargs):  # noqa: E501
+        """get_schedule_templates
+
+        This method retrieves an array containing the details and status of all schedule templates based on the specified feed_type. Use this method to find a schedule template if you do not know the schedule_template_id.
+
+        :param str feed_type: The feed type of the schedule templates to retrieve. Note: Schedules are currently only available for LMS_ORDER_REPORT. (required)
+        :param str limit: The maximum number of schedule templates that can be returned on each page of the paginated response. Use this parameter in conjunction with the offset parameter to control the pagination of the output.  Note: This feature employs a zero-based list, where the first item in the list has an offset of 0.For example, if offset is set to 10 and limit is set to 10, the call retrieves schedule templates 11 thru 20 from the result set.If this parameter is omitted, the default value is used. Default:  10 Maximum: 500
+        :param str offset: The number of schedule templates to skip in the result set before returning the first template in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. If this query parameter is not set, the default value is used and the first page of records is returned.Default: 0
+        :return: ScheduleTemplateCollection
+        """
+        return self._method_paged(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.ScheduleApi,
+            sell_feed.ApiClient,
+            "get_schedule_templates",
+            SellFeedException,
+            True,
+            ["sell.feed", "schedule"],
+            feed_type,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_get_schedules(self, feed_type, **kwargs):  # noqa: E501
+        """get_schedules
+
+        This method retrieves an array containing the details and status of all schedules based on the specified feed_type. Use this method to find a schedule if you do not know the schedule_id.
+
+        :param str feed_type: The feed type associated with the schedules being retrieved.Note: Schedules are currently only available for LMS_ORDER_REPORT. (required)
+        :param str limit: The maximum number of schedules that can be returned on each page of the paginated response. Use this parameter in conjunction with the offset parameter to control the pagination of the output.  Note: This feature employs a zero-based list, where the first item in the list has an offset of 0.For example, if offset is set to 10 and limit is set to 10, the call retrieves schedules 11 thru 20 from the result set.If this parameter is omitted, the default value is used. Default:  10 Maximum: 500
+        :param str offset: The number of schedules to skip in the result set before returning the first schedule in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. If this query parameter is not set, the default value is used and the first page of records is returned.Default: 0
+        :return: UserScheduleCollection
+        """
+        return self._method_paged(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.ScheduleApi,
+            sell_feed.ApiClient,
+            "get_schedules",
+            SellFeedException,
+            True,
+            ["sell.feed", "schedule"],
+            feed_type,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_update_schedule(
+        self, body, content_type, schedule_id, **kwargs
+    ):  # noqa: E501
+        """update_schedule
+
+        This method updates an existing schedule. Specify the schedule to update using the schedule_id path parameter. If the schedule template has changed after the schedule was created or updated, the input will be validated using the changed template. Note: Make sure to include all fields required by the schedule template (scheduleTemplateId). Call the getScheduleTemplate method (or the getScheduleTemplates method), to find out which fields are required or optional. If you do not know the scheduleTemplateId, call the getSchedule method to find out.
+
+        :param UpdateUserScheduleRequest body: In the request payload: scheduleName is optional; preferredTriggerHour, preferredTriggerDayOfWeek, preferredTriggerDayOfMonth, scheduleStartDate, scheduleEndDate, and schemaVersion are conditional. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
+        :param str schedule_id: This path parameter is the unique identifier of the schedule being updated.  Use the getSchedules method to retrieve schedule IDs. (required)
+        :return: None
+        """
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.ScheduleApi,
+            sell_feed.ApiClient,
+            "update_schedule",
+            SellFeedException,
+            True,
+            ["sell.feed", "schedule"],
+            (body, content_type, schedule_id),
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_create_task(
+        self, body, x_ebay_c_marketplace_id, content_type, **kwargs
+    ):  # noqa: E501
+        """create_task
+
+        This method creates an upload task or a download task without filter criteria. When using this method, specify the  feedType and the feed file  schemaVersion. The feed type specified sets the task as a download or an upload task.  For details about the upload and download flows, see Working with Order Feeds in the Selling Integration Guide. Note: The scope depends on the feed type. An error message results when an unsupported scope or feed type is specified.The following list contains this method's authorization scopes and their corresponding feed types:https://api.ebay.com/oauth/api_scope/sell.inventory: See LMS FeedTypeshttps://api.ebay.com/oauth/api_scope/sell.fulfillment: LMS_ORDER_ACK (specify for upload tasks). Also see LMS FeedTypeshttps://api.ebay.com/oauth/api_scope/sell.marketing: None*https://api.ebay.com/oauth/api_scope/commerce.catalog.readonly: None** Reserved for future release
+
+        :param CreateTaskRequest body: description not needed (required)
+        :param str x_ebay_c_marketplace_id: The ID of the eBay marketplace where the item is hosted. For example:X-EBAY-C-MARKETPLACE-ID:EBAY_USThis identifies the eBay marketplace that applies to this task. See MarketplaceIdEnum for supported values.Note: When listing the items in the feed file on the French Canada and French Belgium marketplaces, also set the Accept-Language header as needed. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
+        :param str accept_language: The Accept-Language header is required for listing items in the French Canada and French Belgium marketplaces. Set the following headers to list items on these marketplaces:French Canada: Set the X-EBAY-C-MARKETPLACE-ID header value to EBAY_CA and include the Accept-Language header with a value of fr-CA.French Belgium: Set the X-EBAY-C-MARKETPLACE-ID header value to EBAY_BE and include the Accept-Language header with a value of fr-BE.
+        :return: None
+        """
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.TaskApi,
+            sell_feed.ApiClient,
+            "create_task",
+            SellFeedException,
+            True,
+            ["sell.feed", "task"],
+            (body, x_ebay_c_marketplace_id, content_type),
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_get_input_file(self, task_id, **kwargs):  # noqa: E501
+        """get_input_file
+
+        This method downloads the file previously uploaded using uploadFile. Specify the task_id from the uploadFile call. Note: With respect to LMS, this method applies to all feed types except LMS_ORDER_REPORT and LMS_ACTIVE_INVENTORY_REPORT. See LMS API Feeds in the Selling Integration Guide.
+
+        :param str task_id: This path parameter is the unique identifier of the task associated with the input file to be downloaded.Use the getTasks method to retrieve task IDs. (required)
+        :return: StreamingOutput
+        """
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.TaskApi,
+            sell_feed.ApiClient,
+            "get_input_file",
+            SellFeedException,
+            True,
+            ["sell.feed", "task"],
+            task_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_get_result_file(self, task_id, **kwargs):  # noqa: E501
+        """get_result_file
+
+        This method retrieves the generated file that is associated with the specified task ID. The response of this call is a compressed or uncompressed CSV, XML, or JSON file, with the applicable file extension (for example: csv.gz). For details about how this method is used, see Working with Order Feeds in the Selling Integration Guide. Note: The status of the task to retrieve must be in the COMPLETED or COMPLETED_WITH_ERROR state before this method can retrieve the file. You can use the getTask or getTasks method to retrieve the status of the task.
+
+        :param str task_id: This path parameter is the unique identifier of the task associated with the file to be downloaded. Use the getTasks method to retrieve task IDs. (required)
+        :return: StreamingOutput
+        """
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.TaskApi,
+            sell_feed.ApiClient,
+            "get_result_file",
+            SellFeedException,
+            True,
+            ["sell.feed", "task"],
+            task_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_get_task(self, task_id, **kwargs):  # noqa: E501
+        """get_task
+
+        This method retrieves the details and status of the specified task. The input is task_id. For details of how this method is used, see Working with Order Feeds in the Selling Integration Guide.
+
+        :param str task_id: This path parameter is the unique identifier of the task being retrieved.Use the getTasks method to retrieve task IDs. (required)
+        :return: Task
+        """
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.TaskApi,
+            sell_feed.ApiClient,
+            "get_task",
+            SellFeedException,
+            True,
+            ["sell.feed", "task"],
+            task_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_get_tasks(self, **kwargs):  # noqa: E501
+        """get_tasks
+
+        This method returns the details and status for an array of tasks based on a specified feed_type or schedule_id. Specifying both feed_type and schedule_id results in an error. Since schedules are based on feed types, you can specify a schedule (schedule_id) that returns the needed feed_type.If specifying the feed_type, limit which tasks are returned by specifying filters, such as the creation date range or period of time using look_back_days. Also, by specifying the feed_type, both on-demand and scheduled reports are returned.If specifying a schedule_id, the schedule template (that the schedule ID is based on) determines which tasks are returned (see schedule_id for additional information). Each scheduledId applies to one feed_type.
+
+        :param str date_range: Specifies the range of task creation dates used to filter the results. The results are filtered to include only tasks with a creation date that is equal to this date or is within specified range. Only tasks that are less than 90 days can be retrieved.  Note: Maximum date range window size is 90 days. Valid Format (UTC):yyyy-MM-ddThh:mm:ss.SSSZ..yyyy-MM-ddThh:mm:ss.SSSZ For example: Tasks created on September 8, 2019 2019-09-08T00:00:00.000Z..2019-09-09T00:00:00.000Z
+        :param str feed_type: The feed type associated with the tasks to be returned. Only use a feedType that is available for your API: Order Feeds: LMS_ORDER_ACK, LMS_ORDER_REPORTInventory Upload Feed Types: See Available FeedTypesDo not use with the schedule_id parameter. Since schedules are based on feed types, you can specify a schedule (schedule_id) that returns the needed feed_type.
+        :param str limit: The maximum number of tasks that can be returned on each page of the paginated response. Use this parameter in conjunction with the offset parameter to control the pagination of the output.  Note: This feature employs a zero-based list, where the first item in the list has an offset of 0.For example, if offset is set to 10 and limit is set to 10, the call retrieves tasks 11 thru 20 from the result set.If this parameter is omitted, the default value is used. Default:  10 Maximum: 500
+        :param str look_back_days: The number of previous days in which to search for tasks. Do not use with the date_range parameter. If both date_range and look_back_days are omitted, this parameter's default value is used.  Default:  7 Range:  1-90 (inclusive)
+        :param str offset: The number of tasks to skip in the result set before returning the first task in the paginated response. Combine offset with the limit query parameter to control the items returned in the response. For example, if you supply an offset of 0 and a limit of 10, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If offset is 10 and limit is 20, the first page of the response contains items 11-30 from the complete result set. If this query parameter is not set, the default value is used and the first page of records is returned. Default: 0
+        :param str schedule_id: The unique identifier associated with the tasks being returned. A schedule periodically generates a report for the feed type specified by the schedule template.Note: Schedules are currently only available for LMS_ORDER_REPORT.Do not use with the feed_type parameter.
+        :return: TaskCollection
+        """
+        return self._method_paged(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.TaskApi,
+            sell_feed.ApiClient,
+            "get_tasks",
+            SellFeedException,
+            True,
+            ["sell.feed", "task"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_feed_upload_file(self, task_id, content_type, **kwargs):  # noqa: E501
+        """upload_file
+
+        This method associates the specified file with the specified task ID and uploads the input file. After the file has been uploaded, the processing of the file begins. Reports often take time to generate and it's common for this method to return an HTTP status of 202, which indicates the report is being generated. Use the  getTask with the task ID or  getTasks to determine the status of a report. The status flow is QUEUED > IN_PROCESS > COMPLETED or COMPLETED_WITH_ERROR. When the status is COMPLETED or COMPLETED_WITH_ERROR, this indicates the file has been processed and the order report can be downloaded. If there are errors, they will be indicated in the report file. For details of how this method is used in the upload flow, see Working with Order Feeds in the Selling Integration Guide. This call does not have a JSON Request payload but uploads the file as form-data. For example:  fileName: "AddFixedPriceItem_Macbook.xml"  name: "file"  type: "form-data"  file: @"/C:/Users/.../AddFixedPriceItem_Macbook.7z"See Samples for information.Note: This method applies to all Seller Hub feed types, and to all LMS feed types except LMS_ORDER_REPORT and LMS_ACTIVE_INVENTORY_REPORT. Note: You must use a Content-Type header with its value set to \"multipart/form-data\". See Samples for information.Note: For LMS feed types, upload a regular XML file or an XML file in zipped format (both formats are allowed).
+
+        :param str task_id: This path parameter is the unique identifier of the task associated with the file that will be uploaded.Use the getTasks method to retrieve task IDs. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to multipart/form-data.  For more information, refer to HTTP request headers. (required)
+        :param dict files: Dictionary mapping form field names to file paths. For example: {'image': 'path/to/image.jpg'} or {'file': 'path/to/document.pdf'}. This parameter is used to upload files in multipart/form-data requests. (optional)  # ebay_rest patch: multipart/form-data file uploads
+        :return: object
+        """
+        return self._method_single(
+            sell_feed.Configuration,
+            "/sell/feed/v1",
+            sell_feed.TaskApi,
+            sell_feed.ApiClient,
+            "upload_file",
+            SellFeedException,
+            True,
+            ["sell.feed", "task"],
+            (task_id, content_type),
             **kwargs,
         )  # noqa: E501
 
@@ -3764,6 +5172,61 @@ class API(APIPrivate):
             True,
             ["sell.inventory", "product_compatibility"],
             sku,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_leads_get_all_classified_leads(self, content_type, **kwargs):  # noqa: E501
+        """get_all_classified_leads
+
+        This method retrieves leads for all of the seller's active classified ad listings. Optionally, just those matching specified filter criteria can be returned.Note: This is a  (Limited Release) API available only to select developers approved by business units. For information on how to obtain access to this API in production, please contact eBay support.
+
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
+        :param str end_time: Use with startTime to limit the returned leads for the user. Only leads with a creation date less than or equal to the specified date and time will be returned.Note: The startTime and endTime fields can be used independently to filter results.The time stamp must be formatted as an ISO 8601 string, which is based on the 24-hour Universal Coordinated Time (UTC) clock.Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[SS]Z Example: 2025-01-10T15:54:00Z
+        :param str include_messages: Boolean that indicates whether to return mail messages for this lead in a memberMessage container (true returns messages). If omitted, no messages for this lead will be returned (same as when set to false).Default: false
+        :param str start_time: Use with endTime to limit the returned leads for the user. Only leads for active listings with a creation date greater than or equal to the specified date and time will be returned. Note: The startTime and endTime fields can be used independently to filter results.The time stamp must be formatted as an ISO 8601 string, which is based on the 24-hour Universal Coordinated Time (UTC) clock.Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[SS]Z Example: 2025-01-10T15:54:00Z
+        :param str status: The enumeration value in this field will indicate whether or not a question has been answered. Valid values include: Answered Unanswered
+        :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
+        :return: ClassifiedLeadsListResponse
+        """
+        return self._method_single(
+            sell_leads.Configuration,
+            "/sell/leads/v1",
+            sell_leads.ClassifiedLeadApi,
+            sell_leads.ApiClient,
+            "get_all_classified_leads",
+            SellLeadsException,
+            False,
+            ["sell.leads", "classified_lead"],
+            content_type,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_leads_get_classified_leads_by_item_id(
+        self, item_id, content_type, **kwargs
+    ):  # noqa: E501
+        """get_classified_leads_by_item_id
+
+        This method returns a seller account's leads generated by the specified classified ad, and includes any contact information that prospective buyers have submitted. Optionally, just those matching specified filter criteria can be returned.Note: This is a  (Limited Release) API available only to select developers approved by business units. For information on how to obtain access to this API in production, please contact eBay support.
+
+        :param str item_id: The unique identifier of the listing. (required)
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
+        :param str end_time: Use with startTime to limit the returned leads for the user for active listings. Only leads with a creation date less than or equal to the specified date and time will be returned. Note: The startTime and endTime fields can be used independently to filter results.The time stamp must be formatted as an ISO 8601 string, which is based on the 24-hour Universal Coordinated Time (UTC) clock. Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[SS]Z Example: 2025-01-10T15:54:00Z
+        :param str include_messages: Include this field and set it to true to retrieve any member messages associated with leads in the memberMessage container (true returns messages).Default: true
+        :param str start_time: Use with endTime to limit the returned leads for the user. Only leads with a start time greater than or equal to the specified date and time will be returned. Note: The startTime and endTime fields can be used independently to filter results.The time stamp must be formatted as an ISO 8601 string, which is based on the 24-hour Universal Coordinated Time (UTC) clock.Format: [YYYY]-[MM]-[DD]T[hh]:[mm]:[SS]Z Example: 2025-01-10T15:54:00Z
+        :param str status: Include this field if you would only like to retrieve leads where the buyer has answered questions or has not answered questions. If not used, leads with answered questions and unanswered questions are returned. Valid values include: Answered Unanswered
+        :param str accept_encoding: This header indicates the compression-encoding algorithms the client accepts for the response. This value should be set to gzip.  For more information, refer to HTTP request headers.
+        :return: ClassifiedLead
+        """
+        return self._method_single(
+            sell_leads.Configuration,
+            "/sell/leads/v1",
+            sell_leads.ClassifiedLeadApi,
+            sell_leads.ApiClient,
+            "get_classified_leads_by_item_id",
+            SellLeadsException,
+            False,
+            ["sell.leads", "classified_lead"],
+            (item_id, content_type),
             **kwargs,
         )  # noqa: E501
 
@@ -6611,6 +8074,175 @@ class API(APIPrivate):
             True,
             ["sell.recommendation", "listing_recommendation"],
             x_ebay_c_marketplace_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_stores_add_store_category(self, content_type, **kwargs):  # noqa: E501
+        """add_store_category
+
+
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
+        :param AddStoreCategoryRequestType body: This call is used to add single new category of a user's eBay store.
+        :return: None
+        """
+        return self._method_single(
+            sell_stores.Configuration,
+            "/sell/stores/v1",
+            sell_stores.StoreApi,
+            sell_stores.ApiClient,
+            "add_store_category",
+            SellStoresException,
+            False,
+            ["sell.stores", "store"],
+            content_type,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_stores_delete_store_category(self, category_id, **kwargs):  # noqa: E501
+        """delete_store_category
+
+
+        :param str category_id: The unique identifier of an eBay Store's custom category. eBay auto-generates this identifier when a seller establishes a custom store category. This category ID should not be confused with an eBay category ID. The getStoreCategories method can be used to retrieve store category IDs. (required)
+        :param DeleteStoreCategoryRequestType body: This call is used to delete one category of a user's eBay store.
+        :return: None
+        """
+        return self._method_single(
+            sell_stores.Configuration,
+            "/sell/stores/v1",
+            sell_stores.StoreApi,
+            sell_stores.ApiClient,
+            "delete_store_category",
+            SellStoresException,
+            False,
+            ["sell.stores", "store"],
+            category_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_stores_get_store(self, **kwargs):  # noqa: E501
+        """get_store
+
+        This method is used to retrieve information for an eBay user's store such as store name, store URL, and description.
+
+        :return: GetStoreResponseType
+        """
+        return self._method_single(
+            sell_stores.Configuration,
+            "/sell/stores/v1",
+            sell_stores.StoreApi,
+            sell_stores.ApiClient,
+            "get_store",
+            SellStoresException,
+            False,
+            ["sell.stores", "store"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_stores_get_store_categories(self, **kwargs):  # noqa: E501
+        """get_store_categories
+
+        This method is used to retrieve the category hierarchy for an eBay user's store.Note: Three levels of store categories are supported.
+
+        :return: GetStoreCategoriesResponseType
+        """
+        return self._method_single(
+            sell_stores.Configuration,
+            "/sell/stores/v1",
+            sell_stores.StoreApi,
+            sell_stores.ApiClient,
+            "get_store_categories",
+            SellStoresException,
+            False,
+            ["sell.stores", "store"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_stores_get_store_task(self, task_id, **kwargs):  # noqa: E501
+        """get_store_task
+
+        This method retrieves the current status of a recent store operation. The unique identifier of the task is passed in as a path parameter.
+
+        :param str task_id: The unique identifier of an eBay Store async task. A taskId value is returned in the response of other successful calls. (e.g.addStoreCategory, moveStoreCategory, deleteStoreCategory). (required)
+        :return: GetStoreTaskResponseType
+        """
+        return self._method_single(
+            sell_stores.Configuration,
+            "/sell/stores/v1",
+            sell_stores.StoreApi,
+            sell_stores.ApiClient,
+            "get_store_task",
+            SellStoresException,
+            False,
+            ["sell.stores", "store"],
+            task_id,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_stores_get_store_tasks(self, **kwargs):  # noqa: E501
+        """get_store_tasks
+
+        This method retrieves the status of all async store tasks for a store. Every task is set as FAILED or COMPLETED once it's execution time reaches 24 hours.
+
+        :return: GetStoreTasksResponseType
+        """
+        return self._method_single(
+            sell_stores.Configuration,
+            "/sell/stores/v1",
+            sell_stores.StoreApi,
+            sell_stores.ApiClient,
+            "get_store_tasks",
+            SellStoresException,
+            False,
+            ["sell.stores", "store"],
+            None,
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_stores_move_store_category(
+        self, body, content_type, **kwargs
+    ):  # noqa: E501
+        """move_store_category
+
+
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
+        :return: None
+        """
+        return self._method_single(
+            sell_stores.Configuration,
+            "/sell/stores/v1",
+            sell_stores.StoreApi,
+            sell_stores.ApiClient,
+            "move_store_category",
+            SellStoresException,
+            False,
+            ["sell.stores", "store"],
+            (body, content_type),
+            **kwargs,
+        )  # noqa: E501
+
+    def sell_stores_rename_store_category(
+        self, content_type, category_id, **kwargs
+    ):  # noqa: E501
+        """rename_store_category
+
+
+        :param str content_type: This header indicates the format of the request body provided by the client. Its value should be set to application/json.  For more information, refer to HTTP request headers. (required)
+        :param str category_id: The unique identifier of an eBay Store's custom category. eBay auto-generates this identifier when a seller establishes a custom store category. This category ID should not be confused with an eBay category ID. This is the category that is to be renamed. (required)
+        :param RenameStoreCategoryRequestType body: This call is used to rename the single category of a user's eBay store.
+        :return: None
+        """
+        return self._method_single(
+            sell_stores.Configuration,
+            "/sell/stores/v1",
+            sell_stores.StoreApi,
+            sell_stores.ApiClient,
+            "rename_store_category",
+            SellStoresException,
+            False,
+            ["sell.stores", "store"],
+            (content_type, category_id),
             **kwargs,
         )  # noqa: E501
 

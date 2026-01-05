@@ -559,6 +559,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         else:
             self.assertTrue("credit_count" in result)
 
+    @unittest.skip  # TODO, insufficient permissions.
     def test_sell_feed_create_inventory_task(self):
         """
         https://developer.ebay.com/api-docs/sell/feed/resources/inventory_task/methods/createInventoryTask
@@ -795,6 +796,80 @@ class APISandboxSingleSiteTests(unittest.TestCase):
                 self.assertIn("status", video_info, "Video status should be present")
                 self.assertIn("title", video_info, "Video title should be present")
                 self.assertIn("size", video_info, "Video size should be present")
+
+    @unittest.skip  # TODO, insufficient permissions.
+    def test_commerce_message_get_conversations(self):
+        """
+        https://developer.ebay.com/api-docs/commerce/message/resources/conversation/methods/getConversations
+        """
+        try:
+            for record in self._api.commerce_message_get_conversations(
+                conversation_type="FROM_EBAY", reference_type="LISTING"
+            ):
+                if "record" in record:
+                    item = record["record"]
+                    self.assertIsNotNone(item)
+        except Error as error:
+            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+
+    @unittest.skip  # TODO, insufficient permissions.
+    def test_commerce_vero_get_vero_reason_codes(self):
+        """
+        https://developer.ebay.com/api-docs/commerce/vero/resources/vero_reason_code/methods/getVeroReasonCodes
+
+        Important! You must be a member of the Verified Rights Owner (VeRO) Program to use this call.
+        """
+        try:
+            result = self._api.commerce_vero_get_vero_reason_codes(
+                x_ebay_c_marketplace_id="EBAY_US"
+            )
+        except Error as error:
+            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+        else:
+            self.assertIsNotNone(result)
+
+    @unittest.skip  # # TODO, insufficient permissions.
+    def test_sell_e_delivery_international_shipping_get_address_preferences(self):
+        """
+        https://developer.ebay.com/api-docs/sell/leads/resources/classified_lead/methods/getAllClassifiedLeads
+
+        Important! This method is only available for sellers in Greater China with an active eDIS account.
+        https://edis.ebay.com/login
+        """
+        try:
+            result = (
+                self._api.sell_edelivery_international_shipping_get_address_preferences()
+            )
+        except Error as error:
+            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+        else:
+            self.assertIsNotNone(result)
+
+    @unittest.skip  # TODO, insufficient permissions.
+    def test_sell_leads_get_all_classified_leads(self):
+        """
+        https://developer.ebay.com/api-docs/sell/leads/resources/classified_lead/methods/getAllClassifiedLeads
+        """
+        try:
+            result = self._api.sell_leads_get_all_classified_leads(
+                content_type="application/json"
+            )
+        except Error as error:
+            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+        else:
+            self.assertIsNotNone(result)
+
+    @unittest.skip  # TODO, insufficient permissions.
+    def test_sell_stores_get_store(self):
+        """
+        https://developer.ebay.com/api-docs/sell/stores/resources/store/methods/getStore
+        """
+        try:
+            result = self._api.sell_stores_get_store()
+        except Error as error:
+            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+        else:
+            self.assertIsNotNone(result)
 
 
 class APIProductionSingleTests(unittest.TestCase):

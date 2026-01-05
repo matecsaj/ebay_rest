@@ -15,10 +15,11 @@ import re
 import shutil
 import sys
 import time
-from typing import AsyncGenerator, Dict, Iterable, List, Optional, Set, Union
+from typing import Any, AsyncGenerator, Dict, Iterable, List, Optional, Set, Union
 
 # Third party imports
 import aiofiles
+import aiofiles.os
 import aiohttp
 import asyncio
 from bs4 import BeautifulSoup
@@ -29,6 +30,47 @@ from urllib.parse import urljoin, urlsplit
 # Local imports
 
 # Globals
+
+# Ebay made a mistake with this url, the JSON filename within should contain 'leads' not 'feed'.
+GOOFY_SELL_LEADS_URL = "https://developer.ebay.com/api-docs/master/sell/leads/openapi/3/sell_feed_v1_oas3.json"
+
+# noinspection SpellCheckingInspection
+MISSING_OAUTH_SCOPES = {
+    "commerce_message_v1_oas3.json": (
+        ("https://api.ebay.com/oauth/api_scope/commerce.message", ""),
+    ),
+    "commerce_vero_v1_oas3.json": (
+        ("https://api.ebay.com/oauth/api_scope/commerce.vero", ""),
+    ),
+    "sell_edelivery_international_shipping_oas3.json": (
+        ("https://api.ebay.com/oauth/scope/sell.edelivery", ""),
+    ),
+    "sell_feed_v1_oas3.json": (
+        (
+            "https://api.ebay.com/oauth/api_scope/sell.inventory",
+            "Active Inventory Report",
+        ),
+        (
+            "https://api.ebay.com/oauth/api_scope/sell.fulfillment",
+            "LMS Order Ack and Order Report",
+        ),
+        ("https://api.ebay.com/oauth/api_scope/sell.marketing", "For future use"),
+        (
+            "https://api.ebay.com/oauth/api_scope/commerce.catalog.readonly",
+            "For future use",
+        ),
+        (
+            "https://api.ebay.com/oauth/api_scope/sell.analytics.readonly",
+            "Customer Service Metrics Report",
+        ),
+    ),
+    "sell_leads_v1_oas3.json": (
+        ("https://api.ebay.com/oauth/api_scope/sell.leads", ""),
+    ),
+    "sell_stores_v1_oas3.json": (
+        ("https://api.ebay.com/oauth/api_scope/sell.stores", ""),
+    ),
+}
 
 # Data Classes
 
@@ -534,6 +576,7 @@ class Contract:
         self.data.name = await self.get_api_name()
         await self.cache_contract()
         await self.patch_contract()
+        await self.patch_missing_flows()
         await self.swagger_codegen()
         await self.patch_generated()
         await self.copy_library()
@@ -593,6 +636,10 @@ class Contract:
                 f"Variable path_version {path_version} should equal version {filename_version}."
             )
 
+        if contract_url == GOOFY_SELL_LEADS_URL:
+            file_name = "sell_leads_v1_oas3.json"  # correct the file's name
+            logging.info(f"Corrected the sell_leads filename.")
+
         return ContractInfo(
             category=category,
             call=call,
@@ -630,13 +677,154 @@ class Contract:
         async with aiofiles.open(destination, mode="w", encoding="utf-8") as f:
             await f.write(decoded_content)
 
+    async def patch_missing_flows_old(self) -> None:
+        """
+        Modify OAS3 JSON schema files to add missing OAuth2 flow definitions/scopes.
+        """
+        if self.data.file_name in MISSING_OAUTH_SCOPES:
+            file_path = os.path.join(Locations.cache_path, self.data.file_name)
+            try:
+                async with aiofiles.open(file_path, mode="r") as f:
+                    data = await f.read()
+            except FileNotFoundError:
+                logging.error(
+                    f"Patching flows in {file_path} failed because the file can't be opened."
+                )
+            else:
+                data = json.loads(data)
+
+                flows = (
+                    data.get("components", {})
+                    .get("securitySchemes", {})
+                    .get("api_auth", {})
+                    .get("flows", None)
+                )
+
+                if flows is None:
+                    logging.error(
+                        f"Patching flows in {file_path} failed: missing components.securitySchemes.api_auth."
+                    )
+
+                elif not isinstance(flows, dict):
+                    logging.error(
+                        f"Patching flows in {file_path} failed: expected dict."
+                    )
+
+                elif flows:
+                    logging.warning(
+                        f"Skipped patching flows in {file_path}: api_auth.flows already populated."
+                    )
+
+                else:
+                    for scope, description in MISSING_OAUTH_SCOPES[self.data.file_name]:
+                        flows[scope] = description
+
+                    data = json.dumps(data, sort_keys=True, indent=4)
+                    async with aiofiles.open(file_path, mode="w") as f:
+                        await f.write(data)
+                    logging.info(f"Patched flows in {file_path}.")
+
+    async def patch_missing_flows(self) -> None:
+        """
+        Patch OAuth2 flows only when api_auth.flows exists and is empty {}.
+        Skip if missing, wrong type, or already populated.
+        """
+        filename = self.data.file_name
+        if filename not in MISSING_OAUTH_SCOPES:
+            return
+
+        file_path = os.path.join(Locations.cache_path, filename)
+
+        try:
+            async with aiofiles.open(file_path, mode="r") as f:
+                raw = await f.read()
+        except FileNotFoundError:
+            logging.error(
+                f"Could not patch missing flows in {file_path} because the file can't be opened."
+            )
+            return
+
+        try:
+            data: Dict[str, Any] = json.loads(raw)
+        except json.JSONDecodeError as e:
+            logging.error(
+                f"Could not patch missing flows in {file_path} because of invalid JSON {e}."
+            )
+            return
+
+        api_auth = (
+            data.get("components", {}).get("securitySchemes", {}).get("api_auth", None)
+        )
+        if not isinstance(api_auth, dict):
+            logging.error(
+                f"Could not patch missing flows in {file_path} because of missing components.securitySchemes.api_auth."
+            )
+            return
+
+        flows = api_auth.get("flows", None)
+        if flows is None:
+            logging.error(
+                f"Could not patch missing flows in {file_path} because of missing components.securitySchemes.api_auth.flows."
+            )
+            return
+
+        if not isinstance(flows, dict):
+            logging.error(
+                f"Could not patch missing flows in {file_path} because of expected dict."
+            )
+            return
+
+        if flows:
+            logging.warning(
+                f"Skipped patching missing flows in {file_path} because already populated."
+            )
+            return
+
+        data["components"]["securitySchemes"]["api_auth"]["type"] = "oauth2"
+        flows["clientCredentials"] = {
+            "tokenUrl": "https://api.ebay.com/identity/v1/oauth2/token",
+            "scopes": {
+                scope: (desc or "") for scope, desc in MISSING_OAUTH_SCOPES[filename]
+            },
+        }
+
+        rendered = json.dumps(data, sort_keys=True, indent=4)
+        async with aiofiles.open(file_path, mode="w") as f:
+            await f.write(rendered)
+
+        logging.info(f"Patched missing flows in {file_path}.")
+
     async def patch_contract(self) -> None:
         """
         If the contract from eBay has an error, then patch it before generating code.
         """
         # This is no longer needed, ebay fixed the problem, but I'm leaving it here for reference.
         # if self.data.category == 'sell' and self.data.call == 'fulfillment':
-        #     await Contracts.patch_contract_sell_fulfillment(self.data.file_name)
+        #     await Contract.patch_contract_sell_fulfillment(self.data.file_name)
+
+    # This is no longer needed, ebay fixed the problem, but I'm leaving it here for reference.
+    @staticmethod
+    async def patch_contract_sell_fulfillment(file_name: str) -> None:
+        # In the Sell Fulfillment API, the model 'Address' is returned with the attribute 'countryCode'.
+        # However, the JSON specifies 'country' instead; thus Swagger generates the wrong API.
+        file_path = os.path.join(Locations.cache_path, file_name)
+        try:
+            async with aiofiles.open(file_path, mode="r") as f:
+                data = await f.read()
+        except FileNotFoundError:
+            logging.error(f"Can't open {file_path}.")
+        else:
+            data = json.loads(data)
+            properties = data["components"]["schemas"]["Address"]["properties"]
+            if "country" in properties:
+                properties["countryCode"] = properties.pop(
+                    "country"
+                )  # Warning, alphabetical key order spoiled.
+                data = json.dumps(data, sort_keys=True, indent=4)
+                async with aiofiles.open(file_path, mode="w") as f:
+                    await f.write(data)
+            else:
+                logging.warning(f"Patching {file_name} is no longer needed.")
 
     @staticmethod
     async def patch_file_upload_method(api_file_path: str, method_name: str) -> bool:
@@ -1134,8 +1322,10 @@ class Contract:
         stdout, stderr = await proc.communicate()
         logger.debug(f"[{cmd!r} exited with {proc.returncode}]")
         if stdout:
+            logger.debug(f"{cmd=}")
             logger.debug(f"[stdout]\n{stdout.decode()}")
         if stderr:
+            logger.error(f"{cmd=}")
             logger.error(f"[stderr]\n{stderr.decode()}")
 
     async def swagger_codegen(self) -> None:
@@ -1693,6 +1883,22 @@ class Contracts:
             contract = Contract(url)
             self.contracts.append(contract)
 
+    @staticmethod
+    async def warn_missing_oauth_files() -> None:
+        """
+        Log a warning for each file listed in MISSING_OAUTH_SCOPES that does not exist in the cache directory.
+        """
+        base_dir = Locations.cache_path
+
+        for filename in MISSING_OAUTH_SCOPES:
+            file_path = os.path.join(base_dir, filename)
+            try:
+                await aiofiles.os.stat(file_path)
+            except FileNotFoundError:
+                logging.warning(
+                    f"OAuth patch candidate filename {filename} from MISSING_OAUTH_SCOPES does not exist in {base_dir}."
+                )
+
     async def process_all_contracts(self) -> List[ProcessResult]:
         """
         Process all loaded contracts and return the results.
@@ -1757,6 +1963,11 @@ class Contracts:
             if url_pair.url.endswith(".json"):
                 contract_urls.add(url_pair.url)
 
+        if GOOFY_SELL_LEADS_URL not in contract_urls:
+            logging.debug(
+                f"eBay fixed a mistake, the GOOFY_SELL_LEADS_URL fix can be removed."
+            )
+
         contract_urls_sorted = sorted(list(contract_urls))
 
         # safety check
@@ -1816,30 +2027,6 @@ class Contracts:
         logging.info(f"Process overview URL {contract_url}.")
         c = Contract(contract_url)
         return await c.get_process_result()
-
-    # This is no longer needed, ebay fixed the problem, but I'm leaving it here for reference.
-    @staticmethod
-    async def patch_contract_sell_fulfillment(file_name: str) -> None:
-        # In the Sell Fulfillment API, the model 'Address' is returned with the attribute 'countryCode'.
-        # However, the JSON specifies 'country' instead; thus Swagger generates the wrong API.
-        file_path = os.path.join(Locations.cache_path, file_name)
-        try:
-            async with aiofiles.open(file_path, mode="r") as f:
-                data = await f.read()
-        except FileNotFoundError:
-            logging.error(f"Can't open {file_path}.")
-        else:
-            data = json.loads(data)
-            properties = data["components"]["schemas"]["Address"]["properties"]
-            if "country" in properties:
-                properties["countryCode"] = properties.pop(
-                    "country"
-                )  # Warning, alphabetical key order spoiled.
-                data = json.dumps(data, sort_keys=True, indent=4)
-                async with aiofiles.open(file_path, mode="w") as f:
-                    await f.write(data)
-            else:
-                logging.warning(f"Patching {file_name} is no longer needed.")
 
     @staticmethod
     async def delete_folder_contents(path_to_folder: str) -> None:
@@ -1972,6 +2159,8 @@ class Contracts:
                 methods += record.method
         await CodeInjector().do(requirements, includes, methods)
         # await self.remove_duplicates(names)     # TODO uncomment the method call when work on it resumes
+
+        await self.warn_missing_oauth_files()
 
 
 class CodeInjector:

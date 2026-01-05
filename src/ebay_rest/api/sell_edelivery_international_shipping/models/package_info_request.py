@@ -39,8 +39,8 @@ class PackageInfoRequest(object):
         'package_weight': 'float',
         'package_width': 'float',
         'ship_from_address_id': 'str',
-        'shipping_service_id': 'str',
         'ship_to_address': 'ShipToAddressRequestData',
+        'shipping_service_id': 'str',
         'special_service_detail': 'SpecialServiceDetail',
         'value_for_carriage': 'str'
     }
@@ -57,13 +57,13 @@ class PackageInfoRequest(object):
         'package_weight': 'packageWeight',
         'package_width': 'packageWidth',
         'ship_from_address_id': 'shipFromAddressId',
-        'shipping_service_id': 'shippingServiceId',
         'ship_to_address': 'shipToAddress',
+        'shipping_service_id': 'shippingServiceId',
         'special_service_detail': 'specialServiceDetail',
         'value_for_carriage': 'valueForCarriage'
     }
 
-    def __init__(self, agent_info_request=None, consign_preference_id=None, incoterm=None, items=None, max_quantity_limit=None, package_comment=None, package_height=None, package_length=None, package_weight=None, package_width=None, ship_from_address_id=None, shipping_service_id=None, ship_to_address=None, special_service_detail=None, value_for_carriage=None):  # noqa: E501
+    def __init__(self, agent_info_request=None, consign_preference_id=None, incoterm=None, items=None, max_quantity_limit=None, package_comment=None, package_height=None, package_length=None, package_weight=None, package_width=None, ship_from_address_id=None, ship_to_address=None, shipping_service_id=None, special_service_detail=None, value_for_carriage=None):  # noqa: E501
         """PackageInfoRequest - a model defined in Swagger"""  # noqa: E501
         self._agent_info_request = None
         self._consign_preference_id = None
@@ -76,8 +76,8 @@ class PackageInfoRequest(object):
         self._package_weight = None
         self._package_width = None
         self._ship_from_address_id = None
-        self._shipping_service_id = None
         self._ship_to_address = None
+        self._shipping_service_id = None
         self._special_service_detail = None
         self._value_for_carriage = None
         self.discriminator = None
@@ -103,10 +103,10 @@ class PackageInfoRequest(object):
             self.package_width = package_width
         if ship_from_address_id is not None:
             self.ship_from_address_id = ship_from_address_id
-        if shipping_service_id is not None:
-            self.shipping_service_id = shipping_service_id
         if ship_to_address is not None:
             self.ship_to_address = ship_to_address
+        if shipping_service_id is not None:
+            self.shipping_service_id = shipping_service_id
         if special_service_detail is not None:
             self.special_service_detail = special_service_detail
         if value_for_carriage is not None:
@@ -364,6 +364,27 @@ class PackageInfoRequest(object):
         self._ship_from_address_id = ship_from_address_id
 
     @property
+    def ship_to_address(self):
+        """Gets the ship_to_address of this PackageInfoRequest.  # noqa: E501
+
+
+        :return: The ship_to_address of this PackageInfoRequest.  # noqa: E501
+        :rtype: ShipToAddressRequestData
+        """
+        return self._ship_to_address
+
+    @ship_to_address.setter
+    def ship_to_address(self, ship_to_address):
+        """Sets the ship_to_address of this PackageInfoRequest.
+
+
+        :param ship_to_address: The ship_to_address of this PackageInfoRequest.  # noqa: E501
+        :type: ShipToAddressRequestData
+        """
+
+        self._ship_to_address = ship_to_address
+
+    @property
     def shipping_service_id(self):
         """Gets the shipping_service_id of this PackageInfoRequest.  # noqa: E501
 
@@ -385,27 +406,6 @@ class PackageInfoRequest(object):
         """
 
         self._shipping_service_id = shipping_service_id
-
-    @property
-    def ship_to_address(self):
-        """Gets the ship_to_address of this PackageInfoRequest.  # noqa: E501
-
-
-        :return: The ship_to_address of this PackageInfoRequest.  # noqa: E501
-        :rtype: ShipToAddressRequestData
-        """
-        return self._ship_to_address
-
-    @ship_to_address.setter
-    def ship_to_address(self, ship_to_address):
-        """Sets the ship_to_address of this PackageInfoRequest.
-
-
-        :param ship_to_address: The ship_to_address of this PackageInfoRequest.  # noqa: E501
-        :type: ShipToAddressRequestData
-        """
-
-        self._ship_to_address = ship_to_address
 
     @property
     def special_service_detail(self):

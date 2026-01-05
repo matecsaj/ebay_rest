@@ -39,9 +39,9 @@ class ItemResponses(object):
         'message': 'str',
         'order_id': 'str',
         'order_line_item': 'str',
-        'payment_date': 'str',
         'pay_pal_email': 'str',
         'pay_pal_message': 'str',
+        'payment_date': 'str',
         'posted_quantity': 'int',
         'site_id': 'int',
         'sku': 'SkuRequest',
@@ -63,9 +63,9 @@ class ItemResponses(object):
         'message': 'message',
         'order_id': 'orderId',
         'order_line_item': 'orderLineItem',
-        'payment_date': 'paymentDate',
         'pay_pal_email': 'payPalEmail',
         'pay_pal_message': 'payPalMessage',
+        'payment_date': 'paymentDate',
         'posted_quantity': 'postedQuantity',
         'site_id': 'siteId',
         'sku': 'sku',
@@ -75,7 +75,7 @@ class ItemResponses(object):
         'transaction_id': 'transactionId'
     }
 
-    def __init__(self, buyer_id=None, buyer_tax_id=None, buyer_tax_type=None, ebay_collect_and_remit_tax=None, ebay_collect_and_remit_taxes_value=None, email=None, item_title=None, listing_id=None, message=None, order_id=None, order_line_item=None, payment_date=None, pay_pal_email=None, pay_pal_message=None, posted_quantity=None, site_id=None, sku=None, sold_date=None, sold_price=None, sold_quantity=None, transaction_id=None):  # noqa: E501
+    def __init__(self, buyer_id=None, buyer_tax_id=None, buyer_tax_type=None, ebay_collect_and_remit_tax=None, ebay_collect_and_remit_taxes_value=None, email=None, item_title=None, listing_id=None, message=None, order_id=None, order_line_item=None, pay_pal_email=None, pay_pal_message=None, payment_date=None, posted_quantity=None, site_id=None, sku=None, sold_date=None, sold_price=None, sold_quantity=None, transaction_id=None):  # noqa: E501
         """ItemResponses - a model defined in Swagger"""  # noqa: E501
         self._buyer_id = None
         self._buyer_tax_id = None
@@ -88,9 +88,9 @@ class ItemResponses(object):
         self._message = None
         self._order_id = None
         self._order_line_item = None
-        self._payment_date = None
         self._pay_pal_email = None
         self._pay_pal_message = None
+        self._payment_date = None
         self._posted_quantity = None
         self._site_id = None
         self._sku = None
@@ -121,12 +121,12 @@ class ItemResponses(object):
             self.order_id = order_id
         if order_line_item is not None:
             self.order_line_item = order_line_item
-        if payment_date is not None:
-            self.payment_date = payment_date
         if pay_pal_email is not None:
             self.pay_pal_email = pay_pal_email
         if pay_pal_message is not None:
             self.pay_pal_message = pay_pal_message
+        if payment_date is not None:
+            self.payment_date = payment_date
         if posted_quantity is not None:
             self.posted_quantity = posted_quantity
         if site_id is not None:
@@ -396,29 +396,6 @@ class ItemResponses(object):
         self._order_line_item = order_line_item
 
     @property
-    def payment_date(self):
-        """Gets the payment_date of this ItemResponses.  # noqa: E501
-
-        The date and time that the payment was received by the seller. This timestamp is returned in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock.  # noqa: E501
-
-        :return: The payment_date of this ItemResponses.  # noqa: E501
-        :rtype: str
-        """
-        return self._payment_date
-
-    @payment_date.setter
-    def payment_date(self, payment_date):
-        """Sets the payment_date of this ItemResponses.
-
-        The date and time that the payment was received by the seller. This timestamp is returned in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock.  # noqa: E501
-
-        :param payment_date: The payment_date of this ItemResponses.  # noqa: E501
-        :type: str
-        """
-
-        self._payment_date = payment_date
-
-    @property
     def pay_pal_email(self):
         """Gets the pay_pal_email of this ItemResponses.  # noqa: E501
 
@@ -463,6 +440,29 @@ class ItemResponses(object):
         """
 
         self._pay_pal_message = pay_pal_message
+
+    @property
+    def payment_date(self):
+        """Gets the payment_date of this ItemResponses.  # noqa: E501
+
+        The date and time that the payment was received by the seller. This timestamp is returned in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock.  # noqa: E501
+
+        :return: The payment_date of this ItemResponses.  # noqa: E501
+        :rtype: str
+        """
+        return self._payment_date
+
+    @payment_date.setter
+    def payment_date(self, payment_date):
+        """Sets the payment_date of this ItemResponses.
+
+        The date and time that the payment was received by the seller. This timestamp is returned in ISO 8601 format, which uses the 24-hour Universal Coordinated Time (UTC) clock.  # noqa: E501
+
+        :param payment_date: The payment_date of this ItemResponses.  # noqa: E501
+        :type: str
+        """
+
+        self._payment_date = payment_date
 
     @property
     def posted_quantity(self):
