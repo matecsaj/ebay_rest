@@ -690,9 +690,9 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         else:
             self.assertIsNotNone(result)
 
-    # As of 2025-11-12, the Fulfillment API is in Beta - it is glitchy, so try again later.
+    # TODO As of 2025-11-12, the Fulfillment API is in Beta - it is glitchy, so try again later.
     # If the second step, the actual upload, fails, then see https://github.com/matecsaj/ebay_rest/issues/60.
-    @unittest.skip
+    # @unittest.skip
     def test_sell_fulfillment_upload_evidence_file(self):
         """
         First, get a valid payment_dispute_id,
@@ -797,7 +797,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
                 self.assertIn("title", video_info, "Video title should be present")
                 self.assertIn("size", video_info, "Video size should be present")
 
-    @unittest.skip  # TODO, insufficient permissions.
+    @unittest.skip  # TODO I don't know if this works, eBay has not granted my account the permission to use it.
     def test_commerce_message_get_conversations(self):
         """
         https://developer.ebay.com/api-docs/commerce/message/resources/conversation/methods/getConversations
@@ -812,7 +812,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         except Error as error:
             self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
 
-    @unittest.skip  # TODO, insufficient permissions.
+    @unittest.skip  # TODO I don't know if this works, eBay has not granted my account the permission to use it.
     def test_commerce_vero_get_vero_reason_codes(self):
         """
         https://developer.ebay.com/api-docs/commerce/vero/resources/vero_reason_code/methods/getVeroReasonCodes
@@ -828,7 +828,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         else:
             self.assertIsNotNone(result)
 
-    @unittest.skip  # # TODO, insufficient permissions.
+    @unittest.skip  # TODO I don't know if this works, eBay has not granted my account the permission to use it.
     def test_sell_e_delivery_international_shipping_get_address_preferences(self):
         """
         https://developer.ebay.com/api-docs/sell/leads/resources/classified_lead/methods/getAllClassifiedLeads
@@ -845,7 +845,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         else:
             self.assertIsNotNone(result)
 
-    @unittest.skip  # TODO, insufficient permissions.
+    @unittest.skip  # TODO I don't know if this works, eBay has not granted my account the permission to use it.
     def test_sell_leads_get_all_classified_leads(self):
         """
         https://developer.ebay.com/api-docs/sell/leads/resources/classified_lead/methods/getAllClassifiedLeads
@@ -859,7 +859,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         else:
             self.assertIsNotNone(result)
 
-    @unittest.skip  # TODO, insufficient permissions.
+    @unittest.skip  # TODO I don't know if this works, eBay has not granted my account the permission to use it.
     def test_sell_stores_get_store(self):
         """
         https://developer.ebay.com/api-docs/sell/stores/resources/store/methods/getStore

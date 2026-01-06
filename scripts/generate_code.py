@@ -34,6 +34,7 @@ from urllib.parse import urljoin, urlsplit
 # Ebay made a mistake with this url, the JSON filename within should contain 'leads' not 'feed'.
 GOOFY_SELL_LEADS_URL = "https://developer.ebay.com/api-docs/master/sell/leads/openapi/3/sell_feed_v1_oas3.json"
 
+# TODO I don't know if this works, I wrote unit tests but eBay has not granted my account the permission to run them.
 # noinspection SpellCheckingInspection
 MISSING_OAUTH_SCOPES = {
     "commerce_message_v1_oas3.json": (
