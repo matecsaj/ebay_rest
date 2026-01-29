@@ -67,7 +67,7 @@ else:
                 item = record['record']
                 print(f"item id: {item['item_id']} {item['item_web_url']}")
     except Error as error:
-        print(f'Error {error.number} is {error.reason} {error.detail}.\n')
+        print(error)    # Another way to print an error.
     else:
         pass
 

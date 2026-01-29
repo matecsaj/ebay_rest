@@ -66,7 +66,7 @@ class APIBothEnvironmentsSingleSiteTests(unittest.TestCase):
                         item = api.buy_browse_get_item(item_id=item_id)
                         self.assertTrue(isinstance(item, dict))
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
 
 
 class APIMarketplaceSpecificTests(unittest.TestCase):
@@ -206,7 +206,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
                 application=application, user=user, header=header, key_pair=key_pair
             )
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         else:
             self.assertIsInstance(api, API, "An API object was not returned.")
 
@@ -259,7 +259,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
                 path=os.getcwd(), application="sandbox_1", user="sandbox_1", header="US"
             )
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         else:
             self.assertIsInstance(api, API, "An API object was not returned.")
 
@@ -312,9 +312,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
                                 item_id=item_id, fieldgroups="PRODUCT"
                             )
                         except Error as error:
-                            self.fail(
-                                f"Error {error.number} is {error.reason}  {error.detail}.\n"
-                            )
+                            self.fail(error)
                         d_shipping = self._get_lowest_shipping(
                             d_item, d_country, shipping_currency
                         )
@@ -325,9 +323,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
                                 item_id=item_id, fieldgroups="PRODUCT"
                             )
                         except Error as error:
-                            self.fail(
-                                f"Error {error.number} is {error.reason}  {error.detail}.\n"
-                            )
+                            self.fail(error)
                         f_shipping = self._get_lowest_shipping(
                             f_item, f_country, shipping_currency
                         )
@@ -352,7 +348,7 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
                         )
 
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
 
         self.assertTrue(tally > 0, "Domestic shipping should cost less than foreign.")
 
@@ -443,7 +439,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
                     self.assertTrue(isinstance(item["item_id"], str), "Malformed item.")
                     self.fail(msg="No items should be returned.")
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
 
     def test_positional_none_kw_none(self):
         """
@@ -455,7 +451,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
                 x_ebay_c_marketplace_id=self.marketplace_id
             )
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         else:
             if result is not None:  # If there are listing violations
                 self.assertIn(
@@ -467,7 +463,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         try:
             result = self._api.commerce_taxonomy_get_default_category_tree_id("EBAY_US")
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         else:
             self.assertTrue(
                 "category_tree_id" in result,
@@ -489,7 +485,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
                         "total" in record, f"Unexpected non-record{record}."
                     )
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
 
     def test_positional_some_kw_some(self):
         # This is redundant, several unit tests call buy_browse_search, so this test case is well covered.
@@ -502,9 +498,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         try:
             self._api.buy_browse_get_item(item_id="invalid")
         except Error as error:
-            self.assertIsNotNone(
-                f"Error {error.number} is {error.reason} with detail {error.detail}."
-            )
+            self.assertIsNotNone(error)
         else:
             self.assertIsNotNone(None, msg="Failed to raise an exception.")
 
@@ -536,7 +530,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
                             success = False
                             break
             except Error as error:
-                self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+                self.fail(error)
             else:
                 message = (
                     "The search for "
@@ -555,7 +549,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
                 x_ebay_c_marketplace_id=self.marketplace_id,
             )
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         else:
             self.assertTrue("credit_count" in result)
 
@@ -590,7 +584,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
             # task_id_new = task_ids_new.pop()    # the new task id that we worked so hard to get
 
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         except Exception as ex:
             self.fail(f"An unexpected error occurred: {str(ex)}")
 
@@ -627,7 +621,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
                 files={"image": self.get_upload_sample_path_file("image.jpg")},
             )
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         else:
             self.assertIn("expiration_date", result)
             self.assertIn("image_url", result)
@@ -686,7 +680,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
                 files={"file": self.get_upload_sample_path_file("data.xml")},
             )
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         else:
             self.assertIsNotNone(result)
 
@@ -724,7 +718,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
                 },  # try "file" instead of "image"
             )
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         else:
             self.assertIn("credit_count", result)
 
@@ -784,7 +778,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
             video_info = self._api.commerce_media_get_video(video_id=video_id)
 
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         else:
             self.assertIsNone(result, "upload_video should return None on success")
             self.assertIsNotNone(
@@ -810,7 +804,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
                     item = record["record"]
                     self.assertIsNotNone(item)
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
 
     @unittest.skip  # TODO I don't know if this works, eBay has not granted my account the permission to use it.
     def test_commerce_vero_get_vero_reason_codes(self):
@@ -824,7 +818,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
                 x_ebay_c_marketplace_id="EBAY_US"
             )
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         else:
             self.assertIsNotNone(result)
 
@@ -841,7 +835,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
                 self._api.sell_edelivery_international_shipping_get_address_preferences()
             )
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         else:
             self.assertIsNotNone(result)
 
@@ -855,7 +849,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
                 content_type="application/json"
             )
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         else:
             self.assertIsNotNone(result)
 
@@ -867,7 +861,7 @@ class APISandboxSingleSiteTests(unittest.TestCase):
         try:
             result = self._api.sell_stores_get_store()
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         else:
             self.assertIsNotNone(result)
 
@@ -938,7 +932,7 @@ class APIProductionSingleTests(unittest.TestCase):
                 else:
                     self.fail(f"Unexpected record {record}")
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.")
+            self.fail(error)
 
     def test_hidden_page_boundaries(self):
         """
@@ -1059,7 +1053,7 @@ class APIProductionSingleTests(unittest.TestCase):
                 merchant_location_key=merchant_location_key,
             )
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
 
         # Confirm the new location.
         # https://developer.ebay.com/api-docs/sell/inventory/resources/location/methods/getInventoryLocations
@@ -1081,7 +1075,7 @@ class APIProductionSingleTests(unittest.TestCase):
                             f"A location is missing the merchant_location_key {record}."
                         )
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         self.assertTrue(confirmed, "Failed to confirm that the new location exists.")
 
     def test_sell_create_or_replace_inventory_item(self):
@@ -1198,7 +1192,7 @@ class APIProductionSingleTests(unittest.TestCase):
                 sku=sku,
             )
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
 
     @staticmethod
     def get_upload_sample_path_file(file_name: str) -> str:
@@ -1250,7 +1244,7 @@ class APIProductionSingleTests(unittest.TestCase):
             )
 
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         else:
             self.assertIn("document_metadata", result)
             self.assertIn("document_status", result)
@@ -1314,7 +1308,7 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
         try:
             key = api.get_digital_signature_key(create_new=False)
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         else:
             self.assertEqual(key["private_key"], self.original_private_key)
             self.assertEqual(key["signing_key_id"], self.original_signing_key_id)
@@ -1369,7 +1363,7 @@ class APISandboxDigitalSignatureTests(unittest.TestCase):
                 x_ebay_c_marketplace_id=self.marketplace_id,
             )
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         else:
             self.assertTrue("credit_count" in result)
 
@@ -1479,6 +1473,71 @@ class DateTimeTests(unittest.TestCase):
         )
 
 
+class ErrorTests(unittest.TestCase):
+    def test_error_init(self):
+        # test basic initialization
+        error = Error(number=1, reason="reason", detail="detail")
+        self.assertEqual(error.number, 1)
+        self.assertEqual(error.reason, "reason")
+        self.assertEqual(error.detail, "detail")
+
+    def test_error_json_prettify(self):
+        # test JSON prettification for string
+        detail_json = '{"a": 1, "b": 2}'
+        error = Error(number=1, reason="reason", detail=detail_json)
+        expected_detail = '{\n    "a": 1,\n    "b": 2\n}'
+        self.assertEqual(error.detail, expected_detail)
+
+        # test JSON prettification for bytes
+        detail_bytes = b'{"a": 1, "b": 2}'
+        error = Error(number=1, reason="reason", detail=detail_bytes)  # type: ignore
+        self.assertEqual(error.detail, expected_detail)
+
+    def test_error_str(self):
+        # test string representation without detail or cause
+        error = Error(number=1, reason="reason")
+        expected_str = "Error number 1.\nReason: reason"
+        self.assertEqual(str(error), expected_str)
+
+        # test string representation with detail
+        error = Error(number=1, reason="reason", detail="detail")
+        expected_str = "Error number 1.\nReason: reason\nDetail: detail"
+        self.assertEqual(str(error), expected_str)
+
+        # test string representation with cause
+        cause = Exception("cause message")
+        error = Error(number=1, reason="reason", cause=cause)
+        expected_str = (
+            "Error number 1.\nReason: reason\nCause: Exception: cause message"
+        )
+        self.assertEqual(str(error), expected_str)
+
+    def test_error_as_dict(self):
+        cause = Exception("cause message")
+        error = Error(number=1, reason="reason", detail="detail", cause=cause)
+        expected_dict = {
+            "number": 1,
+            "reason": "reason",
+            "detail": "detail",
+            "cause": "cause message",
+        }
+        self.assertEqual(error.as_dict(), expected_dict)
+
+    def test_error_log(self):
+        error = Error(number=1, reason="reason")
+
+        class MockLogger:
+            def __init__(self):
+                self.message = None
+
+            def error(self, msg):
+                self.message = msg
+
+        logger = MockLogger()
+        error.log(logger)
+        self.assertEqual(logger.message, str(error))
+
+
 class TokenTests(unittest.TestCase):
     def test_get_authorization_code(self):
         """
@@ -1490,7 +1549,7 @@ class TokenTests(unittest.TestCase):
             # The user sand_box_2 should be a copy of sand_box_1 without refresh token values.
             api = API(application="sandbox_1", user="sandbox_2", header="US")
         except Error as error:
-            self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+            self.fail(error)
         else:
             # Try a method that needs a user refresh token.
             try:
@@ -1498,7 +1557,7 @@ class TokenTests(unittest.TestCase):
                     x_ebay_c_marketplace_id=api._header["marketplace_id"]
                 )
             except Error as error:
-                self.fail(f"Error {error.number} is {error.reason}  {error.detail}.\n")
+                self.fail(error)
             else:
                 if result is not None:
                     self.assertIsNotNone("violation_summaries" in result)

@@ -1,3 +1,7 @@
+# Standard library imports
+import json
+
+
 class Error(Exception):
     """
     Custom exception class for all errors raised by this library.
@@ -58,7 +62,22 @@ class Error(Exception):
         super().__init__()
         self.number = number
         self.reason = reason
+
+        # try to tidy the detail if it is a JSON string or bytes
+        if detail:
+            if isinstance(detail, bytes):
+                try:
+                    detail = detail.decode("utf-8")
+                except UnicodeDecodeError:
+                    pass
+            if isinstance(detail, str):
+                try:
+                    data = json.loads(detail)
+                    detail = json.dumps(data, indent=4)
+                except (json.JSONDecodeError, TypeError):
+                    pass
         self.detail = detail
+
         self.__cause__ = cause  # Store the original exception if provided
 
     def __str__(self) -> str:
@@ -67,9 +86,11 @@ class Error(Exception):
 
         :return:
         """
-        message = f"Error number {self.number}. {self.reason or ''} {self.detail or ''}".strip()
+        message = f"Error number {self.number}.\nReason: {self.reason or ''}"
+        if self.detail:
+            message += f"\nDetail: {self.detail}"
         if self.__cause__:
-            message += f" (caused by {type(self.__cause__).__name__}: {self.__cause__})"
+            message += f"\nCause: {type(self.__cause__).__name__}: {self.__cause__}"
         return message
 
     def as_dict(self) -> dict:
