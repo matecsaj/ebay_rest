@@ -2,16 +2,14 @@
 from base64 import b64encode, b64decode
 import binascii
 from datetime import datetime, timedelta, timezone
-from json import loads
 import logging
 from threading import Lock
-import time
 from typing import List, Optional
 from urllib.parse import urlparse, parse_qs, unquote, urlencode
 from cryptography.hazmat.primitives.serialization import load_der_private_key
 
 # 3rd party library imports
-from requests import codes, post, Response
+from authlib.integrations.requests_client import OAuth2Session
 
 # Local imports
 from .api.developer_key_management import CreateSigningKeyRequest
@@ -572,7 +570,7 @@ class _OAuthToken(object):
 
 
 class _OAuth2Api:
-    __slots__ = "_sandbox", "_client_id", "_client_secret", "_ru_name"
+    __slots__ = "_sandbox", "_client_id", "_client_secret", "_ru_name", "session"
 
     def __init__(self, sandbox: bool, client_id: str, client_secret: str, ru_name: str):
         """
@@ -589,6 +587,7 @@ class _OAuth2Api:
         self._client_id = client_id
         self._client_secret = client_secret
         self._ru_name = ru_name
+        self.session = OAuth2Session(client_id, client_secret)
 
     def generate_user_authorization_url(
         self,
@@ -625,14 +624,14 @@ class _OAuth2Api:
         :return: Credential object _OAuthToken
         """
         logging.debug("Trying to get a new application access token ... ")
-        headers = self._generate_request_headers()
-        body = self._generate_application_request_body(scopes)
-        api_endpoint = self._get_endpoint()
-        resp = post(api_endpoint, data=body, headers=headers)
-        content = loads(resp.content)
-        token = _OAuthToken()
 
-        return self._finish(resp, token, content)
+        token = _OAuthToken()
+        try:
+            token_data = self.session.fetch_token(url=self._get_endpoint(), grant_type='client_credentials', scope=" ".join(scopes))
+            return self._finish(token, token_data)
+        except Exception as e:
+            token.error = str(e)
+            return token
 
     def exchange_code_for_access_token(self, code: str) -> _OAuthToken:
         """
@@ -640,24 +639,13 @@ class _OAuth2Api:
         :return: credential_object _OAuthToken
         """
         logging.debug("Trying to get a new user access token ... ")
-
-        headers = self._generate_request_headers()
-        body = self._generate_oauth_request_body(code)
-        api_endpoint = self._get_endpoint()
-        resp = post(api_endpoint, data=body, headers=headers)
-
-        content = loads(resp.content)
         token = _OAuthToken()
-
-        if resp.status_code == codes.ok:
-            token.refresh_token = content["refresh_token"]
-            token.refresh_token_expiry = (
-                datetime.now(timezone.utc)
-                + timedelta(seconds=int(content["refresh_token_expires_in"]))
-                - timedelta(minutes=5)
-            )
-
-        return self._finish(resp, token, content)
+        try:
+            token_data = self.session.fetch_token(url=self._get_endpoint(), grant_type='authorization_code', code=code, redirect_uri=self._ru_name)
+            return self._finish(token, token_data)
+        except Exception as e:
+            token.error = str(e)
+            return token
 
     def get_access_token(self, refresh_token: str, scopes: List[str]) -> _OAuthToken:
         """
@@ -667,16 +655,14 @@ class _OAuth2Api:
         :return: credential_object _OAuthToken
         """
         logging.debug("Trying to get a new user access token ... ")
-
-        headers = self._generate_request_headers()
-        body = self._generate_refresh_request_body(scopes, refresh_token)
-        api_endpoint = self._get_endpoint()
-        resp = post(api_endpoint, data=body, headers=headers)
-        content = loads(resp.content)
         token = _OAuthToken()
-        token.token_response = content
-
-        return self._finish(resp, token, content)
+        token.refresh_token = refresh_token
+        try:
+            token_data = self.session.fetch_token(url=self._get_endpoint(), grant_type='refresh_token', refresh_token=refresh_token, scope=" ".join(scopes))
+            return self._finish(token, token_data)
+        except Exception as e:
+            token.error = str(e)
+            return token
 
     def _get_endpoint(self) -> str:
         """
@@ -687,83 +673,24 @@ class _OAuth2Api:
         else:
             return "https://api.ebay.com/identity/v1/oauth2/token"
 
-    def _generate_request_headers(self) -> dict:
-        """
-        :return: headers
-        """
-        b64_encoded_credential = b64encode(
-            (self._client_id + ":" + self._client_secret).encode()
-        )
-        headers = {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Authorization": "Basic " + b64_encoded_credential.decode(),
-        }
-        return headers
-
-    def _generate_application_request_body(self, scopes: List[str]) -> dict:
-        """
-        :param scopes: list
-        :return: body
-        """
-        body = {
-            "grant_type": "client_credentials",
-            "redirect_uri": self._ru_name,
-            "scope": " ".join(scopes),
-        }
-        return body
-
-    @staticmethod
-    def _generate_refresh_request_body(scopes: List[str], refresh_token: str) -> dict:
-        """
-        :param scopes: (list(str), required):
-        :param refresh_token:
-        :return: body (dict):
-        """
-        if refresh_token is None:
-            raise Error(
-                number=96013,
-                reason="credential object does not contain refresh_token and/or scopes",
-            )
-        body = {
-            "grant_type": "refresh_token",
-            "refresh_token": refresh_token,
-            "scope": " ".join(scopes),
-        }
-        return body
-
-    def _generate_oauth_request_body(self, code: str) -> dict:
-        """
-        :param code:
-        :return: body dict:
-        """
-        body = {
-            "grant_type": "authorization_code",
-            "redirect_uri": self._ru_name,
-            "code": code,
-        }
-        return body
-
-    @staticmethod
-    def _finish(resp: Response, token: _OAuthToken, content: dict) -> _OAuthToken:
+    def _finish(self, token: _OAuthToken, token_data: dict) -> _OAuthToken:
         """
         :param resp:
         :param token:
         :param content:
         :return:
         """
-        if resp.status_code == codes.ok:
-            token.access_token = content["access_token"]
-            token.token_expiry = (
-                datetime.now(timezone.utc)
-                + timedelta(seconds=int(content["expires_in"]))
-                - timedelta(minutes=5)
-            )
-        else:
-            token.error = str(resp.status_code)
-            key = "error_description"
-            if key in content:
-                token.error += ": " + content[key]
+        token.access_token = token_data.get("access_token")
+        token.refresh_token = token_data.get("refresh_token", token.refresh_token)
 
+        expires_in = int(token_data.get("expires_in", 7200))
+        token.token_expiry = datetime.now(timezone.utc) + timedelta(seconds=expires_in) - timedelta(minutes=5)
+
+        if "refresh_token_expires_in" in token_data:
+            refresh_expires_in = int(token_data["refresh_token_expires_in"])
+            token.refresh_token_expiry = datetime.now(timezone.utc) + timedelta(seconds=refresh_expires_in) - timedelta(minutes=5)
+        
+        token.token_response = token_data
         return token
 
 
