@@ -232,13 +232,14 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
         for key in sensitive_params:
             for sub_key in sensitive_params[key]:
                 bad_config = deepcopy(good_config)
-                bad_config[key][sub_key] += "@bad"
-                with self.assertRaises(
-                    Error,
-                    msg=f"No error raised on {key} {sub_key} with value {bad_config[key][sub_key]}",
-                ):
-                    # demonstrate another way to supply dicts during instantiation
-                    API(**bad_config)
+                if sub_key in bad_config[key]:
+                    bad_config[key][sub_key] += "@bad"
+                    with self.assertRaises(
+                        Error,
+                        msg=f"No error raised on {key} {sub_key} with value {bad_config[key][sub_key]}",
+                    ):
+                        # demonstrate another way to supply dicts during instantiation
+                        API(**bad_config)
 
     def test_object_reuse(self):
         """

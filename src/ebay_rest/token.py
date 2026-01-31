@@ -1,8 +1,9 @@
 # Standard library imports
-from base64 import b64encode, b64decode
+from base64 import b64decode
 import binascii
 from datetime import datetime, timedelta, timezone
 import logging
+import time
 from threading import Lock
 from typing import List, Optional
 from urllib.parse import urlparse, parse_qs, unquote, urlencode
@@ -500,7 +501,7 @@ class UserToken(metaclass=Multiton):
 
         if user_token.access_token is None:
             raise Error(
-                number=96011, reason=user_token.token_response["error_description"]
+                number=96011, reason=user_token.error
             )
         if len(user_token.access_token) == 0:
             raise Error(
@@ -673,11 +674,10 @@ class _OAuth2Api:
         else:
             return "https://api.ebay.com/identity/v1/oauth2/token"
 
-    def _finish(self, token: _OAuthToken, token_data: dict) -> _OAuthToken:
+    @staticmethod
+    def _finish(token: _OAuthToken, token_data: dict) -> _OAuthToken:
         """
-        :param resp:
         :param token:
-        :param content:
         :return:
         """
         token.access_token = token_data.get("access_token")
