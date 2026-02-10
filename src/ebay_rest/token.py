@@ -20,6 +20,18 @@ from .multiton import Multiton
 from .reference import Reference
 
 
+def _is_token_stale(token_expiry: datetime) -> bool:
+    """
+    Check if a token has expired or will expire within 5 minutes.
+
+    :param token_expiry: The token expiry datetime (may or may not have timezone info)
+    :return: True if expired or expiring soon, False otherwise
+    """
+    token_expiry_utc = token_expiry.replace(tzinfo=timezone.utc)
+    now_plus_buffer = DateTime.now() + timedelta(minutes=5)
+    return token_expiry_utc < now_plus_buffer
+
+
 class ApplicationToken(metaclass=Multiton):
     """
     Initialize, refresh, and supply an eBay OAuth ***application*** token.
@@ -54,7 +66,7 @@ class ApplicationToken(metaclass=Multiton):
         :return: None (None)
         """
         self._lock = Lock()
-        # The Multiton decorator wraps this initializer with a thread lock; it is safe to skip using self._lock.
+        # The Multiton metaclass ensures thread-safe instance creation; self._lock protects post-creation token operations.
 
         self._sandbox = sandbox
 
@@ -79,10 +91,7 @@ class ApplicationToken(metaclass=Multiton):
 
             if self._application_token is None:
                 self._refresh_application()
-            elif (
-                self._application_token.token_expiry.replace(tzinfo=timezone.utc)
-                <= DateTime.now()
-            ):
+            elif _is_token_stale(self._application_token.token_expiry):
                 self._refresh_application()
 
             token = self._application_token.access_token
@@ -177,7 +186,7 @@ class UserToken(metaclass=Multiton):
         """
 
         self._lock = Lock()
-        # The Multiton decorator wraps this initializer with a thread lock; it is safe to skip using self._lock.
+        # The Multiton metaclass ensures thread-safe instance creation; self._lock protects post-creation token operations.
 
         self._sandbox = sandbox
 
@@ -212,7 +221,9 @@ class UserToken(metaclass=Multiton):
 
                 self._allow_get_user_consent = False
                 if self._user_scopes is None:
-                    self._determine_user_scopes()
+                    with self._lock:
+                        if self._user_scopes is None:  # Double-check pattern
+                            self._determine_user_scopes()
                 try:
                     self._user_refresh_token_expiry = user_refresh_token_expiry
                 except Error as error:
@@ -243,10 +254,7 @@ class UserToken(metaclass=Multiton):
 
             if self._user_token is None:
                 self._refresh_user()
-            elif (
-                self._user_token.token_expiry.replace(tzinfo=timezone.utc)
-                <= DateTime.now()
-            ):
+            elif _is_token_stale(self._user_token.token_expiry):
                 self._refresh_user()
 
             token = self._user_token.access_token
@@ -279,7 +287,7 @@ class UserToken(metaclass=Multiton):
             # We don't have a refresh token; run authorization flow
             self._authorization_flow()
 
-        elif self._user_refresh_token.refresh_token_expiry <= DateTime.now():
+        elif _is_token_stale(self._user_refresh_token.refresh_token_expiry):
             # The refresh token has expired; run authorization flow
             self._authorization_flow()
 
@@ -382,7 +390,7 @@ class UserToken(metaclass=Multiton):
 
                 selectors = [
                     "#passkeys-cancel-btn",  # "Simplify your sign-in" prompt; skip it for now
-                    "#submit",  # "I agree" prompt; agree
+                    "#submit",  # "I agree" prompt; agree # noinspection GrazieInspection
                 ]
                 for selector in selectors:
                     try:
@@ -406,7 +414,7 @@ class UserToken(metaclass=Multiton):
 
                 # Have we reached the final page?
                 if "AuthSuccessful" in page.url:
-                    code = self.extract_code_from_url(page.url)
+                    code = self._extract_code_from_url(page.url)
                     if code is not None:
                         return code
                     else:
@@ -456,7 +464,7 @@ class UserToken(metaclass=Multiton):
                 playwright.stop()
 
     @staticmethod
-    def extract_code_from_url(url: str) -> Optional[str]:
+    def _extract_code_from_url(url: str) -> Optional[str]:
         """
         Extract only the 'code' value from an eBay callback URL.
         Returns the extracted 'code' as a string if found, otherwise returns None.
@@ -619,7 +627,7 @@ class _OAuth2Api:
 
     def get_application_token(self, scopes: List[str]) -> _OAuthToken:
         """
-        Makes call for application token and stores the result in a credential object.
+        Makes a call for an application token and stores the result in a credential object.
 
         :param scopes:
         :return: Credential object _OAuthToken
@@ -684,11 +692,11 @@ class _OAuth2Api:
         token.refresh_token = token_data.get("refresh_token", token.refresh_token)
 
         expires_in = int(token_data.get("expires_in", 7200))
-        token.token_expiry = datetime.now(timezone.utc) + timedelta(seconds=expires_in) - timedelta(minutes=5)
+        token.token_expiry = datetime.now(timezone.utc) + timedelta(seconds=expires_in)
 
         if "refresh_token_expires_in" in token_data:
             refresh_expires_in = int(token_data["refresh_token_expires_in"])
-            token.refresh_token_expiry = datetime.now(timezone.utc) + timedelta(seconds=refresh_expires_in) - timedelta(minutes=5)
+            token.refresh_token_expiry = datetime.now(timezone.utc) + timedelta(seconds=refresh_expires_in)
         
         token.token_response = token_data
         return token
@@ -734,7 +742,7 @@ class KeyPairToken(metaclass=Multiton):
         :param signing_key_id:
         """
         self._lock = Lock()
-        # The Multiton decorator wraps this initializer with a thread lock; it is safe to skip using self._lock.
+        # The Multiton metaclass ensures thread-safe instance creation; self._lock protects post-creation token operations.
         self._creation_time = (
             DateTime.from_string(creation_time) if creation_time else None
         )

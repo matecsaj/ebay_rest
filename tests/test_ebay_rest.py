@@ -1575,6 +1575,129 @@ class MultitonTests(unittest.TestCase):
             msg="Double-check functools.update_wrapper in multiton.py.",
         )
 
+    def test_thread_safety_concurrent_creation(self):
+        """
+        Test that concurrent creation of Multiton instances with the same parameters
+        returns the same instance (no duplicates created due to race conditions).
+        """
+        import threading
+        from src.ebay_rest.multiton import Multiton
+
+        # Create a simple test class using Multiton
+        class TestMultitonClass(metaclass=Multiton):
+            def __init__(self, value):
+                self.value = value
+
+        instances = []
+        threads = []
+
+        def create_instance():
+            inst = TestMultitonClass("test_value")
+            instances.append(inst)
+
+        # Create 10 threads that all try to create instances with the same params
+        for _ in range(10):
+            thread = threading.Thread(target=create_instance)
+            threads.append(thread)
+
+        # Start all threads at roughly the same time
+        for thread in threads:
+            thread.start()
+
+        # Wait for all threads to complete
+        for thread in threads:
+            thread.join()
+
+        # All instances should be the same object
+        first_instance = instances[0]
+        for instance in instances:
+            self.assertIs(
+                instance, first_instance,
+                "All instances with same parameters should be identical (same object)"
+            )
+
+    def test_thread_safety_nested_instantiation(self):
+        """
+        Test that nested Multiton instantiation doesn't cause deadlock.
+        A Multiton class that is creating another Multiton class in its __init__.
+        """
+        import threading
+        from src.ebay_rest.multiton import Multiton
+
+        class InnerMultiton(metaclass=Multiton):
+            def __init__(self, name):
+                self.name = name
+
+        class OuterMultiton(metaclass=Multiton):
+            def __init__(self, outer_name):
+                self.outer_name = outer_name
+                # This creates another Multiton instance while holding the lock
+                self.inner = InnerMultiton("inner")
+
+        results = []
+
+        def create_nested():
+            try:
+                outer = OuterMultiton("outer")
+                results.append(("success", outer))
+            except Exception as e:
+                results.append(("error", str(e)))
+
+        # Try creating nested instances from multiple threads
+        threads = []
+        for _ in range(5):
+            thread = threading.Thread(target=create_nested)
+            threads.append(thread)
+            thread.start()
+
+        # Wait with timeout to detect deadlock
+        for thread in threads:
+            thread.join(timeout=5.0)
+            self.assertFalse(
+                thread.is_alive(),
+                "Thread is still alive - possible deadlock detected"
+            )
+
+        # All operations should succeed
+        for status, result in results:
+            self.assertEqual(
+                status, "success",
+                f"Nested instantiation should not fail: {result}"
+            )
+
+    def test_thread_safety_cleanup(self):
+        """
+        Test that the cleanup of old instances doesn't cause issues
+        when accessed concurrently.
+        """
+        import threading
+        import time
+        from src.ebay_rest.multiton import Multiton
+
+        class TestCleanupClass(metaclass=Multiton):
+            def __init__(self, value):
+                self.value = value
+
+        def create_and_access():
+            # Create instances with different parameters
+            for i in range(5):
+                instance = TestCleanupClass(f"value_{i}")
+                self.assertIsNotNone(instance)
+                time.sleep(0.01)  # Small delay to increase the chance of concurrent access
+
+        threads = []
+        for _ in range(5):
+            thread = threading.Thread(target=create_and_access)
+            threads.append(thread)
+            thread.start()
+
+        for thread in threads:
+            thread.join(timeout=10.0)
+            self.assertFalse(
+                thread.is_alive(),
+                "Thread should complete without hanging"
+            )
+
 
 class ReferenceTests(unittest.TestCase):
     def test_get_application_scopes(self):
