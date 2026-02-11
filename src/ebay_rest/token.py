@@ -508,9 +508,7 @@ class UserToken(metaclass=Multiton):
         )
 
         if user_token.access_token is None:
-            raise Error(
-                number=96011, reason=user_token.error
-            )
+            raise Error(number=96011, reason=user_token.error)
         if len(user_token.access_token) == 0:
             raise Error(
                 number=96012, reason="user_token.access_token is of length zero."
@@ -636,7 +634,11 @@ class _OAuth2Api:
 
         token = _OAuthToken()
         try:
-            token_data = self.session.fetch_token(url=self._get_endpoint(), grant_type='client_credentials', scope=" ".join(scopes))
+            token_data = self.session.fetch_token(
+                url=self._get_endpoint(),
+                grant_type="client_credentials",
+                scope=" ".join(scopes),
+            )
             return self._finish(token, token_data)
         except Exception as e:
             token.error = str(e)
@@ -650,7 +652,12 @@ class _OAuth2Api:
         logging.debug("Trying to get a new user access token ... ")
         token = _OAuthToken()
         try:
-            token_data = self.session.fetch_token(url=self._get_endpoint(), grant_type='authorization_code', code=code, redirect_uri=self._ru_name)
+            token_data = self.session.fetch_token(
+                url=self._get_endpoint(),
+                grant_type="authorization_code",
+                code=code,
+                redirect_uri=self._ru_name,
+            )
             return self._finish(token, token_data)
         except Exception as e:
             token.error = str(e)
@@ -667,7 +674,12 @@ class _OAuth2Api:
         token = _OAuthToken()
         token.refresh_token = refresh_token
         try:
-            token_data = self.session.fetch_token(url=self._get_endpoint(), grant_type='refresh_token', refresh_token=refresh_token, scope=" ".join(scopes))
+            token_data = self.session.fetch_token(
+                url=self._get_endpoint(),
+                grant_type="refresh_token",
+                refresh_token=refresh_token,
+                scope=" ".join(scopes),
+            )
             return self._finish(token, token_data)
         except Exception as e:
             token.error = str(e)
@@ -696,8 +708,10 @@ class _OAuth2Api:
 
         if "refresh_token_expires_in" in token_data:
             refresh_expires_in = int(token_data["refresh_token_expires_in"])
-            token.refresh_token_expiry = datetime.now(timezone.utc) + timedelta(seconds=refresh_expires_in)
-        
+            token.refresh_token_expiry = datetime.now(timezone.utc) + timedelta(
+                seconds=refresh_expires_in
+            )
+
         token.token_response = token_data
         return token
 

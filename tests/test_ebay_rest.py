@@ -1612,8 +1612,9 @@ class MultitonTests(unittest.TestCase):
         first_instance = instances[0]
         for instance in instances:
             self.assertIs(
-                instance, first_instance,
-                "All instances with same parameters should be identical (same object)"
+                instance,
+                first_instance,
+                "All instances with same parameters should be identical (same object)",
             )
 
     def test_thread_safety_nested_instantiation(self):
@@ -1654,15 +1655,13 @@ class MultitonTests(unittest.TestCase):
         for thread in threads:
             thread.join(timeout=5.0)
             self.assertFalse(
-                thread.is_alive(),
-                "Thread is still alive - possible deadlock detected"
+                thread.is_alive(), "Thread is still alive - possible deadlock detected"
             )
 
         # All operations should succeed
         for status, result in results:
             self.assertEqual(
-                status, "success",
-                f"Nested instantiation should not fail: {result}"
+                status, "success", f"Nested instantiation should not fail: {result}"
             )
 
     def test_thread_safety_cleanup(self):
@@ -1683,7 +1682,9 @@ class MultitonTests(unittest.TestCase):
             for i in range(5):
                 instance = TestCleanupClass(f"value_{i}")
                 self.assertIsNotNone(instance)
-                time.sleep(0.01)  # Small delay to increase the chance of concurrent access
+                time.sleep(
+                    0.01
+                )  # Small delay to increase the chance of concurrent access
 
         threads = []
         for _ in range(5):
@@ -1694,8 +1695,7 @@ class MultitonTests(unittest.TestCase):
         for thread in threads:
             thread.join(timeout=10.0)
             self.assertFalse(
-                thread.is_alive(),
-                "Thread should complete without hanging"
+                thread.is_alive(), "Thread should complete without hanging"
             )
 
 
