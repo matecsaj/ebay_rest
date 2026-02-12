@@ -498,21 +498,23 @@ class UserToken(metaclass=Multiton):
         return None
 
     def _refresh_user_token(self) -> None:
-        """
-        Exchange a refresh token for a current user token.
-
-        :return: None (None)
-        """
         user_token = self._oauth2api_inst.get_access_token(
             self._user_refresh_token.refresh_token, self._user_scopes
         )
 
-        if user_token.access_token is None:
+        if not user_token.access_token:
             raise Error(number=96011, reason=user_token.error)
-        if len(user_token.access_token) == 0:
-            raise Error(
-                number=96012, reason="user_token.access_token is of length zero."
+
+        # IMPORTANT: persist rotated refresh token (if eBay returned one)
+        if (
+            user_token.refresh_token
+            and user_token.refresh_token != self._user_refresh_token.refresh_token
+        ):
+            self._user_refresh_token = _OAuthToken(
+                refresh_token=user_token.refresh_token,
+                refresh_token_expiry=user_token.refresh_token_expiry,
             )
+            # If you load/save refresh token from a json file, write it here too.
 
         self._user_token = user_token
 

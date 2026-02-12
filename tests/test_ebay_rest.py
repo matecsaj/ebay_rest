@@ -12,11 +12,12 @@
 # Standard library imports
 import datetime
 from copy import deepcopy
-from json import loads
+from functools import lru_cache
+from json import load as json_load
 import os
 import random
 import string
-from typing import Optional
+from typing import Dict, Any, Optional, Tuple
 import unittest
 from urllib.parse import urlparse
 
@@ -25,6 +26,236 @@ from currency_converter import CurrencyConverter
 
 # Local imports
 from src.ebay_rest import API, DateTime, Error, Reference
+
+
+class Credentials:
+    """
+    A helper class to cache credentials from an ebay_rest.json file.
+    """
+
+    def __init__(self, path: Optional[str] = None, file: str = "ebay_rest.json"):
+        if path is None:
+            path = os.getcwd()
+        path = os.path.abspath(path)
+        path_file = os.path.join(path, file)
+        self._credentials = type(self)._caching_loader(path_file)
+
+    @classmethod
+    @lru_cache(maxsize=5)
+    def _caching_loader(cls, path_file: str) -> Dict[str, Any]:
+        with open(path_file, "r", encoding="utf-8") as f:
+            return json_load(f)
+
+    def instruction_names(self) -> Tuple[str, ...]:
+        return tuple(self._credentials["***_instructions_***"].keys())
+
+    def get_instruction(self, name: str) -> Dict[str, Any]:
+        return self._credentials["***_instructions_***"][name]
+
+    def application_names(self) -> Tuple[str, ...]:
+        return tuple(self._credentials["applications"].keys())
+
+    def get_application(self, name: str) -> Dict[str, Any]:
+        return self._credentials["applications"][name]
+
+    def user_names(self) -> Tuple[str, ...]:
+        return tuple(self._credentials["users"].keys())
+
+    def get_user(self, name: str) -> Dict[str, Any]:
+        return self._credentials["users"][name]
+
+    def header_names(self) -> Tuple[str, ...]:
+        return tuple(self._credentials["headers"].keys())
+
+    def get_header(self, name: str) -> Dict[str, Any]:
+        return self._credentials["headers"][name]
+
+    def get_key_pair(self, name: str) -> Dict[str, Any]:
+        return self._credentials["key_pairs"][name]
+
+    def key_pair_names(self) -> Tuple[str, ...]:
+        return tuple(self._credentials["key_pairs"].keys())
+
+    def root_names(self) -> Tuple[str, ...]:
+        return tuple(self._credentials.keys())
+
+
+class CredentialTests(unittest.TestCase):
+
+    def test_credential_files(self):
+        self._check_credential_file("ebay_rest_EXAMPLE.json")
+        self._check_credential_file("ebay_rest.json")
+
+    def _check_credential_file(self, filename):
+        """
+        Check if a credential file is structured correctly.
+        """
+        try:
+            creds = Credentials(file=filename)
+        except Error as error:
+            self.fail(error)
+
+        root_names = creds.root_names()
+
+        # Are only the expected root keys present?
+        self.assertEqual(
+            set(root_names),
+            {
+                "***_instructions_***",
+                "applications",
+                "users",
+                "headers",
+                "key_pairs",
+            },
+        )
+
+        # Does the example file have instructions? Are all instructions numbered and textual?
+        instruction_names = creds.instruction_names()
+        if filename == "ebay_rest_EXAMPLE.json":
+            self.assertGreater(
+                len(instruction_names), 0, f"No instructions in {filename}."
+            )
+        for name in instruction_names:
+            try:
+                int(name)
+            except ValueError:
+                self.fail(
+                    f"In {filename} the instruction key {name} is not string representing an integer."
+                )
+            self.assertIsInstance(
+                creds.get_instruction(name),
+                str,
+                f"In {filename} the value for instruction key {name} is not a string.",
+            )
+
+        # Does the application section have all the required keys?
+        application_names = creds.application_names()
+        self.assertGreater(len(application_names), 0, f"No applications in {filename}.")
+        for name in application_names:
+            application = creds.get_application(name)
+            self.assertEqual(
+                set(application.keys()),
+                {"app_id", "cert_id", "dev_id", "redirect_uri"},
+                f"In {filename} the application {name} does not have the expected keys.",
+            )
+
+        # Does the user section have all the required keys?
+        user_names = creds.user_names()
+        self.assertGreater(len(user_names), 0, f"No users in {filename}.")
+        for name in user_names:
+            user = creds.get_user(name)
+            self.assertTrue(
+                {
+                    "email_or_username",
+                    "password",
+                    "refresh_token",
+                    "refresh_token_expiry",
+                }.issubset(set(user.keys())),
+                f"In {filename} the user {name} is missing some required keys.",
+            )
+
+        # Does the header section have all the required keys?
+        header_names = creds.header_names()
+        self.assertGreater(len(header_names), 0, f"No headers in {filename}.")
+        for name in header_names:
+            header = creds.get_header(name)
+            self.assertEqual(
+                set(header.keys()),
+                {
+                    "accept_language",
+                    "affiliate_campaign_id",
+                    "affiliate_reference_id",
+                    "content_language",
+                    "country",
+                    "currency",
+                    "device_id",
+                    "marketplace_id",
+                    "zip",
+                },
+                f"In {filename} the header {name} does not have the expected keys.",
+            )
+
+        # Does the key_pair section have all the required keys?
+        key_pair_names = creds.key_pair_names()
+        self.assertGreater(len(key_pair_names), 0, f"No key_pairs in {filename}.")
+        for name in key_pair_names:
+            key_pair = creds.get_key_pair(name)
+            self.assertEqual(
+                set(key_pair.keys()),
+                {"private_key", "signing_key_id"},
+                f"In {filename} the key_pair {name} does not have the expected keys.",
+            )
+
+    def test_credentials_from_dicts(self):
+        """
+        set credentials via dicts
+        """
+
+        try:
+            creds = Credentials()
+            application = creds.get_application("sandbox_1")
+            user = creds.get_user("sandbox_1")
+            header = creds.get_header("US")
+            key_pair = creds.get_key_pair("sandbox_1")
+        except KeyError as e:
+            self.fail(
+                f"The ebay_rest.json file is missing an essential application, user or header record {e}"
+            )
+
+        # use good credentials
+        try:
+            # demonstrate one way to supply dicts during instantiation
+            api = API(
+                application=application, user=user, header=header, key_pair=key_pair
+            )
+        except Error as error:
+            self.fail(error)
+        else:
+            self.assertIsInstance(api, API, "An API object was not returned.")
+
+        # try each credential that when bad should raise an exception
+        sensitive_params = {
+            # "application": ("placeholder",),
+            "user": ("refresh_token_expiry",),
+            "header": (
+                "accept_language",
+                "content_language",
+                "country",
+                "currency",
+                "marketplace_id",
+            ),
+            # "key_pair": ("placeholder",),
+        }
+        good_config = {
+            "user": user,
+            "application": application,
+            "header": header,
+            "key_pair": key_pair,
+        }
+        for key in sensitive_params:
+            for sub_key in sensitive_params[key]:
+                bad_config = deepcopy(good_config)
+                if sub_key in bad_config[key]:
+                    bad_config[key][sub_key] += "@bad"
+                    with self.assertRaises(
+                        Error,
+                        msg=f"No error raised on {key} {sub_key} with value {bad_config[key][sub_key]}",
+                    ):
+                        # demonstrate another way to supply dicts during instantiation
+                        API(**bad_config)
+
+    def test_credential_path(self):
+        """
+        supply a path to ebay_rest.json
+        """
+        try:
+            api = API(
+                path=os.getcwd(), application="sandbox_1", user="sandbox_1", header="US"
+            )
+        except Error as error:
+            self.fail(error)
+        else:
+            self.assertIsInstance(api, API, "An API object was not returned.")
 
 
 class APIBothEnvironmentsSingleSiteTests(unittest.TestCase):
@@ -96,151 +327,6 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
     def setUpClass(cls):
         cls.currency_converter = CurrencyConverter()  # this is slow, so do it once
 
-    def load_credential_file(self, filename: str) -> Optional[dict]:
-        """
-        Try to load a credential file into a dict.
-        """
-        config_location = os.path.join(os.getcwd(), filename)
-        try:
-            f = open(config_location, "r")
-        except FileNotFoundError:
-            self.fail(f"File not found, unable to open {config_location}.")
-        else:
-            try:
-                contents = loads(f.read())
-            except IOError:
-                f.close()
-                self.fail(
-                    f"Unable to load the file {config_location}; likely the json is malformed."
-                )
-            else:
-                f.close()
-                return contents
-
-    def check_credential_file(self, filename):
-        """
-        Check if a credential file is structured correctly.
-        """
-
-        # These are all the root keys.
-        instructions_key = "***_instructions_***"
-        applications_key = "applications"
-        users_key = "users"
-        headers_key = "headers"
-        key_pairs_key = "key_pairs"
-        root_keys = {
-            instructions_key,
-            applications_key,
-            users_key,
-            headers_key,
-            key_pairs_key,
-        }
-
-        # Can the JSON file be loaded into a dictionary?
-        contents = self.load_credential_file(filename)
-        self.assertIsInstance(
-            contents,
-            dict,
-            "Failed to load {filename} from the test folder into a dict.",
-        )
-
-        # Are the expected root keys present?
-        root_keys_in_contents = list(contents.keys())
-        self.assertEqual(len(root_keys_in_contents), len(root_keys))
-        self.assertEqual(set(root_keys_in_contents), root_keys)
-
-        # Check the common requirements for all root_keys records.
-        for root_key in root_keys:
-            keys = contents[root_key].keys()
-            self.assertGreater(len(keys), 0, f"{filename} has no {root_key} records.")
-            for key in keys:
-                self.assertIsInstance(
-                    key,
-                    str,
-                    f"In {filename} the {root_key} record named {key} is not a string.",
-                )
-
-        for instruction_key in contents[instructions_key]:
-            try:
-                int(instruction_key)
-            except ValueError:
-                self.fail(
-                    f"In {filename} the instruction key {instruction_key} is not string representing an integer."
-                )
-            self.assertIsInstance(
-                contents[instructions_key][instruction_key],
-                str,
-                f"In {filename} the value for instruction key {instruction_key} is not a string.",
-            )
-
-        # TODO
-        # for application in contents[applications_key]:
-        # for user in contents[users_key]:
-        # for header in contents[headers_key]:
-        # for key_pair in contents[key_pairs_key]:
-
-    def test_credential_files(self):
-        self.check_credential_file("ebay_rest_EXAMPLE.json")
-        self.check_credential_file("ebay_rest.json")
-
-    def test_credentials_from_dicts(self):
-        """
-        set credentials via dicts
-        """
-
-        contents = self.load_credential_file("ebay_rest.json")
-        try:
-            application = contents["applications"]["sandbox_1"]
-            user = contents["users"]["sandbox_1"]
-            header = contents["headers"]["US"]
-            key_pair = contents["key_pairs"]["sandbox_1"]
-        except KeyError as e:
-            self.fail(
-                f"The ebay_rest.json file is missing an essential application, user or header record {e}"
-            )
-
-        # use good credentials
-        try:
-            # demonstrate one way to supply dicts during instantiation
-            api = API(
-                application=application, user=user, header=header, key_pair=key_pair
-            )
-        except Error as error:
-            self.fail(error)
-        else:
-            self.assertIsInstance(api, API, "An API object was not returned.")
-
-        # try each credential that when bad should raise an exception
-        sensitive_params = {
-            # "application": ("placeholder",),
-            "user": ("refresh_token_expiry",),
-            "header": (
-                "accept_language",
-                "content_language",
-                "country",
-                "currency",
-                "marketplace_id",
-            ),
-            # "key_pair": ("placeholder",),
-        }
-        good_config = {
-            "user": user,
-            "application": application,
-            "header": header,
-            "key_pair": key_pair,
-        }
-        for key in sensitive_params:
-            for sub_key in sensitive_params[key]:
-                bad_config = deepcopy(good_config)
-                if sub_key in bad_config[key]:
-                    bad_config[key][sub_key] += "@bad"
-                    with self.assertRaises(
-                        Error,
-                        msg=f"No error raised on {key} {sub_key} with value {bad_config[key][sub_key]}",
-                    ):
-                        # demonstrate another way to supply dicts during instantiation
-                        API(**bad_config)
-
     def test_object_reuse(self):
         """
         Do the same parameters return the same API object?
@@ -250,19 +336,6 @@ class APISandboxMultipleSiteTests(unittest.TestCase):
         b = API(application="sandbox_1", user="sandbox_1", header="GB")
         self.assertEqual(a1, a2)
         self.assertNotEqual(a1, b)
-
-    def test_credential_path(self):
-        """
-        supply a path to ebay_rest.json
-        """
-        try:
-            api = API(
-                path=os.getcwd(), application="sandbox_1", user="sandbox_1", header="US"
-            )
-        except Error as error:
-            self.fail(error)
-        else:
-            self.assertIsInstance(api, API, "An API object was not returned.")
 
     def test_shipping_accuracy(self):
         """
