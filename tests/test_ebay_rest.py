@@ -26,6 +26,7 @@ from currency_converter import CurrencyConverter
 
 # Local imports
 from src.ebay_rest import API, DateTime, Error, Reference
+from src.ebay_rest.token import ApplicationToken
 
 
 class Credentials:
@@ -1635,6 +1636,95 @@ class TokenTests(unittest.TestCase):
             else:
                 if result is not None:
                     self.assertIsNotNone("violation_summaries" in result)
+
+
+class ApplicationTokenTests(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.creds = Credentials()
+
+    def is_token_valid(self, token: str) -> bool:
+        """
+        Helper, returns true if an application token is valid.
+        """
+        self.assertIsInstance(token, str)
+        self.assertGreater(len(token), 0)
+        return True  # TODO replace this with real validation logic that actually uses the token
+
+    def normal_start_and_use(self, sandbox: bool, app_name: str) -> str:
+        """
+        Helper, test the normal startup and getting of an application token, either sandbox *or* production.
+        """
+
+        # initialization
+        app = self.creds.get_application(app_name)
+        app_token = ApplicationToken(
+            sandbox=sandbox,
+            client_id=app["app_id"],
+            client_secret=app["cert_id"],
+            ru_name=app["redirect_uri"],
+        )
+        self.assertIsInstance(app_token, ApplicationToken)
+
+        # token retrieval, validity and caching
+        token = app_token.get()
+        self.assertTrue(self.is_token_valid(token))
+        self.assertEqual(token, app_token.get())
+
+        return token
+
+    def test_normal_start_and_use(self):
+        """
+        Test the normal startup and getting of an application token, both sandbox *and* production.
+        """
+        sand_token = self.normal_start_and_use(True, "sandbox_1")
+        prod_token = self.normal_start_and_use(False, "production_1")
+        self.assertNotEqual(sand_token, prod_token)
+
+    def bad_start_repetitive(
+        self, app_name, sandbox, client_id, client_secret, ru_name
+    ):
+        """
+        Helper, repetitive part, of test the bad startup of an application token, either sandbox *or* production.
+        """
+        with self.assertRaises(Error, msg=f"Expected Error for: "
+                                          f"{app_name=} {sandbox=} {client_id=} {client_secret=} {ru_name=}") as cm:
+            app = ApplicationToken(
+                sandbox=sandbox,
+                client_id=client_id,
+                client_secret=client_secret,
+                ru_name=ru_name,
+            )
+            app.get()
+
+        self.assertEqual(
+            cm.exception.number,
+            96001,
+            msg=f"Wrong error number for: "
+                f"{app_name=} {sandbox=} {client_id=} {ru_name=}"
+        )
+
+    def bad_start(self, sandbox: bool, app_name: str):
+        """
+        Helper, test the bad startup of an application token, either sandbox *or* production.
+        """
+        app = self.creds.get_application(app_name)
+        client_id = app["app_id"]
+        client_secret = app["cert_id"]
+        ru_name = app["redirect_uri"]
+        # spoil each parameter in turn
+        self.bad_start_repetitive(app_name, not sandbox, client_id, client_secret, ru_name)
+        self.bad_start_repetitive(app_name, sandbox, "BAD!" + client_id, client_secret, ru_name)
+        self.bad_start_repetitive(app_name, sandbox, client_id, "BAD!" + client_secret, ru_name)
+        # TODO self.bad_start_repetitive(app_name, sandbox, client_id, client_secret, "BAD!" + ru_name)
+
+    def test_bad_start(self):
+        """
+        Test the bad startup of an application token, both sandbox *and* production.
+        """
+        self.bad_start(True, "sandbox_1")
+        self.bad_start(False, "production_1")
 
 
 class MultitonTests(unittest.TestCase):
