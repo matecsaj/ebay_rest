@@ -26,7 +26,7 @@ from currency_converter import CurrencyConverter
 
 # Local imports
 from src.ebay_rest import API, DateTime, Error, Reference
-from src.ebay_rest.token import ApplicationToken
+from src.ebay_rest.token import ApplicationToken, UserToken
 
 
 class Credentials:
@@ -186,6 +186,24 @@ class CredentialTests(unittest.TestCase):
                 {"private_key", "signing_key_id"},
                 f"In {filename} the key_pair {name} does not have the expected keys.",
             )
+
+    def test_required_accounts(self):
+        """
+        Test the accounts that most other unit tests need. Are they present and well-formed?
+        """
+        creds = Credentials()
+        for name in ("sandbox_1", "production_1"):
+            self.assertTrue(
+                name in creds.user_names(),
+                msg=f"The file ebay_rest.json is missing user: {name}",
+            )
+            user = creds.get_user(name)
+            message = (
+                f"In ebay_rest.json for user {name} the refresh_token and expiry should not be empty."
+                + " For instructions see the FAQ in README.md about avoiding browser pop-ups"
+            )
+            self.assertNotEqual(user["refresh_token"], "", message)
+            self.assertNotEqual(user["refresh_token_expiry"], "", message)
 
     def test_credentials_from_dicts(self):
         """
@@ -1613,31 +1631,6 @@ class ErrorTests(unittest.TestCase):
         self.assertEqual(logger.message, str(error))
 
 
-class TokenTests(unittest.TestCase):
-    def test_get_authorization_code(self):
-        """
-        Notes:
-        1. A web browser window should pop up while this test successfully runs.
-        2. eBay also refers to the authorization code as a token refresh token.
-        """
-        try:
-            # The user sand_box_2 should be a copy of sand_box_1 without refresh token values.
-            api = API(application="sandbox_1", user="sandbox_2", header="US")
-        except Error as error:
-            self.fail(error)
-        else:
-            # Try a method that needs a user refresh token.
-            try:
-                result = api.sell_compliance_get_listing_violations_summary(
-                    x_ebay_c_marketplace_id=api._header["marketplace_id"]
-                )
-            except Error as error:
-                self.fail(error)
-            else:
-                if result is not None:
-                    self.assertIsNotNone("violation_summaries" in result)
-
-
 class ApplicationTokenTests(unittest.TestCase):
 
     @classmethod
@@ -1688,8 +1681,11 @@ class ApplicationTokenTests(unittest.TestCase):
         """
         Helper, repetitive part, of test the bad startup of an application token, either sandbox *or* production.
         """
-        with self.assertRaises(Error, msg=f"Expected Error for: "
-                                          f"{app_name=} {sandbox=} {client_id=} {client_secret=} {ru_name=}") as cm:
+        with self.assertRaises(
+            Error,
+            msg=f"Expected Error for: "
+            f"{app_name=} {sandbox=} {client_id=} {client_secret=} {ru_name=}",
+        ) as cm:
             app = ApplicationToken(
                 sandbox=sandbox,
                 client_id=client_id,
@@ -1702,7 +1698,7 @@ class ApplicationTokenTests(unittest.TestCase):
             cm.exception.number,
             96001,
             msg=f"Wrong error number for: "
-                f"{app_name=} {sandbox=} {client_id=} {ru_name=}"
+            f"{app_name=} {sandbox=} {client_id=} {ru_name=}",
         )
 
     def bad_start(self, sandbox: bool, app_name: str):
@@ -1713,11 +1709,17 @@ class ApplicationTokenTests(unittest.TestCase):
         client_id = app["app_id"]
         client_secret = app["cert_id"]
         ru_name = app["redirect_uri"]
-        # spoil each parameter in turn
-        self.bad_start_repetitive(app_name, not sandbox, client_id, client_secret, ru_name)
-        self.bad_start_repetitive(app_name, sandbox, "BAD!" + client_id, client_secret, ru_name)
-        self.bad_start_repetitive(app_name, sandbox, client_id, "BAD!" + client_secret, ru_name)
-        # TODO self.bad_start_repetitive(app_name, sandbox, client_id, client_secret, "BAD!" + ru_name)
+        # spoil each parameter in turn - TODO improve sensitivity so the skipped test actually fails
+        self.bad_start_repetitive(
+            app_name, not sandbox, client_id, client_secret, ru_name
+        )
+        self.bad_start_repetitive(
+            app_name, sandbox, "BAD!" + client_id, client_secret, ru_name
+        )
+        self.bad_start_repetitive(
+            app_name, sandbox, client_id, "BAD!" + client_secret, ru_name
+        )
+        # self.bad_start_repetitive(app_name, sandbox, client_id, client_secret, "BAD!" + ru_name)
 
     def test_bad_start(self):
         """
@@ -1725,6 +1727,194 @@ class ApplicationTokenTests(unittest.TestCase):
         """
         self.bad_start(True, "sandbox_1")
         self.bad_start(False, "production_1")
+
+
+class UserTokenTests(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.creds = Credentials()
+
+    def is_token_valid(self, token: str) -> bool:
+        """
+        Helper, returns true if a user token is valid.
+        """
+        self.assertIsInstance(token, str)
+        self.assertGreater(len(token), 0)
+        return True  # TODO replace this with more validation logic that actually uses the token
+
+    def normal_start_and_use(self, sandbox: bool, name: str) -> str:
+        """
+        Helper, test the normal startup and getting of a user token, either sandbox *or* production.
+        """
+
+        # initialization
+        app = self.creds.get_application(name)
+        user = self.creds.get_user(name)
+        user_token = UserToken(
+            sandbox=sandbox,
+            client_id=app["app_id"],
+            client_secret=app["cert_id"],
+            ru_name=app["redirect_uri"],
+            user_id=user["email_or_username"],
+            user_password=user["password"],
+            user_refresh_token=user["refresh_token"] if user["refresh_token"] else None,
+            user_refresh_token_expiry=(
+                user["refresh_token_expiry"] if user["refresh_token_expiry"] else None
+            ),
+        )
+        self.assertIsInstance(user_token, UserToken)
+
+        # token retrieval, validity and caching
+        token = user_token.get()
+        self.assertTrue(self.is_token_valid(token))
+        self.assertEqual(token, user_token.get())
+
+        return token
+
+    def test_normal_start_and_use(self):
+        """
+        Test the normal startup and getting of a user token, both sandbox *and* production.
+        """
+        sand_token = self.normal_start_and_use(True, "sandbox_1")
+        prod_token = self.normal_start_and_use(False, "production_1")
+        self.assertNotEqual(sand_token, prod_token)
+
+    def bad_start_repetitive(
+        self,
+        name,
+        sandbox,
+        client_id,
+        client_secret,
+        ru_name,
+        user_id,
+        user_password,
+        refresh_token,
+        refresh_token_expiry,
+    ):
+        """
+        Helper, repetitive part, of test the bad startup of a user token, either sandbox *or* production.
+        """
+        with self.assertRaises(
+            Error,
+            msg=f"Expected Error for: "
+            f"{name=} {sandbox=} {client_id=} {client_secret=} {ru_name=} "
+            f"{user_id=} {user_password=} {refresh_token=} {refresh_token_expiry=}",
+        ) as cm:
+            user_token = UserToken(
+                sandbox=sandbox,
+                client_id=client_id,
+                client_secret=client_secret,
+                ru_name=ru_name,
+                user_id=user_id,
+                user_password=user_password,
+                user_refresh_token=refresh_token,
+                user_refresh_token_expiry=refresh_token_expiry,
+            )
+            user_token.get()
+
+        self.assertIn(
+            cm.exception.number,
+            [96001, 96003, 96004, 96007, 96011, 96016, 96025, 96030, 96016],
+            msg=f"Wrong error number {cm.exception.number} for: "
+            f"{name=} {sandbox=} {client_id=} {ru_name=}",
+        )
+
+    def bad_start(self, sandbox: bool, name: str):
+        """
+        Helper, test the bad startup of a user token, either sandbox *or* production.
+        """
+        app = self.creds.get_application(name)
+        user = self.creds.get_user(name)
+
+        client_id = app["app_id"]
+        client_secret = app["cert_id"]
+        ru_name = app["redirect_uri"]
+
+        user_id = user["email_or_username"]
+        user_password = user["password"]
+        refresh_token = user["refresh_token"] if user["refresh_token"] else None
+        refresh_token_expiry = (
+            user["refresh_token_expiry"] if user["refresh_token_expiry"] else None
+        )
+
+        # spoil each parameter in turn - TODO improve sensitivity so the skipped tests actually fail
+        self.bad_start_repetitive(
+            name,
+            not sandbox,
+            client_id,
+            client_secret,
+            ru_name,
+            user_id,
+            user_password,
+            refresh_token,
+            refresh_token_expiry,
+        )
+        self.bad_start_repetitive(
+            name,
+            sandbox,
+            "BAD!" + client_id,
+            client_secret,
+            ru_name,
+            user_id,
+            user_password,
+            refresh_token,
+            refresh_token_expiry,
+        )
+        self.bad_start_repetitive(
+            name,
+            sandbox,
+            client_id,
+            "BAD!" + client_secret,
+            ru_name,
+            user_id,
+            user_password,
+            refresh_token,
+            refresh_token_expiry,
+        )
+        # self.bad_start_repetitive(name, sandbox, client_id, client_secret, "BAD!" + ru_name, user_id, user_password, refresh_token, refresh_token_expiry)
+        # self.bad_start_repetitive(name, sandbox, client_id, client_secret, ru_name, "BAD!" + user_id, user_password, refresh_token, refresh_token_expiry)
+        # self.bad_start_repetitive(name, sandbox, client_id, client_secret, ru_name, user_id, "BAD!" + user_password, refresh_token, refresh_token_expiry)
+        # if refresh_token:
+        #     self.bad_start_repetitive(name, sandbox, client_id, client_secret, ru_name, user_id, user_password, "BAD!" + refresh_token, refresh_token_expiry)
+        # if refresh_token_expiry:
+        #    self.bad_start_repetitive(name, sandbox, client_id, client_secret, ru_name, user_id, user_password, refresh_token, "BAD!" + refresh_token_expiry)
+
+    def test_bad_start(self):
+        """
+        Test the bad startup of a user token, both sandbox *and* production.
+        """
+        self.bad_start(True, "sandbox_1")
+        self.bad_start(False, "production_1")
+
+    def test_get_authorization_code(self):
+        """
+        Notes:
+        1. A web browser window should pop up while this test successfully runs. If seen, manually to the captcha.
+        2. eBay also refers to the authorization code as a token refresh token.
+        3. Don't use sandbox_1, it will spoil its refresh token in ebay_rest.json
+        """
+        name = "sandbox_2"
+        user = self.creds.get_user(name)
+        message = f"In ebay_rest.json for user {name} the refresh_token and expiry must be empty."
+        self.assertEqual(user["refresh_token"], "", message)
+        self.assertEqual(user["refresh_token_expiry"], "", message)
+
+        try:
+            api = API(application=name, user=name, header="US")
+        except Error as error:
+            self.fail(error)
+        else:
+            # Try a method that needs a user refresh token.
+            try:
+                result = api.sell_compliance_get_listing_violations_summary(
+                    x_ebay_c_marketplace_id=api._header["marketplace_id"]
+                )
+            except Error as error:
+                self.fail(error)
+            else:
+                if result is not None:
+                    self.assertIsNotNone("violation_summaries" in result)
 
 
 class MultitonTests(unittest.TestCase):
