@@ -1,6 +1,16 @@
 # ebay_rest
 A Python 3 pip package that wraps eBay’s REST APIs.
 
+## Project retired — independent forks welcome
+
+I am retiring this project for two equally important reasons: I no longer use the library personally, and the upstream specification and tooling changes described in [#108](https://github.com/matecsaj/ebay_rest/issues/108) would require substantial work to address. No further updates, support, or security fixes are planned.
+
+Existing source code and releases will remain available. [Known unresolved issues](https://github.com/matecsaj/ebay_rest/issues?q=is%3Aissue%20label%3Awontfix) are preserved for anyone continuing development.
+
+Independent forks are welcome under the existing MIT license. Please publish under a distinct package name. I will retain ownership of this repository and the original PyPI project; independent forks are not endorsed or reviewed by me.
+
+Thank you to everyone who reported issues, contributed code, or otherwise supported the project. I wish you well with your projects and any continued development.
+
 ## Table of Contents
 - [Installation](#installation)
   - [Basic Installation](#basic-installation)
@@ -153,7 +163,7 @@ To optimize API calls:
 ---
 
 ## Contributing
-Contributions are welcome! Please fork this repository and submit a pull request. Follow the coding standards outlined in [`CONTRIBUTING.md`](CONTRIBUTING.md).
+Independent forks are welcome. Issues and pull requests in this repository are no longer reviewed. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for development guidance for your own fork.
 
 ---
 
@@ -162,4 +172,3 @@ Contributions are welcome! Please fork this repository and submit a pull request
 - "Python" is a trademark of the [Python Software Foundation](https://www.python.org/psf/).
 - "eBay" is a trademark of [eBay Inc](https://www.ebay.com).
 - This project is **not affiliated with or endorsed by eBay Inc.**
-

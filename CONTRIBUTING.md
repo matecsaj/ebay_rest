@@ -1,6 +1,8 @@
 # Contributing to ebay_rest
 
-Thank you for your interest in contributing to `ebay_rest`! We appreciate contributions from the community and look forward to collaborating with you.
+This project is retired. Issues and pull requests in the original repository are no longer reviewed. This supersedes earlier maintenance and v2 development plans. Independent forks are welcome under the existing [MIT License](LICENSE); the development guidance below is retained for work in your own fork.
+
+Publish under a distinct package name using your own accounts and credentials. Ownership and publishing access for the original repository and PyPI project will not be transferred. Independent forks are not endorsed or reviewed by the original maintainer.
 
 ## Table of Contents
 - [Getting Started](#getting-started)
@@ -70,11 +72,11 @@ black --version  # Should print the installed version
 ---
 
 ## How to Contribute
-We welcome various types of contributions:
+In your own fork, you can continue work on:
 
-- **Bug Fixes**: If you find a bug, consider fixing it and submitting a pull request.
-- **New Features**: Submit an issue or a pull request with your proposed enhancement.
-- **Documentation**: Improvements to documentation are always welcome.
+- **Bug Fixes**: Review the original repository's unresolved issues for known problems.
+- **New Features**: Track proposed enhancements in your fork.
+- **Documentation**: Update documentation to reflect your fork's behavior and maintenance status.
 
 ### Contribution Tips
 - Review error codes in the `Error` class.
@@ -103,6 +105,8 @@ python -m unittest discover
 
 ## Submitting a Pull Request
 
+These steps apply to collaboration within an independently maintained fork. The original repository no longer reviews pull requests.
+
 1. **Fork the repository** on GitHub.
 2. **Create a new branch** for your feature/fix:
    ```bash
@@ -116,11 +120,13 @@ python -m unittest discover
    ```bash
    git push origin my-feature-branch
    ```
-5. **Open a Pull Request** on GitHub.
+5. **Open a Pull Request** against the independently maintained fork on GitHub.
 
 ---
 
 ## Release Steps
+
+For an independent fork, first change the distribution name and project links in `pyproject.toml` and update the installation instructions. Retain the MIT license and copyright notices. Publish to your own distinct PyPI project using your own credentials.
 
 1. **Update dependencies and tools:**
    ```bash
@@ -157,4 +163,3 @@ python -m unittest discover
 
 ## License
 By contributing to `ebay_rest`, you agree that your contributions will be licensed under the [MIT License](LICENSE).
-
